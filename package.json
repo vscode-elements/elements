@@ -1,0 +1,23 @@
+{
+  "name": "vscode-webview-elements",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build components/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "lit-element": "^2.2.1"
+  },
+  "browserslist": [
+    "last 1 chrome versions"
+  ]
+}
