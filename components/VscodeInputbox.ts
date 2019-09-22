@@ -1,15 +1,30 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
 
 enum Severity {
+  DEFAULT = 'default',
   INFO = 'info',
   WARNING = 'warning',
   ERROR = 'error',
 };
 
+enum InputType {
+  COLOR = 'color',
+  DATE = 'date',
+  DATETIME_LOCAL = 'datetime-local',
+  EMAIL = 'email',
+  FILE = 'file',
+  MONTH = 'month',
+  NUMBER = 'number',
+  PASSWORD = 'password',
+  TEL = 'tel',
+  TEXT = 'text',
+  TIME = 'time',
+  URL = 'url',
+  WEEK = 'week',
+}
+
 @customElement('vscode-inputbox')
 export class VscodeInputbox extends LitElement {
-  private _messageSeverity: Severity;
-
   @property({ type: Boolean }) multiline = false;
   @property({ type: String }) message = '';
   @property({ type: String })
@@ -23,7 +38,7 @@ export class VscodeInputbox extends LitElement {
         this._messageSeverity = val;
         break;
       default:
-        this._messageSeverity = Severity.INFO;
+        this._messageSeverity = Severity.DEFAULT;
     }
 
     this.requestUpdate('messageSeverity', oldVal);
@@ -31,6 +46,39 @@ export class VscodeInputbox extends LitElement {
   get messageSeverity(): string {
     return this._messageSeverity;
   }
+  @property({ type: Boolean }) panelInput = false;
+  @property({ type: String })
+  set type(val: string) {
+    const oldVal = this._type;
+
+    switch(val) {
+      case InputType.COLOR:
+      case InputType.DATE:
+      case InputType.DATETIME_LOCAL:
+      case InputType.EMAIL:
+      case InputType.FILE:
+      case InputType.MONTH:
+      case InputType.NUMBER:
+      case InputType.PASSWORD:
+      case InputType.TEL:
+      case InputType.TEXT:
+      case InputType.TIME:
+      case InputType.URL:
+      case InputType.WEEK:
+        this._type = val;
+        break;
+      default:
+        this._type = InputType.TEXT;
+    }
+
+    this.requestUpdate('type', oldVal);
+  }
+  get type(): string {
+    return this._type;
+  }
+
+  private _messageSeverity: Severity;
+  private _type: InputType;
 
   constructor() {
     super();
@@ -51,6 +99,9 @@ export class VscodeInputbox extends LitElement {
       input,
       textarea {
         background-color: var(--vscode-input-background);
+        border-color: var(--vscode-we-input-border, var(--vscode-settings-textInputBorder));
+        border-style: solid;
+        border-width: 1px;
         box-sizing: border-box;
         color: var(--vscode-input-foreground);
         display: block;
@@ -58,6 +109,37 @@ export class VscodeInputbox extends LitElement {
         outline: none;
         padding: 3px;
         width: 100%;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: var(--vscode-focusBorder);
+      }
+
+      .container.panel-input input,
+      .container.panel-input textarea {
+        border-color: var(--vscode-panelInput-border);
+      }
+
+      .container.info input,
+      .container.info textarea,
+      .container.panel-input.info input,
+      .container.panel-input.info textarea {
+        border-color: var(--vscode-inputValidation-infoBorder);
+      }
+
+      .container.warning input,
+      .container.warning textarea,
+      .container.panel-input.warning input,
+      .container.panel-input.warning textarea {
+        border-color: var(--vscode-inputValidation-warningBorder);
+      }
+
+      .container.error input,
+      .container.error textarea,
+      .container.panel-input.error input,
+      .container.panel-input.error textarea {
+        border-color: var(--vscode-inputValidation-errorBorder);
       }
 
       .message {
@@ -96,15 +178,20 @@ export class VscodeInputbox extends LitElement {
 
   render() {
     const textarea = html`<textarea></textarea>`;
-    const input = html`<input type="text">`;
+    const input = html`<input type="${this.type}">`;
     const message = html`
       <div class="message ${this.messageSeverity}">
         ${this.message}
       </div>
     `;
+    let containerClass = 'container';
+
+    if (this.message !== '') {
+      containerClass += ` ${this.messageSeverity}`;
+    }
 
     return html`
-      <div class="container">
+      <div class="${containerClass}">
         ${this.multiline ? textarea : input}
         ${this.message ? message : ''}
       </div>
