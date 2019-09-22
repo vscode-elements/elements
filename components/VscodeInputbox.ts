@@ -1,7 +1,7 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
 
-@customElement('vscode-textarea')
-export class VscodeTextarea extends LitElement {
+@customElement('vscode-inputbox')
+export class VscodeInputbox extends LitElement {
   @property({ type: Boolean }) multiline = false;
   @property({ type: String }) message = '';
   @property({ type: String }) messageSeverity = 'info';
@@ -22,6 +22,11 @@ export class VscodeTextarea extends LitElement {
         outline: none;
         padding: 3px;
         resize: none;
+        width: 100%;
+      }
+
+      input {
+        display: block;
         width: 100%;
       }
 

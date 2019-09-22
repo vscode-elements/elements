@@ -24,8 +24,8 @@ export const greeterElement = () => {
   return cmp;
 }
 
-export const vscodeTextarea = () => {
-  const cmp = document.createElement('vscode-textarea');
+export const vscodeInputbox = () => {
+  const cmp = document.createElement('vscode-inputbox');
 
   cmp.message = text('message', '');
   cmp.messageSeverity = radios('Message severity', {
