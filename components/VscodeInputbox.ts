@@ -77,7 +77,7 @@ export class VscodeInputbox extends LitElement {
     return this._type;
   }
   @property({ type: Boolean, reflect: false }) focused = false;
-  @property({ type: String, reflect: false }) value = '';
+  @property({ type: String }) value = '';
   @property({ type: String, reflect: false }) placeholder = '';
 
   private _messageSeverity: Severity;
@@ -96,6 +96,14 @@ export class VscodeInputbox extends LitElement {
     this.focused = false;
   }
 
+  private onInputChange = (event: InputEvent) => {
+    this.dispatchEvent(new CustomEvent('vsc-input', {
+      detail: (<HTMLInputElement | HTMLTextAreaElement>event.target).value,
+      bubbles: true,
+      composed: true,
+    }))
+  }
+
   static get styles() {
     return css`
       .container {
@@ -103,7 +111,7 @@ export class VscodeInputbox extends LitElement {
       }
 
       textarea {
-        height: 69px;
+        height: 46px;
         resize: none;
       }
 
@@ -202,6 +210,7 @@ export class VscodeInputbox extends LitElement {
       <textarea
         @focus="${this.onInputFocus}"
         @blur="${this.onInputBlur}"
+        @input="${this.onInputChange}"
         placeholder="${this.placeholder}"
       >${this.value}</textarea>
     `;
@@ -210,6 +219,7 @@ export class VscodeInputbox extends LitElement {
         type="${this.type}"
         @focus="${this.onInputFocus}"
         @blur="${this.onInputBlur}"
+        @input="${this.onInputChange}"
         placeholder="${this.placeholder}"
         value="${this.value}"
       >

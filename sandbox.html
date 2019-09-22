@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>VSCode Webview Elements Sandbox</title>
-    <link rel="stylesheet" href="assets/default-webview-styles.css">
-    <link rel="stylesheet" href="assets/default-light-theme.css">
+    <link rel="stylesheet" href="assets/default-webview-styles.css" />
+    <link rel="stylesheet" href="assets/default-light-theme.css" />
     <script src="components/vscodeWebviewElements.ts"></script>
     <style>
       .preview {
@@ -16,10 +16,29 @@
   </head>
   <body>
     <div class="preview preview-1">
-        <vscode-inputbox placeholder="placeholder text" value="test value"></vscode-inputbox>
+      <vscode-inputbox
+        message="Test message"
+        placeholder="placeholder text"
+        value="test value"
+      ></vscode-inputbox>
     </div>
-    <div class="preview">
-        <vscode-inputbox multiline message="message test" messageseverity="info" placeholder="placeholder text" value="test value"></vscode-inputbox>
+    <div class="preview preview-2">
+      <vscode-inputbox
+        id="ib-2"
+        multiline
+        messageseverity="info"
+        placeholder="placeholder text"
+        value="test value"
+      ></vscode-inputbox>
+      <p id="p-2"></p>
+      <script>
+        (function() {
+          const p = document.getElementById('p-2');
+          const ib = document.getElementById('ib-2').addEventListener('vsc-input', (event) => {
+            p.innerHTML = event.detail;
+          });
+        })();
+      </script>
     </div>
     <div class="preview">
       <greeter-element name="VSCode"></greeter-element>
