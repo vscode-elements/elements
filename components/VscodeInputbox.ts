@@ -23,6 +23,10 @@ enum InputType {
   WEEK = 'week',
 }
 
+const LINE_HEIGHT = 17;
+const PADDING = 4;
+const BORDER_WIDTH = 1;
+
 @customElement('vscode-inputbox')
 export class VscodeInputbox extends LitElement {
   @property({ type: Boolean }) multiline = false;
@@ -76,9 +80,13 @@ export class VscodeInputbox extends LitElement {
   get type(): string {
     return this._type;
   }
-  @property({ type: Boolean, reflect: false }) focused = false;
-  @property({ type: String }) value = '';
-  @property({ type: String, reflect: false }) placeholder = '';
+  @property({ type: Boolean }) focused = false;
+  // https://github.com/Polymer/lit-element/issues/617#issuecomment-473431530
+  @property({ type: String, attribute: 'value' }) inputboxValue = '';
+  @property({ type: String }) placeholder = '';
+  @property({ type: Number }) lines = 2;
+  @property({ type: Number }) minLines = 2;
+  @property({ type: Number }) maxLines = 5;
 
   private _messageSeverity: Severity;
   private _type: InputType;
@@ -86,6 +94,7 @@ export class VscodeInputbox extends LitElement {
   constructor() {
     super();
     this._messageSeverity = Severity.INFO;
+    /* TODO: input type */
   }
 
   private onInputFocus = () => {
@@ -97,11 +106,20 @@ export class VscodeInputbox extends LitElement {
   }
 
   private onInputChange = (event: InputEvent) => {
+    const eventTarget = (<HTMLInputElement | HTMLTextAreaElement>event.target);
+
     this.dispatchEvent(new CustomEvent('vsc-input', {
-      detail: (<HTMLInputElement | HTMLTextAreaElement>event.target).value,
+      detail: eventTarget.value,
       bubbles: true,
       composed: true,
     }));
+
+    if (this.multiline) {
+      const newLineChars = this.inputboxValue.match(/\n/g);
+      console.log(newLineChars, this.inputboxValue);
+      const numLines = newLineChars ? newLineChars.length - 1 : 1;
+      this.lines = Math.min(Math.max(numLines, this.minLines), this.maxLines);
+    }
   }
 
   static get styles() {
@@ -111,7 +129,6 @@ export class VscodeInputbox extends LitElement {
       }
 
       textarea {
-        height: 46px;
         resize: none;
       }
 
@@ -120,13 +137,14 @@ export class VscodeInputbox extends LitElement {
         background-color: var(--vscode-input-background);
         border-color: var(--vscode-we-input-border, var(--vscode-settings-textInputBorder));
         border-style: solid;
-        border-width: 1px;
+        border-width: ${BORDER_WIDTH}px;
         box-sizing: border-box;
         color: var(--vscode-input-foreground);
         display: block;
         font-family: inherit;
+        line-height: 17px;
         outline: none;
-        padding: 3px;
+        padding: 4px;
         width: 100%;
       }
 
@@ -212,7 +230,7 @@ export class VscodeInputbox extends LitElement {
         @blur="${this.onInputBlur}"
         @input="${this.onInputChange}"
         placeholder="${this.placeholder}"
-      >${this.value}</textarea>
+      >${this.inputboxValue}</textarea>
     `;
     const input = html`
       <input
@@ -221,7 +239,7 @@ export class VscodeInputbox extends LitElement {
         @blur="${this.onInputBlur}"
         @input="${this.onInputChange}"
         placeholder="${this.placeholder}"
-        value="${this.value}"
+        .value="${this.inputboxValue}"
       >
     `;
     const message = html`
@@ -240,6 +258,11 @@ export class VscodeInputbox extends LitElement {
     }
 
     return html`
+      <style>
+        textarea {
+          height: ${BORDER_WIDTH * 2 + PADDING * 2 + this.lines * LINE_HEIGHT}px;
+        }
+      </style>
       <div class="${containerClass}">
         ${this.multiline ? textarea : input}
         ${this.message ? message : ''}

@@ -17,10 +17,20 @@
   <body>
     <div class="preview preview-1">
       <vscode-inputbox
+        id="ib-1"
         message="Test message"
         placeholder="placeholder text"
         value="test value"
       ></vscode-inputbox>
+      <p id="p-1"></p>
+      <script>
+        (function() {
+          const p = document.getElementById('p-1');
+          const ib = document.getElementById('ib-1').addEventListener('vsc-input', (event) => {
+            p.innerHTML = event.detail;
+          });
+        })();
+      </script>
     </div>
     <div class="preview preview-2">
       <vscode-inputbox
@@ -34,8 +44,11 @@
       <script>
         (function() {
           const p = document.getElementById('p-2');
-          const ib = document.getElementById('ib-2').addEventListener('vsc-input', (event) => {
+          const ib = document.getElementById('ib-2')
+
+          ib.addEventListener('vsc-input', (event) => {
             p.innerHTML = event.detail;
+            console.log('ib val:', ib.value);
           });
         })();
       </script>
