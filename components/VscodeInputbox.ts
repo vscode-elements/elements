@@ -76,6 +76,7 @@ export class VscodeInputbox extends LitElement {
   get type(): string {
     return this._type;
   }
+  @property({ type: Boolean, reflect: false }) focused = false;
 
   private _messageSeverity: Severity;
   private _type: InputType;
@@ -83,6 +84,14 @@ export class VscodeInputbox extends LitElement {
   constructor() {
     super();
     this._messageSeverity = Severity.INFO;
+  }
+
+  private onInputFocus = () => {
+    this.focused = true;
+  };
+
+  private onInputBlur = () => {
+    this.focused = false;
   }
 
   static get styles() {
@@ -146,17 +155,22 @@ export class VscodeInputbox extends LitElement {
         border-style: solid;
         border-width: 1px;
         box-sizing: border-box;
-        display: block;
+        display: none;
         font-size: 12px;
         line-height: 17px;
         margin-top: -1px;
         overflow: hidden;
         padding: .4em;
         position: absolute;
+        user-select: none;
         top: 100%;
         text-align: left;
         width: 100%;
         word-wrap: break-word;
+      }
+
+      .focused .message {
+        display: block;
       }
 
       .message.info {
@@ -177,8 +191,12 @@ export class VscodeInputbox extends LitElement {
   }
 
   render() {
-    const textarea = html`<textarea></textarea>`;
-    const input = html`<input type="${this.type}">`;
+    const textarea = html`
+      <textarea @focus="${this.onInputFocus}" @blur="${this.onInputBlur}"></textarea>
+    `;
+    const input = html`
+      <input type="${this.type}" @focus="${this.onInputFocus}" @blur="${this.onInputBlur}">
+    `;
     const message = html`
       <div class="message ${this.messageSeverity}">
         ${this.message}
@@ -188,6 +206,10 @@ export class VscodeInputbox extends LitElement {
 
     if (this.message !== '') {
       containerClass += ` ${this.messageSeverity}`;
+    }
+
+    if (this.focused) {
+      containerClass += ' focused';
     }
 
     return html`
