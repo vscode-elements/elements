@@ -77,6 +77,8 @@ export class VscodeInputbox extends LitElement {
     return this._type;
   }
   @property({ type: Boolean, reflect: false }) focused = false;
+  @property({ type: String, reflect: false }) value = '';
+  @property({ type: String, reflect: false }) placeholder = '';
 
   private _messageSeverity: Severity;
   private _type: InputType;
@@ -118,6 +120,11 @@ export class VscodeInputbox extends LitElement {
         outline: none;
         padding: 3px;
         width: 100%;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: var(--vscode-input-placeholderForeground);
       }
 
       input:focus,
@@ -192,10 +199,20 @@ export class VscodeInputbox extends LitElement {
 
   render() {
     const textarea = html`
-      <textarea @focus="${this.onInputFocus}" @blur="${this.onInputBlur}"></textarea>
+      <textarea
+        @focus="${this.onInputFocus}"
+        @blur="${this.onInputBlur}"
+        placeholder="${this.placeholder}"
+      >${this.value}</textarea>
     `;
     const input = html`
-      <input type="${this.type}" @focus="${this.onInputFocus}" @blur="${this.onInputBlur}">
+      <input
+        type="${this.type}"
+        @focus="${this.onInputFocus}"
+        @blur="${this.onInputBlur}"
+        placeholder="${this.placeholder}"
+        value="${this.value}"
+      >
     `;
     const message = html`
       <div class="message ${this.messageSeverity}">
