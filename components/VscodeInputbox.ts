@@ -13,20 +13,19 @@ export class VscodeInputbox extends LitElement {
       }
 
       textarea {
+        height: 69px;
+        resize: none;
+      }
+
+      input,
+      textarea {
         background-color: var(--vscode-input-background);
         box-sizing: border-box;
         color: var(--vscode-input-foreground);
         display: block;
         font-family: inherit;
-        height: 240px;
         outline: none;
         padding: 3px;
-        resize: none;
-        width: 100%;
-      }
-
-      input {
-        display: block;
         width: 100%;
       }
 
