@@ -101,7 +101,7 @@ export class VscodeInputbox extends LitElement {
       detail: (<HTMLInputElement | HTMLTextAreaElement>event.target).value,
       bubbles: true,
       composed: true,
-    }))
+    }));
   }
 
   static get styles() {
