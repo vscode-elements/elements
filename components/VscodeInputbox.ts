@@ -1,10 +1,41 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
 
+enum Severity {
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error',
+};
+
 @customElement('vscode-inputbox')
 export class VscodeInputbox extends LitElement {
+  private _messageSeverity: Severity;
+
   @property({ type: Boolean }) multiline = false;
   @property({ type: String }) message = '';
-  @property({ type: String }) messageSeverity = 'info';
+  @property({ type: String })
+  set messageSeverity(val: string) {
+    const oldVal = this._messageSeverity;
+
+    switch (val) {
+      case Severity.INFO:
+      case Severity.WARNING:
+      case Severity.ERROR:
+        this._messageSeverity = val;
+        break;
+      default:
+        this._messageSeverity = Severity.INFO;
+    }
+
+    this.requestUpdate('messageSeverity', oldVal);
+  }
+  get messageSeverity(): string {
+    return this._messageSeverity;
+  }
+
+  constructor() {
+    super();
+    this._messageSeverity = Severity.INFO;
+  }
 
   static get styles() {
     return css`
