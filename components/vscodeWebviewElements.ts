@@ -1,2 +1,2 @@
 import './GreeterElement';
-import './VscodeTextarea';
+import './VscodeInputbox';

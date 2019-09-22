@@ -2,12 +2,12 @@
   "name": "vscode-webview-elements",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/vscodeWebviewElements.js",
   "scripts": {
-    "dev": "parcel index.html",
-    "build": "parcel build components/index.ts",
-    "storybook": "start-storybook -p 6006 -s ./dist,./.storybook",
-    "build-storybook": "build-storybook"
+    "dev": "parcel sandbox.html",
+    "build": "parcel build components/vscodeWebviewElements.ts && npm run build-storybook",
+    "storybook": "start-storybook -p 6006 -s ./dist,./assets",
+    "build-storybook": "build-storybook -s ./dist,./assets"
   },
   "keywords": [],
   "author": "",
