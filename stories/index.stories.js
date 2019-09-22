@@ -1,9 +1,9 @@
 import { document, console } from 'global';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, number, radios } from '@storybook/addon-knobs';
 
 export default {
   title: 'Demo',
-  notes: 'Bla',
+  decorators: [withKnobs]
 };
 
 export const heading = () => '<h1>Hello World</h1>';
@@ -27,9 +27,13 @@ export const greeterElement = () => {
 export const vscodeTextarea = () => {
   const cmp = document.createElement('vscode-textarea');
 
-  const message = text('Message', 'Test message');
-
-  cmp.message = message;
+  cmp.message = text('message', '');
+  cmp.messageSeverity = radios('Message severity', {
+    info: 'info',
+    warning: 'warning',
+    error: 'error',
+  });
+  cmp.multiline = boolean('multiline', false);
 
   return cmp;
 }
