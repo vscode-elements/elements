@@ -133,7 +133,38 @@ export class VscodeInputbox extends LitElement {
       }
 
       textarea {
+        overflow: visible;
         resize: none;
+      }
+
+      textarea::-webkit-scrollbar {
+        cursor: default;
+        width: 10px;
+      }
+
+      textarea::-webkit-scrollbar-button {
+        display: none;
+      }
+
+      textarea::-webkit-scrollbar-track {
+        background-color: transparent;
+        width: 10px;
+      }
+
+      textarea::-webkit-scrollbar-thumb {
+        background-color: transparent;
+      }
+
+      textarea:hover::-webkit-scrollbar-thumb {
+        background-color: var(--vscode-scrollbarSlider-background);
+      }
+
+      textarea:hover::-webkit-scrollbar-thumb:hover {
+        background-color: var(--vscode-scrollbarSlider-hoverBackground);
+      }
+
+      textarea:hover::-webkit-scrollbar-thumb:active {
+        background-color: var(--vscode-scrollbarSlider-activeBackground);
       }
 
       input,
