@@ -22,7 +22,7 @@
         placeholder="placeholder text"
         value="test value"
       ></vscode-inputbox>
-      <p id="p-1"></p>
+      <pre id="p-1"></pre>
       <script>
         (function() {
           const p = document.getElementById('p-1');
@@ -39,16 +39,18 @@
         messageseverity="info"
         placeholder="placeholder text"
         value="test value"
+        maxlines="10"
       ></vscode-inputbox>
-      <p id="p-2"></p>
+      <pre id="p-2"></pre>
       <script>
         (function() {
           const p = document.getElementById('p-2');
-          const ib = document.getElementById('ib-2')
+          const ib = document.getElementById('ib-2');
+
+          p.innerHTML = ib.value;
 
           ib.addEventListener('vsc-input', (event) => {
             p.innerHTML = event.detail;
-            console.log('ib val:', ib.value);
           });
         })();
       </script>

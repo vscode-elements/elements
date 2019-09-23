@@ -84,16 +84,17 @@ export class VscodeInputbox extends LitElement {
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';
   @property({ type: Number }) lines = 2;
-  @property({ type: Number }) minLines = 2;
   @property({ type: Number }) maxLines = 5;
 
   private _messageSeverity: Severity;
   private _type: InputType;
+  private _currentLines: number;
 
   constructor() {
     super();
     this._messageSeverity = Severity.INFO;
     /* TODO: input type */
+    this._currentLines = this.lines;
   }
 
   private onInputFocus = () => {
@@ -114,13 +115,16 @@ export class VscodeInputbox extends LitElement {
     }));
 
     this.value = eventTarget.value;
+    this.resizeTextareaIfRequired();
+  }
 
+  private resizeTextareaIfRequired = (): void => {
     if (this.multiline) {
       const newLineChars = this.value.match(/\n/g);
-      const numLines = newLineChars ? newLineChars.length - 1 : 1;
-      this.lines = Math.min(Math.max(numLines, this.minLines), this.maxLines);
+      const numLines = newLineChars ? newLineChars.length + 1 : 1;
+      this._currentLines = Math.min(Math.max(numLines, this.lines), this.maxLines);
     }
-  }
+  };
 
   static get styles() {
     return css`
@@ -261,7 +265,7 @@ export class VscodeInputbox extends LitElement {
     return html`
       <style>
         textarea {
-          height: ${BORDER_WIDTH * 2 + PADDING * 2 + this.lines * LINE_HEIGHT}px;
+          height: ${BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT}px;
         }
       </style>
       <div class="${containerClass}">
