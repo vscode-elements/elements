@@ -23,6 +23,13 @@ enum InputType {
   WEEK = 'week',
 }
 
+interface Validator {
+  severity: Severity;
+  message: string;
+  pattern: string;
+  flags?: string;
+}
+
 const LINE_HEIGHT = 17;
 const PADDING = 4;
 const BORDER_WIDTH = 1;
@@ -85,10 +92,13 @@ export class VscodeInputbox extends LitElement {
   @property({ type: String }) placeholder = '';
   @property({ type: Number }) lines = 2;
   @property({ type: Number }) maxLines = 5;
+  @property({ type: Array }) validators: Validator[] = [];
 
   private _messageSeverity: Severity;
   private _type: InputType;
   private _currentLines: number;
+  private _isValid: boolean;
+  private _originalMessage: string;
 
   constructor() {
     super();
@@ -125,6 +135,21 @@ export class VscodeInputbox extends LitElement {
       this._currentLines = Math.min(Math.max(numLines, this.lines), this.maxLines);
     }
   };
+
+  private validate() {
+    if (!this.validators || this.validators.length === 0) {
+      return;
+    }
+
+    this.validators.forEach((validator: Validator) => {
+      const { pattern, flags = '' } = validator;
+
+      const re = new RegExp(pattern, flags);
+      this._isValid = re.test(this.value);
+
+      // TODO: https://stackoverflow.com/questions/2641347/short-circuit-array-foreach-like-calling-break
+    });
+  }
 
   static get styles() {
     return css`
