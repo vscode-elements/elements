@@ -93,7 +93,7 @@ export class VscodeInputbox extends LitElement {
   constructor() {
     super();
     this._messageSeverity = Severity.INFO;
-    /* TODO: input type */
+    this._type = InputType.TEXT;
     this._currentLines = this.lines;
   }
 
