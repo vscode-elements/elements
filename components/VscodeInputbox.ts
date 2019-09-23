@@ -81,8 +81,7 @@ export class VscodeInputbox extends LitElement {
     return this._type;
   }
   @property({ type: Boolean }) focused = false;
-  // https://github.com/Polymer/lit-element/issues/617#issuecomment-473431530
-  @property({ type: String, attribute: 'value' }) inputboxValue = '';
+  @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';
   @property({ type: Number }) lines = 2;
   @property({ type: Number }) minLines = 2;
@@ -114,9 +113,10 @@ export class VscodeInputbox extends LitElement {
       composed: true,
     }));
 
+    this.value = eventTarget.value;
+
     if (this.multiline) {
-      const newLineChars = this.inputboxValue.match(/\n/g);
-      console.log(newLineChars, this.inputboxValue);
+      const newLineChars = this.value.match(/\n/g);
       const numLines = newLineChars ? newLineChars.length - 1 : 1;
       this.lines = Math.min(Math.max(numLines, this.minLines), this.maxLines);
     }
@@ -230,7 +230,8 @@ export class VscodeInputbox extends LitElement {
         @blur="${this.onInputBlur}"
         @input="${this.onInputChange}"
         placeholder="${this.placeholder}"
-      >${this.inputboxValue}</textarea>
+        .value="${this.value}"
+      ></textarea>
     `;
     const input = html`
       <input
@@ -239,7 +240,7 @@ export class VscodeInputbox extends LitElement {
         @blur="${this.onInputBlur}"
         @input="${this.onInputChange}"
         placeholder="${this.placeholder}"
-        .value="${this.inputboxValue}"
+        .value="${this.value}"
       >
     `;
     const message = html`
