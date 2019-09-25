@@ -1,4 +1,4 @@
-import { LitElement, svg, css, property, customElement } from 'lit-element';
+import { LitElement, html, svg, css, property, customElement } from 'lit-element';
 import getIcon from './getIcon';
 
 type Theme = 'light' | 'dark' | 'hc';
@@ -6,6 +6,7 @@ type Theme = 'light' | 'dark' | 'hc';
 @customElement('vscode-icon')
 export class VscodeIcon extends LitElement {
   @property({ type: String }) name: string;
+  @property({ type: Number }) size: number = 16;
   @property({ type: String })
   public set theme(val: Theme) {
     const oldVal = this._theme;
@@ -56,8 +57,14 @@ export class VscodeIcon extends LitElement {
         display: inline-block;
       }
 
+      span {
+        display: block;
+      }
+
       svg {
         display: block;
+        height: 100%;
+        width: 100%;
       }
     `;
   }
@@ -66,16 +73,30 @@ export class VscodeIcon extends LitElement {
     const size = this.getSize();
     const shape = getIcon(this.name, this.theme);
 
-    return svg`
+    const icon = svg`
       <svg
-        width="${size}"
-        height="${size}"
         viewBox="0 0 ${size} ${size}"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         ${shape}
       </svg>
+    `;
+
+    return html`
+      <style>
+        span {
+          height: ${this.size}px;
+          width: ${this.size}px;
+        }
+
+        :host-context([slot=actions]) {
+          margin: 0 4px;
+        }
+      </style>
+      <span>
+        ${icon}
+      </span>
     `;
   }
 }
