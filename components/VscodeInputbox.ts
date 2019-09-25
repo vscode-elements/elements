@@ -1,4 +1,5 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map';
 
 enum Severity {
   DEFAULT = 'default',
@@ -89,6 +90,7 @@ export class VscodeInputbox extends LitElement {
   private _severity: Severity;
   private _type: InputType;
   private _currentLines: number;
+  private _textareaDefaultCursor: boolean = false;
 
   constructor() {
     super();
@@ -118,6 +120,17 @@ export class VscodeInputbox extends LitElement {
     this.resizeTextareaIfRequired();
   }
 
+  private onTextareaMouseMove = (event: MouseEvent) => {
+    const br = this.getBoundingClientRect();
+    const x = event.clientX;
+    const SCROLLBAR_WIDTH = 10;
+
+    this._textareaDefaultCursor =
+      x <= br.left + br.width && x >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
+
+    this.requestUpdate();
+  }
+
   private resizeTextareaIfRequired = (): void => {
     if (this.multiline) {
       const newLineChars = this.value.match(/\n/g);
@@ -130,6 +143,10 @@ export class VscodeInputbox extends LitElement {
     return css`
       .container {
         position: relative;
+      }
+
+      .cursor-default {
+        cursor: default;
       }
 
       textarea {
@@ -276,6 +293,8 @@ export class VscodeInputbox extends LitElement {
         @focus="${this.onInputFocus}"
         @blur="${this.onInputBlur}"
         @input="${this.onInputChange}"
+        @mousemove="${this.onTextareaMouseMove}"
+        class="${classMap({ 'cursor-default': this._textareaDefaultCursor })}"
         placeholder="${this.placeholder}"
         .value="${this.value}"
       ></textarea>
