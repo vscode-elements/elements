@@ -12,17 +12,22 @@ export class VscodeIcon extends LitElement {
 
     this._theme = val;
     this.requestUpdate('theme', oldVal);
-    console.log('set theme', this._theme);
   }
   public get theme(): Theme {
     return this._theme;
   }
 
-  private _theme: Theme = 'dark';
+  private _theme: Theme;
 
   connectedCallback() {
     super.connectedCallback();
 
+    if (!this.theme) {
+      this.setDefaultTheme();
+    }
+  }
+
+  private setDefaultTheme() {
     if (document.body.classList.contains('theme-light')) {
       this._theme = 'light';
     } else if(document.body.classList.contains('theme-hc')) {
@@ -30,8 +35,6 @@ export class VscodeIcon extends LitElement {
     } else {
       this._theme = 'dark';
     }
-
-    console.log('connected callback:', this._theme);
   }
 
   private getSize(): number {
