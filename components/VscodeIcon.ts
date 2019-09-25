@@ -1,4 +1,4 @@
-import { LitElement, html, svg, css, property, customElement } from 'lit-element';
+import { LitElement, svg, css, property, customElement } from 'lit-element';
 import getIcon from './getIcon';
 
 @customElement('vscode-icon')
