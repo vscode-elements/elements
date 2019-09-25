@@ -32,23 +32,23 @@ export class VscodeInputbox extends LitElement {
   @property({ type: Boolean }) multiline = false;
   @property({ type: String }) message = '';
   @property({ type: String })
-  set messageSeverity(val: string) {
-    const oldVal = this._messageSeverity;
+  set severity(val: string) {
+    const oldVal = this._severity;
 
     switch (val) {
       case Severity.INFO:
       case Severity.WARNING:
       case Severity.ERROR:
-        this._messageSeverity = val;
+        this._severity = val;
         break;
       default:
-        this._messageSeverity = Severity.DEFAULT;
+        this._severity = Severity.DEFAULT;
     }
 
     this.requestUpdate('messageSeverity', oldVal);
   }
-  get messageSeverity(): string {
-    return this._messageSeverity;
+  get severity(): string {
+    return this._severity;
   }
   @property({ type: Boolean }) panelInput = false;
   @property({ type: String })
@@ -86,13 +86,13 @@ export class VscodeInputbox extends LitElement {
   @property({ type: Number }) lines = 2;
   @property({ type: Number }) maxLines = 5;
 
-  private _messageSeverity: Severity;
+  private _severity: Severity;
   private _type: InputType;
   private _currentLines: number;
 
   constructor() {
     super();
-    this._messageSeverity = Severity.INFO;
+    this._severity = Severity.INFO;
     this._type = InputType.TEXT;
     this._currentLines = this.lines;
   }
@@ -237,7 +237,7 @@ export class VscodeInputbox extends LitElement {
         word-wrap: break-word;
       }
 
-      .focused .message {
+      .focused:not(.default) .message {
         display: block;
       }
 
@@ -279,14 +279,14 @@ export class VscodeInputbox extends LitElement {
       >
     `;
     const message = html`
-      <div class="message ${this.messageSeverity}">
+      <div class="message ${this.severity}">
         ${this.message}
       </div>
     `;
     let containerClass = 'container';
 
     if (this.message !== '') {
-      containerClass += ` ${this.messageSeverity}`;
+      containerClass += ` ${this.severity}`;
     }
 
     if (this.focused) {
