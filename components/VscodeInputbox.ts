@@ -92,7 +92,7 @@ export class VscodeInputbox extends LitElement {
 
   constructor() {
     super();
-    this._severity = Severity.INFO;
+    this._severity = Severity.DEFAULT;
     this._type = InputType.TEXT;
     this._currentLines = this.lines;
   }
@@ -198,6 +198,13 @@ export class VscodeInputbox extends LitElement {
         border-color: var(--vscode-panelInput-border);
       }
 
+      .container.default input,
+      .container.default textarea,
+      .container.panel-input.default input,
+      .container.panel-input.default textarea {
+        border-color: var(--vscode-focusBorder);
+      }
+
       .container.info input,
       .container.info textarea,
       .container.panel-input.info input,
@@ -239,6 +246,11 @@ export class VscodeInputbox extends LitElement {
 
       .focused:not(.default) .message {
         display: block;
+      }
+
+      .message.default {
+        background-color: var(--vscode-editor-background);
+        border-color: var(--vscode-focusBorder);
       }
 
       .message.info {
@@ -285,7 +297,7 @@ export class VscodeInputbox extends LitElement {
     `;
     let containerClass = 'container';
 
-    if (this.message !== '') {
+    if (this.severity !== Severity.DEFAULT) {
       containerClass += ` ${this.severity}`;
     }
 
