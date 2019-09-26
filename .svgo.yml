@@ -3,3 +3,4 @@ plugins:
       attrs:
         - 'width'
         - 'height'
+  - removeViewBox: false
