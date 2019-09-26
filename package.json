@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "parcel sandbox.html",
     "build": "parcel build components/vscodeWebviewElements.ts",
-    "build-all": "npm run build && npm run build-storybook",
+    "build-all": "npm run build-icons && npm run build && npm run build-storybook",
     "storybook": "start-storybook -p 6006 -s ./dist,./assets",
     "build-storybook": "build-storybook -s ./dist,./assets",
-    "svgo": "svgo -f vscode-icons/icons/ -r --config=.svgo.yml -p 5 -o dist/icons"
+    "svgo": "svgo -f vscode-icons/icons/ -r --config=.svgo.yml -p 5 -o dist/icons",
+    "build-icons": "npm run svgo && npm run icons",
+    "icons": "node scripts/icons.js"
   },
   "keywords": [],
   "author": "",
