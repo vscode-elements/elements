@@ -1,8 +1,8 @@
 import { LitElement, html, css, svg, property, customElement } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 
-@customElement('vscode-panel')
-export class VscodePanel extends LitElement {
+@customElement('vscode-collapsible')
+export class VscodeCollapsible extends LitElement {
   @property({ type: Number }) tabIndex: number = 0;
   @property({ type: String }) title: string;
   @property({ type: Boolean }) open: boolean;
@@ -13,11 +13,11 @@ export class VscodePanel extends LitElement {
 
   static get styles() {
     return css`
-      .panel {
+      .collapsible {
         background-color: var(--vscode-sideBar-background);
       }
 
-      .panel-header {
+      .collapsible-header {
         align-items: center;
         background-color: var(--vscode-sideBarSectionHeader-background);
         cursor: pointer;
@@ -27,7 +27,7 @@ export class VscodePanel extends LitElement {
         user-select: none;
       }
 
-      .panel-header:focus {
+      .collapsible-header:focus {
         opacity: 1;
         outline-offset: -1px;
         outline-style: solid;
@@ -35,7 +35,7 @@ export class VscodePanel extends LitElement {
         outline-color: var(--vscode-focusBorder);
       }
 
-      .panel-header h3 {
+      .collapsible-header h3 {
         color: var(--vscode-sideBarTitle-foreground);
         font-size: 11px;
         font-weight: 700;
@@ -59,7 +59,7 @@ export class VscodePanel extends LitElement {
         fill: #c5c5c5;
       }
 
-      .panel.open .header-icon {
+      .collapsible.open .header-icon {
         transform: rotate(90deg);
       }
 
@@ -69,7 +69,7 @@ export class VscodePanel extends LitElement {
         opacity: 0;
       }
 
-      .panel:hover .actions {
+      .collapsible:hover .actions {
         opacity: 1;
       }
 
@@ -78,19 +78,19 @@ export class VscodePanel extends LitElement {
         display: flex;
       }
 
-      .panel-body {
+      .collapsible-body {
         display: none;
         overflow: hidden;
       }
 
-      .panel.open .panel-body {
+      .collapsible.open .collapsible-body {
         display: block;
       }
     `;
   }
 
   render() {
-    const classes = classMap({ panel: true, open: this.open });
+    const classes = classMap({ collapsible: true, open: this.open });
 
     const icon = svg`
       <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="header-icon">
@@ -101,7 +101,7 @@ export class VscodePanel extends LitElement {
     return html`
       <div class="${classes}">
         <div
-          class="panel-header"
+          class="collapsible-header"
           tabindex="${this.tabIndex}"
           title="${this.title}"
           @click="${this.onHeaderClick}"
@@ -110,7 +110,7 @@ export class VscodePanel extends LitElement {
           <h3 class="title">${this.title}</h3>
           <div class="actions"><slot name="actions"></slot></div>
         </div>
-        <div class="panel-body">
+        <div class="collapsible-body">
           <div>
             <slot name="body"></slot>
           </div>
