@@ -70,7 +70,13 @@
         </div>
         <div slot="body">
             <vscode-scrollable style="height: 200px;">
-              <vscode-checkbox label="Checkbox button"></vscode-checkbox>
+              <vscode-checkbox label="Checkbox button" id="cb-1" value="test-value"></vscode-checkbox>
+              <script>
+                document.getElementById('cb-1').addEventListener('vsc-change', (event) => {
+                  console.log(event);
+                });
+              </script>
+              <vscode-checkbox>Slotted content</vscode-checkbox>
               <p>lorem ipsum dolor sit</p>
               <p>lorem ipsum dolor sit</p>
               <p>lorem ipsum dolor sit</p>
