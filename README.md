@@ -1,4 +1,4 @@
-# vscode-webview-elements
+# VSCode-Webview-Elements
 
 - [ ] Badge
 - [ ] Button
