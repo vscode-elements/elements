@@ -1,18 +1,26 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
 
-interface MenuItemData {
-  label: string;
-  keybinding?: string;
-  value?: string;
-  separator?: boolean;
-  tabindex?: number;
-}
+@customElement('vscode-context-menu-item')
+export class VscodeContextMenuItem extends LitElement {
+  @property({ type: String }) label: string;
+  @property({ type: String }) keybinding: string;
+  @property({ type: String }) value: string;
+  @property({ type: Boolean }) separator: boolean;
+  @property({ type: Number }) tabindex: number;
 
-@customElement('vscode-context-menu')
-export class VscodeContextMenu extends LitElement {
-  @property({ type: Array }) data: [];
-  // TODO: show
+  private onItemClick() {
+    this.dispatchEvent(new CustomEvent('vsc-click', {
+      detail: {
+        label: this.label,
+        keybinding: this.keybinding,
+        value: this.value,
+        separator: this.separator,
+        tabindex: this.tabindex,
+      },
+      bubbles: true,
+      composed: true,
+    }));
+  }
 
   static get styles() {
     return css`
@@ -22,21 +30,17 @@ export class VscodeContextMenu extends LitElement {
         font-size: var(--vscode-font-size);
         font-weight: var(--vscode-font-weight);
         line-height: 1.4em;
+        outline: none;
         position: relative;
       }
 
-      .context-menu {
-        background-color: var(--vscode-menu-background);
-        box-shadow: 0 2px 8px var(--vscode-widget-shadow);
-        color: var(--vscode-menu-foreground);
-        padding: .5em 0;
-        white-space: nowrap;
-      }
-
       .context-menu-item {
+        background-color: var(--vscode-menu-background);
+        color: var(--vscode-menu-foreground);
         border: 1px solid transparent;
         display: flex;
         user-select: none;
+        white-space: nowrap;
       }
 
       .rule {
@@ -61,7 +65,7 @@ export class VscodeContextMenu extends LitElement {
       }
 
       .context-menu-item a:hover,
-      .context-menu-item a:focus {
+      :host-context(:focus) .context-menu-item a {
         background-color: var(--vscode-menu-selectionBackground);
         color: var(--vscode-menu-selectionForeground);
       }
@@ -88,33 +92,11 @@ export class VscodeContextMenu extends LitElement {
 
   render() {
     return html`
-      <div class="context-menu">
-        <vscode-context-menu-item
-          label="Command Palette..."
-          keybinding="Ctrl+Shift+A"
-          value="foo"
-          tabindex="0"
-        ></vscode-context-menu-item>
-        <div class="context-menu-item">
-          <a href="#">
-            <span class="label">Command Palette...</span>
-            <span class="keybinding">Ctrl+Shift+A</span>
-          </a>
-        </div>
-        <div class="context-menu-item separator">
-          <span class="rule"></span>
-        </div>
-        <div class="context-menu-item">
-          <a href="#">
-            <span class="label">Settings</span>
-            <span class="keybinding">Ctrl+,</span>
-          </a>
-        </div>
-        <div class="context-menu-item">
-          <a href="#">
-            <span class="label">Online Services Settings</span>
-          </a>
-        </div>
+      <div class="context-menu-item">
+        <a @click="${this.onItemClick}">
+          <span class="label">${this.label}</span>
+          <span class="keybinding">${this.keybinding}</span>
+        </a>
       </div>
     `;
   }
