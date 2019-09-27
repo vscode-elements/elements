@@ -18,6 +18,7 @@ export class VscodeContextMenu extends LitElement {
 
       .context-menu {
         background-color: var(--vscode-menu-background);
+        box-shadow: 0 2px 8px var(--vscode-widget-shadow);
         color: var(--vscode-menu-foreground);
         padding: .5em 0;
         white-space: nowrap;
