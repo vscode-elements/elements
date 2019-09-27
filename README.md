@@ -3,7 +3,7 @@
 - [ ] Badge
 - [ ] Breadcrumb
 - [ ] Button
-- [ ] Checkbox
+- [ ] Checkbox (WIP)
 - [ ] Collapsible
 - [ ] ContextMenu
 - [ ] Form
