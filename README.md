@@ -1,6 +1,7 @@
 # VSCode-Webview-Elements
 
 - [ ] Badge
+- [ ] Breadcrumb
 - [ ] Button
 - [ ] Checkbox
 - [ ] Collapsible
@@ -12,9 +13,10 @@
 - [ ] List
 - [ ] ListEdit
 - [x] Panel
-- [ ] Radio
+- [ ] Radio (?)
 - [ ] Select
 - [x] Scrollable
 - [ ] Split container
+- [ ] Toc (?)
 - [ ] Tree
 - [ ] ViewContainer (Sidebar)
