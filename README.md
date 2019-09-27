@@ -5,7 +5,7 @@ Reusable components for creating VSCode extensions which use the [Webview API](h
 - [ ] Badge
 - [ ] Breadcrumb
 - [ ] Button
-- [ ] Checkbox
+- [ ] Checkbox (WIP)
 - [ ] Collapsible
 - [ ] ContextMenu
 - [ ] Form
