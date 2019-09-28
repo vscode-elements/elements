@@ -1,4 +1,5 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
+import { nothing } from 'lit-html';
 
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends LitElement {
@@ -101,8 +102,8 @@ export class VscodeContextMenuItem extends LitElement {
         html`
           <div class="context-menu-item">
             <a @click="${this.onItemClick}">
-              <span class="label">${this.label}</span>
-              <span class="keybinding">${this.keybinding}</span>
+              ${this.label ? html`<span class="label">${this.label}</span>` : nothing}
+              ${this.keybinding ? html`<span class="keybinding">${this.keybinding}</span>` : nothing}
             </a>
           </div>
         `

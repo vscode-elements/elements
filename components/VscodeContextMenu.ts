@@ -1,5 +1,5 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
+import { nothing } from 'lit-html';
 
 interface MenuItemData {
   label: string;
@@ -11,8 +11,18 @@ interface MenuItemData {
 
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends LitElement {
-  @property({ type: Array }) data: [];
-  // TODO: show
+  @property({ type: Array }) data: MenuItemData[];
+  @property({ type: Boolean }) show: boolean = true;
+
+  private onItemClick(event: CustomEvent) {
+    const { detail } = event;
+
+    this.dispatchEvent(new CustomEvent('vsc-select', {
+      detail,
+      bubbles: true,
+      composed: true,
+    }));
+  }
 
   static get styles() {
     return css`
@@ -87,35 +97,35 @@ export class VscodeContextMenu extends LitElement {
   };
 
   render() {
-    return html`
+    const menu = html`
       <div class="context-menu">
-        <vscode-context-menu-item
-          label="Command Palette..."
-          keybinding="Ctrl+Shift+A"
-          value="foo"
-          tabindex="0"
-        ></vscode-context-menu-item>
-        <div class="context-menu-item">
-          <a href="#">
-            <span class="label">Command Palette...</span>
-            <span class="keybinding">Ctrl+Shift+A</span>
-          </a>
-        </div>
-        <div class="context-menu-item separator">
-          <span class="rule"></span>
-        </div>
-        <div class="context-menu-item">
-          <a href="#">
-            <span class="label">Settings</span>
-            <span class="keybinding">Ctrl+,</span>
-          </a>
-        </div>
-        <div class="context-menu-item">
-          <a href="#">
-            <span class="label">Online Services Settings</span>
-          </a>
-        </div>
+        ${this.data ?
+          this.data.map(({
+            label = '',
+            keybinding = '',
+            value = '',
+            separator = false,
+            tabindex = ''
+          }) => html`
+            <vscode-context-menu-item
+              label="${label}"
+              keybinding="${keybinding}"
+              value="${value}"
+              ?separator="${separator}"
+              tabindex="${tabindex}"
+              @vsc-click="${this.onItemClick}"
+            ></vscode-context-menu-item>
+          `) :
+          html`<slot></slot>`
+        }
       </div>
+    `;
+
+    return html`
+      ${this.show ?
+        menu :
+        nothing
+      }
     `;
   }
 }

@@ -133,9 +133,55 @@
     </div>
     <div class="preview">
       <div style="background: #e7e7e7; padding: 20px; width: 294px;">
-        <vscode-context-menu>
-          <vscode-context-menu-item></vscode-context-menu-item>
+        <vscode-context-menu id="menu-1"></vscode-context-menu>
+        <pre id="menu-1-result"></pre>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const data = [
+              {
+                label: 'Command Palette...',
+                keybinding: 'Ctrl+Shift+A',
+                value: 'foo',
+                tabindex: '0'
+              },
+              {
+                separator: true
+              },
+              {
+                label: 'Settings',
+                keybinding: 'Ctrl+,',
+              },
+              {
+                label: 'Online Services Settings',
+              }
+            ];
+
+            const menu = document.getElementById('menu-1');
+            const result = document.getElementById('menu-1-result');
+
+            menu.data = [...data];
+            menu.addEventListener('vsc-select', (event) => {
+              result.innerHTML = event.detail.label;
+              menu.show = false;
+            });
+          });
+        </script>
+        <p>&nbsp;</p>
+        <vscode-context-menu id="menu-2">
+          <vscode-context-menu-item label="Lorem"></vscode-context-menu-item>
+          <vscode-context-menu-item label="Ipsum"></vscode-context-menu-item>
         </vscode-context-menu>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const menu = document.getElementById('menu-2');
+            const result = document.getElementById('menu-3-result');
+
+            menu.addEventListener('vsc-select', (event) => {
+              result.innerHTML = event.detail.label;
+            });
+          });
+        </script>
+
       </div>
     </div>
   </body>
