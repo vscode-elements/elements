@@ -92,12 +92,21 @@ export class VscodeContextMenuItem extends LitElement {
 
   render() {
     return html`
-      <div class="context-menu-item">
-        <a @click="${this.onItemClick}">
-          <span class="label">${this.label}</span>
-          <span class="keybinding">${this.keybinding}</span>
-        </a>
-      </div>
+      ${this.separator ?
+        html`
+          <div class="context-menu-item separator">
+            <span class="rule"></span>
+          </div>
+        ` :
+        html`
+          <div class="context-menu-item">
+            <a @click="${this.onItemClick}">
+              <span class="label">${this.label}</span>
+              <span class="keybinding">${this.keybinding}</span>
+            </a>
+          </div>
+        `
+      }
     `;
   }
 }
