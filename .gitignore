@@ -3,3 +3,4 @@ node_modules/
 dist/
 storybook-static/
 vscode-icons-optimized/
+.vscode/
