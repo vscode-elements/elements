@@ -1,4 +1,4 @@
-import { LitElement, html, css, svg, property, customElement } from 'lit-element';
+import { LitElement, html, css, property, customElement } from 'lit-element';
 import { nothing } from 'lit-html';
 
 @customElement('vscode-checkbox')
@@ -62,21 +62,6 @@ export class VscodeCheckbox extends LitElement {
         width: 18px;
       }
 
-      svg {
-        display: block;
-        height: 16px;
-        width: 16px;
-      }
-
-      :host-context(.vscode-light) path {
-        fill: #424242;
-      }
-
-      :host-context(.vscode-dark) path,
-      :host-context(.vscode-high-contrast) path {
-        fill: #c5c5c5;
-      }
-
       .label {
         padding-left: 27px;
       }
@@ -93,16 +78,7 @@ export class VscodeCheckbox extends LitElement {
   };
 
   render() {
-    const icon = svg`
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M14.431 3.323l-8.47 10-.79-.036-3.35-4.77.818-.574 2.978 4.24 8.052-9.506.762.646z"
-        />
-      </svg>
-    `;
-
+    const icon = html`<vscode-icon name="check"></vscode-icon>`;
     const check = this.checked ? icon : nothing;
 
     return html`

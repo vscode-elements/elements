@@ -1,4 +1,4 @@
-import { LitElement, html, css, svg, property, customElement } from 'lit-element';
+import { LitElement, html, css, property, customElement } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 
 @customElement('vscode-collapsible')
@@ -45,18 +45,7 @@ export class VscodeCollapsible extends LitElement {
 
       .header-icon {
         display: block;
-        height: 16px;
         margin: 0 3px;
-        width: 16px;
-      }
-
-      :host-context(body.vscode-light) .header-icon path {
-        fill: #424242;
-      }
-
-      :host-context(body.vscode-dark) .header-icon path,
-      :host-context(body.vscode-high-contrast) .header-icon path {
-        fill: #c5c5c5;
       }
 
       .collapsible.open .header-icon {
@@ -92,11 +81,7 @@ export class VscodeCollapsible extends LitElement {
   render() {
     const classes = classMap({ collapsible: true, open: this.open });
 
-    const icon = svg`
-      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="header-icon">
-        <path d="M5.7 13.7L5 13l4.6-4.6L5 3.7l.7-.7 5 5v.7l-5 5z"/>
-      </svg>
-    `;
+    const icon = html`<vscode-icon name="chevron-right" class="header-icon"></vscode-icon>`;
 
     return html`
       <div class="${classes}">
