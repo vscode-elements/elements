@@ -1,10 +1,10 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
 
 const getBaseURL = () => {
-  const s = document.querySelector('script[src*="vscodeWebviewElements"]');
+  const s = (<HTMLScriptElement>document.querySelector('script[src*="vscodeWebviewElements"]'));
 
   if (s) {
-    const matches = /(.+\/)vscodeWebviewElements/g.exec('vscodeWebviewElements');
+    const matches = /(.+\/)vscodeWebviewElements/g.exec(s.src);
 
     if (!matches) {
       return '';
