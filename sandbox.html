@@ -187,6 +187,62 @@
       <vscode-icon name="array"></vscode-icon>
       <vscode-icon name="arrow-both"></vscode-icon>
       <vscode-icon name="bell"></vscode-icon>
+      <vscode-tree id="tree-1"></vscode-tree>
+      <script>
+        (function() {
+          const tree = document.getElementById('tree-1');
+          const data = [
+            {
+              label: 'item 0',
+              subItems: [
+                {
+                  label: 'item 0.0',
+                  subItems: [
+                    {
+                      label: 'item 0.0.0'
+                    },
+                    {
+                      label: 'item 0.0.1'
+                    },
+                    {
+                      label: 'item 0.0.2'
+                    },
+                    {
+                      label: 'item 0.0.3'
+                    },
+                  ]
+                },
+                {
+                  label: 'item 0.1',
+                  open: true,
+                  subItems: [
+                    {
+                      label: 'item 0.1.0'
+                    },
+                    {
+                      label: 'item 0.1.1'
+                    },
+                    {
+                      label: 'item 0.1.2'
+                    },
+                    {
+                      label: 'item 0.1.3'
+                    },
+                  ],
+                },
+                {
+                  label: 'item 0.2'
+                }
+              ],
+            },
+            {
+              label: 'item 1'
+            },
+          ];
+
+          tree.data = data;
+        })();
+      </script>
     </div>
   </body>
 </html>

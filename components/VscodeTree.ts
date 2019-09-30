@@ -11,33 +11,47 @@ interface TreeItem {
 export class VscodeTree extends LitElement {
   @property({ type: Array, reflect: false }) data: [];
 
-  private renderTree(tree: TreeItem[], pathAttr: string = '0') {
+  private renderTree(tree: TreeItem[], path: number[] = []) {
     let ret = '';
 
     tree.forEach((element, index) => {
-      const path = `${pathAttr}.${index}`;
+      const newPath = [...path, index];
 
       if (element.subItems && Array.isArray(element.subItems) && element.subItems.length > 0) {
         const subTreeRendered = element.open ?
-          `<ul>${this.renderTree(element.subItems, path)}</ul>` :
+          `<ul>${this.renderTree(element.subItems, newPath)}</ul>` :
           '';
 
         ret += `
-          <li data-path="${path}" class="branch">
+          <li data-path="${newPath.join('/')}" class="branch">
             <span class="label">${element.label}</span>
             ${subTreeRendered}
           </li>
         `;
       } else {
-        ret += `<li data-path="${path}" class="leaf"><span class="label">${element.label}</span></li>`;
+        ret += `<li data-path="${newPath.join('/')}" class="leaf"><span class="label">${element.label}</span></li>`;
       }
     });
 
     return `${ret}`;
   }
 
-  private onItemClick() {
+  private toggleSubTreeOpen(path: string, open?: boolean) {
+    const indexes: number[] = path.split('/').map(el => Number(el));
+    let current = this.data;
 
+    current[0].open = true;
+
+    this.requestUpdate();
+  }
+
+  private onComponentClick(event: MouseEvent) {
+    const composedPath = event.composedPath();
+    const targetElement = composedPath.find(
+      (el: HTMLElement) => el.tagName.toUpperCase() === 'LI'
+    );
+
+    this.toggleSubTreeOpen((<HTMLLIElement>targetElement).dataset.path);
   }
 
   static get styles() {
@@ -50,7 +64,7 @@ export class VscodeTree extends LitElement {
 
   render() {
     return html`
-      <div>
+      <div @click="${this.onComponentClick}">
         <ul>
           ${unsafeHTML(this.renderTree(this.data))}
         </ul>
