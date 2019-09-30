@@ -5,7 +5,7 @@
   "main": "dist/vscodeWebviewElements.js",
   "scripts": {
     "clean": "npx rimraf dist && npx rimraf storybook-static && npx rimraf vscode-icons-optimized",
-    "dev": "npm run svgo && parcel sandbox.html",
+    "dev": "parcel sandbox.html",
     "build": "parcel build components/vscodeWebviewElements.ts",
     "build-all": "npm run clean && npm run svgo && npm run build && npm run build-storybook",
     "storybook": "start-storybook -p 6006 -s ./dist,./assets",
