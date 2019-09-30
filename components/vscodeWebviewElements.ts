@@ -6,3 +6,4 @@ import './VscodeContextMenuItem';
 import './VscodeIcon';
 import './VscodeInputbox';
 import './VscodeScrollable';
+import './VscodeSelect';
