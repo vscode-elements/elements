@@ -7,3 +7,4 @@ import './VscodeIcon';
 import './VscodeInputbox';
 import './VscodeScrollable';
 import './VscodeSelect';
+import './VscodeTree';
