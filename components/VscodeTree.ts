@@ -4,28 +4,32 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 interface TreeItem {
   label: string;
   subItems?: TreeItem[],
+  open?: boolean;
 }
 
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
   @property({ type: Array, reflect: false }) data: [];
 
-  private renderSubTree(tree: TreeItem[], pathAttr: string) {
+  private renderTree(tree: TreeItem[], pathAttr: string = '0') {
     let ret = '';
-    const path = pathAttr.split('.');
 
     tree.forEach((element, index) => {
-      const dataPath = `${pathAttr}.${index}`;
+      const path = `${pathAttr}.${index}`;
 
       if (element.subItems && Array.isArray(element.subItems) && element.subItems.length > 0) {
+        const subTreeRendered = element.open ?
+          `<ul>${this.renderTree(element.subItems, path)}</ul>` :
+          '';
+
         ret += `
-          <li data-path="${dataPath}" class="branch">
+          <li data-path="${path}" class="branch">
             <span class="label">${element.label}</span>
-            <ul>${this.renderSubTree(element.subItems, dataPath)}</ul>
+            ${subTreeRendered}
           </li>
         `;
       } else {
-        ret += `<li data-path="${dataPath}" class="leaf"><span class="label">${element.label}</span></li>`;
+        ret += `<li data-path="${path}" class="leaf"><span class="label">${element.label}</span></li>`;
       }
     });
 
@@ -48,7 +52,7 @@ export class VscodeTree extends LitElement {
     return html`
       <div>
         <ul>
-          ${unsafeHTML(this.renderSubTree(this.data, '0'))}
+          ${unsafeHTML(this.renderTree(this.data))}
         </ul>
       </div>
     `;
