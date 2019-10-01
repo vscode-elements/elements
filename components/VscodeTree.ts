@@ -1,5 +1,7 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css, unsafeCSS, property, customElement } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { classMap } from 'lit-html/directives/class-map';
+import getBaseURL from './utils/getBaseURL';
 
 interface TreeItem {
   label: string;
@@ -7,7 +9,8 @@ interface TreeItem {
   open?: boolean;
 }
 
-const ARROW_OUTER_WIDTH = 19;
+const ARROW_OUTER_WIDTH = 24;
+const BASE_URL = getBaseURL();
 
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
@@ -22,17 +25,26 @@ export class VscodeTree extends LitElement {
       const newPath = [...path, index];
       const indentLevel = newPath.length - 1;
       const indentSize = indentLevel * this.indent;
+      const classes = [];
+      const iconClasses = ['icon-arrow'];
+
+      if (element.open) {
+        classes.push('open');
+        iconClasses.push('open');
+      }
 
       if (element.subItems && Array.isArray(element.subItems) && element.subItems.length > 0) {
         const subTreeRendered = element.open ?
           `<ul>${this.renderTree(element.subItems, newPath)}</ul>` :
           '';
         const arrow = this.arrows ?
-          '<vscode-icon name="chevron-right" class="icon-subtree"></vscode-icon>' :
+          `<i class="${iconClasses.join(' ')}"></i>` :
           '';
 
+        classes.push('branch');
+
         ret += `
-          <li data-path="${newPath.join('/')}" class="branch">
+          <li data-path="${newPath.join('/')}" class="${classes.join(' ')}">
             <span class="label" style="padding-left: ${indentSize}px;">
               ${arrow}
               ${element.label}
@@ -45,8 +57,10 @@ export class VscodeTree extends LitElement {
           ARROW_OUTER_WIDTH + indentSize :
           indentSize;
 
+        classes.push('leaf')
+
         ret += `
-          <li data-path="${newPath.join('/')}" class="leaf">
+          <li data-path="${newPath.join('/')}" class="${classes.join(' ')}">
             <span class="label" style="padding-left: ${padLeft}px;">
               ${element.label}
             </span>
@@ -124,9 +138,31 @@ export class VscodeTree extends LitElement {
         font-weight: var(--vscode-font-weight);
       }
 
-      .icon-subtree {
+      .icon-arrow {
+        background-position: 3px center;
+        background-repeat: no-repeat;
         display: block;
-        margin: 3px 3px 0 0;
+        height: 22px;
+        margin: 0 8px 0 0;
+        width: 16px;
+      }
+
+      :host-context(.vscode-light) .icon-arrow {
+        background-image: url(${unsafeCSS(BASE_URL)}icons/light/chevron-right.svg);
+      }
+
+      :host-context(.vscode-dark) .icon-arrow,
+      :host-context(.vscode-high-contrast) .icon-arrow {
+        background-image: url(${unsafeCSS(BASE_URL)}icons/dark/chevron-right.svg);
+      }
+
+      :host-context(.vscode-light) .icon-arrow.open {
+        background-image: url(${unsafeCSS(BASE_URL)}icons/light/chevron-down.svg);
+      }
+
+      :host-context(.vscode-dark) .icon-arrow.open,
+      :host-context(.vscode-high-contrast) .icon-arrow.open {
+        background-image: url(${unsafeCSS(BASE_URL)}icons/dark/chevron-down.svg);
       }
     `;
   };
