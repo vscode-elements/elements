@@ -78,13 +78,16 @@ export class VscodeTree extends LitElement {
 
     pathFragments.forEach((el, i) => {
       if (i === pathFragments.length - 1) {
+        if (!current[el].subItems) {
+          return;
+        }
+
         current[el].open = !current[el].open;
+        this.requestUpdate();
       } else {
         current = current[el].subItems;
       }
     });
-
-    this.requestUpdate();
   }
 
   private closeSubTreeRecursively(tree: TreeItem[]) {
