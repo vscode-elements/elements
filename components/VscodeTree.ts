@@ -10,12 +10,14 @@ interface TreeItem {
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
   @property({ type: Array, reflect: false }) data: TreeItem[];
+  @property({ type: Number }) indent: number = 16;
 
   private renderTree(tree: TreeItem[], path: number[] = []) {
     let ret = '';
 
     tree.forEach((element, index) => {
       const newPath = [...path, index];
+      const indentSize = (newPath.length - 1) * this.indent;
 
       if (element.subItems && Array.isArray(element.subItems) && element.subItems.length > 0) {
         const subTreeRendered = element.open ?
@@ -24,12 +26,16 @@ export class VscodeTree extends LitElement {
 
         ret += `
           <li data-path="${newPath.join('/')}" class="branch">
-            <span class="label">${element.label}</span>
+            <span class="label" style="padding-left: ${indentSize}px;">${element.label}</span>
             ${subTreeRendered}
           </li>
         `;
       } else {
-        ret += `<li data-path="${newPath.join('/')}" class="leaf"><span class="label">${element.label}</span></li>`;
+        ret += `
+          <li data-path="${newPath.join('/')}" class="leaf">
+            <span class="label" style="padding-left: ${indentSize}px;">${element.label}</span>
+          </li>
+        `;
       }
     });
 
@@ -80,6 +86,16 @@ export class VscodeTree extends LitElement {
   static get styles() {
     return css`
       :host {
+        display: block;
+      }
+
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+
+      .label {
         display: block;
       }
     `;
