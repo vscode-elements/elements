@@ -36,7 +36,7 @@ export class VscodeTree extends LitElement {
     return `${ret}`;
   }
 
-  private toggleSubTreeOpen(path: string, open?: boolean) {
+  private toggleSubTreeOpen(path: string) {
     const indexes: number[] = path.split('/').map(el => Number(el));
     let current = this.data;
 
