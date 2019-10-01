@@ -59,14 +59,14 @@ export class VscodeTree extends LitElement {
   }
 
   private toggleSubTreeOpen(path: string) {
-    const indexes: number[] = path.split('/').map(el => Number(el));
+    const pathFragments: number[] = path.split('/').map(el => Number(el));
     let current = this.data;
 
-    indexes.forEach(index => {
-      if (index + 1 === indexes.length) {
-        current[index].open = !current[index].open;
+    pathFragments.forEach((el, i) => {
+      if (i === pathFragments.length - 1) {
+        current[el].open = !current[el].open;
       } else {
-        current = current[index].subItems;
+        current = current[el].subItems;
       }
     });
 
