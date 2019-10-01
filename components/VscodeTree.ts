@@ -51,6 +51,16 @@ export class VscodeTree extends LitElement {
     this.requestUpdate();
   }
 
+  private closeSubTreeRecursively(tree: TreeItem[]) {
+    tree.forEach((item) => {
+      item.open = false;
+
+      if (item.subItems && item.subItems.length > 0) {
+        this.closeSubTreeRecursively(item.subItems);
+      }
+    });
+  }
+
   private onComponentClick(event: MouseEvent) {
     const composedPath = event.composedPath();
     const targetElement = composedPath.find(
@@ -58,6 +68,11 @@ export class VscodeTree extends LitElement {
     );
 
     this.toggleSubTreeOpen((<HTMLLIElement>targetElement).dataset.path);
+  }
+
+  public closeAll() {
+    this.closeSubTreeRecursively(this.data);
+    this.requestUpdate();
   }
 
   static get styles() {

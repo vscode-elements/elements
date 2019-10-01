@@ -187,10 +187,14 @@
       <vscode-icon name="array"></vscode-icon>
       <vscode-icon name="arrow-both"></vscode-icon>
       <vscode-icon name="bell"></vscode-icon>
-      <vscode-tree id="tree-1"></vscode-tree>
+      <vscode-scrollable style="width: 300px; height: 200px;">
+        <vscode-tree id="tree-1"></vscode-tree>
+        <button type="button" id="bt-close-all">Close all</button>
+      </vscode-scrollable>
       <script>
         (function() {
           const tree = document.getElementById('tree-1');
+          const bt = document.getElementById('bt-close-all');
           const data = [
             {
               label: 'item 0',
@@ -241,6 +245,10 @@
           ];
 
           tree.data = data;
+
+          bt.addEventListener('click', () => {
+            tree.closeAll();
+          });
         })();
       </script>
     </div>
