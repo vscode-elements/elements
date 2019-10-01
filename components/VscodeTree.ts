@@ -26,14 +26,19 @@ export class VscodeTree extends LitElement {
 
         ret += `
           <li data-path="${newPath.join('/')}" class="branch">
-            <span class="label" style="padding-left: ${indentSize}px;">${element.label}</span>
+            <span class="label" style="padding-left: ${indentSize}px;">
+              <vscode-icon name="chevron-right" class="icon-subtree"></vscode-icon>
+              ${element.label}
+            </span>
             ${subTreeRendered}
           </li>
         `;
       } else {
         ret += `
           <li data-path="${newPath.join('/')}" class="leaf">
-            <span class="label" style="padding-left: ${indentSize}px;">${element.label}</span>
+            <span class="label" style="padding-left: ${indentSize}px;">
+              ${element.label}
+            </span>
           </li>
         `;
       }
@@ -96,7 +101,20 @@ export class VscodeTree extends LitElement {
       }
 
       .label {
-        display: block;
+        display: flex;
+        line-height: 22px;
+      }
+
+      .label:hover {
+        background-color: var(--vscode-list-hoverBackground);
+        cursor: pointer;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        font-weight: var(--vscode-font-weight);
+      }
+
+      .icon-subtree {
+        margin: 3px 4px 0 0;
       }
     `;
   };
