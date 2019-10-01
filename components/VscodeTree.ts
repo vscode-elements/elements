@@ -9,7 +9,7 @@ interface TreeItem {
 
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
-  @property({ type: Array, reflect: false }) data: [];
+  @property({ type: Array, reflect: false }) data: TreeItem[];
 
   private renderTree(tree: TreeItem[], path: number[] = []) {
     let ret = '';
@@ -40,7 +40,13 @@ export class VscodeTree extends LitElement {
     const indexes: number[] = path.split('/').map(el => Number(el));
     let current = this.data;
 
-    current[0].open = true;
+    indexes.forEach(index => {
+      if (index + 1 === indexes.length) {
+        current[index].open = !current[index].open;
+      } else {
+        current = current[index].subItems;
+      }
+    });
 
     this.requestUpdate();
   }
