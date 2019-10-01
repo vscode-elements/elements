@@ -64,10 +64,12 @@ export class VscodeTree extends LitElement {
   private onComponentClick(event: MouseEvent) {
     const composedPath = event.composedPath();
     const targetElement = composedPath.find(
-      (el: HTMLElement) => el.tagName.toUpperCase() === 'LI'
+      (el: HTMLElement) => el.tagName && el.tagName.toUpperCase() === 'LI'
     );
 
-    this.toggleSubTreeOpen((<HTMLLIElement>targetElement).dataset.path);
+    if (targetElement) {
+      this.toggleSubTreeOpen((<HTMLLIElement>targetElement).dataset.path);
+    }
   }
 
   public closeAll() {
