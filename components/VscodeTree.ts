@@ -7,36 +7,47 @@ interface TreeItem {
   open?: boolean;
 }
 
+const ARROW_OUTER_WIDTH = 19;
+
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
   @property({ type: Array, reflect: false }) data: TreeItem[];
-  @property({ type: Number }) indent: number = 16;
+  @property({ type: Number }) indent: number = 8;
+  @property({ type: Boolean }) arrows: boolean = true;
 
   private renderTree(tree: TreeItem[], path: number[] = []) {
     let ret = '';
 
     tree.forEach((element, index) => {
       const newPath = [...path, index];
-      const indentSize = (newPath.length - 1) * this.indent;
+      const indentLevel = newPath.length - 1;
+      const indentSize = indentLevel * this.indent;
 
       if (element.subItems && Array.isArray(element.subItems) && element.subItems.length > 0) {
         const subTreeRendered = element.open ?
           `<ul>${this.renderTree(element.subItems, newPath)}</ul>` :
           '';
+        const arrow = this.arrows ?
+          '<vscode-icon name="chevron-right" class="icon-subtree"></vscode-icon>' :
+          '';
 
         ret += `
           <li data-path="${newPath.join('/')}" class="branch">
             <span class="label" style="padding-left: ${indentSize}px;">
-              <vscode-icon name="chevron-right" class="icon-subtree"></vscode-icon>
+              ${arrow}
               ${element.label}
             </span>
             ${subTreeRendered}
           </li>
         `;
       } else {
+        const padLeft = this.arrows ?
+          ARROW_OUTER_WIDTH + indentSize :
+          indentSize;
+
         ret += `
           <li data-path="${newPath.join('/')}" class="leaf">
-            <span class="label" style="padding-left: ${indentSize}px;">
+            <span class="label" style="padding-left: ${padLeft}px;">
               ${element.label}
             </span>
           </li>
@@ -114,7 +125,8 @@ export class VscodeTree extends LitElement {
       }
 
       .icon-subtree {
-        margin: 3px 4px 0 0;
+        display: block;
+        margin: 3px 3px 0 0;
       }
     `;
   };
