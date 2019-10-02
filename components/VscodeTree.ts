@@ -1,13 +1,24 @@
 import { LitElement, html, css, unsafeCSS, property, customElement } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
-import { classMap } from 'lit-html/directives/class-map';
 import getBaseURL from './utils/getBaseURL';
+
+interface TreeItemIconConfig {
+  branch?: string,
+  open?: string,
+  leaf?: string,
+}
 
 interface TreeItem {
   label: string;
   subItems?: TreeItem[],
   open?: boolean;
   selected?: boolean;
+  icons?: TreeItemIconConfig
+}
+
+enum ItemType {
+  BRANCH = 'branch',
+  LEAF = 'leaf',
 }
 
 const ARROW_OUTER_WIDTH = 24;
@@ -37,6 +48,34 @@ export class VscodeTree extends LitElement {
     return item;
   }
 
+  private getItemType(item: TreeItem): ItemType {
+    if (item.subItems && Array.isArray(item.subItems) && item.subItems.length > 0) {
+      return ItemType.BRANCH;
+    }
+
+    return ItemType.LEAF;
+  }
+
+  private getIconName(element: TreeItem): string | undefined {
+    if (!element.icons) {
+      return undefined;
+    }
+
+    const { icons } = element;
+    const itemType = this.getItemType(element);
+    const isOpen = element.open || false;
+
+    if (itemType === ItemType.BRANCH && isOpen) {
+      return icons.open || undefined;
+    } else if (itemType === ItemType.BRANCH && !isOpen) {
+      return icons.branch || undefined;
+    } else if (itemType === ItemType.LEAF) {
+      return icons.leaf || undefined;
+    } else {
+      return undefined;
+    }
+  }
+
   private renderTree(tree: TreeItem[], path: number[] = []) {
     let ret = '';
 
@@ -45,24 +84,27 @@ export class VscodeTree extends LitElement {
       const indentLevel = newPath.length - 1;
       const indentSize = indentLevel * this.indent;
       const liClasses = [];
-      const iconClasses = ['icon-arrow'];
+      const arrowClasses = ['icon-arrow'];
       const labelClasses = ['label'];
+      const itemType = this.getItemType(element);
+      const iconName = this.getIconName(element);
+      const icon = iconName ? `<vscode-icon name="${iconName}"></vscode-icon>` : '';
 
       if (element.open) {
         liClasses.push('open');
-        iconClasses.push('open');
+        arrowClasses.push('open');
       }
 
       if (element.selected) {
         labelClasses.push('selected');
       }
 
-      if (element.subItems && Array.isArray(element.subItems) && element.subItems.length > 0) {
+      if (itemType === ItemType.BRANCH) {
         const subTreeRendered = element.open ?
           `<ul>${this.renderTree(element.subItems, newPath)}</ul>` :
           '';
         const arrow = this.arrows ?
-          `<i class="${iconClasses.join(' ')}"></i>` :
+          `<i class="${arrowClasses.join(' ')}"></i>` :
           '';
 
         liClasses.push('branch');
@@ -71,6 +113,7 @@ export class VscodeTree extends LitElement {
           <li data-path="${newPath.join('/')}" class="${liClasses.join(' ')}">
             <span class="${labelClasses.join(' ')}" style="padding-left: ${indentSize}px;">
               ${arrow}
+              ${icon}
               ${element.label}
             </span>
             ${subTreeRendered}
@@ -81,11 +124,12 @@ export class VscodeTree extends LitElement {
           ARROW_OUTER_WIDTH + indentSize :
           indentSize;
 
-        liClasses.push('leaf')
+        liClasses.push('leaf');
 
         ret += `
           <li data-path="${newPath.join('/')}" class="${liClasses.join(' ')}">
             <span class="${labelClasses.join(' ')}" style="padding-left: ${padLeft}px;">
+              ${icon}
               ${element.label}
             </span>
           </li>
