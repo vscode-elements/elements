@@ -18,6 +18,22 @@ export class VscodeTree extends LitElement {
   @property({ type: Number }) indent: number = 8;
   @property({ type: Boolean }) arrows: boolean = true;
 
+  private getItemByPath(path: string): TreeItem {
+    const pathFragments: number[] = path.split('/').map(el => Number(el));
+    let current: TreeItem[] = this.data;
+    let item: TreeItem;
+
+    pathFragments.forEach((el, i) => {
+      if (i === pathFragments.length - 1) {
+        item = current[el];
+      } else {
+        current = current[el].subItems;
+      }
+    });
+
+    return item;
+  }
+
   private renderTree(tree: TreeItem[], path: number[] = []) {
     let ret = '';
 
@@ -73,21 +89,14 @@ export class VscodeTree extends LitElement {
   }
 
   private toggleSubTreeOpen(path: string) {
-    const pathFragments: number[] = path.split('/').map(el => Number(el));
-    let current = this.data;
+    const item = this.getItemByPath(path);
 
-    pathFragments.forEach((el, i) => {
-      if (i === pathFragments.length - 1) {
-        if (!current[el].subItems) {
-          return;
-        }
+    if (!item.subItems) {
+      return;
+    }
 
-        current[el].open = !current[el].open;
-        this.requestUpdate();
-      } else {
-        current = current[el].subItems;
-      }
-    });
+    item.open = !item.open;
+    this.requestUpdate();
   }
 
   private closeSubTreeRecursively(tree: TreeItem[]) {
