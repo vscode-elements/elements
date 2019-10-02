@@ -16,7 +16,7 @@ const BASE_URL = getBaseURL();
 export class VscodeTree extends LitElement {
   @property({ type: Array, reflect: false }) data: TreeItem[];
   @property({ type: Number }) indent: number = 8;
-  @property({ type: Boolean }) arrows: boolean = true;
+  @property({ type: Boolean }) arrows: boolean = false;
 
   private getItemByPath(path: string): TreeItem {
     const pathFragments: number[] = path.split('/').map(el => Number(el));
