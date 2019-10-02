@@ -147,6 +147,7 @@ export class VscodeTree extends LitElement {
     return css`
       :host {
         display: block;
+        outline: none;
       }
 
       ul,
@@ -170,6 +171,11 @@ export class VscodeTree extends LitElement {
 
       .label.selected {
         background-color: var(--vscode-list-focusBackground);
+      }
+
+      :host(:focus) .label.selected {
+        background-color: var(--vscode-list-activeSelectionBackground);
+        color: var(--vscode-list-activeSelectionForeground);
       }
 
       .icon-arrow {
