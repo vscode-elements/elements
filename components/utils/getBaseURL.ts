@@ -2,7 +2,6 @@ let memoizedURL: string;
 
 const getBaseURL = () => {
   if (memoizedURL) {
-    console.log('return memoized');
     return memoizedURL;
   }
 
