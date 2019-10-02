@@ -7,6 +7,7 @@ interface TreeItem {
   label: string;
   subItems?: TreeItem[],
   open?: boolean;
+  selected?: boolean;
 }
 
 const ARROW_OUTER_WIDTH = 24;
@@ -17,6 +18,8 @@ export class VscodeTree extends LitElement {
   @property({ type: Array, reflect: false }) data: TreeItem[];
   @property({ type: Number }) indent: number = 8;
   @property({ type: Boolean }) arrows: boolean = false;
+
+  private _selectedItem: TreeItem;
 
   private getItemByPath(path: string): TreeItem {
     const pathFragments: number[] = path.split('/').map(el => Number(el));
@@ -41,12 +44,17 @@ export class VscodeTree extends LitElement {
       const newPath = [...path, index];
       const indentLevel = newPath.length - 1;
       const indentSize = indentLevel * this.indent;
-      const classes = [];
+      const liClasses = [];
       const iconClasses = ['icon-arrow'];
+      const labelClasses = ['label'];
 
       if (element.open) {
-        classes.push('open');
+        liClasses.push('open');
         iconClasses.push('open');
+      }
+
+      if (element.selected) {
+        labelClasses.push('selected');
       }
 
       if (element.subItems && Array.isArray(element.subItems) && element.subItems.length > 0) {
@@ -57,11 +65,11 @@ export class VscodeTree extends LitElement {
           `<i class="${iconClasses.join(' ')}"></i>` :
           '';
 
-        classes.push('branch');
+        liClasses.push('branch');
 
         ret += `
-          <li data-path="${newPath.join('/')}" class="${classes.join(' ')}">
-            <span class="label" style="padding-left: ${indentSize}px;">
+          <li data-path="${newPath.join('/')}" class="${liClasses.join(' ')}">
+            <span class="${labelClasses.join(' ')}" style="padding-left: ${indentSize}px;">
               ${arrow}
               ${element.label}
             </span>
@@ -73,11 +81,11 @@ export class VscodeTree extends LitElement {
           ARROW_OUTER_WIDTH + indentSize :
           indentSize;
 
-        classes.push('leaf')
+        liClasses.push('leaf')
 
         ret += `
-          <li data-path="${newPath.join('/')}" class="${classes.join(' ')}">
-            <span class="label" style="padding-left: ${padLeft}px;">
+          <li data-path="${newPath.join('/')}" class="${liClasses.join(' ')}">
+            <span class="${labelClasses.join(' ')}" style="padding-left: ${padLeft}px;">
               ${element.label}
             </span>
           </li>
@@ -88,15 +96,21 @@ export class VscodeTree extends LitElement {
     return `${ret}`;
   }
 
-  private toggleSubTreeOpen(path: string) {
-    const item = this.getItemByPath(path);
-
+  private toggleSubTreeOpen(item: TreeItem) {
     if (!item.subItems) {
       return;
     }
 
     item.open = !item.open;
-    this.requestUpdate();
+  }
+
+  private selectTreeItem(item: TreeItem) {
+    if (this._selectedItem) {
+      this._selectedItem.selected = false;
+    }
+
+    this._selectedItem = item;
+    item.selected = true;
   }
 
   private closeSubTreeRecursively(tree: TreeItem[]) {
@@ -116,7 +130,11 @@ export class VscodeTree extends LitElement {
     );
 
     if (targetElement) {
-      this.toggleSubTreeOpen((<HTMLLIElement>targetElement).dataset.path);
+      const item = this.getItemByPath((<HTMLLIElement>targetElement).dataset.path);
+
+      this.toggleSubTreeOpen(item);
+      this.selectTreeItem(item);
+      this.requestUpdate();
     }
   }
 
@@ -148,6 +166,10 @@ export class VscodeTree extends LitElement {
         font-family: var(--vscode-font-family);
         font-size: var(--vscode-font-size);
         font-weight: var(--vscode-font-weight);
+      }
+
+      .label.selected {
+        background-color: var(--vscode-list-focusBackground);
       }
 
       .icon-arrow {
