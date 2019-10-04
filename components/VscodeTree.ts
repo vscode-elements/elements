@@ -76,68 +76,79 @@ export class VscodeTree extends LitElement {
     }
   }
 
-  private renderTree(tree: TreeItem[], path: number[] = []) {
+  private renderTreeItem({
+    indentLevel,
+    label,
+    path,
+    iconName,
+    open = false,
+    itemType,
+    selected = false,
+    subItems,
+  }: {
+    indentLevel: number;
+    label: string;
+    path: number[];
+    iconName: string;
+    open: boolean;
+    itemType: ItemType;
+    selected: boolean;
+    subItems: TreeItem[];
+  }) {
+    const arrowClassname = open ? 'icon-arrow open' : 'icon-arrow';
+    const labelClasses = ['label'];
+    const liClasses = open ? ['open'] : [];
+    const indentSize = indentLevel * this.indent;
+    const padLeft = this.arrows && itemType === ItemType.LEAF ?
+      ARROW_OUTER_WIDTH + indentSize : indentSize;
+    const arrowMarkup = this.arrows && itemType === ItemType.BRANCH ?
+      `<i class="${arrowClassname}"></i>` : '';
+    const iconMarkup = iconName ? `<vscode-icon name="${iconName}"></vscode-icon>` : '';
+    const subTreeMarkup = open && itemType === ItemType.BRANCH ?
+      `<ul>${this.renderTree(subItems, path)}</ul>` :
+      '';
+
+    liClasses.push(itemType === ItemType.LEAF ? 'leaf' : 'branch');
+
+    if (selected) {
+      labelClasses.push('selected');
+    }
+
+    return `
+      <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
+        <span class="${labelClasses.join(' ')}" style="padding-left: ${padLeft}px;">
+          ${arrowMarkup}
+          ${iconMarkup}
+          ${label}
+        </span>
+        ${subTreeMarkup}
+      </li>
+    `;
+  }
+
+  private renderTree(tree: TreeItem[], oldPath: number[] = []) {
     let ret = '';
 
     tree.forEach((element, index) => {
-      const newPath = [...path, index];
-      const indentLevel = newPath.length - 1;
-      const indentSize = indentLevel * this.indent;
-      const liClasses = [];
-      const arrowClasses = ['icon-arrow'];
-      const labelClasses = ['label'];
+      const path = [...oldPath, index];
+      const indentLevel = path.length - 1;
       const itemType = this.getItemType(element);
       const iconName = this.getIconName(element);
-      const icon = iconName ? `<vscode-icon name="${iconName}"></vscode-icon>` : '';
+      const { label, open = false, selected = false, subItems = [] } = element;
 
-      if (element.open) {
-        liClasses.push('open');
-        arrowClasses.push('open');
-      }
-
-      if (element.selected) {
-        labelClasses.push('selected');
-      }
-
-      if (itemType === ItemType.BRANCH) {
-        const subTreeRendered = element.open ?
-          `<ul>${this.renderTree(element.subItems, newPath)}</ul>` :
-          '';
-        const arrow = this.arrows ?
-          `<i class="${arrowClasses.join(' ')}"></i>` :
-          '';
-
-        liClasses.push('branch');
-
-        ret += `
-          <li data-path="${newPath.join('/')}" class="${liClasses.join(' ')}">
-            <span class="${labelClasses.join(' ')}" style="padding-left: ${indentSize}px;">
-              ${arrow}
-              ${icon}
-              ${element.label}
-            </span>
-            ${subTreeRendered}
-          </li>
-        `;
-      } else {
-        const padLeft = this.arrows ?
-          ARROW_OUTER_WIDTH + indentSize :
-          indentSize;
-
-        liClasses.push('leaf');
-
-        ret += `
-          <li data-path="${newPath.join('/')}" class="${liClasses.join(' ')}">
-            <span class="${labelClasses.join(' ')}" style="padding-left: ${padLeft}px;">
-              ${icon}
-              ${element.label}
-            </span>
-          </li>
-        `;
-      }
+      ret += this.renderTreeItem({
+        indentLevel,
+        label,
+        path,
+        open,
+        iconName,
+        itemType,
+        selected,
+        subItems,
+      });
     });
 
-    return `${ret}`;
+    return ret;
   }
 
   private toggleSubTreeOpen(item: TreeItem) {
