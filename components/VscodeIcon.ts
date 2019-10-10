@@ -24,11 +24,13 @@ export class VscodeIcon extends LitElement {
   }
 
   render() {
+    const size = `${this.size}px`;
+
     return html`
       <style>
         span {
-          height: ${this.size}px;
-          width: ${this.size}px;
+          height: ${size};
+          width: ${size};
         }
 
         :host-context(.vscode-light) span {
