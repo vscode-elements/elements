@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "npx rimraf dist && npx rimraf storybook-static",
     "start": "concurrently \"rollup --config --watch\" \"serve\" --names \"rollup,serve\" -k",
-    "build": "rollup --config",
+    "build": "npm run svgo && rollup --config",
     "build-all": "npm run clean && npm run svgo && npm run build && npm run build-storybook",
     "storybook": "start-storybook -p 6006 -s ./dist,./assets",
     "build-storybook": "build-storybook -s ./dist,./assets",
