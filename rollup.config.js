@@ -6,7 +6,7 @@ import minifyHTML from 'rollup-plugin-minify-html-literals';
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-  input: 'components/vscodeWebviewElements.ts',
+  input: 'src/main.ts',
   output: {
     file: 'dist/vscodeWebviewElements.js',
     format: 'esm',
