@@ -8,7 +8,7 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
   input: 'src/main.ts',
   output: {
-    file: 'dist/vscodeWebviewElements.js',
+    file: 'dist/vsc-we.js',
     format: 'esm',
     sourcemap: true,
   },
