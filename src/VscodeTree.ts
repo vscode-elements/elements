@@ -96,7 +96,7 @@ export class VscodeTree extends LitElement {
     subItems: TreeItem[];
   }) {
     const arrowClassname = open ? 'icon-arrow open' : 'icon-arrow';
-    const labelClasses = ['label'];
+    const contentsClasses = ['contents'];
     const liClasses = open ? ['open'] : [];
     const indentSize = indentLevel * this.indent;
     const padLeft = this.arrows && itemType === ItemType.LEAF ?
@@ -111,12 +111,12 @@ export class VscodeTree extends LitElement {
     liClasses.push(itemType === ItemType.LEAF ? 'leaf' : 'branch');
 
     if (selected) {
-      labelClasses.push('selected');
+      contentsClasses.push('selected');
     }
 
     return `
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
-        <span class="${labelClasses.join(' ')}" style="padding-left: ${padLeft}px;">
+        <span class="${contentsClasses.join(' ')}" style="padding-left: ${padLeft}px;">
           ${arrowMarkup}
           ${iconMarkup}
           ${label}
@@ -211,12 +211,12 @@ export class VscodeTree extends LitElement {
         padding: 0;
       }
 
-      .label {
+      .contents {
         display: flex;
         line-height: 22px;
       }
 
-      .label:hover {
+      .contents:hover {
         background-color: var(--vscode-list-hoverBackground);
         cursor: pointer;
         font-family: var(--vscode-font-family);
@@ -224,11 +224,11 @@ export class VscodeTree extends LitElement {
         font-weight: var(--vscode-font-weight);
       }
 
-      .label.selected {
+      .contents.selected {
         background-color: var(--vscode-list-focusBackground);
       }
 
-      :host(:focus) .label.selected {
+      :host(:focus) .contents.selected {
         background-color: var(--vscode-list-activeSelectionBackground);
         color: var(--vscode-list-activeSelectionForeground);
       }
