@@ -11,7 +11,8 @@
     "storybook": "start-storybook -p 6006 -s ./dist,./assets",
     "build-storybook": "build-storybook -s ./dist,./assets",
     "svgo": "svgo -f vscode-icons/icons/ -r --config=.svgo.yml -p 5 -o dist/icons",
-    "test": "jest"
+    "test": "jest",
+    "test-serve": "serve -l 5001"
   },
   "keywords": [],
   "author": "",
