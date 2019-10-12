@@ -103,7 +103,8 @@ export class VscodeTree extends LitElement {
       ARROW_OUTER_WIDTH + indentSize : indentSize;
     const arrowMarkup = this.arrows && itemType === ItemType.BRANCH ?
       `<i class="${arrowClassname}"></i>` : '';
-    const iconMarkup = iconName ? `<vscode-icon name="${iconName}"></vscode-icon>` : '';
+    const iconMarkup = iconName ?
+      `<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>` : '';
     const subTreeMarkup = open && itemType === ItemType.BRANCH ?
       `<ul>${this.renderTree(subItems, path)}</ul>` :
       '';
@@ -205,6 +206,10 @@ export class VscodeTree extends LitElement {
         outline: none;
       }
 
+      li {
+        list-style: none;
+      }
+
       ul,
       li {
         margin: 0;
@@ -212,6 +217,7 @@ export class VscodeTree extends LitElement {
       }
 
       .contents {
+        align-items: center;
         display: flex;
         line-height: 22px;
       }
@@ -258,6 +264,11 @@ export class VscodeTree extends LitElement {
       :host-context(.vscode-dark) .icon-arrow.open,
       :host-context(.vscode-high-contrast) .icon-arrow.open {
         background-image: url(${unsafeCSS(BASE_URL)}icons/dark/chevron-down.svg);
+      }
+
+      .label-icon {
+        display: block;
+        margin-right: 6px;
       }
     `;
   };

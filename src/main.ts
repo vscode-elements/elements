@@ -1,4 +1,3 @@
-import './GreeterElement';
 import './VscodeCheckbox';
 import './VscodeCollapsible';
 import './VscodeContextMenu';

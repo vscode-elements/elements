@@ -4,13 +4,13 @@
   "description": "",
   "main": "dist/vscodeWebviewElements.js",
   "scripts": {
-    "clean": "npx rimraf dist && npx rimraf storybook-static",
+    "clean": "rimraf dist && rimraf storybook-static",
     "start": "concurrently \"rollup --config --watch\" \"serve\" --names \"rollup,serve\" -k",
-    "build": "npm run svgo && rollup --config",
-    "build-all": "npm run clean && npm run svgo && npm run build && npm run build-storybook",
-    "storybook": "start-storybook -p 6006 -s ./dist,./assets",
+    "build": "npm run clean && npm run build-svgo && npm run build-rollup && npm run build-storybook",
+    "build-svgo": "svgo -f vscode-icons/icons/ -r --config=.svgo.yml -p 5 -o dist/icons",
     "build-storybook": "build-storybook -s ./dist,./assets",
-    "svgo": "svgo -f vscode-icons/icons/ -r --config=.svgo.yml -p 5 -o dist/icons",
+    "build-rollup": "rollup --config",
+    "storybook": "start-storybook -p 6006 -s ./dist,./assets",
     "test": "jest",
     "test-serve": "serve -l 5001"
   },
