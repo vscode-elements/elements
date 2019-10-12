@@ -12,11 +12,81 @@
     <script src="dist/vsc-we.js"></script>
     <style>
       .preview {
-        padding: 20px;
+        padding: 20px 0;
+      }
+
+      body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .theme-switcher {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      .theme-switcher-option {
+        align-items: center;
+        display: flex;
+        margin-right: 20px;
+      }
+
+      .theme-switcher-option button {
+        --fallback-font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC',
+          'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+        --fallback-font-size: 13px;
+        --fallback-font-weight: normal;
+
+        background-color: transparent;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        color: var(--vscode-foreground);
+        cursor: pointer;
+        font-family: var(--vscode-font-family, var(--fallback-font-family));
+        font-size: var(--vscode-font-size, var(--fallback-font-size));
+        font-weight: var(--vscode-font-weight, var(--fallback-font-weight));
+        outline: none;
+        padding: 5px 0;
+      }
+
+      body.vscode-light .theme-switcher-option.light button,
+      body.vscode-dark .theme-switcher-option.dark button,
+      body.vscode-high-contrast .theme-switcher-option.hc button {
+        border-bottom-color: var(--vscode-foreground);
       }
     </style>
   </head>
   <body class="vscode-light">
+    <div class="theme-switcher">
+      <div class="theme-switcher-option light">
+        <button value="vscode-light" type="button">Light</button>
+      </div>
+      <div class="theme-switcher-option dark">
+        <button value="vscode-dark" type="button">Dark</button>
+      </div>
+      <div class="theme-switcher-option hc">
+        <button value="vscode-high-contrast" type="button">Hight contrast</button>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const buttons = document.querySelectorAll(
+          '.theme-switcher-option button'
+        );
+
+        Array.from(buttons).forEach(element => {
+          element.addEventListener('click', event => {
+            document.body.classList.remove(
+              'vscode-light',
+              'vscode-dark',
+              'vscode-high-contrast'
+            );
+            document.body.classList.add(event.target.value);
+          });
+        });
+      })();
+    </script>
     <div class="preview preview-1">
       <vscode-inputbox
         id="ib-1"
@@ -29,9 +99,11 @@
       <script>
         (function() {
           const p = document.getElementById('p-1');
-          const ib = document.getElementById('ib-1').addEventListener('vsc-input', (event) => {
-            p.innerHTML = event.detail;
-          });
+          const ib = document
+            .getElementById('ib-1')
+            .addEventListener('vsc-input', event => {
+              p.innerHTML = event.detail;
+            });
         })();
       </script>
     </div>
@@ -52,7 +124,7 @@
 
           p.innerHTML = ib.value;
 
-          ib.addEventListener('vsc-input', (event) => {
+          ib.addEventListener('vsc-input', event => {
             p.innerHTML = event.detail;
           });
         })();
@@ -65,55 +137,62 @@
     <div class="preview">
       <vscode-collapsible title="Panel example" open>
         <div slot="actions">
-            <i class="vscode-icon collapse-all"></i>
-            <i class="vscode-icon more"></i>
+          <i class="vscode-icon collapse-all"></i>
+          <i class="vscode-icon more"></i>
         </div>
         <div slot="body">
-            <vscode-scrollable style="height: 200px;">
-              <vscode-checkbox label="Checkbox button" id="cb-1" value="test-value" checked></vscode-checkbox>
-              <script>
-                document.getElementById('cb-1').addEventListener('vsc-change', (event) => {
+          <vscode-scrollable style="height: 200px;">
+            <vscode-checkbox
+              label="Checkbox button"
+              id="cb-1"
+              value="test-value"
+              checked
+            ></vscode-checkbox>
+            <script>
+              document
+                .getElementById('cb-1')
+                .addEventListener('vsc-change', event => {
                   console.log(event);
                 });
-              </script>
-              <vscode-checkbox>Slotted content</vscode-checkbox>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-            </vscode-scrollable>
+            </script>
+            <vscode-checkbox>Slotted content</vscode-checkbox>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+          </vscode-scrollable>
         </div>
       </vscode-collapsible>
       <vscode-collapsible title="Panel example">
@@ -142,10 +221,10 @@
                 label: 'Command Palette...',
                 keybinding: 'Ctrl+Shift+A',
                 value: 'foo',
-                tabindex: '0'
+                tabindex: '0',
               },
               {
-                separator: true
+                separator: true,
               },
               {
                 label: 'Settings',
@@ -153,14 +232,14 @@
               },
               {
                 label: 'Online Services Settings',
-              }
+              },
             ];
 
             const menu = document.getElementById('menu-1');
             const result = document.getElementById('menu-1-result');
 
             menu.data = [...data];
-            menu.addEventListener('vsc-select', (event) => {
+            menu.addEventListener('vsc-select', event => {
               result.innerHTML = event.detail.label;
               menu.show = false;
             });
@@ -176,12 +255,11 @@
             const menu = document.getElementById('menu-2');
             const result = document.getElementById('menu-3-result');
 
-            menu.addEventListener('vsc-select', (event) => {
+            menu.addEventListener('vsc-select', event => {
               result.innerHTML = event.detail.label;
             });
           });
         </script>
-
       </div>
     </div>
     <div class="preview">
@@ -201,7 +279,7 @@
             branch: 'folder',
             leaf: 'file',
             open: 'folder-opened',
-          }
+          };
           const data = [
             {
               icons,
@@ -213,21 +291,21 @@
                   subItems: [
                     {
                       icons,
-                      label: 'item 0.0.0'
+                      label: 'item 0.0.0',
                     },
                     {
                       icons,
-                      label: 'item 0.0.1'
+                      label: 'item 0.0.1',
                     },
                     {
                       icons,
-                      label: 'item 0.0.2'
+                      label: 'item 0.0.2',
                     },
                     {
                       icons,
-                      label: 'item 0.0.3'
+                      label: 'item 0.0.3',
                     },
-                  ]
+                  ],
                 },
                 {
                   icons,
@@ -236,26 +314,26 @@
                   subItems: [
                     {
                       icons,
-                      label: 'item 0.1.0'
+                      label: 'item 0.1.0',
                     },
                     {
                       icons,
-                      label: 'item 0.1.1'
+                      label: 'item 0.1.1',
                     },
                     {
                       icons,
-                      label: 'item 0.1.2'
+                      label: 'item 0.1.2',
                     },
                     {
                       icons,
-                      label: 'item 0.1.3'
+                      label: 'item 0.1.3',
                     },
                   ],
                 },
                 {
                   icons,
-                  label: 'item 0.2'
-                }
+                  label: 'item 0.2',
+                },
               ],
             },
             {
@@ -264,17 +342,17 @@
               subItems: [
                 {
                   icons,
-                  label: 'item 1.0'
+                  label: 'item 1.0',
                 },
                 {
                   icons,
-                  label: 'item 1.1'
-                }
-              ]
+                  label: 'item 1.1',
+                },
+              ],
             },
             {
               icons,
-              label: 'item 2'
+              label: 'item 2',
             },
           ];
 
