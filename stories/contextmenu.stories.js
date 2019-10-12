@@ -1,10 +1,9 @@
+import withVscodeThemes from './withVscodeThemes';
+
 export default {
   title: 'Context menu',
   decorators: [
-    (story) => {
-      document.body.classList.add('vscode-light');
-      return story();
-    }
+    withVscodeThemes,
   ]
 };
 

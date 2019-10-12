@@ -1,14 +1,12 @@
 import { document, console } from 'global';
 import { withKnobs, text, boolean, number, radios } from '@storybook/addon-knobs';
+import withVscodeThemes from './withVscodeThemes';
 
 export default {
   title: 'Checkbox',
   decorators: [
     withKnobs,
-    (story) => {
-      document.body.classList.add('vscode-light');
-      return story();
-    }
+    withVscodeThemes,
   ]
 };
 

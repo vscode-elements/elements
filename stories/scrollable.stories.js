@@ -1,12 +1,10 @@
 import { document } from 'global';
+import withVscodeThemes from './withVscodeThemes';
 
 export default {
   title: 'Scrollable',
   decorators: [
-    (story) => {
-      document.body.classList.add('vscode-light');
-      return story();
-    }
+    withVscodeThemes,
   ]
 };
 
