@@ -1,5 +1,6 @@
-import withVscodeThemes from './withVscodeThemes';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
+import customEventLogger from './customEventLogger';
+import withVscodeThemes from './withVscodeThemes';
 
 export default {
   title: 'Context menu',
@@ -72,9 +73,7 @@ export const defaultState = () => {
   menu.style.display = 'flex';
   menu.show = boolean('show', true);
 
-  menu.addEventListener('vsc-select', (event) => {
-    console.log(event);
-  });
+  menu.addEventListener('vsc-select', customEventLogger.action('vsc-select'));
 
   return menu;
 };
