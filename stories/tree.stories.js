@@ -1,5 +1,6 @@
 import { document } from 'global';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
+import customEventLogger from './utils/customEventLogger';
 import withVscodeThemes from './utils/withVscodeThemes';
 
 export default {
@@ -21,6 +22,7 @@ export const defaultState = () => {
     {
       icons,
       label: 'Item 1',
+      value: 'Item 1 custom value example',
       subItems: [
         {
           icons,
@@ -74,6 +76,8 @@ export const defaultState = () => {
   tree.arrows = boolean('arrows', false);
   tree.indent = number('indent', 16);
 
+  tree.addEventListener('vsc-select', customEventLogger.action('vsc-select'));
+
   return tree;
 };
 defaultState.story = {
@@ -111,6 +115,8 @@ export const flatList = () => {
   tree.arrows = false;
   tree.indent = 0;
   tree.data = data;
+
+  tree.addEventListener('vsc-select', customEventLogger.action('vsc-select'));
 
   return tree;
 }

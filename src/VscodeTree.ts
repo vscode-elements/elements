@@ -10,10 +10,11 @@ interface TreeItemIconConfig {
 
 interface TreeItem {
   label: string;
-  subItems?: TreeItem[],
+  subItems?: TreeItem[];
   open?: boolean;
   selected?: boolean;
-  icons?: TreeItemIconConfig
+  icons?: TreeItemIconConfig;
+  value?: string;
 }
 
 enum ItemType {
@@ -179,6 +180,23 @@ export class VscodeTree extends LitElement {
     });
   }
 
+  private emitSelectEvent(item: TreeItem, path: string) {
+    const { icons, label, open, value } = item;
+    const detail = {
+      icons,
+      label,
+      open: open || false,
+      value: value || label,
+      path,
+    };
+
+    this.dispatchEvent(new CustomEvent('vsc-select', {
+      bubbles: true,
+      composed: true,
+      detail,
+    }));
+  }
+
   private onComponentClick(event: MouseEvent) {
     const composedPath = event.composedPath();
     const targetElement = composedPath.find(
@@ -186,10 +204,12 @@ export class VscodeTree extends LitElement {
     );
 
     if (targetElement) {
-      const item = this.getItemByPath((<HTMLLIElement>targetElement).dataset.path);
+      const path = (<HTMLLIElement>targetElement).dataset.path;
+      const item = this.getItemByPath(path);
 
       this.toggleSubTreeOpen(item);
       this.selectTreeItem(item);
+      this.emitSelectEvent(item, path);
       this.requestUpdate();
     }
   }
