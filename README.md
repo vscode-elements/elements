@@ -2,6 +2,7 @@
 
 Reusable components for creating VSCode extensions which use the [Webview API](https://code.visualstudio.com/api/extension-guides/webview). 
 
+- [ ] ArrayEdit
 - [ ] Badge
 - [ ] Breadcrumb
 - [ ] Button
@@ -12,6 +13,7 @@ Reusable components for creating VSCode extensions which use the [Webview API](h
 - [ ] FormItem
 - [x] Icon
 - [x] Inputbox
+- [ ] InlineEdit
 - [ ] List
 - [ ] ListEdit
 - [ ] Panel
