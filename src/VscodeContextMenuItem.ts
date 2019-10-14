@@ -6,7 +6,7 @@ export class VscodeContextMenuItem extends LitElement {
   @property({ type: String }) label: string;
   @property({ type: String }) keybinding: string;
   @property({ type: String }) value: string;
-  @property({ type: Boolean }) separator: boolean;
+  @property({ type: Boolean }) separator: boolean = false;
   @property({ type: Number }) tabindex: number;
 
   private onItemClick() {
@@ -14,7 +14,7 @@ export class VscodeContextMenuItem extends LitElement {
       detail: {
         label: this.label,
         keybinding: this.keybinding,
-        value: this.value,
+        value: this.value || this.label,
         separator: this.separator,
         tabindex: this.tabindex,
       },
