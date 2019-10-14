@@ -1,6 +1,6 @@
 import { document } from 'global';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
-import withVscodeThemes from './withVscodeThemes';
+import withVscodeThemes from './utils/withVscodeThemes';
 
 export default {
   title: 'Tree',

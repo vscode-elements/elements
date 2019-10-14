@@ -1,5 +1,5 @@
 import { document } from 'global';
-import withVscodeThemes from './withVscodeThemes';
+import withVscodeThemes from './utils/withVscodeThemes';
 
 export default {
   title: 'Collapsible',

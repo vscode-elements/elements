@@ -1,6 +1,6 @@
 import { document, console } from 'global';
 import { withKnobs, text, boolean, number, radios } from '@storybook/addon-knobs';
-import withVscodeThemes from './withVscodeThemes';
+import withVscodeThemes from './utils/withVscodeThemes';
 
 export default {
   title: 'Checkbox',

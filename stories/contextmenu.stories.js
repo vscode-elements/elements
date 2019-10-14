@@ -1,6 +1,6 @@
 import { withKnobs, boolean } from '@storybook/addon-knobs';
-import customEventLogger from './customEventLogger';
-import withVscodeThemes from './withVscodeThemes';
+import customEventLogger from './utils/customEventLogger';
+import withVscodeThemes from './utils/withVscodeThemes';
 
 export default {
   title: 'Context menu',
