@@ -1,9 +1,11 @@
 import { document } from 'global';
+import { withKnobs, boolean, number } from '@storybook/addon-knobs';
 import withVscodeThemes from './withVscodeThemes';
 
 export default {
   title: 'Tree',
   decorators: [
+    withKnobs,
     withVscodeThemes,
   ]
 };
@@ -69,10 +71,46 @@ export const defaultState = () => {
   const tree = document.createElement('vscode-tree');
 
   tree.data = data;
-  tree.arrows = true;
+  tree.arrows = boolean('arrows', false);
+  tree.indent = number('indent', 16);
 
   return tree;
 };
 defaultState.story = {
   name: 'Default',
 };
+
+export const flatList = () => {
+  const icons = {
+    branch: 'folder',
+    leaf: 'git-commit',
+    open: 'folder-opened',
+  };
+
+  const data = [
+    {
+      icons,
+      label: 'Revert "Fix strictFunctionTypes errors in terminal proxy"',
+    },
+    {
+      icons,
+      label: 'Recent Workspaces list broken with UNC paths and root of a drive. Fixes',
+    },
+    {
+      icons,
+      label: 'Update highlight js and md versions',
+    },
+    {
+      icons,
+      label: 'Show preferred action info in lightbulb hover',
+    },
+  ];
+
+  const tree = document.createElement('vscode-tree');
+
+  tree.arrows = false;
+  tree.indent = 0;
+  tree.data = data;
+
+  return tree;
+}
