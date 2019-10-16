@@ -309,6 +309,7 @@ export class VscodeInputbox extends LitElement {
         .value="${this.value}"
       >
     `;
+    const textareaHeight = `${BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT}px`;
     const message = html`
       <div class="message ${this.severity}">
         ${this.message}
@@ -327,7 +328,7 @@ export class VscodeInputbox extends LitElement {
     return html`
       <style>
         textarea {
-          height: ${BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT}px;
+          height: ${textareaHeight};
         }
       </style>
       <div class="${containerClass}">
