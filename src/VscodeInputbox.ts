@@ -104,6 +104,12 @@ export class VscodeInputbox extends LitElement {
     this.resizeTextareaIfRequired();
   }
 
+  updated(changedProperties: Map<string, undefined | string | boolean | number>) {
+    if (changedProperties.has('value')) {
+      this.resizeTextareaIfRequired();
+    }
+  }
+
   private onInputFocus = () => {
     this.focused = true;
   };
@@ -141,6 +147,7 @@ export class VscodeInputbox extends LitElement {
       const newLineChars = this.value.match(/\n/g);
       const numLines = newLineChars ? newLineChars.length + 1 : 1;
       this._currentLines = Math.min(Math.max(numLines, this.lines), this.maxLines);
+      this.requestUpdate();
     }
   };
 
