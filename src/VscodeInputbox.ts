@@ -99,6 +99,11 @@ export class VscodeInputbox extends LitElement {
     this._currentLines = this.lines;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.resizeTextareaIfRequired();
+  }
+
   private onInputFocus = () => {
     this.focused = true;
   };
