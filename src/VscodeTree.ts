@@ -131,6 +131,10 @@ export class VscodeTree extends LitElement {
   private renderTree(tree: TreeItem[], oldPath: number[] = []) {
     let ret = '';
 
+    if (!tree) {
+      return ret;
+    }
+
     tree.forEach((element, index) => {
       const path = [...oldPath, index];
       const indentLevel = path.length - 1;
