@@ -188,6 +188,7 @@ export class VscodeTree extends LitElement {
     const { icons, label, open, value } = item;
     const detail = {
       icons,
+      itemType: this.getItemType(item),
       label,
       open: open || false,
       value: value || label,
