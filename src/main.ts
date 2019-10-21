@@ -6,6 +6,5 @@ import './VscodeIcon';
 import './VscodeInputbox';
 import './VscodeScrollable';
 import './VscodeSelect';
-import './VscodeTab';
 import './VscodeTabs';
 import './VscodeTree';
