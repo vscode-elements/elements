@@ -4,15 +4,20 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 export class VscodeTabs extends LitElement {
   @property({ type: Number }) selected: number = 0;
 
-  constructor() {
-    super();
-    this.updateComplete.then(() => {
-      const slot = this.shadowRoot.querySelector('slot');
+  private _mainSlot;
 
-      console.dir(slot);
-      console.dir(slot.assignedElements());
-      console.dir(slot.assignedNodes());
-    });
+  private _onSlotChanged(event) {
+    console.dir(this._mainSlot.assignedElements());
+  }
+
+  firstUpdated() {
+    this._mainSlot = this.shadowRoot.querySelector('slot');
+
+    console.log('first updated');
+    this._mainSlot.addEventListener(
+      'slotchange',
+      this._onSlotChanged.bind(this)
+    );
   }
 
   static get styles() {
