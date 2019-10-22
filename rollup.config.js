@@ -1,3 +1,4 @@
+import livereload from 'rollup-plugin-livereload';
 import typescript from 'rollup-plugin-typescript';
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
@@ -13,6 +14,7 @@ export default {
     sourcemap: true,
   },
   plugins: [
+    !production && livereload(),
     typescript(),
     resolve(),
     production && minifyHTML(),
