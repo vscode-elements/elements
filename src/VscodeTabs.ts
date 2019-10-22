@@ -67,8 +67,11 @@ export class VscodeTabs extends LitElement {
         cursor: pointer;
         display: block;
         margin-bottom: -1px;
+        overflow: hidden;
         padding: 7px 8px;
+        text-overflow: ellipsis;
         user-select: none;
+        white-space: nowrap;
       }
 
       ::slotted(.is-active) {
