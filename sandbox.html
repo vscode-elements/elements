@@ -21,7 +21,7 @@
 
       body {
         padding-top: 20px;
-        padding-bottom: 20px;
+        padding-bottom: 40px;
       }
 
       .theme-switcher {
@@ -383,6 +383,20 @@
           console.log(event);
         });
       </script>
+    </div>
+    <div class="preview">
+      <vscode-select
+        options='[
+          {
+            "label": "Lorem ipsum",
+            "value": "22"
+          },
+          {
+            "label": "Dolor sit",
+            "value": "33"
+          }
+        ]'
+      ></vscode-select>
     </div>
   </body>
 </html>
