@@ -16,6 +16,13 @@ export class VscodeTabs extends LitElement {
       el.dataset.index = String(i);
       el.classList.toggle('is-active', i === this.selected);
     });
+
+    this.dispatchEvent(new CustomEvent('vsc-select', {
+      detail: {
+        selected: this.selected,
+      },
+      composed: true,
+    }));
   }
 
   private _onSlotChanged() {

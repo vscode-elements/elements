@@ -378,6 +378,11 @@
         <header slot="header">Tab #3</header>
         <section>tab 3 content</section>
       </vscode-tabs>
+      <script>
+        document.getElementById('tabs-1').addEventListener('vsc-select', (event) => {
+          console.log(event);
+        });
+      </script>
     </div>
   </body>
 </html>
