@@ -49,8 +49,31 @@ export class VscodeTabs extends LitElement {
         display: block;
       }
 
+      .header {
+        display: flex;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        font-weight: var(--vscode-font-weight);
+        width: 100%;
+      }
+
+      :host-context(.vscode-light) .header {
+        border-bottom: 1px solid #ccc;
+      }
+
+      ::slotted(header) {
+        border-bottom: 1px solid transparent;
+        color: var(--vscode-foreground);
+        cursor: pointer;
+        display: block;
+        margin-bottom: -1px;
+        padding: 7px 8px;
+        user-select: none;
+      }
+
       ::slotted(.is-active) {
-        font-weight: bold;
+        border-bottom-color: var(--vscode-settings-headerForeground);
+        color: var(--vscode-settings-headerForeground);
       }
     `;
   }
