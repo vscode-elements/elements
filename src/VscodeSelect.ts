@@ -29,6 +29,23 @@ export class VscodeSelect extends LitElement {
     this.selectedIndex = 0;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('click', this._onClickOutside.bind(this));
+  }
+
+  disconnectedCallback() {
+    super.connectedCallback();
+    window.removeEventListener('click', this._onClickOutside);
+  }
+
+  private _onClickOutside(event: MouseEvent) {
+    if (event.target !== this) {
+      this._showDropdown = false;
+      this.requestUpdate();
+    }
+  }
+
   private _toogleDropdown() {
     this._showDropdown = !this._showDropdown;
     this.requestUpdate();
