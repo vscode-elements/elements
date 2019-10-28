@@ -4,6 +4,7 @@ import './VscodeContextMenu';
 import './VscodeContextMenuItem';
 import './VscodeIcon';
 import './VscodeInputbox';
+import './VscodeOption';
 import './VscodeScrollable';
 import './VscodeSelect';
 import './VscodeTabs';

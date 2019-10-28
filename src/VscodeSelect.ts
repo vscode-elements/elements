@@ -5,6 +5,13 @@ import { nothing } from 'lit-html';
 interface Option {
   label: string;
   value: string;
+  description: string;
+}
+
+interface OptionElement extends Element {
+  label: string;
+  value: string;
+  description: string;
 }
 
 @customElement('vscode-select')
@@ -14,13 +21,33 @@ export class VscodeSelect extends LitElement {
   @property({ type: Number }) defaultIndex: number = 0;
   @property({ type: Number }) selectedIndex: number = 0;
 
+  private _showDropdown: boolean = false;
+  private _currentDescription: string;
+
   constructor() {
     super();
     this.selectedIndex = 0;
   }
 
-  updated(changedProperties: Map<string, string>) {
-    console.log(changedProperties);
+  private _toogleDropdown() {
+    this._showDropdown = !this._showDropdown;
+    this.requestUpdate();
+  }
+
+  private _onFaceClick() {
+    this._toogleDropdown();
+  }
+
+  private _onOptionMouseEnter(event: MouseEvent) {
+    const element = event.target as OptionElement;
+
+    this._currentDescription = element.description || undefined;
+    this.requestUpdate();
+  }
+
+  private _onOptionMouseLeave() {
+    this._currentDescription = '';
+    this.requestUpdate();
   }
 
   static get styles() {
@@ -48,16 +75,19 @@ export class VscodeSelect extends LitElement {
       }
 
       .dropdown {
+        background-color: var(--vscode-settings-textInputBackground);
+        border-color: var(--vscode-settings-dropdownBorder);
+        border-style: solid;
+        border-width: 1px;
+        box-sizing: border-box;
         left: 0;
         position: absolute;
         top: 26px;
         width: 100%;
+        z-index: 1;
       }
 
       .options {
-        border-color: var(--vscode-settings-dropdownBorder);
-        border-style: solid;
-        border-width: 1px;
         box-sizing: border-box;
         cursor: pointer;
         padding: 1px;
@@ -70,30 +100,54 @@ export class VscodeSelect extends LitElement {
       .description {
         border-color: var(--vscode-settings-dropdownBorder);
         border-style: solid;
-        border-width: 0 1px 1px 1px;
+        border-width: 1px 0 0;
       }
     `;
   };
 
   render() {
-    const current =
-      this.options[this.selectedIndex].label || this.options[this.selectedIndex].value;
-    let description;
+    let current: string;
+    let descriptionTemplate: TemplateResult | Object;
+    let optionsTemplate: TemplateResult | Object;
 
-    if (this.options[this.selectedIndex].description) {
-      description = html`<div class="description">${this.options[this.selectedIndex].description}</div>`;
+    if (this.options && this.options[this.selectedIndex]) {
+      current = this.options[this.selectedIndex].label || this.options[this.selectedIndex].value;
     } else {
-      description = nothing;
+      current = '';
     }
 
+    if (this._currentDescription) {
+      descriptionTemplate = html`<div class="description">${this._currentDescription}</div>`;
+    } else {
+      descriptionTemplate = nothing;
+    }
+
+    if (this.options) {
+      optionsTemplate = this.options.map((op) => html`
+        <vscode-option
+          @mouseenter="${this._onOptionMouseEnter}"
+          @mouseleave="${this._onOptionMouseLeave}"
+          description="${op.description || ''}"
+        >${op.label}</vscode-option>
+      `);
+    } else {
+      optionsTemplate = html`<slot></slot>`;
+    }
+
+    const display = this._showDropdown === true ? 'block' : 'none';
+
     return html`
-      <div class="select-face">${current}</div>
+      <style>
+        .dropdown {
+          display: ${display};
+        }
+      </style>
+      <div class="select-face" @click="${this._onFaceClick}">${current}</div>
       <div class="dropdown">
         <div class="options">
-          <div class="option">Lorem</div>
-          <div class="option">Ipsum</div>
+          ${optionsTemplate}
         </div>
-        ${description}
+        ${descriptionTemplate}
       </div>
     `;
   }
