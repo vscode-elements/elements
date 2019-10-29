@@ -9,6 +9,7 @@ export class VscodeOption extends LitElement {
     return css`
       :host {
         display: block;
+        user-select: none;
       }
 
       :host(:hover) {

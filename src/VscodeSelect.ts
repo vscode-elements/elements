@@ -1,6 +1,5 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
-import { nothing } from 'lit-html';
+import { nothing, TemplateResult } from 'lit-html';
 
 interface Option {
   label: string;
@@ -64,6 +63,15 @@ export class VscodeSelect extends LitElement {
 
   private _onOptionMouseLeave() {
     this._currentDescription = '';
+    this.requestUpdate();
+  }
+
+  private _onOptionClick(event: MouseEvent) {
+    const path = event.composedPath();
+    const optionElement = (<HTMLElement>path[0]);
+
+    this.selectedIndex = Number(optionElement.dataset.index);
+    this._showDropdown = false;
     this.requestUpdate();
   }
 
@@ -140,11 +148,13 @@ export class VscodeSelect extends LitElement {
     }
 
     if (this.options) {
-      optionsTemplate = this.options.map((op) => html`
+      optionsTemplate = this.options.map((op, index) => html`
         <vscode-option
+          @click="${this._onOptionClick}"
           @mouseenter="${this._onOptionMouseEnter}"
           @mouseleave="${this._onOptionMouseLeave}"
           description="${op.description || ''}"
+          data-index="${index}"
         >${op.label}</vscode-option>
       `);
     } else {
