@@ -16,12 +16,13 @@ interface OptionElement extends Element {
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
   @property({ type: String }) value: string = '';
-  @property({ type: Array }) options: Option[];
+  @property({ type: Array, reflect: false }) options: Option[];
   @property({ type: Number }) defaultIndex: number = 0;
   @property({ type: Number }) selectedIndex: number = 0;
 
   private _showDropdown: boolean = false;
   private _currentDescription: string;
+  private _mainSlot: HTMLSlotElement;
 
   constructor() {
     super();
@@ -36,6 +37,16 @@ export class VscodeSelect extends LitElement {
   disconnectedCallback() {
     super.connectedCallback();
     window.removeEventListener('click', this._onClickOutside);
+  }
+
+  firstUpdated() {
+    console.log('first updated', this.options);
+    this._mainSlot = this.shadowRoot.querySelector('slot');
+    this._mainSlot.addEventListener('slotchange', this._onSlotChange.bind(this));
+  }
+
+  private _onSlotChange(event: Event) {
+    console.log(this._mainSlot.assignedElements());
   }
 
   private _onClickOutside(event: MouseEvent) {
@@ -172,7 +183,7 @@ export class VscodeSelect extends LitElement {
       <div class="select-face" @click="${this._onFaceClick}">${current}</div>
       <div class="dropdown">
         <div class="options">
-          ${optionsTemplate}
+          <slot></slot>
         </div>
         ${descriptionTemplate}
       </div>
