@@ -221,7 +221,7 @@ export class VscodeSelect extends LitElement {
         font-size: var(--vscode-font-size);
         font-weight: var(--vscode-font-weight);
         line-height: 1.3;
-        padding: 6px 3px;
+        padding: 6px 4px;
       }
     `;
   };
