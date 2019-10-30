@@ -161,8 +161,22 @@ export class VscodeSelect extends LitElement {
         font-weight: var(--vscode-font-weight);
         line-height: 1.3;
         padding: 4px;
+        position: relative;
         user-select: none;
         width: 100%;
+      }
+
+      .select-face:after {
+        border-color: var(--vscode-foreground) transparent transparent transparent;
+        border-style: solid;
+        border-width: 6px 3px;
+        content: '';
+        display: block;
+        margin-top: -3px;
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        z-index: 1;
       }
 
       .dropdown {
