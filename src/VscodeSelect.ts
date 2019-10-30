@@ -216,6 +216,12 @@ export class VscodeSelect extends LitElement {
         border-color: var(--vscode-settings-dropdownBorder);
         border-style: solid;
         border-width: 1px 0 0;
+        color: var(--vscode-foreground);
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        font-weight: var(--vscode-font-weight);
+        line-height: 1.3;
+        padding: 6px 3px;
       }
     `;
   };

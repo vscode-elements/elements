@@ -385,6 +385,14 @@
       </script>
     </div>
     <div class="preview">
+      <vscode-select id="sl-2" tabindex="0">
+        <vscode-option description="A dirty file is never automatically saved">off</vscode-option>
+        <vscode-option description="A dirty file is automatically saved after the configured &quot;Files: Auto Save Delay&quot;.">afterDelay</vscode-option>
+        <vscode-option description="A dirty file is automatically saved when the editor loses focus.">onFocusChange</vscode-option>
+        <vscode-option description="A dirty file is automatically saved when the window loses focus.">onWindowChange</vscode-option>
+      </vscode-select>
+    </div>
+    <div class="preview">
       <vscode-select
         options='[
           {
@@ -398,12 +406,6 @@
           }
         ]'
       ></vscode-select>
-    </div>
-    <div class="preview">
-      <vscode-select id="sl-2" tabindex="0">
-        <vscode-option description="Dolor description">Dolor</vscode-option>
-        <vscode-option>Sit</vscode-option>
-      </vscode-select>
     </div>
   </body>
 </html>
