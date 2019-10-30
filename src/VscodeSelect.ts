@@ -27,6 +27,7 @@ export class VscodeSelect extends LitElement {
   }
   @property({ type: Number }) defaultIndex: number = 0;
   @property({ type: Number }) selectedIndex: number = 0;
+  @property({ type: Number, reflect: true }) tabIndex: number = -1;
 
   private _showDropdown: boolean = false;
   private _currentDescription: string;
@@ -145,6 +146,7 @@ export class VscodeSelect extends LitElement {
     return css`
       :host {
         display: inline-block;
+        outline: none;
         position: relative;
         width: 320px;
       }
@@ -179,6 +181,10 @@ export class VscodeSelect extends LitElement {
         z-index: 1;
       }
 
+      :host(:focus) .select-face {
+        border-color: var(--vscode-focusBorder);
+      }
+
       .dropdown {
         background-color: var(--vscode-settings-textInputBackground);
         border-color: var(--vscode-settings-dropdownBorder);
@@ -189,7 +195,11 @@ export class VscodeSelect extends LitElement {
         position: absolute;
         top: 26px;
         width: 100%;
-        z-index: 1;
+        z-index: 2;
+      }
+
+      :host(:focus) .dropdown {
+        border-color: var(--vscode-focusBorder);
       }
 
       .options {
