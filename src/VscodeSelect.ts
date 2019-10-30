@@ -50,7 +50,6 @@ export class VscodeSelect extends LitElement {
   }
 
   firstUpdated() {
-    console.log('first updated', this.options);
     this._mainSlot = this.shadowRoot.querySelector('slot');
 
     if (this._mainSlot) {
@@ -86,11 +85,10 @@ export class VscodeSelect extends LitElement {
       el.addEventListener('click', this._onOptionClick.bind(this));
       el.addEventListener('mouseenter', this._onOptionMouseEnter.bind(this));
       el.addEventListener('mouseleave', this._onOptionMouseLeave.bind(this));
+      el.addEventListener('vsc-slotchange', this._onOptionSlotChange.bind(this));
     }
 
     if (lastInsertedIndex === this.selectedIndex) {
-      console.dir(lastInserted.shadowRoot.textContent)
-      console.log('bbbbbbbbb', (<OptionElement>lastInserted).innerText)
       this._currentLabel = (<OptionElement>lastInserted).innerText;
       this.requestUpdate();
     }
@@ -125,7 +123,6 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onOptionClick(event: MouseEvent) {
-    console.log('onclick');
     const path = event.composedPath();
     const optionElement = (<HTMLElement>path[0]);
 
@@ -133,6 +130,15 @@ export class VscodeSelect extends LitElement {
     this._currentLabel = optionElement.innerText;
     this._showDropdown = false;
     this.requestUpdate();
+  }
+
+  private _onOptionSlotChange(event: CustomEvent) {
+    const optionElement = event.composedPath()[0] as OptionElement;
+
+    if (Number(optionElement.dataset.index) === this.defaultIndex) {
+      this._currentLabel = event.detail.innerText;
+      this.requestUpdate();
+    }
   }
 
   static get styles() {

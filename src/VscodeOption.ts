@@ -8,7 +8,6 @@ export class VscodeOption extends LitElement {
   private _mainSlot;
 
   firstUpdated() {
-    console.log('option first updated', this.options);
     this._mainSlot = this.shadowRoot.querySelector('slot');
 
     if (this._mainSlot) {
@@ -17,7 +16,13 @@ export class VscodeOption extends LitElement {
   }
 
   private _onSlotChange(event: Event) {
-    console.log('opt onslotchange');
+    this.dispatchEvent(new CustomEvent('vsc-slotchange', {
+      detail: {
+        innerText: this.innerText,
+      },
+      composed: true,
+      bubbles: false,
+    }));
   }
 
   static get styles() {
