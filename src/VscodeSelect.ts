@@ -125,18 +125,26 @@ export class VscodeSelect extends LitElement {
 
   private _onOptionClick(event: MouseEvent) {
     const path = event.composedPath();
-    const optionElement = (<HTMLElement>path[0]);
+    const optionElement = (<OptionElement>path[0]);
 
     this.selectedIndex = Number(optionElement.dataset.index);
+    this.value = optionElement.value || optionElement.innerText;
     this._currentLabel = optionElement.innerText;
     this._showDropdown = false;
+
+    this.dispatchEvent(new CustomEvent('vsc-change', {
+      detail: {
+        value: this.value,
+      },
+    }));
+
     this.requestUpdate();
   }
 
   private _onOptionSlotChange(event: CustomEvent) {
     const optionElement = event.composedPath()[0] as OptionElement;
 
-    if (Number(optionElement.dataset.index) === this.defaultIndex) {
+    if (Number(optionElement.dataset.index) === this.selectedIndex) {
       this._currentLabel = event.detail.innerText;
       this.requestUpdate();
     }

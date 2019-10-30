@@ -385,12 +385,22 @@
       </script>
     </div>
     <div class="preview">
-      <vscode-select id="sl-2" tabindex="0">
-        <vscode-option description="A dirty file is never automatically saved">off</vscode-option>
+      <vscode-select id="sl-1" tabindex="0" selectedindex="2">
+        <vscode-option description="A dirty file is never automatically saved" value="-1">off</vscode-option>
         <vscode-option description="A dirty file is automatically saved after the configured &quot;Files: Auto Save Delay&quot;.">afterDelay</vscode-option>
         <vscode-option description="A dirty file is automatically saved when the editor loses focus.">onFocusChange</vscode-option>
         <vscode-option description="A dirty file is automatically saved when the window loses focus.">onWindowChange</vscode-option>
       </vscode-select>
+      <script>
+        (function(){
+          const sl1 = document.getElementById('sl-1');
+
+          sl1.addEventListener('vsc-change', (event) => {
+            console.log('event:', event);
+            console.log('value:', sl1.value);
+          });
+        })();
+      </script>
     </div>
     <div class="preview">
       <vscode-select
