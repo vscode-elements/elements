@@ -6,11 +6,11 @@ Reusable components for creating VSCode extensions which use the [Webview API](h
 - [ ] Badge
 - [ ] Breadcrumb
 - [ ] Button
-- [ ] Checkbox (WIP)
+- [x] Checkbox
 - [x] Collapsible
 - [ ] ContextMenu
-- [ ] Form
-- [ ] FormItem
+- [ ] Form (?)
+- [x] FormItem
 - [x] Icon
 - [x] Inputbox
 - [ ] InlineEdit
@@ -18,9 +18,9 @@ Reusable components for creating VSCode extensions which use the [Webview API](h
 - [ ] ListEdit
 - [ ] Panel
 - [ ] Radio (?)
-- [ ] Select
+- [x] Select
 - [x] Scrollable
 - [ ] Split container
 - [ ] Toc (?)
-- [ ] Tree
+- [x] Tree
 - [ ] ViewContainer (Sidebar)
