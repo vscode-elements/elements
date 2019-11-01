@@ -9,7 +9,7 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
   input: 'src/main.ts',
   output: {
-    file: 'dist/vsc-we.js',
+    file: 'dist/vscwe.js',
     format: 'esm',
     sourcemap: true,
   },

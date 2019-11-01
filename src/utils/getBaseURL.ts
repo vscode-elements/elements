@@ -5,10 +5,10 @@ const getBaseURL = () => {
     return memoizedURL;
   }
 
-  const s = (<HTMLScriptElement>document.querySelector('script[src*="vsc-we"]'));
+  const s = (<HTMLScriptElement>document.querySelector('script[src*="vscwe"]'));
 
   if (s) {
-    const matches = /(.+\/)vsc-we/g.exec(s.src);
+    const matches = /(.+\/)vscwe/g.exec(s.src);
 
     if (!matches) {
       memoizedURL = '';
