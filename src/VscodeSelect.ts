@@ -20,6 +20,7 @@ export class VscodeSelect extends LitElement {
   set options(val: Option[]) {
     this._options = val;
     this._currentLabel = this.options[this.selectedIndex].label;
+    this.value = this.options[this.selectedIndex].value || this.options[this.selectedIndex].label;
     this.requestUpdate();
   }
   get options(): Option[] {
