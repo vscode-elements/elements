@@ -146,6 +146,7 @@ export class VscodeSelect extends LitElement {
 
     if (Number(optionElement.dataset.index) === this.selectedIndex) {
       this._currentLabel = event.detail.innerText;
+      this.value = optionElement.value || optionElement.innerText;
       this.requestUpdate();
     }
   }
