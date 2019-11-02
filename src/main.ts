@@ -1,3 +1,4 @@
+import './VscodeButton';
 import './VscodeCheckbox';
 import './VscodeCollapsible';
 import './VscodeContextMenu';
