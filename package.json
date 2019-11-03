@@ -1,8 +1,11 @@
 {
-  "name": "vscode-webview-elements",
+  "name": "@bendera/vscode-webview-elements",
   "version": "0.1.0",
   "description": "",
-  "main": "dist/vscodeWebviewElements.js",
+  "main": "dist/vscwe.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rimraf dist && rimraf storybook-static",
     "start": "concurrently \"rollup --config --watch\" \"serve\" --names \"rollup,serve\" -k",
@@ -16,7 +19,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MTI",
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@storybook/addon-actions": "^5.2.4",
@@ -45,13 +48,5 @@
   },
   "browserslist": [
     "last 1 chrome versions"
-  ],
-  "staticFiles": {
-    "staticPath": [
-      {
-        "outDirPattern": "**/dist",
-        "staticPath": "vscode-icons-optimized"
-      }
-    ]
-  }
+  ]
 }
