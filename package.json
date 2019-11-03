@@ -1,7 +1,7 @@
 {
   "name": "@bendera/vscode-webview-elements",
   "version": "0.1.1",
-  "description": "",
+  "description": "Native look and feel web components for creating VSCode extensions which use the Webview API.",
   "main": "dist/vscwe.js",
   "files": [
     "dist"
@@ -20,8 +20,8 @@
     "postversion": "git push && git push --tags"
   },
   "keywords": [],
-  "author": "",
-  "license": "MTI",
+  "author": "bendera",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@storybook/addon-actions": "^5.2.4",
@@ -49,5 +49,16 @@
   "dependencies": {},
   "browserslist": [
     "last 1 chrome versions"
-  ]
+  ],
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bendera/vscode-webview-elements.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bendera/vscode-webview-elements/issues"
+  },
+  "homepage": "https://github.com/bendera/vscode-webview-elements#readme"
 }
