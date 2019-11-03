@@ -30,6 +30,7 @@
     "concurrently": "^5.0.0",
     "jest": "^24.9.0",
     "jest-puppeteer": "^4.3.0",
+    "lit-element": "^2.2.1",
     "puppeteer": "^1.20.0",
     "rollup": "^1.23.1",
     "rollup-plugin-livereload": "^1.0.4",
@@ -43,9 +44,7 @@
     "tslib": "^1.10.0",
     "typescript": "^3.6.3"
   },
-  "dependencies": {
-    "lit-element": "^2.2.1"
-  },
+  "dependencies": {},
   "browserslist": [
     "last 1 chrome versions"
   ]
