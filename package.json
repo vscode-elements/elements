@@ -15,7 +15,9 @@
     "build-rollup": "rollup --config",
     "storybook": "start-storybook -p 6006 -s ./dist,./assets",
     "test": "jest",
-    "test-serve": "serve -l 5001"
+    "test-serve": "serve -l 5001",
+    "version": "rimraf dist && npm run build-rollup && npm run build-svgo",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [],
   "author": "",
