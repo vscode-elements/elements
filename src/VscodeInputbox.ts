@@ -118,7 +118,7 @@ export class VscodeInputbox extends LitElement {
     this.focused = false;
   }
 
-  private onInputChange = (event: InputEvent) => {
+  private onInputInput = (event: InputEvent) => {
     const eventTarget = (<HTMLInputElement | HTMLTextAreaElement>event.target);
 
     this.dispatchEvent(new CustomEvent('vsc-input', {
@@ -129,6 +129,16 @@ export class VscodeInputbox extends LitElement {
 
     this.value = eventTarget.value;
     this.resizeTextareaIfRequired();
+  }
+
+  private onInputChange = (event: InputEvent) => {
+    const eventTarget = (<HTMLInputElement | HTMLTextAreaElement>event.target);
+
+    this.dispatchEvent(new CustomEvent('vsc-change', {
+      detail: eventTarget.value,
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   private onTextareaMouseMove = (event: MouseEvent) => {
@@ -304,7 +314,8 @@ export class VscodeInputbox extends LitElement {
       <textarea
         @focus="${this.onInputFocus}"
         @blur="${this.onInputBlur}"
-        @input="${this.onInputChange}"
+        @input="${this.onInputInput}"
+        @change="${this.onInputChange}"
         @mousemove="${this.onTextareaMouseMove}"
         class="${classMap({ 'cursor-default': this._textareaDefaultCursor })}"
         placeholder="${this.placeholder}"
@@ -316,7 +327,8 @@ export class VscodeInputbox extends LitElement {
         type="${this.type}"
         @focus="${this.onInputFocus}"
         @blur="${this.onInputBlur}"
-        @input="${this.onInputChange}"
+        @input="${this.onInputInput}"
+        @change="${this.onInputChange}"
         placeholder="${this.placeholder}"
         .value="${this.value}"
       >

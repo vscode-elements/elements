@@ -123,11 +123,14 @@
       <script>
         (function() {
           const p = document.getElementById('p-1');
-          const ib = document
-            .getElementById('ib-1')
-            .addEventListener('vsc-input', event => {
-              p.innerHTML = event.detail;
-            });
+          const ib = document.getElementById('ib-1');
+
+          ib.addEventListener('vsc-input', event => {
+            p.innerHTML = event.detail;
+          });
+          ib.addEventListener('vsc-change', event => {
+            console.log(event.detail);
+          });
         })();
       </script>
     </div>
@@ -150,6 +153,9 @@
 
           ib.addEventListener('vsc-input', event => {
             p.innerHTML = event.detail;
+          });
+          ib.addEventListener('vsc-change', event => {
+            console.log(event.detail);
           });
         })();
       </script>
