@@ -2,24 +2,24 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 
 @customElement('vscode-tabs')
 export class VscodeTabs extends LitElement {
-  @property({ type: Number }) selected: number = 0;
+  @property({ type: Number }) selectedIndex: number = 0;
 
   private _headerSlot: HTMLSlotElement;
   private _mainSlot: HTMLSlotElement;
 
   private _setActiveTab() {
     Array.from(this._mainSlot.assignedElements()).forEach((el: HTMLElement, i) => {
-      el.style.display = i === this.selected ? 'block' : 'none';
+      el.style.display = i === this.selectedIndex ? 'block' : 'none';
     });
 
     Array.from(this._headerSlot.assignedElements()).forEach((el: HTMLElement, i) => {
       el.dataset.index = String(i);
-      el.classList.toggle('is-active', i === this.selected);
+      el.classList.toggle('is-active', i === this.selectedIndex);
     });
 
     this.dispatchEvent(new CustomEvent('vsc-select', {
       detail: {
-        selected: this.selected,
+        selected: this.selectedIndex,
       },
       composed: true,
     }));
@@ -36,7 +36,7 @@ export class VscodeTabs extends LitElement {
       return;
     }
 
-    this.selected = Number(index);
+    this.selectedIndex = Number(index);
     this._setActiveTab();
   }
 
