@@ -19,6 +19,7 @@ export class VscodeSelect extends LitElement {
   @property({ type: Array, reflect: false })
   set options(val: Option[]) {
     this._options = val;
+    this._optionsPopulatedBy = 'prop';
     this._currentLabel = this.options[this.selectedIndex].label;
     this.value = this.options[this.selectedIndex].value || this.options[this.selectedIndex].label;
     this.requestUpdate();
@@ -27,7 +28,14 @@ export class VscodeSelect extends LitElement {
     return this._options;
   }
   @property({ type: Number }) defaultIndex: number = 0;
-  @property({ type: Number }) selectedIndex: number = 0;
+  @property({ type: Number })
+  set selectedIndex(val: number) {
+    this._selectedIndex = val;
+    this._updateCurrentLabel();
+  }
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
   @property({ type: Number, reflect: true }) tabIndex: number = -1;
 
   private _showDropdown: boolean = false;
@@ -35,9 +43,12 @@ export class VscodeSelect extends LitElement {
   private _mainSlot: HTMLSlotElement;
   private _options: Option[];
   private _currentLabel: string;
+  private _selectedIndex: number;
+  private _optionsPopulatedBy: 'slot' | 'prop';
 
   constructor() {
     super();
+    this._options = [];
     this.selectedIndex = 0;
   }
 
@@ -57,6 +68,18 @@ export class VscodeSelect extends LitElement {
     if (this._mainSlot) {
       this._mainSlot.addEventListener('slotchange', this._onSlotChange.bind(this));
     }
+  }
+
+  private _updateCurrentLabel() {
+    if (this._options && this._options[this._selectedIndex]) {
+      this._currentLabel =
+        this._options[this._selectedIndex].label ||
+        this._options[this._selectedIndex].value;
+    } else {
+      this._currentLabel = '';
+    }
+
+    this.requestUpdate();
   }
 
   private _onSlotChange(event: Event) {
@@ -88,11 +111,12 @@ export class VscodeSelect extends LitElement {
       el.addEventListener('mouseenter', this._onOptionMouseEnter.bind(this));
       el.addEventListener('mouseleave', this._onOptionMouseLeave.bind(this));
       el.addEventListener('vsc-slotchange', this._onOptionSlotChange.bind(this));
+
+      this._optionsPopulatedBy = 'slot';
     }
 
-    if (lastInsertedIndex === this.selectedIndex) {
-      this._currentLabel = (<OptionElement>lastInserted).innerText;
-      this.requestUpdate();
+    if (lastInsertedIndex === this._selectedIndex) {
+      this._updateCurrentLabel();
     }
   }
 
@@ -144,11 +168,17 @@ export class VscodeSelect extends LitElement {
 
   private _onOptionSlotChange(event: CustomEvent) {
     const optionElement = event.composedPath()[0] as OptionElement;
+    const index = Number(optionElement.dataset.index);
 
-    if (Number(optionElement.dataset.index) === this.selectedIndex) {
-      this._currentLabel = event.detail.innerText;
+    this._options[index] = {
+      label: optionElement.innerText,
+      value: optionElement.value || optionElement.innerText,
+      description: optionElement.description,
+    };
+
+    if (index === this.selectedIndex) {
       this.value = optionElement.value || optionElement.innerText;
-      this.requestUpdate();
+      this._updateCurrentLabel();
     }
   }
 
@@ -203,7 +233,7 @@ export class VscodeSelect extends LitElement {
         box-sizing: border-box;
         left: 0;
         position: absolute;
-        top: 26px;
+        top: 100%;
         width: 100%;
         z-index: 2;
       }
@@ -246,8 +276,8 @@ export class VscodeSelect extends LitElement {
       descriptionTemplate = nothing;
     }
 
-    if (this.options) {
-      optionsTemplate = this.options.map((op, index) => html`
+    if (this._optionsPopulatedBy === 'prop') {
+      optionsTemplate = this._options.map((op, index) => html`
         <vscode-option
           @click="${this._onOptionClick}"
           @mouseenter="${this._onOptionMouseEnter}"

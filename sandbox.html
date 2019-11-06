@@ -102,12 +102,12 @@
           <p>Controls the wrapping column of the editor when <a href="#" data-href="#editor.wordWrap" title="#editor.wordWrap">Editor: Word Wrap</a> is <code>wordWrapColumn</code> or <code>bounded</code>.</p>
         </vscode-form-description>
         <vscode-form-control>
-          <vscode-select tabindex="0" selectedindex="2">
+          <!-- <vscode-select tabindex="0" selectedindex="2">
             <vscode-option description="A dirty file is never automatically saved" value="-1">off</vscode-option>
             <vscode-option description="A dirty file is automatically saved after the configured &quot;Files: Auto Save Delay&quot;.">afterDelay</vscode-option>
             <vscode-option description="A dirty file is automatically saved when the editor loses focus.">onFocusChange</vscode-option>
             <vscode-option description="A dirty file is automatically saved when the window loses focus.">onWindowChange</vscode-option>
-          </vscode-select>
+          </vscode-select> -->
         </vscode-form-control>
       </vscode-form-item>
     </div>
@@ -411,6 +411,7 @@
       </script>
     </div>
     <div class="preview">
+      <b>Slotted options</b>
       <vscode-select id="sl-1" tabindex="0" selectedindex="2">
         <vscode-option description="A dirty file is never automatically saved" value="-1">off</vscode-option>
         <vscode-option description="A dirty file is automatically saved after the configured &quot;Files: Auto Save Delay&quot;.">afterDelay</vscode-option>
@@ -429,6 +430,7 @@
       </script>
     </div>
     <div class="preview">
+      <b>Options attribute</b>
       <vscode-select
         options='[
           {
@@ -441,6 +443,7 @@
             "value": "33"
           }
         ]'
+        id="sl-2"
       ></vscode-select>
     </div>
   </body>
