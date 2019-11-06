@@ -2,24 +2,41 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 
 @customElement('vscode-tabs')
 export class VscodeTabs extends LitElement {
-  @property({ type: Number }) selectedIndex: number = 0;
+  @property({ type: Number })
+  set selectedIndex(index: number) {
+    this._selectedIndex = index;
+    this._setActiveTab();
+  }
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
 
   private _headerSlot: HTMLSlotElement;
   private _mainSlot: HTMLSlotElement;
+  private _selectedIndex: number;
+
+  constructor() {
+    super();
+    this._selectedIndex = 0;
+  }
 
   private _setActiveTab() {
+    if (!this._mainSlot || !this._headerSlot) {
+      return;
+    }
+
     Array.from(this._mainSlot.assignedElements()).forEach((el: HTMLElement, i) => {
-      el.style.display = i === this.selectedIndex ? 'block' : 'none';
+      el.style.display = i === this._selectedIndex ? 'block' : 'none';
     });
 
     Array.from(this._headerSlot.assignedElements()).forEach((el: HTMLElement, i) => {
       el.dataset.index = String(i);
-      el.classList.toggle('is-active', i === this.selectedIndex);
+      el.classList.toggle('is-active', i === this._selectedIndex);
     });
 
     this.dispatchEvent(new CustomEvent('vsc-select', {
       detail: {
-        selected: this.selectedIndex,
+        selectedIndex: this._selectedIndex,
       },
       composed: true,
     }));
@@ -36,7 +53,7 @@ export class VscodeTabs extends LitElement {
       return;
     }
 
-    this.selectedIndex = Number(index);
+    this._selectedIndex = Number(index);
     this._setActiveTab();
   }
 
