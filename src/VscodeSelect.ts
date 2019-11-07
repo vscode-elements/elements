@@ -27,7 +27,6 @@ export class VscodeSelect extends LitElement {
   get options(): Option[] {
     return this._options;
   }
-  @property({ type: Number }) defaultIndex: number = 0;
   @property({ type: Number })
   set selectedIndex(val: number) {
     this._selectedIndex = val;
