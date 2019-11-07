@@ -30,6 +30,7 @@ export class VscodeTree extends LitElement {
   @property({ type: Array, reflect: false }) data: TreeItem[];
   @property({ type: Number }) indent: number = 8;
   @property({ type: Boolean }) arrows: boolean = false;
+  @property({ type: Boolean }) multiline: boolean = false;
 
   private _selectedItem: TreeItem;
 
@@ -109,6 +110,7 @@ export class VscodeTree extends LitElement {
     const subTreeMarkup = open && itemType === ItemType.BRANCH ?
       `<ul>${this.renderTree(subItems, path)}</ul>` :
       '';
+    const labelMarkup = `<span class="label">${label}</span>`;
 
     liClasses.push(itemType === ItemType.LEAF ? 'leaf' : 'branch');
 
@@ -121,7 +123,7 @@ export class VscodeTree extends LitElement {
         <span class="${contentsClasses.join(' ')}" style="padding-left: ${padLeft}px;">
           ${arrowMarkup}
           ${iconMarkup}
-          ${label}
+          ${labelMarkup}
         </span>
         ${subTreeMarkup}
       </li>
@@ -244,7 +246,10 @@ export class VscodeTree extends LitElement {
       .contents {
         align-items: center;
         display: flex;
-        line-height: 22px;
+      }
+
+      .multi .contents {
+        align-items: flex-start;
       }
 
       .contents:hover {
@@ -295,12 +300,29 @@ export class VscodeTree extends LitElement {
         display: block;
         margin-right: 6px;
       }
+
+      .multi .contents .label-icon {
+        margin-top: 3px;
+      }
+
+      .label {
+        display: block;
+        line-height: 16px;
+        padding-bottom: 3px;
+        padding-top: 3px;
+      }
+
+      .single .label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     `;
   };
 
   render() {
     return html`
-      <div @click="${this.onComponentClick}">
+      <div @click="${this.onComponentClick}" class="${this.multiline ? 'multi' : 'single'}">
         <ul>
           ${unsafeHTML(this.renderTree(this.data))}
         </ul>

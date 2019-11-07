@@ -298,7 +298,7 @@
       <vscode-icon name="arrow-both"></vscode-icon>
       <vscode-icon name="bell"></vscode-icon>
       <vscode-scrollable style="width: 300px; height: 200px;">
-        <vscode-tree id="tree-1" arrows tabindex="0"></vscode-tree>
+        <vscode-tree id="tree-1" arrows multiline tabindex="0"></vscode-tree>
       </vscode-scrollable>
       <button type="button" id="bt-close-all">Close all</button>
       <script>
@@ -385,6 +385,10 @@
               icons,
               label: 'item 2',
             },
+            {
+              icons,
+              label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla orci eros, pretium nec fermentum nec, dignissim nec arcu. Proin id tellus eu nunc cursus varius. Cras in rutrum risus. Praesent posuere libero ut sem dapibus imperdiet. Aliquam consequat est vestibulum vulputate convallis. Fusce hendrerit, elit ut iaculis auctor, turpis neque semper magna, in laoreet arcu mi at nibh. Donec vitae ligula blandit, dapibus lacus ac, consectetur libero. Sed ac tortor vel libero hendrerit iaculis. Vestibulum arcu turpis, sodales et viverra at, ornare non turpis.'
+            }
           ];
 
           tree.data = data;
