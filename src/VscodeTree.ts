@@ -144,6 +144,10 @@ export class VscodeTree extends LitElement {
       const iconName = this.getIconName(element);
       const { label, open = false, selected = false, subItems = [] } = element;
 
+      if (selected) {
+        this._selectedItem = element;
+      }
+
       ret += this.renderTreeItem({
         indentLevel,
         label,
