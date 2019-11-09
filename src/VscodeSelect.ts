@@ -15,13 +15,26 @@ interface OptionElement extends HTMLElement {
 
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
-  @property({ type: String }) value: string = '';
+  @property({ type: String })
+  set value(val: string) {
+    this._value = val;
+
+    const found = this.options.findIndex(opt => opt.value === val);
+
+    if (found !== -1) {
+      this._selectedIndex = found;
+      this._updateCurrentLabel();
+    }
+  }
+  get value(): string {
+    return this._value;
+  }
   @property({ type: Array, reflect: false })
   set options(val: Option[]) {
     this._options = val;
     this._optionsPopulatedBy = 'prop';
     this._currentLabel = this.options[this.selectedIndex].label;
-    this.value = this.options[this.selectedIndex].value || this.options[this.selectedIndex].label;
+    this._value = this.options[this.selectedIndex].value || this.options[this.selectedIndex].label;
     this.requestUpdate();
   }
   get options(): Option[] {
@@ -37,6 +50,7 @@ export class VscodeSelect extends LitElement {
   }
   @property({ type: Number, reflect: true }) tabIndex: number = -1;
 
+  private _value: string;
   private _showDropdown: boolean = false;
   private _currentDescription: string;
   private _mainSlot: HTMLSlotElement;
@@ -152,13 +166,13 @@ export class VscodeSelect extends LitElement {
     const optionElement = (<OptionElement>path[0]);
 
     this.selectedIndex = Number(optionElement.dataset.index);
-    this.value = optionElement.value || optionElement.innerText;
+    this._value = optionElement.value || optionElement.innerText;
     this._currentLabel = optionElement.innerText;
     this._showDropdown = false;
 
     this.dispatchEvent(new CustomEvent('vsc-change', {
       detail: {
-        value: this.value,
+        value: this._value,
       },
     }));
 
@@ -176,7 +190,7 @@ export class VscodeSelect extends LitElement {
     };
 
     if (index === this.selectedIndex) {
-      this.value = optionElement.value || optionElement.innerText;
+      this._value = optionElement.value || optionElement.innerText;
       this._updateCurrentLabel();
     }
   }
