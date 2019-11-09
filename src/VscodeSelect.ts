@@ -192,7 +192,7 @@ export class VscodeSelect extends LitElement {
 
       .select-face {
         background-color: var(--vscode-settings-textInputBackground);
-        border-color: var(--vscode-settings-textInputBorder);
+        border-color: var(--vscode-settings-dropdownBorder, rgba(0, 0, 0, 0));
         border-style: solid;
         border-width: 1px;
         box-sizing: border-box;

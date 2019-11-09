@@ -209,7 +209,7 @@ export class VscodeInputbox extends LitElement {
       input,
       textarea {
         background-color: var(--vscode-input-background);
-        border-color: var(--vscode-we-input-border, var(--vscode-settings-textInputBorder));
+        border-color: var(--vscode-settings-textInputBorder, rgba(0, 0, 0, 0));
         border-style: solid;
         border-width: 1px;
         box-sizing: border-box;
