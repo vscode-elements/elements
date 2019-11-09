@@ -14,7 +14,7 @@
     "build-storybook": "build-storybook -s ./dist,./assets",
     "build-rollup": "rollup --config",
     "storybook": "start-storybook -p 6006 -s ./dist,./assets",
-    "test": "jest",
+    "test": "jest --verbose",
     "test-serve": "serve -l 5001",
     "version": "rimraf dist && npm run build-rollup && npm run build-svgo",
     "postversion": "git push && git push --tags"
@@ -31,6 +31,7 @@
     "babel-loader": "^8.0.6",
     "concurrently": "^5.0.0",
     "jest": "^24.9.0",
+    "jest-cli": "^24.9.0",
     "jest-puppeteer": "^4.3.0",
     "lit-element": "^2.2.1",
     "puppeteer": "^1.20.0",
