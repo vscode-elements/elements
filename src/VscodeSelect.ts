@@ -164,8 +164,14 @@ export class VscodeSelect extends LitElement {
   private _onOptionClick(event: MouseEvent) {
     const path = event.composedPath();
     const optionElement = (<OptionElement>path[0]);
+    const prevSelected = this.selectedIndex;
 
     this.selectedIndex = Number(optionElement.dataset.index);
+
+    if (prevSelected === this.selectedIndex) {
+      return;
+    }
+
     this._value = optionElement.value || optionElement.innerText;
     this._currentLabel = optionElement.innerText;
     this._showDropdown = false;
@@ -288,6 +294,7 @@ export class VscodeSelect extends LitElement {
     let optionsTemplate: TemplateResult | Object;
 
     if (this._currentDescription) {
+      console.log('currentDesc', this._currentDescription);
       descriptionTemplate = html`<div class="description">${this._currentDescription}</div>`;
     } else {
       descriptionTemplate = nothing;
