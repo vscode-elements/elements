@@ -451,5 +451,43 @@
         id="sl-2"
       ></vscode-select>
     </div>
+    <div class="preview">
+      <vscode-select tabindex="0" id="sl-3">
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option value="2">Ipsum</vscode-option>
+        <vscode-option value="Dolor"></vscode-option>
+      </vscode-select>
+      <pre id="sl-3-val"></pre>
+      <script>
+        (function() {
+          const el = document.getElementById('sl-3');
+          const elPre = document.getElementById('sl-3-val');
+
+          el.addEventListener('vsc-change', (event) => {
+            console.log(event);
+            elPre.innerHTML = event.target.value;
+          });
+        })();
+      </script>
+    </div>
+    <div class="preview">
+        <select tabindex="0" id="sl-4">
+          <option>Lorem</option>
+          <option value="2">Ipsum</option>
+          <option value="Dolor"></option>
+        </select>
+        <pre id="sl-4-val"></pre>
+        <script>
+          (function() {
+            const el = document.getElementById('sl-4');
+            const elPre = document.getElementById('sl-4-val');
+
+            el.addEventListener('change', (event) => {
+              console.log(event);
+              elPre.innerHTML = event.target.value;
+            });
+          })();
+        </script>
+      </div>
   </body>
 </html>

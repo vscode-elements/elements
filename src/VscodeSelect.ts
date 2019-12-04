@@ -234,6 +234,10 @@ export class VscodeSelect extends LitElement {
         z-index: 1;
       }
 
+      .select-face:empty:before {
+        content: '\\00a0';
+      }
+
       :host(:focus) .select-face {
         border-color: var(--vscode-focusBorder);
       }

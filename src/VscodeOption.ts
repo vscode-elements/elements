@@ -44,7 +44,7 @@ export class VscodeOption extends LitElement {
 
   render() {
     return html`
-      <slot></slot>
+      <slot>&nbsp;</slot>
     `;
   }
 }
