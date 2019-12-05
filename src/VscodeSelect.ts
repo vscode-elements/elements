@@ -33,8 +33,12 @@ export class VscodeSelect extends LitElement {
   set options(val: Option[]) {
     this._options = val;
     this._optionsPopulatedBy = 'prop';
-    this._currentLabel = this.options[this.selectedIndex].label;
-    this._value = this.options[this.selectedIndex].value || this.options[this.selectedIndex].label;
+
+    const v = this._options[this.selectedIndex].value;
+    const l = this._options[this.selectedIndex].label;
+
+    this._currentLabel = l;
+    this._value = v !== undefined ? v : l;
     this.requestUpdate();
   }
   get options(): Option[] {
@@ -196,7 +200,7 @@ export class VscodeSelect extends LitElement {
     };
 
     if (index === this.selectedIndex) {
-      this._value = optionElement.value || optionElement.innerText;
+      this._value = optionElement.value !== undefined ? optionElement.value : optionElement.innerText;
       this._updateCurrentLabel();
     }
   }

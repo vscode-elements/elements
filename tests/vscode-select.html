@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>VSCode Webview Elements test</title>
+  <link rel="stylesheet" href="../assets/default-webview-styles.css" />
+  <link rel="stylesheet" href="../assets/default-dark-theme.css" />
+  <link rel="stylesheet" href="../assets/default-high-contrast-theme.css" />
+  <link rel="stylesheet" href="../assets/default-light-theme.css" />
+  <script src="../dist/vscwe.js"></script>
+</head>
+<body class="vscode-light">
+  <vscode-select id="select-default">
+    <vscode-option value="1">Option 1</vscode-option>
+    <vscode-option value="2">Option 2</vscode-option>
+    <vscode-option value="3">Option 3</vscode-option>
+  </vscode-select>
+  <vscode-select selectedindex="1" id="select-selectedindex">
+    <vscode-option value="1">Option 1</vscode-option>
+    <vscode-option value="2">Option 2</vscode-option>
+    <vscode-option value="3">Option 3</vscode-option>
+  </vscode-select>
+  <vscode-select id="select-empty-value">
+    <vscode-option value="">---Select an option---</vscode-option>
+    <vscode-option value="1">Option 1</vscode-option>
+    <vscode-option value="2">Option 2</vscode-option>
+  </vscode-select>
+</body>
+</html>
