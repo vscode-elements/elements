@@ -172,7 +172,7 @@ export class VscodeSelect extends LitElement {
       return;
     }
 
-    this._value = optionElement.value || optionElement.innerText;
+    this._value = optionElement.value !== undefined ? optionElement.value : optionElement.innerText;
     this._currentLabel = optionElement.innerText;
     this._showDropdown = false;
 

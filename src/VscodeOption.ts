@@ -2,9 +2,16 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 
 @customElement('vscode-option')
 export class VscodeOption extends LitElement {
-  @property({ type: String }) value: string = '';
+  @property({ type: String })
+  set value(val: string | undefined) {
+    this._value = val;
+  }
+  get value(): string | undefined {
+    return this._value;
+  }
   @property({ type: String }) description: string = '';
 
+  private _value;
   private _mainSlot;
 
   firstUpdated() {
