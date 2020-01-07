@@ -3,16 +3,24 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 @customElement('vscode-option')
 export class VscodeOption extends LitElement {
   @property({ type: String })
-  set value(val: string | undefined) {
-    this._value = val;
+  set value(val: string) {
+    this._value = typeof val !== 'string' ? '' : val;
   }
-  get value(): string | undefined {
+  get value(): string {
+    if (typeof this._value === 'string') {
+      return this._value;
+    }
+
     return this._value;
   }
   @property({ type: String }) description: string = '';
 
   private _value;
   private _mainSlot;
+
+  constructor() {
+    super();
+  }
 
   firstUpdated() {
     this._mainSlot = this.shadowRoot.querySelector('slot');
@@ -46,12 +54,17 @@ export class VscodeOption extends LitElement {
       :host(:hover) {
         background-color: var(--vscode-list-focusBackground);
       }
+
+      .empty-placeholder:before {
+        content: '-';
+        visibility: hidden;
+      }
     `;
   }
 
   render() {
     return html`
-      <slot>&nbsp;</slot>
+      <slot><span class="empty-placeholder"></span></slot>
     `;
   }
 }

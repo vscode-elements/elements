@@ -298,7 +298,6 @@ export class VscodeSelect extends LitElement {
     let optionsTemplate: TemplateResult | Object;
 
     if (this._currentDescription) {
-      console.log('currentDesc', this._currentDescription);
       descriptionTemplate = html`<div class="description">${this._currentDescription}</div>`;
     } else {
       descriptionTemplate = nothing;

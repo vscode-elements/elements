@@ -73,6 +73,28 @@
       </div>
     </div>
 
+    <div>
+      <b>Native select</b>
+      <select name="native-select" id="native-select">
+        <option value="">---</option>
+        <option value="1">option 1</option>
+        <option value="2">option 2</option>
+        <option value="3">option 3</option>
+        <option value="option 4"></option>
+        <option>option 5</option>
+      </select>
+    </div>
+
+    <script>
+      (() => {
+        const sl = document.getElementById('native-select');
+
+        sl.addEventListener('change', () => {
+          console.log(sl.value);
+        });
+      })();
+    </script>
+
     <script>
       (function() {
         const buttons = document.querySelectorAll(
