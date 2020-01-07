@@ -1,5 +1,6 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
 import { nothing, TemplateResult } from 'lit-html';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 
 interface Option {
   label: string;
@@ -17,14 +18,17 @@ interface OptionElement extends HTMLElement {
 export class VscodeSelect extends LitElement {
   @property({ type: String })
   set value(val: string) {
-    this._value = val;
-
     const found = this.options.findIndex(opt => opt.value === val);
 
     if (found !== -1) {
       this._selectedIndex = found;
-      this._updateCurrentLabel();
+      this._value = val;
+    } else {
+      this._selectedIndex = -1;
+      this._value = '';
     }
+
+    this._updateCurrentLabel();
   }
   get value(): string {
     return this._value;
@@ -88,10 +92,10 @@ export class VscodeSelect extends LitElement {
   }
 
   private _updateCurrentLabel() {
-    if (this._options && this._options[this._selectedIndex]) {
-      this._currentLabel =
-        this._options[this._selectedIndex].label ||
-        this._options[this._selectedIndex].value;
+    if (this._selectedIndex === -1) {
+      this._currentLabel = '';
+    } else if (this._options && this._options[this._selectedIndex]) {
+      this._currentLabel = this._options[this._selectedIndex].label;
     } else {
       this._currentLabel = '';
     }
@@ -166,25 +170,21 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onOptionClick(event: MouseEvent) {
-    const path = event.composedPath();
-    const optionElement = (<OptionElement>path[0]);
+    const optionElement = (event.target as OptionElement);
     const prevSelected = this.selectedIndex;
 
     this.selectedIndex = Number(optionElement.dataset.index);
-
-    if (prevSelected === this.selectedIndex) {
-      return;
-    }
-
-    this._value = optionElement.value !== undefined ? optionElement.value : optionElement.innerText;
-    this._currentLabel = optionElement.innerText;
+    this._value = optionElement.value;
+    this._currentLabel = optionElement.label;
     this._showDropdown = false;
 
-    this.dispatchEvent(new CustomEvent('vsc-change', {
-      detail: {
-        value: this._value,
-      },
-    }));
+    if (prevSelected !== this.selectedIndex) {
+      this.dispatchEvent(new CustomEvent('vsc-change', {
+        detail: {
+          value: this._value,
+        },
+      }));
+    }
 
     this.requestUpdate();
   }
@@ -319,6 +319,7 @@ export class VscodeSelect extends LitElement {
     }
 
     const display = this._showDropdown === true ? 'block' : 'none';
+    const currentLabelMarkup = this._currentLabel === '' ? unsafeHTML('&nbsp;') : html`${this._currentLabel}`;
 
     return html`
       <style>
@@ -326,7 +327,7 @@ export class VscodeSelect extends LitElement {
           display: ${display};
         }
       </style>
-      <div class="select-face" @click="${this._onFaceClick}">${this._currentLabel}</div>
+      <div class="select-face" @click="${this._onFaceClick}">${currentLabelMarkup}</div>
       <div class="dropdown">
         <div class="options">
           ${optionsTemplate}

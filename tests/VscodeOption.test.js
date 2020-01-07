@@ -1,4 +1,4 @@
-describe('vscode-select', () => {
+describe('vscode-option', () => {
   let elHandle;
 
   beforeAll(async () => {
@@ -28,16 +28,36 @@ describe('vscode-select', () => {
       return Promise.resolve(op.value);
     });
 
-    expect(val).toBe('');
+    expect(val).toBe('2');
   });
 
   it('Value should be equals to the label', async () => {
     const val = await page.evaluate(async () => {
-      const op = document.getElementById('op-5');
+      const op = document.getElementById('op-4');
 
       return Promise.resolve(op.value);
     });
 
-    expect(val).toBe('Option-5');
+    expect(val).toBe('Option 4');
+  });
+
+  it('Should return description', async () => {
+    const val = await page.evaluate(async () => {
+      const op = document.getElementById('op-3');
+
+      return Promise.resolve(op.description);
+    });
+
+    expect(val).toBe('Option 3 description');
+  });
+
+  it('Description should be an empty string', async () => {
+    const val = await page.evaluate(async () => {
+      const op = document.getElementById('op-4');
+
+      return Promise.resolve(op.description);
+    });
+
+    expect(val).toBe('');
   });
 });
