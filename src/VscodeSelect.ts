@@ -205,6 +205,27 @@ export class VscodeSelect extends LitElement {
     }
   }
 
+  private _renderOptions() {
+    let optionsTemplate: TemplateResult | TemplateResult[];
+
+    if (this._optionsPopulatedBy === 'prop') {
+      optionsTemplate = this._options.map((op, index) => html`
+        <vscode-option
+          @click="${this._onOptionClick}"
+          @mouseenter="${this._onOptionMouseEnter}"
+          @mouseleave="${this._onOptionMouseLeave}"
+          description="${op.description || ''}"
+          data-index="${index}"
+          value="${op.value}"
+        >${op.label}</vscode-option>
+      `);
+    } else {
+      optionsTemplate = html`<slot></slot>`;
+    }
+
+    return optionsTemplate;
+  }
+
   static get styles() {
     return css`
       :host {
@@ -295,27 +316,11 @@ export class VscodeSelect extends LitElement {
 
   render() {
     let descriptionTemplate: TemplateResult | Object;
-    let optionsTemplate: TemplateResult | Object;
 
     if (this._currentDescription) {
       descriptionTemplate = html`<div class="description">${this._currentDescription}</div>`;
     } else {
       descriptionTemplate = nothing;
-    }
-
-    if (this._optionsPopulatedBy === 'prop') {
-      optionsTemplate = this._options.map((op, index) => html`
-        <vscode-option
-          @click="${this._onOptionClick}"
-          @mouseenter="${this._onOptionMouseEnter}"
-          @mouseleave="${this._onOptionMouseLeave}"
-          description="${op.description || ''}"
-          data-index="${index}"
-          value="${op.value}"
-        >${op.label}</vscode-option>
-      `);
-    } else {
-      optionsTemplate = html`<slot></slot>`;
     }
 
     const display = this._showDropdown === true ? 'block' : 'none';
@@ -330,7 +335,7 @@ export class VscodeSelect extends LitElement {
       <div class="select-face" @click="${this._onFaceClick}">${currentLabelMarkup}</div>
       <div class="dropdown">
         <div class="options">
-          ${optionsTemplate}
+          ${this._renderOptions()}
         </div>
         ${descriptionTemplate}
       </div>
