@@ -73,6 +73,28 @@
       </div>
     </div>
 
+    <div>
+      <b>Native select</b>
+      <select name="native-select" id="native-select">
+        <option value="">---</option>
+        <option value="1">option 1</option>
+        <option value="2">option 2</option>
+        <option value="3">option 3</option>
+        <option value="option 4"></option>
+        <option>option 5</option>
+      </select>
+    </div>
+
+    <script>
+      (() => {
+        const sl = document.getElementById('native-select');
+
+        sl.addEventListener('change', () => {
+          console.log(sl.value);
+        });
+      })();
+    </script>
+
     <script>
       (function() {
         const buttons = document.querySelectorAll(
@@ -417,7 +439,8 @@
     </div>
     <div class="preview">
       <b>Slotted options</b>
-      <vscode-select id="sl-1" tabindex="0" selectedindex="2">
+      <vscode-select id="sl-1" tabindex="0">
+        <vscode-option value="">---</vscode-option>
         <vscode-option description="A dirty file is never automatically saved" value="-1">off</vscode-option>
         <vscode-option description="A dirty file is automatically saved after the configured &quot;Files: Auto Save Delay&quot;.">afterDelay</vscode-option>
         <vscode-option description="A dirty file is automatically saved when the editor loses focus.">onFocusChange</vscode-option>

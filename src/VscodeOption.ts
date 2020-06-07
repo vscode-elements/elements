@@ -3,16 +3,44 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 @customElement('vscode-option')
 export class VscodeOption extends LitElement {
   @property({ type: String })
-  set value(val: string | undefined) {
-    this._value = val;
+  set value(val: string) {
+    const oldVal = this._value;
+
+    this._value = typeof val !== 'string' ? '' : val;
+    this.requestUpdate('value', oldVal);
   }
-  get value(): string | undefined {
-    return this._value;
+  get value(): string {
+    if (typeof this._value === 'string') {
+      return this._value;
+    } else if (this._value === undefined) {
+      return this._label || '';
+    }
+
+    return '';
+  }
+  @property({ type: String })
+  set label(val: string) {
+    const oldVal = this._label;
+
+    this._label = val;
+    this.requestUpdate('label', oldVal);
+  }
+  get label(): string {
+    if (typeof this._label === 'string') {
+      return this._label;
+    }
+
+    return '';
   }
   @property({ type: String }) description: string = '';
 
-  private _value;
-  private _mainSlot;
+  private _value: string | undefined;
+  private _label: string | undefined;
+  private _mainSlot: HTMLSlotElement;
+
+  constructor() {
+    super();
+  }
 
   firstUpdated() {
     this._mainSlot = this.shadowRoot.querySelector('slot');
@@ -30,6 +58,9 @@ export class VscodeOption extends LitElement {
       composed: true,
       bubbles: false,
     }));
+
+    this.label = this.innerText;
+    console.log('label', this.label);
   }
 
   static get styles() {
@@ -46,12 +77,17 @@ export class VscodeOption extends LitElement {
       :host(:hover) {
         background-color: var(--vscode-list-focusBackground);
       }
+
+      .empty-placeholder:before {
+        content: '-';
+        visibility: hidden;
+      }
     `;
   }
 
   render() {
     return html`
-      <slot>&nbsp;</slot>
+      <slot><span class="empty-placeholder"></span></slot>
     `;
   }
 }
