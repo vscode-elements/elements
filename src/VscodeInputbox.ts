@@ -121,13 +121,14 @@ export class VscodeInputbox extends LitElement {
   private onInputInput = (event: InputEvent) => {
     const eventTarget = (<HTMLInputElement | HTMLTextAreaElement>event.target);
 
+    this.value = eventTarget.value;
+
     this.dispatchEvent(new CustomEvent('vsc-input', {
       detail: eventTarget.value,
       bubbles: true,
       composed: true,
     }));
 
-    this.value = eventTarget.value;
     this.resizeTextareaIfRequired();
   }
 
