@@ -1,6 +1,6 @@
 {
   "name": "@bendera/vscode-webview-elements",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Native look and feel web components for creating VSCode extensions which use the Webview API.",
   "main": "dist/vscwe.js",
   "files": [
