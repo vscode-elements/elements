@@ -52,6 +52,7 @@ export class VscodeSelect extends LitElement {
   set selectedIndex(val: number) {
     this._selectedIndex = val;
     this._updateCurrentLabel();
+    this._value = this._options[this._selectedIndex]?.value;
   }
   get selectedIndex(): number {
     return this._selectedIndex;

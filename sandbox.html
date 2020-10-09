@@ -512,6 +512,28 @@
               elPre.innerHTML = event.target.value;
             });
           })();
+
+          (function() {
+            const sl = document.createElement('vscode-select');
+
+            const options = [
+              {label: 'Test option 1', value: 'option1', description: 'Test option description Test option description'},
+              {label: 'Test option 2', value: 'option2', description: 'Test option description Test option description'},
+              {label: 'Test option 3', value: 'option3', description: 'Test option description Test option description'},
+              {label: 'Test option 4', value: 'option4', description: 'Test option description Test option description'},
+              {label: 'Test option 5', value: 'option5', description: 'Test option description Test option description'},
+              {label: 'Test option 6', value: 'option6', description: 'Test option description Test option description'},
+              {label: 'Test option 7', value: 'option7', description: 'Test option description Test option description'},
+              {label: 'Test option 8', value: 'option8', description: 'Test option description Test option description'},
+              {label: 'Test option 9', value: 'option9', description: 'Test option description Test option description'},
+              {label: 'Test option 10', value: 'option10', description: 'Test option description Test option description'},
+            ]
+
+            sl.options = options;
+            sl.selectedIndex = 4;
+
+            console.log('sl.value:', sl.value);
+          })();
         </script>
       </div>
   </body>
