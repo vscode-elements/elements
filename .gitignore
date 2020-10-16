@@ -4,3 +4,4 @@ dist/
 storybook-static/
 vscode-icons-optimized/
 .vscode/
+debug.log

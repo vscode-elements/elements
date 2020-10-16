@@ -1,45 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+  <script>
+    document.write(
+      '<script src="http://' +
+      (location.host || 'localhost').split(':')[0] +
+      ':35729/livereload.js?snipver=1"></' +
+      'script>'
+    );
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>VSCode Webview Elements demo page</title>
+  <link rel="stylesheet" href="../assets/default-webview-styles.css" />
+  <link rel="stylesheet" href="../assets/default-dark-theme.css" />
+  <link rel="stylesheet" href="../assets/default-high-contrast-theme.css" />
+  <link rel="stylesheet" href="../assets/default-light-theme.css" />
+  <link rel="stylesheet" href="../assets/preview-page.css" />
+  <script src="../assets/preview-page.js"></script>
+  <script src="../dist/vscwe.js"></script>
+</head>
+
+<body class="vscode-light">
+  <div class="theme-switcher">
+    <div class="theme-switcher-option light">
+      <button value="vscode-light" type="button">Light</button>
+    </div>
+    <div class="theme-switcher-option dark">
+      <button value="vscode-dark" type="button">Dark</button>
+    </div>
+    <div class="theme-switcher-option hc">
+      <button value="vscode-high-contrast" type="button">
+        High contrast
+      </button>
+    </div>
+  </div>
+
+  <div class="story" id="vscode-select__default">
+    <h2 class="story-title">Default</h2>
+    <vscode-select>
+      <vscode-option>Lorem</vscode-option>
+      <vscode-option>Ipsum</vscode-option>
+      <vscode-option>Dolor</vscode-option>
+    </vscode-select>
+    <div class="logger"></div>
+    <script>(() => {
+      const sl = document.querySelector('#vscode-select__default vscode-select');
+      const loggerEl = document.querySelector('#vscode-select__default .logger');
+
+      loggerEl.innerHTML = sl.value;
+
+      sl.addEventListener('vsc-change', (event) => {
+        loggerEl.innerHTML = event.detail.value;
+      });
+    })()</script>
+  </div>
+
+  <div class="story" id="vscode-select__value">
+    <h2 class="story-title">Explicit values</h2>
+    <vscode-select>
+      <vscode-option value="test value 1">Lorem</vscode-option>
+      <vscode-option value="test value 2">Ipsum</vscode-option>
+      <vscode-option value="test value 3">Dolor</vscode-option>
+    </vscode-select>
+    <div class="logger"></div>
+    <script>(() => {
+      const sl = document.querySelector('#vscode-select__value vscode-select');
+      const loggerEl = document.querySelector('#vscode-select__value .logger');
+
+      loggerEl.innerHTML = sl.value;
+
+      sl.addEventListener('vsc-change', (event) => {
+        loggerEl.innerHTML = event.detail.value;
+      });
+    })()</script>
+  </div>
+
+  <div class="story" id="vscode-select__selected">
+    <h2 class="story-title">Selected option</h2>
+    <vscode-select value="'test value 2'">
+      <vscode-option value="test value 1">Lorem</vscode-option>
+      <vscode-option value="test value 2" selected>Ipsum</vscode-option>
+      <vscode-option value="test value 3">Dolor</vscode-option>
+    </vscode-select>
+  </div>
+
+  <div class="story" id="vscode-select__description">
+    <h2 class="story-title">Option descriptions</h2>
+    <vscode-select>
+      <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
+      <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
+      <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
+    </vscode-select>
+  </div>
+
+  <div class="story" id="vscode-select__create-element">
+    <h2 class="story-title">Document.createElement()</h2>
+    <div class="element-wrapper"></div>
     <script>
-      document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
-      ':35729/livereload.js?snipver=1"></' + 'script>');
+      (() => {
+        const options = [
+          { label: 'Lorem', value: 'test value 1' },
+          { label: 'Ipsum', value: 'test value 2' },
+          { label: 'Dolor', value: 'test value 3' },
+        ];
+
+        const wrapper = document.querySelector(
+          '#vscode-select__create-element .element-wrapper'
+        );
+        const el = document.createElement('vscode-select');
+        el.options = options;
+        el.selectedIndex = 1;
+
+        wrapper.appendChild(el);
+      })();
     </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>VSCode Webview Elements demo page</title>
-    <link rel="stylesheet" href="../assets/default-webview-styles.css" />
-    <link rel="stylesheet" href="../assets/default-dark-theme.css" />
-    <link rel="stylesheet" href="../assets/default-high-contrast-theme.css" />
-    <link rel="stylesheet" href="../assets/default-light-theme.css" />
-    <link rel="stylesheet" href="../assets/preview-page.css" />
-    <script src="../assets/preview-page.js"></script>
-    <script src="../dist/vscwe.js"></script>
-  </head>
-  <body class="vscode-light">
-    <div class="theme-switcher">
-      <div class="theme-switcher-option light">
-        <button value="vscode-light" type="button">Light</button>
-      </div>
-      <div class="theme-switcher-option dark">
-        <button value="vscode-dark" type="button">Dark</button>
-      </div>
-      <div class="theme-switcher-option hc">
-        <button value="vscode-high-contrast" type="button">High contrast</button>
-      </div>
-    </div>
+  </div>
+</body>
 
-    <div class="story" id="vscode-select__default">
-      <h2 class="story-title">Default</h2>
-      <p>Lorem ipsum dolor</p>
-
-      <vscode-select>
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option>Ipsum</vscode-option>
-        <vscode-option>Dolor</vscode-option>
-      </vscode-select>
-    </div>
-
-  </body>
 </html>
