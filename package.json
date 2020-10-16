@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist && rimraf storybook-static",
-    "start": "concurrently \"rollup --config --watch\" \"serve\" --names \"rollup,serve\" -k",
+    "start": "npm run clean && npm run build-svgo -- -q && npm run build-rollup && concurrently \"rollup --config --watch\" \"serve\" --names \"rollup,serve\" -k",
     "build": "npm run clean && npm run build-svgo && npm run build-rollup && npm run build-storybook",
     "build-svgo": "svgo -f vscode-icons/icons/ -r --config=.svgo.yml -p 5 -o dist/icons",
     "build-storybook": "build-storybook -s ./dist,./assets",

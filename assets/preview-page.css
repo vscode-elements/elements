@@ -1,0 +1,43 @@
+.story {
+  padding: 20px 0;
+}
+
+body {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.theme-switcher {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.theme-switcher-option {
+  align-items: center;
+  display: flex;
+  margin-right: 20px;
+}
+
+.theme-switcher-option button {
+  --fallback-font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC',
+    'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+  --fallback-font-size: 13px;
+  --fallback-font-weight: normal;
+
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--vscode-foreground);
+  cursor: pointer;
+  font-family: var(--vscode-font-family, var(--fallback-font-family));
+  font-size: var(--vscode-font-size, var(--fallback-font-size));
+  font-weight: var(--vscode-font-weight, var(--fallback-font-weight));
+  outline: none;
+  padding: 5px 0;
+}
+
+body.vscode-light .theme-switcher-option.light button,
+body.vscode-dark .theme-switcher-option.dark button,
+body.vscode-high-contrast .theme-switcher-option.hc button {
+  border-bottom-color: var(--vscode-foreground);
+}

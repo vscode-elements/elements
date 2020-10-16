@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+      ':35729/livereload.js?snipver=1"></' + 'script>');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>VSCode Webview Elements demo page</title>
+    <link rel="stylesheet" href="../assets/default-webview-styles.css" />
+    <link rel="stylesheet" href="../assets/default-dark-theme.css" />
+    <link rel="stylesheet" href="../assets/default-high-contrast-theme.css" />
+    <link rel="stylesheet" href="../assets/default-light-theme.css" />
+    <link rel="stylesheet" href="../assets/preview-page.css" />
+    <script src="../assets/preview-page.js"></script>
+    <script src="../dist/vscwe.js"></script>
+  </head>
+  <body class="vscode-light">
+    <div class="theme-switcher">
+      <div class="theme-switcher-option light">
+        <button value="vscode-light" type="button">Light</button>
+      </div>
+      <div class="theme-switcher-option dark">
+        <button value="vscode-dark" type="button">Dark</button>
+      </div>
+      <div class="theme-switcher-option hc">
+        <button value="vscode-high-contrast" type="button">High contrast</button>
+      </div>
+    </div>
+
+    <div class="story" id="vscode-select__default">
+      <h2 class="story-title">Default</h2>
+      <p>Lorem ipsum dolor</p>
+
+      <vscode-select>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-select>
+    </div>
+
+  </body>
+</html>

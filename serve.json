@@ -1,0 +1,15 @@
+{
+  "unlisted": [
+    ".*",
+    "LICENSE",
+    "README.md",
+    "assets",
+    "dist",
+    "node_modules",
+    "src",
+    "stories",
+    "tests",
+    "*.js",
+    "*.json"
+  ]
+}
