@@ -31,7 +31,7 @@ export class VscodeSelect extends LitElement {
     this._updateCurrentLabel();
   }
   get value(): string {
-    return this._value;
+    return this._options[this._selectedIndex]?.value || '';
   }
   @property({ type: Array, reflect: false })
   set options(val: Option[]) {
