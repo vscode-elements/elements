@@ -5,14 +5,26 @@ describe('vscode-select', () => {
 
   it('Default behavior', () => {
     cy.get('#vscode-select__default vscode-select').as('vscodeSelect');
+    cy.get('#vscode-select__default .logger').as('logger');
 
+    cy.get('@logger').should('contain', 'Lorem');
     cy.get('@vscodeSelect').find('.select-face').should('contain', 'Lorem');
+
     cy.get('@vscodeSelect').click();
+
     cy.get('@vscodeSelect').find('vscode-option[data-index=1]').as('option2');
     cy.get('@option2').should('contain', 'Ipsum');
     cy.get('@option2').click();
+
+    cy.get('@logger').should('contain', 'Ipsum');
     cy.get('@vscodeSelect').should('have.prop', 'value', 'Ipsum');
     cy.get('@vscodeSelect').find('.select-face').should('contain', 'Ipsum');
+
+    cy.get('@vscodeSelect').invoke('prop', 'selectedIndex', -1);
+    cy.get('@vscodeSelect')
+      .find('.select-face')
+      .should('have.prop', 'innerHTML', '<!---->&nbsp;<!---->');
+    cy.get('@vscodeSelect').should('have.prop', 'value', '');
   });
 
   it('Explicit values', () => {
