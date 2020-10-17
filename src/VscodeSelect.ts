@@ -23,7 +23,7 @@ const findOptionEl = (event: Event) => {
   }
 
   return undefined;
-}
+};
 
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
