@@ -26,11 +26,7 @@ export class VscodeOption extends LitElement {
     this.requestUpdate('label', oldVal);
   }
   get label(): string {
-    if (typeof this._label === 'string') {
-      return this._label;
-    }
-
-    return '';
+    return this.innerText;
   }
   @property({ type: String }) description: string = '';
 
@@ -60,7 +56,6 @@ export class VscodeOption extends LitElement {
     }));
 
     this.label = this.innerText;
-    console.log('label', this.label);
   }
 
   static get styles() {

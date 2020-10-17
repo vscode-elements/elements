@@ -14,11 +14,22 @@ interface OptionElement extends HTMLElement {
   description?: string;
 }
 
+const findOptionEl = (event: Event) => {
+  const path = event.composedPath();
+  const el = path[0];
+
+  if ((el as OptionElement)?.tagName?.toLowerCase() === 'vscode-option') {
+    return el as OptionElement;
+  }
+
+  return undefined;
+}
+
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
   @property({ type: String })
   set value(val: string) {
-    const found = this.options.findIndex(opt => opt.value === val);
+    const found = this.options.findIndex((opt) => opt.value === val);
 
     if (found !== -1) {
       this._selectedIndex = found;
@@ -38,11 +49,10 @@ export class VscodeSelect extends LitElement {
     this._options = val;
     this._optionsPopulatedBy = 'prop';
 
-    const v = this._options[this.selectedIndex].value;
-    const l = this._options[this.selectedIndex].label;
+    const { value, label } = this._options[this.selectedIndex];
 
-    this._currentLabel = l;
-    this._value = v !== undefined ? v : l;
+    this._currentLabel = label;
+    this._value = value || label;
     this.requestUpdate();
   }
   get options(): Option[] {
@@ -76,19 +86,32 @@ export class VscodeSelect extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+
     window.addEventListener('click', this._onClickOutside.bind(this));
+    this.addEventListener('vsc-slotchange', this._onOptionSlotChange);
+    this.addEventListener('click', this._onOptionClick);
+    this.addEventListener('mouseover', this._onOptionMouseEnter);
+    this.addEventListener('mouseout', this._onOptionMouseLeave);
   }
 
   disconnectedCallback() {
-    super.connectedCallback();
-    window.removeEventListener('click', this._onClickOutside);
+    super.disconnectedCallback();
+
+    window.removeEventListener('click', this._onClickOutside.bind(this));
+    this.removeEventListener('vsc-slotchange', this._onOptionSlotChange);
+    this.removeEventListener('click', this._onOptionClick);
+    this.removeEventListener('mouseover', this._onOptionMouseEnter);
+    this.removeEventListener('mouseout', this._onOptionMouseLeave);
   }
 
   firstUpdated() {
     this._mainSlot = this.shadowRoot.querySelector('slot');
 
     if (this._mainSlot) {
-      this._mainSlot.addEventListener('slotchange', this._onSlotChange.bind(this));
+      this._mainSlot.addEventListener(
+        'slotchange',
+        this._onSlotChange.bind(this)
+      );
     }
   }
 
@@ -104,42 +127,31 @@ export class VscodeSelect extends LitElement {
     this.requestUpdate();
   }
 
-  private _onSlotChange(event: Event) {
+  private _onSlotChange() {
+    this._optionsPopulatedBy = 'slot';
     const nodes = this._mainSlot.assignedNodes();
-    const l = nodes.length;
-
-    if (
-      l < 1 ||
-      nodes[l - 1].nodeType !== Node.ELEMENT_NODE ||
-      (<Element>nodes[l - 1]).tagName.toLowerCase() !== 'vscode-option'
-    ) {
-      return;
-    }
 
     const optElements = nodes.filter(
-      el =>
+      (el) =>
         el.nodeType === Node.ELEMENT_NODE &&
         (<Element>el).tagName.toLowerCase() === 'vscode-option'
     );
 
-    const lastInsertedIndex = optElements.length - 1;
-    const lastInserted = (optElements[lastInsertedIndex]) as Element;
+    optElements.forEach((el: OptionElement, index) => {
+      const label = el.innerText;
+      const value = el.value || label;
+      const description = el.getAttribute('description') || '';
 
-    if (lastInserted.tagName.toLowerCase() === 'vscode-option') {
-      const el = (<OptionElement>lastInserted);
+      el.dataset.index = String(index);
 
-      el.dataset.index = String(lastInsertedIndex);
-      el.addEventListener('click', this._onOptionClick.bind(this));
-      el.addEventListener('mouseenter', this._onOptionMouseEnter.bind(this));
-      el.addEventListener('mouseleave', this._onOptionMouseLeave.bind(this));
-      el.addEventListener('vsc-slotchange', this._onOptionSlotChange.bind(this));
+      this._options[index] = {
+        label,
+        value,
+        description,
+      };
+    });
 
-      this._optionsPopulatedBy = 'slot';
-    }
-
-    if (lastInsertedIndex === this._selectedIndex) {
-      this._updateCurrentLabel();
-    }
+    this._updateCurrentLabel();
   }
 
   private _onClickOutside(event: MouseEvent) {
@@ -159,39 +171,61 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onOptionMouseEnter(event: MouseEvent) {
-    const element = event.target as OptionElement;
+    const element = findOptionEl(event);
+
+    if (!element) {
+      return;
+    }
 
     this._currentDescription = element.description || undefined;
     this.requestUpdate();
   }
 
-  private _onOptionMouseLeave() {
+  private _onOptionMouseLeave(event: MouseEvent) {
+    const element = findOptionEl(event);
+
+    if (!element) {
+      return;
+    }
+
     this._currentDescription = '';
     this.requestUpdate();
   }
 
   private _onOptionClick(event: MouseEvent) {
-    const optionElement = (event.target as OptionElement);
+    const optionElement = findOptionEl(event);
+
+    if (!optionElement) {
+      return;
+    }
+
     const prevSelected = this.selectedIndex;
 
     this.selectedIndex = Number(optionElement.dataset.index);
     this._value = optionElement.value;
-    this._currentLabel = optionElement.label;
+    this._currentLabel = optionElement.innerText;
     this._showDropdown = false;
 
     if (prevSelected !== this.selectedIndex) {
-      this.dispatchEvent(new CustomEvent('vsc-change', {
-        detail: {
-          value: this._value,
-        },
-      }));
+      this.dispatchEvent(
+        new CustomEvent('vsc-change', {
+          detail: {
+            value: this._value,
+          },
+        })
+      );
     }
 
     this.requestUpdate();
   }
 
   private _onOptionSlotChange(event: CustomEvent) {
-    const optionElement = event.composedPath()[0] as OptionElement;
+    const optionElement = findOptionEl(event);
+
+    if (!optionElement) {
+      return;
+    }
+
     const index = Number(optionElement.dataset.index);
 
     this._options[index] = {
@@ -201,25 +235,31 @@ export class VscodeSelect extends LitElement {
     };
 
     if (index === this.selectedIndex) {
-      this._value = optionElement.value !== undefined ? optionElement.value : optionElement.innerText;
+      this._value = optionElement.value || optionElement.innerText;
       this._updateCurrentLabel();
     }
+
+    this._updateCurrentLabel();
+    this.requestUpdate();
   }
 
   private _renderOptions() {
     let optionsTemplate: TemplateResult | TemplateResult[];
 
     if (this._optionsPopulatedBy === 'prop') {
-      optionsTemplate = this._options.map((op, index) => html`
-        <vscode-option
-          @click="${this._onOptionClick}"
-          @mouseenter="${this._onOptionMouseEnter}"
-          @mouseleave="${this._onOptionMouseLeave}"
-          description="${op.description || ''}"
-          data-index="${index}"
-          value="${op.value}"
-        >${op.label}</vscode-option>
-      `);
+      optionsTemplate = this._options.map(
+        (op, index) => html`
+          <vscode-option
+            @click="${this._onOptionClick}"
+            @mouseover="${this._onOptionMouseEnter}"
+            @mouseout="${this._onOptionMouseLeave}"
+            description="${op.description || ''}"
+            data-index="${index}"
+            value="${op.value}"
+            >${op.label}</vscode-option
+          >
+        `
+      );
     } else {
       optionsTemplate = html`<slot></slot>`;
     }
@@ -254,7 +294,8 @@ export class VscodeSelect extends LitElement {
       }
 
       .select-face:after {
-        border-color: var(--vscode-foreground) transparent transparent transparent;
+        border-color: var(--vscode-foreground) transparent transparent
+          transparent;
         border-style: solid;
         border-width: 6px 3px;
         content: '';
@@ -313,19 +354,24 @@ export class VscodeSelect extends LitElement {
         padding: 6px 4px;
       }
     `;
-  };
+  }
 
   render() {
     let descriptionTemplate: TemplateResult | Object;
 
     if (this._currentDescription) {
-      descriptionTemplate = html`<div class="description">${this._currentDescription}</div>`;
+      descriptionTemplate = html`<div class="description">
+        ${this._currentDescription}
+      </div>`;
     } else {
       descriptionTemplate = nothing;
     }
 
     const display = this._showDropdown === true ? 'block' : 'none';
-    const currentLabelMarkup = this._currentLabel === '' ? unsafeHTML('&nbsp;') : html`${this._currentLabel}`;
+    const currentLabelMarkup =
+      this._currentLabel === ''
+        ? unsafeHTML('&nbsp;')
+        : html`${this._currentLabel}`;
 
     return html`
       <style>
@@ -333,11 +379,11 @@ export class VscodeSelect extends LitElement {
           display: ${display};
         }
       </style>
-      <div class="select-face" @click="${this._onFaceClick}">${currentLabelMarkup}</div>
+      <div class="select-face" @click="${this._onFaceClick}">
+        ${currentLabelMarkup}
+      </div>
       <div class="dropdown">
-        <div class="options">
-          ${this._renderOptions()}
-        </div>
+        <div class="options">${this._renderOptions()}</div>
         ${descriptionTemplate}
       </div>
     `;
