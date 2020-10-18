@@ -45,16 +45,6 @@ export class VscodeSelect extends LitElement {
     return this._options[this._selectedIndex]?.value || '';
   }
   @property({ type: Array, reflect: false })
-  set options(val: Option[]) {
-    this._options = val;
-    this._optionsPopulatedBy = 'prop';
-
-    const { value, label } = this._options[this.selectedIndex];
-
-    this._currentLabel = label;
-    this._value = value || label;
-    this.requestUpdate();
-  }
   get options(): Option[] {
     return this._options;
   }
@@ -76,7 +66,6 @@ export class VscodeSelect extends LitElement {
   private _options: Option[];
   private _currentLabel: string;
   private _selectedIndex: number;
-  private _optionsPopulatedBy: 'slot' | 'prop';
 
   constructor() {
     super();
@@ -128,7 +117,6 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onSlotChange() {
-    this._optionsPopulatedBy = 'slot';
     const nodes = this._mainSlot.assignedNodes();
 
     const optElements = nodes.filter(
@@ -241,30 +229,6 @@ export class VscodeSelect extends LitElement {
 
     this._updateCurrentLabel();
     this.requestUpdate();
-  }
-
-  private _renderOptions() {
-    let optionsTemplate: TemplateResult | TemplateResult[];
-
-    if (this._optionsPopulatedBy === 'prop') {
-      optionsTemplate = this._options.map(
-        (op, index) => html`
-          <vscode-option
-            @click="${this._onOptionClick}"
-            @mouseover="${this._onOptionMouseEnter}"
-            @mouseout="${this._onOptionMouseLeave}"
-            description="${op.description || ''}"
-            data-index="${index}"
-            value="${op.value}"
-            >${op.label}</vscode-option
-          >
-        `
-      );
-    } else {
-      optionsTemplate = html`<slot></slot>`;
-    }
-
-    return optionsTemplate;
   }
 
   static get styles() {
@@ -383,7 +347,7 @@ export class VscodeSelect extends LitElement {
         ${currentLabelMarkup}
       </div>
       <div class="dropdown">
-        <div class="options">${this._renderOptions()}</div>
+        <div class="options"><slot></slot></div>
         ${descriptionTemplate}
       </div>
     `;
