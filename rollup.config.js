@@ -14,7 +14,7 @@ export default {
     sourcemap: true,
   },
   plugins: [
-    !production && livereload(),
+    // !production && livereload(),
     typescript(),
     resolve(),
     production && minifyHTML(),

@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-  <script>
+  <!-- <script>
     document.write(
       '<script src="http://' +
       (location.host || 'localhost').split(':')[0] +
       ':35729/livereload.js?snipver=1"></' +
       'script>'
     );
-  </script>
+  </script> -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -46,16 +46,22 @@
       <vscode-option>Dolor</vscode-option>
     </vscode-select>
     <div class="logger"></div>
-    <script>(() => {
-      const sl = document.querySelector('#vscode-select__default vscode-select');
-      const loggerEl = document.querySelector('#vscode-select__default .logger');
+    <script>
+      (() => {
+        const sl = document.querySelector(
+          '#vscode-select__default vscode-select'
+        );
+        const loggerEl = document.querySelector(
+          '#vscode-select__default .logger'
+        );
 
-      loggerEl.innerHTML = sl.value;
+        loggerEl.innerHTML = sl.value;
 
-      sl.addEventListener('vsc-change', (event) => {
-        loggerEl.innerHTML = event.detail.value;
-      });
-    })()</script>
+        sl.addEventListener('vsc-change', (event) => {
+          loggerEl.innerHTML = event.detail.value;
+        });
+      })();
+    </script>
   </div>
 
   <div class="story" id="vscode-select__value">
@@ -66,16 +72,22 @@
       <vscode-option value="test value 3">Dolor</vscode-option>
     </vscode-select>
     <div class="logger"></div>
-    <script>(() => {
-      const sl = document.querySelector('#vscode-select__value vscode-select');
-      const loggerEl = document.querySelector('#vscode-select__value .logger');
+    <script>
+      (() => {
+        const sl = document.querySelector(
+          '#vscode-select__value vscode-select'
+        );
+        const loggerEl = document.querySelector(
+          '#vscode-select__value .logger'
+        );
 
-      loggerEl.innerHTML = sl.value;
+        loggerEl.innerHTML = sl.value;
 
-      sl.addEventListener('vsc-change', (event) => {
-        loggerEl.innerHTML = event.detail.value;
-      });
-    })()</script>
+        sl.addEventListener('vsc-change', (event) => {
+          loggerEl.innerHTML = event.detail.value;
+        });
+      })();
+    </script>
   </div>
 
   <div class="story" id="vscode-select__selected">
@@ -102,22 +114,155 @@
     <script>
       (() => {
         const options = [
-          { label: 'Lorem', value: 'test value 1' },
-          { label: 'Ipsum', value: 'test value 2' },
-          { label: 'Dolor', value: 'test value 3' },
+          {
+            label: 'Lorem',
+            value: 'test value 1',
+            description: 'test description 1',
+          },
+          {
+            label: 'Ipsum',
+            value: 'test value 2',
+            description: 'test description 2',
+          },
+          {
+            label: 'Dolor',
+            value: 'test value 3',
+            description: 'test description 3',
+          },
         ];
+
+        const optionsMarkup = `
+          <vscode-option value="test value 1" description="test description 1">Lorem</vscode-option>
+          <vscode-option value="test value 2" description="test description 2">Ipsum</vscode-option>
+          <vscode-option value="test value 3" description="test description 3">Dolor</vscode-option>
+        `;
 
         const wrapper = document.querySelector(
           '#vscode-select__create-element .element-wrapper'
         );
         const el = document.createElement('vscode-select');
-        el.options = options;
+        el.innerHTML = optionsMarkup;
         el.selectedIndex = 1;
 
         wrapper.appendChild(el);
       })();
     </script>
   </div>
+
+  <div class="story" id="vscode-select__create-append-element">
+    <h2 class="story-title">Document.createElement(), appendChild()</h2>
+    <div class="element-wrapper"></div>
+    <script>
+      (() => {
+        const wrapper = document.querySelector(
+          '#vscode-select__create-append-element .element-wrapper'
+        );
+        const el = document.createElement('vscode-select');
+
+        const op1 = document.createElement('vscode-option');
+        op1.innerText = 'Lorem';
+        op1.setAttribute('value', 'test value 1');
+        op1.setAttribute('description', 'test description 1');
+
+        const op2 = document.createElement('vscode-option');
+        op2.innerText = 'Ipsum';
+        op2.setAttribute('value', 'test value 2');
+        op2.setAttribute('description', 'test description 2');
+
+        const op3 = document.createElement('vscode-option');
+        op3.innerText = 'Dolor';
+        op3.setAttribute('value', 'test value 3');
+        op3.setAttribute('description', 'test description 3');
+
+        el.selectedIndex = 1;
+
+        el.appendChild(op1);
+        el.appendChild(op2);
+        el.appendChild(op3);
+
+        wrapper.appendChild(el);
+      })();
+    </script>
+  </div>
+
+  <div class="story" id="vscode-select__inner-html">
+    <h2 class="story-title">Element.innerHTML()</h2>
+    <div class="element-wrapper"></div>
+    <script>
+      (() => {
+        const html = `
+          <vscode-select>
+            <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
+            <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
+            <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
+          </vscode-select>
+        `;
+
+        const wrapper = document.querySelector(
+          '#vscode-select__inner-html .element-wrapper'
+        );
+
+        wrapper.innerHTML = html;
+      })();
+    </script>
+  </div>
+
+  <div class="story" id="vscode-select__post-manipulation">
+    <h2 class="story-title">Post-manipulation</h2>
+    <vscode-select>
+      <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
+      <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
+      <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
+    </vscode-select>
+    <div class="logger"></div>
+    <button type="button" class="btn-append">Append option</button>
+    <button type="button" class="btn-replace">Replace options</button>
+    <script>
+      (() => {
+        const sl = document.querySelector(
+          '#vscode-select__post-manipulation vscode-select'
+        );
+        const loggerEl = document.querySelector(
+          '#vscode-select__post-manipulation .logger'
+        );
+        const btnAppend = document.querySelector(
+          '#vscode-select__post-manipulation .btn-append'
+        );
+        const btnReplace = document.querySelector(
+          '#vscode-select__post-manipulation .btn-replace'
+        );
+
+        loggerEl.innerHTML = sl.value;
+
+        sl.addEventListener('vsc-change', (event) => {
+          loggerEl.innerHTML = event.detail.value;
+        });
+
+        btnAppend.addEventListener('click', () => {
+          const counter = sl.options.length + 1;
+
+          const op = document.createElement('vscode-option');
+          op.innerText = `Test label ${counter}`;
+          op.value = `Test value ${counter}`;
+          op.description = `Test description ${counter}`;
+
+          sl.appendChild(op);
+        });
+
+        btnReplace.addEventListener('click', () => {
+          const optionsMarkup = `
+            <vscode-option value="replaced test value 1" description="replaced test description 1">Replaced Lorem</vscode-option>
+            <vscode-option value="replaced test value 2" description="replaced test description 2">Replaced Ipsum</vscode-option>
+            <vscode-option value="replaced test value 3" description="replaced test description 3">Replaced Dolor</vscode-option>
+          `;
+
+          sl.innerHTML = optionsMarkup;
+        });
+      })();
+    </script>
+  </div>
+
+  <div style="height: 200px"></div>
 </body>
 
 </html>

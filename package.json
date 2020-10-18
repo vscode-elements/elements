@@ -20,7 +20,8 @@
     "postversion": "git push && git push --tags",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test:e2e": "start-server-and-test start http://localhost:5000 cy:run"
+    "test:e2e": "start-server-and-test start http://localhost:5000 cy:run",
+    "test:watch": "start-server-and-test start http://localhost:5000 cy:open"
   },
   "keywords": [],
   "author": "bendera",

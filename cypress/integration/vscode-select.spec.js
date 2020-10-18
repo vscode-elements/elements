@@ -22,7 +22,7 @@ describe('vscode-select', () => {
 
     cy.get('@vscodeSelect').invoke('prop', 'selectedIndex', -1);
     cy.get('@vscodeSelect')
-      .find('.select-face')
+      .find('.select-face .text')
       .should('have.prop', 'innerHTML', '<!---->&nbsp;<!---->');
     cy.get('@vscodeSelect').should('have.prop', 'value', '');
   });
@@ -43,7 +43,7 @@ describe('vscode-select', () => {
     cy.get('@vscodeSelect').click();
     cy.get('@vscodeSelect')
       .find('vscode-option[data-index=1]')
-      .trigger('mouseenter');
+      .trigger('mouseover');
     cy.get('@vscodeSelect')
       .find('.dropdown')
       .should('contain', 'Test description 2');
