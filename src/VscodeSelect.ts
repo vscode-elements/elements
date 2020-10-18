@@ -12,6 +12,7 @@ interface OptionElement extends HTMLElement {
   label: string;
   value: string;
   description?: string;
+  selected?: boolean;
 }
 
 const findOptionEl = (event: Event) => {
@@ -131,6 +132,10 @@ export class VscodeSelect extends LitElement {
       const description = el.getAttribute('description') || '';
 
       el.dataset.index = String(index);
+
+      if (el.selected) {
+        this._selectedIndex = index;
+      }
 
       this._options[index] = {
         label,

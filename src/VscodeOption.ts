@@ -29,6 +29,7 @@ export class VscodeOption extends LitElement {
     return this.innerText;
   }
   @property({ type: String }) description: string = '';
+  @property({ type: Boolean }) selected: boolean = false;
 
   private _value: string | undefined;
   private _label: string | undefined;
