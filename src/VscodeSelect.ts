@@ -262,18 +262,19 @@ export class VscodeSelect extends LitElement {
         width: 100%;
       }
 
-      .select-face:after {
-        border-color: var(--vscode-foreground) transparent transparent
-          transparent;
-        border-style: solid;
-        border-width: 6px 3px;
-        content: '';
+      .icon {
         display: block;
-        margin-top: -3px;
+        height: 14px;
+        pointer-events: none;
         position: absolute;
-        right: 6px;
-        top: 50%;
-        z-index: 1;
+        right: 8px;
+        top: 5px;
+        width: 14px;
+      }
+
+      .icon svg {
+        height: 100%;
+        width: 100%;
       }
 
       .select-face:empty:before {
@@ -350,6 +351,21 @@ export class VscodeSelect extends LitElement {
       </style>
       <div class="select-face" @click="${this._onFaceClick}">
         ${currentLabelMarkup}
+        <span class="icon">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M7.976 10.072l4.357-4.357.62.618L8.284 11h-.618L3 6.333l.619-.618 4.357 4.357z"
+            />
+          </svg>
+        </span>
       </div>
       <div class="dropdown">
         <div class="options"><slot></slot></div>
