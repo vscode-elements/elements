@@ -67,11 +67,13 @@ export class VscodeSelect extends LitElement {
   private _options: Option[];
   private _currentLabel: string;
   private _selectedIndex: number;
+  private _onClickOutsideBound: (ev: Event) => void;
 
   constructor() {
     super();
     this._options = [];
     this.selectedIndex = 0;
+    this._onClickOutsideBound = this._onClickOutside.bind(this);
   }
 
   connectedCallback() {
@@ -148,8 +150,12 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onClickOutside(event: MouseEvent) {
-    if (event.target !== this) {
+    const path = event.composedPath();
+    const found = path.findIndex(et => et === this);
+
+    if (found === -1) {
       this._showDropdown = false;
+      window.removeEventListener('click', this._onClickOutsideBound);
       this.requestUpdate();
     }
   }
@@ -161,6 +167,7 @@ export class VscodeSelect extends LitElement {
 
   private _onFaceClick() {
     this._toogleDropdown();
+    window.addEventListener('click', this._onClickOutsideBound);
   }
 
   private _onOptionMouseEnter(event: MouseEvent) {
