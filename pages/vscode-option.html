@@ -66,99 +66,20 @@
     })()</script>
   </div>
 
-  <div class="story" id="vscode-option__selected">
-    <h2 class="story-title">Selected option</h2>
-    <vscode-select value="'test value 2'">
-      <vscode-option value="test value 1">Lorem</vscode-option>
-      <vscode-option value="test value 2" selected>Ipsum</vscode-option>
-      <vscode-option value="test value 3">Dolor</vscode-option>
-    </vscode-select>
+  <div class="story" id="vscode-option__multiple">
+    <h2 class="story-title">Multiple</h2>
+    <vscode-option value="test value 1" multiple>Lorem</vscode-option>
+    <div class="logger"></div>
+    <script>(() => {
+      const op = document.querySelector('#vscode-option__multiple vscode-option');
+      const loggerEl = document.querySelector('#vscode-option__multiple .logger');
+
+      op.addEventListener('click', (event) => {
+        loggerEl.innerHTML = op.value;
+      });
+    })()</script>
   </div>
 
-  <div class="story" id="vscode-option__description">
-    <h2 class="story-title">Option descriptions</h2>
-    <vscode-select>
-      <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
-      <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
-      <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
-    </vscode-select>
-  </div>
-
-  <div class="story" id="vscode-option__create-element">
-    <h2 class="story-title">Document.createElement()</h2>
-    <div class="element-wrapper"></div>
-    <script>
-      (() => {
-        const options = [
-          { label: 'Lorem', value: 'test value 1' },
-          { label: 'Ipsum', value: 'test value 2' },
-          { label: 'Dolor', value: 'test value 3' },
-        ];
-
-        const wrapper = document.querySelector(
-          '#vscode-option__create-element .element-wrapper'
-        );
-        const el = document.createElement('vscode-select');
-        el.options = options;
-        el.selectedIndex = 1;
-
-        wrapper.appendChild(el);
-      })();
-    </script>
-  </div>
-
-  <div class="story" id="vscode-option__create-append-element">
-    <h2 class="story-title">Document.createElement(), appendChild()</h2>
-    <div class="element-wrapper"></div>
-    <script>
-      (() => {
-        const wrapper = document.querySelector(
-          '#vscode-option__create-append-element .element-wrapper'
-        );
-        const el = document.createElement('vscode-select');
-
-        const op1 = document.createElement('vscode-option');
-        op1.innerText = 'Lorem';
-        op1.setAttribute('value', 'test value 1');
-
-        const op2 = document.createElement('vscode-option');
-        op2.innerText = 'Ipsum';
-        op2.setAttribute('value', 'test value 2');
-
-        const op3 = document.createElement('vscode-option');
-        op3.innerText = 'Dolor';
-        op3.setAttribute('value', 'test value 3');
-
-        el.appendChild(op1);
-        el.appendChild(op2);
-        el.appendChild(op3);
-
-        wrapper.appendChild(el);
-      })();
-    </script>
-  </div>
-
-  <div class="story" id="vscode-option__inner-html">
-    <h2 class="story-title">Element.innerHTML()</h2>
-    <div class="element-wrapper"></div>
-    <script>
-      (() => {
-        const html = `
-          <vscode-select>
-            <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
-            <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
-            <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
-          </vscode-select>
-        `;
-
-        const wrapper = document.querySelector(
-          '#vscode-option__inner-html .element-wrapper'
-        );
-
-        wrapper.innerHTML = html;
-      })();
-    </script>
-  </div>
 </body>
 
 </html>

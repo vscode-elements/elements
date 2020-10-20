@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-  <!-- <script>
+  <script>
     document.write(
       '<script src="http://' +
       (location.host || 'localhost').split(':')[0] +
       ':35729/livereload.js?snipver=1"></' +
       'script>'
     );
-  </script> -->
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -39,7 +39,7 @@
   </div>
 
   <div class="story" id="vscode-select__default">
-    <h2 class="story-title">Default</h2>
+    <h2 class="story-title">Basic</h2>
     <vscode-select>
       <vscode-option>Lorem</vscode-option>
       <vscode-option>Ipsum</vscode-option>
@@ -53,6 +53,32 @@
         );
         const loggerEl = document.querySelector(
           '#vscode-select__default .logger'
+        );
+
+        loggerEl.innerHTML = sl.value;
+
+        sl.addEventListener('vsc-change', (event) => {
+          loggerEl.innerHTML = event.detail.value;
+        });
+      })();
+    </script>
+  </div>
+
+  <div class="story" id="vscode-select__multiple">
+    <h2 class="story-title">Multiple</h2>
+    <vscode-select multiple>
+      <vscode-option>Lorem</vscode-option>
+      <vscode-option>Ipsum</vscode-option>
+      <vscode-option>Dolor</vscode-option>
+    </vscode-select>
+    <div class="logger"></div>
+    <script>
+      (() => {
+        const sl = document.querySelector(
+          '#vscode-select__multiple vscode-select'
+        );
+        const loggerEl = document.querySelector(
+          '#vscode-select__multiple .logger'
         );
 
         loggerEl.innerHTML = sl.value;

@@ -1,4 +1,8 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
+import { nothing } from 'lit-html';
+import { classMap } from 'lit-html/directives/class-map';
+
+let instanceCounter = 0;
 
 @customElement('vscode-option')
 export class VscodeOption extends LitElement {
@@ -29,49 +33,107 @@ export class VscodeOption extends LitElement {
     return this.innerText;
   }
   @property({ type: String }) description: string = '';
-  @property({ type: Boolean }) selected: boolean = false;
+  @property({ type: Boolean, reflect: true }) selected: boolean = false;
+  @property({ type: Boolean, attribute: false }) multiple: boolean = false;
 
   private _value: string | undefined;
   private _label: string | undefined;
   private _mainSlot: HTMLSlotElement;
+  private _cid: string;
 
   constructor() {
     super();
+    instanceCounter++;
+    this._cid = `vscodeOption${instanceCounter}`;
   }
 
   firstUpdated() {
     this._mainSlot = this.shadowRoot.querySelector('slot');
 
     if (this._mainSlot) {
-      this._mainSlot.addEventListener('slotchange', this._onSlotChange.bind(this));
+      this._mainSlot.addEventListener(
+        'slotchange',
+        this._onSlotChange.bind(this)
+      );
     }
   }
 
   private _onSlotChange(event: Event) {
-    this.dispatchEvent(new CustomEvent('vsc-slotchange', {
-      detail: {
-        innerText: this.innerText,
-      },
-      composed: true,
-      bubbles: false,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('vsc-slotchange', {
+        detail: {
+          innerText: this.innerText,
+        },
+        composed: true,
+        bubbles: false,
+      })
+    );
 
     this.label = this.innerText;
   }
 
   static get styles() {
     return css`
-      :host {
+      .wrapper {
+        align-items: center;
         color: var(--vscode-foreground);
-        display: block;
+        cursor: pointer;
+        display: flex;
         font-size: var(--vscode-font-size);
         line-height: 1.3;
+        min-height: calc(var(--vscode-font-size) * 1.3);
         padding: 1px 3px;
         user-select: none;
       }
 
-      :host(:hover) {
+      .wrapper:hover,
+      .wrapper.selected {
         background-color: var(--vscode-list-focusBackground);
+      }
+
+      input {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
+
+      .icon {
+        background-color: var(--vscode-settings-checkboxBackground);
+        border: 1px solid currentColor;
+        border-radius: 2px;
+        box-sizing: border-box;
+        height: 14px;
+        margin-right: 5px;
+        overflow: hidden;
+        position: relative;
+        width: 14px;
+      }
+
+      .icon.checked:before,
+      .icon.checked:after {
+        content: '';
+        display: block;
+        height: 5px;
+        position: absolute;
+        transform: rotate(-45deg);
+        width: 10px;
+      }
+
+      .icon.checked:before {
+        background-color: currentColor;
+        left: 1px;
+        top: 2.5px;
+      }
+
+      .icon.checked:after {
+        background-color: var(--vscode-settings-checkboxBackground);
+        left: 1px;
+        top: -0.5px;
       }
 
       .empty-placeholder:before {
@@ -83,7 +145,16 @@ export class VscodeOption extends LitElement {
 
   render() {
     return html`
-      <slot><span class="empty-placeholder"></span></slot>
+      <div class="${classMap({ wrapper: true, selected: this.selected })}">
+        ${this.multiple
+          ? html`
+              <span
+                class="${classMap({ icon: true, checked: this.selected })}"
+              ></span>
+            `
+          : nothing}
+        <slot><span class="empty-placeholder"></span></slot>
+      </div>
     `;
   }
 }

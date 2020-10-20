@@ -13,17 +13,15 @@ interface OptionElement extends HTMLElement {
   value: string;
   description?: string;
   selected?: boolean;
+  multiple?: boolean;
 }
 
 const findOptionEl = (event: Event) => {
   const path = event.composedPath();
-  const el = path[0];
 
-  if ((el as OptionElement)?.tagName?.toLowerCase() === 'vscode-option') {
-    return el as OptionElement;
-  }
-
-  return undefined;
+  return path.find(
+    (el) => (el as OptionElement)?.tagName?.toLowerCase() === 'vscode-option'
+  ) as OptionElement;
 };
 
 @customElement('vscode-select')
@@ -59,6 +57,7 @@ export class VscodeSelect extends LitElement {
     return this._selectedIndex;
   }
   @property({ type: Number, reflect: true }) tabIndex: number = -1;
+  @property({ type: Boolean, reflect: true }) multiple: boolean = false;
 
   private _value: string;
   private _showDropdown: boolean = false;
@@ -68,6 +67,7 @@ export class VscodeSelect extends LitElement {
   private _currentLabel: string;
   private _selectedIndex: number;
   private _onClickOutsideBound: (ev: Event) => void;
+  private _tempSelection: number[];
 
   constructor() {
     super();
@@ -79,7 +79,6 @@ export class VscodeSelect extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    window.addEventListener('click', this._onClickOutside.bind(this));
     this.addEventListener('vsc-slotchange', this._onOptionSlotChange);
     this.addEventListener('click', this._onOptionClick);
     this.addEventListener('mouseover', this._onOptionMouseEnter);
@@ -89,7 +88,6 @@ export class VscodeSelect extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    window.removeEventListener('click', this._onClickOutside.bind(this));
     this.removeEventListener('vsc-slotchange', this._onOptionSlotChange);
     this.removeEventListener('click', this._onOptionClick);
     this.removeEventListener('mouseover', this._onOptionMouseEnter);
@@ -134,6 +132,7 @@ export class VscodeSelect extends LitElement {
       const description = el.getAttribute('description') || '';
 
       el.dataset.index = String(index);
+      el.multiple = this.multiple;
 
       if (el.selected) {
         this._selectedIndex = index;
@@ -151,7 +150,7 @@ export class VscodeSelect extends LitElement {
 
   private _onClickOutside(event: MouseEvent) {
     const path = event.composedPath();
-    const found = path.findIndex(et => et === this);
+    const found = path.findIndex((et) => et === this);
 
     if (found === -1) {
       this._showDropdown = false;
@@ -166,6 +165,7 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onFaceClick() {
+    console.log('on face click')
     this._toogleDropdown();
     window.addEventListener('click', this._onClickOutsideBound);
   }
@@ -199,24 +199,33 @@ export class VscodeSelect extends LitElement {
       return;
     }
 
+    console.log(optionElement);
+
     const prevSelected = this.selectedIndex;
 
     this.selectedIndex = Number(optionElement.dataset.index);
     this._value = optionElement.value;
     this._currentLabel = optionElement.innerText;
-    this._showDropdown = false;
 
-    if (prevSelected !== this.selectedIndex) {
-      this.dispatchEvent(
-        new CustomEvent('vsc-change', {
-          detail: {
-            value: this._value,
-          },
-        })
-      );
+    if (!this.multiple) {
+      if (prevSelected !== this.selectedIndex) {
+        this.dispatchEvent(
+          new CustomEvent('vsc-change', {
+            detail: {
+              value: this._value,
+            },
+          })
+        );
+      }
+
+      // TODO: temp selection
+
+      this._showDropdown = false;
+    } else {
+      optionElement.selected = !optionElement.selected;
     }
 
-    this.requestUpdate();
+    // this.requestUpdate();
   }
 
   private _onOptionSlotChange(event: CustomEvent) {
@@ -238,8 +247,17 @@ export class VscodeSelect extends LitElement {
       this._value = optionElement.value || optionElement.innerText;
       this._updateCurrentLabel();
     }
+  }
 
-    this._updateCurrentLabel();
+  private _onApplyClick() {
+    // TODO: vsc-change, temp selection
+
+    this._showDropdown = false;
+    this.requestUpdate();
+  }
+
+  private _onCancelClick() {
+    this._showDropdown = false;
     this.requestUpdate();
   }
 
@@ -319,6 +337,16 @@ export class VscodeSelect extends LitElement {
         background-color: var(--vscode-list-hoverBackground);
       }
 
+      .buttons {
+        display: flex;
+        justify-content: flex-end;
+        padding: 4px;
+      }
+
+      .buttons :not(:last-child) {
+        margin-right: 4px;
+      }
+
       .description {
         border-color: var(--vscode-settings-dropdownBorder);
         border-style: solid;
@@ -376,6 +404,12 @@ export class VscodeSelect extends LitElement {
       </div>
       <div class="dropdown">
         <div class="options"><slot></slot></div>
+        ${this.multiple
+          ? html`<div class="buttons">
+              <vscode-button @click="${this._onApplyClick}">Apply</vscode-button>
+              <vscode-button secondary @click="${this._onCancelClick}">Cancel</vscode-button>
+            </div>`
+          : null}
         ${descriptionTemplate}
       </div>
     `;
