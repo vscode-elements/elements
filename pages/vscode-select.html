@@ -71,7 +71,7 @@
       <vscode-option>Ipsum</vscode-option>
       <vscode-option>Dolor</vscode-option>
     </vscode-select>
-    <div class="logger"></div>
+    <pre class="logger"></pre>
     <script>
       (() => {
         const sl = document.querySelector(
@@ -84,7 +84,7 @@
         loggerEl.innerHTML = sl.value;
 
         sl.addEventListener('vsc-change', (event) => {
-          loggerEl.innerHTML = event.detail.value;
+          console.log(event.detail.value);
         });
       })();
     </script>

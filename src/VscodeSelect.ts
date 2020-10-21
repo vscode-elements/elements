@@ -6,6 +6,7 @@ interface Option {
   label: string;
   value: string;
   description?: string;
+  selected?: boolean;
 }
 
 interface OptionElement extends HTMLElement {
@@ -63,16 +64,16 @@ export class VscodeSelect extends LitElement {
   private _showDropdown: boolean = false;
   private _currentDescription: string;
   private _mainSlot: HTMLSlotElement;
-  private _options: Option[];
+  private _options: Option[] = [];
+  private _optionElements: OptionElement[] = [];
   private _currentLabel: string;
-  private _selectedIndex: number;
+  private _selectedIndex: number = 0;
   private _onClickOutsideBound: (ev: Event) => void;
-  private _tempSelection: number[];
+  private _tempSelection: number[] = [];
+  private _appliedSelection: number[] = [];
 
   constructor() {
     super();
-    this._options = [];
-    this.selectedIndex = 0;
     this._onClickOutsideBound = this._onClickOutside.bind(this);
   }
 
@@ -105,13 +106,33 @@ export class VscodeSelect extends LitElement {
     }
   }
 
-  private _updateCurrentLabel() {
-    if (this._selectedIndex === -1) {
-      this._currentLabel = '';
-    } else if (this._options && this._options[this._selectedIndex]) {
-      this._currentLabel = this._options[this._selectedIndex].label;
+  private _multipleLabelText() {
+    const l = this._tempSelection.length;
+
+    if (l === 0) {
+      return '<No item selected>';
+    } else if(l === 1) {
+      return this._options[this._tempSelection[0]].label;
     } else {
-      this._currentLabel = '';
+      return `${l} items selected`;
+    }
+  }
+
+  private _singleLabelText() {
+    if (this._selectedIndex === -1) {
+      return '';
+    } else if (this._options && this._options[this._selectedIndex]) {
+      return this._options[this._selectedIndex].label;
+    } else {
+      return '';
+    }
+  }
+
+  private _updateCurrentLabel() {
+    if (this.multiple) {
+      this._currentLabel = this._multipleLabelText();
+    } else {
+      this._currentLabel = this._singleLabelText();
     }
 
     this.requestUpdate();
@@ -130,18 +151,21 @@ export class VscodeSelect extends LitElement {
       const label = el.innerText;
       const value = el.value || label;
       const description = el.getAttribute('description') || '';
+      const selected = el.selected;
 
       el.dataset.index = String(index);
       el.multiple = this.multiple;
 
-      if (el.selected) {
+      if (selected) {
         this._selectedIndex = index;
+        this._appliedSelection.push(index);
       }
 
       this._options[index] = {
         label,
         value,
         description,
+        selected,
       };
     });
 
@@ -159,14 +183,15 @@ export class VscodeSelect extends LitElement {
     }
   }
 
-  private _toogleDropdown() {
-    this._showDropdown = !this._showDropdown;
-    this.requestUpdate();
-  }
-
   private _onFaceClick() {
-    console.log('on face click')
-    this._toogleDropdown();
+    console.log('on face click');
+    this._showDropdown = !this._showDropdown;
+
+    if (this.multiple && this._showDropdown) {
+      this._tempSelection = [...this._appliedSelection];
+    }
+
+    this.requestUpdate();
     window.addEventListener('click', this._onClickOutsideBound);
   }
 
@@ -199,19 +224,20 @@ export class VscodeSelect extends LitElement {
       return;
     }
 
-    console.log(optionElement);
-
+    const optionElementIndex = Number(optionElement.dataset.index);
+    const optionElementSelected = optionElement.selected;
     const prevSelected = this.selectedIndex;
 
-    this.selectedIndex = Number(optionElement.dataset.index);
+    this.selectedIndex = Number(optionElementIndex);
     this._value = optionElement.value;
-    this._currentLabel = optionElement.innerText;
+    // this._currentLabel = optionElement.innerText;
 
     if (!this.multiple) {
       if (prevSelected !== this.selectedIndex) {
         this.dispatchEvent(
           new CustomEvent('vsc-change', {
             detail: {
+              multiple: false,
               value: this._value,
             },
           })
@@ -222,8 +248,27 @@ export class VscodeSelect extends LitElement {
 
       this._showDropdown = false;
     } else {
-      optionElement.selected = !optionElement.selected;
+      const nextSelectedValue = !optionElementSelected;
+
+      optionElement.selected = nextSelectedValue;
+      // this._options[optionElementIndex].selected = optionElementIndex;
+      /* this._tempSelection = this._options
+        .filter((op) => op.selected)
+        .map((_, index) => index); */
+
+      if (nextSelectedValue) {
+        this._tempSelection.push(optionElementIndex);
+      } else {
+        this._tempSelection.splice(
+          this._tempSelection.indexOf(optionElementIndex),
+          1
+        );
+      }
+
+      console.log(this._tempSelection);
     }
+
+    this._updateCurrentLabel();
 
     // this.requestUpdate();
   }
@@ -252,7 +297,20 @@ export class VscodeSelect extends LitElement {
   private _onApplyClick() {
     // TODO: vsc-change, temp selection
 
+    this._appliedSelection = [...this._tempSelection];
     this._showDropdown = false;
+    this._updateCurrentLabel();
+    this._tempSelection = [];
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {
+          multiple: true,
+          value: this._options,
+        },
+      })
+    );
+
     this.requestUpdate();
   }
 
@@ -406,8 +464,12 @@ export class VscodeSelect extends LitElement {
         <div class="options"><slot></slot></div>
         ${this.multiple
           ? html`<div class="buttons">
-              <vscode-button @click="${this._onApplyClick}">Apply</vscode-button>
-              <vscode-button secondary @click="${this._onCancelClick}">Cancel</vscode-button>
+              <vscode-button @click="${this._onApplyClick}"
+                >Apply</vscode-button
+              >
+              <vscode-button secondary @click="${this._onCancelClick}"
+                >Cancel</vscode-button
+              >
             </div>`
           : null}
         ${descriptionTemplate}
