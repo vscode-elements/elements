@@ -10,6 +10,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({'dist/bundled.js': 'bundled.js'});
   eleventyConfig.addPassthroughCopy('docs-src/docs.css');
   eleventyConfig.addPassthroughCopy('docs-src/.nojekyll');
+  eleventyConfig.addPassthroughCopy('dev-assets');
 
   let conf = {
     dir: {

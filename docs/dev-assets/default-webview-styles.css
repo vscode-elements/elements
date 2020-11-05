@@ -1,0 +1,55 @@
+.vscode-preview {
+  all: initial;
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+  font-family: var(--vscode-font-family);
+  font-weight: var(--vscode-font-weight);
+  font-size: var(--vscode-font-size);
+  margin: 0;
+  padding: 20px;
+}
+
+.vscode-preview img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.vscode-preview a {
+  color: var(--vscode-textLink-foreground);
+}
+
+.vscode-preview a:hover {
+  color: var(--vscode-textLink-activeForeground);
+}
+
+.vscode-preview a:focus,
+.vscode-preview input:focus,
+.vscode-preview select:focus,
+.vscode-preview textarea:focus {
+  outline: 1px solid -webkit-focus-ring-color;
+  outline-offset: -1px;
+}
+
+.vscode-preview code {
+  color: var(--vscode-textPreformat-foreground);
+}
+
+.vscode-preview blockquote {
+  background: var(--vscode-textBlockQuote-background);
+  border-color: var(--vscode-textBlockQuote-border);
+}
+
+.vscode-preview ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.vscode-preview ::-webkit-scrollbar-thumb {
+  background-color: var(--vscode-scrollbarSlider-background);
+}
+.vscode-preview ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vscode-scrollbarSlider-hoverBackground);
+}
+.vscode-preview ::-webkit-scrollbar-thumb:active {
+  background-color: var(--vscode-scrollbarSlider-activeBackground);
+}

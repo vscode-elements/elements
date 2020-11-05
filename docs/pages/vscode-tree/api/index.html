@@ -1,0 +1,140 @@
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;vscode-tree&gt; ⌲ API</title>
+    <link rel="stylesheet" href="/docs.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
+    <link rel="stylesheet" href="/prism-okaidia.css">
+    <link rel="stylesheet" href="/dev-assets/default-dark-theme.css">
+    <link rel="stylesheet" href="/dev-assets/default-high-contrast-theme.css">
+    <link rel="stylesheet" href="/dev-assets/default-light-theme.css">
+    <link rel="stylesheet" href="/dev-assets/default-webview-styles.css">
+    <link rel="stylesheet" href="/dev-assets/theme-switcher.css">
+    <script type="module" src="/bundled.js"></script>
+  </head>
+  <body class="vscode-light">
+    
+<header>
+  <h1>My Library</h1>
+  <h2>A web component library just for me.</h2>
+</header>
+    
+<nav>
+  <a href="/">Home</a>
+  <a href="/pages/vscode-tree/overview">Overview</a>
+  <a href="/pages/vscode-tree/examples">Examples</a>
+  <a href="/pages/vscode-tree/api">API</a>
+  <a href="/pages/vscode-tree/install">Install</a>
+</nav>
+    <div id="main-wrapper">
+      <main>
+        <div class="theme-switcher">
+          <div class="theme-switcher-option light">
+            <button value="vscode-light" type="button">Light</button>
+          </div>
+          <div class="theme-switcher-option dark">
+            <button value="vscode-dark" type="button">Dark</button>
+          </div>
+          <div class="theme-switcher-option hc">
+            <button value="vscode-high-contrast" type="button">High contrast</button>
+          </div>
+        </div>
+
+        <script>
+          (function() {
+            const buttons = document.querySelectorAll('.theme-switcher-option button');
+
+            Array.from(buttons).forEach(element => {
+              element.addEventListener('click', event => {
+                document.body.classList.remove(
+                  'vscode-light',
+                  'vscode-dark',
+                  'vscode-high-contrast'
+                );
+                document.body.classList.add(event.target.value);
+              });
+            });
+          })();
+        </script>
+        <h1>vscode-tree</h1>
+<h2>Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Attribute</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>arrows</code></td>
+<td><code>arrows</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>data</code></td>
+<td><code>TreeItem[]</code></td>
+<td>[]</td>
+</tr>
+<tr>
+<td><code>indent</code></td>
+<td><code>indent</code></td>
+<td><code>number</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>multiline</code></td>
+<td><code>multiline</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h2>Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>closeAll</code></td>
+<td><code>(): void</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Events</h2>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vsc-select</code></td>
+</tr>
+</tbody>
+</table>
+
+      </main>
+    </div>
+    
+<footer>
+  <p>
+    Made with
+    <a href="https://github.com/PolymerLabs/lit-element-starter-ts">lit-element-starter-ts</a>
+  </p>
+</footer>
+  </body>
+</html>

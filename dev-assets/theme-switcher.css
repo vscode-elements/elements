@@ -1,0 +1,25 @@
+.theme-switcher {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.theme-switcher-option {
+  align-items: center;
+  display: flex;
+  margin-right: 20px;
+}
+
+.theme-switcher-option button {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  outline: none;
+  padding: 5px 0;
+}
+
+body.vscode-light .theme-switcher-option.light button,
+body.vscode-dark .theme-switcher-option.dark button,
+body.vscode-high-contrast .theme-switcher-option.hc button {
+  border-bottom-color: currentColor;
+}

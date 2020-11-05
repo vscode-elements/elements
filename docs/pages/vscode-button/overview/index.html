@@ -1,31 +1,35 @@
-const header = require('./header.11ty.cjs');
-const footer = require('./footer.11ty.cjs');
-const nav = require('./nav.11ty.cjs');
-const htmlspecialchars = require('./htmlspecialchars');
 
-module.exports = function(data) {
-  const {title, content} = data;
-  return `
 <!doctype html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${htmlspecialchars(title)}</title>
-    <link rel="stylesheet" href="${this.url('/docs.css')}">
+    <title>&lt;vscode-button&gt; ⌲ Home</title>
+    <link rel="stylesheet" href="/docs.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
-    <link rel="stylesheet" href="${this.url('/prism-okaidia.css')}">
-    <link rel="stylesheet" href="${this.url('/dev-assets/default-dark-theme.css')}">
-    <link rel="stylesheet" href="${this.url('/dev-assets/default-high-contrast-theme.css')}">
-    <link rel="stylesheet" href="${this.url('/dev-assets/default-light-theme.css')}">
-    <link rel="stylesheet" href="${this.url('/dev-assets/default-webview-styles.css')}">
-    <link rel="stylesheet" href="${this.url('/dev-assets/theme-switcher.css')}">
-    <script type="module" src="${this.url('/bundled.js')}"></script>
+    <link rel="stylesheet" href="/prism-okaidia.css">
+    <link rel="stylesheet" href="/dev-assets/default-dark-theme.css">
+    <link rel="stylesheet" href="/dev-assets/default-high-contrast-theme.css">
+    <link rel="stylesheet" href="/dev-assets/default-light-theme.css">
+    <link rel="stylesheet" href="/dev-assets/default-webview-styles.css">
+    <link rel="stylesheet" href="/dev-assets/theme-switcher.css">
+    <script type="module" src="/bundled.js"></script>
   </head>
   <body class="vscode-light">
-    ${header()}
-    ${nav(data, this)}
+    
+<header>
+  <h1>My Library</h1>
+  <h2>A web component library just for me.</h2>
+</header>
+    
+<nav>
+  <a href="/">Home</a>
+  <a href="/pages/vscode-button/overview">Overview</a>
+  <a href="/pages/vscode-button/examples">Examples</a>
+  <a href="/pages/vscode-button/api">API</a>
+  <a href="/pages/vscode-button/install">Install</a>
+</nav>
     <div id="main-wrapper">
       <main>
         <div class="theme-switcher">
@@ -56,10 +60,17 @@ module.exports = function(data) {
             });
           })();
         </script>
-        ${content}
+        <h1>&lt;vscode-button&gt;</h1>
+<p><code>&lt;vscode-button&gt;</code> is an awesome element. It's a great introduction to building web components with LitElement, with nice documentation site as well.</p>
+<div class="vscode-preview"><vscode-button>Button example</vscode-button></div>
       </main>
     </div>
-    ${footer()}
+    
+<footer>
+  <p>
+    Made with
+    <a href="https://github.com/PolymerLabs/lit-element-starter-ts">lit-element-starter-ts</a>
+  </p>
+</footer>
   </body>
-</html>`;
-};
+</html>
