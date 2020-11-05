@@ -3,11 +3,11 @@ import { nothing } from 'lit-html';
 
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends LitElement {
-  @property({ type: String }) label: string;
-  @property({ type: String }) keybinding: string;
-  @property({ type: String }) value: string;
-  @property({ type: Boolean }) separator: boolean = false;
-  @property({ type: Number }) tabindex: number;
+  @property({ type: String }) label = '';
+  @property({ type: String }) keybinding = '';
+  @property({ type: String }) value = '';
+  @property({ type: Boolean }) separator = false;
+  @property({ type: Number }) tabindex = 0;
 
   private onItemClick() {
     this.dispatchEvent(new CustomEvent('vsc-click', {
@@ -89,7 +89,7 @@ export class VscodeContextMenuItem extends LitElement {
         text-align: right;
       }
     `;
-  };
+  }
 
   render() {
     return html`

@@ -5,8 +5,8 @@ const BASE_URL = getBaseURL();
 
 @customElement('vscode-icon')
 export class VscodeIcon extends LitElement {
-  @property({ type: String }) name: string;
-  @property({ type: Number }) size: number = 16;
+  @property({ type: String }) name = '';
+  @property({ type: Number }) size = 16;
 
   static get styles() {
     return css`

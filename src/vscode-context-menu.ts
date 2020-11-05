@@ -11,8 +11,8 @@ interface MenuItemData {
 
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends LitElement {
-  @property({ type: Array }) data: MenuItemData[];
-  @property({ type: Boolean }) show: boolean = true;
+  @property({ type: Array }) data: MenuItemData[] = [];
+  @property({ type: Boolean }) show = true;
 
   private onItemClick(event: CustomEvent) {
     const { detail } = event;
@@ -94,7 +94,7 @@ export class VscodeContextMenu extends LitElement {
         text-align: right;
       }
     `;
-  };
+  }
 
   render() {
     const menu = html`
@@ -105,7 +105,7 @@ export class VscodeContextMenu extends LitElement {
             keybinding = '',
             value = '',
             separator = false,
-            tabindex = ''
+            tabindex = 0
           }) => html`
             <vscode-context-menu-item
               label="${label}"

@@ -3,9 +3,9 @@ import { classMap } from 'lit-html/directives/class-map';
 
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends LitElement {
-  @property({ type: Number }) tabIndex: number = 0;
-  @property({ type: String }) title: string;
-  @property({ type: Boolean }) open: boolean;
+  @property({ type: Number }) tabIndex = 0;
+  @property({ type: String }) title = '';
+  @property({ type: Boolean }) open = false;
 
   private onHeaderClick() {
     this.open = !this.open;

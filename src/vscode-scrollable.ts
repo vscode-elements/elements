@@ -2,17 +2,17 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 
 @customElement('vscode-scrollable')
-export class VscodePanel extends LitElement {
-  @property({ type: Boolean }) shadow: boolean = true;
-  @property({ type: Boolean, reflect: false }) scrolled: boolean = false;
+export class VscodeScrollable extends LitElement {
+  @property({ type: Boolean }) shadow = true;
+  @property({ type: Boolean, reflect: false }) scrolled = false;
 
-  private scrollableContainer: HTMLDivElement;
+  private scrollableContainer: HTMLDivElement | null = null;
 
   connectedCallback() {
     super.connectedCallback();
 
     this.requestUpdate().then(() => {
-      this.scrollableContainer = this.shadowRoot.querySelector('.scrollable-container');
+      this.scrollableContainer = this.shadowRoot?.querySelector('.scrollable-container') as HTMLDivElement;
       this.scrollableContainer.addEventListener(
         'scroll',
         this.onScrollableContainerScroll.bind(this)
@@ -21,7 +21,7 @@ export class VscodePanel extends LitElement {
   }
 
   private onScrollableContainerScroll() {
-    this.scrolled = this.scrollableContainer.scrollTop > 0;
+    this.scrolled = (this.scrollableContainer as HTMLDivElement).scrollTop > 0;
   }
 
   static get styles() {
@@ -90,7 +90,7 @@ export class VscodePanel extends LitElement {
         overflow: hidden;
       }
     `;
-  };
+  }
 
   render() {
     const shadowClasses = classMap({ shadow: true, visible: this.scrolled });

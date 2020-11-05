@@ -3,9 +3,9 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import getBaseURL from './utils/getBaseURL';
 
 interface TreeItemIconConfig {
-  branch?: string,
-  open?: string,
-  leaf?: string,
+  branch?: string;
+  open?: string;
+  leaf?: string;
 }
 
 interface TreeItem {
@@ -27,23 +27,23 @@ const BASE_URL = getBaseURL();
 
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
-  @property({ type: Array, reflect: false }) data: TreeItem[];
-  @property({ type: Number }) indent: number = 8;
-  @property({ type: Boolean }) arrows: boolean = false;
-  @property({ type: Boolean }) multiline: boolean = false;
+  @property({ type: Array, reflect: false }) data: TreeItem[] = [];
+  @property({ type: Number }) indent = 8;
+  @property({ type: Boolean }) arrows = false;
+  @property({ type: Boolean }) multiline = false;
 
-  private _selectedItem: TreeItem;
+  private _selectedItem: TreeItem | null = null;
 
-  private getItemByPath(path: string): TreeItem {
+  private getItemByPath(path: string): TreeItem | undefined {
     const pathFragments: number[] = path.split('/').map(el => Number(el));
     let current: TreeItem[] = this.data;
-    let item: TreeItem;
+    let item: TreeItem | undefined = undefined;
 
     pathFragments.forEach((el, i) => {
       if (i === pathFragments.length - 1) {
         item = current[el];
       } else {
-        current = current[el].subItems;
+        current = current[el].subItems as TreeItem[];
       }
     });
 
@@ -91,7 +91,7 @@ export class VscodeTree extends LitElement {
     indentLevel: number;
     label: string;
     path: number[];
-    iconName: string;
+    iconName: string | undefined;
     open: boolean;
     itemType: ItemType;
     selected: boolean;
@@ -211,12 +211,12 @@ export class VscodeTree extends LitElement {
   private onComponentClick(event: MouseEvent) {
     const composedPath = event.composedPath();
     const targetElement = composedPath.find(
-      (el: HTMLElement) => el.tagName && el.tagName.toUpperCase() === 'LI'
+      (el: EventTarget) => (el as HTMLElement).tagName && (el as HTMLElement).tagName.toUpperCase() === 'LI'
     );
 
     if (targetElement) {
-      const path = (<HTMLLIElement>targetElement).dataset.path;
-      const item = this.getItemByPath(path);
+      const path = (targetElement as HTMLLIElement).dataset.path || '';
+      const item = this.getItemByPath(path) as TreeItem;
 
       this.toggleSubTreeOpen(item);
       this.selectTreeItem(item);
@@ -322,7 +322,7 @@ export class VscodeTree extends LitElement {
         white-space: nowrap;
       }
     `;
-  };
+  }
 
   render() {
     return html`

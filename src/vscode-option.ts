@@ -2,8 +2,6 @@ import { LitElement, html, css, property, customElement } from 'lit-element';
 import { nothing } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map';
 
-let instanceCounter = 0;
-
 @customElement('vscode-option')
 export class VscodeOption extends LitElement {
   @property({ type: String })
@@ -32,23 +30,20 @@ export class VscodeOption extends LitElement {
   get label(): string {
     return this.innerText;
   }
-  @property({ type: String }) description: string = '';
-  @property({ type: Boolean, reflect: true }) selected: boolean = false;
-  @property({ type: Boolean, attribute: false }) multiple: boolean = false;
+  @property({ type: String }) description = '';
+  @property({ type: Boolean, reflect: true }) selected = false;
+  @property({ type: Boolean, attribute: false }) multiple = false;
 
   private _value: string | undefined;
   private _label: string | undefined;
-  private _mainSlot: HTMLSlotElement;
-  private _cid: string;
+  private _mainSlot: HTMLSlotElement | null = null;
 
   constructor() {
     super();
-    instanceCounter++;
-    this._cid = `vscodeOption${instanceCounter}`;
   }
 
   firstUpdated() {
-    this._mainSlot = this.shadowRoot.querySelector('slot');
+    this._mainSlot = this.shadowRoot?.querySelector('slot') as HTMLSlotElement;
 
     if (this._mainSlot) {
       this._mainSlot.addEventListener(
@@ -58,7 +53,7 @@ export class VscodeOption extends LitElement {
     }
   }
 
-  private _onSlotChange(event: Event) {
+  private _onSlotChange() {
     this.dispatchEvent(
       new CustomEvent('vsc-slotchange', {
         detail: {

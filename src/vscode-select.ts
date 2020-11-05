@@ -57,18 +57,17 @@ export class VscodeSelect extends LitElement {
   get selectedIndex(): number {
     return this._selectedIndex;
   }
-  @property({ type: Number, reflect: true }) tabIndex: number = -1;
-  @property({ type: Boolean, reflect: true }) multiple: boolean = false;
+  @property({ type: Number, reflect: true }) tabIndex = -1;
+  @property({ type: Boolean, reflect: true }) multiple = false;
 
-  private _value: string;
-  private _showDropdown: boolean = false;
-  private _currentDescription: string;
-  private _mainSlot: HTMLSlotElement;
+  private _value = '';
+  private _showDropdown = false;
+  private _currentDescription = '';
+  private _mainSlot: HTMLSlotElement | null = null;
   private _options: Option[] = [];
-  private _optionElements: OptionElement[] = [];
-  private _currentLabel: string;
-  private _selectedIndex: number = 0;
-  private _onClickOutsideBound: (ev: Event) => void;
+  private _currentLabel = '';
+  private _selectedIndex = 0;
+  private _onClickOutsideBound: (event: MouseEvent) => void;
   private _tempSelection: number[] = [];
   private _appliedSelection: number[] = [];
 
@@ -80,7 +79,8 @@ export class VscodeSelect extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.addEventListener('vsc-slotchange', this._onOptionSlotChange);
+    // TODO: https://github.com/microsoft/TypeScript/issues/28357#issuecomment-711415095
+    this.addEventListener('vsc-slotchange', this._onOptionSlotChange as EventListener);
     this.addEventListener('click', this._onOptionClick);
     this.addEventListener('mouseover', this._onOptionMouseEnter);
     this.addEventListener('mouseout', this._onOptionMouseLeave);
@@ -89,14 +89,14 @@ export class VscodeSelect extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener('vsc-slotchange', this._onOptionSlotChange);
+    this.removeEventListener('vsc-slotchange', this._onOptionSlotChange as EventListener);
     this.removeEventListener('click', this._onOptionClick);
     this.removeEventListener('mouseover', this._onOptionMouseEnter);
     this.removeEventListener('mouseout', this._onOptionMouseLeave);
   }
 
   firstUpdated() {
-    this._mainSlot = this.shadowRoot.querySelector('slot');
+    this._mainSlot = this.shadowRoot!.querySelector('slot');
 
     if (this._mainSlot) {
       this._mainSlot.addEventListener(
@@ -139,13 +139,13 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onSlotChange() {
-    const nodes = this._mainSlot.assignedNodes();
+    const nodes = this._mainSlot!.assignedNodes();
 
     const optElements = nodes.filter(
       (el) =>
         el.nodeType === Node.ELEMENT_NODE &&
-        (<Element>el).tagName.toLowerCase() === 'vscode-option'
-    );
+        (el as Element).tagName.toLowerCase() === 'vscode-option'
+    ) as OptionElement[];
 
     optElements.forEach((el: OptionElement, index) => {
       const label = el.innerText;
@@ -202,7 +202,7 @@ export class VscodeSelect extends LitElement {
       return;
     }
 
-    this._currentDescription = element.description || undefined;
+    this._currentDescription = element.description || '';
     this.requestUpdate();
   }
 
@@ -420,7 +420,7 @@ export class VscodeSelect extends LitElement {
   }
 
   render() {
-    let descriptionTemplate: TemplateResult | Object;
+    let descriptionTemplate: TemplateResult | {};
 
     if (this._currentDescription) {
       descriptionTemplate = html`<div class="description">

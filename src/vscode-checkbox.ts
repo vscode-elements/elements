@@ -3,9 +3,9 @@ import { nothing } from 'lit-html';
 
 @customElement('vscode-checkbox')
 export class VscodeCheckbox extends LitElement {
-  @property({ type: String }) label: string;
-  @property({ type: Boolean }) checked: boolean = false;
-  @property({ type: String }) value: string;
+  @property({ type: String }) label = '';
+  @property({ type: Boolean }) checked = false;
+  @property({ type: String }) value = '';
 
   private _uid = `id_${new Date().valueOf()}_${Math.floor(Math.random() * 9999)}`;
 
@@ -75,7 +75,7 @@ export class VscodeCheckbox extends LitElement {
         line-height: 1.4;
       }
     `;
-  };
+  }
 
   render() {
     const icon = html`<vscode-icon name="check"></vscode-icon>`;

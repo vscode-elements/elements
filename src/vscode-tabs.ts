@@ -11,8 +11,8 @@ export class VscodeTabs extends LitElement {
     return this._selectedIndex;
   }
 
-  private _headerSlot: HTMLSlotElement;
-  private _mainSlot: HTMLSlotElement;
+  private _headerSlot: HTMLSlotElement | null = null;
+  private _mainSlot: HTMLSlotElement | null = null;
   private _selectedIndex: number;
 
   constructor() {
@@ -25,12 +25,12 @@ export class VscodeTabs extends LitElement {
       return;
     }
 
-    Array.from(this._mainSlot.assignedElements()).forEach((el: HTMLElement, i) => {
-      el.style.display = i === this._selectedIndex ? 'block' : 'none';
+    Array.from(this._mainSlot.assignedElements()).forEach((el: Element, i) => {
+      (el as HTMLElement).style.display = i === this._selectedIndex ? 'block' : 'none';
     });
 
-    Array.from(this._headerSlot.assignedElements()).forEach((el: HTMLElement, i) => {
-      el.dataset.index = String(i);
+    Array.from(this._headerSlot.assignedElements()).forEach((el: Element, i) => {
+      (el as HTMLElement).dataset.index = String(i);
       el.classList.toggle('is-active', i === this._selectedIndex);
     });
 
@@ -47,7 +47,7 @@ export class VscodeTabs extends LitElement {
   }
 
   private _onHeaderClick(event: MouseEvent) {
-    const index = (<HTMLElement>event.target).dataset.index;
+    const index = (event.target as HTMLElement).dataset.index;
 
     if (!index) {
       return;
@@ -58,8 +58,8 @@ export class VscodeTabs extends LitElement {
   }
 
   firstUpdated() {
-    this._headerSlot = this.shadowRoot.querySelector('slot[name=header]');
-    this._mainSlot = this.shadowRoot.querySelector('slot:not([name=header])');
+    this._headerSlot = this.shadowRoot!.querySelector('slot[name=header]') as HTMLSlotElement;
+    this._mainSlot = this.shadowRoot!.querySelector('slot:not([name=header])') as HTMLSlotElement;
 
     this._mainSlot.addEventListener(
       'slotchange',
