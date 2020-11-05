@@ -1,0 +1,9 @@
+---
+layout: 'page.11ty.cjs'
+title: 'Docs'
+---
+<ul>
+  {%- for page in collections.overview -%}
+    <li><a href="{{ page.url | url }}">{{ page.data.customElement }}</a></li>
+  {%- endfor -%}
+</ul>

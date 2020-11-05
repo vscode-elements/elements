@@ -1,7 +1,8 @@
-node_modules/
-.cache/
-dist/
-storybook-static/
-vscode-icons-optimized/
-.vscode/
-debug.log
+/node_modules/
+/lib/
+/test/
+
+/dist/
+/coverage/
+
+.env

@@ -1,6 +1,0 @@
-plugins:
-  - removeAttrs:
-      attrs:
-        - 'width'
-        - 'height'
-  - removeViewBox: false
