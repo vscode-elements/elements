@@ -1,0 +1,15 @@
+---
+layout: example.11ty.cjs
+title: <%tagName%> ⌲ Examples ⌲ Another example
+tags: example
+name: Another
+description: Another example
+---
+
+<%tagName% name="Earth"></%tagName%>
+
+<h3>HTML</h3>
+
+```html
+<%tagName% name="Earth"></%tagName%>
+```

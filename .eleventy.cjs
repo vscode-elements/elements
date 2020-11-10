@@ -23,7 +23,7 @@ module.exports = function (eleventyConfig) {
     },
   };
 
-  if (process.env.PATH_PREFIX) {
+  if (process.env.PATH_PREFIX && process.env.NODE_ENV !== 'development') {
     conf.pathPrefix = process.env.PATH_PREFIX;
   }
 

@@ -1,0 +1,8 @@
+---
+layout: page.11ty.cjs
+title: <my-element> ⌲ API
+---
+
+<!-- This file is auto-generated. Do not edit! -->
+
+Run `npm run analyze` to update this file.

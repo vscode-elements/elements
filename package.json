@@ -20,15 +20,15 @@
     "docs:clean": "rimraf docs",
     "docs:gen": "npm run build:bundle && npm run eleventy",
     "docs:gen:watch": "npm run build:bundle && npm run eleventy:watch",
-    "docs:assets": "cp node_modules/prismjs/themes/prism-okaidia.css docs/",
-    "docs:serve": "es-dev-server --root-dir=docs --node-resolve --watch",
-    "docs:start": "concurrently \"npm run docs:gen:watch\" \"npm run docs:serve\" --names \"11ty,server\"",
+    "docs:serve": "es-dev-server --root-dir=docs --node-resolve --watch --open",
+    "docs:start": "cross-env NODE_ENV=development concurrently \"npm run docs:gen:watch\" \"npm run docs:serve\" --names \"11ty,server\"",
     "analyze": "wca analyze \"src/**/*.ts\" --outFiles docs-src/pages/{tagname}/api.md && node scripts/patchMdFiles.js",
     "serve": "es-dev-server --node-resolve --watch --app-index dev/index.html --open",
     "start": "concurrently \"npm run build:watch\" \"npm run serve\" --names \"tsc,server\"",
     "test": "npm run build && web-test-runner dist/test/**/*.test.js --node-resolve --coverage",
     "test:watch": "web-test-runner dist/test/**/*.test.js --node-resolve --watch",
-    "checksize": "rollup -c ; cat dist/bundled.js | gzip -9 | wc -c"
+    "checksize": "npm run build:bundle && cat dist/bundled.js | gzip -9 | wc -c",
+    "generate": "node scripts/generateComponent.js"
   },
   "keywords": [
     "web-components",
@@ -52,6 +52,7 @@
     "@web/test-runner": "^0.9.7",
     "chai": "^4.2.0",
     "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
     "deepmerge": "^4.2.2",
     "dotenv": "^8.2.0",
     "es-dev-server": "^1.46.1",
