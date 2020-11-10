@@ -3,6 +3,8 @@ layout: page.11ty.cjs
 title: <vscode-option> ⌲ API
 ---
 
+<!-- This file is auto-generated. Do not edit! -->
+
 # vscode-option
 
 ## Properties

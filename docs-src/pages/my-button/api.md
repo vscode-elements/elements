@@ -3,6 +3,8 @@ layout: page.11ty.cjs
 title: <my-button> ⌲ API
 ---
 
+<!-- This file is auto-generated. Do not edit! -->
+
 # my-button
 
 A custom button element.

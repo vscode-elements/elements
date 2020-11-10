@@ -3,6 +3,8 @@ layout: page.11ty.cjs
 title: <vscode-context-menu-item> ⌲ API
 ---
 
+<!-- This file is auto-generated. Do not edit! -->
+
 # vscode-context-menu-item
 
 ## Properties

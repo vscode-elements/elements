@@ -3,6 +3,8 @@ layout: page.11ty.cjs
 title: <vscode-tree> ⌲ API
 ---
 
+<!-- This file is auto-generated. Do not edit! -->
+
 # vscode-tree
 
 ## Properties

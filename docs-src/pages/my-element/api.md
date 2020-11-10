@@ -3,6 +3,8 @@ layout: page.11ty.cjs
 title: <my-element> ⌲ API
 ---
 
+<!-- This file is auto-generated. Do not edit! -->
+
 # my-element
 
 An example element.

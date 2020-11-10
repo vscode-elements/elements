@@ -19,7 +19,7 @@ module.exports = function(data) {
     <link rel="stylesheet" href="${this.url('/dev-assets/default-dark-theme.css')}">
     <link rel="stylesheet" href="${this.url('/dev-assets/default-high-contrast-theme.css')}">
     <link rel="stylesheet" href="${this.url('/dev-assets/default-light-theme.css')}">
-    <link rel="stylesheet" href="${this.url('/dev-assets/default-webview-styles.css')}">
+    <link rel="stylesheet" href="${this.url('/dev-assets/preview-styles.css')}">
     <link rel="stylesheet" href="${this.url('/dev-assets/theme-switcher.css')}">
     <script type="module" src="${this.url('/bundled.js')}"></script>
   </head>

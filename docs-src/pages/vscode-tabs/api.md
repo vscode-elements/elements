@@ -3,6 +3,8 @@ layout: page.11ty.cjs
 title: <vscode-tabs> ⌲ API
 ---
 
+<!-- This file is auto-generated. Do not edit! -->
+
 # vscode-tabs
 
 ## Properties

@@ -3,6 +3,8 @@ layout: page.11ty.cjs
 title: <vscode-collapsible> ⌲ API
 ---
 
+<!-- This file is auto-generated. Do not edit! -->
+
 # vscode-collapsible
 
 ## Properties
