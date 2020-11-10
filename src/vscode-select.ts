@@ -1,6 +1,7 @@
 import { LitElement, html, css, property, customElement } from 'lit-element';
 import { nothing, TemplateResult } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import './vscode-button';
 
 interface Option {
   label: string;

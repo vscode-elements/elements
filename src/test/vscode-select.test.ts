@@ -10,12 +10,12 @@ describe('vscode-select', () => {
   });
 
   it('renders with default values', async () => {
-    const el = (await fixture(html`
+    const el = await fixture(html`
       <vscode-select>
         <vscode-option>Lorem</vscode-option>
         <vscode-option selected>Ipsum</vscode-option>
       </vscode-select>
-    `)) as VscodeSelect;
+    `) as VscodeSelect;
 
     expect(el).shadowDom.to.equal(`
       <div class="select-face">
