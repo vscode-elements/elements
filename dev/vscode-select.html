@@ -2,25 +2,19 @@
 <html lang="en">
 
 <head>
-  <script>
-    document.write(
-      '<script src="http://' +
-      (location.host || 'localhost').split(':')[0] +
-      ':35729/livereload.js?snipver=1"></' +
-      'script>'
-    );
-  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>VSCode Webview Elements demo page</title>
-  <link rel="stylesheet" href="../assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../assets/default-dark-theme.css" />
-  <link rel="stylesheet" href="../assets/default-high-contrast-theme.css" />
-  <link rel="stylesheet" href="../assets/default-light-theme.css" />
-  <link rel="stylesheet" href="../assets/preview-page.css" />
-  <script src="../assets/preview-page.js"></script>
-  <script src="../dist/vscwe.js"></script>
+  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+  <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
+  <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
+  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
+  <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
+  <script src="../dev-assets/preview-page.js"></script>
+  <script src="../dist/vscode-button.js" type="module"></script>
+  <script src="../dist/vscode-option.js" type="module"></script>
+  <script src="../dist/vscode-select.js" type="module"></script>
 </head>
 
 <body class="vscode-light">
