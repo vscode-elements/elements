@@ -1,6 +1,6 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
-import { nothing, TemplateResult } from 'lit-html';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import {LitElement, html, css, property, customElement} from 'lit-element';
+import {nothing, TemplateResult} from 'lit-html';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html';
 import './vscode-button';
 
 interface Option {
@@ -28,7 +28,7 @@ const findOptionEl = (event: Event) => {
 
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
-  @property({ type: String })
+  @property({type: String})
   set value(val: string) {
     const found = this.options.findIndex((opt) => opt.value === val);
 
@@ -45,11 +45,11 @@ export class VscodeSelect extends LitElement {
   get value(): string {
     return this._options[this._selectedIndex]?.value || '';
   }
-  @property({ type: Array, reflect: false })
+  @property({type: Array, reflect: false})
   get options(): Option[] {
     return this._options;
   }
-  @property({ type: Number })
+  @property({type: Number})
   set selectedIndex(val: number) {
     this._selectedIndex = val;
     this._updateCurrentLabel();
@@ -58,19 +58,27 @@ export class VscodeSelect extends LitElement {
   get selectedIndex(): number {
     return this._selectedIndex;
   }
-  @property({ type: Number, reflect: true }) tabIndex = -1;
-  @property({ type: Boolean, reflect: true }) multiple = false;
+  @property({type: Array})
+  set multipleSelectedIndexes(val: number[]) {
+    this._multipleSelectedIndexes = val;
+  }
+  get multipleSelectedIndexes(): number[] {
+    return this._multipleSelectedIndexes;
+  }
+  @property({type: Number, reflect: true}) tabIndex = -1;
+  @property({type: Boolean, reflect: true}) multiple = false;
 
   private _value = '';
   private _showDropdown = false;
   private _currentDescription = '';
   private _mainSlot: HTMLSlotElement | null = null;
   private _options: Option[] = [];
+  // private _selectedOptionIndexes: number[] = [];
+  // private _optionElements: OptionElement[] = [];
   private _currentLabel = '';
-  private _selectedIndex = 0;
+  private _selectedIndex = -1;
+  private _multipleSelectedIndexes: number[] = [];
   private _onClickOutsideBound: (event: MouseEvent) => void;
-  private _tempSelection: number[] = [];
-  private _appliedSelection: number[] = [];
 
   constructor() {
     super();
@@ -81,7 +89,10 @@ export class VscodeSelect extends LitElement {
     super.connectedCallback();
 
     // TODO: https://github.com/microsoft/TypeScript/issues/28357#issuecomment-711415095
-    this.addEventListener('vsc-slotchange', this._onOptionSlotChange as EventListener);
+    this.addEventListener(
+      'vsc-slotchange',
+      this._onOptionSlotChange as EventListener
+    );
     this.addEventListener('click', this._onOptionClick);
     this.addEventListener('mouseover', this._onOptionMouseEnter);
     this.addEventListener('mouseout', this._onOptionMouseLeave);
@@ -90,7 +101,10 @@ export class VscodeSelect extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener('vsc-slotchange', this._onOptionSlotChange as EventListener);
+    this.removeEventListener(
+      'vsc-slotchange',
+      this._onOptionSlotChange as EventListener
+    );
     this.removeEventListener('click', this._onOptionClick);
     this.removeEventListener('mouseover', this._onOptionMouseEnter);
     this.removeEventListener('mouseout', this._onOptionMouseLeave);
@@ -108,12 +122,12 @@ export class VscodeSelect extends LitElement {
   }
 
   private _multipleLabelText() {
-    const l = this._tempSelection.length;
+    const l = this._multipleSelectedIndexes.length;
 
     if (l === 0) {
       return '<No item selected>';
-    } else if(l === 1) {
-      return this._options[this._tempSelection[0]].label;
+    } else if (l === 1) {
+      return this._options[this._multipleSelectedIndexes[0]].label;
     } else {
       return `${l} items selected`;
     }
@@ -148,6 +162,8 @@ export class VscodeSelect extends LitElement {
         (el as Element).tagName.toLowerCase() === 'vscode-option'
     ) as OptionElement[];
 
+    let firstSelectedElementFound = false;
+
     optElements.forEach((el: OptionElement, index) => {
       const label = el.innerText;
       const value = el.value || label;
@@ -157,9 +173,13 @@ export class VscodeSelect extends LitElement {
       el.dataset.index = String(index);
       el.multiple = this.multiple;
 
-      if (selected) {
+      if (!firstSelectedElementFound && selected) {
         this._selectedIndex = index;
-        this._appliedSelection.push(index);
+        firstSelectedElementFound = true;
+      }
+
+      if (this.multiple && selected) {
+        this._multipleSelectedIndexes.push(index);
       }
 
       this._options[index] = {
@@ -170,6 +190,7 @@ export class VscodeSelect extends LitElement {
       };
     });
 
+    // this._optionElements = optElements;
     this._updateCurrentLabel();
   }
 
@@ -185,13 +206,7 @@ export class VscodeSelect extends LitElement {
   }
 
   private _onFaceClick() {
-    console.log('on face click');
     this._showDropdown = !this._showDropdown;
-
-    if (this.multiple && this._showDropdown) {
-      this._tempSelection = [...this._appliedSelection];
-    }
-
     this.requestUpdate();
     window.addEventListener('click', this._onClickOutsideBound);
   }
@@ -240,38 +255,29 @@ export class VscodeSelect extends LitElement {
             detail: {
               multiple: false,
               value: this._value,
+              selectedOptions: this._options[this._selectedIndex],
+              selectedIndex: this._selectedIndex,
             },
           })
         );
       }
-
-      // TODO: temp selection
 
       this._showDropdown = false;
     } else {
       const nextSelectedValue = !optionElementSelected;
 
       optionElement.selected = nextSelectedValue;
-      // this._options[optionElementIndex].selected = optionElementIndex;
-      /* this._tempSelection = this._options
-        .filter((op) => op.selected)
-        .map((_, index) => index); */
+      this._options[optionElementIndex].selected = nextSelectedValue;
 
-      if (nextSelectedValue) {
-        this._tempSelection.push(optionElementIndex);
-      } else {
-        this._tempSelection.splice(
-          this._tempSelection.indexOf(optionElementIndex),
-          1
-        );
-      }
-
-      console.log(this._tempSelection);
+      this._multipleSelectedIndexes = [];
+      this._options.forEach((option, index) => {
+        if (option.selected) {
+          this._multipleSelectedIndexes.push(index);
+        }
+      });
     }
 
     this._updateCurrentLabel();
-
-    // this.requestUpdate();
   }
 
   private _onOptionSlotChange(event: CustomEvent) {
@@ -295,29 +301,23 @@ export class VscodeSelect extends LitElement {
     }
   }
 
-  private _onApplyClick() {
-    // TODO: vsc-change, temp selection
-
-    this._appliedSelection = [...this._tempSelection];
+  private _onAcceptClick() {
     this._showDropdown = false;
-    this._updateCurrentLabel();
-    this._tempSelection = [];
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {
-          multiple: true,
-          value: this._options,
-        },
-      })
-    );
-
     this.requestUpdate();
   }
 
-  private _onCancelClick() {
-    this._showDropdown = false;
-    this.requestUpdate();
+  private _onResetClick() {
+    const optionElements = this._mainSlot
+      ?.assignedElements()
+      .filter((el) => el.tagName.toLocaleLowerCase() === 'vscode-option') as OptionElement[];
+
+    this._options.forEach((option, index) => {
+      optionElements[index].selected = false;
+      option.selected = false;
+    });
+
+    this._multipleSelectedIndexes = [];
+    this._updateCurrentLabel();
   }
 
   static get styles() {
@@ -465,11 +465,11 @@ export class VscodeSelect extends LitElement {
         <div class="options"><slot></slot></div>
         ${this.multiple
           ? html`<div class="buttons">
-              <vscode-button @click="${this._onApplyClick}"
-                >Apply</vscode-button
+              <vscode-button @click="${this._onAcceptClick}"
+                >OK</vscode-button
               >
-              <vscode-button secondary @click="${this._onCancelClick}"
-                >Cancel</vscode-button
+              <vscode-button secondary @click="${this._onResetClick}"
+                >Reset</vscode-button
               >
             </div>`
           : null}
