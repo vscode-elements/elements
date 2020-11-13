@@ -44,6 +44,49 @@ describe('vscode-select', () => {
     expect(el.value).to.eq('testvalue2');
   });
 
+  it('select an option', async () => {
+    const el = (await fixture(html`
+      <vscode-select>
+        <vscode-option value="testvalue1">Lorem</vscode-option>
+        <vscode-option value="testvalue2">Ipsum</vscode-option>
+      </vscode-select>
+    `)) as VscodeSelect;
+
+    const event = new MouseEvent('click');
+    const faceElement = el.shadowRoot?.querySelector('.select-face');
+    const slot = el.shadowRoot?.querySelector('slot');
+    const optionElements = slot
+      ?.assignedNodes()
+      .filter(
+        (el) => el.nodeName.toLowerCase() === 'vscode-option'
+      ) as VscodeOption[];
+    const option = optionElements[1]
+
+    const dropdown = el.shadowRoot?.querySelector(
+      '.dropdown'
+    ) as HTMLDivElement;
+
+    expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
+      'none'
+    );
+
+    faceElement?.dispatchEvent(event);
+    await el.updateComplete;
+
+    expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
+      'block'
+    );
+
+    event.composedPath = () => {
+      return [option as VscodeOption];
+    }
+
+    el?.dispatchEvent(event);
+    await el.updateComplete;
+
+    expect(el.value).to.eq('testvalue2');
+  });
+
   it('renders description', async () => {
     const markup = html`
       <vscode-select>
@@ -73,45 +116,73 @@ describe('vscode-select', () => {
     expect(descriptionEl).lightDom.to.equal('Test description 2');
   });
 
-  it('multiple attribute', async () => {
-    const el = (await fixture(html`
-      <vscode-select multiple>
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option>Ipsum</vscode-option>
-        <vscode-option>Dolor</vscode-option>
-      </vscode-select>
-    `)) as VscodeSelect;
+  describe('multiple', () => {
+    it('multiple attribute', async () => {
+      const el = (await fixture(html`
+        <vscode-select multiple>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-select>
+      `)) as VscodeSelect;
 
-    const labelEl = el.shadowRoot?.querySelector('.select-face .text');
-    const slot = el.shadowRoot?.querySelector('slot');
-    const optionElements = slot
-      ?.assignedNodes()
-      .filter(
-        (el) => el.nodeName.toLowerCase() === 'vscode-option'
-      ) as VscodeOption[];
+      const labelEl = el.shadowRoot?.querySelector('.select-face .text');
+      const slot = el.shadowRoot?.querySelector('slot');
+      const optionElements = slot
+        ?.assignedNodes()
+        .filter(
+          (el) => el.nodeName.toLowerCase() === 'vscode-option'
+        ) as VscodeOption[];
 
-    expect(el.selectedIndex).to.eq(-1);
-    expect(el.value).to.eq('');
-    expect(labelEl).lightDom.to.equal('&lt;No item selected&gt;');
-    expect(optionElements[0].multiple).to.eq(true);
-    expect(optionElements[1].multiple).to.eq(true);
-    expect(optionElements[2].multiple).to.eq(true);
-  });
+      expect(el.selectedIndex).to.eq(-1);
+      expect(el.value).to.eq('');
+      expect(labelEl).lightDom.to.equal('&lt;No item selected&gt;');
+      expect(optionElements[0].multiple).to.eq(true);
+      expect(optionElements[1].multiple).to.eq(true);
+      expect(optionElements[2].multiple).to.eq(true);
+    });
 
-  it('multiple attribute - select multiple option', async () => {
-    const el = (await fixture(html`
-      <vscode-select multiple>
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option selected>Ipsum</vscode-option>
-        <vscode-option selected>Dolor</vscode-option>
-      </vscode-select>
-    `)) as VscodeSelect;
+    it('multiple attribute - select multiple option', async () => {
+      const el = (await fixture(html`
+        <vscode-select multiple>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option selected>Ipsum</vscode-option>
+          <vscode-option selected>Dolor</vscode-option>
+        </vscode-select>
+      `)) as VscodeSelect;
 
-    const labelEl = el.shadowRoot?.querySelector('.select-face .text');
+      const labelEl = el.shadowRoot?.querySelector('.select-face .text');
 
-    expect(el.selectedIndex).to.eq(1);
-    expect(el.multipleSelectedIndexes).to.eql([1, 2]);
-    expect(el.value).to.eq('Ipsum');
-    expect(labelEl).lightDom.to.equal('2 items selected');
+      expect(el.selectedIndex).to.eq(1);
+      expect(el.selectedIndexes).to.eql([1, 2]);
+      expect(el.options).to.eql([
+        {
+          description: '',
+          label: 'Lorem',
+          selected: false,
+          value: 'Lorem',
+        },
+        {
+          description: '',
+          label: 'Ipsum',
+          selected: true,
+          value: 'Ipsum',
+        },
+        {
+          description: '',
+          label: 'Dolor',
+          selected: true,
+          value: 'Dolor',
+        },
+      ]);
+      expect(el.value).to.eq('Ipsum');
+      expect(labelEl).lightDom.to.equal('2 items selected', 'label text');
+    });
   });
 });
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-select': VscodeSelect;
+  }
+}

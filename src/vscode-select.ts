@@ -26,6 +26,9 @@ const findOptionEl = (event: Event) => {
   ) as OptionElement;
 };
 
+/**
+ * @fires vsc-change
+ */
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
   @property({type: String})
@@ -45,10 +48,12 @@ export class VscodeSelect extends LitElement {
   get value(): string {
     return this._options[this._selectedIndex]?.value || '';
   }
+
   @property({type: Array, reflect: false})
   get options(): Option[] {
     return this._options;
   }
+
   @property({type: Number})
   set selectedIndex(val: number) {
     this._selectedIndex = val;
@@ -58,14 +63,17 @@ export class VscodeSelect extends LitElement {
   get selectedIndex(): number {
     return this._selectedIndex;
   }
+
   @property({type: Array})
-  set multipleSelectedIndexes(val: number[]) {
-    this._multipleSelectedIndexes = val;
+  set selectedIndexes(val: number[]) {
+    this._selectedIndexes = val;
   }
-  get multipleSelectedIndexes(): number[] {
-    return this._multipleSelectedIndexes;
+  get selectedIndexes(): number[] {
+    return this._selectedIndexes;
   }
+
   @property({type: Number, reflect: true}) tabIndex = -1;
+
   @property({type: Boolean, reflect: true}) multiple = false;
 
   private _value = '';
@@ -73,11 +81,10 @@ export class VscodeSelect extends LitElement {
   private _currentDescription = '';
   private _mainSlot: HTMLSlotElement | null = null;
   private _options: Option[] = [];
-  // private _selectedOptionIndexes: number[] = [];
-  // private _optionElements: OptionElement[] = [];
+  private _selectedOptions: Option[] = [];
   private _currentLabel = '';
   private _selectedIndex = -1;
-  private _multipleSelectedIndexes: number[] = [];
+  private _selectedIndexes: number[] = [];
   private _onClickOutsideBound: (event: MouseEvent) => void;
 
   constructor() {
@@ -122,12 +129,12 @@ export class VscodeSelect extends LitElement {
   }
 
   private _multipleLabelText() {
-    const l = this._multipleSelectedIndexes.length;
+    const l = this._selectedIndexes.length;
 
     if (l === 0) {
       return '<No item selected>';
     } else if (l === 1) {
-      return this._options[this._multipleSelectedIndexes[0]].label;
+      return this._options[this._selectedIndexes[0]].label;
     } else {
       return `${l} items selected`;
     }
@@ -179,7 +186,7 @@ export class VscodeSelect extends LitElement {
       }
 
       if (this.multiple && selected) {
-        this._multipleSelectedIndexes.push(index);
+        this._selectedIndexes.push(index);
       }
 
       this._options[index] = {
@@ -256,7 +263,7 @@ export class VscodeSelect extends LitElement {
               multiple: false,
               value: this._value,
               selectedOptions: this._options[this._selectedIndex],
-              selectedIndex: this._selectedIndex,
+              selectedIndexes: [this._selectedIndex],
             },
           })
         );
@@ -269,12 +276,30 @@ export class VscodeSelect extends LitElement {
       optionElement.selected = nextSelectedValue;
       this._options[optionElementIndex].selected = nextSelectedValue;
 
-      this._multipleSelectedIndexes = [];
+      let firstSelectedElementFound = false;
+      this._selectedIndexes = [];
+      this._selectedOptions = [];
+
       this._options.forEach((option, index) => {
         if (option.selected) {
-          this._multipleSelectedIndexes.push(index);
+          this._selectedIndexes.push(index);
+          this._selectedOptions.push(option);
+
+          if (!firstSelectedElementFound) {
+            this._selectedIndex = index;
+            firstSelectedElementFound = true;
+          }
         }
       });
+
+      this.dispatchEvent(new CustomEvent('vsc-change', {
+        detail: {
+          multiple: true,
+          value: this._value,
+          selectedIndex: this._selectedIndex,
+          selectedIndexes: this._selectedIndexes,
+        }
+      }));
     }
 
     this._updateCurrentLabel();
@@ -316,7 +341,7 @@ export class VscodeSelect extends LitElement {
       option.selected = false;
     });
 
-    this._multipleSelectedIndexes = [];
+    this._selectedIndexes = [];
     this._updateCurrentLabel();
   }
 

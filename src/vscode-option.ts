@@ -153,3 +153,9 @@ export class VscodeOption extends LitElement {
     `;
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-option': VscodeOption;
+  }
+}
