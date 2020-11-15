@@ -27,26 +27,26 @@ const findOptionEl = (event: Event) => {
 };
 
 /**
+ * A dropdown menu element.
+ *
+ * @element vscode-select
+ *
  * @fires vsc-change
  */
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
+  /**
+   * If value is not represented in the options list, the selectedIndex will be -1
+   */
   @property({type: String})
   set value(val: string) {
-    const found = this.options.findIndex((opt) => opt.value === val);
-
-    if (found !== -1) {
-      this._selectedIndex = found;
-      this._value = val;
-    } else {
-      this._selectedIndex = -1;
-      this._value = '';
-    }
-
+    this._selectedIndex = this.options.findIndex((opt) => opt.value === val);
+    this._selectedIndexes = [this._selectedIndex];
+    this._value = val || '';
     this._updateCurrentLabel();
   }
   get value(): string {
-    return this._options[this._selectedIndex]?.value || '';
+    return this._value;
   }
 
   @property({type: Array, reflect: false})
@@ -57,8 +57,9 @@ export class VscodeSelect extends LitElement {
   @property({type: Number})
   set selectedIndex(val: number) {
     this._selectedIndex = val;
+    this._selectedIndexes = [this._selectedIndex];
+    this._value = this._options[this._selectedIndex]?.value || '';
     this._updateCurrentLabel();
-    this._value = this._options[this._selectedIndex]?.value;
   }
   get selectedIndex(): number {
     return this._selectedIndex;
@@ -67,6 +68,7 @@ export class VscodeSelect extends LitElement {
   @property({type: Array})
   set selectedIndexes(val: number[]) {
     this._selectedIndexes = val;
+    this._updateCurrentLabel();
   }
   get selectedIndexes(): number[] {
     return this._selectedIndexes;
@@ -182,6 +184,7 @@ export class VscodeSelect extends LitElement {
 
       if (!firstSelectedElementFound && selected) {
         this._selectedIndex = index;
+        this._value = value;
         firstSelectedElementFound = true;
       }
 
@@ -251,9 +254,9 @@ export class VscodeSelect extends LitElement {
     const optionElementSelected = optionElement.selected;
     const prevSelected = this.selectedIndex;
 
-    this.selectedIndex = Number(optionElementIndex);
+    this._selectedIndex = Number(optionElementIndex);
+    this._selectedIndexes = [this._selectedIndex];
     this._value = optionElement.value;
-    // this._currentLabel = optionElement.innerText;
 
     if (!this.multiple) {
       if (prevSelected !== this.selectedIndex) {
@@ -261,9 +264,10 @@ export class VscodeSelect extends LitElement {
           new CustomEvent('vsc-change', {
             detail: {
               multiple: false,
-              value: this._value,
+              selectedIndex: this._selectedIndex,
+              selectedIndexes: this._selectedIndexes,
               selectedOptions: this._options[this._selectedIndex],
-              selectedIndexes: [this._selectedIndex],
+              value: this._value,
             },
           })
         );
@@ -287,6 +291,7 @@ export class VscodeSelect extends LitElement {
 
           if (!firstSelectedElementFound) {
             this._selectedIndex = index;
+            this._value = this._options[this._selectedIndex]?.value || '';
             firstSelectedElementFound = true;
           }
         }
@@ -295,9 +300,10 @@ export class VscodeSelect extends LitElement {
       this.dispatchEvent(new CustomEvent('vsc-change', {
         detail: {
           multiple: true,
-          value: this._value,
           selectedIndex: this._selectedIndex,
           selectedIndexes: this._selectedIndexes,
+          selectedOptions: this._selectedOptions,
+          value: this._value,
         }
       }));
     }
@@ -501,5 +507,11 @@ export class VscodeSelect extends LitElement {
         ${descriptionTemplate}
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-select': VscodeSelect;
   }
 }

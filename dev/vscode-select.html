@@ -64,10 +64,6 @@
       <vscode-option>Lorem</vscode-option>
       <vscode-option>Ipsum</vscode-option>
       <vscode-option>Dolor</vscode-option>
-      <div>
-        <p>aaa</p>
-        <p>bbb</p>
-      </div>
     </vscode-select>
     <pre class="logger"></pre>
     <script>
@@ -82,7 +78,7 @@
         loggerEl.innerHTML = sl.value;
 
         sl.addEventListener('vsc-change', (event) => {
-          console.log(event.detail.value);
+          console.log(event);
         });
       })();
     </script>
@@ -281,6 +277,26 @@
           `;
 
           sl.innerHTML = optionsMarkup;
+        });
+      })();
+    </script>
+  </div>
+
+  <div class="story">
+    <h2 class="story-title">Native select</h2>
+    <select name="" id="native-select" multiple>
+      <option value="testvalue0">Lorem</option>
+      <option value="testvalue1">Ipsum</option>
+      <option value="testvalue2">Dolor</option>
+      <option value="testvalue3">Sit</option>
+    </select>
+    <script>
+      (() => {
+        const el = document.querySelector('#native-select');
+
+        el.addEventListener('change', (event) => {
+          console.log('value:', el.value);
+          console.log('selectedIndex:', el.selectedIndex);
         });
       })();
     </script>
