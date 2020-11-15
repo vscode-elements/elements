@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>&lt;vscode-form-item&gt; ⌲ API</title>
+    <title>&lt;vscode-select&gt; ⌲ Install</title>
     
     <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
@@ -27,10 +27,10 @@
     
 <nav>
   <a href="/vscode-webview-elements/">Home</a>
-  <a href="/vscode-webview-elements/pages/vscode-form-item/overview">Overview</a>
-  <a href="/vscode-webview-elements/pages/vscode-form-item/examples">Examples</a>
-  <a href="/vscode-webview-elements/pages/vscode-form-item/api">API</a>
-  <a href="/vscode-webview-elements/pages/vscode-form-item/install">Install</a>
+  <a href="/vscode-webview-elements/pages/vscode-select/overview">Overview</a>
+  <a href="/vscode-webview-elements/pages/vscode-select/examples">Examples</a>
+  <a href="/vscode-webview-elements/pages/vscode-select/api">API</a>
+  <a href="/vscode-webview-elements/pages/vscode-select/install">Install</a>
 </nav>
     <div id="main-wrapper">
       <main>
@@ -62,8 +62,17 @@
             });
           })();
         </script>
-        <!-- This file is auto-generated. Do not edit! -->
-<h1>vscode-form-item</h1>
+        <h1>Install</h1>
+<p><code>&lt;vscode-select&gt;</code> is distributed on npm, so you can install it locally or use it via npm CDNs like unpkg.com.</p>
+<h2>Local Installation</h2>
+<pre class="language-bash"><code class="language-bash"><span class="token function">npm</span> i vscode-select</code></pre>
+<h2>CDN</h2>
+<p>npm CDNs like <a href="">unpkg.com</a> can directly serve files that have been published to npm. This works great for standard JavaScript modules that the browser can load natively.</p>
+<p>For this element to work from unpkg.com specifically, you need to include the <code>?module</code> query parameter, which tells unpkg.com to rewrite &quot;bare&quot; module specificers to full URLs.</p>
+<h3>HTML</h3>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://unpkg.com/vscode-select?module<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<h3>JavaScript</h3>
+<pre class="language-html"><code class="language-html">import {VscodeSelect} from 'https://unpkg.com/vscode-select?module';</code></pre>
 
       </main>
     </div>

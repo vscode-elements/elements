@@ -1,54 +1,55 @@
-body {
+.vscode-preview {
+  all: initial;
   background-color: var(--vscode-editor-background);
   color: var(--vscode-editor-foreground);
   font-family: var(--vscode-font-family);
   font-weight: var(--vscode-font-weight);
   font-size: var(--vscode-font-size);
   margin: 0;
-  padding: 0 20px;
+  padding: 20px;
 }
 
-img {
+.vscode-preview img {
   max-width: 100%;
   max-height: 100%;
 }
 
-a {
+.vscode-preview a {
   color: var(--vscode-textLink-foreground);
 }
 
-a:hover {
+.vscode-preview a:hover {
   color: var(--vscode-textLink-activeForeground);
 }
 
-a:focus,
-input:focus,
-select:focus,
-textarea:focus {
+.vscode-preview a:focus,
+.vscode-preview input:focus,
+.vscode-preview select:focus,
+.vscode-preview textarea:focus {
   outline: 1px solid -webkit-focus-ring-color;
   outline-offset: -1px;
 }
 
-code {
+.vscode-preview code {
   color: var(--vscode-textPreformat-foreground);
 }
 
-blockquote {
+.vscode-preview blockquote {
   background: var(--vscode-textBlockQuote-background);
   border-color: var(--vscode-textBlockQuote-border);
 }
 
-::-webkit-scrollbar {
+.vscode-preview ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-::-webkit-scrollbar-thumb {
+.vscode-preview ::-webkit-scrollbar-thumb {
   background-color: var(--vscode-scrollbarSlider-background);
 }
-::-webkit-scrollbar-thumb:hover {
+.vscode-preview ::-webkit-scrollbar-thumb:hover {
   background-color: var(--vscode-scrollbarSlider-hoverBackground);
 }
-::-webkit-scrollbar-thumb:active {
+.vscode-preview ::-webkit-scrollbar-thumb:active {
   background-color: var(--vscode-scrollbarSlider-activeBackground);
 }
