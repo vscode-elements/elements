@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import {html, fixture, expect} from '@open-wc/testing';
 import {VscodeSelect} from '../vscode-select';
 import {VscodeOption} from '../vscode-option';
 import '../vscode-option';
-import {html, fixture, expect} from '@open-wc/testing';
+import {spy} from 'sinon';
 
 describe('vscode-select', () => {
   it('is defined', () => {
@@ -52,7 +53,10 @@ describe('vscode-select', () => {
       </vscode-select>
     `)) as VscodeSelect;
 
-    const event = new MouseEvent('click');
+    const changeSpy = spy();
+    el.addEventListener('vsc-change', changeSpy);
+
+    const clickEvent = new MouseEvent('click');
     const faceElement = el.shadowRoot?.querySelector('.select-face');
     const slot = el.shadowRoot?.querySelector('slot');
     const optionElements = slot
@@ -60,7 +64,7 @@ describe('vscode-select', () => {
       .filter(
         (el) => el.nodeName.toLowerCase() === 'vscode-option'
       ) as VscodeOption[];
-    const option = optionElements[1]
+    const option = optionElements[1];
 
     const dropdown = el.shadowRoot?.querySelector(
       '.dropdown'
@@ -70,21 +74,22 @@ describe('vscode-select', () => {
       'none'
     );
 
-    faceElement?.dispatchEvent(event);
+    faceElement?.dispatchEvent(clickEvent);
     await el.updateComplete;
 
     expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
       'block'
     );
 
-    event.composedPath = () => {
+    clickEvent.composedPath = () => {
       return [option as VscodeOption];
-    }
+    };
 
-    el?.dispatchEvent(event);
+    el?.dispatchEvent(clickEvent);
     await el.updateComplete;
 
     expect(el.value).to.eq('testvalue2');
+    expect(changeSpy).to.calledWithMatch({detail: {value: 'testvalue2'}});
   });
 
   it('renders description', async () => {
@@ -104,16 +109,89 @@ describe('vscode-select', () => {
     const el = (await fixture(markup)) as VscodeSelect;
 
     const option = el.querySelectorAll('vscode-option')[1];
-    const event = new MouseEvent('mouseover');
-    event.composedPath = () => {
+    const mouseOverEvent = new MouseEvent('mouseover');
+    mouseOverEvent.composedPath = () => {
       return [option];
     };
 
-    el.dispatchEvent(event);
+    const mouseOutEvent = new MouseEvent('mouseout');
+    mouseOutEvent.composedPath = () => {
+      return [option];
+    };
+
+    el.dispatchEvent(mouseOverEvent);
     await el.updateComplete;
 
     const descriptionEl = el.shadowRoot?.querySelector('.description');
     expect(descriptionEl).lightDom.to.equal('Test description 2');
+
+    el.dispatchEvent(mouseOutEvent);
+    await el.updateComplete;
+
+    const emptyDescriptionEl = el.shadowRoot?.querySelector('.description');
+    expect(emptyDescriptionEl).to.eq(null);
+  });
+
+  it('set selectedIndex when value changed', async () => {
+    const el = (await fixture(html`
+      <vscode-select>
+        <vscode-option value="testvalue1">Lorem</vscode-option>
+        <vscode-option value="testvalue2">Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-select>
+    `)) as VscodeSelect;
+
+    el.value = 'testvalue2';
+    expect(el.selectedIndex).to.eq(1);
+    expect(el.selectedIndexes).to.eql([1]);
+    el.value = 'Dolor';
+    expect(el.selectedIndex).to.eq(2);
+    expect(el.selectedIndexes).to.eql([2]);
+    el.value = 'asdf';
+    expect(el.selectedIndex).to.eq(-1);
+    expect(el.selectedIndexes).to.eql([-1]);
+    expect(el.value).to.eq('asdf');
+  });
+
+  it('set value when selectedIndex changed', async () => {
+    const el = (await fixture(html`
+      <vscode-select>
+        <vscode-option value="testvalue1">Lorem</vscode-option>
+        <vscode-option value="testvalue2">Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-select>
+    `)) as VscodeSelect;
+
+    el.selectedIndex = 1;
+    expect(el.value).to.eq('testvalue2');
+    el.selectedIndex = 3;
+    expect(el.value).to.eq('');
+    el.selectedIndex = -1;
+    expect(el.value).to.eq('');
+  });
+
+  it('default value should be an empty string', async () => {
+    const el = (await fixture(html`
+      <vscode-select>
+        <vscode-option value="testvalue1">Lorem</vscode-option>
+        <vscode-option value="testvalue2">Ipsum</vscode-option>
+        <vscode-option value="testvalue3">Dolor</vscode-option>
+      </vscode-select>
+    `)) as VscodeSelect;
+
+    expect(el.value).to.eq('');
+  });
+
+  it('default selectedIndex should be -1', async () => {
+    const el = (await fixture(html`
+      <vscode-select>
+        <vscode-option value="testvalue1">Lorem</vscode-option>
+        <vscode-option value="testvalue2">Ipsum</vscode-option>
+        <vscode-option value="testvalue3">Dolor</vscode-option>
+      </vscode-select>
+    `)) as VscodeSelect;
+
+    expect(el.selectedIndex).to.eq(-1);
   });
 
   describe('multiple', () => {
@@ -178,11 +256,78 @@ describe('vscode-select', () => {
       expect(el.value).to.eq('Ipsum');
       expect(labelEl).lightDom.to.equal('2 items selected', 'label text');
     });
+
+    it('click on options', async () => {
+      const el = (await fixture(html`
+        <vscode-select multiple>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-select>
+      `)) as VscodeSelect;
+
+      const changeListenerSpy = spy();
+      el.addEventListener('vsc-change', changeListenerSpy);
+
+      const clickEvent = new MouseEvent('click');
+      const faceElement = el.shadowRoot?.querySelector('.select-face');
+      faceElement?.dispatchEvent(clickEvent);
+
+      const slot = el.shadowRoot?.querySelector('slot');
+      const optionElements = slot
+        ?.assignedNodes()
+        .filter(
+          (el) => el.nodeName.toLowerCase() === 'vscode-option'
+        ) as VscodeOption[];
+      const opt0click = new MouseEvent('click');
+      const opt1click = new MouseEvent('click');
+      const opt2click = new MouseEvent('click');
+      opt0click.composedPath = () => [optionElements[0]];
+      opt1click.composedPath = () => [optionElements[1]];
+      opt2click.composedPath = () => [optionElements[2]];
+
+      el.dispatchEvent(opt0click);
+      expect(changeListenerSpy).to.calledWithMatch({
+        detail: {
+          multiple: true,
+          selectedIndex: 0,
+          selectedIndexes: [0],
+          value: 'Lorem',
+        },
+      });
+      changeListenerSpy.resetHistory();
+
+      el.dispatchEvent(opt1click);
+      expect(changeListenerSpy).to.calledWithMatch({
+        detail: {
+          multiple: true,
+          selectedIndex: 0,
+          selectedIndexes: [0, 1],
+          value: 'Lorem',
+        },
+      });
+      changeListenerSpy.resetHistory();
+
+      el.dispatchEvent(opt2click);
+      expect(changeListenerSpy).to.calledWithMatch({
+        detail: {
+          multiple: true,
+          selectedIndex: 0,
+          selectedIndexes: [0, 1, 2],
+          value: 'Lorem',
+        },
+      });
+      changeListenerSpy.resetHistory();
+
+      el.dispatchEvent(opt0click);
+      expect(changeListenerSpy).to.calledWithMatch({
+        detail: {
+          multiple: true,
+          selectedIndex: 1,
+          selectedIndexes: [1, 2],
+          value: 'Ipsum',
+        },
+      });
+    });
   });
 });
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'vscode-select': VscodeSelect;
-  }
-}
