@@ -97,11 +97,6 @@ export class VscodeSelect extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // TODO: https://github.com/microsoft/TypeScript/issues/28357#issuecomment-711415095
-    this.addEventListener(
-      'vsc-slotchange',
-      this._onOptionSlotChange as EventListener
-    );
     this.addEventListener('click', this._onOptionClick);
     this.addEventListener('mouseover', this._onOptionMouseEnter);
     this.addEventListener('mouseout', this._onOptionMouseLeave);
@@ -110,10 +105,6 @@ export class VscodeSelect extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener(
-      'vsc-slotchange',
-      this._onOptionSlotChange as EventListener
-    );
     this.removeEventListener('click', this._onOptionClick);
     this.removeEventListener('mouseover', this._onOptionMouseEnter);
     this.removeEventListener('mouseout', this._onOptionMouseLeave);
@@ -309,27 +300,6 @@ export class VscodeSelect extends LitElement {
     }
 
     this._updateCurrentLabel();
-  }
-
-  private _onOptionSlotChange(event: CustomEvent) {
-    const optionElement = findOptionEl(event);
-
-    if (!optionElement) {
-      return;
-    }
-
-    const index = Number(optionElement.dataset.index);
-
-    this._options[index] = {
-      label: optionElement.innerText,
-      value: optionElement.value || optionElement.innerText,
-      description: optionElement.description,
-    };
-
-    if (index === this.selectedIndex) {
-      this._value = optionElement.value || optionElement.innerText;
-      this._updateCurrentLabel();
-    }
   }
 
   private _onAcceptClick() {
