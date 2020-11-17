@@ -68,6 +68,31 @@ export class VscodeSelect extends LitElement {
   @property({type: Array})
   set selectedIndexes(val: number[]) {
     this._selectedIndexes = val;
+
+    const optionElements = this._mainSlot
+      ?.assignedNodes()
+      .filter(
+        (el) => el.nodeName.toLowerCase() === 'vscode-option'
+      ) as OptionElement[];
+
+    let firstSelectedElementIndex = -1;
+
+    this._options.forEach((_, index) => {
+      const selected = this._selectedIndexes.includes(index);
+
+      if (firstSelectedElementIndex === -1 && selected) {
+        firstSelectedElementIndex = index;
+      }
+
+      optionElements[index].selected = selected;
+      this._options[index].selected = selected;
+    });
+
+    this._value =
+      firstSelectedElementIndex !== -1
+        ? this._options[firstSelectedElementIndex].value
+        : '';
+    this._selectedIndex = firstSelectedElementIndex;
     this._updateCurrentLabel();
   }
   get selectedIndexes(): number[] {
@@ -288,15 +313,17 @@ export class VscodeSelect extends LitElement {
         }
       });
 
-      this.dispatchEvent(new CustomEvent('vsc-change', {
-        detail: {
-          multiple: true,
-          selectedIndex: this._selectedIndex,
-          selectedIndexes: this._selectedIndexes,
-          selectedOptions: this._selectedOptions,
-          value: this._value,
-        }
-      }));
+      this.dispatchEvent(
+        new CustomEvent('vsc-change', {
+          detail: {
+            multiple: true,
+            selectedIndex: this._selectedIndex,
+            selectedIndexes: this._selectedIndexes,
+            selectedOptions: this._selectedOptions,
+            value: this._value,
+          },
+        })
+      );
     }
 
     this._updateCurrentLabel();
@@ -310,7 +337,9 @@ export class VscodeSelect extends LitElement {
   private _onResetClick() {
     const optionElements = this._mainSlot
       ?.assignedElements()
-      .filter((el) => el.tagName.toLocaleLowerCase() === 'vscode-option') as OptionElement[];
+      .filter(
+        (el) => el.tagName.toLocaleLowerCase() === 'vscode-option'
+      ) as OptionElement[];
 
     this._options.forEach((option, index) => {
       optionElements[index].selected = false;
@@ -318,6 +347,8 @@ export class VscodeSelect extends LitElement {
     });
 
     this._selectedIndexes = [];
+    this._selectedIndex = -1;
+    this._value = '';
     this._updateCurrentLabel();
   }
 
@@ -466,9 +497,7 @@ export class VscodeSelect extends LitElement {
         <div class="options"><slot></slot></div>
         ${this.multiple
           ? html`<div class="buttons">
-              <vscode-button @click="${this._onAcceptClick}"
-                >OK</vscode-button
-              >
+              <vscode-button @click="${this._onAcceptClick}">OK</vscode-button>
               <vscode-button secondary @click="${this._onResetClick}"
                 >Reset</vscode-button
               >

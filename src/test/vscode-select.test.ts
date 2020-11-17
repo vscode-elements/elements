@@ -132,6 +132,84 @@ describe('vscode-select', () => {
     expect(emptyDescriptionEl).to.eq(null);
   });
 
+  it('append content through innerHTML', async () => {
+    const el = (await fixture(html`
+      <vscode-select></vscode-select>
+    `)) as VscodeSelect;
+
+    el.innerHTML = `
+      <vscode-option>Lorem</vscode-option>
+      <vscode-option>Ipsum</vscode-option>
+      <vscode-option selected>Dolor</vscode-option>
+    `;
+
+    await el.updateComplete;
+
+    expect(el.selectedIndex).to.eq(2);
+    expect(el.options).to.eql([
+      {
+        description: '',
+        label: 'Lorem',
+        selected: false,
+        value: 'Lorem',
+      },
+      {
+        description: '',
+        label: 'Ipsum',
+        selected: false,
+        value: 'Ipsum',
+      },
+      {
+        description: '',
+        label: 'Dolor',
+        selected: true,
+        value: 'Dolor',
+      },
+    ]);
+  });
+
+  it('append content with appendChild()', async () => {
+    const el = (await fixture(html`
+      <vscode-select></vscode-select>
+    `)) as VscodeSelect;
+
+    const op1 = document.createElement('vscode-option');
+    const op2 = document.createElement('vscode-option');
+    const op3 = document.createElement('vscode-option');
+    op1.innerHTML = 'Lorem';
+    op2.innerHTML = 'Ipsum';
+    op3.innerHTML = 'Dolor';
+    op3.setAttribute('selected', '');
+
+    el.appendChild(op1);
+    el.appendChild(op2);
+    el.appendChild(op3);
+
+    await el.updateComplete;
+
+    expect(el.selectedIndex).to.eq(2);
+    expect(el.options).to.eql([
+      {
+        description: '',
+        label: 'Lorem',
+        selected: false,
+        value: 'Lorem',
+      },
+      {
+        description: '',
+        label: 'Ipsum',
+        selected: false,
+        value: 'Ipsum',
+      },
+      {
+        description: '',
+        label: 'Dolor',
+        selected: true,
+        value: 'Dolor',
+      },
+    ]);
+  });
+
   it('set selectedIndex when value changed', async () => {
     const el = (await fixture(html`
       <vscode-select>
@@ -194,15 +272,50 @@ describe('vscode-select', () => {
     expect(el.selectedIndex).to.eq(-1);
   });
 
+  it('click on outside area closes the dropdown', async () => {
+    const el = (await fixture(html`
+      <vscode-select>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-select>
+    `)) as VscodeSelect;
+
+    el.shadowRoot
+      ?.querySelector('.select-face')
+      ?.dispatchEvent(new MouseEvent('click'));
+
+    await el.updateComplete;
+
+    const dropdown = el.shadowRoot?.querySelector(
+      '.dropdown'
+    ) as HTMLDivElement;
+
+    expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
+      'block'
+    );
+
+    const outsideClickEvent = new MouseEvent('click');
+    outsideClickEvent.composedPath = () => [];
+
+    window.dispatchEvent(outsideClickEvent);
+
+    await el.updateComplete;
+
+    expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
+      'none'
+    );
+  });
+
   describe('multiple', () => {
     it('multiple attribute', async () => {
-      const el = (await fixture(html`
+      const el = await fixture(html`
         <vscode-select multiple>
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-select>
-      `)) as VscodeSelect;
+      `) as VscodeSelect;
 
       const labelEl = el.shadowRoot?.querySelector('.select-face .text');
       const slot = el.shadowRoot?.querySelector('slot');
@@ -328,6 +441,113 @@ describe('vscode-select', () => {
           value: 'Ipsum',
         },
       });
+    });
+
+    it('set selectedIndexes', async () => {
+      const el = await fixture(html`
+        <vscode-select multiple>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-select>
+      `) as VscodeSelect;
+
+      el.selectedIndexes = [0, 1, 2];
+
+      await el.updateComplete;
+
+      const options = el.options;
+      const slot = el.shadowRoot?.querySelector('slot');
+      const optionElements = slot
+        ?.assignedNodes()
+        .filter(
+          (el) => el.nodeName.toLowerCase() === 'vscode-option'
+        ) as VscodeOption[];
+      const labelEl = el.shadowRoot?.querySelector('.select-face .text');
+
+      expect(options[0].selected).to.eq(true);
+      expect(options[1].selected).to.eq(true);
+      expect(options[2].selected).to.eq(true);
+      expect(optionElements[0].selected).to.eq(true);
+      expect(optionElements[1].selected).to.eq(true);
+      expect(optionElements[2].selected).to.eq(true);
+      expect(labelEl).lightDom.to.equal('3 items selected');
+      expect(el.value).to.eq('Lorem');
+      expect(el.selectedIndex).to.eq(0);
+    });
+
+    it('click on OK button', async () => {
+      const el = await fixture(html`
+        <vscode-select multiple>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-select>
+      `) as VscodeSelect;
+
+      const clickEvent = new MouseEvent('click');
+      const faceElement = el.shadowRoot?.querySelector('.select-face');
+      const dropdown = el.shadowRoot?.querySelector(
+        '.dropdown'
+      ) as HTMLDivElement;
+
+      faceElement?.dispatchEvent(clickEvent);
+
+      await el.updateComplete;
+
+      expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
+        'block'
+      );
+
+      const okButton = el.shadowRoot?.querySelector(
+        '.buttons vscode-button:first-child'
+      ) as HTMLDivElement;
+      okButton.dispatchEvent(new MouseEvent('click'));
+
+      await el.updateComplete;
+
+      expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
+        'none'
+      );
+    });
+
+    it('click on reset button', async () => {
+      const el = await fixture(html`
+        <vscode-select multiple>
+          <vscode-option selected>Lorem</vscode-option>
+          <vscode-option selected>Ipsum</vscode-option>
+          <vscode-option selected>Dolor</vscode-option>
+        </vscode-select>
+      `) as VscodeSelect;
+
+      const clickEvent = new MouseEvent('click');
+      const faceElement = el.shadowRoot?.querySelector('.select-face');
+      const dropdown = el.shadowRoot?.querySelector(
+        '.dropdown'
+      ) as HTMLDivElement;
+
+      faceElement?.dispatchEvent(clickEvent);
+
+      await el.updateComplete;
+
+      expect(el.selectedIndexes).to.eql([0, 1, 2]);
+      expect(window.getComputedStyle(dropdown).getPropertyValue('display')).to.eq(
+        'block'
+      );
+
+      const cancelButton = el.shadowRoot?.querySelector(
+        '.buttons vscode-button:nth-child(2)'
+      ) as HTMLDivElement;
+      cancelButton.dispatchEvent(new MouseEvent('click'));
+
+      await el.updateComplete;
+
+      const labelEl = el.shadowRoot?.querySelector('.select-face .text');
+
+      expect(el.selectedIndexes).to.eql([]);
+      expect(el.selectedIndex).to.eq(-1);
+      expect(el.value).to.eql('');
+      expect(labelEl).lightDom.to.equal('&lt;No item selected&gt;');
     });
   });
 });
