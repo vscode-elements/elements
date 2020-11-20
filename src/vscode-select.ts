@@ -123,16 +123,16 @@ export class VscodeSelect extends LitElement {
     super.connectedCallback();
 
     this.addEventListener('click', this._onOptionClick);
-    this.addEventListener('mouseover', this._onOptionMouseEnter);
-    this.addEventListener('mouseout', this._onOptionMouseLeave);
+    this.addEventListener('mouseover', this._onOptionMouseOver);
+    this.addEventListener('mouseout', this._onOptionMouseOut);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
     this.removeEventListener('click', this._onOptionClick);
-    this.removeEventListener('mouseover', this._onOptionMouseEnter);
-    this.removeEventListener('mouseout', this._onOptionMouseLeave);
+    this.removeEventListener('mouseover', this._onOptionMouseOver);
+    this.removeEventListener('mouseout', this._onOptionMouseOut);
   }
 
   firstUpdated() {
@@ -237,7 +237,7 @@ export class VscodeSelect extends LitElement {
     window.addEventListener('click', this._onClickOutsideBound);
   }
 
-  private _onOptionMouseEnter(event: MouseEvent) {
+  private _onOptionMouseOver(event: MouseEvent) {
     const element = findOptionEl(event);
 
     if (!element) {
@@ -248,7 +248,7 @@ export class VscodeSelect extends LitElement {
     this.requestUpdate();
   }
 
-  private _onOptionMouseLeave(event: MouseEvent) {
+  private _onOptionMouseOut(event: MouseEvent) {
     const element = findOptionEl(event);
 
     if (!element) {
