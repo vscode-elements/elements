@@ -28,7 +28,8 @@
     "test": "npm run build && web-test-runner dist/test/**/*.test.js --node-resolve --coverage",
     "test:watch": "web-test-runner dist/test/**/*.test.js --node-resolve --watch",
     "checksize": "npm run build:bundle && cat dist/bundled.js | gzip -9 | wc -c",
-    "generate": "node scripts/generateComponent.js"
+    "generate": "node scripts/generateComponent.js",
+    "icons": "node scripts/generateIconList.js"
   },
   "keywords": [
     "web-components",
@@ -71,6 +72,7 @@
     "rollup-plugin-terser": "^5.3.0",
     "sinon": "^9.2.1",
     "typescript": "^3.8.3",
+    "vscode-codicons": "0.0.12",
     "web-component-analyzer": "^1.0.3"
   }
 }
