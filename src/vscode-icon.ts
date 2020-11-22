@@ -47,7 +47,7 @@ export class VscodeIcon extends LitElement {
         display: inline-block;
       }
 
-      .codicon {
+      .codicon[class*='codicon-'] {
         display: block;
       }
 

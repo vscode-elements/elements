@@ -311,9 +311,7 @@ export class VscodeTree extends LitElement {
 
       .label {
         display: block;
-        line-height: 16px;
-        padding-bottom: 3px;
-        padding-top: 3px;
+        line-height: 22px;
       }
 
       .single .label {

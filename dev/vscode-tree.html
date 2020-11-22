@@ -33,7 +33,7 @@
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
-      <vscode-tree id="tree-1"></vscode-tree>
+      <vscode-tree id="tree-1" tabindex="0"></vscode-tree>
       <script>
         (function() {
           const tree = document.getElementById('tree-1');
@@ -122,6 +122,57 @@
               icons,
               label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla orci eros, pretium nec fermentum nec, dignissim nec arcu. Proin id tellus eu nunc cursus varius. Cras in rutrum risus. Praesent posuere libero ut sem dapibus imperdiet. Aliquam consequat est vestibulum vulputate convallis. Fusce hendrerit, elit ut iaculis auctor, turpis neque semper magna, in laoreet arcu mi at nibh. Donec vitae ligula blandit, dapibus lacus ac, consectetur libero. Sed ac tortor vel libero hendrerit iaculis. Vestibulum arcu turpis, sodales et viverra at, ornare non turpis.'
             }
+          ];
+
+          tree.data = data;
+        })();
+      </script>
+    </div>
+  </div>
+  <div class="story">
+    <h2 class="story-title">Flat list</h2>
+    <div class="story-content">
+      <vscode-tree id="tree-2" tabindex="0"></vscode-tree>
+      <script>
+        (function() {
+          const tree = document.getElementById('tree-2');
+
+          data = [
+            {
+              icons: {
+                leaf: 'git-commit'
+              },
+              label: 'bump distro',
+              value: '986e1248f6d8c1aa2a7f57a3fadbb00f94248c2b',
+            },
+            {
+              icons: {
+                leaf: 'git-commit'
+              },
+              label: 'Update milestone',
+              value: '4ae26a156300729ed3f9d23377e5d2aff9dcd982',
+            },
+            {
+              icons: {
+                leaf: 'git-commit'
+              },
+              label: 'env - tweak shell resolve experience on startup',
+              value: '52098eaeb028e123b3f8af1d4a3d64df6db528be',
+            },
+            {
+              icons: {
+                leaf: 'git-commit'
+              },
+              label: 'Merge pull request #107126 from Timmmm/atomic_tabs',
+              value: 'fb80c0e44af034df58e329e0f946a9a722ab297c',
+            },
+            {
+              icons: {
+                leaf: 'git-commit'
+              },
+              label: 'Simplify changes from #108193',
+              value: '88856f1a1c8f90bcc12171d1af920d74bb59b625',
+            },
           ];
 
           tree.data = data;
