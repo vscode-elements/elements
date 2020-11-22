@@ -674,7 +674,7 @@ const St=new WeakMap,Bt=v(t=>e=>{if(!(e instanceof S)||e instanceof _||"style"!=
 
       .spin {
         animation-name: icon-spin;
-        animation-timing-function: steps(30);
+        animation-timing-function: linear;
         animation-iteration-count: infinite;
       }
     `}render(){return N`
@@ -684,7 +684,7 @@ const St=new WeakMap,Bt=v(t=>e=>{if(!(e instanceof S)||e instanceof _||"style"!=
       />
       <span
         class="${at({codicon:!0,["codicon-"+this.name]:!0,spin:this.spin})}"
-        style="${Bt({animationDuration:String(this.spinDuration)+"s"})}"
+        style="${Bt({animationDuration:String(this.spinDuration)+"s",fontSize:this.size+"px",height:this.size+"px",width:this.size+"px"})}"
       ></span>
     `}};Ot([G({type:String})],Ct.prototype,"name",void 0),Ot([G({type:Number})],Ct.prototype,"size",void 0),Ot([G({type:Boolean})],Ct.prototype,"spin",void 0),Ot([G({type:Number,attribute:"spin-duration"})],Ct.prototype,"spinDuration",void 0),Ct=Ot([J("vscode-icon")],Ct);var _t,jt,zt=function(t,e,s,o){for(var i,n=arguments.length,r=n<3?e:null===o?o=Object.getOwnPropertyDescriptor(e,s):o,c=t.length-1;c>=0;c--)(i=t[c])&&(r=(n<3?i(r):n>3?i(e,s,r):i(e,s))||r);return n>3&&r&&Object.defineProperty(e,s,r),r};!function(t){t.DEFAULT="default",t.INFO="info",t.WARNING="warning",t.ERROR="error"}(_t||(_t={})),function(t){t.COLOR="color",t.DATE="date",t.DATETIME_LOCAL="datetime-local",t.EMAIL="email",t.FILE="file",t.MONTH="month",t.NUMBER="number",t.PASSWORD="password",t.TEL="tel",t.TEXT="text",t.TIME="time",t.URL="url",t.WEEK="week"}(jt||(jt={}));let It=class extends st{constructor(){super(),this.multiline=!1,this.message="",this.panelInput=!1,this.focused=!1,this.value="",this.placeholder="",this.lines=2,this.maxLines=5,this._textareaDefaultCursor=!1,this.onInputFocus=()=>{this.focused=!0},this.onInputBlur=()=>{this.focused=!1},this.onInputInput=t=>{const e=t.target;this.value=e.value,this.dispatchEvent(new CustomEvent("vsc-input",{detail:e.value,bubbles:!0,composed:!0})),this.resizeTextareaIfRequired()},this.onInputChange=t=>{const e=t.target;this.dispatchEvent(new CustomEvent("vsc-change",{detail:e.value,bubbles:!0,composed:!0}))},this.onTextareaMouseMove=t=>{const e=this.getBoundingClientRect(),s=t.clientX;this._textareaDefaultCursor=s<=e.left+e.width&&s>=e.left+e.width-10-2,this.requestUpdate()},this.resizeTextareaIfRequired=()=>{if(this.multiline){const t=this.value.match(/\n/g),e=t?t.length+1:1;this._currentLines=Math.min(Math.max(e,this.lines),this.maxLines),this.requestUpdate()}},this._severity=_t.DEFAULT,this._type=jt.TEXT,this._currentLines=this.lines}set severity(t){const e=this._severity;switch(t){case _t.INFO:case _t.WARNING:case _t.ERROR:this._severity=t;break;default:this._severity=_t.DEFAULT}this.requestUpdate("messageSeverity",e)}get severity(){return this._severity}set type(t){const e=this._type;switch(t){case jt.COLOR:case jt.DATE:case jt.DATETIME_LOCAL:case jt.EMAIL:case jt.FILE:case jt.MONTH:case jt.NUMBER:case jt.PASSWORD:case jt.TEL:case jt.TEXT:case jt.TIME:case jt.URL:case jt.WEEK:this._type=t;break;default:this._type=jt.TEXT}this.requestUpdate("type",e)}get type(){return this._type}connectedCallback(){super.connectedCallback(),this.resizeTextareaIfRequired()}updated(t){t.has("value")&&this.resizeTextareaIfRequired()}static get styles(){return tt`
       .container {
