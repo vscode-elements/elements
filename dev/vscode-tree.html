@@ -180,6 +180,83 @@
       </script>
     </div>
   </div>
+  <div class="story">
+    <h2 class="story-title">Arrows</h2>
+    <div class="story-content">
+      <vscode-tree id="tree-3" tabindex="0" indent="16" arrows style="user-select: none;"></vscode-tree>
+      <script>
+        (function() {
+          const tree = document.getElementById('tree-3');
+          const data = [
+            {
+              label: 'item 0',
+              value: 'item 0 custom value example',
+              subItems: [
+                {
+                  label: 'item 0.0',
+                  subItems: [
+                    {
+                      label: 'item 0.0.0',
+                    },
+                    {
+                      label: 'item 0.0.1',
+                    },
+                    {
+                      label: 'item 0.0.2',
+                    },
+                    {
+                      label: 'item 0.0.3',
+                    },
+                  ],
+                },
+                {
+                  label: 'item 0.1',
+                  open: true,
+                  subItems: [
+                    {
+                      label: 'item 0.1.0',
+                    },
+                    {
+                      label: 'item 0.1.1',
+                    },
+                    {
+                      label: 'item 0.1.2',
+                    },
+                    {
+                      label: 'item 0.1.3',
+                    },
+                  ],
+                },
+                {
+                  label: 'item 0.2',
+                },
+              ],
+            },
+            {
+              label: 'item 1',
+              subItems: [
+                {
+                  label: 'item 1.0',
+                },
+                {
+                  label: 'item 1.1',
+                },
+              ],
+            },
+            {
+              label: 'item 2',
+              selected: true,
+            },
+            {
+              label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla orci eros, pretium nec fermentum nec, dignissim nec arcu. Proin id tellus eu nunc cursus varius. Cras in rutrum risus. Praesent posuere libero ut sem dapibus imperdiet. Aliquam consequat est vestibulum vulputate convallis. Fusce hendrerit, elit ut iaculis auctor, turpis neque semper magna, in laoreet arcu mi at nibh. Donec vitae ligula blandit, dapibus lacus ac, consectetur libero. Sed ac tortor vel libero hendrerit iaculis. Vestibulum arcu turpis, sodales et viverra at, ornare non turpis.'
+            }
+          ];
+
+          tree.data = data;
+        })();
+      </script>
+    </div>
+  </div>
 </body>
 
 </html>

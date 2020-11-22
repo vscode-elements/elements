@@ -2,12 +2,10 @@ import {
   LitElement,
   html,
   css,
-  unsafeCSS,
   property,
   customElement,
 } from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
-import getBaseURL from './utils/getBaseURL';
 import './vscode-icon';
 
 interface TreeItemIconConfig {
@@ -30,8 +28,7 @@ enum ItemType {
   LEAF = 'leaf',
 }
 
-const ARROW_OUTER_WIDTH = 24;
-const BASE_URL = getBaseURL();
+const ARROW_OUTER_WIDTH = 18;
 
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
@@ -109,7 +106,7 @@ export class VscodeTree extends LitElement {
     selected: boolean;
     subItems: TreeItem[];
   }) {
-    const arrowClassname = open ? 'icon-arrow open' : 'icon-arrow';
+    const arrowIconName = open ? 'chevron-down' : 'chevron-right';
     const contentsClasses = ['contents'];
     const liClasses = open ? ['open'] : [];
     const indentSize = indentLevel * this.indent;
@@ -119,7 +116,7 @@ export class VscodeTree extends LitElement {
         : indentSize;
     const arrowMarkup =
       this.arrows && itemType === ItemType.BRANCH
-        ? html`<i class="${arrowClassname}"></i>`
+        ? html`<vscode-icon name="${arrowIconName}" class="icon-arrow"></vscode-icon>`
         : nothing;
     const iconMarkup = iconName
       ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
@@ -300,30 +297,8 @@ export class VscodeTree extends LitElement {
       }
 
       .icon-arrow {
-        background-position: 3px center;
-        background-repeat: no-repeat;
         display: block;
-        height: 22px;
-        margin: 0 8px 0 0;
-        width: 16px;
-      }
-
-      :host-context(.vscode-light) .icon-arrow {
-        background-image: url(${unsafeCSS(BASE_URL)}icons/light/chevron-right.svg);
-      }
-
-      :host-context(.vscode-dark) .icon-arrow,
-      :host-context(.vscode-high-contrast) .icon-arrow {
-        background-image: url(${unsafeCSS(BASE_URL)}icons/dark/chevron-right.svg);
-      }
-
-      :host-context(.vscode-light) .icon-arrow.open {
-        background-image: url(${unsafeCSS(BASE_URL)}icons/light/chevron-down.svg);
-      }
-
-      :host-context(.vscode-dark) .icon-arrow.open,
-      :host-context(.vscode-high-contrast) .icon-arrow.open {
-        background-image: url(${unsafeCSS(BASE_URL)}icons/dark/chevron-down.svg);
+        margin: 3px 2px 3px 0;
       }
 
       .label-icon {
