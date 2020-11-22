@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docs</title>
+    <title>&lt;vscode-icon&gt; ⌲ Examples ⌲ Basic</title>
     
     <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
@@ -25,6 +25,13 @@
   <span class="pkg-version">Current version: 0.0.0</span>
 </header>
     
+<nav>
+  <a href="/vscode-webview-elements/">Home</a>
+  <a href="/vscode-webview-elements/pages/vscode-icon/overview">Overview</a>
+  <a href="/vscode-webview-elements/pages/vscode-icon/examples">Examples</a>
+  <a href="/vscode-webview-elements/pages/vscode-icon/api">API</a>
+  <a href="/vscode-webview-elements/pages/vscode-icon/install">Install</a>
+</nav>
     <div id="main-wrapper">
       <main>
         <div class="theme-switcher">
@@ -55,7 +62,41 @@
             });
           })();
         </script>
-        <ul><li><a href="/vscode-webview-elements/pages/my-button/overview/">my-button</a></li><li><a href="/vscode-webview-elements/pages/my-element/overview/">my-element</a></li><li><a href="/vscode-webview-elements/pages/vscode-button/overview/">vscode-button</a></li><li><a href="/vscode-webview-elements/pages/vscode-select/overview/">vscode-select</a></li><li><a href="/vscode-webview-elements/pages/vscode-icon/overview/">vscode-icon</a></li></ul>
+        
+    <h1>&lt;vscode-icon&gt;</h1>
+    <section class="examples">
+      <nav class="collection">
+        <ul>
+          
+                  <li class="selected">
+                    <a href="/vscode-webview-elements/pages/vscode-icon/examples/">A basic example</a>
+                  </li>
+                
+                  <li class="">
+                    <a href="/vscode-webview-elements/pages/vscode-icon/examples/another-example/">Another example</a>
+                  </li>
+                
+        </ul>
+      </nav>
+      <div>
+        <h2>Example: Basic</h2>
+        <style>
+  vscode-icon p {
+    border: solid 1px blue;
+    padding: 8px;
+  }
+</style>
+<vscode-icon>
+  <p>This is child content</p>
+</vscode-icon>
+<h3>CSS</h3>
+<pre class="language-css"><code class="language-css">  <span class="token selector">p</span> <span class="token punctuation">{</span><br>    <span class="token property">border</span><span class="token punctuation">:</span> solid 1px blue<span class="token punctuation">;</span><br>    <span class="token property">padding</span><span class="token punctuation">:</span> 8px<span class="token punctuation">;</span><br>  <span class="token punctuation">}</span></code></pre>
+<h3>HTML</h3>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>This is child content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span></code></pre>
+
+      </div>
+    </section>
+  
       </main>
     </div>
     

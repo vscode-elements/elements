@@ -9,7 +9,9 @@ title: <vscode-icon> ⌲ API
 
 ## Properties
 
-| Property | Attribute | Type     | Default |
-|----------|-----------|----------|---------|
-| `name`   | `name`    | `string` | ""      |
-| `size`   | `size`    | `number` | 16      |
+| Property       | Attribute       | Type      | Default | Description                                      |
+|----------------|-----------------|-----------|---------|--------------------------------------------------|
+| `name`         | `name`          | `string`  | ""      | Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html |
+| `size`         | `size`          | `number`  | 16      | Icon size in pixels                              |
+| `spin`         | `spin`          | `boolean` | false   | Enable rotation animation                        |
+| `spinDuration` | `spin-duration` | `number`  | 1.5     | Animation duration in seconds                    |
