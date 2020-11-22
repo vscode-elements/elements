@@ -334,3 +334,9 @@ export class VscodeTree extends LitElement {
     `;
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-tree': VscodeTree;
+  }
+}
