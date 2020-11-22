@@ -1,5 +1,12 @@
-import { LitElement, html, css, unsafeCSS, property, customElement } from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import {
+  LitElement,
+  html,
+  css,
+  unsafeCSS,
+  property,
+  customElement,
+} from 'lit-element';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html';
 import getBaseURL from './utils/getBaseURL';
 
 interface TreeItemIconConfig {
@@ -27,15 +34,15 @@ const BASE_URL = getBaseURL();
 
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
-  @property({ type: Array, reflect: false }) data: TreeItem[] = [];
-  @property({ type: Number }) indent = 8;
-  @property({ type: Boolean }) arrows = false;
-  @property({ type: Boolean }) multiline = false;
+  @property({type: Array, reflect: false}) data: TreeItem[] = [];
+  @property({type: Number}) indent = 8;
+  @property({type: Boolean}) arrows = false;
+  @property({type: Boolean}) multiline = false;
 
   private _selectedItem: TreeItem | null = null;
 
   private getItemByPath(path: string): TreeItem | undefined {
-    const pathFragments: number[] = path.split('/').map(el => Number(el));
+    const pathFragments: number[] = path.split('/').map((el) => Number(el));
     let current: TreeItem[] = this.data;
     let item: TreeItem | undefined = undefined;
 
@@ -51,7 +58,11 @@ export class VscodeTree extends LitElement {
   }
 
   private getItemType(item: TreeItem): ItemType {
-    if (item.subItems && Array.isArray(item.subItems) && item.subItems.length > 0) {
+    if (
+      item.subItems &&
+      Array.isArray(item.subItems) &&
+      item.subItems.length > 0
+    ) {
       return ItemType.BRANCH;
     }
 
@@ -63,7 +74,7 @@ export class VscodeTree extends LitElement {
       return undefined;
     }
 
-    const { icons } = element;
+    const {icons} = element;
     const itemType = this.getItemType(element);
     const isOpen = element.open || false;
 
@@ -101,15 +112,21 @@ export class VscodeTree extends LitElement {
     const contentsClasses = ['contents'];
     const liClasses = open ? ['open'] : [];
     const indentSize = indentLevel * this.indent;
-    const padLeft = this.arrows && itemType === ItemType.LEAF ?
-      ARROW_OUTER_WIDTH + indentSize : indentSize;
-    const arrowMarkup = this.arrows && itemType === ItemType.BRANCH ?
-      `<i class="${arrowClassname}"></i>` : '';
-    const iconMarkup = iconName ?
-      `<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>` : '';
-    const subTreeMarkup = open && itemType === ItemType.BRANCH ?
-      `<ul>${this.renderTree(subItems, path)}</ul>` :
-      '';
+    const padLeft =
+      this.arrows && itemType === ItemType.LEAF
+        ? ARROW_OUTER_WIDTH + indentSize
+        : indentSize;
+    const arrowMarkup =
+      this.arrows && itemType === ItemType.BRANCH
+        ? `<i class="${arrowClassname}"></i>`
+        : '';
+    const iconMarkup = iconName
+      ? `<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
+      : '';
+    const subTreeMarkup =
+      open && itemType === ItemType.BRANCH
+        ? `<ul>${this.renderTree(subItems, path)}</ul>`
+        : '';
     const labelMarkup = `<span class="label">${label}</span>`;
 
     liClasses.push(itemType === ItemType.LEAF ? 'leaf' : 'branch');
@@ -120,7 +137,9 @@ export class VscodeTree extends LitElement {
 
     return `
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
-        <span class="${contentsClasses.join(' ')}" style="padding-left: ${padLeft}px;">
+        <span class="${contentsClasses.join(
+          ' '
+        )}" style="padding-left: ${padLeft}px;">
           ${arrowMarkup}
           ${iconMarkup}
           ${labelMarkup}
@@ -142,7 +161,7 @@ export class VscodeTree extends LitElement {
       const indentLevel = path.length - 1;
       const itemType = this.getItemType(element);
       const iconName = this.getIconName(element);
-      const { label, open = false, selected = false, subItems = [] } = element;
+      const {label, open = false, selected = false, subItems = []} = element;
 
       if (selected) {
         this._selectedItem = element;
@@ -191,7 +210,7 @@ export class VscodeTree extends LitElement {
   }
 
   private emitSelectEvent(item: TreeItem, path: string) {
-    const { icons, label, open, value } = item;
+    const {icons, label, open, value} = item;
     const detail = {
       icons,
       itemType: this.getItemType(item),
@@ -201,17 +220,21 @@ export class VscodeTree extends LitElement {
       path,
     };
 
-    this.dispatchEvent(new CustomEvent('vsc-select', {
-      bubbles: true,
-      composed: true,
-      detail,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('vsc-select', {
+        bubbles: true,
+        composed: true,
+        detail,
+      })
+    );
   }
 
   private onComponentClick(event: MouseEvent) {
     const composedPath = event.composedPath();
     const targetElement = composedPath.find(
-      (el: EventTarget) => (el as HTMLElement).tagName && (el as HTMLElement).tagName.toUpperCase() === 'LI'
+      (el: EventTarget) =>
+        (el as HTMLElement).tagName &&
+        (el as HTMLElement).tagName.toUpperCase() === 'LI'
     );
 
     if (targetElement) {
@@ -324,7 +347,10 @@ export class VscodeTree extends LitElement {
 
   render() {
     return html`
-      <div @click="${this.onComponentClick}" class="${this.multiline ? 'multi' : 'single'}">
+      <div
+        @click="${this.onComponentClick}"
+        class="${this.multiline ? 'multi' : 'single'}"
+      >
         <ul>
           ${unsafeHTML(this.renderTree(this.data))}
         </ul>
