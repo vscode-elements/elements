@@ -6,8 +6,9 @@ import {
   property,
   customElement,
 } from 'lit-element';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html';
+import {nothing, TemplateResult} from 'lit-html';
 import getBaseURL from './utils/getBaseURL';
+import './vscode-icon';
 
 interface TreeItemIconConfig {
   branch?: string;
@@ -118,16 +119,18 @@ export class VscodeTree extends LitElement {
         : indentSize;
     const arrowMarkup =
       this.arrows && itemType === ItemType.BRANCH
-        ? `<i class="${arrowClassname}"></i>`
-        : '';
+        ? html`<i class="${arrowClassname}"></i>`
+        : nothing;
     const iconMarkup = iconName
-      ? `<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
-      : '';
+      ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
+      : nothing;
     const subTreeMarkup =
       open && itemType === ItemType.BRANCH
-        ? `<ul>${this.renderTree(subItems, path)}</ul>`
-        : '';
-    const labelMarkup = `<span class="label">${label}</span>`;
+        ? html`<ul>
+            ${this.renderTree(subItems, path)}
+          </ul>`
+        : nothing;
+    const labelMarkup = html`<span class="label">${label}</span>`;
 
     liClasses.push(itemType === ItemType.LEAF ? 'leaf' : 'branch');
 
@@ -135,7 +138,7 @@ export class VscodeTree extends LitElement {
       contentsClasses.push('selected');
     }
 
-    return `
+    return html`
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
         <span class="${contentsClasses.join(
           ' '
@@ -150,10 +153,10 @@ export class VscodeTree extends LitElement {
   }
 
   private renderTree(tree: TreeItem[], oldPath: number[] = []) {
-    let ret = '';
+    const ret: TemplateResult[] = [];
 
     if (!tree) {
-      return ret;
+      return nothing;
     }
 
     tree.forEach((element, index) => {
@@ -167,7 +170,7 @@ export class VscodeTree extends LitElement {
         this._selectedItem = element;
       }
 
-      ret += this.renderTreeItem({
+      ret.push(this.renderTreeItem({
         indentLevel,
         label,
         path,
@@ -176,7 +179,7 @@ export class VscodeTree extends LitElement {
         itemType,
         selected,
         subItems,
-      });
+      }));
     });
 
     return ret;
@@ -352,7 +355,7 @@ export class VscodeTree extends LitElement {
         class="${this.multiline ? 'multi' : 'single'}"
       >
         <ul>
-          ${unsafeHTML(this.renderTree(this.data))}
+          ${this.renderTree(this.data)}
         </ul>
       </div>
     `;
