@@ -59,7 +59,7 @@ export class VscodeIcon extends LitElement {
 
       .spin {
         animation-name: icon-spin;
-        animation-timing-function: steps(30);
+        animation-timing-function: linear;
         animation-iteration-count: infinite;
       }
     `;
@@ -79,6 +79,9 @@ export class VscodeIcon extends LitElement {
         })}"
         style="${styleMap({
           animationDuration: String(this.spinDuration) + 's',
+          fontSize: this.size + 'px',
+          height: this.size + 'px',
+          width: this.size + 'px',
         })}"
       ></span>
     `;
