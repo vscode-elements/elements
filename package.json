@@ -1,12 +1,16 @@
 {
-  "name": "lit-element-starter-ts",
-  "version": "0.0.0",
-  "description": "A simple web component",
-  "main": "my-element.js",
-  "module": "my-element.js",
+  "name": "@bendera/vscode-webview-elements",
+  "version": "0.1.10",
+  "description": "Webcomponents for creating Visual Studio Code extensions",
+  "main": "dist/bundled.js",
+  "module": "dist/bundled.js",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:ts && npm run build:bundle",
+    "build:ts": "tsc",
     "build:watch": "tsc --watch",
     "build:bundle": "npm run build && rollup -c --file dist/bundled.js",
     "clean": "rimraf dist",
@@ -16,7 +20,7 @@
     "lint:eslint": "eslint src/**/*.ts",
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/* --write",
-    "docs": "npm run docs:clean && npm run build && npm run analyze && npm run docs:gen",
+    "docs": "npm run docs:clean && npm run build:ts && npm run analyze && npm run docs:gen",
     "docs:clean": "rimraf docs",
     "docs:gen": "npm run build:bundle && npm run eleventy",
     "docs:gen:watch": "npm run build:bundle && npm run eleventy:watch",
@@ -25,7 +29,7 @@
     "analyze": "wca analyze \"src/**/*.ts\" --outFiles docs-src/pages/{tagname}/api.md && node scripts/patchMdFiles.js",
     "serve": "web-dev-server --node-resolve --watch --app-index dev/index.html --open",
     "start": "concurrently \"npm run build:watch\" \"npm run serve\" --names \"tsc,server\"",
-    "test": "npm run build && web-test-runner dist/test/**/*.test.js --node-resolve --coverage",
+    "test": "npm run build:ts && web-test-runner dist/test/**/*.test.js --node-resolve --coverage",
     "test:watch": "web-test-runner dist/test/**/*.test.js --node-resolve --watch",
     "checksize": "npm run build:bundle && cat dist/bundled.js | gzip -9 | wc -c",
     "generate": "node scripts/generateComponent.js",
@@ -36,8 +40,19 @@
     "lit-element",
     "typescript"
   ],
-  "author": "The Polymer Authors",
-  "license": "BSD-3-Clause",
+  "author": "bendera",
+  "license": "MIT",
+  "browserslist": [
+    "last 1 chrome versions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bendera/vscode-webview-elements.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bendera/vscode-webview-elements/issues"
+  },
+  "homepage": "https://bendera.github.io/vscode-webview-elements",
   "dependencies": {
     "lit-element": "^2.3.1"
   },
