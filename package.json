@@ -2,11 +2,12 @@
   "name": "@bendera/vscode-webview-elements",
   "version": "0.1.10",
   "description": "Webcomponents for creating Visual Studio Code extensions",
-  "main": "dist/bundled.js",
-  "module": "dist/bundled.js",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "!dist/test"
   ],
   "scripts": {
     "build": "npm run build:ts && npm run build:bundle",
