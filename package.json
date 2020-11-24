@@ -10,10 +10,10 @@
     "!dist/test"
   ],
   "scripts": {
-    "build": "npm run build:ts && npm run build:bundle",
+    "build": "npm run build:bundle",
     "build:ts": "tsc",
     "build:watch": "tsc --watch",
-    "build:bundle": "npm run build && rollup -c --file dist/bundled.js",
+    "build:bundle": "npm run build:ts && rollup -c --file dist/bundled.js",
     "clean": "rimraf dist",
     "eleventy": "eleventy --config=.eleventy.cjs",
     "eleventy:watch": "eleventy --config=.eleventy.cjs --watch",
