@@ -125,6 +125,8 @@ export class VscodeSelect extends LitElement {
     this.addEventListener('click', this._onOptionClick);
     this.addEventListener('mouseover', this._onOptionMouseOver);
     this.addEventListener('mouseout', this._onOptionMouseOut);
+    this.addEventListener('keyup', this._onComponentKeyUp);
+    this.addEventListener('keydown', this._onComponentKeyDown);
   }
 
   disconnectedCallback() {
@@ -350,6 +352,40 @@ export class VscodeSelect extends LitElement {
     this._selectedIndex = -1;
     this._value = '';
     this._updateCurrentLabel();
+  }
+
+  private _onComponentKeyUp(event: KeyboardEvent) {
+    console.log(event);
+
+    if (event.key === ' ') {
+      this._onSpaceKeyUp();
+    }
+
+    if (event.key === 'Enter') {
+      this._onEnterKeyUp;
+    }
+
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  private _onComponentKeyDown(event: KeyboardEvent) {
+    if (event.key === ' ') {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+
+    if (event.key === 'Enter') {
+      this._showDropdown = !this._showDropdown;
+    }
+
+    if (event.key === ' ') {
+      this._showDropdown = true;
+    }
+
+    if (event.key === 'Escape') {
+      this._showDropdown = false;
+    }
   }
 
   static get styles() {
