@@ -20,7 +20,13 @@ describe('vscode-select', () => {
     `)) as VscodeSelect;
 
     expect(el).shadowDom.to.equal(`
-      <div class="select-face">
+      <div
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="select-face"
+        role="listbox"
+        tabindex="0"
+      >
         <span class="text">
           Ipsum
         </span>

@@ -1,10 +1,10 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
-import { nothing } from 'lit-html';
-import { classMap } from 'lit-html/directives/class-map';
+import {LitElement, html, css, property, customElement} from 'lit-element';
+import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
 
 @customElement('vscode-option')
 export class VscodeOption extends LitElement {
-  @property({ type: String })
+  @property({type: String})
   set value(val: string) {
     const oldVal = this._value;
 
@@ -20,7 +20,7 @@ export class VscodeOption extends LitElement {
 
     return '';
   }
-  @property({ type: String })
+  @property({type: String})
   set label(val: string) {
     const oldVal = this._label;
 
@@ -30,9 +30,9 @@ export class VscodeOption extends LitElement {
   get label(): string {
     return this.innerText;
   }
-  @property({ type: String }) description = '';
-  @property({ type: Boolean, reflect: true }) selected = false;
-  @property({ type: Boolean, attribute: false }) multiple = false;
+  @property({type: String}) description = '';
+  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, attribute: false}) multiple = false;
 
   private _value: string | undefined;
   private _label: string | undefined;
