@@ -109,19 +109,26 @@ export class VscodeSelect extends LitElement {
     return this._selectedIndexes;
   }
 
-  @property({type: Boolean, reflect: true}) multiple = false;
+  @property({type: Boolean, reflect: true})
+  multiple = false;
 
-  @property({type: String, attribute: true, reflect: true}) role = 'listbox';
+  @property({type: String, attribute: true, reflect: true})
+  role = 'listbox';
 
-  @property({type: Number, attribute: true, reflect: true}) tabindex = 0;
+  @property({type: Number, attribute: true, reflect: true})
+  tabindex = 0;
 
-  @property({type: String, reflect: true, attribute: 'aria-expanded'}) ariaExpanded = 'false';
+  @property({type: String, reflect: true, attribute: 'aria-expanded'})
+  ariaExpanded = 'false';
 
-  @property({type: String, reflect: true, attribute: 'aria-activedescendant'}) ariaActivedescendant = '';
+  @property({type: String, reflect: true, attribute: 'aria-activedescendant'})
+  ariaActivedescendant = '';
 
-  @property({type: String, reflect: true, attribute: 'aria-label'}) ariaLabel = '';
+  @property({type: String, reflect: true, attribute: 'aria-label'})
+  ariaLabel = '';
 
-  @property({type: String, reflect: true, attribute: 'aria-multiselectable'}) ariaMultiselectable = 'false';
+  @property({type: String, reflect: true, attribute: 'aria-multiselectable'})
+  ariaMultiselectable = 'false';
 
   @internalProperty()
   private set _showDropdown(val: boolean) {
@@ -130,7 +137,9 @@ export class VscodeSelect extends LitElement {
 
     if (val) {
       this._optionElements.forEach((_, index) => {
-        this._optionElements[index].active = this._optionElements[index].selected;
+        this._optionElements[index].active = this._optionElements[
+          index
+        ].selected;
 
         if (this._optionElements[index].active) {
           this._activeOptionElement = this._optionElements[index];
@@ -163,9 +172,11 @@ export class VscodeSelect extends LitElement {
     this._onClickOutsideBound = this._onClickOutside.bind(this);
   }
 
-  attributeChangedCallback(name: string, oldVal: string | null, newVal: string | null): void {
-
-
+  attributeChangedCallback(
+    name: string,
+    oldVal: string | null,
+    newVal: string | null
+  ): void {
     super.attributeChangedCallback(name, oldVal, newVal);
 
     if (name === 'multiple') {
@@ -199,7 +210,8 @@ export class VscodeSelect extends LitElement {
     );
 
     if (selected) {
-      this.ariaActivedescendant = this._optionElements[optIndex].getAttribute('id') || '';
+      this.ariaActivedescendant =
+        this._optionElements[optIndex].getAttribute('id') || '';
     } else {
       this.ariaActivedescendant = '';
     }
@@ -604,11 +616,10 @@ export class VscodeSelect extends LitElement {
           display: ${display};
         }
       </style>
-      <div
-        class="select-face"
-        @click="${this._onFaceClick}"
-      >
-        <span class="text" aria-labelledby="text" id="text">${currentLabelMarkup}</span>
+      <div class="select-face" @click="${this._onFaceClick}">
+        <span class="text" aria-labelledby="text" id="text"
+          >${currentLabelMarkup}</span
+        >
         <span class="icon">
           <svg
             width="16"
