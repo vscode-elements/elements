@@ -32,6 +32,7 @@ export class VscodeOption extends LitElement {
   }
   @property({type: String}) description = '';
   @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) active = false;
   @property({type: Boolean, attribute: false}) multiple = false;
 
   private _value: string | undefined;
@@ -81,8 +82,11 @@ export class VscodeOption extends LitElement {
         user-select: none;
       }
 
-      .wrapper:hover,
-      .wrapper.selected {
+      :host([active]) .wrapper {
+        background-color: var(--vscode-list-focusBackground);
+      }
+
+      .wrapper:hover {
         background-color: var(--vscode-list-focusBackground);
       }
 
@@ -140,7 +144,7 @@ export class VscodeOption extends LitElement {
 
   render() {
     return html`
-      <div class="${classMap({ wrapper: true, selected: this.selected })}">
+      <div class="wrapper">
         ${this.multiple
           ? html`
               <span

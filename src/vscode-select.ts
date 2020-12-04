@@ -25,6 +25,7 @@ interface OptionElement extends HTMLElement {
   description?: string;
   selected?: boolean;
   multiple?: boolean;
+  active?: boolean;
 }
 
 const isOptionElement = (el: Element) =>
@@ -120,10 +121,22 @@ export class VscodeSelect extends LitElement {
 
   @property({type: String, reflect: true, attribute: 'aria-label'}) ariaLabel = '';
 
+  @property({type: String, reflect: true, attribute: 'aria-multiselectable'}) ariaMultiselectable = 'false';
+
   @internalProperty()
   private set _showDropdown(val: boolean) {
     this._dropdownVisible = val;
     this.ariaExpanded = String(val);
+
+    if (val) {
+      this._optionElements.forEach((_, index) => {
+        this._optionElements[index].active = this._optionElements[index].selected;
+
+        if (this._optionElements[index].active) {
+          this._activeOptionElement = this._optionElements[index];
+        }
+      });
+    }
   }
   private get _showDropdown() {
     return this._dropdownVisible;
@@ -141,12 +154,23 @@ export class VscodeSelect extends LitElement {
   private _selectedIndexes: number[] = [];
   private _dropdownVisible = false;
   private _onClickOutsideBound: (event: MouseEvent) => void;
+  private _activeOptionElement: OptionElement | null = null;
 
   constructor() {
     super();
     componentCounter++;
     this._componentId = componentCounter;
     this._onClickOutsideBound = this._onClickOutside.bind(this);
+  }
+
+  attributeChangedCallback(name: string, oldVal: string | null, newVal: string | null): void {
+
+
+    super.attributeChangedCallback(name, oldVal, newVal);
+
+    if (name === 'multiple') {
+      this.ariaMultiselectable = this.multiple ? 'true' : 'false';
+    }
   }
 
   connectedCallback(): void {
@@ -289,6 +313,12 @@ export class VscodeSelect extends LitElement {
       return;
     }
 
+    if (this._activeOptionElement) {
+      this._activeOptionElement.active = false;
+    }
+
+    element.active = true;
+    this._activeOptionElement = element;
     this._currentDescription = element.description || '';
     this.requestUpdate();
   }
