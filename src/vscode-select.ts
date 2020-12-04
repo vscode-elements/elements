@@ -617,8 +617,7 @@ export class VscodeSelect extends LitElement {
         }
       </style>
       <div class="select-face" @click="${this._onFaceClick}">
-        <span class="text" aria-labelledby="text" id="text"
-          >${currentLabelMarkup}</span
+        <span class="text">${currentLabelMarkup}</span
         >
         <span class="icon">
           <svg
