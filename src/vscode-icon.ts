@@ -29,6 +29,15 @@ export class VscodeIcon extends LitElement {
 
   constructor() {
     super();
+    this._injectCodiconCSS();
+  }
+
+  private _injectCodiconCSS() {
+    const id = 'vscode-icon-injected-stylesheet';
+
+    if (document.getElementById(id)) {
+      return;
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const config = (window as any).__VSCODE_WEBVIEW_ELEMENTS_CONFIG__;
@@ -39,7 +48,7 @@ export class VscodeIcon extends LitElement {
     const link = document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('href', cssHref);
-    link.setAttribute('id', 'vscode-icon-injected-stylesheet');
+    link.setAttribute('id', id);
 
     if (nonce) {
       link.setAttribute('nonce', nonce);
