@@ -29,14 +29,21 @@ export class VscodeIcon extends LitElement {
 
   constructor() {
     super();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config = (window as any).__VSCODE_WEBVIEW_ELEMENTS_CONFIG__;
+    const nonce = config?.nonce || '';
     const cssHref =
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).__VSCODE_WEBVIEW_ELEMENTS_CONFIG__?.codiconCssPath ||
+      config?.codiconCssPath ||
       '../node_modules/vscode-codicons/dist/codicon.css';
     const link = document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('href', cssHref);
     link.setAttribute('id', 'vscode-icon-injected-stylesheet');
+
+    if (nonce) {
+      link.setAttribute('nonce', nonce);
+    }
 
     document.head.appendChild(link);
   }
