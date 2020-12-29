@@ -1,9 +1,15 @@
-import {LitElement, html, css, property, customElement} from 'lit-element';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+  TemplateResult,
+} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
-// import icons from './codicons';
-
-// const BASE_URL = getBaseURL();
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 @customElement('vscode-icon')
 export class VscodeIcon extends LitElement {
@@ -27,37 +33,18 @@ export class VscodeIcon extends LitElement {
    */
   @property({type: Number, attribute: 'spin-duration'}) spinDuration = 1.5;
 
-  constructor() {
-    super();
-    this._injectCodiconCSS();
+  private _getStylesheetConfig(): {
+    href: string | undefined;
+    nonce: string | undefined;
+  } {
+    const linkElement = document.getElementById('vscode-codicon-stylesheet');
+    const href = linkElement?.getAttribute('href') || undefined;
+    const nonce = linkElement?.getAttribute('nonce') || undefined;
+
+    return {nonce, href};
   }
 
-  private _injectCodiconCSS() {
-    const id = 'vscode-icon-injected-stylesheet';
-
-    if (document.getElementById(id)) {
-      return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const config = (window as any).__VSCODE_WEBVIEW_ELEMENTS_CONFIG__;
-    const nonce = config?.nonce || '';
-    const cssHref =
-      config?.codiconCssPath ||
-      '../node_modules/vscode-codicons/dist/codicon.css';
-    const link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', cssHref);
-    link.setAttribute('id', id);
-
-    if (nonce) {
-      link.setAttribute('nonce', nonce);
-    }
-
-    document.head.appendChild(link);
-  }
-
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: inline-block;
@@ -81,11 +68,14 @@ export class VscodeIcon extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
+    const {href, nonce} = this._getStylesheetConfig();
+
     return html`
       <link
         rel="stylesheet"
-        href="../node_modules/vscode-codicons/dist/codicon.css"
+        href="${ifDefined(href)}"
+        nonce="${ifDefined(nonce)}"
       />
       <span
         class="${classMap({
