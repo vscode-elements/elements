@@ -273,6 +273,9 @@ export class VscodeTree extends LitElement {
       .contents {
         align-items: center;
         display: flex;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        font-weight: var(--vscode-font-weight);
       }
 
       .multi .contents {
@@ -282,9 +285,6 @@ export class VscodeTree extends LitElement {
       .contents:hover {
         background-color: var(--vscode-list-hoverBackground);
         cursor: pointer;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
       }
 
       .contents.selected {
