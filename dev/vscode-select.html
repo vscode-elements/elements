@@ -110,6 +110,34 @@
     </script>
   </div>
 
+  <div class="story" id="vscode-select__options">
+    <h2 class="story-title">Add options</h2>
+    <vscode-select></vscode-select>
+    <div class="logger"></div>
+    <script>
+      (() => {
+        const sl = document.querySelector(
+          '#vscode-select__options vscode-select'
+        );
+        const loggerEl = document.querySelector(
+          '#vscode-select__options .logger'
+        );
+
+        sl.options = [
+          {label: 'Lorem', description: 'Lorem description', selected: true},
+          {label: 'Ipsum', description: 'Ipsum description'},
+          {label: 'Dolor', description: 'Dolor description'},
+        ];
+
+        loggerEl.innerHTML = sl.value;
+
+        sl.addEventListener('vsc-change', (event) => {
+          loggerEl.innerHTML = event.detail.value;
+        });
+      })();
+    </script>
+  </div>
+
   <div class="story" id="vscode-select__selected">
     <h2 class="story-title">Selected option</h2>
     <vscode-select value="'test value 2'">

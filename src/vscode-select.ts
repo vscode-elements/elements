@@ -50,6 +50,25 @@ export class VscodeSelect extends LitElement {
   }
 
   @property({type: Array, reflect: false})
+  set options(opts: Option[]) {
+    let markup = '';
+
+    opts.forEach((opt) => {
+      const {value, selected, description, label} = opt;
+      const valueAttr = value ? ` value="${value}"` : '';
+      const selectedAttr = selected ? ' selected' : '';
+      const descriptionAttr = description
+        ? ` description="${description}"`
+        : '';
+
+      markup += `<vscode-option${valueAttr}${descriptionAttr}${selectedAttr}>`;
+      markup += label;
+      markup += '</vscode-option>';
+    });
+
+    this._options = opts;
+    this.innerHTML = markup;
+  }
   get options(): Option[] {
     return this._options;
   }
