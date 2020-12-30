@@ -311,11 +311,33 @@
   </div>
 
   <div class="story">
+    <h2 class="story-title">Native select - multiple</h2>
+    <label for="native-select-multiple">Multiple select example</label>
+    <select name="" id="native-select-multiple" multiple>
+      <option value="testvalue0">Lorem</option>
+      <option value="testvalue1" selected>Ipsum</option>
+      <option value="testvalue2" selected>Dolor</option>
+      <option value="testvalue3">Sit</option>
+    </select>
+    <script>
+      (() => {
+        const el = document.querySelector('#native-select-multiple');
+
+        el.addEventListener('change', (event) => {
+          console.log('value:', el.value);
+          console.log('selectedIndex:', el.selectedIndex);
+        });
+      })();
+    </script>
+  </div>
+
+  <div class="story">
     <h2 class="story-title">Native select</h2>
-    <select name="" id="native-select" multiple>
+    <label for="native-select">Single select example</label>
+    <select name="" id="native-select">
       <option value="testvalue0">Lorem</option>
       <option value="testvalue1">Ipsum</option>
-      <option value="testvalue2">Dolor</option>
+      <option value="testvalue2" selected>Dolor</option>
       <option value="testvalue3">Sit</option>
     </select>
     <script>
