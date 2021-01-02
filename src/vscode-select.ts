@@ -271,6 +271,15 @@ export class VscodeSelect extends LitElement {
     this.requestUpdate();
   }
 
+  private _setActiveOptionElement(element: OptionElement) {
+    if (this._activeOptionElement) {
+      this._activeOptionElement.active = false;
+    }
+
+    element.active = true;
+    this._activeOptionElement = element;
+  }
+
   private _onSlotChange() {
     const slot = this.shadowRoot?.querySelector('slot');
     const nodes = slot!.assignedNodes();
@@ -344,12 +353,7 @@ export class VscodeSelect extends LitElement {
       return;
     }
 
-    if (this._activeOptionElement) {
-      this._activeOptionElement.active = false;
-    }
-
-    element.active = true;
-    this._activeOptionElement = element;
+    this._setActiveOptionElement(element);
     this._currentDescription = element.description || '';
     this.requestUpdate();
   }
