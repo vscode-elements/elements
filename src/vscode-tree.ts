@@ -4,6 +4,7 @@ import {
   css,
   property,
   customElement,
+  CSSResult,
 } from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
 import './vscode-icon';
@@ -253,7 +254,7 @@ export class VscodeTree extends LitElement {
     this.requestUpdate();
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -323,7 +324,7 @@ export class VscodeTree extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div
         @click="${this.onComponentClick}"

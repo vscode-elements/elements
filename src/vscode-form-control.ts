@@ -1,8 +1,15 @@
-import { LitElement, html, css, customElement } from 'lit-element';
+import {
+  LitElement,
+  html,
+  css,
+  customElement,
+  CSSResult,
+  TemplateResult,
+} from 'lit-element';
 
 @customElement('vscode-form-control')
 export class VscodeFormControl extends LitElement {
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -11,9 +18,13 @@ export class VscodeFormControl extends LitElement {
     `;
   }
 
-  render() {
-    return html`
-      <slot></slot>
-    `;
+  render(): TemplateResult {
+    return html` <slot></slot> `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-form-control': VscodeFormControl;
   }
 }

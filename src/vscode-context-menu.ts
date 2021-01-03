@@ -1,5 +1,13 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
-import { nothing } from 'lit-html';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+} from 'lit-element';
+import {nothing, TemplateResult} from 'lit-html';
+import './vscode-context-menu-item';
 
 interface MenuItemData {
   label: string;
@@ -11,20 +19,22 @@ interface MenuItemData {
 
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends LitElement {
-  @property({ type: Array }) data: MenuItemData[] = [];
-  @property({ type: Boolean }) show = true;
+  @property({type: Array}) data: MenuItemData[] = [];
+  @property({type: Boolean}) show = true;
 
   private onItemClick(event: CustomEvent) {
-    const { detail } = event;
+    const {detail} = event;
 
-    this.dispatchEvent(new CustomEvent('vsc-select', {
-      detail,
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('vsc-select', {
+        detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -39,7 +49,7 @@ export class VscodeContextMenu extends LitElement {
         background-color: var(--vscode-menu-background);
         box-shadow: 0 2px 8px var(--vscode-widget-shadow);
         color: var(--vscode-menu-foreground);
-        padding: .5em 0;
+        padding: 0.5em 0;
         white-space: nowrap;
       }
 
@@ -52,9 +62,9 @@ export class VscodeContextMenu extends LitElement {
       .rule {
         border-bottom: 1px solid var(--vscode-menu-separatorBackground);
         display: block;
-        margin: 0 .8em .2em;
-        opacity: .4;
-        padding-top: .2em;
+        margin: 0 0.8em 0.2em;
+        opacity: 0.4;
+        padding-top: 0.2em;
         width: 100%;
       }
 
@@ -96,36 +106,38 @@ export class VscodeContextMenu extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     const menu = html`
       <div class="context-menu">
-        ${this.data ?
-          this.data.map(({
-            label = '',
-            keybinding = '',
-            value = '',
-            separator = false,
-            tabindex = 0
-          }) => html`
-            <vscode-context-menu-item
-              label="${label}"
-              keybinding="${keybinding}"
-              value="${value}"
-              ?separator="${separator}"
-              tabindex="${tabindex}"
-              @vsc-click="${this.onItemClick}"
-            ></vscode-context-menu-item>
-          `) :
-          html`<slot></slot>`
-        }
+        ${this.data
+          ? this.data.map(
+              ({
+                label = '',
+                keybinding = '',
+                value = '',
+                separator = false,
+                tabindex = 0,
+              }) => html`
+                <vscode-context-menu-item
+                  label="${label}"
+                  keybinding="${keybinding}"
+                  value="${value}"
+                  ?separator="${separator}"
+                  tabindex="${tabindex}"
+                  @vsc-click="${this.onItemClick}"
+                ></vscode-context-menu-item>
+              `
+            )
+          : html`<slot></slot>`}
       </div>
     `;
 
-    return html`
-      ${this.show ?
-        menu :
-        nothing
-      }
-    `;
+    return html` ${this.show ? menu : nothing} `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-context-menu': VscodeContextMenu;
   }
 }

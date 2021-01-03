@@ -63,3 +63,9 @@ export class VscodeButton extends LitElement {
     `;
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-button': VscodeButton;
+  }
+}

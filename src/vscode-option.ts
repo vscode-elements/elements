@@ -1,5 +1,5 @@
-import {LitElement, html, css, property, customElement} from 'lit-element';
-import {nothing} from 'lit-html';
+import {LitElement, html, css, property, customElement, CSSResult} from 'lit-element';
+import {nothing, TemplateResult} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 
 @customElement('vscode-option')
@@ -68,7 +68,7 @@ export class VscodeOption extends LitElement {
     this.label = this.innerText;
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       .wrapper {
         align-items: center;
@@ -142,7 +142,7 @@ export class VscodeOption extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div class="wrapper">
         ${this.multiple

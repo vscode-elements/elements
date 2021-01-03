@@ -1,4 +1,4 @@
-import {LitElement, html, css, property, customElement} from 'lit-element';
+import {LitElement, html, css, property, customElement, CSSResult, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
 @customElement('vscode-collapsible')
@@ -11,7 +11,7 @@ export class VscodeCollapsible extends LitElement {
     this.open = !this.open;
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       .collapsible {
         background-color: var(--vscode-sideBar-background);
@@ -78,7 +78,7 @@ export class VscodeCollapsible extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     const classes = classMap({collapsible: true, open: this.open});
 
     const icon = html`<svg
@@ -115,5 +115,11 @@ export class VscodeCollapsible extends LitElement {
         </div>
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-collapsible': VscodeCollapsible;
   }
 }
