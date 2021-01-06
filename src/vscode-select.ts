@@ -320,6 +320,10 @@ export class VscodeSelect extends LitElement {
         this._selectedIndexes.push(index);
       }
 
+      if(value === this._value) {
+        this._selectedIndex = index;
+      }
+
       this._options[index] = {
         label,
         value,
