@@ -3,6 +3,7 @@
 }
 
 body {
+  background-color: var(--vscode-editor-background);
   margin: 0;
   color: #333;
   font-family: 'Open Sans', arial, sans-serif;
@@ -12,6 +13,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+}
+
+body.vscode-dark,
+body.vscode-high-contrast {
+  color: #ccc;
 }
 
 #main-wrapper {

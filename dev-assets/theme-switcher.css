@@ -1,6 +1,6 @@
 .theme-switcher {
   display: flex;
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
 }
 
 .theme-switcher-option {
