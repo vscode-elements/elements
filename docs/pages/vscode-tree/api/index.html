@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&lt;vscode-tree&gt; ⌲ API</title>
     
+    <link rel="stylesheet" href="/vscode-webview-elements/codicon.css" id="vscode-codicon-stylesheet">
     <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
     <link rel="stylesheet" href="/vscode-webview-elements/prism-okaidia.css">
@@ -20,17 +21,15 @@
   <body class="vscode-light">
     
 <header>
-  <h1>My Library</h1>
-  <h2>A web component library just for me.</h2>
-  <span class="pkg-version">Current version: 0.0.0</span>
+  <h1>VSCode Webview Elements</h1>
+  <h2>Web component library for VSCode extension development.</h2>
+  <span class="pkg-version">Current version: 0.1.11-alpha.5</span>
 </header>
     
 <nav>
   <a href="/vscode-webview-elements/">Home</a>
-  <a href="/vscode-webview-elements/pages/vscode-tree/overview">Overview</a>
   <a href="/vscode-webview-elements/pages/vscode-tree/examples">Examples</a>
-  <a href="/vscode-webview-elements/pages/vscode-tree/api">API</a>
-  <a href="/vscode-webview-elements/pages/vscode-tree/install">Install</a>
+  <a href="/vscode-webview-elements/pages/vscode-tree/api" class="active">API</a>
 </nav>
     <div id="main-wrapper">
       <main>
@@ -121,11 +120,13 @@
 <thead>
 <tr>
 <th>Event</th>
+<th>Type</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>vsc-select</code></td>
+<td><code>CustomEvent&lt;{ icons: TreeItemIconConfig \| undefined; itemType: ItemType; label: string; open: boolean; value: string; path: string; }&gt;</code></td>
 </tr>
 </tbody>
 </table>

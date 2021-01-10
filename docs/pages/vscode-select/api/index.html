@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&lt;vscode-select&gt; ⌲ API</title>
     
+    <link rel="stylesheet" href="/vscode-webview-elements/codicon.css" id="vscode-codicon-stylesheet">
     <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
     <link rel="stylesheet" href="/vscode-webview-elements/prism-okaidia.css">
@@ -20,17 +21,15 @@
   <body class="vscode-light">
     
 <header>
-  <h1>My Library</h1>
-  <h2>A web component library just for me.</h2>
-  <span class="pkg-version">Current version: 0.0.0</span>
+  <h1>VSCode Webview Elements</h1>
+  <h2>Web component library for VSCode extension development.</h2>
+  <span class="pkg-version">Current version: 0.1.11-alpha.5</span>
 </header>
     
 <nav>
   <a href="/vscode-webview-elements/">Home</a>
-  <a href="/vscode-webview-elements/pages/vscode-select/overview">Overview</a>
   <a href="/vscode-webview-elements/pages/vscode-select/examples">Examples</a>
-  <a href="/vscode-webview-elements/pages/vscode-select/api">API</a>
-  <a href="/vscode-webview-elements/pages/vscode-select/install">Install</a>
+  <a href="/vscode-webview-elements/pages/vscode-select/api" class="active">API</a>
 </nav>
     <div id="main-wrapper">
       <main>
@@ -71,7 +70,6 @@
 <tr>
 <th>Property</th>
 <th>Attribute</th>
-<th>Modifiers</th>
 <th>Type</th>
 <th>Default</th>
 <th>Description</th>
@@ -79,9 +77,36 @@
 </thead>
 <tbody>
 <tr>
-<td><code>multiple</code></td>
-<td><code>multiple</code></td>
+<td><code>ariaActivedescendant</code></td>
+<td><code>aria-activedescendant</code></td>
+<td><code>string</code></td>
+<td>&quot;&quot;</td>
 <td></td>
+</tr>
+<tr>
+<td><code>ariaExpanded</code></td>
+<td><code>aria-expanded</code></td>
+<td><code>string</code></td>
+<td>&quot;false&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ariaLabel</code></td>
+<td><code>aria-label</code></td>
+<td><code>string</code></td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ariaMultiselectable</code></td>
+<td><code>aria-multiselectable</code></td>
+<td><code>string</code></td>
+<td>&quot;false&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>multiple</code></td>
+<td><code>multiple</code></td>
 <td><code>boolean</code></td>
 <td>false</td>
 <td></td>
@@ -89,15 +114,20 @@
 <tr>
 <td><code>options</code></td>
 <td><code>options</code></td>
-<td>readonly</td>
 <td><code>Option[]</code></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><code>selectedIndex</code></td>
-<td><code>selectedIndex</code></td>
+<td><code>role</code></td>
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>&quot;listbox&quot;</td>
 <td></td>
+</tr>
+<tr>
+<td><code>selectedIndex</code></td>
+<td><code>selectedIndex</code></td>
 <td><code>number</code></td>
 <td></td>
 <td></td>
@@ -105,26 +135,23 @@
 <tr>
 <td><code>selectedIndexes</code></td>
 <td><code>selectedIndexes</code></td>
-<td></td>
 <td><code>number[]</code></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><code>tabIndex</code></td>
-<td><code>tabIndex</code></td>
-<td></td>
+<td><code>tabindex</code></td>
+<td><code>tabindex</code></td>
 <td><code>number</code></td>
-<td>-1</td>
+<td>0</td>
 <td></td>
 </tr>
 <tr>
 <td><code>value</code></td>
 <td><code>value</code></td>
-<td></td>
 <td><code>string</code></td>
 <td></td>
-<td>If value is not represented in the options list, the selectedIndex will be -1</td>
+<td>If value is not presented in the options list, the selectedIndex will be -1</td>
 </tr>
 </tbody>
 </table>
@@ -133,11 +160,13 @@
 <thead>
 <tr>
 <th>Event</th>
+<th>Type</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>vsc-change</code></td>
+<td><code>CustomEvent&lt;{ multiple: boolean; selectedIndex: number; selectedIndexes: number[]; selectedOptions: Option; value: string; }&gt;</code></td>
 </tr>
 </tbody>
 </table>
