@@ -3,8 +3,8 @@ module.exports = function(data) {
 
   return `
 <header>
-  <h1>My Library</h1>
-  <h2>A web component library just for me.</h2>
+  <h1>VSCode Webview Elements</h1>
+  <h2>Web component library for VSCode extension development.</h2>
   ${versionInfo}
 </header>`;
 };
