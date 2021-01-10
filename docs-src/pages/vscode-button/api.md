@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-button> ⌲ API
+tags: api
+customElement: vscode-button
 ---
 
 <!-- This file is auto-generated. Do not edit! -->

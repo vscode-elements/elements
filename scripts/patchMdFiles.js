@@ -22,6 +22,8 @@ const processFile = (path) => {
       let frontMatter = '---\n';
       frontMatter += 'layout: page.11ty.cjs\n';
       frontMatter += `title: <${title}> ⌲ API\n`;
+      frontMatter += `tags: api\n`;
+      frontMatter += `customElement: ${title}\n`;
       frontMatter += '---\n\n';
       frontMatter += '<!-- This file is auto-generated. Do not edit! -->\n\n';
 

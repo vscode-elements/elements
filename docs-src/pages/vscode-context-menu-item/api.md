@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-context-menu-item> ⌲ API
+tags: api
+customElement: vscode-context-menu-item
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
@@ -19,6 +21,6 @@ title: <vscode-context-menu-item> ⌲ API
 
 ## Events
 
-| Event       |
-|-------------|
-| `vsc-click` |
+| Event       | Type                                             |
+|-------------|--------------------------------------------------|
+| `vsc-click` | `CustomEvent<{ label: string; keybinding: string; value: string; separator: boolean; tabindex: number; }>` |

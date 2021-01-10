@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-checkbox> ⌲ API
+tags: api
+customElement: vscode-checkbox
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
@@ -17,6 +19,6 @@ title: <vscode-checkbox> ⌲ API
 
 ## Events
 
-| Event        |
-|--------------|
-| `vsc-change` |
+| Event        | Type                                             |
+|--------------|--------------------------------------------------|
+| `vsc-change` | `CustomEvent<{ checked: boolean; label: string; value: string; }>` |

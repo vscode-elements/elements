@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-context-menu> ⌲ API
+tags: api
+customElement: vscode-context-menu
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
@@ -16,6 +18,6 @@ title: <vscode-context-menu> ⌲ API
 
 ## Events
 
-| Event        |
-|--------------|
-| `vsc-select` |
+| Event        | Type               |
+|--------------|--------------------|
+| `vsc-select` | `CustomEvent<any>` |

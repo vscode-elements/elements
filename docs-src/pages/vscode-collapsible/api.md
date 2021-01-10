@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-collapsible> ⌲ API
+tags: api
+customElement: vscode-collapsible
 ---
 
 <!-- This file is auto-generated. Do not edit! -->

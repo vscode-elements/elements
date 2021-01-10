@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <my-element> ⌲ API
+tags: api
+customElement: my-element
 ---
 
 <!-- This file is auto-generated. Do not edit! -->

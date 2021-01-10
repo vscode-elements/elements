@@ -6,12 +6,14 @@ module.exports = function({page, collections, globals, eleventyConfig}, parentTe
   const urlParts = page.url.split('/');
   const urlBase = `/${urlParts[1]}/${urlParts[2]}`;
 
+  const activeClass = (slug) => {
+    return page.url.includes(slug) ? ' class="active"' : '';
+  };
+
   return `
 <nav>
   <a href="${parentTemplate.url('/')}">Home</a>
-  <a href="${parentTemplate.url(urlBase + '/overview')}">Overview</a>
-  <a href="${parentTemplate.url(urlBase + '/examples')}">Examples</a>
-  <a href="${parentTemplate.url(urlBase + '/api')}">API</a>
-  <a href="${parentTemplate.url(urlBase + '/install')}">Install</a>
+  <a href="${parentTemplate.url(urlBase + '/examples')}"${activeClass('examples')}>Examples</a>
+  <a href="${parentTemplate.url(urlBase + '/api')}"${activeClass('api')}>API</a>
 </nav>`;
 };

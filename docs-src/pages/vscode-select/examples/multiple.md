@@ -1,12 +1,12 @@
 ---
 layout: example.11ty.cjs
-title: <vscode-select> ⌲ Examples ⌲ Basic
+title: <vscode-select> ⌲ Examples ⌲ Multiple
 tags: example
-name: Basic
-description: Basic example
+name: Multiple
+description: Multiple attribute
 ---
 
-<vscode-select id="select-example">
+<vscode-select id="select-example" multiple>
   <vscode-option>Lorem</vscode-option>
   <vscode-option selected>Ipsum</vscode-option>
   <vscode-option>Dolor</vscode-option>

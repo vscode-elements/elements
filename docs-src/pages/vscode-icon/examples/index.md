@@ -3,32 +3,25 @@ layout: example.11ty.cjs
 title: <vscode-icon> ⌲ Examples ⌲ Basic
 tags: example
 name: Basic
-description: A basic example
+description: Basic example
 ---
 
-<style>
-  vscode-icon p {
-    border: solid 1px blue;
-    padding: 8px;
-  }
-</style>
-<vscode-icon>
-  <p>This is child content</p>
-</vscode-icon>
-
-<h3>CSS</h3>
-
-```css
-  p {
-    border: solid 1px blue;
-    padding: 8px;
-  }
-```
-
-<h3>HTML</h3>
+<vscode-icon name="account"></vscode-icon>
+<vscode-icon name="account" size="32"></vscode-icon>
+<vscode-icon name="account" size="48"></vscode-icon>
+<vscode-icon name="account" size="64"></vscode-icon>
 
 ```html
-<vscode-icon>
-  <p>This is child content</p>
-</vscode-icon>
+<!--
+  Download codicons from https://github.com/microsoft/vscode-codicons
+-->
+<link rel="stylesheet" href="path/to/codicon.css" id="vscode-codicon-stylesheet">
+
+```
+
+```html
+<vscode-icon name="account"></vscode-icon>
+<vscode-icon name="account" size="32"></vscode-icon>
+<vscode-icon name="account" size="48"></vscode-icon>
+<vscode-icon name="account" size="64"></vscode-icon>
 ```

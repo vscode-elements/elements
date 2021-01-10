@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-scrollable> ⌲ API
+tags: api
+customElement: vscode-scrollable
 ---
 
 <!-- This file is auto-generated. Do not edit! -->

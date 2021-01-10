@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-icon> ⌲ API
+tags: api
+customElement: vscode-icon
 ---
 
 <!-- This file is auto-generated. Do not edit! -->

@@ -29,6 +29,7 @@ module.exports = function(data) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${htmlspecialchars(title)}</title>
     ${analytics}
+    <link rel="stylesheet" href="${this.url('/codicon.css')}" id="vscode-codicon-stylesheet">
     <link rel="stylesheet" href="${this.url('/docs.css')}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
     <link rel="stylesheet" href="${this.url('/prism-okaidia.css')}">

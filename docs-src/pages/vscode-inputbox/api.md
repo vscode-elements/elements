@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-inputbox> ⌲ API
+tags: api
+customElement: vscode-inputbox
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
@@ -24,7 +26,7 @@ title: <vscode-inputbox> ⌲ API
 
 ## Events
 
-| Event        |
-|--------------|
-| `vsc-change` |
-| `vsc-input`  |
+| Event        | Type                  |
+|--------------|-----------------------|
+| `vsc-change` | `CustomEvent<string>` |
+| `vsc-input`  | `CustomEvent<string>` |

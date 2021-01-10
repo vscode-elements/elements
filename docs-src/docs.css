@@ -103,6 +103,10 @@ nav > a {
   text-decoration: none;
 }
 
+nav > a.active {
+  font-weight: bold;
+}
+
 nav > a:hover {
   text-decoration: underline;
 }

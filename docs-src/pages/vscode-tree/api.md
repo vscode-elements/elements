@@ -1,6 +1,8 @@
 ---
 layout: page.11ty.cjs
 title: <vscode-tree> ⌲ API
+tags: api
+customElement: vscode-tree
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
@@ -24,6 +26,6 @@ title: <vscode-tree> ⌲ API
 
 ## Events
 
-| Event        |
-|--------------|
-| `vsc-select` |
+| Event        | Type                                             |
+|--------------|--------------------------------------------------|
+| `vsc-select` | `CustomEvent<{ icons: TreeItemIconConfig \| undefined; itemType: ItemType; label: string; open: boolean; value: string; path: string; }>` |
