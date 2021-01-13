@@ -19,8 +19,17 @@ interface MenuItemData {
 
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends LitElement {
+  /** <pre><code>interface MenuItemData {
+   * &nbsp;&nbsp;label: string;
+   * &nbsp;&nbsp;keybinding?: string;
+   * &nbsp;&nbsp;value?: string;
+   * &nbsp;&nbsp;separator?: boolean;
+   * &nbsp;&nbsp;tabindex?: number;
+   * }</code></pre>
+   */
   @property({type: Array}) data: MenuItemData[] = [];
-  @property({type: Boolean}) show = true;
+  // TODO: hide on item click
+  @property({type: Boolean, reflect: true}) show = false;
 
   private onItemClick(event: CustomEvent) {
     const {detail} = event;

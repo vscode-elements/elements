@@ -16,3 +16,10 @@ customElement: vscode-collapsible
 | `open`     | `open`     | `boolean` | false   |
 | `tabIndex` | `tabIndex` | `number`  | 0       |
 | `title`    | `title`    | `string`  | ""      |
+
+## Slots
+
+| Name      | Description                  |
+|-----------|------------------------------|
+| `actions` | The right side of the header |
+| `body`    | Main content                 |

@@ -36,6 +36,7 @@ export class VscodeCheckbox extends LitElement {
       .wrapper {
         cursor: pointer;
         display: block;
+        font-size: var(--vscode-font-size);
         position: relative;
         user-select: none;
       }

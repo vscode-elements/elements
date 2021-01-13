@@ -23,7 +23,7 @@
 <header>
   <h1>VSCode Webview Elements</h1>
   <h2>Web component library for VSCode extension development.</h2>
-  <span class="pkg-version">Current version: 0.1.11-alpha.5</span>
+  <span class="pkg-version">Current version: 0.1.11-alpha.7</span>
 </header>
     
 <nav>
@@ -72,16 +72,16 @@
                   </li>
                 
                   <li class="selected">
-                    <a href="/vscode-webview-elements/pages/vscode-checkbox/examples/another-example/">Another example</a>
+                    <a href="/vscode-webview-elements/pages/vscode-checkbox/examples/slotted/">Slotted content</a>
                   </li>
                 
         </ul>
       </nav>
       <div>
-        <h2>Example: Another</h2>
-        <p><vscode-checkbox name="Earth"></vscode-checkbox></p>
+        <h2>Example: Slotted</h2>
+        <p><vscode-checkbox>I agree to the <a href="#">terms &amp; conditions</a></vscode-checkbox></p>
 <h3>HTML</h3>
-<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-checkbox</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Earth<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-checkbox</span><span class="token punctuation">></span></span></code></pre>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-checkbox</span><span class="token punctuation">></span></span>I agree to the <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>terms <span class="token entity named-entity" title="&amp;">&amp;amp;</span> conditions<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-checkbox</span><span class="token punctuation">></span></span></code></pre>
 
       </div>
     </section>

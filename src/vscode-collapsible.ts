@@ -1,6 +1,10 @@
 import {LitElement, html, css, property, customElement, CSSResult, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 
+/**
+ * @slot body - Main content
+ * @slot actions - The right side of the header
+ */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends LitElement {
   @property({type: Number}) tabIndex = 0;

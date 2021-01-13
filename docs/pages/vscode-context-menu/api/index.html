@@ -23,7 +23,7 @@
 <header>
   <h1>VSCode Webview Elements</h1>
   <h2>Web component library for VSCode extension development.</h2>
-  <span class="pkg-version">Current version: 0.1.11-alpha.5</span>
+  <span class="pkg-version">Current version: 0.1.11-alpha.7</span>
 </header>
     
 <nav>
@@ -71,6 +71,7 @@
 <th>Attribute</th>
 <th>Type</th>
 <th>Default</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -79,12 +80,14 @@
 <td><code>data</code></td>
 <td><code>MenuItemData[]</code></td>
 <td>[]</td>
+<td><pre><code>interface MenuItemData {<br />  label: string;<br />  keybinding?: string;<br />  value?: string;<br />  separator?: boolean;<br />  tabindex?: number;<br />}</code></pre></td>
 </tr>
 <tr>
 <td><code>show</code></td>
 <td><code>show</code></td>
 <td><code>boolean</code></td>
-<td>true</td>
+<td>false</td>
+<td></td>
 </tr>
 </tbody>
 </table>
