@@ -440,3 +440,9 @@ body.vscode-dark {
   --vscode-widget-shadow: #000000;
   --vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
 }
+
+body.vscode-dark {
+  --component-preview-light-active-color: transparent;
+  --component-preview-dark-active-color: var(--vscode-foreground);
+  --component-preview-hc-active-color: transparent;
+}

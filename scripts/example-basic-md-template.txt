@@ -1,10 +1,11 @@
 ---
-layout: example.11ty.cjs
-title: <%tagName%> ⌲ Examples ⌲ Basic
-tags: example
-name: Basic
-description: Basic example
+layout: component.njk
+title: %className%
+tags: component
+component: %tagName%
 ---
+
+# %tagName%
 
 <style>
   %tagName% p {
@@ -12,20 +13,23 @@ description: Basic example
     padding: 8px;
   }
 </style>
-<%tagName%>
-  <p>This is child content</p>
-</%tagName%>
 
-<h3>CSS</h3>
+<component-preview>
+  <%tagName%>
+    <p>This is child content</p>
+  </%tagName%>
+</component-preview>
+
+### CSS
 
 ```css
-  p {
-    border: solid 1px blue;
-    padding: 8px;
-  }
+p {
+  border: solid 1px blue;
+  padding: 8px;
+}
 ```
 
-<h3>HTML</h3>
+### HTML
 
 ```html
 <%tagName%>

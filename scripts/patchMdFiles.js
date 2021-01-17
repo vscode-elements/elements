@@ -1,5 +1,6 @@
 import fs from 'fs';
 import rreaddir from 'recursive-readdir';
+import { kebabToPascal } from './utils.mjs';
 
 const processFile = (path) => {
   if (!/api\.md$/g.test(path)) {
@@ -11,19 +12,21 @@ const processFile = (path) => {
       throw err;
     }
 
-    const isAlreadyPatched = /---\nlayout: page.11ty.cjs\ntitle: <[a-z0-9\-]+> ⌲ Install\n---/g.test(data);
+    const isAlreadyPatched = /---\nlayout: component.njk\n/g.test(data);
 
     if (!isAlreadyPatched) {
       let foundMainHeader = [];
       foundMainHeader = [...data.matchAll(/^#{1} (.*)$/gm)];
 
       const title = foundMainHeader.length > 0 ? foundMainHeader[0][1] : '';
+      const plainKebab = title.replace('vscode-', '');
+      const plainClassName = kebabToPascal(plainKebab);
 
       let frontMatter = '---\n';
-      frontMatter += 'layout: page.11ty.cjs\n';
-      frontMatter += `title: <${title}> ⌲ API\n`;
+      frontMatter += 'layout: component.njk\n';
+      frontMatter += `title: ${plainClassName}\n`;
       frontMatter += `tags: api\n`;
-      frontMatter += `customElement: ${title}\n`;
+      frontMatter += `component: ${title}\n`;
       frontMatter += '---\n\n';
       frontMatter += '<!-- This file is auto-generated. Do not edit! -->\n\n';
 
@@ -38,7 +41,7 @@ const processFile = (path) => {
   });
 };
 
-rreaddir('docs-src/pages', (err, files) => {
+rreaddir('docs-src/components', (err, files) => {
   if (err) {
     throw err;
   }
