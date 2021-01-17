@@ -394,3 +394,9 @@ body.vscode-high-contrast {
   --vscode-window-inactiveBorder: #6fc3df;
   --vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
 }
+
+body.vscode-high-contrast {
+  --component-preview-light-active-color: transparent;
+  --component-preview-dark-active-color: transparent;
+  --component-preview-hc-active-color: var(--vscode-foreground);
+}
