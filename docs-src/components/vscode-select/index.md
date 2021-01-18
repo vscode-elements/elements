@@ -1,16 +1,21 @@
 ---
-layout: page.njk
-title: <vscode-select> ⌲ Examples ⌲ Basic
-tags: example
-name: Basic
-description: Basic example
+layout: component.njk
+title: Select
+tags: component
+component: vscode-select
 ---
 
-<vscode-select id="select-example">
-  <vscode-option>Lorem</vscode-option>
-  <vscode-option selected>Ipsum</vscode-option>
-  <vscode-option>Dolor</vscode-option>
-</vscode-select>
+# vscode-select
+
+## Basic example
+
+<component-preview>
+  <vscode-select id="select-example">
+    <vscode-option>Lorem</vscode-option>
+    <vscode-option selected>Ipsum</vscode-option>
+    <vscode-option>Dolor</vscode-option>
+  </vscode-select>
+</component-preview>
 <script>
   const select = document.querySelector('#select-example');
   select.addEventListener('vsc-change', (event) => {
