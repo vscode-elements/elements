@@ -24,6 +24,10 @@ body.landing-page {
   justify-content: center;
 }
 
+a {
+  color: var(--vscode-textLink-activeForeground, #006ab1);
+}
+
 .content-wrapper {
   box-sizing: border-box;
   display: flex;
