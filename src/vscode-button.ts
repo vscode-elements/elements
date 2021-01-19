@@ -1,15 +1,15 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css, property, customElement, CSSResult, TemplateResult } from 'lit-element';
 
 @customElement('vscode-button')
 export class VscodeButton extends LitElement {
-  @property({ type: Number, reflect: true }) tabindex: number = 0;
-  @property({ type: Boolean }) secondary: boolean = false;
+  @property({ type: Number, reflect: true }) tabindex = 0;
+  @property({ type: Boolean }) secondary = false;
 
   private _handleClick(event: MouseEvent) {
     this.dispatchEvent(new MouseEvent('click', event));
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         background-color: var(--vscode-button-background);
@@ -55,7 +55,7 @@ export class VscodeButton extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <slot @click="${this._handleClick}"></slot>
     `;
