@@ -32,20 +32,24 @@
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
-      <vscode-button id="button-1">Hello World</vscode-button>
+      <vscode-button id="button-1">Enabled</vscode-button>
       <vscode-button secondary id="button-2">Hello World</vscode-button>
       <button type="button" id="button-3" tabindex="0">Native button</button>
+      <button type="button" id="button-32" tabindex="0" disabled>Native button disabled</button>
+      <vscode-button id="button-4" disabled>Disabled</vscode-button>
+      <vscode-button id="button-5" disabled secondary>Disabled</vscode-button>
       <script>
         const bt1 = document.querySelector('#button-1');
         const bt3 = document.querySelector('#button-3');
+        const bt4 = document.querySelector('#button-4');
 
         const listener = (event) => {
           console.log(event);
         };
 
-        bt1.addEventListener('click', listener);
         bt1.addEventListener('vsc-click', listener);
         bt3.addEventListener('click', listener);
+        bt4.addEventListener('vsc-click', listener);
       </script>
     </div>
   </div>
