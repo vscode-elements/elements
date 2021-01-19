@@ -5,8 +5,15 @@ export class VscodeButton extends LitElement {
   @property({ type: Number, reflect: true }) tabindex = 0;
   @property({ type: Boolean }) secondary = false;
 
-  private _handleClick(event: MouseEvent) {
-    this.dispatchEvent(new MouseEvent('click', event));
+  constructor() {
+    super();
+    this.addEventListener('keydown', this._handleKeydown.bind(this));
+  }
+
+  private _handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.dispatchEvent(new MouseEvent('click'));
+    }
   }
 
   static get styles(): CSSResult {
@@ -57,7 +64,7 @@ export class VscodeButton extends LitElement {
 
   render(): TemplateResult {
     return html`
-      <slot @click="${this._handleClick}"></slot>
+      <slot></slot>
     `;
   }
 }

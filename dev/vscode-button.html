@@ -36,7 +36,7 @@
       <vscode-button secondary id="button-2">Hello World</vscode-button>
       <button type="button" id="button-3" tabindex="0">Native button</button>
       <script>
-        const bt1 = document.querySelector('#button-3');
+        const bt1 = document.querySelector('#button-1');
         const bt3 = document.querySelector('#button-3');
 
         const listener = (event) => {
@@ -44,6 +44,7 @@
         };
 
         bt1.addEventListener('click', listener);
+        bt1.addEventListener('vsc-click', listener);
         bt3.addEventListener('click', listener);
       </script>
     </div>
