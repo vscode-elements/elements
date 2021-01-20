@@ -11,13 +11,22 @@ import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import './vscode-icon';
 
+/**
+ * @fires vsc-click - Dispatched only if the disabled attribute is false.
+ */
 @customElement('vscode-button')
 export class VscodeButton extends LitElement {
   @property({type: Number, reflect: true}) tabindex = 0;
   @property({type: Boolean}) secondary = false;
   @property({reflect: true}) role = 'button';
   @property({type: Boolean}) disabled = false;
+  /**
+   * A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) before the label
+   */
   @property() icon = '';
+  /**
+   * A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label
+   */
   @property() iconAfter = '';
 
   private _prevTabindex = 0;

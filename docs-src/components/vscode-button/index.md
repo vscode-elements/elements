@@ -7,11 +7,14 @@ component: vscode-button
 
 # vscode-button
 
-## Basic example
+## Example
 
 <component-preview>
-  <vscode-button>Button example</vscode-button>
+  <vscode-button>Button</vscode-button> 
   <vscode-button secondary>Secondary button</vscode-button>
+  <vscode-button disabled>Disabled button</vscode-button>
+  <vscode-button disabled secondary>Disabled secondary button</vscode-button>
+  <vscode-button icon="account" iconafter="chevron-right">Icons</vscode-button>
 </component-preview>
 
 ### HTML
