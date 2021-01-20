@@ -7,13 +7,18 @@ import {
   CSSResult,
   TemplateResult,
 } from 'lit-element';
+import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
+import './vscode-icon';
 
 @customElement('vscode-button')
 export class VscodeButton extends LitElement {
   @property({type: Number, reflect: true}) tabindex = 0;
   @property({type: Boolean}) secondary = false;
-  @property({type: String, reflect: true}) role = 'button';
-  @property({type: Boolean, reflect: false}) disabled = false;
+  @property({reflect: true}) role = 'button';
+  @property({type: Boolean}) disabled = false;
+  @property() icon = '';
+  @property() iconAfter = '';
 
   private _prevTabindex = 0;
 
@@ -23,7 +28,9 @@ export class VscodeButton extends LitElement {
     this.addEventListener('click', this._handleClick.bind(this));
   }
 
-  attributeChangedCallback(name: string): void {
+  attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
+    super.attributeChangedCallback(name, oldVal, newVal);
+
     if (name === 'disabled' && this.hasAttribute('disabled')) {
       this._prevTabindex = this.tabindex;
       this.tabindex = -1;
@@ -62,17 +69,18 @@ export class VscodeButton extends LitElement {
   static get styles(): CSSResult {
     return css`
       :host {
+        align-items: center;
         background-color: var(--vscode-button-background);
         border: 0;
         border-radius: 0;
         box-sizing: border-box;
         color: var(--vscode-button-foreground);
         cursor: pointer;
-        display: inline-block;
+        display: inline-flex;
         font-size: var(--vscode-font-size);
         font-weight: var(--vscode-font-weight);
-        line-height: 1.4;
-        padding: 2px 14px;
+        line-height: 24px;
+        padding: 0 14px;
         user-select: none;
       }
 
@@ -125,11 +133,60 @@ export class VscodeButton extends LitElement {
       :host([secondary][disabled]:focus) {
         background-color: var(--vscode-button-secondaryBackground);
       }
+
+      .wrapper {
+        align-items: center;
+        display: flex;
+        position: relative;
+      }
+
+      .wrapper.has-icon-before {
+        padding-left: 21px;
+      }
+
+      .wrapper.has-icon-after {
+        padding-right: 21px;
+      }
+
+      .icon {
+        left: 0;
+        position: absolute;
+      }
+
+      .icon-after {
+        position: absolute;
+        right: 0;
+      }
     `;
   }
 
   render(): TemplateResult {
-    return html` <slot></slot> `;
+    const hasIcon = this.icon !== '';
+    const hasIconAfter = this.iconAfter !== '';
+    const wrapperClasses = {
+      wrapper: true,
+      'has-icon-before': hasIcon,
+      'has-icon-after': hasIconAfter,
+    };
+
+    const iconElem = hasIcon
+      ? html`<vscode-icon name="${this.icon}" class="icon"></vscode-icon>`
+      : nothing;
+
+    const iconAfterElem = hasIconAfter
+      ? html`<vscode-icon
+          name="${this.iconAfter}"
+          class="icon-after"
+        ></vscode-icon>`
+      : nothing;
+
+    return html`
+      <span class="${classMap(wrapperClasses)}">
+        ${iconElem}
+        <slot></slot>
+        ${iconAfterElem}
+      </span>
+    `;
   }
 }
 
