@@ -101,6 +101,8 @@ component: vscode-icon
   <vscode-icon name="chrome-minimize" title="chrome-minimize"></vscode-icon>
   <vscode-icon name="chrome-restore" title="chrome-restore"></vscode-icon>
   <vscode-icon name="circle-filled" title="circle-filled"></vscode-icon>
+  <vscode-icon name="circle-large-filled" title="circle-large-filled"></vscode-icon>
+  <vscode-icon name="circle-large-outline" title="circle-large-outline"></vscode-icon>
   <vscode-icon name="circle-outline" title="circle-outline"></vscode-icon>
   <vscode-icon name="circle-slash" title="circle-slash"></vscode-icon>
   <vscode-icon name="circuit-board" title="circuit-board"></vscode-icon>
@@ -310,6 +312,7 @@ component: vscode-icon
   <vscode-icon name="package" title="package"></vscode-icon>
   <vscode-icon name="paintcan" title="paintcan"></vscode-icon>
   <vscode-icon name="pass" title="pass"></vscode-icon>
+  <vscode-icon name="pass-filled" title="pass-filled"></vscode-icon>
   <vscode-icon name="pencil" title="pencil"></vscode-icon>
   <vscode-icon name="person" title="person"></vscode-icon>
   <vscode-icon name="person-add" title="person-add"></vscode-icon>
@@ -318,6 +321,7 @@ component: vscode-icon
   <vscode-icon name="person-outline" title="person-outline"></vscode-icon>
   <vscode-icon name="pin" title="pin"></vscode-icon>
   <vscode-icon name="pinned" title="pinned"></vscode-icon>
+  <vscode-icon name="pinned-dirty" title="pinned-dirty"></vscode-icon>
   <vscode-icon name="play" title="play"></vscode-icon>
   <vscode-icon name="play-circle" title="play-circle"></vscode-icon>
   <vscode-icon name="plug" title="plug"></vscode-icon>
