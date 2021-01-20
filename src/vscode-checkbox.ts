@@ -1,11 +1,12 @@
-import {LitElement, html, css, property, customElement} from 'lit-element';
-import {nothing} from 'lit-html';
+import {LitElement, html, css, property, customElement, CSSResult} from 'lit-element';
+import {nothing, TemplateResult} from 'lit-html';
 
 @customElement('vscode-checkbox')
 export class VscodeCheckbox extends LitElement {
-  @property({type: String}) label = '';
+  @property() label = '';
   @property({type: Boolean}) checked = false;
-  @property({type: String}) value = '';
+  @property() value = '';
+  @property({type: Number, reflect: true}) tabindex = 0;
 
   private _uid = `id_${new Date().valueOf()}_${Math.floor(
     Math.random() * 9999
@@ -27,10 +28,14 @@ export class VscodeCheckbox extends LitElement {
     );
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: inline-block;
+      }
+
+      :host(:focus) {
+        outline: none;
       }
 
       .wrapper {
@@ -67,6 +72,11 @@ export class VscodeCheckbox extends LitElement {
         width: 18px;
       }
 
+      :host(:focus) .icon {
+        outline: 1px solid var(--vscode-focusBorder);
+        outline-offset: -1px;
+      }
+
       .label {
         padding-left: 27px;
       }
@@ -82,7 +92,7 @@ export class VscodeCheckbox extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     const icon = html`<svg
       width="16"
       height="16"
