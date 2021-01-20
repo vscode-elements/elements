@@ -45,9 +45,11 @@ export class VscodeButton extends LitElement {
       !this.hasAttribute('disabled')
     ) {
       this.dispatchEvent(
-        new CustomEvent('vsc-click', {
+        new CustomEvent<{
+          originalEvent: MouseEvent;
+        }>('vsc-click', {
           detail: {
-            originalEvent: event,
+            originalEvent: new MouseEvent('click'),
           },
         })
       );
@@ -57,7 +59,9 @@ export class VscodeButton extends LitElement {
   private _handleClick(event: MouseEvent) {
     if (!this.hasAttribute('disabled')) {
       this.dispatchEvent(
-        new CustomEvent('vsc-click', {
+        new CustomEvent<{
+          originalEvent: MouseEvent
+        }>('vsc-click', {
           detail: {
             originalEvent: event,
           },
