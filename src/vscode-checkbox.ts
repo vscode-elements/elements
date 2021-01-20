@@ -8,11 +8,16 @@ export class VscodeCheckbox extends LitElement {
   @property() value = '';
   @property({type: Number, reflect: true}) tabindex = 0;
 
+  constructor() {
+    super();
+    this.addEventListener('keydown', this._handleKeyDown.bind(this));
+  }
+
   private _uid = `id_${new Date().valueOf()}_${Math.floor(
     Math.random() * 9999
   )}`;
 
-  private onElementClick() {
+  private _handleClick() {
     this.checked = !this.checked;
 
     this.dispatchEvent(
@@ -26,6 +31,12 @@ export class VscodeCheckbox extends LitElement {
         composed: true,
       })
     );
+  }
+
+  private _handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.checked = !this.checked;
+    }
   }
 
   static get styles(): CSSResult {
@@ -116,9 +127,10 @@ export class VscodeCheckbox extends LitElement {
           type="checkbox"
           ?checked="${this.checked}"
           value="${this.value}"
+          tabindex="-1"
         />
         <div class="icon">${check}</div>
-        <label for="${this._uid}" class="label" @click="${this.onElementClick}">
+        <label for="${this._uid}" class="label" @click="${this._handleClick}">
           <slot><span class="label-text">${this.label}</span></slot>
         </label>
       </div>
