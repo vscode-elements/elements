@@ -1,6 +1,6 @@
-# LitElement TypeScript starter 
+# VSCode Webview Elements 
 
-This project includes a sample component using LitElement with TypeScript.
+For the end-user documentation, [click here](https://bendera.github.io/vscode-webview-elements/).
 
 ## Setup
 
