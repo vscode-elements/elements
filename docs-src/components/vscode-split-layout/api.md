@@ -1,8 +1,18 @@
 ---
 layout: component.njk
-title: Unknown
+title: SplitLayout
+tags: api
+component: vscode-split-layout
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-Run `npm run analyze` to update this file.
+# vscode-split-layout
+
+## Properties
+
+| Property          | Attribute         | Type                         | Default    |
+|-------------------|-------------------|------------------------------|------------|
+| `initialPos`      | `initialPos`      | `string`                     | "50%"      |
+| `resetOnDblClick` | `resetOnDblClick` | `boolean`                    | false      |
+| `split`           | `split`           | `"horizontal" \| "vertical"` | "vertical" |
