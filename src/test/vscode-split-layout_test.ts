@@ -1,14 +1,14 @@
-import {SplitLayout} from '../vscode-split-layout';
+import {VscodeSplitLayout} from '../vscode-split-layout';
 import {expect, fixture, html} from '@open-wc/testing';
 
 describe('vscode-split-layout', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-split-layout');
-    expect(el).to.instanceOf(SplitLayout);
+    expect(el).to.instanceOf(VscodeSplitLayout);
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-split-layout></vscode-split-layout>`) as SplitLayout;
+    const el = await fixture(html`<vscode-split-layout></vscode-split-layout>`) as VscodeSplitLayout;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +21,7 @@ describe('vscode-split-layout', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-split-layout name="Test"></vscode-split-layout>`) as SplitLayout;
+    const el = await fixture(html`<vscode-split-layout name="Test"></vscode-split-layout>`) as VscodeSplitLayout;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +32,7 @@ describe('vscode-split-layout', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-split-layout></vscode-split-layout>`) as SplitLayout;
+    const el = await fixture(html`<vscode-split-layout></vscode-split-layout>`) as VscodeSplitLayout;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;

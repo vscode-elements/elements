@@ -14,7 +14,7 @@ import {styleMap} from 'lit-html/directives/style-map';
 const HANDLE_SIZE = 4;
 
 @customElement('vscode-split-layout')
-export class SplitLayout extends LitElement {
+export class VscodeSplitLayout extends LitElement {
   @property()
   split: 'horizontal' | 'vertical' = 'vertical';
 
@@ -264,6 +264,6 @@ export class SplitLayout extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-split-layout': SplitLayout;
+    'vscode-split-layout': VscodeSplitLayout;
   }
 }
