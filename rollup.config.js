@@ -42,6 +42,9 @@ export default {
           regex: /^__/,
         },
       },
+      format: {
+        comments: false,
+      },
     }),
     filesize({
       showBrotliSize: true,
