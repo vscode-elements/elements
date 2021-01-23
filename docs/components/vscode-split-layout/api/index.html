@@ -12,7 +12,7 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inputbox &ndash; VSCode Webview Elements</title>
+  <title>SplitLayout &ndash; VSCode Webview Elements</title>
   <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-dark-theme.css">
   <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-high-contrast-theme.css">
   <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-light-theme.css">
@@ -56,7 +56,7 @@
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-icon/">Icon</a>
                 </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-inputbox/" aria-current="page" class="current">Inputbox</a>
+                  <a href="/vscode-webview-elements/components/vscode-inputbox/">Inputbox</a>
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
                 </li><li>
@@ -64,7 +64,7 @@
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-select/">Select</a>
                 </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
+                  <a href="/vscode-webview-elements/components/vscode-split-layout/" aria-current="page" class="current">SplitLayout</a>
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-tabs/">Tabs</a>
                 </li><li>
@@ -78,23 +78,43 @@
       <div class="page">
         
 <ul class="sub-nav">
-  <li><a href="/vscode-webview-elements/components/vscode-inputbox/" class="current">Examples</a></li>
-  <li><a href="/vscode-webview-elements/components/vscode-inputbox/api" >API</a></li>
+  <li><a href="/vscode-webview-elements/components/vscode-split-layout/" >Examples</a></li>
+  <li><a href="/vscode-webview-elements/components/vscode-split-layout/api" class="current">API</a></li>
 </ul>
 
-        <h1>vscode-inputbox</h1>
-<h2>Basic example</h2>
-<component-preview>
-  <vscode-inputbox message="Lorem ipsum" placeholder="Placeholder text"></vscode-inputbox>
-</component-preview>
-<h3>HTML</h3>
-<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-inputbox</span> <span class="token attr-name">message</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Lorem ipsum<span class="token punctuation">"</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Placeholder text<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-inputbox</span><span class="token punctuation">></span></span></code></pre>
-<h2>Multiline</h2>
-<component-preview>
-  <vscode-inputbox message="Lorem ipsum" placeholder="Placeholder text" multiline></vscode-inputbox>
-</component-preview>
-<h3>HTML</h3>
-<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-inputbox</span> <span class="token attr-name">message</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Lorem ipsum<span class="token punctuation">"</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Placeholder text<span class="token punctuation">"</span></span> <span class="token attr-name">multiline</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-inputbox</span><span class="token punctuation">></span></span></code></pre>
+        <!-- This file is auto-generated. Do not edit! -->
+<h1>vscode-split-layout</h1>
+<h2>Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Attribute</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initialPos</code></td>
+<td><code>initialPos</code></td>
+<td><code>string</code></td>
+<td>&quot;50%&quot;</td>
+</tr>
+<tr>
+<td><code>resetOnDblClick</code></td>
+<td><code>resetOnDblClick</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>split</code></td>
+<td><code>split</code></td>
+<td><code>&quot;horizontal&quot; \| &quot;vertical&quot;</code></td>
+<td>&quot;vertical&quot;</td>
+</tr>
+</tbody>
+</table>
 
       </div>
       <p class="last-modified">Last modified: Sat, 23 Jan 2021 21:37:08 GMT</p>
