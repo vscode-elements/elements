@@ -24,7 +24,7 @@
     "format": "prettier src/* --write",
     "docs": "npm run docs:clean && npm run build:bundle && npm run analyze && cross-env NODE_ENV=production npm run eleventy",
     "docs:clean": "rimraf docs",
-    "docs:start": "npm run docs:clean && cross-env NODE_ENV=development eleventy --config=.eleventy.cjs --serve --port=8081",
+    "docs:start": "npm run docs:clean && npm run build && npm run analyze && cross-env NODE_ENV=development eleventy --config=.eleventy.cjs --serve --port=8081",
     "analyze": "wca analyze \"src/**/*.ts\" --outFiles docs-src/components/{tagname}/api.md && node scripts/patchMdFiles.js",
     "serve": "web-dev-server --node-resolve --watch --app-index dev/index.html --open",
     "start": "concurrently \"npm run build:watch\" \"npm run serve\" --names \"tsc,server\"",
