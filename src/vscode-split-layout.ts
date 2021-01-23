@@ -9,6 +9,7 @@ import {
   internalProperty,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 
 const HANDLE_SIZE = 4;
 
@@ -54,7 +55,7 @@ export class SplitLayout extends LitElement {
     }
 
     if (matches && matches[2] === '%') {
-      pos = Math.min(maxPos, maxPos / 100 * numericVal);
+      pos = Math.min(maxPos, (maxPos / 100) * numericVal);
     } else if (matches && matches[2] !== '%') {
       pos = Math.min(numericVal, maxPos);
     } else {
@@ -193,53 +194,67 @@ export class SplitLayout extends LitElement {
       .handle.split-vertical {
         cursor: ew-resize;
         height: 100%;
-        margin-left: ${0 - HANDLE_SIZE / 2}px;
-        width: ${HANDLE_SIZE}px;
       }
 
       .handle.split-horizontal {
         cursor: ns-resize;
-        height: ${HANDLE_SIZE}px;
-        margin-top: ${0 - HANDLE_SIZE / 2}px;
         width: 100%;
       }
     `;
   }
 
   render(): TemplateResult {
+    const startPaneStyles = styleMap({
+      bottom: `${this._startPaneBottom}px`,
+      right: `${this._startPaneRight}px`,
+    });
+
+    const endPaneStyles = styleMap({
+      left: `${this._endPaneLeft}px`,
+      top: `${this._endPaneTop}px`,
+    });
+
+    const handleStylesPropObj: {[prop: string]: string} = {
+      left: `${this._handleLeft}px`,
+      top: `${this._handleTop}px`,
+    };
+
+    if (this.split === 'vertical') {
+      handleStylesPropObj.marginLeft = `${0 - HANDLE_SIZE / 2}px`;
+      handleStylesPropObj.width = `${HANDLE_SIZE}px`;
+    }
+
+    if (this.split === 'horizontal') {
+      handleStylesPropObj.height = `${HANDLE_SIZE}px`;
+      handleStylesPropObj.marginTop = `${0 - HANDLE_SIZE / 2}px`;
+    }
+
+    const handleStyles = styleMap(handleStylesPropObj);
+
+    const handleOverlayClasses = classMap({
+      'handle-overlay': true,
+      active: this._isDragActive,
+      'split-vertical': this.split === 'vertical',
+      'split-horizontal': this.split === 'horizontal',
+    });
+
+    const handleClasses = classMap({
+      handle: true,
+      'split-vertical': this.split === 'vertical',
+      'split-horizontal': this.split === 'horizontal',
+    });
+
     return html`
-      <style>
-        .start {
-          bottom: ${this._startPaneBottom}px;
-          right: ${this._startPaneRight}px;
-        }
-
-        .end {
-          top: ${this._endPaneTop}px;
-          left: ${this._endPaneLeft}px;
-        }
-
-        .handle {
-          left: ${this._handleLeft}px;
-          top: ${this._handleTop}px;
-        }
-      </style>
-      <div class="start"><slot name="start"></slot></div>
-      <div class="end"><slot name="end"></slot></div>
+      <div class="start" style="${startPaneStyles}">
+        <slot name="start"></slot>
+      </div>
+      <div class="end" style="${endPaneStyles}">
+        <slot name="end"></slot>
+      </div>
+      <div class="${handleOverlayClasses}"></div>
       <div
-        class="${classMap({
-          'handle-overlay': true,
-          active: this._isDragActive,
-          'split-vertical': this.split === 'vertical',
-          'split-horizontal': this.split === 'horizontal',
-        })}"
-      ></div>
-      <div
-        class="${classMap({
-          handle: true,
-          'split-vertical': this.split === 'vertical',
-          'split-horizontal': this.split === 'horizontal',
-        })}"
+        class="${handleClasses}"
+        style="${handleStyles}"
         @mousedown="${this._handleMouseDown}"
         @dblclick="${this._handleDblClick}"
       ></div>
