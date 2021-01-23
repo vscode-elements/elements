@@ -16,6 +16,7 @@ import filesize from 'rollup-plugin-filesize';
 import {terser} from 'rollup-plugin-terser';
 import resolve from 'rollup-plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import visualizer from 'rollup-plugin-visualizer';
 
 export default {
   input: 'dist/main.js',
@@ -43,5 +44,6 @@ export default {
     filesize({
       showBrotliSize: true,
     }),
+    visualizer(),
   ],
 };
