@@ -68,7 +68,7 @@ export class VscodeSelect extends LitElement {
     opts.forEach((opt) => {
       const {value, selected, description, label} = opt;
       const valueAttr = value ? ` value="${value}"` : '';
-      const selectedAttr = selected ? ' selected' : '';
+      const selectedAttr = selected && !this.multiple ? ' selected' : '';
       const descriptionAttr = description
         ? ` description="${description}"`
         : '';
@@ -154,7 +154,7 @@ export class VscodeSelect extends LitElement {
     this._dropdownVisible = val;
     this.ariaExpanded = String(val);
 
-    if (val) {
+    if (val && !this.multiple) {
       this._optionElements.forEach((_, index) => {
         this._optionElements[index].active = this._optionElements[
           index
@@ -353,7 +353,7 @@ export class VscodeSelect extends LitElement {
   private _onOptionMouseOver(event: MouseEvent) {
     const element = findOptionEl(event);
 
-    if (!element) {
+    if (!element || this.multiple) {
       return;
     }
 
