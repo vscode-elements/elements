@@ -17,6 +17,7 @@ component: vscode-tree
 | `data`      | `data`      | `TreeItem[]` | []      |
 | `indent`    | `indent`    | `number`     | 8       |
 | `multiline` | `multiline` | `boolean`    | false   |
+| `tabindex`  | `tabindex`  | `number`     | 0       |
 
 ## Methods
 
