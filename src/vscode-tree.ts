@@ -38,6 +38,7 @@ export class VscodeTree extends LitElement {
   @property({type: Number}) indent = 8;
   @property({type: Boolean}) arrows = false;
   @property({type: Boolean}) multiline = false;
+  @property({type: Number, reflect: true}) tabindex = 0;
 
   private _selectedItem: TreeItem | null = null;
 
