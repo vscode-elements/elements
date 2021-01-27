@@ -7,6 +7,7 @@ import {
   CSSResult,
 } from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
+import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-icon';
 
 interface TreeItemIconConfig {
@@ -140,7 +141,7 @@ export class VscodeTree extends LitElement {
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
         <span class="${contentsClasses.join(
           ' '
-        )}" style="padding-left: ${padLeft}px;">
+        )}" style="${styleMap({paddingLeft: `${padLeft}px`})}">
           ${arrowMarkup}
           ${iconMarkup}
           ${labelMarkup}
