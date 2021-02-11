@@ -353,11 +353,14 @@ export class VscodeSelect extends LitElement {
   private _onOptionMouseOver(event: MouseEvent) {
     const element = findOptionEl(event);
 
-    if (!element || this.multiple) {
+    if (!element) {
       return;
     }
 
-    this._setActiveOptionElement(element);
+    if (!this.multiple) {
+      this._setActiveOptionElement(element);
+    }
+
     this._currentDescription = element.description || '';
     this.requestUpdate();
   }
