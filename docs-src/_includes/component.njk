@@ -1,0 +1,8 @@
+{% extends "page.njk" %}
+
+{% block subnav %}
+<ul class="sub-nav">
+  <li><a href="{{ '/components' | url }}/{{ component }}/" {% if page.fileSlug == component %}class="current"{% endif %}>Examples</a></li>
+  <li><a href="{{ '/components' | url }}/{{ component }}/api" {% if page.fileSlug == 'api' %}class="current"{% endif %}>API</a></li>
+</ul>
+{% endblock %}

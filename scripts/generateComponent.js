@@ -34,8 +34,8 @@ const generateFile = async (templateFile, filePath, componentName) => {
 
   await mkdir(dirname(filePath), { recursive: true });
 
-  template = template.replace(/\%tagName\%/gm, componentName);
-  template = template.replace(/\%className\%/gm, kebabToPascal(componentName));
+  template = template.replace(/%tagName%/gm, componentName);
+  template = template.replace(/%className%/gm, kebabToPascal(componentName.replace('vscode-', '')));
 
   try {
     await writeFile(filePath, template);
@@ -58,11 +58,11 @@ const main = async () => {
   try {
     await generateFile('./component-template.txt', `src/${componentName}.ts`, componentName);
     await generateFile('./test-template.txt', `src/test/${componentName}_test.ts`, componentName);
-    await generateFile('./overview-md-template.txt', `docs-src/pages/${componentName}/overview.md`, componentName);
-    await generateFile('./example-basic-md-template.txt', `docs-src/pages/${componentName}/examples/index.md`, componentName);
-    await generateFile('./example-another-md-template.txt', `docs-src/pages/${componentName}/examples/another-example.md`, componentName);
-    await generateFile('./api-md-template.txt', `docs-src/pages/${componentName}/api.md`, componentName);
-    await generateFile('./install-md-template.txt', `docs-src/pages/${componentName}/install.md`, componentName);
+    // await generateFile('./overview-md-template.txt', `docs-src/components/${componentName}/overview.md`, componentName);
+    await generateFile('./example-basic-md-template.txt', `docs-src/components/${componentName}/index.md`, componentName);
+    // await generateFile('./example-another-md-template.txt', `docs-src/components/${componentName}/examples/another-example.md`, componentName);
+    await generateFile('./api-md-template.txt', `docs-src/components/${componentName}/api.md`, componentName);
+    // await generateFile('./install-md-template.txt', `docs-src/components/${componentName}/install.md`, componentName);
     await generateFile('./demo-html-template.txt', `dev/${componentName}.html`, componentName);
 
     console.log('Done.');

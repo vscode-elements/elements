@@ -1,6 +1,6 @@
 ---
-layout: page.11ty.cjs
-title: <my-element> ⌲ API
+layout: component.njk
+title: Unknown
 ---
 
 <!-- This file is auto-generated. Do not edit! -->

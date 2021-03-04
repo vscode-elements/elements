@@ -1,4 +1,4 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css, property, customElement, CSSResult, TemplateResult } from 'lit-element';
 
 @customElement('vscode-tabs')
 export class VscodeTabs extends LitElement {
@@ -67,7 +67,7 @@ export class VscodeTabs extends LitElement {
     );
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -105,12 +105,18 @@ export class VscodeTabs extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div class="header" @click="${this._onHeaderClick}">
         <slot name="header"></slot>
       </div>
       <slot></slot>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-tabs': VscodeTabs;
   }
 }

@@ -1,69 +1,44 @@
-
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docs</title>
-    
-    <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto+Mono">
-    <link rel="stylesheet" href="/vscode-webview-elements/prism-okaidia.css">
-    <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-dark-theme.css">
-    <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-high-contrast-theme.css">
-    <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-light-theme.css">
-    <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/preview-styles.css">
-    <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/theme-switcher.css">
-    <script type="module" src="/vscode-webview-elements/bundled.js"></script>
-  </head>
-  <body class="vscode-light">
-    
-<header>
-  <h1>My Library</h1>
-  <h2>A web component library just for me.</h2>
-  <span class="pkg-version">Current version: 0.0.0</span>
-</header>
-    
-    <div id="main-wrapper">
-      <main>
-        <div class="theme-switcher">
-          <div class="theme-switcher-option light">
-            <button value="vscode-light" type="button">Light</button>
-          </div>
-          <div class="theme-switcher-option dark">
-            <button value="vscode-dark" type="button">Dark</button>
-          </div>
-          <div class="theme-switcher-option hc">
-            <button value="vscode-high-contrast" type="button">High contrast</button>
-          </div>
-        </div>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1Y0GZ34XC7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        <script>
-          (function() {
-            const buttons = document.querySelectorAll('.theme-switcher-option button');
-
-            Array.from(buttons).forEach(element => {
-              element.addEventListener('click', event => {
-                document.body.classList.remove(
-                  'vscode-light',
-                  'vscode-dark',
-                  'vscode-high-contrast'
-                );
-                document.body.classList.add(event.target.value);
-              });
-            });
-          })();
-        </script>
-        <ul><li><a href="/vscode-webview-elements/pages/my-button/overview/">my-button</a></li><li><a href="/vscode-webview-elements/pages/my-element/overview/">my-element</a></li><li><a href="/vscode-webview-elements/pages/vscode-button/overview/">vscode-button</a></li><li><a href="/vscode-webview-elements/pages/vscode-select/overview/">vscode-select</a></li><li><a href="/vscode-webview-elements/pages/vscode-icon/overview/">vscode-icon</a></li><li><a href="/vscode-webview-elements/pages/vscode-tree/overview/">vscode-tree</a></li></ul>
-      </main>
+  gtag('config', 'G-1Y0GZ34XC7');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSCode Webview Elements</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&amp;display=swap&amp;text=VSCodeWebviewElements" rel="stylesheet">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-dark-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-high-contrast-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-light-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/preview-styles.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/theme-switcher.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/codicon.css" id="vscode-codicon-stylesheet">
+  <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/prism-okaidia.css">
+  <script type="module" src="/vscode-webview-elements/bundled.js"></script>
+</head>
+<body class="landing-page">
+  <div>
+    <div class="clipart">
+      <div class="clipart__logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
+      </div>
+      <h1 class="clipart__heading-1">VSCode<br> Webview<br> Elements</h1>
     </div>
-    
-<footer>
-  <p>
-    Made with
-    <a href="https://github.com/bendera/lit-element-ui-kit-starter-ts">lit-element-ui-kit-starter-ts</a>
-  </p>
-</footer>
-  </body>
+    <h2 class="landing-header__heading-2">Web component library for development<br> Visual Studio Code extensions</h2>
+    <div class="buttons-wrapper">
+      <a href="/vscode-webview-elements/pages/getting-started" class="button">Getting started</a>
+      <a href="https://github.com/bendera/vscode-webview-elements" class="button button--ghost">Github</a>
+    </div>
+    <p class="landing-version">Current version: 0.2.0-alpha.5</p>
+  </div>
+</body>
 </html>

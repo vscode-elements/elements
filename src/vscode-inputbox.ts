@@ -1,4 +1,4 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css, property, customElement, CSSResult, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 
 enum Severity {
@@ -162,7 +162,7 @@ export class VscodeInputbox extends LitElement {
     }
   };
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       .container {
         position: relative;
@@ -310,7 +310,7 @@ export class VscodeInputbox extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     const textarea = html`
       <textarea
         @focus="${this.onInputFocus}"
@@ -361,5 +361,11 @@ export class VscodeInputbox extends LitElement {
         ${this.message ? message : ''}
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-inputbox': VscodeInputbox;
   }
 }

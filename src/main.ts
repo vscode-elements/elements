@@ -12,5 +12,6 @@ export {VscodeInputbox} from './vscode-inputbox';
 export {VscodeOption} from './vscode-option';
 export {VscodeScrollable} from './vscode-scrollable';
 export {VscodeSelect} from './vscode-select';
+export {VscodeSplitLayout} from './vscode-split-layout';
 export {VscodeTabs} from './vscode-tabs';
 export {VscodeTree} from './vscode-tree';

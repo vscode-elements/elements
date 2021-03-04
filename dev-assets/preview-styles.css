@@ -1,55 +1,44 @@
-.vscode-preview {
-  all: initial;
-  background-color: var(--vscode-editor-background);
-  color: var(--vscode-editor-foreground);
-  font-family: var(--vscode-font-family);
-  font-weight: var(--vscode-font-weight);
-  font-size: var(--vscode-font-size);
-  margin: 0;
-  padding: 20px;
-}
-
-.vscode-preview img {
+component-preview img {
   max-width: 100%;
   max-height: 100%;
 }
 
-.vscode-preview a {
+component-preview a {
   color: var(--vscode-textLink-foreground);
 }
 
-.vscode-preview a:hover {
+component-preview a:hover {
   color: var(--vscode-textLink-activeForeground);
 }
 
-.vscode-preview a:focus,
-.vscode-preview input:focus,
-.vscode-preview select:focus,
-.vscode-preview textarea:focus {
+component-preview a:focus,
+component-preview input:focus,
+component-preview select:focus,
+component-preview textarea:focus {
   outline: 1px solid -webkit-focus-ring-color;
   outline-offset: -1px;
 }
 
-.vscode-preview code {
+component-preview code {
   color: var(--vscode-textPreformat-foreground);
 }
 
-.vscode-preview blockquote {
+component-preview blockquote {
   background: var(--vscode-textBlockQuote-background);
   border-color: var(--vscode-textBlockQuote-border);
 }
 
-.vscode-preview ::-webkit-scrollbar {
+component-preview ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-.vscode-preview ::-webkit-scrollbar-thumb {
+component-preview ::-webkit-scrollbar-thumb {
   background-color: var(--vscode-scrollbarSlider-background);
 }
-.vscode-preview ::-webkit-scrollbar-thumb:hover {
+component-preview ::-webkit-scrollbar-thumb:hover {
   background-color: var(--vscode-scrollbarSlider-hoverBackground);
 }
-.vscode-preview ::-webkit-scrollbar-thumb:active {
+component-preview ::-webkit-scrollbar-thumb:active {
   background-color: var(--vscode-scrollbarSlider-activeBackground);
 }

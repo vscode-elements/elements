@@ -1,4 +1,4 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css, property, customElement, CSSResult, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 
 @customElement('vscode-scrollable')
@@ -24,7 +24,7 @@ export class VscodeScrollable extends LitElement {
     this.scrolled = (this.scrollableContainer as HTMLDivElement).scrollTop > 0;
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -92,7 +92,7 @@ export class VscodeScrollable extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     const shadowClasses = classMap({ shadow: true, visible: this.scrolled });
 
     return html`
@@ -103,5 +103,11 @@ export class VscodeScrollable extends LitElement {
         </div>
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-scrollable': VscodeScrollable;
   }
 }

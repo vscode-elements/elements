@@ -440,3 +440,9 @@ body.vscode-light {
   --vscode-widget-shadow: #a8a8a8;
   --vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
 }
+
+body.vscode-light {
+  --component-preview-light-active-color: var(--vscode-foreground);
+  --component-preview-dark-active-color: transparent;
+  --component-preview-hc-active-color: transparent;
+}

@@ -1,65 +1,210 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+  TemplateResult,
+} from 'lit-element';
+import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
+import './vscode-icon';
 
+/**
+ * @fires vsc-click - Dispatched only if the disabled attribute is false.
+ */
 @customElement('vscode-button')
 export class VscodeButton extends LitElement {
-  @property({ type: Number, reflect: true }) tabindex: number = 0;
-  @property({ type: Boolean }) secondary: boolean = false;
+  @property({type: Number, reflect: true}) tabindex = 0;
+  @property({type: Boolean}) secondary = false;
+  @property({reflect: true}) role = 'button';
+  @property({type: Boolean}) disabled = false;
+  /**
+   * A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) before the label
+   */
+  @property() icon = '';
+  /**
+   * A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label
+   */
+  @property() iconAfter = '';
 
-  static get styles() {
+  private _prevTabindex = 0;
+
+  constructor() {
+    super();
+    this.addEventListener('keydown', this._handleKeyDown.bind(this));
+    this.addEventListener('click', this._handleClick.bind(this));
+  }
+
+  attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
+    super.attributeChangedCallback(name, oldVal, newVal);
+
+    if (name === 'disabled' && this.hasAttribute('disabled')) {
+      this._prevTabindex = this.tabindex;
+      this.tabindex = -1;
+    } else if (name === 'disabled' && !this.hasAttribute('disabled')) {
+      this.tabindex = this._prevTabindex;
+    }
+  }
+
+  private _handleKeyDown(event: KeyboardEvent) {
+    if (
+      (event.key === 'Enter' || event.key === ' ') &&
+      !this.hasAttribute('disabled')
+    ) {
+      this.dispatchEvent(
+        new CustomEvent<{
+          originalEvent: MouseEvent;
+        }>('vsc-click', {
+          detail: {
+            originalEvent: new MouseEvent('click'),
+          },
+        })
+      );
+    }
+  }
+
+  private _handleClick(event: MouseEvent) {
+    if (!this.hasAttribute('disabled')) {
+      this.dispatchEvent(
+        new CustomEvent<{
+          originalEvent: MouseEvent
+        }>('vsc-click', {
+          detail: {
+            originalEvent: event,
+          },
+        })
+      );
+    }
+  }
+
+  static get styles(): CSSResult {
     return css`
       :host {
-        display: inline-block;
-      }
-
-      button {
+        align-items: center;
         background-color: var(--vscode-button-background);
         border: 0;
         border-radius: 0;
         box-sizing: border-box;
         color: var(--vscode-button-foreground);
         cursor: pointer;
-        display: block;
+        display: inline-flex;
         font-size: var(--vscode-font-size);
         font-weight: var(--vscode-font-weight);
-        line-height: 1.4;
-        padding: 2px 14px;
+        line-height: 24px;
+        padding: 0 14px;
         user-select: none;
       }
 
-      button.secondary {
+      :host([secondary]) {
         color: var(--vscode-button-secondaryForeground);
         background-color: var(--vscode-button-secondaryBackground);
       }
 
-      button:hover {
+      :host([disabled]) {
+        cursor: default;
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      :host(:hover) {
         background-color: var(--vscode-button-hoverBackground);
       }
 
-      button:focus,
-      button:active {
-        outline: none;
+      :host([disabled]:hover) {
+        background-color: var(--vscode-button-background);
       }
 
-      button.secondary:hover {
+      :host([secondary]:hover) {
         background-color: var(--vscode-button-secondaryHoverBackground);
       }
 
-      :host(:focus) {
+      :host([secondary][disabled]:hover) {
+        background-color: var(--vscode-button-secondaryBackground);
+      }
+
+      :host(:focus),
+      :host(:active) {
         outline: none;
       }
 
-      :host(:focus) button {
+      :host(:focus) {
+        background-color: var(--vscode-button-hoverBackground);
         outline: 1px solid var(--vscode-focusBorder);
-        outline-offset: 2px;
+      }
+
+      :host([disabled]:focus) {
+        background-color: var(--vscode-button-background);
+        outline: 0;
+      }
+
+      :host([secondary]:focus) {
+        background-color: var(--vscode-button-secondaryHoverBackground);
+      }
+
+      :host([secondary][disabled]:focus) {
+        background-color: var(--vscode-button-secondaryBackground);
+      }
+
+      .wrapper {
+        align-items: center;
+        display: flex;
+        position: relative;
+      }
+
+      .wrapper.has-icon-before {
+        padding-left: 21px;
+      }
+
+      .wrapper.has-icon-after {
+        padding-right: 21px;
+      }
+
+      .icon {
+        left: 0;
+        position: absolute;
+      }
+
+      .icon-after {
+        position: absolute;
+        right: 0;
       }
     `;
   }
 
-  render() {
+  render(): TemplateResult {
+    const hasIcon = this.icon !== '';
+    const hasIconAfter = this.iconAfter !== '';
+    const wrapperClasses = {
+      wrapper: true,
+      'has-icon-before': hasIcon,
+      'has-icon-after': hasIconAfter,
+    };
+
+    const iconElem = hasIcon
+      ? html`<vscode-icon name="${this.icon}" class="icon"></vscode-icon>`
+      : nothing;
+
+    const iconAfterElem = hasIconAfter
+      ? html`<vscode-icon
+          name="${this.iconAfter}"
+          class="icon-after"
+        ></vscode-icon>`
+      : nothing;
+
     return html`
-      <button class="${this.secondary ? 'secondary' : 'primary'}">
+      <span class="${classMap(wrapperClasses)}">
+        ${iconElem}
         <slot></slot>
-      </button>
+        ${iconAfterElem}
+      </span>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-button': VscodeButton;
   }
 }

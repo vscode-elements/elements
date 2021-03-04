@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1Y0GZ34XC7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1Y0GZ34XC7');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started &ndash; VSCode Webview Elements</title>
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-dark-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-high-contrast-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-light-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/preview-styles.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/codicon.css" id="vscode-codicon-stylesheet">
+  <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/prism-material-light.css">
+  <script type="module" src="/vscode-webview-elements/dev-assets/component-preview.js"></script>
+  <script type="module" src="/vscode-webview-elements/bundled.js"></script>
+</head>
+<body class="vscode-light">
+  <div class="content-wrapper">
+    <header class="page-header">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.2.0-alpha.5</span>
+    </header>
+    <aside class="sidebar">
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/vscode-webview-elements/pages/getting-started" class="current">Getting Started</a></li>
+          <li>
+            <a href="/vscode-webview-elements/components">Components</a>
+            <ul><li>
+                  <a href="/vscode-webview-elements/components/vscode-button/">Button</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-checkbox/">Checkbox</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-collapsible/">Collapsible</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-context-menu/">ContextMenu</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-context-menu-item/">ContextMenuItem</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-control/">FormControl</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-description/">FormDescription</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-item/">FormItem</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-label/">FormLabel</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-icon/">Icon</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-inputbox/">Inputbox</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-scrollable/">Scrollable</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-select/">Select</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-tabs/">Tabs</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-tree/">Tree</a>
+                </li></ul>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="main-content">
+      <div class="page">
+        
+        <h1>Getting started</h1>
+<p>VSCode Webview Elements is aimed to provide web components for extension development that fit the
+VSCode's UI design system. You can use these web components with the <a href="https://code.visualstudio.com/api/extension-guides/webview">Webview API</a>.</p>
+<h2>Installation</h2>
+<p>You can access the library as NPM package:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">npm</span> i @bendera/vscode-webview-elements</code></pre>
+<h2>Usage</h2>
+<h3>Including the whole bundle</h3>
+<p>This is the simplest method. The bundle is minified and contains all the components.</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>node_modules/@bendera/vscode-webview-elements/dist/bundled.js<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<h3>Include only the required modules</h3>
+<p>You can include modules separately. These files only transpiled but not minified.</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>node_modules/@bendera/vscode-webview-elements/dist/vscode-checkbox.js<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<h3>Import in JavaScript</h3>
+<p>Import anywhere in your JavaScript/TypeScript code. Code duplication will be handled by the bundlers (ex.: Webpack).</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token string">'node_modules/@bendera/vscode-webview-elements/dist/vscode-checkbox'</span><span class="token punctuation">;</span></code></pre>
+<h3>Using in the HTML</h3>
+<p>After including scripts, you can use any component in the same way as a normal HTML tag. The custom elements will be registered automatically.</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>Lorem ispum dolor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-button</span><span class="token punctuation">></span></span>Hello World!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-button</span><span class="token punctuation">></span></span></code></pre>
+<p>If you would like to use the Icon component, you must include the Codicon library on your page (the id attribute is important):</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>path/to/codicon.css<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vscode-codicon-stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></code></pre>
+<h3>Demo extension</h3>
+<p>For more details, see the <a href="https://github.com/bendera/vscode-vscwe-demo/releases">demo extension</a>.</p>
+
+      </div>
+      <p class="last-modified">Last modified: Sat, 23 Jan 2021 21:37:08 GMT</p>
+    </div>
+  </div>
+</body>
+</html>

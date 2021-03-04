@@ -1,8 +1,15 @@
-import { LitElement, html, css, customElement } from 'lit-element';
+import {
+  LitElement,
+  html,
+  css,
+  customElement,
+  CSSResult,
+  TemplateResult,
+} from 'lit-element';
 
 @customElement('vscode-form-description')
 export class VscodeFormDescription extends LitElement {
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         color: var(--vscode-foreground);
@@ -49,9 +56,13 @@ export class VscodeFormDescription extends LitElement {
     `;
   }
 
-  render() {
-    return html`
-      <slot></slot>
-    `;
+  render(): TemplateResult {
+    return html` <slot></slot> `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-form-description': VscodeFormDescription;
   }
 }

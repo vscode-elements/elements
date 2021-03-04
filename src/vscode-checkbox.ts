@@ -1,17 +1,48 @@
-import {LitElement, html, css, property, customElement} from 'lit-element';
-import {nothing} from 'lit-html';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+} from 'lit-element';
+import {nothing, TemplateResult} from 'lit-html';
 
 @customElement('vscode-checkbox')
 export class VscodeCheckbox extends LitElement {
-  @property({type: String}) label = '';
+  @property() label = '';
   @property({type: Boolean}) checked = false;
-  @property({type: String}) value = '';
+  @property() value = '';
+  @property({type: Number, reflect: true}) tabindex = 0;
+  @property({type: Boolean}) disabled = false;
+
+  constructor() {
+    super();
+    this.addEventListener('keydown', this._handleKeyDown.bind(this));
+  }
+
+  attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
+    super.attributeChangedCallback(name, oldVal, newVal);
+
+    if (name === 'disabled' && this.hasAttribute('disabled')) {
+      this._prevTabindex = this.tabindex;
+      this.tabindex = -1;
+    } else if (name === 'disabled' && !this.hasAttribute('disabled')) {
+      this.tabindex = this._prevTabindex;
+    }
+  }
+
+  private _prevTabindex = 0;
 
   private _uid = `id_${new Date().valueOf()}_${Math.floor(
     Math.random() * 9999
   )}`;
 
-  private onElementClick() {
+  private _handleClick() {
+    if (this.disabled) {
+      return;
+    }
+
     this.checked = !this.checked;
 
     this.dispatchEvent(
@@ -27,17 +58,36 @@ export class VscodeCheckbox extends LitElement {
     );
   }
 
-  static get styles() {
+  private _handleKeyDown(event: KeyboardEvent) {
+    if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
+      this.checked = !this.checked;
+    }
+  }
+
+  static get styles(): CSSResult {
     return css`
       :host {
         display: inline-block;
       }
 
+      :host(:focus) {
+        outline: none;
+      }
+
+      :host([disabled]) {
+        opacity: 0.4;
+      }
+
       .wrapper {
         cursor: pointer;
         display: block;
+        font-size: var(--vscode-font-size);
         position: relative;
         user-select: none;
+      }
+
+      :host([disabled]) .wrapper {
+        cursor: default;
       }
 
       .checkbox {
@@ -66,6 +116,11 @@ export class VscodeCheckbox extends LitElement {
         width: 18px;
       }
 
+      :host(:focus):host(:not([disabled])) .icon {
+        outline: 1px solid var(--vscode-focusBorder);
+        outline-offset: -1px;
+      }
+
       .label {
         padding-left: 27px;
       }
@@ -78,10 +133,14 @@ export class VscodeCheckbox extends LitElement {
         font-weight: var(--vscode-font-weight);
         line-height: 1.4;
       }
+
+      :host([disabled]) .label-text {
+        cursor: default;
+      }
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     const icon = html`<svg
       width="16"
       height="16"
@@ -105,9 +164,10 @@ export class VscodeCheckbox extends LitElement {
           type="checkbox"
           ?checked="${this.checked}"
           value="${this.value}"
+          tabindex="-1"
         />
         <div class="icon">${check}</div>
-        <label for="${this._uid}" class="label" @click="${this.onElementClick}">
+        <label for="${this._uid}" class="label" @click="${this._handleClick}">
           <slot><span class="label-text">${this.label}</span></slot>
         </label>
       </div>

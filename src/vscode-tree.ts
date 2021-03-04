@@ -4,8 +4,10 @@ import {
   css,
   property,
   customElement,
+  CSSResult,
 } from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
+import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-icon';
 
 interface TreeItemIconConfig {
@@ -36,6 +38,7 @@ export class VscodeTree extends LitElement {
   @property({type: Number}) indent = 8;
   @property({type: Boolean}) arrows = false;
   @property({type: Boolean}) multiline = false;
+  @property({type: Number, reflect: true}) tabindex = 0;
 
   private _selectedItem: TreeItem | null = null;
 
@@ -139,7 +142,7 @@ export class VscodeTree extends LitElement {
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
         <span class="${contentsClasses.join(
           ' '
-        )}" style="padding-left: ${padLeft}px;">
+        )}" style="${styleMap({paddingLeft: `${padLeft}px`})}">
           ${arrowMarkup}
           ${iconMarkup}
           ${labelMarkup}
@@ -253,7 +256,7 @@ export class VscodeTree extends LitElement {
     this.requestUpdate();
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -273,6 +276,9 @@ export class VscodeTree extends LitElement {
       .contents {
         align-items: center;
         display: flex;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        font-weight: var(--vscode-font-weight);
       }
 
       .multi .contents {
@@ -282,9 +288,6 @@ export class VscodeTree extends LitElement {
       .contents:hover {
         background-color: var(--vscode-list-hoverBackground);
         cursor: pointer;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
       }
 
       .contents.selected {
@@ -323,7 +326,7 @@ export class VscodeTree extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div
         @click="${this.onComponentClick}"

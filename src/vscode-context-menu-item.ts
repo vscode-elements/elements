@@ -1,5 +1,5 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
-import { nothing } from 'lit-html';
+import { LitElement, html, css, property, customElement, CSSResult } from 'lit-element';
+import { nothing, TemplateResult } from 'lit-html';
 
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends LitElement {
@@ -23,7 +23,7 @@ export class VscodeContextMenuItem extends LitElement {
     }));
   }
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
@@ -91,7 +91,7 @@ export class VscodeContextMenuItem extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       ${this.separator ?
         html`
@@ -109,5 +109,11 @@ export class VscodeContextMenuItem extends LitElement {
         `
       }
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-context-menu-item': VscodeContextMenuItem;
   }
 }

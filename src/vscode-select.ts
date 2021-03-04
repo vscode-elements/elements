@@ -1,7 +1,16 @@
-import {LitElement, html, css, property, customElement} from 'lit-element';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+  internalProperty,
+} from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html';
 import './vscode-button';
+import {VscodeOption} from './vscode-option';
 
 interface Option {
   label: string;
@@ -16,15 +25,18 @@ interface OptionElement extends HTMLElement {
   description?: string;
   selected?: boolean;
   multiple?: boolean;
+  active?: boolean;
 }
+
+const isOptionElement = (el: Element) =>
+  el.nodeType === Node.ELEMENT_NODE && (el as Element).matches('vscode-option');
 
 const findOptionEl = (event: Event) => {
   const path = event.composedPath();
-
-  return path.find(
-    (el) => (el as OptionElement)?.tagName?.toLowerCase() === 'vscode-option'
-  ) as OptionElement;
+  return path.find((el) => isOptionElement(el as Element)) as OptionElement;
 };
+
+let componentCounter = 0;
 
 /**
  * A dropdown menu element.
@@ -36,9 +48,9 @@ const findOptionEl = (event: Event) => {
 @customElement('vscode-select')
 export class VscodeSelect extends LitElement {
   /**
-   * If value is not represented in the options list, the selectedIndex will be -1
+   * If value is not presented in the options list, the selectedIndex will be -1
    */
-  @property({type: String})
+  @property({type: String, reflect: true, attribute: 'value'})
   set value(val: string) {
     this._selectedIndex = this.options.findIndex((opt) => opt.value === val);
     this._selectedIndexes = [this._selectedIndex];
@@ -50,6 +62,25 @@ export class VscodeSelect extends LitElement {
   }
 
   @property({type: Array, reflect: false})
+  set options(opts: Option[]) {
+    let markup = '';
+
+    opts.forEach((opt) => {
+      const {value, selected, description, label} = opt;
+      const valueAttr = value ? ` value="${value}"` : '';
+      const selectedAttr = selected && !this.multiple ? ' selected' : '';
+      const descriptionAttr = description
+        ? ` description="${description}"`
+        : '';
+
+      markup += `<vscode-option${valueAttr}${descriptionAttr}${selectedAttr}>`;
+      markup += label;
+      markup += '</vscode-option>';
+    });
+
+    this._options = opts;
+    this.innerHTML = markup;
+  }
   get options(): Option[] {
     return this._options;
   }
@@ -69,12 +100,6 @@ export class VscodeSelect extends LitElement {
   set selectedIndexes(val: number[]) {
     this._selectedIndexes = val;
 
-    const optionElements = this._mainSlot
-      ?.assignedNodes()
-      .filter(
-        (el) => el.nodeName.toLowerCase() === 'vscode-option'
-      ) as OptionElement[];
-
     let firstSelectedElementIndex = -1;
 
     this._options.forEach((_, index) => {
@@ -84,7 +109,11 @@ export class VscodeSelect extends LitElement {
         firstSelectedElementIndex = index;
       }
 
-      optionElements[index].selected = selected;
+      this._optionElements[index].selected = selected;
+      this._optionElements[index].setAttribute(
+        'aria-selected',
+        selected ? 'true' : 'false'
+      );
       this._options[index].selected = selected;
     });
 
@@ -99,35 +128,91 @@ export class VscodeSelect extends LitElement {
     return this._selectedIndexes;
   }
 
-  @property({type: Number, reflect: true}) tabIndex = -1;
+  @property({type: Boolean, reflect: true})
+  multiple = false;
 
-  @property({type: Boolean, reflect: true}) multiple = false;
+  @property({type: String, attribute: true, reflect: true})
+  role = 'listbox';
 
+  @property({type: Number, attribute: true, reflect: true})
+  tabindex = 0;
+
+  @property({type: String, reflect: true, attribute: 'aria-expanded'})
+  ariaExpanded = 'false';
+
+  @property({type: String, reflect: true, attribute: 'aria-activedescendant'})
+  ariaActivedescendant = '';
+
+  @property({type: String, reflect: true, attribute: 'aria-label'})
+  ariaLabel = '';
+
+  @property({type: String, reflect: true, attribute: 'aria-multiselectable'})
+  ariaMultiselectable = 'false';
+
+  @internalProperty()
+  private set _showDropdown(val: boolean) {
+    this._dropdownVisible = val;
+    this.ariaExpanded = String(val);
+
+    if (val && !this.multiple) {
+      this._optionElements.forEach((_, index) => {
+        this._optionElements[index].active = this._optionElements[
+          index
+        ].selected;
+
+        if (this._optionElements[index].active) {
+          this._activeOptionElement = this._optionElements[index];
+        }
+      });
+    }
+  }
+  private get _showDropdown() {
+    return this._dropdownVisible;
+  }
+
+  private _componentId = 0;
+  private _ownedOptionIds: string[] = [];
   private _value = '';
-  private _showDropdown = false;
   private _currentDescription = '';
-  private _mainSlot: HTMLSlotElement | null = null;
+  private _optionElements: VscodeOption[] = [];
   private _options: Option[] = [];
   private _selectedOptions: Option[] = [];
   private _currentLabel = '';
   private _selectedIndex = -1;
   private _selectedIndexes: number[] = [];
+  private _dropdownVisible = false;
   private _onClickOutsideBound: (event: MouseEvent) => void;
+  private _activeOptionElement: OptionElement | null = null;
 
   constructor() {
     super();
+    componentCounter++;
+    this._componentId = componentCounter;
     this._onClickOutsideBound = this._onClickOutside.bind(this);
   }
 
-  connectedCallback() {
+  attributeChangedCallback(
+    name: string,
+    oldVal: string | null,
+    newVal: string | null
+  ): void {
+    super.attributeChangedCallback(name, oldVal, newVal);
+
+    if (name === 'multiple') {
+      this.ariaMultiselectable = this.multiple ? 'true' : 'false';
+    }
+  }
+
+  connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener('click', this._onOptionClick);
     this.addEventListener('mouseover', this._onOptionMouseOver);
     this.addEventListener('mouseout', this._onOptionMouseOut);
+    this.addEventListener('keydown', this._onComponentKeyDown);
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener('click', this._onOptionClick);
@@ -135,15 +220,22 @@ export class VscodeSelect extends LitElement {
     this.removeEventListener('mouseout', this._onOptionMouseOut);
   }
 
-  firstUpdated() {
-    this._mainSlot = this.shadowRoot!.querySelector('slot');
+  private _toggleOption(optIndex: number, selected: boolean) {
+    this._options[optIndex].selected = selected;
+    this._optionElements[optIndex].selected = selected;
+    this._optionElements[optIndex].setAttribute(
+      'aria-selected',
+      String(selected)
+    );
 
-    if (this._mainSlot) {
-      this._mainSlot.addEventListener(
-        'slotchange',
-        this._onSlotChange.bind(this)
-      );
+    if (selected) {
+      this.ariaActivedescendant =
+        this._optionElements[optIndex].getAttribute('id') || '';
+    } else {
+      this.ariaActivedescendant = '';
     }
+
+    this._updateCurrentLabel();
   }
 
   private _multipleLabelText() {
@@ -173,30 +265,50 @@ export class VscodeSelect extends LitElement {
       this._currentLabel = this._multipleLabelText();
     } else {
       this._currentLabel = this._singleLabelText();
+      this.ariaLabel = this._singleLabelText();
     }
 
     this.requestUpdate();
   }
 
-  private _onSlotChange() {
-    const nodes = this._mainSlot!.assignedNodes();
+  private _setActiveOptionElement(element: OptionElement) {
+    if (this._activeOptionElement) {
+      this._activeOptionElement.active = false;
+    }
 
-    const optElements = nodes.filter(
-      (el) =>
-        el.nodeType === Node.ELEMENT_NODE &&
-        (el as Element).tagName.toLowerCase() === 'vscode-option'
-    ) as OptionElement[];
+    element.active = true;
+    this._activeOptionElement = element;
+  }
+
+  private _onSlotChange() {
+    const slot = this.shadowRoot?.querySelector('slot');
+    const nodes = slot!.assignedNodes();
+
+    this._optionElements = nodes.filter((el) =>
+      isOptionElement(el as Element)
+    ) as VscodeOption[];
+    this._ownedOptionIds = [];
 
     let firstSelectedElementFound = false;
 
-    optElements.forEach((el: OptionElement, index) => {
+    this._optionElements.forEach((el: OptionElement, index) => {
       const label = el.innerText;
       const value = el.value || label;
       const description = el.getAttribute('description') || '';
       const selected = el.selected;
+      const id = `s${this._componentId}_${index}`;
 
       el.dataset.index = String(index);
       el.multiple = this.multiple;
+      el.setAttribute('id', id);
+      el.setAttribute('role', 'option');
+      el.setAttribute('aria-selected', selected ? 'true' : 'false');
+
+      if (selected && !this.multiple) {
+        this.ariaActivedescendant = id;
+      }
+
+      this._ownedOptionIds.push(id);
 
       if (!firstSelectedElementFound && selected) {
         this._selectedIndex = index;
@@ -208,6 +320,10 @@ export class VscodeSelect extends LitElement {
         this._selectedIndexes.push(index);
       }
 
+      if(value === this._value) {
+        this._selectedIndex = index;
+      }
+
       this._options[index] = {
         label,
         value,
@@ -216,7 +332,6 @@ export class VscodeSelect extends LitElement {
       };
     });
 
-    // this._optionElements = optElements;
     this._updateCurrentLabel();
   }
 
@@ -227,13 +342,11 @@ export class VscodeSelect extends LitElement {
     if (found === -1) {
       this._showDropdown = false;
       window.removeEventListener('click', this._onClickOutsideBound);
-      this.requestUpdate();
     }
   }
 
   private _onFaceClick() {
     this._showDropdown = !this._showDropdown;
-    this.requestUpdate();
     window.addEventListener('click', this._onClickOutsideBound);
   }
 
@@ -242,6 +355,10 @@ export class VscodeSelect extends LitElement {
 
     if (!element) {
       return;
+    }
+
+    if (!this.multiple) {
+      this._setActiveOptionElement(element);
     }
 
     this._currentDescription = element.description || '';
@@ -268,14 +385,14 @@ export class VscodeSelect extends LitElement {
 
     const optionElementIndex = Number(optionElement.dataset.index);
     const optionElementSelected = optionElement.selected;
-    const prevSelected = this.selectedIndex;
+    const prevSelectedIndex = this.selectedIndex;
 
     this._selectedIndex = Number(optionElementIndex);
     this._selectedIndexes = [this._selectedIndex];
     this._value = optionElement.value;
 
     if (!this.multiple) {
-      if (prevSelected !== this.selectedIndex) {
+      if (prevSelectedIndex !== this.selectedIndex) {
         this.dispatchEvent(
           new CustomEvent('vsc-change', {
             detail: {
@@ -287,6 +404,13 @@ export class VscodeSelect extends LitElement {
             },
           })
         );
+
+        optionElement.selected = true;
+        this.ariaActivedescendant = optionElement.id;
+
+        if (prevSelectedIndex !== -1) {
+          this._optionElements[prevSelectedIndex].selected = false;
+        }
       }
 
       this._showDropdown = false;
@@ -294,6 +418,10 @@ export class VscodeSelect extends LitElement {
       const nextSelectedValue = !optionElementSelected;
 
       optionElement.selected = nextSelectedValue;
+      optionElement.setAttribute(
+        'aria-selected',
+        nextSelectedValue ? 'true' : 'false'
+      );
       this._options[optionElementIndex].selected = nextSelectedValue;
 
       let firstSelectedElementFound = false;
@@ -331,18 +459,12 @@ export class VscodeSelect extends LitElement {
 
   private _onAcceptClick() {
     this._showDropdown = false;
-    this.requestUpdate();
   }
 
   private _onResetClick() {
-    const optionElements = this._mainSlot
-      ?.assignedElements()
-      .filter(
-        (el) => el.tagName.toLocaleLowerCase() === 'vscode-option'
-      ) as OptionElement[];
-
     this._options.forEach((option, index) => {
-      optionElements[index].selected = false;
+      this._optionElements[index].selected = false;
+      this._optionElements[index].setAttribute('aria-selected', 'false');
       option.selected = false;
     });
 
@@ -352,7 +474,55 @@ export class VscodeSelect extends LitElement {
     this._updateCurrentLabel();
   }
 
-  static get styles() {
+  /*   private _onComponentKeyUp(event: KeyboardEvent) {
+    console.log(event);
+
+    event.stopPropagation();
+    event.preventDefault();
+  } */
+
+  private _onComponentKeyDown(event: KeyboardEvent) {
+    if (
+      event.key === ' ' ||
+      event.key === 'ArrowUp' ||
+      event.key === 'ArrowDown'
+    ) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+
+    if (event.key === 'Enter') {
+      this._showDropdown = !this._showDropdown;
+    }
+
+    if (event.key === ' ') {
+      this._showDropdown = true;
+    }
+
+    if (event.key === 'Escape' || event.key == 'Tab') {
+      this._showDropdown = false;
+    }
+
+    if (event.key === 'ArrowUp' && this._selectedIndex > 0) {
+      this._toggleOption(this._selectedIndex, false);
+      this._selectedIndex--;
+      this._toggleOption(this._selectedIndex, true);
+    }
+
+    if (
+      event.key === 'ArrowDown' &&
+      this._selectedIndex < this._options.length - 1
+    ) {
+      if (this._selectedIndex !== -1) {
+        this._toggleOption(this._selectedIndex, false);
+      }
+
+      this._selectedIndex++;
+      this._toggleOption(this._selectedIndex, true);
+    }
+  }
+
+  static get styles(): CSSResult {
     return css`
       :host {
         display: inline-block;
@@ -378,6 +548,11 @@ export class VscodeSelect extends LitElement {
         width: 100%;
       }
 
+      :host(:focus) .select-face {
+        border-color: var(--vscode-focusBorder);
+        outline: none;
+      }
+
       .icon {
         display: block;
         height: 14px;
@@ -395,10 +570,6 @@ export class VscodeSelect extends LitElement {
 
       .select-face:empty:before {
         content: '\\00a0';
-      }
-
-      :host(:focus) .select-face {
-        border-color: var(--vscode-focusBorder);
       }
 
       .dropdown {
@@ -452,8 +623,8 @@ export class VscodeSelect extends LitElement {
     `;
   }
 
-  render() {
-    let descriptionTemplate: TemplateResult | {};
+  render(): TemplateResult {
+    let descriptionTemplate: TemplateResult | Record<string, never>;
 
     if (this._currentDescription) {
       descriptionTemplate = html`<div class="description">
@@ -476,7 +647,8 @@ export class VscodeSelect extends LitElement {
         }
       </style>
       <div class="select-face" @click="${this._onFaceClick}">
-        <span class="text">${currentLabelMarkup}</span>
+        <span class="text">${currentLabelMarkup}</span
+        >
         <span class="icon">
           <svg
             width="16"
@@ -494,7 +666,9 @@ export class VscodeSelect extends LitElement {
         </span>
       </div>
       <div class="dropdown">
-        <div class="options"><slot></slot></div>
+        <div class="options">
+          <slot @slotchange=${this._onSlotChange}></slot>
+        </div>
         ${this.multiple
           ? html`<div class="buttons">
               <vscode-button @click="${this._onAcceptClick}">OK</vscode-button>

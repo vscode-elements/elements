@@ -1,0 +1,11 @@
+---
+layout: page.njk
+title: Components
+---
+<ul>
+  {%- for component in collections.component -%}
+    <li{% if page.url == component.url %} aria-current="page" class="current"{% endif %}>
+      <a href="{{ component.url | url }}">{{ component.data.title }}</a>
+    </li>
+  {%- endfor -%}
+</ul>

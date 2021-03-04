@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1Y0GZ34XC7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1Y0GZ34XC7');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon &ndash; VSCode Webview Elements</title>
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-dark-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-high-contrast-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-light-theme.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/preview-styles.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/codicon.css" id="vscode-codicon-stylesheet">
+  <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/prism-material-light.css">
+  <script type="module" src="/vscode-webview-elements/dev-assets/component-preview.js"></script>
+  <script type="module" src="/vscode-webview-elements/bundled.js"></script>
+</head>
+<body class="vscode-light">
+  <div class="content-wrapper">
+    <header class="page-header">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.2.0-alpha.5</span>
+    </header>
+    <aside class="sidebar">
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/vscode-webview-elements/pages/getting-started">Getting Started</a></li>
+          <li>
+            <a href="/vscode-webview-elements/components">Components</a>
+            <ul><li>
+                  <a href="/vscode-webview-elements/components/vscode-button/">Button</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-checkbox/">Checkbox</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-collapsible/">Collapsible</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-context-menu/">ContextMenu</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-context-menu-item/">ContextMenuItem</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-control/">FormControl</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-description/">FormDescription</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-item/">FormItem</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-form-label/">FormLabel</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-icon/" aria-current="page" class="current">Icon</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-inputbox/">Inputbox</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-scrollable/">Scrollable</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-select/">Select</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-tabs/">Tabs</a>
+                </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-tree/">Tree</a>
+                </li></ul>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="main-content">
+      <div class="page">
+        
+<ul class="sub-nav">
+  <li><a href="/vscode-webview-elements/components/vscode-icon/" class="current">Examples</a></li>
+  <li><a href="/vscode-webview-elements/components/vscode-icon/api" >API</a></li>
+</ul>
+
+        <h1>vscode-icon</h1>
+<h2>Basic example</h2>
+<component-preview>
+  <vscode-icon name="account"></vscode-icon>
+  <vscode-icon name="account" size="32"></vscode-icon>
+  <vscode-icon name="account" size="48"></vscode-icon>
+  <vscode-icon name="account" size="64"></vscode-icon>
+</component-preview>
+<h3>HTML</h3>
+<pre class="language-html"><code class="language-html"><span class="token comment">&lt;!--<br>  Download codicons from https://github.com/microsoft/vscode-codicons<br>--></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>path/to/codicon.css<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vscode-codicon-stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br></code></pre>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>account<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>account<span class="token punctuation">"</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>32<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>account<span class="token punctuation">"</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>48<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>account<span class="token punctuation">"</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>64<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span></code></pre>
+<h2>Animated icons</h2>
+<component-preview>
+  <vscode-icon name="loading" spin spin-duration="1"></vscode-icon>
+  <vscode-icon name="sync" spin></vscode-icon>
+  <vscode-icon name="gear" spin spin-duration="2"></vscode-icon>
+</component-preview>
+<h3>HTML</h3>
+<pre class="language-html"><code class="language-html"><span class="token comment">&lt;!--<br>  Download codicons from https://github.com/microsoft/vscode-codicons<br>--></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>path/to/codicon.css<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vscode-codicon-stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br></code></pre>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>loading<span class="token punctuation">"</span></span> <span class="token attr-name">spin</span> <span class="token attr-name">spin-duration</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sync<span class="token punctuation">"</span></span> <span class="token attr-name">spin</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-icon</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gear<span class="token punctuation">"</span></span> <span class="token attr-name">spin</span> <span class="token attr-name">spin-duration</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-icon</span><span class="token punctuation">></span></span></code></pre>
+<h2>List of icons</h2>
+<component-preview>
+  <vscode-icon name="account" title="account"></vscode-icon>
+  <vscode-icon name="activate-breakpoints" title="activate-breakpoints"></vscode-icon>
+  <vscode-icon name="add" title="add"></vscode-icon>
+  <vscode-icon name="alert" title="alert"></vscode-icon>
+  <vscode-icon name="archive" title="archive"></vscode-icon>
+  <vscode-icon name="array" title="array"></vscode-icon>
+  <vscode-icon name="arrow-both" title="arrow-both"></vscode-icon>
+  <vscode-icon name="arrow-down" title="arrow-down"></vscode-icon>
+  <vscode-icon name="arrow-left" title="arrow-left"></vscode-icon>
+  <vscode-icon name="arrow-right" title="arrow-right"></vscode-icon>
+  <vscode-icon name="arrow-small-down" title="arrow-small-down"></vscode-icon>
+  <vscode-icon name="arrow-small-left" title="arrow-small-left"></vscode-icon>
+  <vscode-icon name="arrow-small-right" title="arrow-small-right"></vscode-icon>
+  <vscode-icon name="arrow-small-up" title="arrow-small-up"></vscode-icon>
+  <vscode-icon name="arrow-up" title="arrow-up"></vscode-icon>
+  <vscode-icon name="beaker" title="beaker"></vscode-icon>
+  <vscode-icon name="bell" title="bell"></vscode-icon>
+  <vscode-icon name="bell-dot" title="bell-dot"></vscode-icon>
+  <vscode-icon name="bold" title="bold"></vscode-icon>
+  <vscode-icon name="book" title="book"></vscode-icon>
+  <vscode-icon name="bookmark" title="bookmark"></vscode-icon>
+  <vscode-icon name="briefcase" title="briefcase"></vscode-icon>
+  <vscode-icon name="broadcast" title="broadcast"></vscode-icon>
+  <vscode-icon name="browser" title="browser"></vscode-icon>
+  <vscode-icon name="bug" title="bug"></vscode-icon>
+  <vscode-icon name="calendar" title="calendar"></vscode-icon>
+  <vscode-icon name="call-incoming" title="call-incoming"></vscode-icon>
+  <vscode-icon name="call-outgoing" title="call-outgoing"></vscode-icon>
+  <vscode-icon name="case-sensitive" title="case-sensitive"></vscode-icon>
+  <vscode-icon name="check" title="check"></vscode-icon>
+  <vscode-icon name="check-all" title="check-all"></vscode-icon>
+  <vscode-icon name="checklist" title="checklist"></vscode-icon>
+  <vscode-icon name="chevron-down" title="chevron-down"></vscode-icon>
+  <vscode-icon name="chevron-left" title="chevron-left"></vscode-icon>
+  <vscode-icon name="chevron-right" title="chevron-right"></vscode-icon>
+  <vscode-icon name="chevron-up" title="chevron-up"></vscode-icon>
+  <vscode-icon name="chrome-close" title="chrome-close"></vscode-icon>
+  <vscode-icon name="chrome-maximize" title="chrome-maximize"></vscode-icon>
+  <vscode-icon name="chrome-minimize" title="chrome-minimize"></vscode-icon>
+  <vscode-icon name="chrome-restore" title="chrome-restore"></vscode-icon>
+  <vscode-icon name="circle-filled" title="circle-filled"></vscode-icon>
+  <vscode-icon name="circle-large-filled" title="circle-large-filled"></vscode-icon>
+  <vscode-icon name="circle-large-outline" title="circle-large-outline"></vscode-icon>
+  <vscode-icon name="circle-outline" title="circle-outline"></vscode-icon>
+  <vscode-icon name="circle-slash" title="circle-slash"></vscode-icon>
+  <vscode-icon name="circuit-board" title="circuit-board"></vscode-icon>
+  <vscode-icon name="clear-all" title="clear-all"></vscode-icon>
+  <vscode-icon name="clippy" title="clippy"></vscode-icon>
+  <vscode-icon name="clock" title="clock"></vscode-icon>
+  <vscode-icon name="clone" title="clone"></vscode-icon>
+  <vscode-icon name="close" title="close"></vscode-icon>
+  <vscode-icon name="close-all" title="close-all"></vscode-icon>
+  <vscode-icon name="close-dirty" title="close-dirty"></vscode-icon>
+  <vscode-icon name="cloud" title="cloud"></vscode-icon>
+  <vscode-icon name="cloud-download" title="cloud-download"></vscode-icon>
+  <vscode-icon name="cloud-upload" title="cloud-upload"></vscode-icon>
+  <vscode-icon name="code" title="code"></vscode-icon>
+  <vscode-icon name="collapse-all" title="collapse-all"></vscode-icon>
+  <vscode-icon name="color-mode" title="color-mode"></vscode-icon>
+  <vscode-icon name="comment" title="comment"></vscode-icon>
+  <vscode-icon name="comment-add" title="comment-add"></vscode-icon>
+  <vscode-icon name="comment-discussion" title="comment-discussion"></vscode-icon>
+  <vscode-icon name="compare-changes" title="compare-changes"></vscode-icon>
+  <vscode-icon name="console" title="console"></vscode-icon>
+  <vscode-icon name="credit-card" title="credit-card"></vscode-icon>
+  <vscode-icon name="dash" title="dash"></vscode-icon>
+  <vscode-icon name="dashboard" title="dashboard"></vscode-icon>
+  <vscode-icon name="database" title="database"></vscode-icon>
+  <vscode-icon name="debug" title="debug"></vscode-icon>
+  <vscode-icon name="debug-alt" title="debug-alt"></vscode-icon>
+  <vscode-icon name="debug-alt-small" title="debug-alt-small"></vscode-icon>
+  <vscode-icon name="debug-breakpoint" title="debug-breakpoint"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-conditional" title="debug-breakpoint-conditional"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-conditional-disabled" title="debug-breakpoint-conditional-disabled"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-conditional-unverified" title="debug-breakpoint-conditional-unverified"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-data" title="debug-breakpoint-data"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-data-disabled" title="debug-breakpoint-data-disabled"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-data-unverified" title="debug-breakpoint-data-unverified"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-disabled" title="debug-breakpoint-disabled"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-function" title="debug-breakpoint-function"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-function-disabled" title="debug-breakpoint-function-disabled"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-function-unverified" title="debug-breakpoint-function-unverified"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-log" title="debug-breakpoint-log"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-log-disabled" title="debug-breakpoint-log-disabled"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-log-unverified" title="debug-breakpoint-log-unverified"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-unsupported" title="debug-breakpoint-unsupported"></vscode-icon>
+  <vscode-icon name="debug-breakpoint-unverified" title="debug-breakpoint-unverified"></vscode-icon>
+  <vscode-icon name="debug-console" title="debug-console"></vscode-icon>
+  <vscode-icon name="debug-continue" title="debug-continue"></vscode-icon>
+  <vscode-icon name="debug-disconnect" title="debug-disconnect"></vscode-icon>
+  <vscode-icon name="debug-hint" title="debug-hint"></vscode-icon>
+  <vscode-icon name="debug-pause" title="debug-pause"></vscode-icon>
+  <vscode-icon name="debug-restart" title="debug-restart"></vscode-icon>
+  <vscode-icon name="debug-restart-frame" title="debug-restart-frame"></vscode-icon>
+  <vscode-icon name="debug-reverse-continue" title="debug-reverse-continue"></vscode-icon>
+  <vscode-icon name="debug-stackframe" title="debug-stackframe"></vscode-icon>
+  <vscode-icon name="debug-stackframe-active" title="debug-stackframe-active"></vscode-icon>
+  <vscode-icon name="debug-stackframe-dot" title="debug-stackframe-dot"></vscode-icon>
+  <vscode-icon name="debug-stackframe-focused" title="debug-stackframe-focused"></vscode-icon>
+  <vscode-icon name="debug-start" title="debug-start"></vscode-icon>
+  <vscode-icon name="debug-step-back" title="debug-step-back"></vscode-icon>
+  <vscode-icon name="debug-step-into" title="debug-step-into"></vscode-icon>
+  <vscode-icon name="debug-step-out" title="debug-step-out"></vscode-icon>
+  <vscode-icon name="debug-step-over" title="debug-step-over"></vscode-icon>
+  <vscode-icon name="debug-stop" title="debug-stop"></vscode-icon>
+  <vscode-icon name="desktop-download" title="desktop-download"></vscode-icon>
+  <vscode-icon name="device-camera" title="device-camera"></vscode-icon>
+  <vscode-icon name="device-camera-video" title="device-camera-video"></vscode-icon>
+  <vscode-icon name="device-desktop" title="device-desktop"></vscode-icon>
+  <vscode-icon name="device-mobile" title="device-mobile"></vscode-icon>
+  <vscode-icon name="diff" title="diff"></vscode-icon>
+  <vscode-icon name="diff-added" title="diff-added"></vscode-icon>
+  <vscode-icon name="diff-ignored" title="diff-ignored"></vscode-icon>
+  <vscode-icon name="diff-modified" title="diff-modified"></vscode-icon>
+  <vscode-icon name="diff-removed" title="diff-removed"></vscode-icon>
+  <vscode-icon name="diff-renamed" title="diff-renamed"></vscode-icon>
+  <vscode-icon name="discard" title="discard"></vscode-icon>
+  <vscode-icon name="edit" title="edit"></vscode-icon>
+  <vscode-icon name="editor-layout" title="editor-layout"></vscode-icon>
+  <vscode-icon name="ellipsis" title="ellipsis"></vscode-icon>
+  <vscode-icon name="empty-window" title="empty-window"></vscode-icon>
+  <vscode-icon name="error" title="error"></vscode-icon>
+  <vscode-icon name="exclude" title="exclude"></vscode-icon>
+  <vscode-icon name="expand-all" title="expand-all"></vscode-icon>
+  <vscode-icon name="export" title="export"></vscode-icon>
+  <vscode-icon name="extensions" title="extensions"></vscode-icon>
+  <vscode-icon name="eye" title="eye"></vscode-icon>
+  <vscode-icon name="eye-closed" title="eye-closed"></vscode-icon>
+  <vscode-icon name="eye-unwatch" title="eye-unwatch"></vscode-icon>
+  <vscode-icon name="eye-watch" title="eye-watch"></vscode-icon>
+  <vscode-icon name="feedback" title="feedback"></vscode-icon>
+  <vscode-icon name="file" title="file"></vscode-icon>
+  <vscode-icon name="file-add" title="file-add"></vscode-icon>
+  <vscode-icon name="file-binary" title="file-binary"></vscode-icon>
+  <vscode-icon name="file-code" title="file-code"></vscode-icon>
+  <vscode-icon name="file-directory" title="file-directory"></vscode-icon>
+  <vscode-icon name="file-directory-create" title="file-directory-create"></vscode-icon>
+  <vscode-icon name="file-media" title="file-media"></vscode-icon>
+  <vscode-icon name="file-pdf" title="file-pdf"></vscode-icon>
+  <vscode-icon name="file-submodule" title="file-submodule"></vscode-icon>
+  <vscode-icon name="file-symlink-directory" title="file-symlink-directory"></vscode-icon>
+  <vscode-icon name="file-symlink-file" title="file-symlink-file"></vscode-icon>
+  <vscode-icon name="file-text" title="file-text"></vscode-icon>
+  <vscode-icon name="file-zip" title="file-zip"></vscode-icon>
+  <vscode-icon name="files" title="files"></vscode-icon>
+  <vscode-icon name="filter" title="filter"></vscode-icon>
+  <vscode-icon name="flame" title="flame"></vscode-icon>
+  <vscode-icon name="fold" title="fold"></vscode-icon>
+  <vscode-icon name="fold-down" title="fold-down"></vscode-icon>
+  <vscode-icon name="fold-up" title="fold-up"></vscode-icon>
+  <vscode-icon name="folder" title="folder"></vscode-icon>
+  <vscode-icon name="folder-active" title="folder-active"></vscode-icon>
+  <vscode-icon name="folder-opened" title="folder-opened"></vscode-icon>
+  <vscode-icon name="gear" title="gear"></vscode-icon>
+  <vscode-icon name="gift" title="gift"></vscode-icon>
+  <vscode-icon name="gist" title="gist"></vscode-icon>
+  <vscode-icon name="gist-fork" title="gist-fork"></vscode-icon>
+  <vscode-icon name="gist-new" title="gist-new"></vscode-icon>
+  <vscode-icon name="gist-private" title="gist-private"></vscode-icon>
+  <vscode-icon name="gist-secret" title="gist-secret"></vscode-icon>
+  <vscode-icon name="git-branch" title="git-branch"></vscode-icon>
+  <vscode-icon name="git-branch-create" title="git-branch-create"></vscode-icon>
+  <vscode-icon name="git-branch-delete" title="git-branch-delete"></vscode-icon>
+  <vscode-icon name="git-commit" title="git-commit"></vscode-icon>
+  <vscode-icon name="git-compare" title="git-compare"></vscode-icon>
+  <vscode-icon name="git-fork-private" title="git-fork-private"></vscode-icon>
+  <vscode-icon name="git-merge" title="git-merge"></vscode-icon>
+  <vscode-icon name="git-pull-request" title="git-pull-request"></vscode-icon>
+  <vscode-icon name="git-pull-request-abandoned" title="git-pull-request-abandoned"></vscode-icon>
+  <vscode-icon name="github" title="github"></vscode-icon>
+  <vscode-icon name="github-action" title="github-action"></vscode-icon>
+  <vscode-icon name="github-alt" title="github-alt"></vscode-icon>
+  <vscode-icon name="github-inverted" title="github-inverted"></vscode-icon>
+  <vscode-icon name="globe" title="globe"></vscode-icon>
+  <vscode-icon name="go-to-file" title="go-to-file"></vscode-icon>
+  <vscode-icon name="grabber" title="grabber"></vscode-icon>
+  <vscode-icon name="graph" title="graph"></vscode-icon>
+  <vscode-icon name="graph-left" title="graph-left"></vscode-icon>
+  <vscode-icon name="gripper" title="gripper"></vscode-icon>
+  <vscode-icon name="group-by-ref-type" title="group-by-ref-type"></vscode-icon>
+  <vscode-icon name="heart" title="heart"></vscode-icon>
+  <vscode-icon name="history" title="history"></vscode-icon>
+  <vscode-icon name="home" title="home"></vscode-icon>
+  <vscode-icon name="horizontal-rule" title="horizontal-rule"></vscode-icon>
+  <vscode-icon name="hubot" title="hubot"></vscode-icon>
+  <vscode-icon name="inbox" title="inbox"></vscode-icon>
+  <vscode-icon name="info" title="info"></vscode-icon>
+  <vscode-icon name="issue-closed" title="issue-closed"></vscode-icon>
+  <vscode-icon name="issue-opened" title="issue-opened"></vscode-icon>
+  <vscode-icon name="issue-reopened" title="issue-reopened"></vscode-icon>
+  <vscode-icon name="issues" title="issues"></vscode-icon>
+  <vscode-icon name="italic" title="italic"></vscode-icon>
+  <vscode-icon name="jersey" title="jersey"></vscode-icon>
+  <vscode-icon name="json" title="json"></vscode-icon>
+  <vscode-icon name="kebab-horizontal" title="kebab-horizontal"></vscode-icon>
+  <vscode-icon name="kebab-vertical" title="kebab-vertical"></vscode-icon>
+  <vscode-icon name="key" title="key"></vscode-icon>
+  <vscode-icon name="keyboard" title="keyboard"></vscode-icon>
+  <vscode-icon name="law" title="law"></vscode-icon>
+  <vscode-icon name="library" title="library"></vscode-icon>
+  <vscode-icon name="light-bulb" title="light-bulb"></vscode-icon>
+  <vscode-icon name="lightbulb" title="lightbulb"></vscode-icon>
+  <vscode-icon name="lightbulb-autofix" title="lightbulb-autofix"></vscode-icon>
+  <vscode-icon name="link" title="link"></vscode-icon>
+  <vscode-icon name="link-external" title="link-external"></vscode-icon>
+  <vscode-icon name="list-filter" title="list-filter"></vscode-icon>
+  <vscode-icon name="list-flat" title="list-flat"></vscode-icon>
+  <vscode-icon name="list-ordered" title="list-ordered"></vscode-icon>
+  <vscode-icon name="list-selection" title="list-selection"></vscode-icon>
+  <vscode-icon name="list-tree" title="list-tree"></vscode-icon>
+  <vscode-icon name="list-unordered" title="list-unordered"></vscode-icon>
+  <vscode-icon name="live-share" title="live-share"></vscode-icon>
+  <vscode-icon name="loading" title="loading"></vscode-icon>
+  <vscode-icon name="location" title="location"></vscode-icon>
+  <vscode-icon name="lock" title="lock"></vscode-icon>
+  <vscode-icon name="log-in" title="log-in"></vscode-icon>
+  <vscode-icon name="log-out" title="log-out"></vscode-icon>
+  <vscode-icon name="logo-github" title="logo-github"></vscode-icon>
+  <vscode-icon name="magnet" title="magnet"></vscode-icon>
+  <vscode-icon name="mail" title="mail"></vscode-icon>
+  <vscode-icon name="mail-read" title="mail-read"></vscode-icon>
+  <vscode-icon name="mail-reply" title="mail-reply"></vscode-icon>
+  <vscode-icon name="mark-github" title="mark-github"></vscode-icon>
+  <vscode-icon name="markdown" title="markdown"></vscode-icon>
+  <vscode-icon name="megaphone" title="megaphone"></vscode-icon>
+  <vscode-icon name="mention" title="mention"></vscode-icon>
+  <vscode-icon name="menu" title="menu"></vscode-icon>
+  <vscode-icon name="merge" title="merge"></vscode-icon>
+  <vscode-icon name="microscope" title="microscope"></vscode-icon>
+  <vscode-icon name="milestone" title="milestone"></vscode-icon>
+  <vscode-icon name="mirror" title="mirror"></vscode-icon>
+  <vscode-icon name="mirror-private" title="mirror-private"></vscode-icon>
+  <vscode-icon name="mirror-public" title="mirror-public"></vscode-icon>
+  <vscode-icon name="more" title="more"></vscode-icon>
+  <vscode-icon name="mortar-board" title="mortar-board"></vscode-icon>
+  <vscode-icon name="move" title="move"></vscode-icon>
+  <vscode-icon name="multiple-windows" title="multiple-windows"></vscode-icon>
+  <vscode-icon name="mute" title="mute"></vscode-icon>
+  <vscode-icon name="new-file" title="new-file"></vscode-icon>
+  <vscode-icon name="new-folder" title="new-folder"></vscode-icon>
+  <vscode-icon name="no-newline" title="no-newline"></vscode-icon>
+  <vscode-icon name="note" title="note"></vscode-icon>
+  <vscode-icon name="notebook" title="notebook"></vscode-icon>
+  <vscode-icon name="octoface" title="octoface"></vscode-icon>
+  <vscode-icon name="open-preview" title="open-preview"></vscode-icon>
+  <vscode-icon name="organization" title="organization"></vscode-icon>
+  <vscode-icon name="organization-filled" title="organization-filled"></vscode-icon>
+  <vscode-icon name="organization-outline" title="organization-outline"></vscode-icon>
+  <vscode-icon name="output" title="output"></vscode-icon>
+  <vscode-icon name="package" title="package"></vscode-icon>
+  <vscode-icon name="paintcan" title="paintcan"></vscode-icon>
+  <vscode-icon name="pass" title="pass"></vscode-icon>
+  <vscode-icon name="pass-filled" title="pass-filled"></vscode-icon>
+  <vscode-icon name="pencil" title="pencil"></vscode-icon>
+  <vscode-icon name="person" title="person"></vscode-icon>
+  <vscode-icon name="person-add" title="person-add"></vscode-icon>
+  <vscode-icon name="person-filled" title="person-filled"></vscode-icon>
+  <vscode-icon name="person-follow" title="person-follow"></vscode-icon>
+  <vscode-icon name="person-outline" title="person-outline"></vscode-icon>
+  <vscode-icon name="pin" title="pin"></vscode-icon>
+  <vscode-icon name="pinned" title="pinned"></vscode-icon>
+  <vscode-icon name="pinned-dirty" title="pinned-dirty"></vscode-icon>
+  <vscode-icon name="play" title="play"></vscode-icon>
+  <vscode-icon name="play-circle" title="play-circle"></vscode-icon>
+  <vscode-icon name="plug" title="plug"></vscode-icon>
+  <vscode-icon name="plus" title="plus"></vscode-icon>
+  <vscode-icon name="preserve-case" title="preserve-case"></vscode-icon>
+  <vscode-icon name="preview" title="preview"></vscode-icon>
+  <vscode-icon name="primitive-dot" title="primitive-dot"></vscode-icon>
+  <vscode-icon name="primitive-square" title="primitive-square"></vscode-icon>
+  <vscode-icon name="project" title="project"></vscode-icon>
+  <vscode-icon name="pulse" title="pulse"></vscode-icon>
+  <vscode-icon name="question" title="question"></vscode-icon>
+  <vscode-icon name="quote" title="quote"></vscode-icon>
+  <vscode-icon name="radio-tower" title="radio-tower"></vscode-icon>
+  <vscode-icon name="reactions" title="reactions"></vscode-icon>
+  <vscode-icon name="record" title="record"></vscode-icon>
+  <vscode-icon name="record-keys" title="record-keys"></vscode-icon>
+  <vscode-icon name="redo" title="redo"></vscode-icon>
+  <vscode-icon name="references" title="references"></vscode-icon>
+  <vscode-icon name="refresh" title="refresh"></vscode-icon>
+  <vscode-icon name="regex" title="regex"></vscode-icon>
+  <vscode-icon name="remote" title="remote"></vscode-icon>
+  <vscode-icon name="remote-explorer" title="remote-explorer"></vscode-icon>
+  <vscode-icon name="remove" title="remove"></vscode-icon>
+  <vscode-icon name="remove-close" title="remove-close"></vscode-icon>
+  <vscode-icon name="repl" title="repl"></vscode-icon>
+  <vscode-icon name="replace" title="replace"></vscode-icon>
+  <vscode-icon name="replace-all" title="replace-all"></vscode-icon>
+  <vscode-icon name="reply" title="reply"></vscode-icon>
+  <vscode-icon name="repo" title="repo"></vscode-icon>
+  <vscode-icon name="repo-clone" title="repo-clone"></vscode-icon>
+  <vscode-icon name="repo-create" title="repo-create"></vscode-icon>
+  <vscode-icon name="repo-delete" title="repo-delete"></vscode-icon>
+  <vscode-icon name="repo-force-push" title="repo-force-push"></vscode-icon>
+  <vscode-icon name="repo-forked" title="repo-forked"></vscode-icon>
+  <vscode-icon name="repo-pull" title="repo-pull"></vscode-icon>
+  <vscode-icon name="repo-push" title="repo-push"></vscode-icon>
+  <vscode-icon name="repo-sync" title="repo-sync"></vscode-icon>
+  <vscode-icon name="report" title="report"></vscode-icon>
+  <vscode-icon name="request-changes" title="request-changes"></vscode-icon>
+  <vscode-icon name="rocket" title="rocket"></vscode-icon>
+  <vscode-icon name="root-folder" title="root-folder"></vscode-icon>
+  <vscode-icon name="root-folder-opened" title="root-folder-opened"></vscode-icon>
+  <vscode-icon name="rss" title="rss"></vscode-icon>
+  <vscode-icon name="ruby" title="ruby"></vscode-icon>
+  <vscode-icon name="run" title="run"></vscode-icon>
+  <vscode-icon name="run-all" title="run-all"></vscode-icon>
+  <vscode-icon name="save" title="save"></vscode-icon>
+  <vscode-icon name="save-all" title="save-all"></vscode-icon>
+  <vscode-icon name="save-as" title="save-as"></vscode-icon>
+  <vscode-icon name="screen-full" title="screen-full"></vscode-icon>
+  <vscode-icon name="screen-normal" title="screen-normal"></vscode-icon>
+  <vscode-icon name="search" title="search"></vscode-icon>
+  <vscode-icon name="search-save" title="search-save"></vscode-icon>
+  <vscode-icon name="search-stop" title="search-stop"></vscode-icon>
+  <vscode-icon name="selection" title="selection"></vscode-icon>
+  <vscode-icon name="server" title="server"></vscode-icon>
+  <vscode-icon name="server-environment" title="server-environment"></vscode-icon>
+  <vscode-icon name="server-process" title="server-process"></vscode-icon>
+  <vscode-icon name="settings" title="settings"></vscode-icon>
+  <vscode-icon name="settings-gear" title="settings-gear"></vscode-icon>
+  <vscode-icon name="shield" title="shield"></vscode-icon>
+  <vscode-icon name="sign-in" title="sign-in"></vscode-icon>
+  <vscode-icon name="sign-out" title="sign-out"></vscode-icon>
+  <vscode-icon name="smiley" title="smiley"></vscode-icon>
+  <vscode-icon name="sort-precedence" title="sort-precedence"></vscode-icon>
+  <vscode-icon name="source-control" title="source-control"></vscode-icon>
+  <vscode-icon name="split-horizontal" title="split-horizontal"></vscode-icon>
+  <vscode-icon name="split-vertical" title="split-vertical"></vscode-icon>
+  <vscode-icon name="squirrel" title="squirrel"></vscode-icon>
+  <vscode-icon name="star" title="star"></vscode-icon>
+  <vscode-icon name="star-add" title="star-add"></vscode-icon>
+  <vscode-icon name="star-delete" title="star-delete"></vscode-icon>
+  <vscode-icon name="star-empty" title="star-empty"></vscode-icon>
+  <vscode-icon name="star-full" title="star-full"></vscode-icon>
+  <vscode-icon name="star-half" title="star-half"></vscode-icon>
+  <vscode-icon name="stop" title="stop"></vscode-icon>
+  <vscode-icon name="stop-circle" title="stop-circle"></vscode-icon>
+  <vscode-icon name="symbol-array" title="symbol-array"></vscode-icon>
+  <vscode-icon name="symbol-boolean" title="symbol-boolean"></vscode-icon>
+  <vscode-icon name="symbol-class" title="symbol-class"></vscode-icon>
+  <vscode-icon name="symbol-color" title="symbol-color"></vscode-icon>
+  <vscode-icon name="symbol-constant" title="symbol-constant"></vscode-icon>
+  <vscode-icon name="symbol-constructor" title="symbol-constructor"></vscode-icon>
+  <vscode-icon name="symbol-enum" title="symbol-enum"></vscode-icon>
+  <vscode-icon name="symbol-enum-member" title="symbol-enum-member"></vscode-icon>
+  <vscode-icon name="symbol-event" title="symbol-event"></vscode-icon>
+  <vscode-icon name="symbol-field" title="symbol-field"></vscode-icon>
+  <vscode-icon name="symbol-file" title="symbol-file"></vscode-icon>
+  <vscode-icon name="symbol-folder" title="symbol-folder"></vscode-icon>
+  <vscode-icon name="symbol-function" title="symbol-function"></vscode-icon>
+  <vscode-icon name="symbol-interface" title="symbol-interface"></vscode-icon>
+  <vscode-icon name="symbol-key" title="symbol-key"></vscode-icon>
+  <vscode-icon name="symbol-keyword" title="symbol-keyword"></vscode-icon>
+  <vscode-icon name="symbol-method" title="symbol-method"></vscode-icon>
+  <vscode-icon name="symbol-misc" title="symbol-misc"></vscode-icon>
+  <vscode-icon name="symbol-module" title="symbol-module"></vscode-icon>
+  <vscode-icon name="symbol-namespace" title="symbol-namespace"></vscode-icon>
+  <vscode-icon name="symbol-null" title="symbol-null"></vscode-icon>
+  <vscode-icon name="symbol-number" title="symbol-number"></vscode-icon>
+  <vscode-icon name="symbol-numeric" title="symbol-numeric"></vscode-icon>
+  <vscode-icon name="symbol-object" title="symbol-object"></vscode-icon>
+  <vscode-icon name="symbol-operator" title="symbol-operator"></vscode-icon>
+  <vscode-icon name="symbol-package" title="symbol-package"></vscode-icon>
+  <vscode-icon name="symbol-parameter" title="symbol-parameter"></vscode-icon>
+  <vscode-icon name="symbol-property" title="symbol-property"></vscode-icon>
+  <vscode-icon name="symbol-reference" title="symbol-reference"></vscode-icon>
+  <vscode-icon name="symbol-ruler" title="symbol-ruler"></vscode-icon>
+  <vscode-icon name="symbol-snippet" title="symbol-snippet"></vscode-icon>
+  <vscode-icon name="symbol-string" title="symbol-string"></vscode-icon>
+  <vscode-icon name="symbol-struct" title="symbol-struct"></vscode-icon>
+  <vscode-icon name="symbol-structure" title="symbol-structure"></vscode-icon>
+  <vscode-icon name="symbol-text" title="symbol-text"></vscode-icon>
+  <vscode-icon name="symbol-type-parameter" title="symbol-type-parameter"></vscode-icon>
+  <vscode-icon name="symbol-unit" title="symbol-unit"></vscode-icon>
+  <vscode-icon name="symbol-value" title="symbol-value"></vscode-icon>
+  <vscode-icon name="symbol-variable" title="symbol-variable"></vscode-icon>
+  <vscode-icon name="sync" title="sync"></vscode-icon>
+  <vscode-icon name="sync-ignored" title="sync-ignored"></vscode-icon>
+  <vscode-icon name="tag" title="tag"></vscode-icon>
+  <vscode-icon name="tag-add" title="tag-add"></vscode-icon>
+  <vscode-icon name="tag-remove" title="tag-remove"></vscode-icon>
+  <vscode-icon name="tasklist" title="tasklist"></vscode-icon>
+  <vscode-icon name="telescope" title="telescope"></vscode-icon>
+  <vscode-icon name="terminal" title="terminal"></vscode-icon>
+  <vscode-icon name="text-size" title="text-size"></vscode-icon>
+  <vscode-icon name="three-bars" title="three-bars"></vscode-icon>
+  <vscode-icon name="thumbsdown" title="thumbsdown"></vscode-icon>
+  <vscode-icon name="thumbsup" title="thumbsup"></vscode-icon>
+  <vscode-icon name="tools" title="tools"></vscode-icon>
+  <vscode-icon name="trash" title="trash"></vscode-icon>
+  <vscode-icon name="trashcan" title="trashcan"></vscode-icon>
+  <vscode-icon name="triangle-down" title="triangle-down"></vscode-icon>
+  <vscode-icon name="triangle-left" title="triangle-left"></vscode-icon>
+  <vscode-icon name="triangle-right" title="triangle-right"></vscode-icon>
+  <vscode-icon name="triangle-up" title="triangle-up"></vscode-icon>
+  <vscode-icon name="twitter" title="twitter"></vscode-icon>
+  <vscode-icon name="unfold" title="unfold"></vscode-icon>
+  <vscode-icon name="ungroup-by-ref-type" title="ungroup-by-ref-type"></vscode-icon>
+  <vscode-icon name="unlock" title="unlock"></vscode-icon>
+  <vscode-icon name="unmute" title="unmute"></vscode-icon>
+  <vscode-icon name="unverified" title="unverified"></vscode-icon>
+  <vscode-icon name="variable" title="variable"></vscode-icon>
+  <vscode-icon name="verified" title="verified"></vscode-icon>
+  <vscode-icon name="versions" title="versions"></vscode-icon>
+  <vscode-icon name="vm" title="vm"></vscode-icon>
+  <vscode-icon name="vm-active" title="vm-active"></vscode-icon>
+  <vscode-icon name="vm-connect" title="vm-connect"></vscode-icon>
+  <vscode-icon name="vm-outline" title="vm-outline"></vscode-icon>
+  <vscode-icon name="vm-running" title="vm-running"></vscode-icon>
+  <vscode-icon name="warning" title="warning"></vscode-icon>
+  <vscode-icon name="watch" title="watch"></vscode-icon>
+  <vscode-icon name="whitespace" title="whitespace"></vscode-icon>
+  <vscode-icon name="whole-word" title="whole-word"></vscode-icon>
+  <vscode-icon name="window" title="window"></vscode-icon>
+  <vscode-icon name="word-wrap" title="word-wrap"></vscode-icon>
+  <vscode-icon name="wrench" title="wrench"></vscode-icon>
+  <vscode-icon name="wrench-subaction" title="wrench-subaction"></vscode-icon>
+  <vscode-icon name="x" title="x"></vscode-icon>
+  <vscode-icon name="zap" title="zap"></vscode-icon>
+  <vscode-icon name="zoom-in" title="zoom-in"></vscode-icon>
+  <vscode-icon name="zoom-out" title="zoom-out"></vscode-icon>
+</component-preview>
+      </div>
+      <p class="last-modified">Last modified: Sat, 23 Jan 2021 21:37:08 GMT</p>
+    </div>
+  </div>
+</body>
+</html>
