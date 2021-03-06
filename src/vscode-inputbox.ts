@@ -81,16 +81,16 @@ export class VscodeInputbox extends LitElement {
   get type(): string {
     return this._type;
   }
-  @property({ type: Boolean }) focused: boolean = false;
-  @property({ type: String }) value: string = '';
-  @property({ type: String }) placeholder: string = '';
-  @property({ type: Number }) lines: number = 2;
-  @property({ type: Number }) maxLines: number = 5;
+  @property({ type: Boolean }) focused = false;
+  @property({ type: String }) value = '';
+  @property({ type: String }) placeholder = '';
+  @property({ type: Number }) lines = 2;
+  @property({ type: Number }) maxLines = 5;
 
   private _severity: Severity;
   private _type: InputType;
   private _currentLines: number;
-  private _textareaDefaultCursor: boolean = false;
+  private _textareaDefaultCursor = false;
 
   constructor() {
     super();
@@ -99,12 +99,12 @@ export class VscodeInputbox extends LitElement {
     this._currentLines = this.lines;
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
     this.resizeTextareaIfRequired();
   }
 
-  updated(changedProperties: Map<string, undefined | string | boolean | number>) {
+  updated(changedProperties: Map<string, undefined | string | boolean | number>): void {
     if (changedProperties.has('value')) {
       this.resizeTextareaIfRequired();
     }
