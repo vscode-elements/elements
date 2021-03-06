@@ -28,6 +28,25 @@ const LINE_HEIGHT = 17;
 const PADDING = 4;
 const BORDER_WIDTH = 1;
 
+/**
+ * @cssprop --vscode-scrollbarSlider-background
+ * @cssprop --vscode-scrollbarSlider-hoverBackground
+ * @cssprop --vscode-scrollbarSlider-activeBackground
+ * @cssprop --vscode-input-background
+ * @cssprop --vscode-settings-textInputBorder
+ * @cssprop --vscode-input-foreground
+ * @cssprop --vscode-input-placeholderForeground
+ * @cssprop --vscode-focusBorder
+ * @cssprop --vscode-panelInput-border
+ * @cssprop --vscode-focusBorder
+ * @cssprop --vscode-inputValidation-infoBackground
+ * @cssprop --vscode-inputValidation-infoBorder
+ * @cssprop --vscode-inputValidation-warningBackground
+ * @cssprop --vscode-inputValidation-warningBorder
+ * @cssprop --vscode-inputValidation-errorBackground
+ * @cssprop --vscode-inputValidation-errorBorder
+ * @cssprop --vscode-editor-background
+ */
 @customElement('vscode-inputbox')
 export class VscodeInputbox extends LitElement {
   @property({ type: Boolean }) multiline = false;
@@ -51,7 +70,16 @@ export class VscodeInputbox extends LitElement {
   get severity(): string {
     return this._severity;
   }
+  /**
+   * @deprecated
+   * @attr panelInput
+   */
   @property({ type: Boolean }) panelInput = false;
+  /**
+   * Text-like input types
+   * @attr type
+   * @type {"color"|"date"|"datetime-local"|"email"|"file"|"month"|"number"|"password"|"tel"|"text"|"time"|"url"|"week"}
+   */
   @property({ type: String }) type: InputType = 'text';
   @property({ type: Boolean }) focused = false;
   @property({ type: String }) value = '';
