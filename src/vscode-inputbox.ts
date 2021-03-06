@@ -1,5 +1,6 @@
 import { LitElement, html, css, property, customElement, CSSResult, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 enum Severity {
   DEFAULT = 'default',
@@ -57,6 +58,13 @@ export class VscodeInputbox extends LitElement {
   @property({ type: String }) placeholder = '';
   @property({ type: Number }) lines = 2;
   @property({ type: Number }) maxLines = 5;
+  @property({ type: Number }) min: number | undefined = undefined;
+  @property({ type: Number }) minLength: number | undefined = undefined;
+  @property({ type: Number }) max: number | undefined = undefined;
+  @property({ type: Number }) maxLength: number | undefined = undefined;
+  @property({ type: Boolean }) multiple = false;
+  @property({ type: Boolean }) readonly = false;
+  @property({ type: Number }) step: number | undefined = undefined;
 
   private _severity: Severity;
   private _currentLines: number;
@@ -300,6 +308,13 @@ export class VscodeInputbox extends LitElement {
         @input="${this.onInputInput}"
         @change="${this.onInputChange}"
         placeholder="${this.placeholder}"
+        min="${ifDefined(this.min)}"
+        minlength="${ifDefined(this.minLength)}"
+        max="${ifDefined(this.max)}"
+        maxlength="${ifDefined(this.maxLength)}"
+        ?multiple="${this.multiple}"
+        ?readonly="${this.readonly}"
+        step="${ifDefined(this.step)}"
         .value="${this.value}"
       >
     `;

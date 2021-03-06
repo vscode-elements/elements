@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
   <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
   <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
+  <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
   <script src="../dev-assets/preview-page.js"></script>
   <script type="module" src="../dist/vscode-inputbox.js"></script>
 </head>
@@ -20,6 +21,14 @@
     <div class="story-content">
       <component-preview>
         <vscode-inputbox></vscode-inputbox>
+      </component-preview>
+    </div>
+  </div>
+  <div class="story">
+    <h2 class="story-title">Number</h2>
+    <div class="story-content">
+      <component-preview>
+        <vscode-inputbox type="number" min="5" max="10"></vscode-inputbox>
       </component-preview>
     </div>
   </div>
