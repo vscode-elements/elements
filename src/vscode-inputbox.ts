@@ -6,23 +6,22 @@ enum Severity {
   INFO = 'info',
   WARNING = 'warning',
   ERROR = 'error',
-};
-
-enum InputType {
-  COLOR = 'color',
-  DATE = 'date',
-  DATETIME_LOCAL = 'datetime-local',
-  EMAIL = 'email',
-  FILE = 'file',
-  MONTH = 'month',
-  NUMBER = 'number',
-  PASSWORD = 'password',
-  TEL = 'tel',
-  TEXT = 'text',
-  TIME = 'time',
-  URL = 'url',
-  WEEK = 'week',
 }
+
+type InputType =
+  | 'color'
+  | 'date'
+  | 'datetime-local'
+  | 'email'
+  | 'file'
+  | 'month'
+  | 'number'
+  | 'password'
+  | 'tel'
+  | 'text'
+  | 'time'
+  | 'url'
+  | 'week';
 
 const LINE_HEIGHT = 17;
 const PADDING = 4;
@@ -52,35 +51,7 @@ export class VscodeInputbox extends LitElement {
     return this._severity;
   }
   @property({ type: Boolean }) panelInput = false;
-  @property({ type: String })
-  set type(val: string) {
-    const oldVal = this._type;
-
-    switch(val) {
-      case InputType.COLOR:
-      case InputType.DATE:
-      case InputType.DATETIME_LOCAL:
-      case InputType.EMAIL:
-      case InputType.FILE:
-      case InputType.MONTH:
-      case InputType.NUMBER:
-      case InputType.PASSWORD:
-      case InputType.TEL:
-      case InputType.TEXT:
-      case InputType.TIME:
-      case InputType.URL:
-      case InputType.WEEK:
-        this._type = val;
-        break;
-      default:
-        this._type = InputType.TEXT;
-    }
-
-    this.requestUpdate('type', oldVal);
-  }
-  get type(): string {
-    return this._type;
-  }
+  @property({ type: String }) type: InputType = 'text';
   @property({ type: Boolean }) focused = false;
   @property({ type: String }) value = '';
   @property({ type: String }) placeholder = '';
@@ -88,14 +59,12 @@ export class VscodeInputbox extends LitElement {
   @property({ type: Number }) maxLines = 5;
 
   private _severity: Severity;
-  private _type: InputType;
   private _currentLines: number;
   private _textareaDefaultCursor = false;
 
   constructor() {
     super();
     this._severity = Severity.DEFAULT;
-    this._type = InputType.TEXT;
     this._currentLines = this.lines;
   }
 
