@@ -1,3 +1,17 @@
+/*
+// Run this snippet in the webview to get all theme variables:
+let __html = document
+  .querySelector('iframe')
+  .contentDocument.querySelector('html');
+
+Array.from(__html.style)
+  .sort((a, b) => a.localeCompare(b))
+  .map(
+    (s) => `  ${s.replace(/./g, '\\.')}: ${__html.style.getPropertyValue(s)};\n`
+  )
+  .join('');
+*/
+
 body.vscode-dark {
   --vscode-activityBar-activeBorder: #ffffff;
   --vscode-activityBar-background: #333333;
@@ -89,7 +103,7 @@ body.vscode-dark {
   --vscode-editor-hoverHighlightBackground: rgba(38, 79, 120, 0.25);
   --vscode-editor-inactiveSelectionBackground: #3a3d41;
   --vscode-editor-lineHighlightBorder: #282828;
-  --vscode-editor-onTypeRenameBackground: rgba(255, 0, 0, 0.3);
+  --vscode-editor-linkedEditingBackground: rgba(255, 0, 0, 0.3);
   --vscode-editor-rangeHighlightBackground: rgba(255, 255, 255, 0.04);
   --vscode-editor-selectionBackground: #264f78;
   --vscode-editor-selectionHighlightBackground: rgba(173, 214, 255, 0.15);
@@ -123,6 +137,8 @@ body.vscode-dark {
   --vscode-editorIndentGuide-activeBackground: #707070;
   --vscode-editorIndentGuide-background: #404040;
   --vscode-editorInfo-foreground: #75beff;
+  --vscode-editorInlineHint-background: #cccccc;
+  --vscode-editorInlineHint-foreground: #252526;
   --vscode-editorLightBulb-foreground: #ffcc00;
   --vscode-editorLightBulbAutoFix-foreground: #75beff;
   --vscode-editorLineNumber-activeForeground: #c6c6c6;
@@ -189,29 +205,25 @@ body.vscode-dark {
   --vscode-errorForeground: #f48771;
   --vscode-extensionBadge-remoteBackground: #007acc;
   --vscode-extensionBadge-remoteForeground: #ffffff;
-  --vscode-extensionButton-prominentBackground: #327e36;
+  --vscode-extensionButton-prominentBackground: #0e639c;
   --vscode-extensionButton-prominentForeground: #ffffff;
-  --vscode-extensionButton-prominentHoverBackground: #28632b;
+  --vscode-extensionButton-prominentHoverBackground: #1177bb;
+  --vscode-extensionIcon-starForeground: #ff8e00;
   --vscode-focusBorder: #007fd4;
+  --vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
   --vscode-font-size: 13px;
   --vscode-font-weight: normal;
   --vscode-foreground: #cccccc;
   --vscode-gitDecoration-addedResourceForeground: #81b88b;
-  --vscode-gitDecoration-conflictingResourceForeground: #6c6cc4;
+  --vscode-gitDecoration-conflictingResourceForeground: #e4676b;
   --vscode-gitDecoration-deletedResourceForeground: #c74e39;
   --vscode-gitDecoration-ignoredResourceForeground: #8c8c8c;
   --vscode-gitDecoration-modifiedResourceForeground: #e2c08d;
+  --vscode-gitDecoration-renamedResourceForeground: #73c991;
   --vscode-gitDecoration-stageDeletedResourceForeground: #c74e39;
   --vscode-gitDecoration-stageModifiedResourceForeground: #e2c08d;
   --vscode-gitDecoration-submoduleResourceForeground: #8db9e2;
   --vscode-gitDecoration-untrackedResourceForeground: #73c991;
-  --vscode-gitlens-gutterBackgroundColor: rgba(255, 255, 255, 0.07);
-  --vscode-gitlens-gutterForegroundColor: #bebebe;
-  --vscode-gitlens-gutterUncommittedForegroundColor: rgba(0, 188, 242, 0.6);
-  --vscode-gitlens-lineHighlightBackgroundColor: rgba(0, 188, 242, 0.2);
-  --vscode-gitlens-lineHighlightOverviewRulerColor: rgba(0, 188, 242, 0.6);
-  --vscode-gitlens-trailingLineBackgroundColor: rgba(0, 0, 0, 0);
-  --vscode-gitlens-trailingLineForegroundColor: rgba(153, 153, 153, 0.35);
   --vscode-icon-foreground: #c5c5c5;
   --vscode-imagePreview-border: rgba(128, 128, 128, 0.35);
   --vscode-input-background: #3c3c3c;
@@ -232,7 +244,7 @@ body.vscode-dark {
   --vscode-list-dropBackground: #383b3d;
   --vscode-list-errorForeground: #f88070;
   --vscode-list-filterMatchBackground: rgba(234, 92, 0, 0.33);
-  --vscode-list-focusBackground: #062f4a;
+  --vscode-list-focusOutline: #007fd4;
   --vscode-list-highlightForeground: #0097fb;
   --vscode-list-hoverBackground: #2a2d2e;
   --vscode-list-inactiveSelectionBackground: #37373d;
@@ -264,17 +276,18 @@ body.vscode-dark {
   --vscode-minimapSlider-activeBackground: rgba(191, 191, 191, 0.2);
   --vscode-minimapSlider-background: rgba(121, 121, 121, 0.2);
   --vscode-minimapSlider-hoverBackground: rgba(100, 100, 100, 0.35);
-  --vscode-notebook-cellBorderColor: rgba(128, 128, 128, 0.14);
-  --vscode-notebook-cellHoverBackground: rgba(128, 128, 128, 0.07);
+  --vscode-notebook-cellBorderColor: #37373d;
   --vscode-notebook-cellInsertionIndicator: #007fd4;
   --vscode-notebook-cellStatusBarItemHoverBackground: rgba(255, 255, 255, 0.15);
   --vscode-notebook-cellToolbarSeparator: rgba(128, 128, 128, 0.35);
-  --vscode-notebook-focusedCellBackground: rgba(128, 128, 128, 0.14);
-  --vscode-notebook-focusedCellBorder: rgba(255, 255, 255, 0.12);
+  --vscode-notebook-focusedCellBorder: #007fd4;
   --vscode-notebook-focusedEditorBorder: #007fd4;
   --vscode-notebook-focusedRowBorder: rgba(255, 255, 255, 0.12);
-  --vscode-notebook-outputContainerBackgroundColor: rgba(128, 128, 128, 0.14);
+  --vscode-notebook-inactiveFocusedCellBorder: #37373d;
+  --vscode-notebook-outputContainerBackgroundColor: #37373d;
   --vscode-notebook-rowHoverBackground: rgba(128, 128, 128, 0.07);
+  --vscode-notebook-selectedCellBackground: rgba(56, 59, 61, 0.31);
+  --vscode-notebook-selectedCellBorder: #37373d;
   --vscode-notebook-symbolHighlightBackground: rgba(255, 255, 255, 0.04);
   --vscode-notebookScrollbarSlider-activeBackground: rgba(191, 191, 191, 0.4);
   --vscode-notebookScrollbarSlider-background: rgba(121, 121, 121, 0.4);
@@ -320,7 +333,9 @@ body.vscode-dark {
   --vscode-progressBar-background: #0e70c0;
   --vscode-quickInput-background: #252526;
   --vscode-quickInput-foreground: #cccccc;
+  --vscode-quickInput-list\.focusBackground: #062f4a;
   --vscode-quickInputTitle-background: rgba(255, 255, 255, 0.1);
+  --vscode-sash-hoverBorder: #007fd4;
   --vscode-scm-providerBorder: #454545;
   --vscode-scrollbar-shadow: #000000;
   --vscode-scrollbarSlider-activeBackground: rgba(191, 191, 191, 0.4);
@@ -353,6 +368,8 @@ body.vscode-dark {
   --vscode-statusBar-noFolderBackground: #68217a;
   --vscode-statusBar-noFolderForeground: #ffffff;
   --vscode-statusBarItem-activeBackground: rgba(255, 255, 255, 0.18);
+  --vscode-statusBarItem-errorBackground: #c72e0f;
+  --vscode-statusBarItem-errorForeground: #ffffff;
   --vscode-statusBarItem-hoverBackground: rgba(255, 255, 255, 0.12);
   --vscode-statusBarItem-prominentBackground: rgba(0, 0, 0, 0.5);
   --vscode-statusBarItem-prominentForeground: #ffffff;
@@ -425,6 +442,26 @@ body.vscode-dark {
   --vscode-terminal-border: rgba(128, 128, 128, 0.35);
   --vscode-terminal-foreground: #cccccc;
   --vscode-terminal-selectionBackground: rgba(255, 255, 255, 0.25);
+  --vscode-testing-iconErrored: #f14c4c;
+  --vscode-testing-iconFailed: #f14c4c;
+  --vscode-testing-iconPassed: #73c991;
+  --vscode-testing-iconQueued: #cca700;
+  --vscode-testing-iconSkipped: #848484;
+  --vscode-testing-iconUnset: #848484;
+  --vscode-testing-message\.error\.decorationForeground: #f48771;
+  --vscode-testing-message\.error\.lineBackground: rgba(255, 0, 0, 0.2);
+  --vscode-testing-message\.hint\.decorationForeground: rgba(
+    238,
+    238,
+    238,
+    0.7
+  );
+  --vscode-testing-message\.info\.decorationForeground: #75beff;
+  --vscode-testing-message\.info\.lineBackground: rgba(0, 127, 255, 0.2);
+  --vscode-testing-message\.warning\.decorationForeground: #cca700;
+  --vscode-testing-message\.warning\.lineBackground: rgba(255, 208, 0, 0.2);
+  --vscode-testing-peekBorder: #f48771;
+  --vscode-testing-runAction: #73c991;
   --vscode-textBlockQuote-background: rgba(127, 127, 127, 0.1);
   --vscode-textBlockQuote-border: rgba(0, 122, 204, 0.5);
   --vscode-textCodeBlock-background: rgba(10, 10, 10, 0.4);
@@ -437,8 +474,12 @@ body.vscode-dark {
   --vscode-titleBar-inactiveBackground: rgba(60, 60, 60, 0.6);
   --vscode-titleBar-inactiveForeground: rgba(204, 204, 204, 0.6);
   --vscode-tree-indentGuidesStroke: #585858;
-  --vscode-widget-shadow: #000000;
-  --vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
+  --vscode-tree-tableColumnsBorder: rgba(204, 204, 204, 0.13);
+  --vscode-welcomePage-progress\.background: #3c3c3c;
+  --vscode-welcomePage-progress\.foreground: #3794ff;
+  --vscode-welcomePage-tileBackground: #252526;
+  --vscode-welcomePage-tileHoverBackground: #2c2c2d;
+  --vscode-widget-shadow: rgba(0, 0, 0, 0.36);
 }
 
 body.vscode-dark {

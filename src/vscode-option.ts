@@ -83,11 +83,11 @@ export class VscodeOption extends LitElement {
       }
 
       :host([active]) .wrapper {
-        background-color: var(--vscode-list-focusBackground);
+        background-color: var(--vscode-quickInput-list\\.focusBackground);
       }
 
       .wrapper:hover {
-        background-color: var(--vscode-list-focusBackground);
+        background-color: var(--vscode-quickInput-list\\.focusBackground);
       }
 
       input {
