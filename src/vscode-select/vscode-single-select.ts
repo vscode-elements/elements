@@ -1,5 +1,4 @@
-import {html, customElement, property, TemplateResult} from 'lit-element';
-import {nothing} from 'lit-html';
+import {customElement, property, html, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {chevronDownIcon} from './includes/template-elements';
 import {VscodeSelectBase} from './vscode-select-base';
@@ -8,6 +7,14 @@ import {VscodeSelectBase} from './vscode-select-base';
 export class VscodeSingleSelect extends VscodeSelectBase {
   @property({type: String, attribute: true, reflect: true})
   role = 'listbox';
+
+  @property({type: Number})
+  set selectedIndex(val: number) {
+    this._selectedIndex = val;
+  }
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
 
   @property({type: String})
   set value(val: string) {
@@ -27,14 +34,6 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     return this._value as string;
   }
 
-  @property({type: Number})
-  set selectedIndex(val: number) {
-    this._selectedIndex = val;
-  }
-  get selectedIndex(): number {
-    return this._selectedIndex;
-  }
-
   constructor() {
     super();
     this._multiple = false;
@@ -48,66 +47,20 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     super._toggleDropdown(visible);
   }
 
-  private _onSlotChange(): void {
-    const stat = this._addOptionsFromSlottedElements();
+  private _onOptionClick(ev: MouseEvent) {
+    const composedPath = ev.composedPath();
+    const optEl = composedPath.find((et) =>
+      (et as HTMLElement)?.matches('li.option')
+    );
 
-    if (stat.selectedIndexes.length > 0) {
-      this._selectedIndex = stat.selectedIndexes[0];
-    }
-  }
-
-  private _onOptionMouseOver(ev: MouseEvent) {
-    const el = ev.target as HTMLElement;
-
-    if (!el.matches('.option')) {
+    if (!optEl) {
       return;
     }
 
-    this._activeIndex = Number(el.dataset.index);
-  }
-
-  private _onOptionClick(ev: MouseEvent) {
-    const evTarget = ev.target as HTMLElement;
-    this._selectedIndex = Number(evTarget.dataset.index);
+    this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
     this._value = this._options[this._selectedIndex].value;
     this._toggleDropdown(false);
     this._dispatchChangeEvent();
-  }
-
-  private _onComboboxInputFocus(ev: FocusEvent) {
-    (ev.target as HTMLInputElement).select();
-  }
-
-  private _onComboboxInputInput(ev: InputEvent) {
-    this._filterPattern = (ev.target as HTMLInputElement).value;
-    this._toggleDropdown(true);
-  }
-
-  private _renderOptions() {
-    const list = this.combobox ? this._filteredOptions : this._options;
-
-    return list.map((op) => {
-      const classes = classMap({
-        option: true,
-        active: op.index === this._activeIndex,
-      });
-
-      return html`
-        <li class="${classes}" data-index="${op.index}">${op.label}</li>
-      `;
-    });
-  }
-
-  private _renderDescription() {
-    if (!this._options[this._activeIndex]) {
-      return nothing;
-    }
-
-    const {description} = this._options[this._activeIndex];
-
-    return description
-      ? html`<div class="description">${description}</div>`
-      : nothing;
   }
 
   private _renderLabel() {
@@ -119,7 +72,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     return html`<span class="text">${labelText}</span>`;
   }
 
-  private _renderSelectFace() {
+  protected _renderSelectFace(): TemplateResult {
     return html`
       <div class="select-face" @click="${this._onFaceClick}">
         ${this._renderLabel()} ${chevronDownIcon}
@@ -127,51 +80,28 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     `;
   }
 
-  private _renderComboboxFace() {
-    const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
+  protected _renderOptions(): TemplateResult {
+    const list = this.combobox ? this._filteredOptions : this._options;
+
+    const options = list.map((op) => {
+      const classes = classMap({
+        option: true,
+        active: op.index === this._activeIndex,
+      });
+
+      return html`
+        <li class="${classes}" data-index="${op.index}">${op.label}</li>
+      `;
+    });
 
     return html`
-      <div class="combobox-face">
-        <input
-          class="combobox-input"
-          spellcheck="false"
-          type="text"
-          .value="${inputVal}"
-          @focus="${this._onComboboxInputFocus}"
-          @input="${this._onComboboxInputInput}"
-        />
-        <button
-          class="combobox-button"
-          type="button"
-          @click="${this._onComboboxButtonClick}"
-        >
-          ${chevronDownIcon}
-        </button>
-      </div>
-    `;
-  }
-
-  render(): TemplateResult {
-    const dropdown = this._showDropdown
-      ? html`
-          <div class="dropdown">
-            <ul
-              class="options"
-              @mouseover="${this._onOptionMouseOver}"
-              @click="${this._onOptionClick}"
-            >
-              ${this._renderOptions()}
-            </ul>
-            ${this._renderDescription()}
-          </div>
-        `
-      : nothing;
-
-    return html`
-      <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
-      ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
-      ${dropdown}
+      <ul
+        class="options"
+        @mouseover="${this._onOptionMouseOver}"
+        @click="${this._onOptionClick}"
+      >
+        ${options}
+      </ul>
     `;
   }
 }

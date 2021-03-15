@@ -1,4 +1,15 @@
-import {LitElement, property, internalProperty, query} from 'lit-element';
+import {
+  LitElement,
+  property,
+  internalProperty,
+  query,
+  html,
+  TemplateResult,
+} from 'lit-element';
+import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
+import '../vscode-button';
+import {chevronDownIcon} from './includes/template-elements';
 import {VscodeSelectOption} from './vscode-select-option';
 import dropdownStyles from './vscode-select-base.styles';
 import {InternalOption, Option, SearchMethod} from './includes/types';
@@ -83,7 +94,7 @@ export class VscodeSelectBase extends LitElement {
   protected _currentDescription = '';
 
   @internalProperty()
-  _filter: SearchMethod = 'fuzzy';
+  protected _filter: SearchMethod = 'fuzzy';
 
   @internalProperty()
   protected get _filteredOptions(): InternalOption[] {
@@ -105,13 +116,19 @@ export class VscodeSelectBase extends LitElement {
   protected _selectedIndex = -1;
 
   @internalProperty()
+  protected _selectedIndexes: number[] = [];
+
+  @internalProperty()
   protected _showDropdown = false;
 
   @internalProperty()
   protected _options: InternalOption[] = [];
 
   @internalProperty()
-  protected _value: string | string[] = '';
+  protected _value = '';
+
+  @internalProperty()
+  protected _values: string[] = [];
 
   @query('.main-slot')
   protected _mainSlot!: HTMLSlotElement;
@@ -190,6 +207,15 @@ export class VscodeSelectBase extends LitElement {
           },
         })
       );
+    } else {
+      this.dispatchEvent(
+        new CustomEvent('vsc-change', {
+          detail: {
+            selectedIndexes: this._selectedIndexes,
+            value: this._values,
+          },
+        })
+      );
     }
   }
 
@@ -212,6 +238,16 @@ export class VscodeSelectBase extends LitElement {
   protected _onComboboxButtonClick(): void {
     this._filterPattern = '';
     this._toggleDropdown(!this._showDropdown);
+  }
+
+  protected _onOptionMouseOver(ev: MouseEvent): void {
+    const el = ev.target as HTMLElement;
+
+    if (!el.matches('.option')) {
+      return;
+    }
+
+    this._activeIndex = Number(el.dataset.index);
   }
 
   private _onComponentKeyDown(event: KeyboardEvent) {
@@ -269,5 +305,95 @@ export class VscodeSelectBase extends LitElement {
     this.focused = false;
   }
 
+  private _onSlotChange(): void {
+    const stat = this._addOptionsFromSlottedElements();
+
+    if (stat.selectedIndexes.length > 0) {
+      this._selectedIndex = stat.selectedIndexes[0];
+      this._selectedIndexes = stat.selectedIndexes;
+    }
+  }
+
+  private _onComboboxInputFocus(ev: FocusEvent) {
+    (ev.target as HTMLInputElement).select();
+  }
+
+  private _onComboboxInputInput(ev: InputEvent) {
+    this._filterPattern = (ev.target as HTMLInputElement).value;
+    this._toggleDropdown(true);
+  }
+
+  protected _renderOptions(): TemplateResult | TemplateResult[] {
+    return [];
+  }
+
+  private _renderDescription() {
+    if (!this._options[this._activeIndex]) {
+      return nothing;
+    }
+
+    const {description} = this._options[this._activeIndex];
+
+    return description
+      ? html`<div class="description">${description}</div>`
+      : nothing;
+  }
+
+  protected _renderSelectFace(): TemplateResult {
+    return html`${nothing}`;
+  }
+
+  private _renderComboboxFace() {
+    const inputVal =
+      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
+
+    return html`
+      <div class="combobox-face">
+        <input
+          class="combobox-input"
+          spellcheck="false"
+          type="text"
+          .value="${inputVal}"
+          @focus="${this._onComboboxInputFocus}"
+          @input="${this._onComboboxInputInput}"
+        />
+        <button
+          class="combobox-button"
+          type="button"
+          @click="${this._onComboboxButtonClick}"
+        >
+          ${chevronDownIcon}
+        </button>
+      </div>
+    `;
+  }
+
+  protected _renderDropdownControls(): TemplateResult {
+    return html`${nothing}`;
+  }
+
+  private _renderDropdown() {
+    const classes = classMap({
+      dropdown: true,
+      multiple: this._multiple,
+    });
+
+    return html`
+      <div class="${classes}">
+        ${this._renderOptions()}
+        ${this._renderDropdownControls()}
+        ${this._renderDescription()}
+      </div>
+    `;
+  }
+
   static styles = dropdownStyles;
+
+  render(): TemplateResult {
+    return html`
+      <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
+      ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+      ${this._showDropdown ? this._renderDropdown() : nothing}
+    `;
+  }
 }

@@ -33,6 +33,27 @@ export default css`
     padding: 4px;
   }
 
+  .select-face.multiselect {
+    padding: 0;
+  }
+
+  .select-face-badge {
+    background-color: var(--vscode-badge-background);
+    border-radius: 2px;
+    color: var(--vsode-badge-foreground);
+    display: inline-block;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 2px;
+    padding: 2px 3px;
+    text-transform: uppercase;
+  }
+
+  .select-face-badge.no-item {
+    background-color: transparent;
+    color: inherit;
+  }
+
   .combobox-face {
     display: flex;
   }
@@ -147,25 +168,59 @@ export default css`
     user-select: none;
   }
 
-  /* .option:hover {
-    background-color: var(--vscode-list-hoverBackground);
-  } */
-
   .option.active {
     background-color: var(--vscode-quickInput-list\\.focusBackground, var(--vscode-list-focusBackground));
   }
 
-  .wrapper:hover {
+  .dropdown.multiple .option.selected {
+    background-color: var(--vscode-list-hoverBackground);
+  }
+
+  .dropdown.multiple .option:hover {
     background-color: var(--vscode-quickInput-list\\.focusBackground, var(--vscode-list-focusBackground));
   }
 
-  .buttons {
+  .checkbox-icon {
+    background-color: var(--vscode-settings-checkboxBackground);
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    box-sizing: border-box;
+    height: 14px;
+    margin-right: 5px;
+    overflow: hidden;
+    position: relative;
+    width: 14px;
+  }
+
+  .checkbox-icon.checked:before,
+  .checkbox-icon.checked:after {
+    content: '';
+    display: block;
+    height: 5px;
+    position: absolute;
+    transform: rotate(-45deg);
+    width: 10px;
+  }
+
+  .checkbox-icon.checked:before {
+    background-color: currentColor;
+    left: 1px;
+    top: 2.5px;
+  }
+
+  .checkbox-icon.checked:after {
+    background-color: var(--vscode-settings-checkboxBackground);
+    left: 1px;
+    top: -0.5px;
+  }
+
+  .dropdown-controls {
     display: flex;
     justify-content: flex-end;
     padding: 4px;
   }
 
-  .buttons :not(:last-child) {
+  .dropdown-controls :not(:last-child) {
     margin-right: 4px;
   }
 
