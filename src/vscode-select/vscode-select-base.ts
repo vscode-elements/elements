@@ -172,6 +172,12 @@ export class VscodeSelectBase extends LitElement {
   protected _toggleDropdown(visible: boolean): void {
     this._showDropdown = visible;
     this.ariaExpanded = String(visible);
+
+    if (visible) {
+      window.addEventListener('click', this._onClickOutsideBound);
+    } else {
+      window.removeEventListener('click', this._onClickOutsideBound);
+    }
   }
 
   protected _dispatchChangeEvent(): void {
@@ -190,6 +196,18 @@ export class VscodeSelectBase extends LitElement {
   protected _onFaceClick(): void {
     this._toggleDropdown(!this._showDropdown);
   }
+
+  protected _onClickOutside(event: MouseEvent): void {
+    const path = event.composedPath();
+    const found = path.findIndex((et) => et === this);
+
+    if (found === -1) {
+      this._toggleDropdown(false);
+      window.removeEventListener('click', this._onClickOutsideBound);
+    }
+  }
+
+  protected _onClickOutsideBound = this._onClickOutside.bind(this);
 
   protected _onComboboxButtonClick(): void {
     this._filterPattern = '';

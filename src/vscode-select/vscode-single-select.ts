@@ -43,25 +43,10 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   protected _toggleDropdown(visible: boolean): void {
     if (visible) {
       this._activeIndex = this._selectedIndex;
-      window.addEventListener('click', this._onClickOutsideBound);
-    } else {
-      window.removeEventListener('click', this._onClickOutsideBound);
     }
 
     super._toggleDropdown(visible);
   }
-
-  private _onClickOutside(event: MouseEvent) {
-    const path = event.composedPath();
-    const found = path.findIndex((et) => et === this);
-
-    if (found === -1) {
-      this._toggleDropdown(false);
-      window.removeEventListener('click', this._onClickOutsideBound);
-    }
-  }
-
-  private _onClickOutsideBound = this._onClickOutside.bind(this);
 
   private _onSlotChange(): void {
     const stat = this._addOptionsFromSlottedElements();
