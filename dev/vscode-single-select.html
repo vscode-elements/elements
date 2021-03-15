@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>&lt;vscode-single-select&gt; Demo</title>
+  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+  <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
+  <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
+  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
+  <link rel="stylesheet" href="../node_modules/vscode-codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
+  <script src="../dev-assets/component-preview.js"></script>
+  <script type="module" src="../dist/vscode-icon.js"></script>
+  <script type="module" src="../dist/vscode-select/vscode-select-option.js"></script>
+  <script type="module" src="../dist/vscode-select/vscode-single-select.js"></script>
+  <style>
+    [data-cloak] vscode-select-option {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="vscode-light">
+  <h1>vscode-single-select</h1>
+  <h2>Basic example</h2>
+  <component-preview>
+    <vscode-single-select value="lorem" data-cloak id="sl-1">
+      <vscode-select-option value="">---</vscode-select-option>
+      <vscode-select-option><vscode-icon name="add"></vscode-icon>lorem</vscode-select-option>
+      <vscode-select-option description="ipsum description">ipsum</vscode-select-option>
+      <vscode-select-option selected>dolor</vscode-select-option>
+    </vscode-single-select>
+  </component-preview>
+  <script type="module">
+    const sl = document.querySelector('#sl-1');
+
+    sl.addEventListener('vsc-change', (ev) => {
+      console.log(ev.detail);
+    });
+  </script>
+</body>
+
+</html>
