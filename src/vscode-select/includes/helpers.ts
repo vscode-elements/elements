@@ -1,4 +1,4 @@
-import {Option, SearchMethod} from './types';
+import {InternalOption, SearchMethod} from './types';
 
 export const startsWithPerTermMatch = (
   subject: string,
@@ -38,10 +38,10 @@ export const fuzzyMatch = (subject: string, pattern: string): boolean => {
 };
 
 export const filterOptionsByPattern = (
-  list: Option[],
+  list: InternalOption[],
   pattern: string,
   method: SearchMethod
-): Option[] => {
+): InternalOption[] => {
   return list.filter(({label}) => {
     switch (method) {
       case 'startsWithPerTerm':

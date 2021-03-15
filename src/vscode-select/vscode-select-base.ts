@@ -86,7 +86,7 @@ export class VscodeSelectBase extends LitElement {
   _filter: SearchMethod = 'fuzzy';
 
   @internalProperty()
-  protected get _filteredOptions(): Option[] {
+  protected get _filteredOptions(): InternalOption[] {
     if (!this.combobox || this._filterPattern === '') {
       return this._options;
     }

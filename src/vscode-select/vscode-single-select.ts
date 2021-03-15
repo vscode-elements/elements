@@ -86,14 +86,14 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   private _renderOptions() {
     const list = this.combobox ? this._filteredOptions : this._options;
 
-    return list.map((op, index) => {
+    return list.map((op) => {
       const classes = classMap({
         option: true,
-        active: index === this._activeIndex,
+        active: op.index === this._activeIndex,
       });
 
       return html`
-        <li class="${classes}" data-index="${index}">${op.label}</li>
+        <li class="${classes}" data-index="${op.index}">${op.label}</li>
       `;
     });
   }
