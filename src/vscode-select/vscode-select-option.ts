@@ -1,6 +1,5 @@
-import {LitElement, html, css, property, customElement, CSSResult} from 'lit-element';
-import {nothing, TemplateResult} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map';
+import {LitElement, html, property, customElement} from 'lit-element';
+import {TemplateResult} from 'lit-html';
 
 @customElement('vscode-select-option')
 export class VscodeSelectOption extends LitElement {

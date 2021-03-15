@@ -1,7 +1,7 @@
 import {html, customElement, property, TemplateResult} from 'lit-element';
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
-import {icon} from './includes/template-elements';
+import {chevronDownIcon} from './includes/template-elements';
 import {VscodeSelectBase} from './vscode-select-base';
 
 @customElement('vscode-single-select')
@@ -28,7 +28,12 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   }
 
   @property({type: Number})
-  selectedIndex = -1;
+  set selectedIndex(val: number) {
+    this._selectedIndex = val;
+  }
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
 
   constructor() {
     super();
@@ -84,16 +89,27 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     this._dispatchChangeEvent();
   }
 
+  private _onComboboxInputFocus(ev: FocusEvent) {
+    (ev.target as HTMLInputElement).select();
+  }
+
+  private _onComboboxInputInput(ev: InputEvent) {
+    this._filterPattern = (ev.target as HTMLInputElement).value;
+    this._toggleDropdown(true);
+  }
+
   private _renderOptions() {
-    return this._options.map((op, index) => {
+    const list = this.combobox ? this._filteredOptions : this._options;
+
+    return list.map((op, index) => {
       const classes = classMap({
         option: true,
         active: index === this._activeIndex,
       });
 
-      return html`<li class="${classes}" data-index="${index}">
-        ${op.label}
-      </li>`;
+      return html`
+        <li class="${classes}" data-index="${index}">${op.label}</li>
+      `;
     });
   }
 
@@ -109,29 +125,67 @@ export class VscodeSingleSelect extends VscodeSelectBase {
       : nothing;
   }
 
-  render(): TemplateResult {
+  private _renderLabel() {
     const labelText =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : ' ';
+      this._selectedIndex > -1
+        ? this._options[this._selectedIndex].label
+        : html`<span class="empty-label-placeholder"></span>`;
 
+    return html`<span class="text">${labelText}</span>`;
+  }
+
+  private _renderSelectFace() {
+    return html`
+      <div class="select-face" @click="${this._onFaceClick}">
+        ${this._renderLabel()} ${chevronDownIcon}
+      </div>
+    `;
+  }
+
+  private _renderComboboxFace() {
+    const inputVal =
+      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
+
+    return html`
+      <div class="combobox-face">
+        <input
+          class="combobox-input"
+          spellcheck="false"
+          type="text"
+          .value="${inputVal}"
+          @focus="${this._onComboboxInputFocus}"
+          @input="${this._onComboboxInputInput}"
+        />
+        <button
+          class="combobox-button"
+          type="button"
+          @click="${this._onComboboxButtonClick}"
+        >
+          ${chevronDownIcon}
+        </button>
+      </div>
+    `;
+  }
+
+  render(): TemplateResult {
     const dropdown = this._showDropdown
-      ? html`<div class="dropdown">
-          <ul
-            class="options"
-            @mouseover="${this._onOptionMouseOver}"
-            @click="${this._onOptionClick}"
-          >
-            ${this._renderOptions()}
-          </ul>
-          ${this._renderDescription()}
-        </div>`
+      ? html`
+          <div class="dropdown">
+            <ul
+              class="options"
+              @mouseover="${this._onOptionMouseOver}"
+              @click="${this._onOptionClick}"
+            >
+              ${this._renderOptions()}
+            </ul>
+            ${this._renderDescription()}
+          </div>
+        `
       : nothing;
 
     return html`
       <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
-      <div class="select-face" @click="${this._onFaceClick}">
-        <span class="text">${labelText}</span>
-        ${icon}
-      </div>
+      ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
       ${dropdown}
     `;
   }

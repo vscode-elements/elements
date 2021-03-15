@@ -1,6 +1,6 @@
 import {html} from 'lit-element';
 
-export const icon = html`
+export const chevronDownIcon = html`
   <span class="icon">
     <svg
       width="16"

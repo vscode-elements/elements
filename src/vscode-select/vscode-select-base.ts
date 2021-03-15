@@ -1,21 +1,8 @@
-import {
-  LitElement,
-  html,
-  property,
-  TemplateResult,
-  internalProperty,
-  queryAssignedNodes,
-  query,
-} from 'lit-element';
+import {LitElement, property, internalProperty, query} from 'lit-element';
 import {VscodeSelectOption} from './vscode-select-option';
 import dropdownStyles from './vscode-select-base.styles';
-
-interface Option {
-  label: string;
-  value: string;
-  description: string;
-  selected: boolean;
-}
+import {InternalOption, Option, SearchMethod} from './includes/types';
+import {filterOptionsByPattern} from './includes/helpers';
 
 interface OptionListStat {
   selectedIndexes: number[];
@@ -32,6 +19,45 @@ export class VscodeSelectBase extends LitElement {
   @property({type: Boolean, reflect: true, attribute: 'data-cloak'})
   dataCloak = false;
 
+  @property({type: String})
+  set filter(val: string) {
+    const validValues: SearchMethod[] = [
+      'contains',
+      'fuzzy',
+      'startsWith',
+      'startsWithPerTerm',
+    ];
+
+    if (validValues.includes(val as SearchMethod)) {
+      this._filter = val as SearchMethod;
+    } else {
+      this._filter = 'fuzzy';
+      console.warn(
+        `[VSCode Webview Elements] Invalid filter: "${val}", fallback to default. Valid values are: "contains", "fuzzy", "startsWith", "startsWithPerm".`,
+        this
+      );
+    }
+  }
+  get filter(): string {
+    return this._filter;
+  }
+
+  @property({type: Boolean, reflect: true})
+  focused = false;
+
+  @property({type: Array})
+  set options(opts: Option[]) {
+    this._options = opts.map((op, index) => ({...op, index}));
+  }
+  get options(): Option[] {
+    return this._options.map(({label, value, description, selected}) => ({
+      label,
+      value,
+      description,
+      selected,
+    }));
+  }
+
   @property({type: Number, attribute: true, reflect: true})
   tabindex = 0;
 
@@ -39,11 +65,15 @@ export class VscodeSelectBase extends LitElement {
     super.connectedCallback();
     this.dataCloak = false;
     this.addEventListener('keydown', this._onComponentKeyDown);
+    this.addEventListener('focus', this._onComponentFocus);
+    this.addEventListener('blur', this._onComponentBlur);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this._onComponentKeyDown);
+    this.removeEventListener('focus', this._onComponentFocus);
+    this.removeEventListener('blur', this._onComponentBlur);
   }
 
   @internalProperty()
@@ -53,13 +83,32 @@ export class VscodeSelectBase extends LitElement {
   protected _currentDescription = '';
 
   @internalProperty()
+  _filter: SearchMethod = 'fuzzy';
+
+  @internalProperty()
+  protected get _filteredOptions(): Option[] {
+    if (!this.combobox || this._filterPattern === '') {
+      return this._options;
+    }
+
+    return filterOptionsByPattern(
+      this._options,
+      this._filterPattern,
+      this._filter
+    );
+  }
+
+  @internalProperty()
+  protected _filterPattern = '';
+
+  @internalProperty()
   protected _selectedIndex = -1;
 
   @internalProperty()
   protected _showDropdown = false;
 
   @internalProperty()
-  protected _options: Option[] = [];
+  protected _options: InternalOption[] = [];
 
   @internalProperty()
   protected _value: string | string[] = '';
@@ -70,7 +119,8 @@ export class VscodeSelectBase extends LitElement {
   protected _multiple = false;
 
   protected _addOptionsFromSlottedElements(): OptionListStat {
-    const options: Option[] = [];
+    const options: InternalOption[] = [];
+    let currentIndex = 0;
     const nodes = this._mainSlot.assignedNodes();
     const optionsListStat: OptionListStat = {
       selectedIndexes: [],
@@ -98,14 +148,15 @@ export class VscodeSelectBase extends LitElement {
         ? elValue
         : innerText;
 
-      const op: Option = {
+      const op: InternalOption = {
         label: innerText,
         value,
         description,
         selected,
+        index: currentIndex,
       };
 
-      options.push(op);
+      currentIndex = options.push(op);
 
       if (selected) {
         optionsListStat.selectedIndexes.push(options.length - 1);
@@ -137,6 +188,11 @@ export class VscodeSelectBase extends LitElement {
   }
 
   protected _onFaceClick(): void {
+    this._toggleDropdown(!this._showDropdown);
+  }
+
+  protected _onComboboxButtonClick(): void {
+    this._filterPattern = '';
     this._toggleDropdown(!this._showDropdown);
   }
 
@@ -185,6 +241,14 @@ export class VscodeSelectBase extends LitElement {
       this._options[this._selectedIndex].selected = true;
       this._dispatchChangeEvent();
     }
+  }
+
+  private _onComponentFocus() {
+    this.focused = true;
+  }
+
+  private _onComponentBlur() {
+    this.focused = false;
   }
 
   static styles = dropdownStyles;
