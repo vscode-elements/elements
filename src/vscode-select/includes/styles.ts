@@ -40,7 +40,7 @@ export default css`
   .select-face-badge {
     background-color: var(--vscode-badge-background);
     border-radius: 2px;
-    color: var(--vsode-badge-foreground);
+    color: var(--vscode-badge-foreground);
     display: inline-block;
     flex-shrink: 0;
     font-size: 11px;
