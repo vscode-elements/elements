@@ -1,8 +1,8 @@
 import {LitElement, html, property, customElement} from 'lit-element';
 import {TemplateResult} from 'lit-html';
 
-@customElement('vscode-select-option')
-export class VscodeSelectOption extends LitElement {
+@customElement('vscode-option')
+export class VscodeOption extends LitElement {
   @property({type: String}) value = '';
   @property({type: String}) description = '';
   @property({type: Boolean, reflect: true}) selected = false;
@@ -14,6 +14,6 @@ export class VscodeSelectOption extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-select-option': VscodeSelectOption;
+    'vscode-option': VscodeOption;
   }
 }

@@ -9,7 +9,7 @@ import {
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import '../../vscode-button';
-import {VscodeSelectOption} from '../vscode-select-option';
+import {VscodeOption} from '../vscode-option';
 import dropdownStyles from './styles';
 import {InternalOption, Option, SearchMethod} from './types';
 import {filterOptionsByPattern} from './helpers';
@@ -147,7 +147,7 @@ export class VscodeSelectBase extends LitElement {
       if (
         !(
           el.nodeType === Node.ELEMENT_NODE &&
-          (el as Element).matches('vscode-select-option')
+          (el as Element).matches('vscode-option')
         )
       ) {
         return;
@@ -158,9 +158,9 @@ export class VscodeSelectBase extends LitElement {
         value: elValue,
         description,
         selected,
-      } = el as VscodeSelectOption;
+      } = el as VscodeOption;
 
-      const value = (el as VscodeSelectOption).hasAttribute('value')
+      const value = (el as VscodeOption).hasAttribute('value')
         ? elValue
         : innerText;
 
