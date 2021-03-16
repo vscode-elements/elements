@@ -1,17 +1,3 @@
-/*
-// Run this snippet in the webview to get all theme variables:
-let __html = document
-  .querySelector('iframe')
-  .contentDocument.querySelector('html');
-
-Array.from(__html.style)
-  .sort((a, b) => a.localeCompare(b))
-  .map(
-    (s) => `  ${s.replace(/./g, '\\.')}: ${__html.style.getPropertyValue(s)};\n`
-  )
-  .join('');
-*/
-
 body.vscode-high-contrast {
   --vscode-activityBar-background: #000000;
   --vscode-activityBar-border: #6fc3df;
@@ -85,13 +71,8 @@ body.vscode-high-contrast {
   --vscode-editor-findMatchBorder: #f38518;
   --vscode-editor-findMatchHighlightBorder: #f38518;
   --vscode-editor-findRangeHighlightBorder: rgba(243, 133, 24, 0.4);
-  --vscode-editor-focusedStackFrameHighlightBackground: rgba(
-    122,
-    189,
-    122,
-    0.3
-  );
-  --vscode-editor-font-family: Consolas, 'Courier New', monospace;
+  --vscode-editor-focusedStackFrameHighlightBackground: rgba(122, 189, 122, 0.3);
+  --vscode-editor-font-family: Consolas, "Courier New", monospace;
   --vscode-editor-font-size: 15px;
   --vscode-editor-font-weight: normal;
   --vscode-editor-foreground: #ffffff;
@@ -156,25 +137,10 @@ body.vscode-high-contrast {
   --vscode-editorOverviewRuler-infoForeground: rgba(117, 190, 255, 0.8);
   --vscode-editorOverviewRuler-modifiedForeground: rgba(0, 155, 249, 0.6);
   --vscode-editorOverviewRuler-rangeHighlightForeground: rgba(0, 122, 204, 0.6);
-  --vscode-editorOverviewRuler-selectionHighlightForeground: rgba(
-    160,
-    160,
-    160,
-    0.8
-  );
+  --vscode-editorOverviewRuler-selectionHighlightForeground: rgba(160, 160, 160, 0.8);
   --vscode-editorOverviewRuler-warningForeground: rgba(255, 204, 0, 0.8);
-  --vscode-editorOverviewRuler-wordHighlightForeground: rgba(
-    160,
-    160,
-    160,
-    0.8
-  );
-  --vscode-editorOverviewRuler-wordHighlightStrongForeground: rgba(
-    192,
-    160,
-    192,
-    0.8
-  );
+  --vscode-editorOverviewRuler-wordHighlightForeground: rgba(160, 160, 160, 0.8);
+  --vscode-editorOverviewRuler-wordHighlightStrongForeground: rgba(192, 160, 192, 0.8);
   --vscode-editorPane-background: #000000;
   --vscode-editorRuler-foreground: #ffffff;
   --vscode-editorSuggestWidget-background: #0c141f;
@@ -192,7 +158,7 @@ body.vscode-high-contrast {
   --vscode-extensionBadge-remoteForeground: #ffffff;
   --vscode-extensionIcon-starForeground: #ff8e00;
   --vscode-focusBorder: #f38518;
-  --vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
+  --vscode-font-family: "Segoe WPC", "Segoe UI", sans-serif;
   --vscode-font-size: 13px;
   --vscode-font-weight: normal;
   --vscode-foreground: #ffffff;
