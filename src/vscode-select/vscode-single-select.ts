@@ -80,6 +80,31 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     `;
   }
 
+  protected _renderComboboxFace(): TemplateResult {
+    const inputVal =
+      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
+
+    return html`
+      <div class="combobox-face">
+        <input
+          class="combobox-input"
+          spellcheck="false"
+          type="text"
+          .value="${inputVal}"
+          @focus="${this._onComboboxInputFocus}"
+          @input="${this._onComboboxInputInput}"
+        />
+        <button
+          class="combobox-button"
+          type="button"
+          @click="${this._onComboboxButtonClick}"
+        >
+          ${chevronDownIcon}
+        </button>
+      </div>
+    `;
+  }
+
   protected _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
 

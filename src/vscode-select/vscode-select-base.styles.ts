@@ -42,11 +42,13 @@ export default css`
     border-radius: 2px;
     color: var(--vsode-badge-foreground);
     display: inline-block;
+    flex-shrink: 0;
     font-size: 11px;
     line-height: 16px;
     margin: 2px;
     padding: 2px 3px;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .select-face-badge.no-item {
@@ -93,6 +95,7 @@ export default css`
     border: 0;
     color: var(--vscode-foreground);
     cursor: pointer;
+    flex-shrink: 0;
     height: 24px;
     margin: 0;
     padding: 0;

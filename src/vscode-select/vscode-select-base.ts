@@ -314,11 +314,11 @@ export class VscodeSelectBase extends LitElement {
     }
   }
 
-  private _onComboboxInputFocus(ev: FocusEvent) {
+  protected _onComboboxInputFocus(ev: FocusEvent): void {
     (ev.target as HTMLInputElement).select();
   }
 
-  private _onComboboxInputInput(ev: InputEvent) {
+  protected _onComboboxInputInput(ev: InputEvent): void {
     this._filterPattern = (ev.target as HTMLInputElement).value;
     this._toggleDropdown(true);
   }
@@ -343,29 +343,8 @@ export class VscodeSelectBase extends LitElement {
     return html`${nothing}`;
   }
 
-  private _renderComboboxFace() {
-    const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
-
-    return html`
-      <div class="combobox-face">
-        <input
-          class="combobox-input"
-          spellcheck="false"
-          type="text"
-          .value="${inputVal}"
-          @focus="${this._onComboboxInputFocus}"
-          @input="${this._onComboboxInputInput}"
-        />
-        <button
-          class="combobox-button"
-          type="button"
-          @click="${this._onComboboxButtonClick}"
-        >
-          ${chevronDownIcon}
-        </button>
-      </div>
-    `;
+  protected _renderComboboxFace(): TemplateResult {
+    return html`${nothing}`;
   }
 
   protected _renderDropdownControls(): TemplateResult {
