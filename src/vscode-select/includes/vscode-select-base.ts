@@ -8,12 +8,11 @@ import {
 } from 'lit-element';
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
-import '../vscode-button';
-import {chevronDownIcon} from './includes/template-elements';
-import {VscodeSelectOption} from './vscode-select-option';
-import dropdownStyles from './vscode-select-base.styles';
-import {InternalOption, Option, SearchMethod} from './includes/types';
-import {filterOptionsByPattern} from './includes/helpers';
+import '../../vscode-button';
+import {VscodeSelectOption} from '../vscode-select-option';
+import dropdownStyles from './styles';
+import {InternalOption, Option, SearchMethod} from './types';
+import {filterOptionsByPattern} from './helpers';
 
 interface OptionListStat {
   selectedIndexes: number[];

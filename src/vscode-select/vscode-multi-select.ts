@@ -1,7 +1,7 @@
 import {html, customElement, property, TemplateResult} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {chevronDownIcon} from './includes/template-elements';
-import {VscodeSelectBase} from './vscode-select-base';
+import {VscodeSelectBase} from './includes/vscode-select-base';
 
 @customElement('vscode-multi-select')
 export class VscodeMultiSelect extends VscodeSelectBase {
