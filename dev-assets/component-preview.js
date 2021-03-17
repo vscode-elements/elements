@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const tmpl = document.createElement('template');
 
 tmpl.innerHTML = `
@@ -5,7 +6,7 @@ tmpl.innerHTML = `
     :host {
       all: initial;
       background-color: var(--vscode-editor-background);
-      color: var(--vscode-editor-foreground);
+      color: var(--vscode-foreground);
       display: block;
       font-family: var(--vscode-font-family);
       font-size: var(--vscode-font-size);
@@ -34,6 +35,12 @@ tmpl.innerHTML = `
       padding: 5px 0;
     }
 
+    .theme-switcher-option button:focus-visible span {
+      display: block;
+      outline: 1px solid var(--vscode-focusBorder);
+      outline-offset: 2px;
+    }
+
     .theme-switcher-option.light button {
       border-bottom-color: var(--component-preview-light-active-color);
     }
@@ -48,13 +55,13 @@ tmpl.innerHTML = `
   </style>
   <div class="theme-switcher">
     <div class="theme-switcher-option light">
-      <button value="vscode-light" type="button">Light</button>
+      <button value="vscode-light" type="button"><span>Light</span></button>
     </div>
     <div class="theme-switcher-option dark">
-      <button value="vscode-dark" type="button">Dark</button>
+      <button value="vscode-dark" type="button"><span>Dark</span></button>
     </div>
     <div class="theme-switcher-option hc">
-      <button value="vscode-high-contrast" type="button">High contrast</button>
+      <button value="vscode-high-contrast" type="button"><span>High contrast</span></button>
     </div>
   </div>
   <slot></slot>
@@ -78,7 +85,10 @@ class ComponentPreview extends HTMLElement {
           'vscode-dark',
           'vscode-high-contrast'
         );
-        document.body.classList.add(event.target.value);
+
+        const button = event.composedPath().find((el) => el.matches('button'));
+
+        document.body.classList.add(button.value);
       });
     });
   }
