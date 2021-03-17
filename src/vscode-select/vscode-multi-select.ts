@@ -139,6 +139,7 @@ export class VscodeMultiSelect extends VscodeSelectBase {
         class="options"
         @mouseover="${this._onOptionMouseOver}"
         @click="${this._onOptionClick}"
+        .scrollTop="${this._optionListScrollTop}"
       >
         ${options}
       </ul>

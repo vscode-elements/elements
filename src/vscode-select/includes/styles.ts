@@ -154,7 +154,7 @@ export default css`
     cursor: pointer;
     list-style: none;
     margin: 0;
-    max-height: 191px;
+    max-height: 192px;
     overflow: auto;
     padding: 1px;
   }
@@ -165,7 +165,7 @@ export default css`
     cursor: pointer;
     display: flex;
     font-size: var(--vscode-font-size);
-    line-height: 1.3;
+    line-height: 17px;
     min-height: calc(var(--vscode-font-size) * 1.3);
     padding: 1px 3px;
     user-select: none;

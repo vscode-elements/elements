@@ -130,10 +130,21 @@ export class VscodeSelectBase extends LitElement {
   @internalProperty()
   protected _values: string[] = [];
 
+  @internalProperty()
+  protected _optionListScrollTop = 0;
+
   @query('.main-slot')
   protected _mainSlot!: HTMLSlotElement;
 
+  @query('.options')
+  private _optionListElement!: HTMLUListElement;
+
+  @query('.options li:first-child')
+  private _firstOptionElement!: HTMLLIElement;
+
   protected _multiple = false;
+  private _optionElementHeight = -1;
+  private _isHoverForbidden = false;
 
   protected _addOptionsFromSlottedElements(): OptionListStat {
     const options: InternalOption[] = [];
@@ -243,6 +254,13 @@ export class VscodeSelectBase extends LitElement {
 
   protected _onClickOutsideBound = this._onClickOutside.bind(this);
 
+  private _onMouseMove() {
+    this._isHoverForbidden = false;
+    window.removeEventListener('mousemove', this._onMouseMoveBound);
+  }
+
+  private _onMouseMoveBound = this._onMouseMove.bind(this);
+
   private _toggleComboboxDropdown() {
     this._filterPattern = '';
     this._toggleDropdown(!this._showDropdown);
@@ -263,6 +281,10 @@ export class VscodeSelectBase extends LitElement {
   }
 
   protected _onOptionMouseOver(ev: MouseEvent): void {
+    if (this._isHoverForbidden) {
+      return;
+    }
+
     const el = ev.target as HTMLElement;
 
     if (!el.matches('.option')) {
@@ -311,6 +333,35 @@ export class VscodeSelectBase extends LitElement {
     }
   }
 
+  private _adjustOptionListScrollPos(direction: 'down' | 'up') {
+    const UL_TOP_PADDING = 0;
+    const VISIBLE_OPTIONS = 10;
+
+    if (this._optionElementHeight < 0) {
+      const boundRect = this._firstOptionElement.getBoundingClientRect();
+      this._optionElementHeight = boundRect.height;
+    }
+
+    const ulBoundRect = this._optionListElement.getBoundingClientRect();
+    const ulHeight = ulBoundRect.height - UL_TOP_PADDING * 2;
+    const ulScrollTop = this._optionListElement.scrollTop;
+    const liPosY = this._activeIndex * this._optionElementHeight;
+
+    if (direction === 'down') {
+      if (liPosY + this._optionElementHeight >= ulHeight + ulScrollTop) {
+        this._optionListScrollTop =
+          (this._activeIndex - (VISIBLE_OPTIONS - 1)) * this._optionElementHeight;
+      }
+    }
+
+    if (direction === 'up') {
+      if (liPosY <= ulScrollTop - this._optionElementHeight) {
+        this._optionListScrollTop =
+          Math.floor((this._activeIndex ) * this._optionElementHeight);
+      }
+    }
+  }
+
   private _onArrowUpKeyDown() {
     if (this._showDropdown) {
       if (this._activeIndex <= 0) {
@@ -319,6 +370,10 @@ export class VscodeSelectBase extends LitElement {
 
       this._activeIndex -= 1;
     }
+
+    this._isHoverForbidden = true;
+    window.addEventListener('mousemove', this._onMouseMoveBound);
+    this._adjustOptionListScrollPos('up');
   }
 
   private _onArrowDownKeyDown() {
@@ -329,6 +384,10 @@ export class VscodeSelectBase extends LitElement {
 
       this._activeIndex += 1;
     }
+
+    this._isHoverForbidden = true;
+    window.addEventListener('mousemove', this._onMouseMoveBound);
+    this._adjustOptionListScrollPos('down');
   }
 
   private _onComponentKeyDown(event: KeyboardEvent) {
