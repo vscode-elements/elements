@@ -19,6 +19,8 @@ interface OptionListStat {
   values: string[];
 }
 
+const VISIBLE_OPTIONS = 10;
+
 export class VscodeSelectBase extends LitElement {
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
   ariaExpanded = 'false';
@@ -101,7 +103,6 @@ export class VscodeSelectBase extends LitElement {
       return this._options;
     }
 
-    // TODO: filteredIndexes
     return filterOptionsByPattern(
       this._options,
       this._filterPattern,
@@ -334,8 +335,16 @@ export class VscodeSelectBase extends LitElement {
   }
 
   private _adjustOptionListScrollPos(direction: 'down' | 'up') {
-    const UL_TOP_PADDING = 0;
-    const VISIBLE_OPTIONS = 10;
+    const numOpts = this.combobox
+      ? this._filteredOptions.length
+      : this._options.length;
+
+    if (numOpts <= VISIBLE_OPTIONS) {
+      return;
+    }
+
+    this._isHoverForbidden = true;
+    window.addEventListener('mousemove', this._onMouseMoveBound);
 
     if (this._optionElementHeight < 0) {
       const boundRect = this._firstOptionElement.getBoundingClientRect();
@@ -343,21 +352,23 @@ export class VscodeSelectBase extends LitElement {
     }
 
     const ulBoundRect = this._optionListElement.getBoundingClientRect();
-    const ulHeight = ulBoundRect.height - UL_TOP_PADDING * 2;
+    const ulHeight = ulBoundRect.height;
     const ulScrollTop = this._optionListElement.scrollTop;
     const liPosY = this._activeIndex * this._optionElementHeight;
 
     if (direction === 'down') {
       if (liPosY + this._optionElementHeight >= ulHeight + ulScrollTop) {
         this._optionListScrollTop =
-          (this._activeIndex - (VISIBLE_OPTIONS - 1)) * this._optionElementHeight;
+          (this._activeIndex - (VISIBLE_OPTIONS - 1)) *
+          this._optionElementHeight;
       }
     }
 
     if (direction === 'up') {
       if (liPosY <= ulScrollTop - this._optionElementHeight) {
-        this._optionListScrollTop =
-          Math.floor((this._activeIndex ) * this._optionElementHeight);
+        this._optionListScrollTop = Math.floor(
+          this._activeIndex * this._optionElementHeight
+        );
       }
     }
   }
@@ -371,8 +382,6 @@ export class VscodeSelectBase extends LitElement {
       this._activeIndex -= 1;
     }
 
-    this._isHoverForbidden = true;
-    window.addEventListener('mousemove', this._onMouseMoveBound);
     this._adjustOptionListScrollPos('up');
   }
 
@@ -385,8 +394,6 @@ export class VscodeSelectBase extends LitElement {
       this._activeIndex += 1;
     }
 
-    this._isHoverForbidden = true;
-    window.addEventListener('mousemove', this._onMouseMoveBound);
     this._adjustOptionListScrollPos('down');
   }
 

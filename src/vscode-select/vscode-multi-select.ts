@@ -113,7 +113,6 @@ export class VscodeMultiSelect extends VscodeSelectBase {
     const list = this.combobox ? this._filteredOptions : this._options;
 
     const options = list.map((op) => {
-      // TODO: binary search
       const selected = this._selectedIndexes.includes(op.index);
       const active = this._activeIndex === op.index;
       const optionClasses = classMap({
