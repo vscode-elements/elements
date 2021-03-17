@@ -25,9 +25,13 @@ export class VscodeMultiSelect extends VscodeSelectBase {
 
   private _onOptionClick(ev: MouseEvent) {
     const composedPath = ev.composedPath();
-    const optEl = composedPath.find((et) =>
-      (et as HTMLElement)?.matches('li.option')
-    );
+    const optEl = composedPath.find((et) => {
+      if ('matches' in et) {
+        return (et as HTMLElement).matches('li.option');
+      }
+
+      return false;
+    });
 
     if (!optEl) {
       return;
@@ -66,11 +70,15 @@ export class VscodeMultiSelect extends VscodeSelectBase {
   private _renderLabel() {
     switch (this._selectedIndexes.length) {
       case 0:
-        return html`<span class="select-face-badge no-item">No items selected</span>`;
+        return html`<span class="select-face-badge no-item"
+          >No items selected</span
+        >`;
       case 1:
         return html`<span class="select-face-badge">1 item selected</span>`;
       default:
-        return html`<span class="select-face-badge">${this._selectedIndexes.length} items selected</span>`;
+        return html`<span class="select-face-badge"
+          >${this._selectedIndexes.length} items selected</span
+        >`;
     }
   }
 
