@@ -119,6 +119,7 @@ component: vscode-icon
   <vscode-icon name="code" title="code"></vscode-icon>
   <vscode-icon name="collapse-all" title="collapse-all"></vscode-icon>
   <vscode-icon name="color-mode" title="color-mode"></vscode-icon>
+  <vscode-icon name="combine" title="combine"></vscode-icon>
   <vscode-icon name="comment" title="comment"></vscode-icon>
   <vscode-icon name="comment-add" title="comment-add"></vscode-icon>
   <vscode-icon name="comment-discussion" title="comment-discussion"></vscode-icon>
@@ -152,6 +153,7 @@ component: vscode-icon
   <vscode-icon name="debug-disconnect" title="debug-disconnect"></vscode-icon>
   <vscode-icon name="debug-hint" title="debug-hint"></vscode-icon>
   <vscode-icon name="debug-pause" title="debug-pause"></vscode-icon>
+  <vscode-icon name="debug-rerun" title="debug-rerun"></vscode-icon>
   <vscode-icon name="debug-restart" title="debug-restart"></vscode-icon>
   <vscode-icon name="debug-restart-frame" title="debug-restart-frame"></vscode-icon>
   <vscode-icon name="debug-reverse-continue" title="debug-reverse-continue"></vscode-icon>
@@ -213,6 +215,7 @@ component: vscode-icon
   <vscode-icon name="folder" title="folder"></vscode-icon>
   <vscode-icon name="folder-active" title="folder-active"></vscode-icon>
   <vscode-icon name="folder-opened" title="folder-opened"></vscode-icon>
+  <vscode-icon name="gather" title="gather"></vscode-icon>
   <vscode-icon name="gear" title="gear"></vscode-icon>
   <vscode-icon name="gift" title="gift"></vscode-icon>
   <vscode-icon name="gist" title="gist"></vscode-icon>
@@ -229,6 +232,7 @@ component: vscode-icon
   <vscode-icon name="git-merge" title="git-merge"></vscode-icon>
   <vscode-icon name="git-pull-request" title="git-pull-request"></vscode-icon>
   <vscode-icon name="git-pull-request-abandoned" title="git-pull-request-abandoned"></vscode-icon>
+  <vscode-icon name="git-pull-request-create" title="git-pull-request-create"></vscode-icon>
   <vscode-icon name="github" title="github"></vscode-icon>
   <vscode-icon name="github-action" title="github-action"></vscode-icon>
   <vscode-icon name="github-alt" title="github-alt"></vscode-icon>
@@ -303,6 +307,7 @@ component: vscode-icon
   <vscode-icon name="no-newline" title="no-newline"></vscode-icon>
   <vscode-icon name="note" title="note"></vscode-icon>
   <vscode-icon name="notebook" title="notebook"></vscode-icon>
+  <vscode-icon name="notebook-template" title="notebook-template"></vscode-icon>
   <vscode-icon name="octoface" title="octoface"></vscode-icon>
   <vscode-icon name="open-preview" title="open-preview"></vscode-icon>
   <vscode-icon name="organization" title="organization"></vscode-icon>
@@ -367,7 +372,9 @@ component: vscode-icon
   <vscode-icon name="rss" title="rss"></vscode-icon>
   <vscode-icon name="ruby" title="ruby"></vscode-icon>
   <vscode-icon name="run" title="run"></vscode-icon>
+  <vscode-icon name="run-above" title="run-above"></vscode-icon>
   <vscode-icon name="run-all" title="run-all"></vscode-icon>
+  <vscode-icon name="run-below" title="run-below"></vscode-icon>
   <vscode-icon name="save" title="save"></vscode-icon>
   <vscode-icon name="save-all" title="save-all"></vscode-icon>
   <vscode-icon name="save-as" title="save-as"></vscode-icon>
@@ -440,6 +447,7 @@ component: vscode-icon
   <vscode-icon name="symbol-variable" title="symbol-variable"></vscode-icon>
   <vscode-icon name="sync" title="sync"></vscode-icon>
   <vscode-icon name="sync-ignored" title="sync-ignored"></vscode-icon>
+  <vscode-icon name="table" title="table"></vscode-icon>
   <vscode-icon name="tag" title="tag"></vscode-icon>
   <vscode-icon name="tag-add" title="tag-add"></vscode-icon>
   <vscode-icon name="tag-remove" title="tag-remove"></vscode-icon>
@@ -458,12 +466,16 @@ component: vscode-icon
   <vscode-icon name="triangle-right" title="triangle-right"></vscode-icon>
   <vscode-icon name="triangle-up" title="triangle-up"></vscode-icon>
   <vscode-icon name="twitter" title="twitter"></vscode-icon>
+  <vscode-icon name="type-hierarchy" title="type-hierarchy"></vscode-icon>
+  <vscode-icon name="type-hierarchy-sub" title="type-hierarchy-sub"></vscode-icon>
+  <vscode-icon name="type-hierarchy-super" title="type-hierarchy-super"></vscode-icon>
   <vscode-icon name="unfold" title="unfold"></vscode-icon>
   <vscode-icon name="ungroup-by-ref-type" title="ungroup-by-ref-type"></vscode-icon>
   <vscode-icon name="unlock" title="unlock"></vscode-icon>
   <vscode-icon name="unmute" title="unmute"></vscode-icon>
   <vscode-icon name="unverified" title="unverified"></vscode-icon>
   <vscode-icon name="variable" title="variable"></vscode-icon>
+  <vscode-icon name="variable-group" title="variable-group"></vscode-icon>
   <vscode-icon name="verified" title="verified"></vscode-icon>
   <vscode-icon name="versions" title="versions"></vscode-icon>
   <vscode-icon name="vm" title="vm"></vscode-icon>
