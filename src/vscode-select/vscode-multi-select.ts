@@ -72,7 +72,6 @@ export class VscodeMultiSelect extends VscodeSelectBase {
       default:
         return html`<span class="select-face-badge">${this._selectedIndexes.length} items selected</span>`;
     }
-
   }
 
   protected _renderSelectFace(): TemplateResult {
@@ -102,6 +101,7 @@ export class VscodeMultiSelect extends VscodeSelectBase {
           class="combobox-button"
           type="button"
           @click="${this._onComboboxButtonClick}"
+          @keydown="${this._onComboboxButtonKeyDown}"
         >
           ${chevronDownIcon}
         </button>
@@ -115,7 +115,9 @@ export class VscodeMultiSelect extends VscodeSelectBase {
     const options = list.map((op) => {
       // TODO: binary search
       const selected = this._selectedIndexes.includes(op.index);
+      const active = this._activeIndex === op.index;
       const optionClasses = classMap({
+        active,
         option: true,
         selected,
       });

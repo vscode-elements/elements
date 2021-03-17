@@ -179,7 +179,7 @@ export default css`
     background-color: var(--vscode-list-hoverBackground);
   }
 
-  .dropdown.multiple .option:hover {
+  .dropdown.multiple .option.selected.active {
     background-color: var(--vscode-quickInputList-focusBackground, var(--vscode-list-focusBackground));
   }
 

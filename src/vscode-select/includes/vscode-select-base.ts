@@ -101,6 +101,7 @@ export class VscodeSelectBase extends LitElement {
       return this._options;
     }
 
+    // TODO: filteredIndexes
     return filterOptionsByPattern(
       this._options,
       this._filterPattern,
@@ -189,6 +190,10 @@ export class VscodeSelectBase extends LitElement {
     this._showDropdown = visible;
     this.ariaExpanded = String(visible);
 
+    if (visible && !this._multiple) {
+      this._activeIndex = this._selectedIndex;
+    }
+
     if (visible) {
       window.addEventListener('click', this._onClickOutsideBound);
     } else {
@@ -220,6 +225,10 @@ export class VscodeSelectBase extends LitElement {
 
   protected _onFaceClick(): void {
     this._toggleDropdown(!this._showDropdown);
+
+    if (this._multiple) {
+      this._activeIndex = -1;
+    }
   }
 
   protected _onClickOutside(event: MouseEvent): void {
@@ -234,9 +243,23 @@ export class VscodeSelectBase extends LitElement {
 
   protected _onClickOutsideBound = this._onClickOutside.bind(this);
 
-  protected _onComboboxButtonClick(): void {
+  private _toggleComboboxDropdown() {
     this._filterPattern = '';
     this._toggleDropdown(!this._showDropdown);
+
+    if (this._multiple) {
+      this._activeIndex = -1;
+    }
+  }
+
+  protected _onComboboxButtonClick(): void {
+    this._toggleComboboxDropdown();
+  }
+
+  protected _onComboboxButtonKeyDown(ev: KeyboardEvent): void {
+    if (ev.key === 'Enter') {
+      this._toggleComboboxDropdown();
+    }
   }
 
   protected _onOptionMouseOver(ev: MouseEvent): void {
@@ -249,50 +272,89 @@ export class VscodeSelectBase extends LitElement {
     this._activeIndex = Number(el.dataset.index);
   }
 
-  private _onComponentKeyDown(event: KeyboardEvent) {
+  private _onEnterKeyDown() {
+    const visible = !this._showDropdown;
+
+    this._toggleDropdown(visible);
+
     if (
-      event.key === ' ' ||
-      event.key === 'ArrowUp' ||
-      event.key === 'ArrowDown'
+      !this._multiple &&
+      !visible &&
+      this._selectedIndex !== this._activeIndex
     ) {
+      this._selectedIndex = this._activeIndex;
+      this._value = this._options[this._selectedIndex].value;
+      this._dispatchChangeEvent();
+    }
+
+    if (this._multiple && visible) {
+      this._activeIndex = 0;
+    }
+  }
+
+  private _onSpaceKeyDown() {
+    if (!this._showDropdown) {
+      this._toggleDropdown(true);
+      return;
+    }
+
+    if (this._showDropdown && this._multiple && this._activeIndex > -1) {
+      const {selected} = this._options[this._activeIndex];
+      this._options[this._activeIndex].selected = !selected;
+      this._selectedIndexes = [];
+
+      this._options.forEach(({index, selected}) => {
+        if (selected) {
+          this._selectedIndexes.push(index);
+        }
+      });
+    }
+  }
+
+  private _onArrowUpKeyDown() {
+    if (this._showDropdown) {
+      if (this._activeIndex <= 0) {
+        return;
+      }
+
+      this._activeIndex -= 1;
+    }
+  }
+
+  private _onArrowDownKeyDown() {
+    if (this._showDropdown) {
+      if (this._activeIndex >= this._options.length - 1) {
+        return;
+      }
+
+      this._activeIndex += 1;
+    }
+  }
+
+  private _onComponentKeyDown(event: KeyboardEvent) {
+    if ([' ', 'ArrowUp', 'ArrowDown', 'Escape'].includes(event.key)) {
       event.stopPropagation();
       event.preventDefault();
     }
 
     if (event.key === 'Enter') {
-      this._toggleDropdown(!this._showDropdown);
+      this._onEnterKeyDown();
     }
 
     if (event.key === ' ') {
-      this._showDropdown = true;
+      this._onSpaceKeyDown();
     }
 
-    if (event.key === 'Escape' || event.key == 'Tab') {
+    if (event.key === 'Escape') {
       this._showDropdown = false;
     }
 
-    if (event.key === 'ArrowUp' && this._selectedIndex > 0) {
-      this._options[this._selectedIndex].selected = false;
-      this._selectedIndex -= 1;
-      this._activeIndex = this._selectedIndex;
-      this._options[this._selectedIndex].selected = true;
-      this._dispatchChangeEvent();
+    if (event.key === 'ArrowUp') {
+      this._onArrowUpKeyDown();
     }
 
-    if (
-      event.key === 'ArrowDown' &&
-      this._selectedIndex < this._options.length - 1
-    ) {
-      if (this._selectedIndex === -1) {
-        this._selectedIndex = 0;
-      } else {
-        this._options[this._selectedIndex].selected = false;
-        this._selectedIndex += 1;
-      }
-
-      this._activeIndex = this._selectedIndex;
-      this._options[this._selectedIndex].selected = true;
-      this._dispatchChangeEvent();
+    if (event.key === 'ArrowDown') {
+      this._onArrowDownKeyDown();
     }
   }
 
@@ -358,8 +420,7 @@ export class VscodeSelectBase extends LitElement {
 
     return html`
       <div class="${classes}">
-        ${this._renderOptions()}
-        ${this._renderDropdownControls()}
+        ${this._renderOptions()} ${this._renderDropdownControls()}
         ${this._renderDescription()}
       </div>
     `;

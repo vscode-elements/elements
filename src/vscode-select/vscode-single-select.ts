@@ -39,14 +39,6 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     this._multiple = false;
   }
 
-  protected _toggleDropdown(visible: boolean): void {
-    if (visible) {
-      this._activeIndex = this._selectedIndex;
-    }
-
-    super._toggleDropdown(visible);
-  }
-
   private _onOptionClick(ev: MouseEvent) {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) =>
@@ -64,9 +56,11 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   }
 
   private _renderLabel() {
+    const index = this._showDropdown ? this._activeIndex : this._selectedIndex;
+
     const labelText =
-      this._selectedIndex > -1
-        ? this._options[this._selectedIndex].label
+      index > -1
+        ? this._options[index].label
         : html`<span class="empty-label-placeholder"></span>`;
 
     return html`<span class="text">${labelText}</span>`;
@@ -98,6 +92,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
           class="combobox-button"
           type="button"
           @click="${this._onComboboxButtonClick}"
+          @keydown="${this._onComboboxButtonKeyDown}"
         >
           ${chevronDownIcon}
         </button>
