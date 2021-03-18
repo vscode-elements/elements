@@ -196,12 +196,21 @@ export class VscodeSelectBase extends LitElement {
     return optionsListStat;
   }
 
-  protected _toggleDropdown(visible: boolean): void {
+  protected async _toggleDropdown(visible: boolean): Promise<void> {
     this._showDropdown = visible;
     this.ariaExpanded = String(visible);
 
     if (visible && !this._multiple) {
       this._activeIndex = this._selectedIndex;
+
+      if (this._activeIndex > VISIBLE_OPTS - 1) {
+
+        await this.updateComplete;
+
+        this._listElement.scrollTop = Math.floor(
+          this._activeIndex * OPT_HEIGHT
+        );
+      }
     }
 
     if (visible) {
@@ -237,7 +246,7 @@ export class VscodeSelectBase extends LitElement {
     this._toggleDropdown(!this._showDropdown);
 
     if (this._multiple) {
-      this._activeIndex = -1;
+      this._activeIndex = 0;
     }
   }
 
@@ -349,14 +358,14 @@ export class VscodeSelectBase extends LitElement {
 
     if (direction === 'down') {
       if (liPosY + OPT_HEIGHT >= LIST_HEIGHT + ulScrollTop) {
-        this._listScrollTop =
+        this._listElement.scrollTop =
           (this._activeIndex - (VISIBLE_OPTS - 1)) * OPT_HEIGHT;
       }
     }
 
     if (direction === 'up') {
       if (liPosY <= ulScrollTop - OPT_HEIGHT) {
-        this._listScrollTop = Math.floor(
+        this._listElement.scrollTop = Math.floor(
           this._activeIndex * OPT_HEIGHT
         );
       }
