@@ -120,11 +120,10 @@ export class VscodeMultiSelect extends VscodeSelectBase {
   protected _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
 
-    const options = list.map((op) => {
+    const options = list.map((op, index) => {
       const selected = this._selectedIndexes.includes(op.index);
-      const active = this._activeIndex === op.index;
       const optionClasses = classMap({
-        active,
+        active: index === this._activeIndex,
         option: true,
         selected,
       });
@@ -134,7 +133,11 @@ export class VscodeMultiSelect extends VscodeSelectBase {
       });
 
       return html`
-        <li class="${optionClasses}" data-index="${op.index}">
+        <li
+          class="${optionClasses}"
+          data-index="${op.index}"
+          data-filtered-index="${index}"
+        >
           <span class="${checkboxClasses}"></span>
           <span class="option-label">${op.label}</span>
         </li>

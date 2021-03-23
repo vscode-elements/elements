@@ -1,4 +1,10 @@
-import {customElement, property, html, TemplateResult} from 'lit-element';
+import {
+  customElement,
+  property,
+  html,
+  TemplateResult,
+  internalProperty,
+} from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {chevronDownIcon} from './includes/template-elements';
 import {VscodeSelectBase} from './includes/vscode-select-base';
@@ -34,9 +40,44 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     return this._value as string;
   }
 
+  @internalProperty()
+  private _labelText = '';
+
   constructor() {
     super();
     this._multiple = false;
+  }
+
+  protected _onSlotChange(): void {
+    super._onSlotChange();
+
+    if (this._selectedIndex > -1) {
+      this._labelText = this._options[this._selectedIndex].label;
+    }
+  }
+
+  protected _onArrowUpKeyDown(): void {
+    super._onArrowUpKeyDown();
+
+    if (this._showDropdown || this._selectedIndex <= 0) {
+      return;
+    }
+
+    this._selectedIndex -= 1;
+    this._labelText = this._options[this._selectedIndex].label;
+    this._dispatchChangeEvent();
+  }
+
+  protected _onArrowDownKeyDown(): void {
+    super._onArrowDownKeyDown();
+
+    if (this._showDropdown || this._selectedIndex >= this._options.length) {
+      return;
+    }
+
+    this._selectedIndex += 1;
+    this._labelText = this._options[this._selectedIndex].label;
+    this._dispatchChangeEvent();
   }
 
   private _onOptionClick(ev: MouseEvent) {
@@ -51,19 +92,20 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
     this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
     this._value = this._options[this._selectedIndex].value;
+
+    if (this._selectedIndex > -1) {
+      this._labelText = this._options[this._selectedIndex].label;
+    }
+
     this._toggleDropdown(false);
     this._dispatchChangeEvent();
   }
 
   private _renderLabel() {
-    const index = this._showDropdown ? this._activeIndex : this._selectedIndex;
+    const labelContent =
+      this._labelText || html`<span class="empty-label-placeholder"></span>`;
 
-    const labelText =
-      index > -1
-        ? this._options[index].label
-        : html`<span class="empty-label-placeholder"></span>`;
-
-    return html`<span class="text">${labelText}</span>`;
+    return html`<span class="text">${labelContent}</span>`;
   }
 
   protected _renderSelectFace(): TemplateResult {
@@ -103,14 +145,20 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   protected _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
 
-    const options = list.map((op) => {
+    const options = list.map((op, index) => {
       const classes = classMap({
         option: true,
-        active: op.index === this._activeIndex,
+        active: index === this._activeIndex,
       });
 
       return html`
-        <li class="${classes}" data-index="${op.index}">${op.label}</li>
+        <li
+          class="${classes}"
+          data-index="${op.index}"
+          data-filtered-index="${index}"
+        >
+          ${op.label}
+        </li>
       `;
     });
 

@@ -145,6 +145,10 @@ export class VscodeSelectBase extends LitElement {
   protected _multiple = false;
   private _isHoverForbidden = false;
 
+  protected get _currentOptions(): InternalOption[] {
+    return this.combobox ? this._filteredOptions : this._options;
+  }
+
   protected _addOptionsFromSlottedElements(): OptionListStat {
     const options: InternalOption[] = [];
     let currentIndex = 0;
@@ -204,7 +208,6 @@ export class VscodeSelectBase extends LitElement {
       this._activeIndex = this._selectedIndex;
 
       if (this._activeIndex > VISIBLE_OPTS - 1) {
-
         await this.updateComplete;
 
         this._listElement.scrollTop = Math.floor(
@@ -299,10 +302,12 @@ export class VscodeSelectBase extends LitElement {
       return;
     }
 
-    this._activeIndex = Number(el.dataset.index);
+    this._activeIndex = Number(
+      this.combobox ? el.dataset.filteredIndex : el.dataset.index
+    );
   }
 
-  private _onEnterKeyDown() {
+  private _onEnterKeyDown(): void {
     const visible = !this._showDropdown;
 
     this._toggleDropdown(visible);
@@ -312,7 +317,7 @@ export class VscodeSelectBase extends LitElement {
       !visible &&
       this._selectedIndex !== this._activeIndex
     ) {
-      this._selectedIndex = this._activeIndex;
+      this._selectedIndex = this._options[this._activeIndex].index;
       this._value = this._options[this._selectedIndex].value;
       this._dispatchChangeEvent();
     }
@@ -372,28 +377,28 @@ export class VscodeSelectBase extends LitElement {
     }
   }
 
-  private _onArrowUpKeyDown() {
+  protected _onArrowUpKeyDown(): void {
     if (this._showDropdown) {
       if (this._activeIndex <= 0) {
         return;
       }
 
       this._activeIndex -= 1;
+      this._adjustOptionListScrollPos('up');
     }
-
-    this._adjustOptionListScrollPos('up');
   }
 
-  private _onArrowDownKeyDown() {
+  protected _onArrowDownKeyDown(): void {
+    console.log(this._activeIndex, this._showDropdown);
     if (this._showDropdown) {
-      if (this._activeIndex >= this._options.length - 1) {
+      if (this._activeIndex >= this._currentOptions.length - 1) {
         return;
       }
 
       this._activeIndex += 1;
-    }
 
-    this._adjustOptionListScrollPos('down');
+      this._adjustOptionListScrollPos('down');
+    }
   }
 
   private _onComponentKeyDown(event: KeyboardEvent) {
@@ -431,7 +436,7 @@ export class VscodeSelectBase extends LitElement {
     this.focused = false;
   }
 
-  private _onSlotChange(): void {
+  protected _onSlotChange(): void {
     const stat = this._addOptionsFromSlottedElements();
 
     if (stat.selectedIndexes.length > 0) {
@@ -446,6 +451,7 @@ export class VscodeSelectBase extends LitElement {
 
   protected _onComboboxInputInput(ev: InputEvent): void {
     this._filterPattern = (ev.target as HTMLInputElement).value;
+    this._activeIndex = 0;
     this._toggleDropdown(true);
   }
 
