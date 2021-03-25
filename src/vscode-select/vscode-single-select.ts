@@ -65,6 +65,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
     this._selectedIndex -= 1;
     this._labelText = this._options[this._selectedIndex].label;
+    this._value = this._options[this._selectedIndex].value;
     this._dispatchChangeEvent();
   }
 
@@ -77,6 +78,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
     this._selectedIndex += 1;
     this._labelText = this._options[this._selectedIndex].label;
+    this._value = this._options[this._selectedIndex].value;
     this._dispatchChangeEvent();
   }
 

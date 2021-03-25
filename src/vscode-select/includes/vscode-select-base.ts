@@ -322,6 +322,10 @@ export class VscodeSelectBase extends LitElement {
       this._dispatchChangeEvent();
     }
 
+    if (this.combobox) {
+      this._selectedIndex = this._activeIndex;
+    }
+
     if (this._multiple && visible) {
       this._activeIndex = 0;
     }
@@ -389,7 +393,6 @@ export class VscodeSelectBase extends LitElement {
   }
 
   protected _onArrowDownKeyDown(): void {
-    console.log(this._activeIndex, this._showDropdown);
     if (this._showDropdown) {
       if (this._activeIndex >= this._currentOptions.length - 1) {
         return;
@@ -416,7 +419,7 @@ export class VscodeSelectBase extends LitElement {
     }
 
     if (event.key === 'Escape') {
-      this._showDropdown = false;
+      this._toggleDropdown(false);
     }
 
     if (event.key === 'ArrowUp') {
@@ -442,6 +445,8 @@ export class VscodeSelectBase extends LitElement {
     if (stat.selectedIndexes.length > 0) {
       this._selectedIndex = stat.selectedIndexes[0];
       this._selectedIndexes = stat.selectedIndexes;
+      this._value = stat.values[0];
+      this._values = stat.values;
     }
   }
 
