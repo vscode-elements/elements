@@ -316,4 +316,93 @@ describe('vscode-single-select', () => {
     const options = el.shadowRoot?.querySelector('.options');
     expect(options?.scrollTop).to.eq(190);
   });
+
+  it('combobox mode', async () => {
+    const el = (await fixture(html`
+      <vscode-single-select combobox></vscode-single-select>
+    `)) as VscodeSingleSelect;
+
+    expect(el).shadowDom.to.eq(`
+      <slot class="main-slot">
+      </slot>
+      <div class="combobox-face">
+        <input
+          class="combobox-input"
+          spellcheck="false"
+          type="text"
+        >
+        <button
+          class="combobox-button"
+          type="button"
+        >
+          <span class="icon">
+          </span>
+        </button>
+      </div>
+    `);
+  });
+
+  it('filtered list', async () => {
+    const el = (await fixture(html`
+      <vscode-single-select combobox>
+        <vscode-option>Antigua and Barbuda</vscode-option>
+        <vscode-option>Argentina</vscode-option>
+        <vscode-option>Armenia</vscode-option>
+        <vscode-option>Australia</vscode-option>
+        <vscode-option>Austria</vscode-option>
+      </vscode-single-select>
+    `)) as VscodeSingleSelect;
+    await el.updateComplete;
+
+    const input = el.shadowRoot?.querySelector(
+      '.combobox-input'
+    ) as HTMLInputElement;
+    input.value = 'au';
+    input.dispatchEvent(new InputEvent('input'));
+    await el.updateComplete;
+
+    expect(el).shadowDom.to.eq(`
+      <slot class="main-slot">
+      </slot>
+      <div class="combobox-face">
+        <input
+          class="combobox-input"
+          spellcheck="false"
+          type="text"
+        >
+        <button
+          class="combobox-button"
+          type="button"
+        >
+          <span class="icon">
+          </span>
+        </button>
+      </div>
+      <div class="dropdown">
+        <ul class="options">
+          <li
+            class="option"
+            data-filtered-index="0"
+            data-index="0"
+          >
+            Antigua and Barbuda
+          </li>
+          <li
+            class="option"
+            data-filtered-index="1"
+            data-index="3"
+          >
+            Australia
+          </li>
+          <li
+            class="option"
+            data-filtered-index="2"
+            data-index="4"
+          >
+            Austria
+          </li>
+        </ul>
+      </div>
+    `);
+  });
 });
