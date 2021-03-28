@@ -204,7 +204,7 @@ export class VscodeSelectBase extends LitElement {
     this._showDropdown = visible;
     this.ariaExpanded = String(visible);
 
-    if (visible && !this._multiple) {
+    if (visible && !this._multiple && !this.combobox) {
       this._activeIndex = this._selectedIndex;
 
       if (this._activeIndex > VISIBLE_OPTS - 1) {
@@ -399,7 +399,6 @@ export class VscodeSelectBase extends LitElement {
       }
 
       this._activeIndex += 1;
-
       this._adjustOptionListScrollPos('down');
     }
   }
@@ -456,7 +455,7 @@ export class VscodeSelectBase extends LitElement {
 
   protected _onComboboxInputInput(ev: InputEvent): void {
     this._filterPattern = (ev.target as HTMLInputElement).value;
-    this._activeIndex = 0;
+    this._activeIndex = -1;
     this._toggleDropdown(true);
   }
 
