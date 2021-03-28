@@ -432,5 +432,57 @@ describe('vscode-single-select', () => {
         </div>
       `);
     });
+
+    it('highlight element when the arrow down key pressed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox>
+          <vscode-option>Antigua and Barbuda</vscode-option>
+          <vscode-option>Argentina</vscode-option>
+          <vscode-option>Armenia</vscode-option>
+          <vscode-option>Australia</vscode-option>
+          <vscode-option>Austria</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+      await el.updateComplete;
+
+      const input = el.shadowRoot?.querySelector(
+        '.combobox-input'
+      ) as HTMLInputElement;
+      input.value = 'au';
+      input.dispatchEvent(new InputEvent('input'));
+      await el.updateComplete;
+
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      const optionsElement = el.shadowRoot?.querySelector(
+        '.options'
+      );
+
+      expect(optionsElement).lightDom.to.eq(`
+        <li
+          class="option"
+          data-filtered-index="0"
+          data-index="0"
+        >
+          Antigua and Barbuda
+        </li>
+        <li
+          class="active option"
+          data-filtered-index="1"
+          data-index="3"
+        >
+          Australia
+        </li>
+        <li
+          class="option"
+          data-filtered-index="2"
+          data-index="4"
+        >
+          Austria
+        </li>
+      `);
+    });
   });
 });
