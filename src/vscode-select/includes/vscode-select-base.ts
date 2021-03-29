@@ -323,7 +323,7 @@ export class VscodeSelectBase extends LitElement {
     }
 
     if (this.combobox) {
-      this._selectedIndex = this._activeIndex;
+      this._selectedIndex = this._filteredOptions[this._activeIndex].index;
     }
 
     if (this._multiple && visible) {

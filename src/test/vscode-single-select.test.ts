@@ -456,9 +456,7 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      const optionsElement = el.shadowRoot?.querySelector(
-        '.options'
-      );
+      const optionsElement = el.shadowRoot?.querySelector('.options');
 
       expect(optionsElement).lightDom.to.eq(`
         <li
@@ -483,6 +481,43 @@ describe('vscode-single-select', () => {
           Austria
         </li>
       `);
+    });
+
+    it('highlight element when the arrow down key pressed, then select it', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox>
+          <vscode-option>Antigua and Barbuda</vscode-option>
+          <vscode-option>Argentina</vscode-option>
+          <vscode-option>Armenia</vscode-option>
+          <vscode-option>Australia</vscode-option>
+          <vscode-option>Austria</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+      await el.updateComplete;
+
+      const spy = sinon.spy(el, 'dispatchEvent');
+
+      const input = el.shadowRoot?.querySelector(
+        '.combobox-input'
+      ) as HTMLInputElement;
+      input.value = 'au';
+      input.dispatchEvent(new InputEvent('input'));
+      await el.updateComplete;
+
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
+      await el.updateComplete;
+
+      const dispatchedChangeEvent = spy.args[2][0] as CustomEvent;
+
+      expect(el.value).to.eq('Antigua and Barbuda');
+      expect(dispatchedChangeEvent.type).to.eq('vsc-change');
+      expect(dispatchedChangeEvent.detail).to.eql({
+        selectedIndex: 0,
+        value: 'Antigua and Barbuda',
+      });
     });
   });
 });
