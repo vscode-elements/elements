@@ -63,7 +63,9 @@ export class VscodeSingleSelect extends VscodeSelectBase {
       return;
     }
 
+    this._filterPattern = '';
     this._selectedIndex -= 1;
+    this._activeIndex = this._selectedIndex;
     this._labelText = this._options[this._selectedIndex].label;
     this._value = this._options[this._selectedIndex].value;
     this._dispatchChangeEvent();
@@ -76,7 +78,9 @@ export class VscodeSingleSelect extends VscodeSelectBase {
       return;
     }
 
+    this._filterPattern = '';
     this._selectedIndex += 1;
+    this._activeIndex = this._selectedIndex;
     this._labelText = this._options[this._selectedIndex].label;
     this._value = this._options[this._selectedIndex].value;
     this._dispatchChangeEvent();

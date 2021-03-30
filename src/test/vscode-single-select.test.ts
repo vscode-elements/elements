@@ -519,5 +519,72 @@ describe('vscode-single-select', () => {
         value: 'Antigua and Barbuda',
       });
     });
+
+    it('select an option with the arrow down key, opens the dropdown with the enter key, scroll to the selected option', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox>
+          <vscode-option>Afghanistan</vscode-option>
+          <vscode-option>Albania</vscode-option>
+          <vscode-option>Algeria</vscode-option>
+          <vscode-option>Andorra</vscode-option>
+          <vscode-option>Angola</vscode-option>
+          <vscode-option>Antigua and Barbuda</vscode-option>
+          <vscode-option>Argentina</vscode-option>
+          <vscode-option>Armenia</vscode-option>
+          <vscode-option>Australia</vscode-option>
+          <vscode-option>Austria</vscode-option>
+          <vscode-option>Azerbaijan</vscode-option>
+          <vscode-option>Bahamas</vscode-option>
+          <vscode-option>Bahrain</vscode-option>
+          <vscode-option>Bangladesh</vscode-option>
+          <vscode-option>Barbados</vscode-option>
+          <vscode-option>Belarus</vscode-option>
+          <vscode-option>Belgium</vscode-option>
+          <vscode-option>Belize</vscode-option>
+          <vscode-option>Benin</vscode-option>
+          <vscode-option>Bhutan</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+      await el.updateComplete;
+
+      const input = el.shadowRoot?.querySelector(
+        '.combobox-input'
+      ) as HTMLInputElement;
+      input.focus();
+
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
+      await el.updateComplete;
+
+      const activeOpt = el.shadowRoot?.querySelector('.option.active');
+      const optionsEl = el.shadowRoot?.querySelector('.options');
+
+      expect(input.value).to.eq('Austria');
+      expect(activeOpt).not.null;
+      expect((activeOpt as HTMLLIElement).innerText).to.eq('Austria');
+      expect(optionsEl?.scrollTop).to.eq(171);
+      expect(el.value).to.eq('Austria');
+      expect(el.selectedIndex).to.eq(9);
+    });
   });
 });

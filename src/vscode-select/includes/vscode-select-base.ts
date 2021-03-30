@@ -324,6 +324,12 @@ export class VscodeSelectBase extends LitElement {
 
     if (this.combobox) {
       this._selectedIndex = this._filteredOptions[this._activeIndex].index;
+
+      if (!this._multiple && visible) {
+        this.updateComplete.then(() => {
+          this._scrollActiveElementToTop();
+        });
+      }
     }
 
     if (this._multiple && visible) {
@@ -350,7 +356,13 @@ export class VscodeSelectBase extends LitElement {
     }
   }
 
-  private _adjustOptionListScrollPos(direction: 'down' | 'up') {
+  private _scrollActiveElementToTop() {
+    this._listElement.scrollTop = Math.floor(
+      this._activeIndex * OPT_HEIGHT
+    );
+  }
+
+  private async _adjustOptionListScrollPos(direction: 'down' | 'up') {
     const numOpts = this.combobox
       ? this._filteredOptions.length
       : this._options.length;
@@ -361,6 +373,10 @@ export class VscodeSelectBase extends LitElement {
 
     this._isHoverForbidden = true;
     window.addEventListener('mousemove', this._onMouseMoveBound);
+
+    if (!this._listElement) {
+      await this.updateComplete;
+    }
 
     const ulScrollTop = this._listElement.scrollTop;
     const liPosY = this._activeIndex * OPT_HEIGHT;
@@ -374,9 +390,7 @@ export class VscodeSelectBase extends LitElement {
 
     if (direction === 'up') {
       if (liPosY <= ulScrollTop - OPT_HEIGHT) {
-        this._listElement.scrollTop = Math.floor(
-          this._activeIndex * OPT_HEIGHT
-        );
+        this._scrollActiveElementToTop();
       }
     }
   }
