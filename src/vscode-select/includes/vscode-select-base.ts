@@ -323,7 +323,6 @@ export class VscodeSelectBase extends LitElement {
     }
 
     if (this.combobox) {
-
       if (!this._multiple && !showDropdownNext) {
         this._selectedIndex = this._filteredOptions[this._activeIndex].index;
       }
@@ -347,11 +346,13 @@ export class VscodeSelectBase extends LitElement {
     }
 
     if (this._showDropdown && this._multiple && this._activeIndex > -1) {
-      const {selected} = this._options[this._activeIndex];
-      this._options[this._activeIndex].selected = !selected;
+      const opts = this.combobox ? this._filteredOptions : this._options;
+      const {selected} = opts[this._activeIndex];
+
+      opts[this._activeIndex].selected = !selected;
       this._selectedIndexes = [];
 
-      this._options.forEach(({index, selected}) => {
+      opts.forEach(({index, selected}) => {
         if (selected) {
           this._selectedIndexes.push(index);
         }
