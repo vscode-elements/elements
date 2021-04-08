@@ -308,13 +308,13 @@ export class VscodeSelectBase extends LitElement {
   }
 
   private _onEnterKeyDown(): void {
-    const visible = !this._showDropdown;
+    const showDropdownNext = !this._showDropdown;
 
-    this._toggleDropdown(visible);
+    this._toggleDropdown(showDropdownNext);
 
     if (
       !this._multiple &&
-      !visible &&
+      !showDropdownNext &&
       this._selectedIndex !== this._activeIndex
     ) {
       this._selectedIndex = this._options[this._activeIndex].index;
@@ -323,16 +323,19 @@ export class VscodeSelectBase extends LitElement {
     }
 
     if (this.combobox) {
-      this._selectedIndex = this._filteredOptions[this._activeIndex].index;
 
-      if (!this._multiple && visible) {
+      if (!this._multiple && !showDropdownNext) {
+        this._selectedIndex = this._filteredOptions[this._activeIndex].index;
+      }
+
+      if (!this._multiple && showDropdownNext) {
         this.updateComplete.then(() => {
           this._scrollActiveElementToTop();
         });
       }
     }
 
-    if (this._multiple && visible) {
+    if (this._multiple && showDropdownNext) {
       this._activeIndex = 0;
     }
   }
@@ -357,9 +360,7 @@ export class VscodeSelectBase extends LitElement {
   }
 
   private _scrollActiveElementToTop() {
-    this._listElement.scrollTop = Math.floor(
-      this._activeIndex * OPT_HEIGHT
-    );
+    this._listElement.scrollTop = Math.floor(this._activeIndex * OPT_HEIGHT);
   }
 
   private async _adjustOptionListScrollPos(direction: 'down' | 'up') {

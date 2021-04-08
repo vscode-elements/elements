@@ -135,7 +135,7 @@ describe('vscode-single-select', () => {
       });
     });
 
-    it('arrow up key press', async () => {
+    it('the value should be changed when the arrow up key pressed while the dropdown is closed', async () => {
       const el = (await fixture(html`
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
@@ -144,10 +144,12 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
+      const spy = sinon.spy(el, 'dispatchEvent');
+
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowUp'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(`
+      expect(el).shadowDom.to.eq(`
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -159,6 +161,14 @@ describe('vscode-single-select', () => {
       `);
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
+
+      const dispatchedEvent = spy.args[1][0] as CustomEvent;
+
+      expect(dispatchedEvent.type).to.eq('vsc-change');
+      expect(dispatchedEvent.detail).to.eql({
+        selectedIndex: 1,
+        value: 'Ipsum',
+      });
     });
 
     it('dropdown should be opened when "Space" key pressed', async () => {

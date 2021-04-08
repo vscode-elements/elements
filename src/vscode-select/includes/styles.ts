@@ -175,6 +175,12 @@ export default css`
     background-color: var(--vscode-quickInputList-focusBackground, var(--vscode-list-focusBackground));
   }
 
+  .option-label {
+    display: block;
+    pointer-events: none;
+    width: 100%;
+  }
+
   .dropdown.multiple .option.selected {
     background-color: var(--vscode-list-hoverBackground);
   }

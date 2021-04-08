@@ -1,4 +1,5 @@
 import {html, customElement, property, TemplateResult} from 'lit-element';
+import {repeat} from 'lit-html/directives/repeat';
 import {classMap} from 'lit-html/directives/class-map';
 import {chevronDownIcon} from './includes/template-elements';
 import {VscodeSelectBase} from './includes/vscode-select-base';
@@ -120,37 +121,39 @@ export class VscodeMultiSelect extends VscodeSelectBase {
   protected _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
 
-    const options = list.map((op, index) => {
-      const selected = this._selectedIndexes.includes(op.index);
-      const optionClasses = classMap({
-        active: index === this._activeIndex,
-        option: true,
-        selected,
-      });
-      const checkboxClasses = classMap({
-        'checkbox-icon': true,
-        checked: selected,
-      });
-
-      return html`
-        <li
-          class="${optionClasses}"
-          data-index="${op.index}"
-          data-filtered-index="${index}"
-        >
-          <span class="${checkboxClasses}"></span>
-          <span class="option-label">${op.label}</span>
-        </li>
-      `;
-    });
-
     return html`
       <ul
         class="options"
-        @mouseover="${this._onOptionMouseOver}"
         @click="${this._onOptionClick}"
+        @mouseover="${this._onOptionMouseOver}"
       >
-        ${options}
+        ${repeat(
+          list,
+          (op) => op.index,
+          (op, index) => {
+            const selected = this._selectedIndexes.includes(op.index);
+            const optionClasses = classMap({
+              active: index === this._activeIndex,
+              option: true,
+              selected,
+            });
+            const checkboxClasses = classMap({
+              'checkbox-icon': true,
+              checked: selected,
+            });
+
+            return html`
+              <li
+                class="${optionClasses}"
+                data-index="${op.index}"
+                data-filtered-index="${index}"
+              >
+                <span class="${checkboxClasses}"></span>
+                <span class="option-label">${op.label}</span>
+              </li>
+            `;
+          }
+        )}
       </ul>
     `;
   }
