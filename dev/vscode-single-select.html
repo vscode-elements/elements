@@ -480,7 +480,7 @@
 
     <h2>Gitmoji example</h2>
     <component-preview>
-      <vscode-single-select data-cloak combobox>
+      <vscode-single-select data-cloak combobox id="sl-gitmoji">
         <vscode-option description="Improve structure / format of the code." value="🎨">🎨 art</vscode-option>
         <vscode-option description="Improve performance." value="⚡️">⚡️ zap</vscode-option>
         <vscode-option description="Remove code or files." value="🔥">🔥 fire</vscode-option>
@@ -547,6 +547,20 @@
         <vscode-option description="Remove dead code." value="⚰️">⚰️ coffin</vscode-option>
       </vscode-single-select>
     </component-preview>
+    <script type="module">
+      const sl = document.querySelector('#sl-gitmoji');
+
+      sl.addEventListener('vsc-change', (ev) => {
+        console.log(
+          'event detail:',
+          ev.detail,
+          'value:',
+          sl.value,
+          'selectedIndexes:',
+          sl.selectedIndexes
+        );
+      });
+    </script>
 
     <h2>Multi select example</h2>
     <component-preview>

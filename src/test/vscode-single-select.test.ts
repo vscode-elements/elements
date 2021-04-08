@@ -635,5 +635,36 @@ describe('vscode-single-select', () => {
       expect(el.value).to.eq('Austria');
       expect(el.selectedIndex).to.eq(9);
     });
+
+    it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      const spy = sinon.spy(el, 'dispatchEvent');
+
+      const input = el.shadowRoot?.querySelector(
+        '.combobox-input'
+      ) as HTMLInputElement;
+      input.value = 'dol';
+
+      input?.dispatchEvent(new InputEvent('input'));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
+      await el.updateComplete;
+
+      const changeEvent = spy.lastCall.args[0] as CustomEvent;
+
+      expect(el.value).to.eq('Dolor');
+      expect(el.selectedIndex).to.eq(2);
+      expect(changeEvent.type).to.eq('vsc-change');
+      expect(changeEvent.detail).to.eql({selectedIndex: 2, value: 'Dolor'});
+    });
   });
 });

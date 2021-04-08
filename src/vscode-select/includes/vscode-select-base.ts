@@ -308,6 +308,7 @@ export class VscodeSelectBase extends LitElement {
   }
 
   protected _onEnterKeyDown(): void {
+    const list = this.combobox ? this._filteredOptions : this._options;
     const showDropdownNext = !this._showDropdown;
 
     this._toggleDropdown(showDropdownNext);
@@ -317,7 +318,7 @@ export class VscodeSelectBase extends LitElement {
       !showDropdownNext &&
       this._selectedIndex !== this._activeIndex
     ) {
-      this._selectedIndex = this._options[this._activeIndex].index;
+      this._selectedIndex = list[this._activeIndex].index;
       this._value = this._options[this._selectedIndex].value;
       this._dispatchChangeEvent();
     }
