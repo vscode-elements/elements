@@ -266,6 +266,45 @@ describe('vscode-single-select', () => {
       expect(el.getAttribute('aria-expanded')).to.eq('false');
     });
 
+    it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      const spy = sinon.spy(el, 'dispatchEvent');
+
+      el.dispatchEvent(new MouseEvent('click'));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      const changeEvent = spy.lastCall.args[0] as CustomEvent;
+
+      expect(el).shadowDom.to.eq(`
+        <slot class="main-slot">
+        </slot>
+        <div class="select-face">
+          <span class="text">
+            Dolor
+          </span>
+          <span class="icon">
+          </span>
+        </div>
+      `);
+      expect(el.value).to.eq('Dolor');
+      expect(el.selectedIndex).to.eq(2);
+      expect(changeEvent.type).to.eq('vsc-change');
+      expect(changeEvent.detail).to.eql({selectedIndex: 2, value: 'Dolor'});
+    });
+
     it('dropdown should be closed when ESC key pressed', async () => {
       const el = (await fixture(html`
         <vscode-single-select>

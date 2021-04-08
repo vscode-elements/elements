@@ -86,6 +86,14 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     this._dispatchChangeEvent();
   }
 
+  protected _onEnterKeyDown(): void {
+    super._onEnterKeyDown();
+
+    if (this._selectedIndex > -1) {
+      this._labelText = this._options[this._selectedIndex].label;
+    }
+  }
+
   private _onOptionClick(ev: MouseEvent) {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) =>

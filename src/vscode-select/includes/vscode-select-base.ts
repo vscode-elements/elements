@@ -307,7 +307,7 @@ export class VscodeSelectBase extends LitElement {
     );
   }
 
-  private _onEnterKeyDown(): void {
+  protected _onEnterKeyDown(): void {
     const showDropdownNext = !this._showDropdown;
 
     this._toggleDropdown(showDropdownNext);
