@@ -233,6 +233,27 @@ export default css`
     margin-right: 4px;
   }
 
+  .action-icon {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    padding: 0;
+    width: 24px;
+  }
+
+  .action-icon:focus {
+    outline: none;
+  }
+
+  .action-icon:focus-visible {
+    outline: 1px solid var(--vscode-focusBorder);
+    outline-offset: -1px;
+  }
+
   .description {
     border-color: var(--vscode-settings-dropdownBorder);
     border-style: solid;

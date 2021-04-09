@@ -61,11 +61,22 @@ export class VscodeMultiSelect extends VscodeSelectBase {
     this._toggleDropdown(false);
   }
 
-  private _onMultiResetClick(): void {
+  private _onMultiDeselectAllClick(): void {
     this._selectedIndexes = [];
     this._values = [];
     this._options = this._options.map((op) => ({...op, selected: false}));
     this._dispatchChangeEvent();
+  }
+
+  private _onMultiSelectAllClick(): void {
+    this._selectedIndexes = [];
+    this._values = [];
+    this._options = this._options.map((op) => ({...op, selected: true}));
+    this._options.forEach((op, index) => {
+      this._selectedIndexes.push(index);
+      this._values.push(op.value);
+      this._dispatchChangeEvent();
+    });
   }
 
   private _renderLabel() {
@@ -161,10 +172,23 @@ export class VscodeMultiSelect extends VscodeSelectBase {
   protected _renderDropdownControls(): TemplateResult {
     return html`
       <div class="dropdown-controls">
-        <vscode-button @click="${this._onMultiAcceptClick}">OK</vscode-button>
-        <vscode-button secondary @click="${this._onMultiResetClick}"
-          >Reset</vscode-button
+        <button
+          type="button"
+          @click="${this._onMultiSelectAllClick}"
+          title="Select all"
+          class="action-icon"
         >
+          <vscode-icon name="checklist"></vscode-icon>
+        </button>
+        <button
+          type="button"
+          @click="${this._onMultiDeselectAllClick}"
+          title="Deselect all"
+          class="action-icon"
+        >
+          <vscode-icon name="clear-all"></vscode-icon>
+        </button>
+        <vscode-button @click="${this._onMultiAcceptClick}">OK</vscode-button>
       </div>
     `;
   }
