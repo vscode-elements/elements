@@ -43,6 +43,22 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   @internalProperty()
   private _labelText = '';
 
+  private updateInputValue() {
+    if (!this.combobox) {
+      return;
+    }
+
+    const input = this.renderRoot.querySelector(
+      '.combobox-input'
+    ) as HTMLInputElement;
+
+    if (input) {
+      input.value = this._options[this._selectedIndex]
+        ? this._options[this._selectedIndex].label
+        : '';
+    }
+  }
+
   constructor() {
     super();
     this._multiple = false;
@@ -92,6 +108,8 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     if (this._selectedIndex > -1) {
       this._labelText = this._options[this._selectedIndex].label;
     }
+
+    this.updateInputValue();
   }
 
   private _onOptionClick(ev: MouseEvent) {

@@ -665,6 +665,7 @@ describe('vscode-single-select', () => {
       expect(el.selectedIndex).to.eq(2);
       expect(changeEvent.type).to.eq('vsc-change');
       expect(changeEvent.detail).to.eql({selectedIndex: 2, value: 'Dolor'});
+      expect(input.value).to.eq('Dolor');
     });
   });
 });
