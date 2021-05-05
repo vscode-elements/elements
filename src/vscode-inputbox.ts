@@ -1,6 +1,14 @@
-import { LitElement, html, css, property, customElement, CSSResult, TemplateResult } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+  TemplateResult,
+} from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
+import {ifDefined} from 'lit-html/directives/if-defined';
 
 enum Severity {
   DEFAULT = 'default',
@@ -49,9 +57,13 @@ const BORDER_WIDTH = 1;
  */
 @customElement('vscode-inputbox')
 export class VscodeInputbox extends LitElement {
-  @property({ type: Boolean }) multiline = false;
-  @property({ type: String }) message = '';
-  @property({ type: String })
+  @property({type: Boolean})
+  multiline = false;
+
+  @property({type: String})
+  message = '';
+
+  @property({type: String})
   set severity(val: string) {
     const oldVal = this._severity;
 
@@ -70,29 +82,57 @@ export class VscodeInputbox extends LitElement {
   get severity(): string {
     return this._severity;
   }
+
   /**
    * @deprecated
    * @attr panelInput
    */
-  @property({ type: Boolean }) panelInput = false;
+  @property({type: Boolean})
+  panelInput = false;
+
   /**
    * Text-like input types
    * @attr type
    * @type {"color"|"date"|"datetime-local"|"email"|"file"|"month"|"number"|"password"|"tel"|"text"|"time"|"url"|"week"}
    */
-  @property({ type: String }) type: InputType = 'text';
-  @property({ type: Boolean }) focused = false;
-  @property({ type: String }) value = '';
-  @property({ type: String }) placeholder = '';
-  @property({ type: Number }) lines = 2;
-  @property({ type: Number }) maxLines = 5;
-  @property({ type: Number }) min: number | undefined = undefined;
-  @property({ type: Number }) minLength: number | undefined = undefined;
-  @property({ type: Number }) max: number | undefined = undefined;
-  @property({ type: Number }) maxLength: number | undefined = undefined;
-  @property({ type: Boolean }) multiple = false;
-  @property({ type: Boolean }) readonly = false;
-  @property({ type: Number }) step: number | undefined = undefined;
+  @property({type: String})
+  type: InputType = 'text';
+
+  @property({type: Boolean})
+  focused = false;
+
+  @property({type: String})
+  value = '';
+
+  @property({type: String})
+  placeholder = '';
+
+  @property({type: Number})
+  lines = 2;
+
+  @property({type: Number})
+  maxLines = 5;
+
+  @property({type: Number})
+  min: number | undefined = undefined;
+
+  @property({type: Number})
+  minLength: number | undefined = undefined;
+
+  @property({type: Number})
+  max: number | undefined = undefined;
+
+  @property({type: Number})
+  maxLength: number | undefined = undefined;
+
+  @property({type: Boolean})
+  multiple = false;
+
+  @property({type: Boolean})
+  readonly = false;
+
+  @property({type: Number})
+  step: number | undefined = undefined;
 
   private _severity: Severity;
   private _currentLines: number;
@@ -109,7 +149,9 @@ export class VscodeInputbox extends LitElement {
     this.resizeTextareaIfRequired();
   }
 
-  updated(changedProperties: Map<string, undefined | string | boolean | number>): void {
+  updated(
+    changedProperties: Map<string, undefined | string | boolean | number>
+  ): void {
     if (changedProperties.has('value')) {
       this.resizeTextareaIfRequired();
     }
@@ -121,31 +163,35 @@ export class VscodeInputbox extends LitElement {
 
   private onInputBlur = () => {
     this.focused = false;
-  }
+  };
 
   private onInputInput = (event: InputEvent) => {
-    const eventTarget = (<HTMLInputElement | HTMLTextAreaElement>event.target);
+    const eventTarget = <HTMLInputElement | HTMLTextAreaElement>event.target;
 
     this.value = eventTarget.value;
 
-    this.dispatchEvent(new CustomEvent('vsc-input', {
-      detail: eventTarget.value,
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('vsc-input', {
+        detail: eventTarget.value,
+        bubbles: true,
+        composed: true,
+      })
+    );
 
     this.resizeTextareaIfRequired();
-  }
+  };
 
   private onInputChange = (event: InputEvent) => {
-    const eventTarget = (<HTMLInputElement | HTMLTextAreaElement>event.target);
+    const eventTarget = <HTMLInputElement | HTMLTextAreaElement>event.target;
 
-    this.dispatchEvent(new CustomEvent('vsc-change', {
-      detail: eventTarget.value,
-      bubbles: true,
-      composed: true,
-    }));
-  }
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: eventTarget.value,
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
 
   private onTextareaMouseMove = (event: MouseEvent) => {
     const br = this.getBoundingClientRect();
@@ -153,16 +199,20 @@ export class VscodeInputbox extends LitElement {
     const SCROLLBAR_WIDTH = 10;
 
     this._textareaDefaultCursor =
-      x <= br.left + br.width && x >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
+      x <= br.left + br.width &&
+      x >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
 
     this.requestUpdate();
-  }
+  };
 
   private resizeTextareaIfRequired = (): void => {
     if (this.multiline) {
       const newLineChars = this.value.match(/\n/g);
       const numLines = newLineChars ? newLineChars.length + 1 : 1;
-      this._currentLines = Math.min(Math.max(numLines, this.lines), this.maxLines);
+      this._currentLines = Math.min(
+        Math.max(numLines, this.lines),
+        this.maxLines
+      );
       this.requestUpdate();
     }
   };
@@ -280,7 +330,7 @@ export class VscodeInputbox extends LitElement {
         line-height: 17px;
         margin-top: -1px;
         overflow: hidden;
-        padding: .4em;
+        padding: 0.4em;
         position: absolute;
         user-select: none;
         top: 100%;
@@ -323,7 +373,7 @@ export class VscodeInputbox extends LitElement {
         @input="${this.onInputInput}"
         @change="${this.onInputChange}"
         @mousemove="${this.onTextareaMouseMove}"
-        class="${classMap({ 'cursor-default': this._textareaDefaultCursor })}"
+        class="${classMap({'cursor-default': this._textareaDefaultCursor})}"
         placeholder="${this.placeholder}"
         .value="${this.value}"
       ></textarea>
@@ -344,13 +394,13 @@ export class VscodeInputbox extends LitElement {
         ?readonly="${this.readonly}"
         step="${ifDefined(this.step)}"
         .value="${this.value}"
-      >
+      />
     `;
-    const textareaHeight = `${BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT}px`;
+    const textareaHeight = `${
+      BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT
+    }px`;
     const message = html`
-      <div class="message ${this.severity}">
-        ${this.message}
-      </div>
+      <div class="message ${this.severity}">${this.message}</div>
     `;
     let containerClass = 'container';
 
@@ -369,8 +419,7 @@ export class VscodeInputbox extends LitElement {
         }
       </style>
       <div class="${containerClass}">
-        ${this.multiline ? textarea : input}
-        ${this.message ? message : ''}
+        ${this.multiline ? textarea : input} ${this.message ? message : ''}
       </div>
     `;
   }
