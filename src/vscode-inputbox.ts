@@ -374,7 +374,10 @@ export class VscodeInputbox extends LitElement {
         @change="${this.onInputChange}"
         @mousemove="${this.onTextareaMouseMove}"
         class="${classMap({'cursor-default': this._textareaDefaultCursor})}"
+        minlength="${ifDefined(this.minLength)}"
+        maxlength="${ifDefined(this.maxLength)}"
         placeholder="${this.placeholder}"
+        ?readonly="${this.readonly}"
         .value="${this.value}"
       ></textarea>
     `;
