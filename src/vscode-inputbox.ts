@@ -8,6 +8,7 @@ import {
   TemplateResult,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
 
 enum Severity {
@@ -366,6 +367,17 @@ export class VscodeInputbox extends LitElement {
   }
 
   render(): TemplateResult {
+    const textareaHeight =
+      BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT;
+    const textareaStyles = styleMap({
+      height: `${textareaHeight}px`,
+    });
+    const containerClasses = classMap({
+      container: true,
+      severity: this.severity !== Severity.DEFAULT,
+      focused: this.focused,
+    });
+
     const textarea = html`
       <textarea
         @focus="${this.onInputFocus}"
@@ -378,6 +390,7 @@ export class VscodeInputbox extends LitElement {
         maxlength="${ifDefined(this.maxLength)}"
         placeholder="${this.placeholder}"
         ?readonly="${this.readonly}"
+        style="${textareaStyles}"
         .value="${this.value}"
       ></textarea>
     `;
@@ -399,29 +412,13 @@ export class VscodeInputbox extends LitElement {
         .value="${this.value}"
       />
     `;
-    const textareaHeight = `${
-      BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT
-    }px`;
+
     const message = html`
       <div class="message ${this.severity}">${this.message}</div>
     `;
-    let containerClass = 'container';
-
-    if (this.severity !== Severity.DEFAULT) {
-      containerClass += ` ${this.severity}`;
-    }
-
-    if (this.focused) {
-      containerClass += ' focused';
-    }
 
     return html`
-      <style>
-        textarea {
-          height: ${textareaHeight};
-        }
-      </style>
-      <div class="${containerClass}">
+      <div class="${containerClasses}">
         ${this.multiline ? textarea : input} ${this.message ? message : ''}
       </div>
     `;
