@@ -27,7 +27,7 @@
   <div class="content-wrapper">
     <header class="page-header">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
-      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.2.0</span>
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.2.1</span>
     </header>
     <aside class="sidebar">
       <nav class="main-nav">
@@ -92,6 +92,7 @@
 <th>Attribute</th>
 <th>Type</th>
 <th>Default</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -100,60 +101,119 @@
 <td><code>focused</code></td>
 <td><code>boolean</code></td>
 <td>false</td>
+<td></td>
 </tr>
 <tr>
 <td><code>lines</code></td>
 <td><code>lines</code></td>
 <td><code>number</code></td>
 <td>2</td>
+<td></td>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td><code>max</code></td>
+<td><code>number \| undefined</code></td>
+<td>&quot;undefined&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>maxLength</code></td>
+<td><code>maxLength</code></td>
+<td><code>number \| undefined</code></td>
+<td>&quot;undefined&quot;</td>
+<td></td>
 </tr>
 <tr>
 <td><code>maxLines</code></td>
 <td><code>maxLines</code></td>
 <td><code>number</code></td>
 <td>5</td>
+<td></td>
 </tr>
 <tr>
 <td><code>message</code></td>
 <td><code>message</code></td>
 <td><code>string</code></td>
 <td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td><code>min</code></td>
+<td><code>number \| undefined</code></td>
+<td>&quot;undefined&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>minLength</code></td>
+<td><code>minLength</code></td>
+<td><code>number \| undefined</code></td>
+<td>&quot;undefined&quot;</td>
+<td></td>
 </tr>
 <tr>
 <td><code>multiline</code></td>
 <td><code>multiline</code></td>
 <td><code>boolean</code></td>
 <td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>multiple</code></td>
+<td><code>multiple</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+<td></td>
 </tr>
 <tr>
 <td><code>panelInput</code></td>
 <td><code>panelInput</code></td>
 <td><code>boolean</code></td>
 <td>false</td>
+<td></td>
 </tr>
 <tr>
 <td><code>placeholder</code></td>
 <td><code>placeholder</code></td>
 <td><code>string</code></td>
 <td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>readonly</code></td>
+<td><code>readonly</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+<td></td>
 </tr>
 <tr>
 <td><code>severity</code></td>
 <td><code>severity</code></td>
 <td><code>string</code></td>
 <td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td><code>step</code></td>
+<td><code>number \| undefined</code></td>
+<td>&quot;undefined&quot;</td>
+<td></td>
 </tr>
 <tr>
 <td><code>type</code></td>
 <td><code>type</code></td>
-<td><code>string</code></td>
-<td></td>
+<td><code>&quot;color&quot;\|&quot;date&quot;\|&quot;datetime-local&quot;\|&quot;email&quot;\|&quot;file&quot;\|&quot;month&quot;\|&quot;number&quot;\|&quot;password&quot;\|&quot;tel&quot;\|&quot;text&quot;\|&quot;time&quot;\|&quot;url&quot;\|&quot;week&quot;</code></td>
+<td>&quot;text&quot;</td>
+<td>Text-like input types</td>
 </tr>
 <tr>
 <td><code>value</code></td>
 <td><code>value</code></td>
 <td><code>string</code></td>
 <td>&quot;&quot;</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -176,9 +236,67 @@
 </tr>
 </tbody>
 </table>
+<h2>CSS Custom Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--vscode-editor-background</code></td>
+</tr>
+<tr>
+<td><code>--vscode-focusBorder</code></td>
+</tr>
+<tr>
+<td><code>--vscode-input-background</code></td>
+</tr>
+<tr>
+<td><code>--vscode-input-foreground</code></td>
+</tr>
+<tr>
+<td><code>--vscode-input-placeholderForeground</code></td>
+</tr>
+<tr>
+<td><code>--vscode-inputValidation-errorBackground</code></td>
+</tr>
+<tr>
+<td><code>--vscode-inputValidation-errorBorder</code></td>
+</tr>
+<tr>
+<td><code>--vscode-inputValidation-infoBackground</code></td>
+</tr>
+<tr>
+<td><code>--vscode-inputValidation-infoBorder</code></td>
+</tr>
+<tr>
+<td><code>--vscode-inputValidation-warningBackground</code></td>
+</tr>
+<tr>
+<td><code>--vscode-inputValidation-warningBorder</code></td>
+</tr>
+<tr>
+<td><code>--vscode-panelInput-border</code></td>
+</tr>
+<tr>
+<td><code>--vscode-scrollbarSlider-activeBackground</code></td>
+</tr>
+<tr>
+<td><code>--vscode-scrollbarSlider-background</code></td>
+</tr>
+<tr>
+<td><code>--vscode-scrollbarSlider-hoverBackground</code></td>
+</tr>
+<tr>
+<td><code>--vscode-settings-textInputBorder</code></td>
+</tr>
+</tbody>
+</table>
 
       </div>
-      <p class="last-modified">Last modified: Thu, 04 Mar 2021 22:32:38 GMT</p>
+      <p class="last-modified">Last modified: Tue, 16 Mar 2021 18:17:21 GMT</p>
     </div>
   </div>
 </body>
