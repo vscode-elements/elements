@@ -298,6 +298,11 @@ export class VscodeInputbox extends LitElement {
         color: var(--vscode-input-placeholderForeground);
       }
 
+      input::selection,
+      textarea::selection {
+        background-color: var(--vscode-editor-selectionBackground);
+      }
+
       input:focus,
       textarea:focus {
         border-color: var(--vscode-focusBorder);
