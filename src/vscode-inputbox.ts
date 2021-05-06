@@ -6,6 +6,8 @@ import {
   customElement,
   CSSResult,
   TemplateResult,
+  query,
+  internalProperty,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -135,14 +137,18 @@ export class VscodeInputbox extends LitElement {
   @property({type: Number})
   step: number | undefined = undefined;
 
+  @query('.content-measurer')
+  private _measurerEl!: HTMLDivElement;
+
+  @internalProperty()
+  private _textareaHeight = 0;
+
   private _severity: Severity;
-  private _currentLines: number;
   private _textareaDefaultCursor = false;
 
   constructor() {
     super();
     this._severity = Severity.DEFAULT;
-    this._currentLines = this.lines;
   }
 
   connectedCallback(): void {
@@ -207,15 +213,13 @@ export class VscodeInputbox extends LitElement {
   };
 
   private resizeTextareaIfRequired = (): void => {
-    if (this.multiline) {
-      const newLineChars = this.value.match(/\n/g);
-      const numLines = newLineChars ? newLineChars.length + 1 : 1;
-      this._currentLines = Math.min(
-        Math.max(numLines, this.lines),
-        this.maxLines
-      );
-      this.requestUpdate();
+    if (!this._measurerEl) {
+      return;
     }
+
+    const {height} = this._measurerEl.getBoundingClientRect();
+
+    this._textareaHeight = height;
   };
 
   static get styles(): CSSResult {
@@ -229,21 +233,30 @@ export class VscodeInputbox extends LitElement {
       }
 
       textarea {
+        left: 0;
         overflow: visible;
+        position: absolute;
         resize: none;
+        top: 0;
       }
 
+      .content-measurer::-webkit-scrollbar,
       textarea::-webkit-scrollbar {
         cursor: default;
         width: 10px;
       }
 
+      .content-measurer::-webkit-scrollbar-button,
       textarea::-webkit-scrollbar-button {
         display: none;
       }
 
       textarea::-webkit-scrollbar-track {
         background-color: transparent;
+        width: 10px;
+      }
+
+      .content-measurer::-webkit-scrollbar-track {
         width: 10px;
       }
 
@@ -272,7 +285,8 @@ export class VscodeInputbox extends LitElement {
         box-sizing: border-box;
         color: var(--vscode-input-foreground);
         display: block;
-        font-family: inherit;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
         line-height: 17px;
         outline: none;
         padding: 4px;
@@ -363,14 +377,36 @@ export class VscodeInputbox extends LitElement {
         background-color: var(--vscode-inputValidation-errorBackground);
         border-color: var(--vscode-inputValidation-errorBorder);
       }
+
+      .content-measurer {
+        background-color: green;
+        border: 1px solid transparent;
+        box-sizing: border-box;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        left: 0;
+        line-height: 17px;
+        overflow: auto;
+        padding: 4px;
+        text-align: left;
+        top: 0;
+        visibility: hidden;
+        word-break: break-all;
+      }
     `;
   }
 
   render(): TemplateResult {
-    const textareaHeight =
-      BORDER_WIDTH * 2 + PADDING * 2 + this._currentLines * LINE_HEIGHT;
+    const minHeight = BORDER_WIDTH * 2 + PADDING * 2 + this.lines * LINE_HEIGHT;
+    const maxHeight =
+      BORDER_WIDTH * 2 + PADDING * 2 + this.maxLines * LINE_HEIGHT;
+
+    const measurerStyles = styleMap({
+      minHeight: `${minHeight}px`,
+      maxHeight: `${maxHeight}px`,
+    });
     const textareaStyles = styleMap({
-      height: `${textareaHeight}px`,
+      height: `${this._textareaHeight}px`,
     });
     const containerClasses = classMap({
       container: true,
@@ -393,6 +429,13 @@ export class VscodeInputbox extends LitElement {
         style="${textareaStyles}"
         .value="${this.value}"
       ></textarea>
+      <div class="content-measurer" style="${measurerStyles}">
+        ${this.value
+          .split('\n')
+          .map((line) =>
+            line ? html`<div>${line}</div>` : html`<div>&nbsp;</div>`
+          )}
+      </div>
     `;
     const input = html`
       <input
