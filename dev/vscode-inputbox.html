@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
   <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
   <script src="../dev-assets/preview-page.js"></script>
+  <script type="module" src="../dist/vscode-tabs.js"></script>
   <script type="module" src="../dist/vscode-inputbox.js"></script>
 </head>
 
@@ -38,6 +39,60 @@
       <component-preview>
         <vscode-inputbox multiline lines="2"></vscode-inputbox>
       </component-preview>
+    </div>
+  </div>
+  <div class="story">
+    <h2 class="story-title">Forced re-rendering</h2>
+    <div class="story-content">
+      <component-preview>
+        <vscode-tabs selectedIndex="1" id="tabs-example">
+          <header slot="header">Lorem</header>
+          <section>
+            <p><vscode-inputbox multiline lines="2" maxlines="20" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in ante lacinia, pulvinar nunc ac, eleifend lorem. Ut porttitor, dolor nec condimentum scelerisque, est sem cursus odio, eu scelerisque diam turpis vel mi. Nam ex lacus, egestas non augue id, tristique mollis sapien. Proin velit nibh, porttitor pellentesque blandit eu, tristique in libero. Nunc vitae feugiat urna. Sed id risus sit amet ipsum suscipit condimentum non vulputate dolor. Proin tristique elit eget eleifend congue. In nec nisl dignissim arcu placerat rhoncus. Nullam nisl magna, rutrum vitae tincidunt at, ultrices eget erat.
+
+Aenean a vulputate est, porttitor vestibulum lorem. Nam laoreet odio sit amet erat fringilla rutrum. Fusce id condimentum turpis, in feugiat dui. Vivamus ultricies justo eget turpis vestibulum viverra. Integer efficitur purus eu erat semper, a bibendum urna cursus. Phasellus accumsan vestibulum dictum. Aenean sit amet sodales lacus, at accumsan lorem. Quisque nec dui eu quam lobortis dictum. Sed accumsan purus ut nisl accumsan malesuada. In quis neque sem. In feugiat faucibus nulla quis congue. Morbi nibh nulla, facilisis vel massa ut, consequat accumsan nunc. Cras commodo accumsan velit, sed aliquet nunc consequat vehicula. Nam viverra tellus non sem semper imperdiet. Proin varius scelerisque velit volutpat venenatis.
+
+Phasellus vestibulum quis mauris et sollicitudin. Sed porta lorem tortor, posuere mollis ligula congue ut. Ut ut ipsum id nunc malesuada tristique id ut neque. Vestibulum a feugiat augue, sit amet viverra nisl. Cras in eros lectus. Sed id lobortis odio. Pellentesque quis pharetra tortor. In erat diam, maximus sit amet velit non, sollicitudin imperdiet tortor. Cras feugiat suscipit ante vel aliquet. Pellentesque at odio pharetra, luctus nisl vel, suscipit dui.
+
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vel dictum nibh, quis porttitor magna. Praesent erat lectus, viverra id nulla non, placerat euismod dolor. Nulla ac mattis augue, vitae pulvinar velit. Proin consequat felis quis fringilla mollis. Integer felis eros, vehicula at maximus sed, accumsan at lectus. Nullam et maximus risus. Integer dapibus nibh eu odio lacinia ullamcorper ut et risus. Nulla tincidunt a quam at dictum. Sed sit amet ex molestie, pretium sem ut, egestas sapien. Nunc convallis lacus sed ex varius maximus.
+
+Ut in lacus porta, molestie urna sed, pulvinar augue. Phasellus vitae arcu tortor. Sed varius maximus quam, at hendrerit dui varius quis. Aliquam commodo lorem est, nec semper ipsum tempus at. Aliquam faucibus eleifend lacus in ullamcorper. Quisque quis mattis magna, eu placerat metus. Integer bibendum tempor arcu a mollis. Vivamus malesuada urna ac ultricies egestas. Mauris vel molestie leo, sit amet interdum turpis. Donec vel elit pulvinar, commodo diam non, tristique justo. Praesent hendrerit justo a ante bibendum lacinia. Nunc at maximus diam. Sed blandit mauris id dolor luctus, et semper dolor placerat. Sed consequat justo id magna aliquam hendrerit. Proin facilisis ultricies condimentum.
+
+Vestibulum eu porttitor magna. Aliquam sapien lacus, lacinia vel nibh sed, tempus fringilla velit. Phasellus dignissim turpis nisl, quis laoreet lorem egestas ac. Suspendisse porta nisi arcu, nec elementum leo sollicitudin ac. Ut sit amet sem nisi. Fusce nec est rutrum, maximus dui ut, lobortis ex. In tortor justo, eleifend non elementum eget, pharetra in ex. Maecenas quis maximus purus. In aliquam, nisi ac auctor tincidunt, est arcu sodales sapien, non egestas leo turpis in elit. Sed sit amet venenatis metus. Etiam pellentesque ornare massa tempus commodo. Vivamus lacinia ante et dolor pretium, vel sollicitudin odio convallis. Mauris consectetur turpis a risus mollis, vel maximus neque porta. Vestibulum quis interdum arcu.
+
+Etiam ullamcorper, enim ac egestas ultricies, leo nibh auctor elit, ac sodales lacus felis eu justo. Nulla facilisi. Mauris eu nibh quis metus vulputate bibendum eu sed nisi. Donec feugiat leo ac nisl dignissim, eu euismod dolor sodales. Mauris feugiat justo vitae urna posuere, et posuere orci egestas. Ut a ornare tortor, vel pharetra nulla. Fusce nibh lectus, viverra id luctus sed, vehicula et risus. Nulla urna lorem, euismod vitae felis sed, viverra placerat orci. Mauris interdum auctor ex, at tincidunt enim tristique non. Vestibulum scelerisque erat at lectus facilisis egestas. Maecenas commodo purus non ultrices luctus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+Mauris justo purus, sodales nec ornare eu, mattis in dui. Maecenas blandit sagittis nisl ac elementum. Vestibulum convallis sagittis velit. Sed dapibus tincidunt erat nec imperdiet. Proin tincidunt feugiat nisi, eget cursus sem. Mauris porttitor tempor tortor vitae aliquam. Phasellus ligula mi, pellentesque pulvinar interdum non, sodales a ipsum. Maecenas aliquam facilisis orci vel placerat. Proin pellentesque mi a neque vestibulum maximus. Aliquam vitae metus dolor. Integer eleifend, risus id placerat facilisis, elit arcu faucibus ipsum, et pretium diam purus et metus. Fusce eleifend velit id neque ullamcorper facilisis.
+
+Mauris tortor nisl, scelerisque ut vulputate in, pellentesque sit amet nunc. Quisque id condimentum urna. Vestibulum condimentum nibh vel nisi tristique scelerisque. Phasellus feugiat sem quis ligula consectetur, at fringilla ligula venenatis. Nam facilisis tincidunt pellentesque. Mauris nec dictum lectus. Praesent nunc diam, blandit quis est nec, lobortis laoreet mauris. Vestibulum porttitor ipsum lacinia metus venenatis, in porta nibh convallis. Morbi mollis nisi sed rhoncus eleifend. Etiam sagittis nunc id nunc condimentum dapibus.
+
+Proin rutrum consequat risus, et porttitor lacus tincidunt vitae. Aliquam lobortis venenatis erat eget ullamcorper. Aenean sit amet urna efficitur, fermentum eros at, rutrum neque. Donec ac ipsum ante. Sed gravida nibh et neque dapibus fermentum. Fusce quis nibh mollis, laoreet magna nec, volutpat lorem. Aliquam vitae viverra tellus. Praesent tristique lorem et iaculis accumsan."></vscode-inputbox></p>
+          </section>
+          <header slot="header">Ipsum</header>
+          <section>
+            <p><vscode-inputbox multiline lines="3" maxlines="30"></vscode-inputbox></p>
+          </section>
+          <header slot="header">Dolor</header>
+          <section>
+            <p><vscode-inputbox multiline lines="4" maxlines="40"></vscode-inputbox></p>
+          </section>
+        </vscode-tabs>
+      </component-preview>
+      <script type="module">
+        const tabs = document.getElementById('tabs-example');
+        const tabContents = tabs.querySelectorAll('section');
+
+        tabs.addEventListener('vsc-select', (e) => {
+          const tabContent = tabContents[e.detail.selectedIndex];
+          const inputs = tabContent.querySelectorAll('vscode-inputbox');
+
+          inputs.forEach((input) => {
+            const oVal = input.value;
+            input.value = '';
+            input.value = oVal;
+          });
+        });
+      </script>
     </div>
   </div>
 </body>

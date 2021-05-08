@@ -39,6 +39,10 @@ const LINE_HEIGHT = 17;
 const PADDING = 4;
 const BORDER_WIDTH = 1;
 
+const calcHeightFromLines = (lines: number) => {
+  return BORDER_WIDTH * 2 + PADDING * 2 + lines * LINE_HEIGHT;
+};
+
 /**
  * @cssprop --vscode-scrollbarSlider-background
  * @cssprop --vscode-scrollbarSlider-hoverBackground
@@ -213,13 +217,18 @@ export class VscodeInputbox extends LitElement {
   };
 
   private resizeTextareaIfRequired = (): void => {
-    if (!this._measurerEl) {
+    if (!this._measurerEl || !this.multiline) {
       return;
     }
 
     const {height} = this._measurerEl.getBoundingClientRect();
 
-    this._textareaHeight = height;
+    if (height === 0) {
+      this._textareaHeight = calcHeightFromLines(this.lines);
+      this._measurerEl.style.minHeight = `${calcHeightFromLines(this.lines)}px`;
+    } else {
+      this._textareaHeight = height;
+    }
   };
 
   static get styles(): CSSResult {
@@ -402,9 +411,8 @@ export class VscodeInputbox extends LitElement {
   }
 
   render(): TemplateResult {
-    const minHeight = BORDER_WIDTH * 2 + PADDING * 2 + this.lines * LINE_HEIGHT;
-    const maxHeight =
-      BORDER_WIDTH * 2 + PADDING * 2 + this.maxLines * LINE_HEIGHT;
+    const minHeight = calcHeightFromLines(this.lines);
+    const maxHeight = calcHeightFromLines(this.maxLines);
 
     const measurerStyles = styleMap({
       minHeight: `${minHeight}px`,
@@ -418,6 +426,13 @@ export class VscodeInputbox extends LitElement {
       severity: this.severity !== Severity.DEFAULT,
       focused: this.focused,
     });
+    const measurerContent = this.value
+      ? this.value
+          .split('\n')
+          .map((line) =>
+            line ? html`<div>${line}</div>` : html`<div>&nbsp;</div>`
+          )
+      : html`&nbsp;`;
 
     const textarea = html`
       <textarea
@@ -435,11 +450,7 @@ export class VscodeInputbox extends LitElement {
         .value="${this.value}"
       ></textarea>
       <div class="content-measurer" style="${measurerStyles}">
-        ${this.value
-          .split('\n')
-          .map((line) =>
-            line ? html`<div>${line}</div>` : html`<div>&nbsp;</div>`
-          )}
+        ${measurerContent}
       </div>
     `;
     const input = html`
