@@ -5,7 +5,7 @@
 
 @font-face {
 	font-family: "codicon";
-	src: url("./codicon.ttf?15118deaa64a49e5a6b50e74d1faf57f") format("truetype");
+	src: url("./codicon.ttf?54702f639320b60466e6f56678165405") format("truetype");
 }
 
 .codicon[class*='codicon-'] {
@@ -40,7 +40,6 @@
 .codicon-tag-add:before { content: "\ea66" }
 .codicon-tag-remove:before { content: "\ea66" }
 .codicon-person:before { content: "\ea67" }
-.codicon-person-add:before { content: "\ea67" }
 .codicon-person-follow:before { content: "\ea67" }
 .codicon-person-outline:before { content: "\ea67" }
 .codicon-person-filled:before { content: "\ea67" }
@@ -445,3 +444,31 @@
 .codicon-pass-filled:before { content: "\ebb3" }
 .codicon-circle-large-filled:before { content: "\ebb4" }
 .codicon-circle-large-outline:before { content: "\ebb5" }
+.codicon-combine:before { content: "\ebb6" }
+.codicon-gather:before { content: "\ebb6" }
+.codicon-table:before { content: "\ebb7" }
+.codicon-variable-group:before { content: "\ebb8" }
+.codicon-type-hierarchy:before { content: "\ebb9" }
+.codicon-type-hierarchy-sub:before { content: "\ebba" }
+.codicon-type-hierarchy-super:before { content: "\ebbb" }
+.codicon-git-pull-request-create:before { content: "\ebbc" }
+.codicon-run-above:before { content: "\ebbd" }
+.codicon-run-below:before { content: "\ebbe" }
+.codicon-notebook-template:before { content: "\ebbf" }
+.codicon-debug-rerun:before { content: "\ebc0" }
+.codicon-workspace-trusted:before { content: "\ebc1" }
+.codicon-workspace-untrusted:before { content: "\ebc2" }
+.codicon-workspace-unknown:before { content: "\ebc3" }
+.codicon-terminal-cmd:before { content: "\ebc4" }
+.codicon-terminal-debian:before { content: "\ebc5" }
+.codicon-terminal-linux:before { content: "\ebc6" }
+.codicon-terminal-powershell:before { content: "\ebc7" }
+.codicon-terminal-tmux:before { content: "\ebc8" }
+.codicon-terminal-ubuntu:before { content: "\ebc9" }
+.codicon-terminal-bash:before { content: "\ebca" }
+.codicon-arrow-swap:before { content: "\ebcb" }
+.codicon-copy:before { content: "\ebcc" }
+.codicon-person-add:before { content: "\ebcd" }
+.codicon-filter-filled:before { content: "\ebce" }
+.codicon-wand:before { content: "\ebcf" }
+.codicon-debug-line-by-line:before { content: "\ebd0" }

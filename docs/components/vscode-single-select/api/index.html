@@ -12,7 +12,7 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select &ndash; VSCode Webview Elements</title>
+  <title>SingleSelect &ndash; VSCode Webview Elements</title>
   <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-dark-theme.css">
   <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-high-contrast-theme.css">
   <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-light-theme.css">
@@ -27,7 +27,7 @@
   <div class="content-wrapper">
     <header class="page-header">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
-      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.2.1</span>
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.3.0</span>
     </header>
     <aside class="sidebar">
       <nav class="main-nav">
@@ -58,11 +58,13 @@
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-inputbox/">Inputbox</a>
                 </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-multi-select/">MultiSelect</a>
+                </li><li>
                   <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-scrollable/">Scrollable</a>
                 </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-select/" aria-current="page" class="current">Select</a>
+                  <a href="/vscode-webview-elements/components/vscode-single-select/" aria-current="page" class="current">SingleSelect</a>
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
                 </li><li>
@@ -78,32 +80,116 @@
       <div class="page">
         
 <ul class="sub-nav">
-  <li><a href="/vscode-webview-elements/components/vscode-select/" class="current">Examples</a></li>
-  <li><a href="/vscode-webview-elements/components/vscode-select/api" >API</a></li>
+  <li><a href="/vscode-webview-elements/components/vscode-single-select/" >Examples</a></li>
+  <li><a href="/vscode-webview-elements/components/vscode-single-select/api" class="current">API</a></li>
 </ul>
 
-        <h1>vscode-select</h1>
-<h2>Basic example</h2>
-<component-preview>
-  <vscode-select id="select-example">
-    <vscode-option>Lorem</vscode-option>
-    <vscode-option selected>Ipsum</vscode-option>
-    <vscode-option>Dolor</vscode-option>
-  </vscode-select>
-</component-preview>
-<script>
-  const select = document.querySelector('#select-example');
-  select.addEventListener('vsc-change', (event) => {
-    console.log(event);
-  });
-</script>
-<h3>HTML</h3>
-<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-select</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-option</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>option 1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Lorem<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-option</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-option</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>option 2<span class="token punctuation">"</span></span> <span class="token attr-name">selected</span><span class="token punctuation">></span></span>Ipsum<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-option</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-option</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>option 3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Dolor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-option</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-select</span><span class="token punctuation">></span></span></code></pre>
-<h3>Javascript</h3>
-<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> select <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'#select-example'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>select<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'vsc-change'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><br>  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        <!-- This file is auto-generated. Do not edit! -->
+<h1>vscode-single-select</h1>
+<h2>Types</h2>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">interface</span> <span class="token class-name">Option</span> <span class="token punctuation">{</span><br>  label<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>  value<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>  description<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>  selected<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<h2>Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Attribute</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ariaExpanded</code></td>
+<td><code>aria-expanded</code></td>
+<td><code>string</code></td>
+<td>&quot;false&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>combobox</code></td>
+<td><code>combobox</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>dataCloak</code></td>
+<td><code>data-cloak</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>filter</code></td>
+<td><code>filter</code></td>
+<td><code>&quot;fuzzy&quot;|&quot;contains&quot;|&quot;startsWith&quot;|&quot;startsWithPerTerm&quot;</code></td>
+<td>&quot;fuzzy&quot;</td>
+<td>Filter method</td>
+</tr>
+<tr>
+<td><code>focused</code></td>
+<td><code>focused</code></td>
+<td><code>boolean</code></td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td><code>options</code></td>
+<td><code>Option[]</code></td>
+<td>&quot;[]&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>&quot;listbox&quot;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>selectedIndex</code></td>
+<td><code>selectedIndex</code></td>
+<td><code>number</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>tabindex</code></td>
+<td><code>tabindex</code></td>
+<td><code>number</code></td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>value</code></td>
+<td><code>string</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Events</h2>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vsc-change</code></td>
+<td><code>CustomEvent&lt;{ selectedIndex: number; value: string; }&gt;</code></td>
+</tr>
+</tbody>
+</table>
 
       </div>
-      <p class="last-modified">Last modified: Thu, 04 Mar 2021 22:32:38 GMT</p>
+      <p class="last-modified">Last modified: Mon, 10 May 2021 21:05:55 GMT</p>
     </div>
   </div>
 </body>

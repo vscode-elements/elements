@@ -13,6 +13,7 @@ body.vscode-high-contrast {
   --vscode-breadcrumb-focusForeground: #ffffff;
   --vscode-breadcrumb-foreground: rgba(255, 255, 255, 0.8);
   --vscode-breadcrumbPicker-background: #0c141f;
+  --vscode-button-border: #6fc3df;
   --vscode-button-foreground: #ffffff;
   --vscode-button-secondaryForeground: #ffffff;
   --vscode-charts-foreground: #ffffff;
@@ -72,7 +73,7 @@ body.vscode-high-contrast {
   --vscode-editor-findMatchHighlightBorder: #f38518;
   --vscode-editor-findRangeHighlightBorder: rgba(243, 133, 24, 0.4);
   --vscode-editor-focusedStackFrameHighlightBackground: rgba(122, 189, 122, 0.3);
-  --vscode-editor-font-family: Consolas, "Courier New", monospace;
+  --vscode-editor-font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
   --vscode-editor-font-size: 15px;
   --vscode-editor-font-weight: normal;
   --vscode-editor-foreground: #ffffff;
@@ -186,6 +187,10 @@ body.vscode-high-contrast {
   --vscode-inputValidation-infoBorder: #6fc3df;
   --vscode-inputValidation-warningBackground: #000000;
   --vscode-inputValidation-warningBorder: #6fc3df;
+  --vscode-keybindingLabel-background: rgba(0, 0, 0, 0);
+  --vscode-keybindingLabel-border: #6fc3df;
+  --vscode-keybindingLabel-bottomBorder: #6fc3df;
+  --vscode-keybindingLabel-foreground: #ffffff;
   --vscode-list-deemphasizedForeground: #a7a8a9;
   --vscode-list-filterMatchBorder: #6fc3df;
   --vscode-list-focusOutline: #f38518;
@@ -220,6 +225,7 @@ body.vscode-high-contrast {
   --vscode-notebook-focusedEditorBorder: #f38518;
   --vscode-notebook-focusedRowBorder: #f38518;
   --vscode-notebook-inactiveFocusedCellBorder: #6fc3df;
+  --vscode-notebook-inactiveSelectedCellBorder: #f38518;
   --vscode-notebook-selectedCellBorder: #6fc3df;
   --vscode-notebookScrollbarSlider-activeBackground: #6fc3df;
   --vscode-notebookScrollbarSlider-background: rgba(111, 195, 223, 0.6);
@@ -255,6 +261,7 @@ body.vscode-high-contrast {
   --vscode-peekViewTitleLabel-foreground: #ffffff;
   --vscode-pickerGroup-border: #ffffff;
   --vscode-pickerGroup-foreground: #ffffff;
+  --vscode-ports-iconRunningProcessForeground: #ffffff;
   --vscode-progressBar-background: #6fc3df;
   --vscode-quickInput-background: #0c141f;
   --vscode-quickInput-foreground: #ffffff;
@@ -385,12 +392,15 @@ body.vscode-high-contrast {
   --vscode-titleBar-activeBackground: #000000;
   --vscode-titleBar-activeForeground: #ffffff;
   --vscode-titleBar-border: #6fc3df;
+  --vscode-toolbar-hoverOutline: #f38518;
   --vscode-tree-indentGuidesStroke: #a9a9a9;
   --vscode-welcomePage-progress\.background: #000000;
   --vscode-welcomePage-progress\.foreground: #3794ff;
   --vscode-welcomePage-tileBackground: #000000;
   --vscode-window-activeBorder: #6fc3df;
   --vscode-window-inactiveBorder: #6fc3df;
+  --vscode-workspaceTrust-tileBackground: #000000;
+  --vscode-workspaceTrust-trustedForegound: #89d185;
 }
 
 body.vscode-high-contrast {

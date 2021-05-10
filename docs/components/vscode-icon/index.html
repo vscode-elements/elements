@@ -27,7 +27,7 @@
   <div class="content-wrapper">
     <header class="page-header">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
-      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.2.1</span>
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.3.0</span>
     </header>
     <aside class="sidebar">
       <nav class="main-nav">
@@ -58,11 +58,13 @@
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-inputbox/">Inputbox</a>
                 </li><li>
+                  <a href="/vscode-webview-elements/components/vscode-multi-select/">MultiSelect</a>
+                </li><li>
                   <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-scrollable/">Scrollable</a>
                 </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-select/">Select</a>
+                  <a href="/vscode-webview-elements/components/vscode-single-select/">SingleSelect</a>
                 </li><li>
                   <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
                 </li><li>
@@ -118,6 +120,7 @@
   <vscode-icon name="arrow-small-left" title="arrow-small-left"></vscode-icon>
   <vscode-icon name="arrow-small-right" title="arrow-small-right"></vscode-icon>
   <vscode-icon name="arrow-small-up" title="arrow-small-up"></vscode-icon>
+  <vscode-icon name="arrow-swap" title="arrow-swap"></vscode-icon>
   <vscode-icon name="arrow-up" title="arrow-up"></vscode-icon>
   <vscode-icon name="beaker" title="beaker"></vscode-icon>
   <vscode-icon name="bell" title="bell"></vscode-icon>
@@ -163,11 +166,13 @@
   <vscode-icon name="code" title="code"></vscode-icon>
   <vscode-icon name="collapse-all" title="collapse-all"></vscode-icon>
   <vscode-icon name="color-mode" title="color-mode"></vscode-icon>
+  <vscode-icon name="combine" title="combine"></vscode-icon>
   <vscode-icon name="comment" title="comment"></vscode-icon>
   <vscode-icon name="comment-add" title="comment-add"></vscode-icon>
   <vscode-icon name="comment-discussion" title="comment-discussion"></vscode-icon>
   <vscode-icon name="compare-changes" title="compare-changes"></vscode-icon>
   <vscode-icon name="console" title="console"></vscode-icon>
+  <vscode-icon name="copy" title="copy"></vscode-icon>
   <vscode-icon name="credit-card" title="credit-card"></vscode-icon>
   <vscode-icon name="dash" title="dash"></vscode-icon>
   <vscode-icon name="dashboard" title="dashboard"></vscode-icon>
@@ -195,7 +200,9 @@
   <vscode-icon name="debug-continue" title="debug-continue"></vscode-icon>
   <vscode-icon name="debug-disconnect" title="debug-disconnect"></vscode-icon>
   <vscode-icon name="debug-hint" title="debug-hint"></vscode-icon>
+  <vscode-icon name="debug-line-by-line" title="debug-line-by-line"></vscode-icon>
   <vscode-icon name="debug-pause" title="debug-pause"></vscode-icon>
+  <vscode-icon name="debug-rerun" title="debug-rerun"></vscode-icon>
   <vscode-icon name="debug-restart" title="debug-restart"></vscode-icon>
   <vscode-icon name="debug-restart-frame" title="debug-restart-frame"></vscode-icon>
   <vscode-icon name="debug-reverse-continue" title="debug-reverse-continue"></vscode-icon>
@@ -250,6 +257,7 @@
   <vscode-icon name="file-zip" title="file-zip"></vscode-icon>
   <vscode-icon name="files" title="files"></vscode-icon>
   <vscode-icon name="filter" title="filter"></vscode-icon>
+  <vscode-icon name="filter-filled" title="filter-filled"></vscode-icon>
   <vscode-icon name="flame" title="flame"></vscode-icon>
   <vscode-icon name="fold" title="fold"></vscode-icon>
   <vscode-icon name="fold-down" title="fold-down"></vscode-icon>
@@ -257,6 +265,7 @@
   <vscode-icon name="folder" title="folder"></vscode-icon>
   <vscode-icon name="folder-active" title="folder-active"></vscode-icon>
   <vscode-icon name="folder-opened" title="folder-opened"></vscode-icon>
+  <vscode-icon name="gather" title="gather"></vscode-icon>
   <vscode-icon name="gear" title="gear"></vscode-icon>
   <vscode-icon name="gift" title="gift"></vscode-icon>
   <vscode-icon name="gist" title="gist"></vscode-icon>
@@ -273,6 +282,7 @@
   <vscode-icon name="git-merge" title="git-merge"></vscode-icon>
   <vscode-icon name="git-pull-request" title="git-pull-request"></vscode-icon>
   <vscode-icon name="git-pull-request-abandoned" title="git-pull-request-abandoned"></vscode-icon>
+  <vscode-icon name="git-pull-request-create" title="git-pull-request-create"></vscode-icon>
   <vscode-icon name="github" title="github"></vscode-icon>
   <vscode-icon name="github-action" title="github-action"></vscode-icon>
   <vscode-icon name="github-alt" title="github-alt"></vscode-icon>
@@ -347,6 +357,7 @@
   <vscode-icon name="no-newline" title="no-newline"></vscode-icon>
   <vscode-icon name="note" title="note"></vscode-icon>
   <vscode-icon name="notebook" title="notebook"></vscode-icon>
+  <vscode-icon name="notebook-template" title="notebook-template"></vscode-icon>
   <vscode-icon name="octoface" title="octoface"></vscode-icon>
   <vscode-icon name="open-preview" title="open-preview"></vscode-icon>
   <vscode-icon name="organization" title="organization"></vscode-icon>
@@ -411,7 +422,9 @@
   <vscode-icon name="rss" title="rss"></vscode-icon>
   <vscode-icon name="ruby" title="ruby"></vscode-icon>
   <vscode-icon name="run" title="run"></vscode-icon>
+  <vscode-icon name="run-above" title="run-above"></vscode-icon>
   <vscode-icon name="run-all" title="run-all"></vscode-icon>
+  <vscode-icon name="run-below" title="run-below"></vscode-icon>
   <vscode-icon name="save" title="save"></vscode-icon>
   <vscode-icon name="save-all" title="save-all"></vscode-icon>
   <vscode-icon name="save-as" title="save-as"></vscode-icon>
@@ -484,12 +497,20 @@
   <vscode-icon name="symbol-variable" title="symbol-variable"></vscode-icon>
   <vscode-icon name="sync" title="sync"></vscode-icon>
   <vscode-icon name="sync-ignored" title="sync-ignored"></vscode-icon>
+  <vscode-icon name="table" title="table"></vscode-icon>
   <vscode-icon name="tag" title="tag"></vscode-icon>
   <vscode-icon name="tag-add" title="tag-add"></vscode-icon>
   <vscode-icon name="tag-remove" title="tag-remove"></vscode-icon>
   <vscode-icon name="tasklist" title="tasklist"></vscode-icon>
   <vscode-icon name="telescope" title="telescope"></vscode-icon>
   <vscode-icon name="terminal" title="terminal"></vscode-icon>
+  <vscode-icon name="terminal-bash" title="terminal-bash"></vscode-icon>
+  <vscode-icon name="terminal-cmd" title="terminal-cmd"></vscode-icon>
+  <vscode-icon name="terminal-debian" title="terminal-debian"></vscode-icon>
+  <vscode-icon name="terminal-linux" title="terminal-linux"></vscode-icon>
+  <vscode-icon name="terminal-powershell" title="terminal-powershell"></vscode-icon>
+  <vscode-icon name="terminal-tmux" title="terminal-tmux"></vscode-icon>
+  <vscode-icon name="terminal-ubuntu" title="terminal-ubuntu"></vscode-icon>
   <vscode-icon name="text-size" title="text-size"></vscode-icon>
   <vscode-icon name="three-bars" title="three-bars"></vscode-icon>
   <vscode-icon name="thumbsdown" title="thumbsdown"></vscode-icon>
@@ -502,12 +523,16 @@
   <vscode-icon name="triangle-right" title="triangle-right"></vscode-icon>
   <vscode-icon name="triangle-up" title="triangle-up"></vscode-icon>
   <vscode-icon name="twitter" title="twitter"></vscode-icon>
+  <vscode-icon name="type-hierarchy" title="type-hierarchy"></vscode-icon>
+  <vscode-icon name="type-hierarchy-sub" title="type-hierarchy-sub"></vscode-icon>
+  <vscode-icon name="type-hierarchy-super" title="type-hierarchy-super"></vscode-icon>
   <vscode-icon name="unfold" title="unfold"></vscode-icon>
   <vscode-icon name="ungroup-by-ref-type" title="ungroup-by-ref-type"></vscode-icon>
   <vscode-icon name="unlock" title="unlock"></vscode-icon>
   <vscode-icon name="unmute" title="unmute"></vscode-icon>
   <vscode-icon name="unverified" title="unverified"></vscode-icon>
   <vscode-icon name="variable" title="variable"></vscode-icon>
+  <vscode-icon name="variable-group" title="variable-group"></vscode-icon>
   <vscode-icon name="verified" title="verified"></vscode-icon>
   <vscode-icon name="versions" title="versions"></vscode-icon>
   <vscode-icon name="vm" title="vm"></vscode-icon>
@@ -515,12 +540,16 @@
   <vscode-icon name="vm-connect" title="vm-connect"></vscode-icon>
   <vscode-icon name="vm-outline" title="vm-outline"></vscode-icon>
   <vscode-icon name="vm-running" title="vm-running"></vscode-icon>
+  <vscode-icon name="wand" title="wand"></vscode-icon>
   <vscode-icon name="warning" title="warning"></vscode-icon>
   <vscode-icon name="watch" title="watch"></vscode-icon>
   <vscode-icon name="whitespace" title="whitespace"></vscode-icon>
   <vscode-icon name="whole-word" title="whole-word"></vscode-icon>
   <vscode-icon name="window" title="window"></vscode-icon>
   <vscode-icon name="word-wrap" title="word-wrap"></vscode-icon>
+  <vscode-icon name="workspace-trusted" title="workspace-trusted"></vscode-icon>
+  <vscode-icon name="workspace-unknown" title="workspace-unknown"></vscode-icon>
+  <vscode-icon name="workspace-untrusted" title="workspace-untrusted"></vscode-icon>
   <vscode-icon name="wrench" title="wrench"></vscode-icon>
   <vscode-icon name="wrench-subaction" title="wrench-subaction"></vscode-icon>
   <vscode-icon name="x" title="x"></vscode-icon>
@@ -529,7 +558,7 @@
   <vscode-icon name="zoom-out" title="zoom-out"></vscode-icon>
 </component-preview>
       </div>
-      <p class="last-modified">Last modified: Wed, 05 May 2021 12:19:39 GMT</p>
+      <p class="last-modified">Last modified: Sat, 08 May 2021 20:58:14 GMT</p>
     </div>
   </div>
 </body>
