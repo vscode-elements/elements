@@ -30,7 +30,11 @@ const processFile = (path) => {
       frontMatter += '---\n\n';
       frontMatter += '<!-- This file is auto-generated. Do not edit! -->\n\n';
 
-      const newData = frontMatter + data;
+      let fixedData = data;
+
+      fixedData = fixedData.replace(/\\\|/g, '|');
+
+      const newData = frontMatter + fixedData;
 
       fs.writeFile(path, newData, (err) => {
         if (err) {
