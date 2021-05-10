@@ -74,6 +74,7 @@ component: vscode-icon
   <vscode-icon name="arrow-small-left" title="arrow-small-left"></vscode-icon>
   <vscode-icon name="arrow-small-right" title="arrow-small-right"></vscode-icon>
   <vscode-icon name="arrow-small-up" title="arrow-small-up"></vscode-icon>
+  <vscode-icon name="arrow-swap" title="arrow-swap"></vscode-icon>
   <vscode-icon name="arrow-up" title="arrow-up"></vscode-icon>
   <vscode-icon name="beaker" title="beaker"></vscode-icon>
   <vscode-icon name="bell" title="bell"></vscode-icon>
@@ -125,6 +126,7 @@ component: vscode-icon
   <vscode-icon name="comment-discussion" title="comment-discussion"></vscode-icon>
   <vscode-icon name="compare-changes" title="compare-changes"></vscode-icon>
   <vscode-icon name="console" title="console"></vscode-icon>
+  <vscode-icon name="copy" title="copy"></vscode-icon>
   <vscode-icon name="credit-card" title="credit-card"></vscode-icon>
   <vscode-icon name="dash" title="dash"></vscode-icon>
   <vscode-icon name="dashboard" title="dashboard"></vscode-icon>
@@ -152,6 +154,7 @@ component: vscode-icon
   <vscode-icon name="debug-continue" title="debug-continue"></vscode-icon>
   <vscode-icon name="debug-disconnect" title="debug-disconnect"></vscode-icon>
   <vscode-icon name="debug-hint" title="debug-hint"></vscode-icon>
+  <vscode-icon name="debug-line-by-line" title="debug-line-by-line"></vscode-icon>
   <vscode-icon name="debug-pause" title="debug-pause"></vscode-icon>
   <vscode-icon name="debug-rerun" title="debug-rerun"></vscode-icon>
   <vscode-icon name="debug-restart" title="debug-restart"></vscode-icon>
@@ -208,6 +211,7 @@ component: vscode-icon
   <vscode-icon name="file-zip" title="file-zip"></vscode-icon>
   <vscode-icon name="files" title="files"></vscode-icon>
   <vscode-icon name="filter" title="filter"></vscode-icon>
+  <vscode-icon name="filter-filled" title="filter-filled"></vscode-icon>
   <vscode-icon name="flame" title="flame"></vscode-icon>
   <vscode-icon name="fold" title="fold"></vscode-icon>
   <vscode-icon name="fold-down" title="fold-down"></vscode-icon>
@@ -454,6 +458,13 @@ component: vscode-icon
   <vscode-icon name="tasklist" title="tasklist"></vscode-icon>
   <vscode-icon name="telescope" title="telescope"></vscode-icon>
   <vscode-icon name="terminal" title="terminal"></vscode-icon>
+  <vscode-icon name="terminal-bash" title="terminal-bash"></vscode-icon>
+  <vscode-icon name="terminal-cmd" title="terminal-cmd"></vscode-icon>
+  <vscode-icon name="terminal-debian" title="terminal-debian"></vscode-icon>
+  <vscode-icon name="terminal-linux" title="terminal-linux"></vscode-icon>
+  <vscode-icon name="terminal-powershell" title="terminal-powershell"></vscode-icon>
+  <vscode-icon name="terminal-tmux" title="terminal-tmux"></vscode-icon>
+  <vscode-icon name="terminal-ubuntu" title="terminal-ubuntu"></vscode-icon>
   <vscode-icon name="text-size" title="text-size"></vscode-icon>
   <vscode-icon name="three-bars" title="three-bars"></vscode-icon>
   <vscode-icon name="thumbsdown" title="thumbsdown"></vscode-icon>
@@ -483,12 +494,16 @@ component: vscode-icon
   <vscode-icon name="vm-connect" title="vm-connect"></vscode-icon>
   <vscode-icon name="vm-outline" title="vm-outline"></vscode-icon>
   <vscode-icon name="vm-running" title="vm-running"></vscode-icon>
+  <vscode-icon name="wand" title="wand"></vscode-icon>
   <vscode-icon name="warning" title="warning"></vscode-icon>
   <vscode-icon name="watch" title="watch"></vscode-icon>
   <vscode-icon name="whitespace" title="whitespace"></vscode-icon>
   <vscode-icon name="whole-word" title="whole-word"></vscode-icon>
   <vscode-icon name="window" title="window"></vscode-icon>
   <vscode-icon name="word-wrap" title="word-wrap"></vscode-icon>
+  <vscode-icon name="workspace-trusted" title="workspace-trusted"></vscode-icon>
+  <vscode-icon name="workspace-unknown" title="workspace-unknown"></vscode-icon>
+  <vscode-icon name="workspace-untrusted" title="workspace-untrusted"></vscode-icon>
   <vscode-icon name="wrench" title="wrench"></vscode-icon>
   <vscode-icon name="wrench-subaction" title="wrench-subaction"></vscode-icon>
   <vscode-icon name="x" title="x"></vscode-icon>
