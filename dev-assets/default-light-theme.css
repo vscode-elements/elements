@@ -75,7 +75,7 @@ body.vscode-light {
   --vscode-editor-findRangeHighlightBackground: rgba(180, 180, 180, 0.3);
   --vscode-editor-focusedStackFrameHighlightBackground: rgba(206, 231, 206, 0.45);
   --vscode-editor-foldBackground: rgba(173, 214, 255, 0.3);
-  --vscode-editor-font-family: Consolas, "Courier New", monospace;
+  --vscode-editor-font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
   --vscode-editor-font-size: 15px;
   --vscode-editor-font-weight: normal;
   --vscode-editor-foreground: #000000;
@@ -192,6 +192,10 @@ body.vscode-light {
   --vscode-inputValidation-infoBorder: #007acc;
   --vscode-inputValidation-warningBackground: #f6f5d2;
   --vscode-inputValidation-warningBorder: #b89500;
+  --vscode-keybindingLabel-background: rgba(221, 221, 221, 0.4);
+  --vscode-keybindingLabel-border: rgba(204, 204, 204, 0.4);
+  --vscode-keybindingLabel-bottomBorder: rgba(187, 187, 187, 0.4);
+  --vscode-keybindingLabel-foreground: #555555;
   --vscode-list-activeSelectionBackground: #0060c0;
   --vscode-list-activeSelectionForeground: #ffffff;
   --vscode-list-deemphasizedForeground: #8e8e90;
@@ -281,6 +285,7 @@ body.vscode-light {
   --vscode-peekViewTitleLabel-foreground: #333333;
   --vscode-pickerGroup-border: #cccedb;
   --vscode-pickerGroup-foreground: #0066bf;
+  --vscode-ports-iconRunningProcessForeground: #369432;
   --vscode-problemsErrorIcon-foreground: #e51400;
   --vscode-problemsInfoIcon-foreground: #75beff;
   --vscode-problemsWarningIcon-foreground: #bf8803;
@@ -422,13 +427,19 @@ body.vscode-light {
   --vscode-titleBar-activeForeground: #333333;
   --vscode-titleBar-inactiveBackground: rgba(221, 221, 221, 0.6);
   --vscode-titleBar-inactiveForeground: rgba(51, 51, 51, 0.6);
+  --vscode-toolbar-activeBackground: rgba(166, 166, 166, 0.31);
+  --vscode-toolbar-hoverBackground: rgba(184, 184, 184, 0.31);
   --vscode-tree-indentGuidesStroke: #a9a9a9;
   --vscode-tree-tableColumnsBorder: rgba(97, 97, 97, 0.13);
   --vscode-welcomePage-progress\.background: #ffffff;
   --vscode-welcomePage-progress\.foreground: #006ab1;
   --vscode-welcomePage-tileBackground: #f3f3f3;
   --vscode-welcomePage-tileHoverBackground: #dbdbdb;
+  --vscode-welcomePage-tileShadow\.: rgba(0, 0, 0, 0.16);
   --vscode-widget-shadow: rgba(0, 0, 0, 0.16);
+  --vscode-workspaceTrust-tileBackground: #f3f3f3;
+  --vscode-workspaceTrust-trustedForegound: #388a34;
+  --vscode-workspaceTrust-untrustedForeground: #e51400;
 }
 
 body.vscode-light {
