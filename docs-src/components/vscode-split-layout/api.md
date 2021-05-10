@@ -15,4 +15,4 @@ component: vscode-split-layout
 |-------------------|-------------------|------------------------------|------------|
 | `initialPos`      | `initialPos`      | `string`                     | "50%"      |
 | `resetOnDblClick` | `resetOnDblClick` | `boolean`                    | false      |
-| `split`           | `split`           | `"horizontal" \| "vertical"` | "vertical" |
+| `split`           | `split`           | `"horizontal" | "vertical"` | "vertical" |

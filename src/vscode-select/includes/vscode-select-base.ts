@@ -33,6 +33,12 @@ export class VscodeSelectBase extends LitElement {
   @property({type: Boolean, reflect: true, attribute: 'data-cloak'})
   dataCloak = false;
 
+  /**
+   * Filter method
+   *
+   * @attr [filter=fuzzy]
+   * @type {"fuzzy"|"contains"|"startsWith"|"startsWithPerTerm"}
+   */
   @property({type: String})
   set filter(val: string) {
     const validValues: SearchMethod[] = [
@@ -59,6 +65,10 @@ export class VscodeSelectBase extends LitElement {
   @property({type: Boolean, reflect: true})
   focused = false;
 
+  /**
+   * @attr [options=[]]
+   * @type {Option[]}
+   */
   @property({type: Array})
   set options(opts: Option[]) {
     this._options = opts.map((op, index) => ({...op, index}));

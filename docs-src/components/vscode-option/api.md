@@ -13,15 +13,6 @@ component: vscode-option
 
 | Property      | Attribute     | Type      | Default |
 |---------------|---------------|-----------|---------|
-| `active`      | `active`      | `boolean` | false   |
 | `description` | `description` | `string`  | ""      |
-| `label`       | `label`       | `string`  |         |
-| `multiple`    |               | `boolean` | false   |
 | `selected`    | `selected`    | `boolean` | false   |
-| `value`       | `value`       | `string`  |         |
-
-## Events
-
-| Event            | Type                                  |
-|------------------|---------------------------------------|
-| `vsc-slotchange` | `CustomEvent<{ innerText: string; }>` |
+| `value`       | `value`       | `string`  | ""      |

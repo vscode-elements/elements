@@ -9,20 +9,34 @@ component: vscode-single-select
 
 # vscode-single-select
 
+## Types
+
+```typescript
+interface Option {
+  label: string;
+  value: string;
+  description: string;
+  selected: boolean;
+}
+```
+
 ## Properties
 
-| Property        | Attribute       | Type      | Default   |
-|-----------------|-----------------|-----------|-----------|
-| `ariaExpanded`  | `aria-expanded` | `string`  | "false"   |
-| `combobox`      | `combobox`      | `boolean` | false     |
-| `dataCloak`     | `data-cloak`    | `boolean` | false     |
-| `role`          | `role`          | `string`  | "listbox" |
-| `selectedIndex` | `selectedIndex` | `number`  | -1        |
-| `tabindex`      | `tabindex`      | `number`  | 0         |
-| `value`         | `value`         | `string`  |           |
+| Property        | Attribute       | Type                                             | Default   | Description   |
+|-----------------|-----------------|--------------------------------------------------|-----------|---------------|
+| `ariaExpanded`  | `aria-expanded` | `string`                                         | "false"   |               |
+| `combobox`      | `combobox`      | `boolean`                                        | false     |               |
+| `dataCloak`     | `data-cloak`    | `boolean`                                        | false     |               |
+| `filter`        | `filter`        | `"fuzzy"|"contains"|"startsWith"|"startsWithPerTerm"` | "fuzzy"   | Filter method |
+| `focused`       | `focused`       | `boolean`                                        | false     |               |
+| `options`       | `options`       | `Option[]`                                       | "[]"      |               |
+| `role`          | `role`          | `string`                                         | "listbox" |               |
+| `selectedIndex` | `selectedIndex` | `number`                                         |           |               |
+| `tabindex`      | `tabindex`      | `number`                                         | 0         |               |
+| `value`         | `value`         | `string`                                         |           |               |
 
 ## Events
 
 | Event        | Type                                             |
 |--------------|--------------------------------------------------|
-| `vsc-change` | `CustomEvent<{ selectedIndex: number; value: string \| string[]; }>` |
+| `vsc-change` | `CustomEvent<{ selectedIndex: number; value: string; }>` |

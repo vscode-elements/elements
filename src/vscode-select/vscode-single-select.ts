@@ -9,6 +9,18 @@ import {classMap} from 'lit-html/directives/class-map';
 import {chevronDownIcon} from './includes/template-elements';
 import {VscodeSelectBase} from './includes/vscode-select-base';
 
+/**
+ * ## Types
+ *
+ * ```typescript
+ *interface Option {
+ *  label: string;
+ *  value: string;
+ *  description: string;
+ *  selected: boolean;
+ *}
+ * ```
+ */
 @customElement('vscode-single-select')
 export class VscodeSingleSelect extends VscodeSelectBase {
   @property({type: String, attribute: true, reflect: true})

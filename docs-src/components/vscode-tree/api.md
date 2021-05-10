@@ -29,4 +29,4 @@ component: vscode-tree
 
 | Event        | Type                                             |
 |--------------|--------------------------------------------------|
-| `vsc-select` | `CustomEvent<{ icons: TreeItemIconConfig \| undefined; itemType: ItemType; label: string; open: boolean; value: string; path: string; }>` |
+| `vsc-select` | `CustomEvent<{ icons: TreeItemIconConfig | undefined; itemType: ItemType; label: string; open: boolean; value: string; path: string; }>` |

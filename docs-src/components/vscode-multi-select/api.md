@@ -11,16 +11,20 @@ component: vscode-multi-select
 
 ## Properties
 
-| Property       | Attribute       | Type       | Default |
-|----------------|-----------------|------------|---------|
-| `ariaExpanded` | `aria-expanded` | `string`   | "false" |
-| `combobox`     | `combobox`      | `boolean`  | false   |
-| `dataCloak`    | `data-cloak`    | `boolean`  | false   |
-| `tabindex`     | `tabindex`      | `number`   | 0       |
-| `value`        | `value`         | `string[]` | []      |
+| Property          | Attribute         | Type                                             | Default | Description   |
+|-------------------|-------------------|--------------------------------------------------|---------|---------------|
+| `ariaExpanded`    | `aria-expanded`   | `string`                                         | "false" |               |
+| `combobox`        | `combobox`        | `boolean`                                        | false   |               |
+| `dataCloak`       | `data-cloak`      | `boolean`                                        | false   |               |
+| `filter`          | `filter`          | `"fuzzy"|"contains"|"startsWith"|"startsWithPerTerm"` | "fuzzy" | Filter method |
+| `focused`         | `focused`         | `boolean`                                        | false   |               |
+| `options`         | `options`         | `Option[]`                                       | "[]"    |               |
+| `selectedIndexes` | `selectedIndexes` | `number[]`                                       |         |               |
+| `tabindex`        | `tabindex`        | `number`                                         | 0       |               |
+| `value`           | `value`           | `string[]`                                       |         |               |
 
 ## Events
 
 | Event        | Type                                             |
 |--------------|--------------------------------------------------|
-| `vsc-change` | `CustomEvent<{ selectedIndex: number; value: string \| string[]; }>` |
+| `vsc-change` | `CustomEvent<{ selectedIndex: number; value: string; }>` |
