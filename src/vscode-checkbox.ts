@@ -100,12 +100,15 @@ export class VscodeCheckbox extends LitElement {
       }
 
       .icon {
+        align-items: center;
         background-color: var(--vscode-settings-checkboxBackground);
         background-size: 16px;
         border: 1px solid var(--vscode-settings-checkboxBorder);
         border-radius: 3px;
         box-sizing: border-box;
+        display: flex;
         height: 18px;
+        justify-content: center;
         left: 0;
         margin-left: 0;
         margin-right: 9px;

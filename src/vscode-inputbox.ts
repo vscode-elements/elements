@@ -12,6 +12,7 @@ import {
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {ifDefined} from 'lit-html/directives/if-defined';
+import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 
 enum Severity {
   DEFAULT = 'default',
@@ -158,6 +159,10 @@ export class VscodeInputbox extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.resizeTextareaIfRequired();
+
+    this.addEventListener('focus', () => {
+      console.log('focus', this.shadowRoot?.querySelector('input')?.focus());
+    });
   }
 
   updated(
@@ -233,6 +238,14 @@ export class VscodeInputbox extends LitElement {
 
   static get styles(): CSSResult {
     return css`
+      :host {
+        display: inline-block;
+      }
+
+      :host([multiline]) {
+        display: block;
+      }
+
       .container {
         position: relative;
       }
@@ -296,7 +309,7 @@ export class VscodeInputbox extends LitElement {
         display: block;
         font-family: var(--vscode-font-family);
         font-size: var(--vscode-font-size);
-        line-height: 17px;
+        line-height: ${INPUT_LINE_HEIGHT_RATIO};
         outline: none;
         padding: 4px;
         width: 100%;
@@ -399,7 +412,7 @@ export class VscodeInputbox extends LitElement {
         font-family: var(--vscode-font-family);
         font-size: var(--vscode-font-size);
         left: 0;
-        line-height: 17px;
+        line-height: ${INPUT_LINE_HEIGHT_RATIO};
         overflow: auto;
         padding: 4px;
         text-align: left;

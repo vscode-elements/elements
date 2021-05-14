@@ -92,7 +92,7 @@ export class VscodeButton extends LitElement {
         display: inline-flex;
         font-size: var(--vscode-font-size);
         font-weight: var(--vscode-font-weight);
-        line-height: 24px;
+        line-height: 26px;
         padding: 0 14px;
         user-select: none;
       }

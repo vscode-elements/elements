@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>&lt;vscode-inputbox&gt; Demo</title>
+    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
+    <link
+      rel="stylesheet"
+      href="../dev-assets/default-high-contrast-theme.css"
+    />
+    <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
+    <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
+    <style>
+      .w-130 {
+        width: 130px;
+      }
+
+      .w-80 {
+        width: 80px;
+      }
+
+      .label {
+        display: inline-block;
+        line-height: 17px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+
+      .inline-form {
+        align-items: center;
+        display: flex;
+      }
+    </style>
+    <script src="../dev-assets/component-preview.js"></script>
+    <script src="../dev-assets/preview-page.js"></script>
+    <script type="module" src="../dist/vscode-tabs.js"></script>
+    <script type="module" src="../dist/vscode-form-row.js"></script>
+    <script type="module" src="../dist/vscode-select/vscode-single-select.js"></script>
+    <script type="module" src="../dist/vscode-select/vscode-multi-select.js"></script>
+    <script type="module" src="../dist/vscode-checkbox.js"></script>
+    <script type="module" src="../dist/vscode-inputbox.js"></script>
+    <script type="module" src="../dist/vscode-label.js"></script>
+  </head>
+
+  <body class="vscode-light">
+    <div class="story">
+      <h2 class="story-title">Inline form</h2>
+      <div class="story-content">
+        <component-preview>
+          <vscode-form-row inline>
+            <vscode-label>Lorem ipsum</vscode-label>
+            <vscode-inputbox class="vsc-widget w-130" id="ib-01"></vscode-inputbox>
+            <vscode-single-select tabindex="0">
+              <vscode-option>Lorem</vscode-option>
+              <vscode-option>Ipsum</vscode-option>
+              <vscode-option>Dolor</vscode-option>
+            </vscode-single-select>
+            <vscode-button>Run</vscode-button>
+          </vscode-form-row>
+          <input id="ib-02" />
+        </component-preview>
+        <script>
+        document.getElementById('ib-01').focus();
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
