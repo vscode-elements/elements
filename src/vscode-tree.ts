@@ -5,8 +5,10 @@ import {
   property,
   customElement,
   CSSResult,
+  state,
 } from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-icon';
 
@@ -21,8 +23,10 @@ interface TreeItem {
   subItems?: TreeItem[];
   open?: boolean;
   selected?: boolean;
+  focused?: boolean;
   icons?: TreeItemIconConfig;
   value?: string;
+  path?: number[];
 }
 
 enum ItemType {
@@ -32,23 +36,61 @@ enum ItemType {
 
 const ARROW_OUTER_WIDTH = 18;
 
+const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
+  const nextTree: TreeItem[] = [];
+
+  tree.forEach((val, index) => {
+    const {label, subItems, open, selected, focused, icons, value} = val;
+    const path = [...prevPath, index];
+    const nextItem: TreeItem = {
+      label,
+      path,
+      open: !!open,
+      selected: !!selected,
+      focused: !!focused,
+      icons: {...icons},
+      value,
+    };
+
+    if (subItems) {
+      nextItem.subItems = mapData(subItems, path);
+    }
+
+    nextTree.push(nextItem);
+  });
+
+  return nextTree;
+};
+
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
-  @property({type: Array, reflect: false}) data: TreeItem[] = [];
+  @property({type: Array, reflect: false})
+  set data(val: TreeItem[]) {
+    this._data = mapData(val);
+  }
+  get data(): TreeItem[] {
+    return this._data;
+  }
+
   @property({type: Number}) indent = 8;
   @property({type: Boolean}) arrows = false;
   @property({type: Boolean}) multiline = false;
   @property({type: Number, reflect: true}) tabindex = 0;
 
+  private _data: TreeItem[] = [];
+
+  @state()
   private _selectedItem: TreeItem | null = null;
 
-  private getItemByPath(path: string): TreeItem | undefined {
-    const pathFragments: number[] = path.split('/').map((el) => Number(el));
-    let current: TreeItem[] = this.data;
-    let item: TreeItem | undefined = undefined;
+  @state()
+  private _focusedItem: TreeItem | null = null;
 
-    pathFragments.forEach((el, i) => {
-      if (i === pathFragments.length - 1) {
+  private getItemByPath(path: number[]): TreeItem | null {
+    let current: TreeItem[] = this._data;
+    let item: TreeItem | null = null;
+
+    path.forEach((el, i) => {
+      if (i === path.length - 1) {
         item = current[el];
       } else {
         current = current[el].subItems as TreeItem[];
@@ -98,6 +140,7 @@ export class VscodeTree extends LitElement {
     open = false,
     itemType,
     selected = false,
+    focused = false,
     subItems,
   }: {
     indentLevel: number;
@@ -107,6 +150,7 @@ export class VscodeTree extends LitElement {
     open: boolean;
     itemType: ItemType;
     selected: boolean;
+    focused: boolean;
     subItems: TreeItem[];
   }) {
     const arrowIconName = open ? 'chevron-down' : 'chevron-right';
@@ -119,7 +163,10 @@ export class VscodeTree extends LitElement {
         : indentSize;
     const arrowMarkup =
       this.arrows && itemType === ItemType.BRANCH
-        ? html`<vscode-icon name="${arrowIconName}" class="icon-arrow"></vscode-icon>`
+        ? html`<vscode-icon
+            name="${arrowIconName}"
+            class="icon-arrow"
+          ></vscode-icon>`
         : nothing;
     const iconMarkup = iconName
       ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
@@ -138,14 +185,17 @@ export class VscodeTree extends LitElement {
       contentsClasses.push('selected');
     }
 
+    if (focused) {
+      contentsClasses.push('focused');
+    }
+
     return html`
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
-        <span class="${contentsClasses.join(
-          ' '
-        )}" style="${styleMap({paddingLeft: `${padLeft}px`})}">
-          ${arrowMarkup}
-          ${iconMarkup}
-          ${labelMarkup}
+        <span
+          class="${contentsClasses.join(' ')}"
+          style="${styleMap({paddingLeft: `${padLeft}px`})}"
+        >
+          ${arrowMarkup} ${iconMarkup} ${labelMarkup}
         </span>
         ${subTreeMarkup}
       </li>
@@ -164,22 +214,35 @@ export class VscodeTree extends LitElement {
       const indentLevel = path.length - 1;
       const itemType = this.getItemType(element);
       const iconName = this.getIconName(element);
-      const {label, open = false, selected = false, subItems = []} = element;
+      const {
+        label,
+        open = false,
+        selected = false,
+        focused = false,
+        subItems = [],
+      } = element;
 
       if (selected) {
         this._selectedItem = element;
       }
 
-      ret.push(this.renderTreeItem({
-        indentLevel,
-        label,
-        path,
-        open,
-        iconName,
-        itemType,
-        selected,
-        subItems,
-      }));
+      if (focused) {
+        this._focusedItem = element;
+      }
+
+      ret.push(
+        this.renderTreeItem({
+          indentLevel,
+          label,
+          path,
+          open,
+          iconName,
+          itemType,
+          selected,
+          focused,
+          subItems,
+        })
+      );
     });
 
     return ret;
@@ -200,6 +263,15 @@ export class VscodeTree extends LitElement {
 
     this._selectedItem = item;
     item.selected = true;
+  }
+
+  private focusTreeItem(item: TreeItem) {
+    if (this._focusedItem) {
+      this._focusedItem.focused = false;
+    }
+
+    this._focusedItem = item;
+    item.focused = true;
   }
 
   private closeSubTreeRecursively(tree: TreeItem[]) {
@@ -232,6 +304,91 @@ export class VscodeTree extends LitElement {
     );
   }
 
+  private _focusItem(item: TreeItem) {
+    if (this._focusedItem) {
+      this._focusedItem.focused = false;
+    }
+
+    this._focusedItem = item;
+    this._focusedItem.focused = true;
+  }
+
+  private _focusPrevItem() {
+    if (!this._focusedItem) {
+      this._focusItem(this._data[0]);
+      return;
+    }
+
+    const {path} = this._focusedItem;
+
+    if (path && path?.length > 0) {
+      const currentItemIndex = path[path.length - 1];
+      const hasParent = path!.length > 1;
+
+      if (currentItemIndex > 0) {
+        const newPath = [...path];
+        newPath[newPath.length - 1] = currentItemIndex - 1;
+
+        const prevSibling = this.getItemByPath(newPath) as TreeItem;
+        let newFocusedItem = prevSibling;
+
+        if (prevSibling?.open && prevSibling.subItems?.length) {
+          const {subItems} = prevSibling;
+          newFocusedItem = subItems[subItems.length - 1];
+        }
+
+        this._focusItem(newFocusedItem);
+      } else {
+        if (hasParent) {
+          const newPath = [...path];
+          newPath.pop();
+
+          this._focusItem(this.getItemByPath(newPath) as TreeItem);
+        }
+      }
+    } else {
+      this._focusItem(this._data[0]);
+    }
+  }
+
+  private _focusNextItem() {
+    if (!this._focusedItem) {
+      this._focusItem(this._data[0]);
+      return;
+    }
+
+    const {path, open} = this._focusedItem;
+
+    if (
+      open &&
+      Array.isArray(this._focusedItem.subItems) &&
+      this._focusedItem.subItems.length > 0
+    ) {
+      this._focusItem(this._focusedItem.subItems[0]);
+      return;
+    }
+
+    const nextPath = [...path as number[]];
+    nextPath[nextPath.length - 1] += 1;
+
+    let nextFocusedItem = this.getItemByPath(nextPath);
+
+    if (nextFocusedItem) {
+      this._focusItem(nextFocusedItem);
+    } else {
+      nextPath.pop();
+
+      if (nextPath.length > 0) {
+        nextPath[nextPath.length - 1] += 1;
+        nextFocusedItem = this.getItemByPath(nextPath);
+
+        if (nextFocusedItem) {
+          this._focusItem(nextFocusedItem);
+        }
+      }
+    }
+  }
+
   private onComponentClick(event: MouseEvent) {
     const composedPath = event.composedPath();
     const targetElement = composedPath.find(
@@ -241,19 +398,59 @@ export class VscodeTree extends LitElement {
     );
 
     if (targetElement) {
-      const path = (targetElement as HTMLLIElement).dataset.path || '';
+      const pathStr = (targetElement as HTMLLIElement).dataset.path || '';
+      const path = pathStr.split('/').map((el) => Number(el));
       const item = this.getItemByPath(path) as TreeItem;
 
       this.toggleSubTreeOpen(item);
       this.selectTreeItem(item);
-      this.emitSelectEvent(item, path);
+      this.focusTreeItem(item);
+      this.emitSelectEvent(item, pathStr);
       this.requestUpdate();
+    } else {
+      if (this._focusedItem) {
+        this._focusedItem.focused = false;
+      }
+
+      this._focusedItem = null;
     }
   }
 
-  public closeAll() {
+  private onComponentKeyDown(ev: KeyboardEvent) {
+    if (ev.key === 'Escape') {
+      this._focusedItem = null;
+    }
+
+    if (ev.key === 'ArrowUp') {
+      ev.stopPropagation();
+      ev.preventDefault();
+
+      this._focusPrevItem();
+    }
+
+    if (ev.key === 'ArrowDown') {
+      ev.stopPropagation();
+      ev.preventDefault();
+
+      this._focusNextItem();
+    }
+  }
+
+  private onComponentKeyDownBound = this.onComponentKeyDown.bind(this);
+
+  public closeAll(): void {
     this.closeSubTreeRecursively(this.data);
     this.requestUpdate();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('keydown', this.onComponentKeyDownBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this.onComponentKeyDownBound);
   }
 
   static get styles(): CSSResult {
@@ -261,6 +458,15 @@ export class VscodeTree extends LitElement {
       :host {
         display: block;
         outline: none;
+        user-select: none;
+      }
+
+      .wrapper {
+        height: 100%;
+      }
+
+      :host(:focus) .wrapper.focused-none {
+        outline: 1px solid var(--vscode-list-focusOutline);
       }
 
       li {
@@ -291,12 +497,16 @@ export class VscodeTree extends LitElement {
       }
 
       .contents.selected {
-        background-color: var(--vscode-list-focusBackground);
+        background-color: var(--vscode-list-activeSelectionBackground);
       }
 
       :host(:focus) .contents.selected {
-        background-color: var(--vscode-list-activeSelectionBackground);
+        /* background-color: var(--vscode-list-inactiveSelectionBackground); */
         color: var(--vscode-list-activeSelectionForeground);
+      }
+
+      :host(:focus) .contents.focused {
+        outline: 1px solid var(--vscode-list-focusOutline);
       }
 
       .icon-arrow {
@@ -327,13 +537,19 @@ export class VscodeTree extends LitElement {
   }
 
   render(): TemplateResult {
+    const classes = classMap({
+      multi: this.multiline,
+      single: !this.multiline,
+      wrapper: true,
+      'focused-none': !this._focusedItem,
+      'selection-none': !this._selectedItem,
+      'selection-single': this._selectedItem !== null,
+    });
+
     return html`
-      <div
-        @click="${this.onComponentClick}"
-        class="${this.multiline ? 'multi' : 'single'}"
-      >
+      <div @click="${this.onComponentClick}" class="${classes}">
         <ul>
-          ${this.renderTree(this.data)}
+          ${this.renderTree(this._data)}
         </ul>
       </div>
     `;
