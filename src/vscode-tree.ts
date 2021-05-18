@@ -12,6 +12,14 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-icon';
 
+enum KeyName {
+  ARROW_DOWN = 'ArrowDown',
+  ARROW_UP = 'ArrowUp',
+  ENTER = 'Enter',
+  ESCAPE = 'Escape',
+  SPACE = ' ',
+}
+
 interface TreeItemIconConfig {
   branch?: string;
   open?: string;
@@ -417,31 +425,49 @@ export class VscodeTree extends LitElement {
   }
 
   private onComponentKeyDown(ev: KeyboardEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
+    const keys = [
+      KeyName.ARROW_DOWN,
+      KeyName.ARROW_UP,
+      KeyName.ENTER,
+      KeyName.ESCAPE,
+      KeyName.SPACE,
+    ];
 
-    if (ev.key === 'Escape') {
+    if (keys.includes(ev.key as KeyName)) {
+      ev.stopPropagation();
+      ev.preventDefault();
+    }
+
+    if (ev.key === KeyName.ESCAPE) {
       this._focusedItem = null;
     }
 
-    if (ev.key === 'ArrowUp') {
+    if (ev.key === KeyName.ARROW_UP) {
       this._focusPrevItem();
     }
 
-    if (ev.key === 'ArrowDown') {
+    if (ev.key === KeyName.ARROW_DOWN) {
       this._focusNextItem();
     }
 
-    if (ev.key === 'Enter') {
-      this._selectedItem!.selected = false;
-      this._selectedItem = this._focusedItem;
-      this._selectedItem!.selected = true;
-      this._selectedItem!.open = !this._selectedItem?.open;
-      this.emitSelectEvent(
-        this._selectedItem as TreeItem,
-        this._selectedItem!.path!.join('/')
-      );
-      this.requestUpdate();
+    if (ev.key === KeyName.ENTER || ev.key === KeyName.SPACE) {
+      if (this._selectedItem) {
+        this._selectedItem.selected = false;
+      }
+
+      if (this._focusedItem) {
+        this._selectedItem = this._focusedItem;
+      }
+
+      if (this._selectedItem) {
+        this._selectedItem.selected = true;
+        this._selectedItem.open = !this._selectedItem.open;
+        this.emitSelectEvent(
+          this._selectedItem as TreeItem,
+          this._selectedItem.path!.join('/')
+        );
+        this.requestUpdate();
+      }
     }
   }
 
@@ -502,6 +528,7 @@ export class VscodeTree extends LitElement {
 
       .contents:hover {
         background-color: var(--vscode-list-hoverBackground);
+        color: var(--vscode-list-hoverForeground);
         cursor: pointer;
       }
 

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
   <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
   <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/github-light-theme.css" />
+  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
   <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
   <script src="../dev-assets/preview-page.js"></script>
   <script src="../dev-assets/component-preview.js" type="module"></script>
@@ -23,7 +23,7 @@
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
       <component-preview>
-        <vscode-tree id="tree-1" tabindex="0" style="height: 400px;"></vscode-tree>
+        <vscode-tree id="tree-1" tabindex="0" style="background-color: var(--vscode-sideBar-background); min-height: 400px;"></vscode-tree>
         <script>
           (function() {
             const tree = document.getElementById('tree-1');
