@@ -14,11 +14,6 @@ toc:
 
 ## Basic example
 
-<style>
-  .tree-1 {
-    width: 200px;
-  }
-</style>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const tree = document.querySelector('#tree-1');
@@ -81,14 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
 <component-preview>
   <vscode-tree id="tree-1"></vscode-tree>
 </component-preview>
-
-### CSS
-
-```css
-vscode-tree {
-  width: 200px;
-}
-```
 
 ### HTML
 
@@ -156,8 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 ```
-
-[Go to top](#vscode-tree)
 
 ## Flat list
 

@@ -9,12 +9,33 @@ component: vscode-tree
 
 # vscode-tree
 
+## Type definitions
+
+```typescript
+interface TreeItemIconConfig {
+   branch?: string;
+   open?: string;
+   leaf?: string;
+}
+
+interface TreeItem {
+   label: string;
+   subItems?: TreeItem[];
+   open?: boolean;
+   selected?: boolean;
+   focused?: boolean;
+   icons?: TreeItemIconConfig;
+   value?: string;
+   path?: number[];
+}
+```
+
 ## Properties
 
 | Property    | Attribute   | Type         | Default |
 |-------------|-------------|--------------|---------|
 | `arrows`    | `arrows`    | `boolean`    | false   |
-| `data`      | `data`      | `TreeItem[]` | []      |
+| `data`      | `data`      | `TreeItem[]` |         |
 | `indent`    | `indent`    | `number`     | 8       |
 | `multiline` | `multiline` | `boolean`    | false   |
 | `tabindex`  | `tabindex`  | `number`     | 0       |

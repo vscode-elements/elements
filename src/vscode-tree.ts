@@ -69,7 +69,28 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
 
   return nextTree;
 };
-
+/**
+ * ## Type definitions
+ *
+ * ```typescript
+ * interface TreeItemIconConfig {
+ *   branch?: string;
+ *   open?: string;
+ *   leaf?: string;
+ * }
+ *
+ * interface TreeItem {
+ *   label: string;
+ *   subItems?: TreeItem[];
+ *   open?: boolean;
+ *   selected?: boolean;
+ *   focused?: boolean;
+ *   icons?: TreeItemIconConfig;
+ *   value?: string;
+ *   path?: number[];
+ * }
+ * ```
+ */
 @customElement('vscode-tree')
 export class VscodeTree extends LitElement {
   @property({type: Array, reflect: false})
