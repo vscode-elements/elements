@@ -368,7 +368,7 @@ export class VscodeTree extends LitElement {
       return;
     }
 
-    const nextPath = [...path as number[]];
+    const nextPath = [...(path as number[])];
     nextPath[nextPath.length - 1] += 1;
 
     let nextFocusedItem = this.getItemByPath(nextPath);
@@ -417,22 +417,31 @@ export class VscodeTree extends LitElement {
   }
 
   private onComponentKeyDown(ev: KeyboardEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
     if (ev.key === 'Escape') {
       this._focusedItem = null;
     }
 
     if (ev.key === 'ArrowUp') {
-      ev.stopPropagation();
-      ev.preventDefault();
-
       this._focusPrevItem();
     }
 
     if (ev.key === 'ArrowDown') {
-      ev.stopPropagation();
-      ev.preventDefault();
-
       this._focusNextItem();
+    }
+
+    if (ev.key === 'Enter') {
+      this._selectedItem!.selected = false;
+      this._selectedItem = this._focusedItem;
+      this._selectedItem!.selected = true;
+      this._selectedItem!.open = !this._selectedItem?.open;
+      this.emitSelectEvent(
+        this._selectedItem as TreeItem,
+        this._selectedItem!.path!.join('/')
+      );
+      this.requestUpdate();
     }
   }
 
@@ -497,16 +506,18 @@ export class VscodeTree extends LitElement {
       }
 
       .contents.selected {
-        background-color: var(--vscode-list-activeSelectionBackground);
-      }
-
-      :host(:focus) .contents.selected {
-        /* background-color: var(--vscode-list-inactiveSelectionBackground); */
-        color: var(--vscode-list-activeSelectionForeground);
+        background-color: var(--vscode-list-inactiveSelectionBackground);
       }
 
       :host(:focus) .contents.focused {
+        background-color: var(--vscode-list-focusBackground);
         outline: 1px solid var(--vscode-list-focusOutline);
+      }
+
+      :host(:focus) .contents.selected.focused,
+      :host(:focus) .contents.selected {
+        background-color: var(--vscode-list-activeSelectionBackground);
+        color: var(--vscode-list-activeSelectionForeground);
       }
 
       .icon-arrow {
