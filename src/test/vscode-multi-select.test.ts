@@ -1,6 +1,6 @@
-import {VscodeMultiSelect} from '../vscode-select/vscode-multi-select';
+import {VscodeMultiSelect} from '../vscode-multi-select';
 import {expect, fixture, html} from '@open-wc/testing';
-import '../vscode-select/vscode-option';
+import '../vscode-option';
 
 describe('vscode-multi-select', () => {
   it('is defined', () => {

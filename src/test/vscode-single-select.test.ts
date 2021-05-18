@@ -1,7 +1,7 @@
-import {VscodeSingleSelect} from '../vscode-select/vscode-single-select';
+import {VscodeSingleSelect} from '../vscode-single-select';
 import {expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
-import '../vscode-select/vscode-option';
+import '../vscode-option';
 
 describe('vscode-single-select', () => {
   it('is defined', () => {
