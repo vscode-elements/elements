@@ -25,7 +25,7 @@
       <component-preview>
         <vscode-tree id="tree-1" tabindex="0" style="background-color: var(--vscode-sideBar-background); min-height: 400px;"></vscode-tree>
         <script>
-          (function() {
+          document.addEventListener('DOMContentLoaded', () => {
             const tree = document.getElementById('tree-1');
             const icons = {
               branch: 'folder',
@@ -129,7 +129,7 @@
             tree.addEventListener('vsc-select', (ev) => {
               console.log(ev);
             });
-          })();
+          });
         </script>
       </component-preview>
     </div>

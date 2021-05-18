@@ -74,7 +74,10 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
 export class VscodeTree extends LitElement {
   @property({type: Array, reflect: false})
   set data(val: TreeItem[]) {
+    const oldVal = this._data;
+
     this._data = mapData(val);
+    this.requestUpdate('data', oldVal);
   }
   get data(): TreeItem[] {
     return this._data;
