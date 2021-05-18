@@ -172,7 +172,10 @@ export default css`
   }
 
   .option.active {
-    background-color: var(--vscode-quickInputList-focusBackground, var(--vscode-list-focusBackground));
+    background-color: var(
+      --vscode-quickInputList-focusBackground,
+      var(--vscode-list-focusBackground)
+    );
   }
 
   .option-label {
@@ -186,7 +189,10 @@ export default css`
   }
 
   .dropdown.multiple .option.selected.active {
-    background-color: var(--vscode-quickInputList-focusBackground, var(--vscode-list-focusBackground));
+    background-color: var(
+      --vscode-quickInputList-focusBackground,
+      var(--vscode-list-focusBackground)
+    );
   }
 
   .checkbox-icon {

@@ -1,26 +1,35 @@
-import { LitElement, html, css, property, customElement, CSSResult } from 'lit-element';
-import { nothing, TemplateResult } from 'lit-html';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+} from 'lit-element';
+import {nothing, TemplateResult} from 'lit-html';
 
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends LitElement {
-  @property({ type: String }) label = '';
-  @property({ type: String }) keybinding = '';
-  @property({ type: String }) value = '';
-  @property({ type: Boolean }) separator = false;
-  @property({ type: Number }) tabindex = 0;
+  @property({type: String}) label = '';
+  @property({type: String}) keybinding = '';
+  @property({type: String}) value = '';
+  @property({type: Boolean}) separator = false;
+  @property({type: Number}) tabindex = 0;
 
   private onItemClick() {
-    this.dispatchEvent(new CustomEvent('vsc-click', {
-      detail: {
-        label: this.label,
-        keybinding: this.keybinding,
-        value: this.value || this.label,
-        separator: this.separator,
-        tabindex: this.tabindex,
-      },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('vsc-click', {
+        detail: {
+          label: this.label,
+          keybinding: this.keybinding,
+          value: this.value || this.label,
+          separator: this.separator,
+          tabindex: this.tabindex,
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   static get styles(): CSSResult {
@@ -47,9 +56,9 @@ export class VscodeContextMenuItem extends LitElement {
       .rule {
         border-bottom: 1px solid var(--vscode-menu-separatorBackground);
         display: block;
-        margin: 0 .8em .2em;
-        opacity: .4;
-        padding-top: .2em;
+        margin: 0 0.8em 0.2em;
+        opacity: 0.4;
+        padding-top: 0.2em;
         width: 100%;
       }
 
@@ -93,21 +102,24 @@ export class VscodeContextMenuItem extends LitElement {
 
   render(): TemplateResult {
     return html`
-      ${this.separator ?
-        html`
-          <div class="context-menu-item separator">
-            <span class="rule"></span>
-          </div>
-        ` :
-        html`
-          <div class="context-menu-item">
-            <a @click="${this.onItemClick}">
-              ${this.label ? html`<span class="label">${this.label}</span>` : nothing}
-              ${this.keybinding ? html`<span class="keybinding">${this.keybinding}</span>` : nothing}
-            </a>
-          </div>
-        `
-      }
+      ${this.separator
+        ? html`
+            <div class="context-menu-item separator">
+              <span class="rule"></span>
+            </div>
+          `
+        : html`
+            <div class="context-menu-item">
+              <a @click="${this.onItemClick}">
+                ${this.label
+                  ? html`<span class="label">${this.label}</span>`
+                  : nothing}
+                ${this.keybinding
+                  ? html`<span class="keybinding">${this.keybinding}</span>`
+                  : nothing}
+              </a>
+            </div>
+          `}
     `;
   }
 }

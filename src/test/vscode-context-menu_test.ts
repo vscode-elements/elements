@@ -8,7 +8,9 @@ describe('vscode-context-menu', () => {
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-context-menu></vscode-context-menu>`) as VscodeContextMenu;
+    const el = (await fixture(
+      html`<vscode-context-menu></vscode-context-menu>`
+    )) as VscodeContextMenu;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +23,9 @@ describe('vscode-context-menu', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-context-menu name="Test"></vscode-context-menu>`) as VscodeContextMenu;
+    const el = (await fixture(
+      html`<vscode-context-menu name="Test"></vscode-context-menu>`
+    )) as VscodeContextMenu;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +36,9 @@ describe('vscode-context-menu', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-context-menu></vscode-context-menu>`) as VscodeContextMenu;
+    const el = (await fixture(
+      html`<vscode-context-menu></vscode-context-menu>`
+    )) as VscodeContextMenu;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;

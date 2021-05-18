@@ -8,7 +8,9 @@ describe('vscode-inputbox', () => {
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-inputbox></vscode-inputbox>`) as VscodeInputbox;
+    const el = (await fixture(
+      html`<vscode-inputbox></vscode-inputbox>`
+    )) as VscodeInputbox;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +23,9 @@ describe('vscode-inputbox', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-inputbox name="Test"></vscode-inputbox>`) as VscodeInputbox;
+    const el = (await fixture(
+      html`<vscode-inputbox name="Test"></vscode-inputbox>`
+    )) as VscodeInputbox;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +36,9 @@ describe('vscode-inputbox', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-inputbox></vscode-inputbox>`) as VscodeInputbox;
+    const el = (await fixture(
+      html`<vscode-inputbox></vscode-inputbox>`
+    )) as VscodeInputbox;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;

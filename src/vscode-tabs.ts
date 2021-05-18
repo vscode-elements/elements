@@ -1,8 +1,16 @@
-import { LitElement, html, css, property, customElement, CSSResult, TemplateResult } from 'lit-element';
+import {
+  LitElement,
+  html,
+  css,
+  property,
+  customElement,
+  CSSResult,
+  TemplateResult,
+} from 'lit-element';
 
 @customElement('vscode-tabs')
 export class VscodeTabs extends LitElement {
-  @property({ type: Number })
+  @property({type: Number})
   set selectedIndex(index: number) {
     this._selectedIndex = index;
     this._setActiveTab();
@@ -26,20 +34,25 @@ export class VscodeTabs extends LitElement {
     }
 
     Array.from(this._mainSlot.assignedElements()).forEach((el: Element, i) => {
-      (el as HTMLElement).style.display = i === this._selectedIndex ? 'block' : 'none';
+      (el as HTMLElement).style.display =
+        i === this._selectedIndex ? 'block' : 'none';
     });
 
-    Array.from(this._headerSlot.assignedElements()).forEach((el: Element, i) => {
-      (el as HTMLElement).dataset.index = String(i);
-      el.classList.toggle('is-active', i === this._selectedIndex);
-    });
+    Array.from(this._headerSlot.assignedElements()).forEach(
+      (el: Element, i) => {
+        (el as HTMLElement).dataset.index = String(i);
+        el.classList.toggle('is-active', i === this._selectedIndex);
+      }
+    );
 
-    this.dispatchEvent(new CustomEvent('vsc-select', {
-      detail: {
-        selectedIndex: this._selectedIndex,
-      },
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('vsc-select', {
+        detail: {
+          selectedIndex: this._selectedIndex,
+        },
+        composed: true,
+      })
+    );
   }
 
   private _onSlotChanged() {
@@ -58,8 +71,12 @@ export class VscodeTabs extends LitElement {
   }
 
   firstUpdated() {
-    this._headerSlot = this.shadowRoot!.querySelector('slot[name=header]') as HTMLSlotElement;
-    this._mainSlot = this.shadowRoot!.querySelector('slot:not([name=header])') as HTMLSlotElement;
+    this._headerSlot = this.shadowRoot!.querySelector(
+      'slot[name=header]'
+    ) as HTMLSlotElement;
+    this._mainSlot = this.shadowRoot!.querySelector(
+      'slot:not([name=header])'
+    ) as HTMLSlotElement;
 
     this._mainSlot.addEventListener(
       'slotchange',

@@ -1,4 +1,3 @@
-
 export interface Option {
   label: string;
   value: string;
@@ -10,4 +9,8 @@ export interface InternalOption extends Option {
   index: number;
 }
 
-export type SearchMethod = 'startsWithPerTerm' | 'startsWith' | 'contains' | 'fuzzy';
+export type SearchMethod =
+  | 'startsWithPerTerm'
+  | 'startsWith'
+  | 'contains'
+  | 'fuzzy';

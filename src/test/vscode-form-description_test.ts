@@ -8,7 +8,9 @@ describe('vscode-form-description', () => {
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-form-description></vscode-form-description>`) as VscodeFormDescription;
+    const el = (await fixture(
+      html`<vscode-form-description></vscode-form-description>`
+    )) as VscodeFormDescription;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +23,9 @@ describe('vscode-form-description', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-form-description name="Test"></vscode-form-description>`) as VscodeFormDescription;
+    const el = (await fixture(
+      html`<vscode-form-description name="Test"></vscode-form-description>`
+    )) as VscodeFormDescription;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +36,9 @@ describe('vscode-form-description', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-form-description></vscode-form-description>`) as VscodeFormDescription;
+    const el = (await fixture(
+      html`<vscode-form-description></vscode-form-description>`
+    )) as VscodeFormDescription;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;

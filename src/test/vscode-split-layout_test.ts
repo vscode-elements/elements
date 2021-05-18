@@ -8,7 +8,9 @@ describe('vscode-split-layout', () => {
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-split-layout></vscode-split-layout>`) as VscodeSplitLayout;
+    const el = (await fixture(
+      html`<vscode-split-layout></vscode-split-layout>`
+    )) as VscodeSplitLayout;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +23,9 @@ describe('vscode-split-layout', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-split-layout name="Test"></vscode-split-layout>`) as VscodeSplitLayout;
+    const el = (await fixture(
+      html`<vscode-split-layout name="Test"></vscode-split-layout>`
+    )) as VscodeSplitLayout;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +36,9 @@ describe('vscode-split-layout', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-split-layout></vscode-split-layout>`) as VscodeSplitLayout;
+    const el = (await fixture(
+      html`<vscode-split-layout></vscode-split-layout>`
+    )) as VscodeSplitLayout;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;

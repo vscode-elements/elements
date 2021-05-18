@@ -8,7 +8,7 @@ describe('vscode-tree', () => {
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-tree></vscode-tree>`) as VscodeTree;
+    const el = (await fixture(html`<vscode-tree></vscode-tree>`)) as VscodeTree;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +21,9 @@ describe('vscode-tree', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-tree name="Test"></vscode-tree>`) as VscodeTree;
+    const el = (await fixture(
+      html`<vscode-tree name="Test"></vscode-tree>`
+    )) as VscodeTree;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +34,7 @@ describe('vscode-tree', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-tree></vscode-tree>`) as VscodeTree;
+    const el = (await fixture(html`<vscode-tree></vscode-tree>`)) as VscodeTree;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;

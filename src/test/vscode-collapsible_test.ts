@@ -8,7 +8,9 @@ describe('vscode-collapsible', () => {
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-collapsible></vscode-collapsible>`) as VscodeCollapsible;
+    const el = (await fixture(
+      html`<vscode-collapsible></vscode-collapsible>`
+    )) as VscodeCollapsible;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +23,9 @@ describe('vscode-collapsible', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-collapsible name="Test"></vscode-collapsible>`) as VscodeCollapsible;
+    const el = (await fixture(
+      html`<vscode-collapsible name="Test"></vscode-collapsible>`
+    )) as VscodeCollapsible;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +36,9 @@ describe('vscode-collapsible', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-collapsible></vscode-collapsible>`) as VscodeCollapsible;
+    const el = (await fixture(
+      html`<vscode-collapsible></vscode-collapsible>`
+    )) as VscodeCollapsible;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;

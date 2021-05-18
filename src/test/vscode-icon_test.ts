@@ -8,7 +8,7 @@ describe('vscode-icon', () => {
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-icon></vscode-icon>`) as VscodeIcon;
+    const el = (await fixture(html`<vscode-icon></vscode-icon>`)) as VscodeIcon;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, World!</h1>
@@ -21,7 +21,9 @@ describe('vscode-icon', () => {
   });
 
   it('renders with a set name', async () => {
-    const el = await fixture(html`<vscode-icon name="Test"></vscode-icon>`) as VscodeIcon;
+    const el = (await fixture(
+      html`<vscode-icon name="Test"></vscode-icon>`
+    )) as VscodeIcon;
     expect(el).shadowDom.to.equal(
       `
         <h1>Hello, Test!</h1>
@@ -32,7 +34,7 @@ describe('vscode-icon', () => {
   });
 
   it('handles a click', async () => {
-    const el = await fixture(html`<vscode-icon></vscode-icon>`) as VscodeIcon;
+    const el = (await fixture(html`<vscode-icon></vscode-icon>`)) as VscodeIcon;
     const button = el.shadowRoot!.querySelector('button')!;
     button.click();
     await el.updateComplete;
