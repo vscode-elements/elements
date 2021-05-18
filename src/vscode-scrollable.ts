@@ -16,7 +16,7 @@ export class VscodeScrollable extends LitElement {
 
   private scrollableContainer: HTMLDivElement | null = null;
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
 
     this.requestUpdate().then(() => {

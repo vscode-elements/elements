@@ -70,7 +70,7 @@ export class VscodeTabs extends LitElement {
     this._setActiveTab();
   }
 
-  firstUpdated() {
+  firstUpdated(): void {
     this._headerSlot = this.shadowRoot!.querySelector(
       'slot[name=header]'
     ) as HTMLSlotElement;
