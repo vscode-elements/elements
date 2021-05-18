@@ -16,34 +16,51 @@
   <script type="module" src="{{ '/bundled.js' | url }}"></script>
 </head>
 <body class="vscode-light">
-  <div class="content-wrapper">
-    <header class="page-header">
+  <header class="page-header">
+    <div class="content-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
       <a href="{{ '/' | url }}" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">{{ pkg.version }}</span>
-    </header>
-    <aside class="sidebar">
-      <nav class="main-nav">
-        <ul>
-          <li><a href="{{ '/pages/getting-started' | url }}"{% if page.url == '/pages/getting-started/' %} class="current"{% endif %}>Getting Started</a></li>
+      {% if toc %}
+        <ul class="in-page-nav">
           <li>
-            <a href="{{ '/components' | url }}"{% if page.url == '/components/' %} class="current"{% endif %}>Components</a>
-            <ul>
-              {%- for cmp in collections.component -%}
-                <li>
-                  <a href="{{ cmp.url | url }}"{% if page.url == cmp.url or page.url == cmp.url + 'api/' %} aria-current="page" class="current"{% endif %}>{{ cmp.data.title }}</a>
-                </li>
+            <h2><span>In-page Navigation</span></h2>
+            <ul class="in-page-nav-dropdown">
+              <li><a href="#top">Go to top</a></li>
+              {%- for item in toc -%}
+                <li><a href="#{{item.path}}">{{item.label}}</a></li>
               {%- endfor -%}
             </ul>
           </li>
         </ul>
-      </nav>
-    </aside>
-    <div class="main-content">
-      <div class="page">
-        {% block subnav %}{% endblock %}
-        {{ content | safe }}
+      {% endif %}
+    </div>
+  </header>
+  <div class="content-wrapper">
+    <div class="page-content" id="top">
+      <aside class="sidebar">
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{{ '/pages/getting-started' | url }}"{% if page.url == '/pages/getting-started/' %} class="current"{% endif %}>Getting Started</a></li>
+            <li>
+              <a href="{{ '/components' | url }}"{% if page.url == '/components/' %} class="current"{% endif %}>Components</a>
+              <ul>
+                {%- for cmp in collections.component -%}
+                  <li>
+                    <a href="{{ cmp.url | url }}"{% if page.url == cmp.url or page.url == cmp.url + 'api/' %} aria-current="page" class="current"{% endif %}>{{ cmp.data.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <div class="main-content">
+        <div class="page">
+          {% block subnav %}{% endblock %}
+          {{ content | safe }}
+        </div>
+        <p class="last-modified">Last modified: {{ page.date.toUTCString() }}</p>
       </div>
-      <p class="last-modified">Last modified: {{ page.date.toUTCString() }}</p>
     </div>
   </div>
 </body>

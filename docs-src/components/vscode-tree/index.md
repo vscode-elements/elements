@@ -3,6 +3,11 @@ layout: component.njk
 title: Tree
 tags: component
 component: vscode-tree
+toc:
+  - label: Basic example
+    path: basic-example
+  - label: Flat list
+    path: flat-list
 ---
 
 # vscode-tree
@@ -32,30 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
           icons,
           label: '.bin',
           subItems: [
-            {
-              icons,
-              label: '_mocha_',
-            },
-            {
-              icons,
-              label: '_mocha.cmd_',
-            },
-            {
-              icons,
-              label: '_mocha.ps1_',
-            },
-            {
-              icons,
-              label: 'acorn',
-            },
-            {
-              icons,
-              label: 'acorn.cmd',
-            },
-            {
-              icons,
-              label: 'acorn.ps1',
-            },
+            { icons, label: '_mocha_' },
+            { icons, label: '_mocha.cmd_' },
+            { icons, label: '_mocha.ps1_' },
+            { icons, label: 'acorn' },
+            { icons, label: 'acorn.cmd' },
+            { icons, label: 'acorn.ps1' },
           ],
         },
         {
@@ -63,49 +50,24 @@ document.addEventListener('DOMContentLoaded', () => {
           label: '@11ty',
           open: true,
           subItems: [
-            {
-              icons,
-              label: 'lorem.js',
-            },
-            {
-              icons,
-              label: 'ipsum.js',
-            },
-            {
-              icons,
-              label: 'dolor.js',
-            },
+            { icons, label: 'lorem.js' },
+            { icons, label: 'ipsum.js' },
+            { icons, label: 'dolor.js' },
           ],
         },
-        {
-          icons,
-          label: '.DS_Store',
-        },
+        { icons, label: '.DS_Store' },
       ],
     },
     {
       icons,
       label: 'scripts',
       subItems: [
-        {
-          icons,
-          label: 'build.js',
-        },
-        {
-          icons,
-          label: 'start.js',
-        },
+        { icons, label: 'build.js' },
+        { icons, label: 'start.js' },
       ],
     },
-    {
-      icons,
-      label: '.editorconfig',
-      selected: true,
-    },
-    {
-      icons,
-      label: '2021-01-18T22_10_20_535Z-debug.log',
-    },
+    { icons, label: '.editorconfig', selected: true },
+    { icons, label: '2021-01-18T22_10_20_535Z-debug.log' },
   ];
 
   tree.data = data;
@@ -154,30 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
           icons,
           label: '.bin',
           subItems: [
-            {
-              icons,
-              label: '_mocha_',
-            },
-            {
-              icons,
-              label: '_mocha.cmd_',
-            },
-            {
-              icons,
-              label: '_mocha.ps1_',
-            },
-            {
-              icons,
-              label: 'acorn',
-            },
-            {
-              icons,
-              label: 'acorn.cmd',
-            },
-            {
-              icons,
-              label: 'acorn.ps1',
-            },
+            { icons, label: '_mocha_' },
+            { icons, label: '_mocha.cmd_' },
+            { icons, label: '_mocha.ps1_' },
+            { icons, label: 'acorn' },
+            { icons, label: 'acorn.cmd' },
+            { icons, label: 'acorn.ps1' },
           ],
         },
         {
@@ -185,49 +129,24 @@ document.addEventListener('DOMContentLoaded', () => {
           label: '@11ty',
           open: true,
           subItems: [
-            {
-              icons,
-              label: 'lorem.js',
-            },
-            {
-              icons,
-              label: 'ipsum.js',
-            },
-            {
-              icons,
-              label: 'dolor.js',
-            },
+            { icons, label: 'lorem.js' },
+            { icons, label: 'ipsum.js' },
+            { icons, label: 'dolor.js' },
           ],
         },
-        {
-          icons,
-          label: '.DS_Store',
-        },
+        { icons, label: '.DS_Store' },
       ],
     },
     {
       icons,
       label: 'scripts',
       subItems: [
-        {
-          icons,
-          label: 'build.js',
-        },
-        {
-          icons,
-          label: 'start.js',
-        },
+        { icons, label: 'build.js' },
+        { icons, label: 'start.js' },
       ],
     },
-    {
-      icons,
-      label: '.editorconfig',
-      selected: true,
-    },
-    {
-      icons,
-      label: '2021-01-18T22_10_20_535Z-debug.log',
-    },
+    { icons, label: '.editorconfig', selected: true },
+    { icons, label: '2021-01-18T22_10_20_535Z-debug.log' },
   ];
 
   tree.data = data;
@@ -237,6 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 ```
+
+[Go to top](#vscode-tree)
 
 ## Flat list
 
@@ -308,37 +229,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   data = [
     {
-      icons: {
-        leaf: 'git-commit'
-      },
+      icons: { leaf: 'git-commit' },
       label: 'bump distro',
       value: '986e1248f6d8c1aa2a7f57a3fadbb00f94248c2b',
     },
     {
-      icons: {
-        leaf: 'git-commit'
-      },
+      icons: { leaf: 'git-commit' },
       label: 'Update milestone',
       value: '4ae26a156300729ed3f9d23377e5d2aff9dcd982',
     },
     {
-      icons: {
-        leaf: 'git-commit'
-      },
+      icons: { leaf: 'git-commit' },
       label: 'env - tweak shell resolve experience on startup',
       value: '52098eaeb028e123b3f8af1d4a3d64df6db528be',
     },
     {
-      icons: {
-        leaf: 'git-commit'
-      },
+      icons: { leaf: 'git-commit' },
       label: 'Merge pull request #107126 from Timmmm/atomic_tabs',
       value: 'fb80c0e44af034df58e329e0f946a9a722ab297c',
     },
     {
-      icons: {
-        leaf: 'git-commit'
-      },
+      icons: { leaf: 'git-commit' },
       label: 'Simplify changes from #108193',
       value: '88856f1a1c8f90bcc12171d1af920d74bb59b625',
     },

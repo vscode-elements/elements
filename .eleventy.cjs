@@ -3,6 +3,18 @@ require('dotenv').config();
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 module.exports = function (eleventyConfig) {
+  const markdownIt = require('markdown-it');
+  const githubHeadings = require('@gerhobbelt/markdown-it-github-headings');
+
+  const mdOpts = {
+    html: true,
+  };
+  const mdLib = markdownIt(mdOpts).use(githubHeadings, {
+    prefixHeadingIds: false,
+  });
+
+  eleventyConfig.setLibrary('md', mdLib);
+
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPassthroughCopy({
     'node_modules/vscode-codicons/dist/codicon.css': 'codicon.css',

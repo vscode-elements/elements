@@ -28,14 +28,22 @@ a {
   color: var(--vscode-textLink-activeForeground, #006ab1);
 }
 
-.content-wrapper {
+.content-wrapper,
+.page-content {
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
   max-width: 1200px;
-  padding: 0 20px;
   width: 100%;
+}
+
+body > .content-wrapper {
+  padding-top: 50px;
+}
+
+.page-content {
+  padding: 0 20px;
 }
 
 .buttons-wrapper {
@@ -107,11 +115,22 @@ a {
 
 .page-header {
   align-items: center;
+  background-color: var(--color-light-gray);
+  border-bottom: 1px solid #ddd;
   box-sizing: border-box;
   display: flex;
   height: 50px;
-  padding: 10px 20px;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
   width: 100%;
+  z-index: 1;
+}
+
+.page-header .content-wrapper {
+  align-items: center;
+  display: flex;
+  padding: 0 40px;
 }
 
 .page-header__logo {
@@ -135,8 +154,88 @@ a {
   margin-left: 20px;
 }
 
+.in-page-nav {
+  align-items: center;
+  list-style: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+  position: relative;
+}
+
+.in-page-nav > li {
+  display: flex;
+}
+
+.in-page-nav h2 {
+  align-items: center;
+  border: 1px solid #ddd;
+  display: flex;
+  font-size: 14px;
+  font-weight: normal;
+  height: 30px;
+  margin: 0;
+  padding: 0 20px;
+
+}
+
+.in-page-nav h2 span {
+  cursor: pointer;
+  display: block;
+  padding-right: 15px;
+  position: relative;
+}
+
+.in-page-nav h2 span::after {
+  border-color: currentColor transparent transparent transparent;
+  border-style: solid;
+  border-width: 6px 4px;
+  content: '';
+  display: block;
+  margin-top: -2px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.in-page-nav-dropdown {
+  background-color: var(--color-light-gray);
+  border: 1px solid #ddd;
+  border-top: 0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  display: none;
+  list-style: none;
+  min-width: 100%;
+  padding: 5px 0;
+  position: absolute;
+  right: 0;
+  top: 32px;
+}
+
+.in-page-nav:hover .in-page-nav-dropdown {
+  display: block;
+}
+
+.in-page-nav-dropdown a {
+  color: inherit;
+  display: block;
+  font-size: 14px;
+  padding: 5px 20px;
+  text-decoration: none;
+}
+
+.in-page-nav-dropdown li:first-child a::before {
+  content: '↑';
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.in-page-nav-dropdown a:hover {
+  background-color: var(--color-vscode-blue);
+  color: var(--color-light-gray);
+}
+
 .sidebar {
-  height: calc(100% - 50px);
   overflow: auto;
   width: 250px;
 }
@@ -184,7 +283,6 @@ a {
 
 .main-content {
   box-sizing: border-box;
-  height: calc(100% - 50px);
   overflow: auto;
   padding: 20px 32px;
   position: relative;
@@ -249,6 +347,36 @@ a {
   font-weight: normal;
   line-height: 1.2;
   margin: 32px 0 8px;
+}
+
+.page h1,
+.page h2,
+.page h3 {
+  align-items: center;
+  display: flex;
+}
+
+.page h1 .anchor,
+.page h2 .anchor,
+.page h3 .anchor {
+  display: inline-block;
+  margin-left: -21px;
+  padding-right: 5px;
+}
+
+.page h1 .anchor .octicon,
+.page h2 .anchor .octicon,
+.page h3 .anchor .octicon {
+  display: block;
+  height: 16px;
+  visibility: hidden;
+  width: 16px;
+}
+
+.page h1:hover .anchor .octicon,
+.page h2:hover .anchor .octicon,
+.page h3:hover .anchor .octicon {
+  visibility: visible;
 }
 
 .page table {
