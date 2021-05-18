@@ -21,7 +21,7 @@
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint src/**/*.ts",
     "lint:lit-analyzer": "lit-analyzer",
-    "format": "prettier src/* --write",
+    "format": "prettier src/**/* --write",
     "docs": "npm run docs:clean && npm run build:bundle && npm run analyze && cross-env NODE_ENV=production npm run eleventy",
     "docs:clean": "rimraf docs",
     "docs:start": "npm run docs:clean && npm run build && npm run analyze && cross-env NODE_ENV=development eleventy --config=.eleventy.cjs --serve --port=8081",
