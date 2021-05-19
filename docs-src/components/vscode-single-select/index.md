@@ -7,6 +7,10 @@ component: vscode-single-select
 
 # vscode-single-select
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-single-select';
+```
+
 ## Basic example
 
 <component-preview>

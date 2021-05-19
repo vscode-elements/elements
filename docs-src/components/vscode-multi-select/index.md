@@ -7,6 +7,10 @@ component: vscode-multi-select
 
 # vscode-multi-select
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-multiselect';
+```
+
 ## Basic example
 
 <component-preview>

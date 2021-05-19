@@ -7,6 +7,10 @@ component: vscode-collapsible
 
 # vscode-collapsible
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-collapsible';
+```
+
 ## Basic example
 
 <style>

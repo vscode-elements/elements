@@ -7,6 +7,10 @@ component: vscode-tabs
 
 # vscode-tabs
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-tabs';
+```
+
 <component-preview>
   <vscode-tabs selectedIndex="1">
     <header slot="header">Lorem</header>

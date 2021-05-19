@@ -7,6 +7,10 @@ component: vscode-checkbox
 
 # vscode-checkbox
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-checkbox';
+```
+
 ## Basic example
 
 <component-preview>

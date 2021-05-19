@@ -7,6 +7,10 @@ component: vscode-context-menu
 
 # context-menu
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-context-menu';
+```
+
 ## Basic example
 
 <style>

@@ -7,6 +7,10 @@ component: vscode-icon
 
 # vscode-icon
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-icon';
+```
+
 ## Basic example
 
 <component-preview>

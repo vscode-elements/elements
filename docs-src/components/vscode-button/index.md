@@ -7,6 +7,10 @@ component: vscode-button
 
 # vscode-button
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-button';
+```
+
 ## Example
 
 <component-preview>

@@ -7,6 +7,10 @@ component: vscode-inputbox
 
 # vscode-inputbox
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-inputbox';
+```
+
 ## Basic example
 
 <component-preview>

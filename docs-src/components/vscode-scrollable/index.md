@@ -7,6 +7,10 @@ component: vscode-scrollable
 
 # vscode-scrollable
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-scrollable';
+```
+
 ## Basic example
 
 <style>

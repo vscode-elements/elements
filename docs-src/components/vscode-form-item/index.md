@@ -7,6 +7,10 @@ component: vscode-form-item
 
 # vscode-form-item
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-form-item';
+```
+
 ## Basic example
 
 <style>

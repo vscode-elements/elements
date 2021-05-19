@@ -7,4 +7,8 @@ component: vscode-form-label
 
 # vscode-form-label
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-form-label';
+```
+
 You shouldn't use as standalone element. See [vscode-form-description](https://bendera.github.io/vscode-webview-elements/components/vscode-form-label/) for examples

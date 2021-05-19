@@ -7,6 +7,10 @@ component: vscode-split-layout
 
 # vscode-split-layout
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-split-layout';
+```
+
 ## Example
 
 <style>
