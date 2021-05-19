@@ -5,7 +5,7 @@ tags: component
 component: vscode-context-menu-item
 ---
 
-# vscode-context-menu-item
+# VscodeContextMenuItem
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-context-menu-item';

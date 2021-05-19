@@ -5,7 +5,7 @@ tags: component
 component: vscode-form-label
 ---
 
-# vscode-form-label
+# VscodeFormLabel
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-label';

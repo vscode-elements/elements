@@ -5,7 +5,7 @@ tags: component
 component: vscode-form-description
 ---
 
-# vscode-form-description
+# VscodeFormDescription
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-description';

@@ -5,7 +5,7 @@ tags: component
 component: vscode-form-control
 ---
 
-# vscode-form-control
+# VscodeFormControl
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-control';

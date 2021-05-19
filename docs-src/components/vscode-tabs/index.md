@@ -5,7 +5,7 @@ tags: component
 component: vscode-tabs
 ---
 
-# vscode-tabs
+# VscodeTabs
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-tabs';

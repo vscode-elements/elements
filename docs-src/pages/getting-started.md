@@ -40,7 +40,7 @@ You can include modules separately. These files only transpiled but not minified
 Import anywhere in your JavaScript/TypeScript code. Code duplication will be handled by the bundlers (ex.: Webpack).
 
 ```javascript
-import 'node_modules/@bendera/vscode-webview-elements/dist/vscode-checkbox';
+import '@bendera/vscode-webview-elements/dist/vscode-checkbox';
 ```
 
 ### Using in the HTML

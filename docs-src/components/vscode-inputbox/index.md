@@ -5,7 +5,7 @@ tags: component
 component: vscode-inputbox
 ---
 
-# vscode-inputbox
+# VscodeInputbox
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-inputbox';

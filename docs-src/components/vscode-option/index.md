@@ -5,7 +5,7 @@ tags: component
 component: vscode-option
 ---
 
-# vscode-option
+# VscodeOption
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-option';
