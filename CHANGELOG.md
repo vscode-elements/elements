@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Added keyboard navigation to the Tree component.
 
+### Changed
+
+- SingleSelect and MultiSelect import path have been simplified.
+
 ## [0.3.0] - 2021-05-11
 
 ### Added
