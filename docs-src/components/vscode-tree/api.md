@@ -12,6 +12,8 @@ component: vscode-tree
 ## Type definitions
 
 ```typescript
+type ItemType = 'branch' | 'leaf';
+
 interface TreeItemIconConfig {
    branch?: string;
    open?: string;
@@ -25,8 +27,23 @@ interface TreeItem {
    selected?: boolean;
    focused?: boolean;
    icons?: TreeItemIconConfig;
+
+   // If it's not defined the value will be equal to the label
    value?: string;
+
+   // Item path in the tree. For example [0,0,1] means:
+   // tree[0].subItems[0].subItems[1]
    path?: number[];
+}
+
+
+interface SelectEventDetail {
+   icons: TreeItemIconConfig | undefined;
+   itemType: ItemType;
+   label: string;
+   open: boolean;
+   value: string;
+   path: string; // ex.: 0/0/1
 }
 ```
 
@@ -48,6 +65,6 @@ interface TreeItem {
 
 ## Events
 
-| Event        | Type                                             |
-|--------------|--------------------------------------------------|
-| `vsc-select` | `CustomEvent<{ icons: TreeItemIconConfig | undefined; itemType: ItemType; label: string; open: boolean; value: string; path: string; }>` |
+| Event        | Type                             |
+|--------------|----------------------------------|
+| `vsc-select` | `CustomEvent<SelectEventDetail>` |
