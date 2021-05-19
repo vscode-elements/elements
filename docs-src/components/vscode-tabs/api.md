@@ -7,7 +7,7 @@ component: vscode-tabs
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-tabs
+# VscodeTabs
 
 ## Properties
 

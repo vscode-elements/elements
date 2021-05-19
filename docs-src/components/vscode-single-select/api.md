@@ -7,7 +7,7 @@ component: vscode-single-select
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-single-select
+# VscodeSingleSelect
 
 ## Types
 

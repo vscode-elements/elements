@@ -7,7 +7,7 @@ component: vscode-inputbox
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-inputbox
+# VscodeInputbox
 
 ## Properties
 

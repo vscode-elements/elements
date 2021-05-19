@@ -7,4 +7,4 @@ component: vscode-form-label
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-form-label
+# VscodeFormLabel

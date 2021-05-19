@@ -12,6 +12,10 @@ toc:
 
 # vscode-tree
 
+```typescript
+import 'node_modules/@bendera/vscode-webview-elements/dist/vscode-tree';
+```
+
 ## Basic example
 
 <script>

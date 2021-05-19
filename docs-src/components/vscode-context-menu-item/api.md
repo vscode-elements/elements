@@ -7,7 +7,7 @@ component: vscode-context-menu-item
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-context-menu-item
+# VscodeContextMenuItem
 
 ## Properties
 

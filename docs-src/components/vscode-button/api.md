@@ -7,7 +7,7 @@ component: vscode-button
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-button
+# VscodeButton
 
 ## Properties
 

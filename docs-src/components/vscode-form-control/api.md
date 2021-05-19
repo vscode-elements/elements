@@ -7,4 +7,4 @@ component: vscode-form-control
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-form-control
+# VscodeFormControl

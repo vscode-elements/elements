@@ -7,7 +7,7 @@ component: vscode-tree
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-tree
+# VscodeTree
 
 ## Type definitions
 

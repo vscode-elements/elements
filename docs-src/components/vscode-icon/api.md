@@ -7,7 +7,7 @@ component: vscode-icon
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-icon
+# VscodeIcon
 
 ## Properties
 

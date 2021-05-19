@@ -7,7 +7,7 @@ component: vscode-multi-select
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-multi-select
+# VscodeMultiSelect
 
 ## Properties
 

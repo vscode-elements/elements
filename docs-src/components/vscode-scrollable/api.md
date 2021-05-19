@@ -7,7 +7,7 @@ component: vscode-scrollable
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-scrollable
+# VscodeScrollable
 
 ## Properties
 

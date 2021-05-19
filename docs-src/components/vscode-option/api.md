@@ -7,7 +7,7 @@ component: vscode-option
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-option
+# VscodeOption
 
 ## Properties
 
