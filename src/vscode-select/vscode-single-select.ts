@@ -46,6 +46,9 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
     if (this._selectedIndex > -1) {
       this._options[this._selectedIndex].selected = true;
+      this._labelText = this._options[this._selectedIndex].label;
+    } else {
+      this._labelText = '';
     }
   }
   get value(): string {
