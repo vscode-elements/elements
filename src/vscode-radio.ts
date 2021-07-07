@@ -67,7 +67,9 @@ export class VscodeRadio extends LitElement {
       return;
     }
 
-    const radios = root.querySelectorAll('vscode-radio');
+    const radios = root.querySelectorAll(
+      `vscode-radio[name="${this.name}"]`
+    ) as NodeListOf<VscodeRadio>;
     this._checked = true;
 
     radios.forEach((r) => {
