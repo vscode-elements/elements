@@ -14,14 +14,6 @@
     <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
     <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
     <style>
-      .w-130 {
-        width: 130px;
-      }
-
-      .w-80 {
-        width: 80px;
-      }
-
       .label {
         display: inline-block;
         line-height: 17px;
@@ -37,12 +29,26 @@
     <script src="../dev-assets/component-preview.js"></script>
     <script src="../dev-assets/preview-page.js"></script>
     <script type="module" src="../dist/vscode-tabs.js"></script>
-    <script type="module" src="../dist/vscode-form-row.js"></script>
-    <script type="module" src="../dist/vscode-select/vscode-single-select.js"></script>
-    <script type="module" src="../dist/vscode-select/vscode-multi-select.js"></script>
+    <script type="module" src="../dist/vscode-form-group.js"></script>
+    <script type="module" src="../dist/vscode-single-select.js"></script>
+    <script type="module" src="../dist/vscode-multi-select.js"></script>
+    <script type="module" src="../dist/vscode-option.js"></script>
+    <script type="module" src="../dist/vscode-radio.js"></script>
+    <script type="module" src="../dist/vscode-radio-group.js"></script>
     <script type="module" src="../dist/vscode-checkbox.js"></script>
+    <script type="module" src="../dist/vscode-checkbox-group.js"></script>
+    <script type="module" src="../dist/vscode-form-helper.js"></script>
     <script type="module" src="../dist/vscode-inputbox.js"></script>
     <script type="module" src="../dist/vscode-label.js"></script>
+    <style>
+      .form-label b {
+        color: red;
+      }
+
+      .helper {
+        width: 400px;
+      }
+    </style>
   </head>
 
   <body class="vscode-light">
@@ -50,21 +56,82 @@
       <h2 class="story-title">Inline form</h2>
       <div class="story-content">
         <component-preview>
-          <vscode-form-row inline>
-            <vscode-label>Lorem ipsum</vscode-label>
-            <vscode-inputbox class="vsc-widget w-130" id="ib-01"></vscode-inputbox>
-            <vscode-single-select tabindex="0">
+          <vscode-form-group>
+            <vscode-label for="inputbox-01" side-aligned="end">
+              Lorem <span class="normal">ipsum</span>:
+            </vscode-label>
+            <vscode-inputbox id="inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
+            <vscode-form-helper>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus imperdiet sapien, a gravida dolor.</vscode-form-helper>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-label for="inputbox-02" side-aligned="end">
+              Dolor sit:
+            </vscode-label>
+            <vscode-inputbox id="inputbox-02" multiline></vscode-inputbox>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-label for="select-01" side-aligned="end">
+              Duis eget erat accumsan:
+            </vscode-label>
+            <vscode-single-select id="select-01">
               <vscode-option>Lorem</vscode-option>
               <vscode-option>Ipsum</vscode-option>
               <vscode-option>Dolor</vscode-option>
             </vscode-single-select>
-            <vscode-button>Run</vscode-button>
-          </vscode-form-row>
-          <input id="ib-02" />
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-label for="checkbox-01" side-aligned="end">
+              Phasellus quam arcu:
+            </vscode-label>
+            <vscode-checkbox-group>
+              <vscode-checkbox id="checkbox-01">Lorem ipsum</vscode-checkbox>
+              <vscode-checkbox id="checkbox-02">Donec mi risus</vscode-checkbox>
+              <vscode-checkbox id="checkbox-03">Duis ullamcorper</vscode-checkbox>
+            </vscode-checkbox-group>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-label for="checkbox-04" side-aligned="end">
+              Phasellus quam arcu:
+            </vscode-label>
+            <vscode-checkbox-group vertical>
+              <vscode-checkbox id="checkbox-04">Lorem ipsum</vscode-checkbox>
+              <vscode-checkbox id="checkbox-05">Donec mi risus</vscode-checkbox>
+              <vscode-checkbox id="checkbox-06">Duis ullamcorper</vscode-checkbox>
+            </vscode-checkbox-group>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-label for="radio-01" side-aligned="end">
+              Phasellus quam arcu:
+            </vscode-label>
+            <vscode-radio-group>
+              <vscode-radio id="radio-01" name="radio-example">Lorem ipsum</vscode-radio>
+              <vscode-radio id="radio-02" name="radio-example">Donec mi risus</vscode-radio>
+              <vscode-radio id="radio-03" name="radio-example">Duis ullamcorper</vscode-radio>
+            </vscode-radio-group>
+          </vscode-form-group>
         </component-preview>
-        <script>
-        document.getElementById('ib-01').focus();
-        </script>
+      </div>
+    </div>
+    <div class="story">
+      <h2 class="story-title">A native form</h2>
+      <div class="story-content">
+        <form action="#">
+          <label for="tf-1">Textfield 1</label>
+          <input type="text" placeholder="Textfield 1">
+          <input type="radio" name="radio-example" id="rb-1"><label for="rb-1">option 1</label><br>
+          <input type="radio" name="radio-example" id="rb-2"><label for="rb-2">option 2</label><br>
+          <input type="radio" name="radio-example" id="rb-3"><label for="rb-3">option 3</label><br>
+        </form>
+      </div>
+    </div>
+    <div class="story">
+      <h2 class="story-title">Form example</h2>
+      <div class="story-content">
+        <vscode-form-layout>
+          <vscode-form-group layout="block">
+            <vscode-label>Lorem <span class="normal">ipsum</span></vscode-label>
+          </vscode-form-group>
+        </vscode-form-layout>
       </div>
     </div>
   </body>

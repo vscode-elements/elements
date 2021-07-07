@@ -65,6 +65,9 @@ const calcHeightFromLines = (lines: number) => {
  */
 @customElement('vscode-inputbox')
 export class VscodeInputbox extends LitElement {
+  @property()
+  label = '';
+
   @property({type: Boolean})
   multiline = false;
 
@@ -142,8 +145,14 @@ export class VscodeInputbox extends LitElement {
   @property({type: Number})
   step: number | undefined = undefined;
 
+  /* @property({reflect: true, type: Number})
+  tabindex = 0; */
+
   @query('.content-measurer')
   private _measurerEl!: HTMLDivElement;
+
+  @query('.input-element')
+  private _inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
   @internalProperty()
   private _textareaHeight = 0;
@@ -171,6 +180,18 @@ export class VscodeInputbox extends LitElement {
     if (changedProperties.has('value')) {
       this.resizeTextareaIfRequired();
     }
+  }
+
+  get focusElement(): HTMLInputElement | HTMLTextAreaElement {
+    return this._inputElement;
+  }
+
+  focus(): void {
+    this._inputElement.focus();
+  }
+
+  toString(): string {
+    return '[object VscodeInputbox]';
   }
 
   private onInputFocus = () => {
@@ -240,10 +261,7 @@ export class VscodeInputbox extends LitElement {
     return css`
       :host {
         display: inline-block;
-      }
-
-      :host([multiline]) {
-        display: block;
+        width: 320px;
       }
 
       .container {
@@ -454,7 +472,10 @@ export class VscodeInputbox extends LitElement {
         @input="${this.onInputInput}"
         @change="${this.onInputChange}"
         @mousemove="${this.onTextareaMouseMove}"
-        class="${classMap({'cursor-default': this._textareaDefaultCursor})}"
+        class="${classMap({
+          'cursor-default': this._textareaDefaultCursor,
+          'input-element': true,
+        })}"
         minlength="${ifDefined(this.minLength)}"
         maxlength="${ifDefined(this.maxLength)}"
         placeholder="${this.placeholder}"
@@ -482,6 +503,7 @@ export class VscodeInputbox extends LitElement {
         ?readonly="${this.readonly}"
         step="${ifDefined(this.step)}"
         .value="${this.value}"
+        class="input-element"
       />
     `;
 
@@ -491,7 +513,10 @@ export class VscodeInputbox extends LitElement {
 
     return html`
       <div class="${containerClasses}">
-        ${this.multiline ? textarea : input} ${this.message ? message : ''}
+        <div class="helper"><slot name="helper"></slot></div>
+        <div class="input-wrapper">
+          ${this.multiline ? textarea : input} ${this.message ? message : ''}
+        </div>
       </div>
     `;
   }

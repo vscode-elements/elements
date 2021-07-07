@@ -5,16 +5,38 @@ import {
   property,
   customElement,
   CSSResult,
+  state,
 } from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
 
-@customElement('vscode-checkbox')
-export class VscodeCheckbox extends LitElement {
-  @property() label = '';
-  @property({type: Boolean}) checked = false;
-  @property() value = '';
-  @property({type: Number, reflect: true}) tabindex = 0;
-  @property({type: Boolean}) disabled = false;
+@customElement('vscode-radio')
+export class VscodeRadio extends LitElement {
+  @property()
+  label = '';
+
+  @property({type: Boolean})
+  set checked(val: boolean) {
+    this._checked = val;
+  }
+  get checked(): boolean {
+    return this._checked;
+  }
+
+  @property()
+  name = '';
+
+  @property()
+  value = '';
+
+  @property({type: Number, reflect: true})
+  tabindex = 0;
+
+  @property({type: Boolean})
+  disabled = false;
+
+  @state()
+  _checked = false;
 
   constructor() {
     super();
@@ -38,12 +60,29 @@ export class VscodeCheckbox extends LitElement {
     Math.random() * 9999
   )}`;
 
+  private _checkButton() {
+    const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
+
+    if (!root) {
+      return;
+    }
+
+    const radios = root.querySelectorAll('vscode-radio');
+    this._checked = true;
+
+    radios.forEach((r) => {
+      if (r !== this) {
+        r.checked = false;
+      }
+    });
+  }
+
   private _handleClick() {
     if (this.disabled) {
       return;
     }
 
-    this.checked = !this.checked;
+    this._checkButton();
 
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
@@ -60,7 +99,7 @@ export class VscodeCheckbox extends LitElement {
 
   private _handleKeyDown(event: KeyboardEvent) {
     if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
-      this.checked = !this.checked;
+      this.checked = true;
     }
   }
 
@@ -107,7 +146,7 @@ export class VscodeCheckbox extends LitElement {
         background-color: var(--vscode-settings-checkboxBackground);
         background-size: 16px;
         border: 1px solid var(--vscode-settings-checkboxBorder);
-        border-radius: 3px;
+        border-radius: 9px;
         box-sizing: border-box;
         display: flex;
         height: 18px;
@@ -120,6 +159,18 @@ export class VscodeCheckbox extends LitElement {
         position: absolute;
         top: 0;
         width: 18px;
+      }
+
+      .icon.checked:before {
+        background-color: currentColor;
+        border-radius: 4px;
+        content: '';
+        height: 8px;
+        left: 50%;
+        margin: -4px 0 0 -4px;
+        position: absolute;
+        top: 50%;
+        width: 8px;
       }
 
       :host(:focus):host(:not([disabled])) .icon {
@@ -161,7 +212,11 @@ export class VscodeCheckbox extends LitElement {
         d="M14.431 3.323l-8.47 10-.79-.036-3.35-4.77.818-.574 2.978 4.24 8.051-9.506.764.646z"
       />
     </svg>`;
-    const check = this.checked ? icon : nothing;
+    const check = this._checked ? icon : nothing;
+    const iconClasses = classMap({
+      icon: true,
+      checked: this.checked,
+    });
 
     return html`
       <div class="wrapper">
@@ -173,7 +228,7 @@ export class VscodeCheckbox extends LitElement {
           value="${this.value}"
           tabindex="-1"
         />
-        <div class="icon">${check}</div>
+        <div class="${iconClasses}"></div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
           <slot><span class="label-text">${this.label}</span></slot>
         </label>
@@ -184,6 +239,6 @@ export class VscodeCheckbox extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-checkbox': VscodeCheckbox;
+    'vscode-radio': VscodeRadio;
   }
 }
