@@ -8,6 +8,10 @@ import {
 } from 'lit-element';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 
+interface FocusableElement extends Element {
+  focus: () => void;
+}
+
 /**
  * An example element.
  *
@@ -76,9 +80,8 @@ export class VscodeLabel extends LitElement {
       if (root) {
         target = root.querySelector(`#${this.for}`);
 
-        if (target) {
-          console.log(target.toString());
-          target!.focus();
+        if (target && 'focus' in target) {
+          (target as FocusableElement).focus();
         }
       }
     }
