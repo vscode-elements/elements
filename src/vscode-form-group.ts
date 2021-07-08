@@ -10,6 +10,9 @@ import {
 
 @customElement('vscode-form-group')
 export class VscodeFormGroup extends LitElement {
+  @property({type: Boolean, reflect: true})
+  vertical = false;
+
   static get styles(): CSSResult {
     return css`
       :host {
@@ -25,6 +28,21 @@ export class VscodeFormGroup extends LitElement {
         flex-wrap: wrap;
       }
 
+      :host([vertical]) .wrapper {
+        display: block;
+      }
+
+      ::slotted(vscode-checkbox-group),
+      ::slotted(vscode-radio-group) {
+        width: calc(
+          100% -
+            calc(
+              var(--vsc-inline-label-width, var(--label-default-width)) +
+                var(--label-right-margin)
+            )
+        );
+      }
+
       ::slotted(vscode-label) {
         width: var(--vsc-inline-label-width, var(--label-default-width));
         margin-right: var(--label-right-margin);
@@ -35,6 +53,15 @@ export class VscodeFormGroup extends LitElement {
           var(--vsc-inline-label-width, var(--label-default-width)) +
             var(--label-right-margin)
         );
+      }
+
+      :host([vertical]) ::slotted(vscode-label) {
+        display: block;
+        text-align: left;
+      }
+
+      :host([vertical]) ::slotted(vscode-form-helper) {
+        margin-left: 0;
       }
     `;
   }
@@ -53,6 +80,6 @@ export class VscodeFormGroup extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-form-row': VscodeFormGroup;
+    'vscode-form-group': VscodeFormGroup;
   }
 }

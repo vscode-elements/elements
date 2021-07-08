@@ -17,6 +17,10 @@ export class VscodeFormHelper extends LitElement {
       margin-top: 4px;
       max-width: 720px;
     }
+
+    :host([vertical]) {
+      margin-left: 0;
+    }
   `;
 
   render(): TemplateResult {

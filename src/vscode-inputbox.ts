@@ -261,6 +261,7 @@ export class VscodeInputbox extends LitElement {
     return css`
       :host {
         display: inline-block;
+        max-width: 100%;
         width: 320px;
       }
 

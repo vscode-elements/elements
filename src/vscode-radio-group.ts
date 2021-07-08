@@ -9,6 +9,9 @@ import {
 
 @customElement('vscode-radio-group')
 export class VscodeRadioGroup extends LitElement {
+  @property({type: Boolean, reflect: true})
+  vertical = false;
+
   static styles = css`
     :host {
       display: block;

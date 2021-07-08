@@ -7,7 +7,6 @@ import {
   TemplateResult,
 } from 'lit-element';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
-import { VscodeInputbox } from './vscode-inputbox';
 
 /**
  * An example element.
@@ -23,8 +22,8 @@ export class VscodeLabel extends LitElement {
   @property({type: Boolean})
   required = false;
 
-  @property()
-  sideAligned: 'start' |'end' = 'start';
+  @property({reflect: true, attribute: 'side-aligned'})
+  sideAligned: 'start' | 'end' = 'start';
 
   @property({type: Boolean})
   wrap = false;
@@ -49,9 +48,9 @@ export class VscodeLabel extends LitElement {
       width: 150px;
     }
 
-    :host([side-aligned=end]),
-    :host([sideAligned=end]),
-    :host([sidealigned=end]) {
+    :host([side-aligned='end']),
+    :host([sideAligned='end']),
+    :host([sidealigned='end']) {
       text-align: right;
     }
 
@@ -76,7 +75,6 @@ export class VscodeLabel extends LitElement {
 
       if (root) {
         target = root.querySelector(`#${this.for}`);
-
 
         if (target) {
           console.log(target.toString());

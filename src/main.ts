@@ -4,6 +4,7 @@ export {VscodeCheckboxGroup} from './vscode-checkbox-group';
 export {VscodeCollapsible} from './vscode-collapsible';
 export {VscodeContextMenuItem} from './vscode-context-menu-item';
 export {VscodeContextMenu} from './vscode-context-menu';
+export {VscodeFormContainer} from './vscode-form-container';
 export {VscodeFormControl} from './vscode-form-control';
 export {VscodeFormDescription} from './vscode-form-description';
 export {VscodeFormItem} from './vscode-form-item';

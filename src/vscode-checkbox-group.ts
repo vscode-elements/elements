@@ -9,6 +9,9 @@ import {
 
 @customElement('vscode-checkbox-group')
 export class VscodeCheckboxGroup extends LitElement {
+  @property({type: Boolean, reflect: true})
+  vertical = false;
+
   static styles = css`
     :host {
       display: block;
