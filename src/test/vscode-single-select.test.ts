@@ -33,6 +33,110 @@ describe('vscode-single-select', () => {
       expect(el.value).to.eq('Ipsum');
     });
 
+    it('should display selected value when value prop is changed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.value = 'Ipsum';
+      await el.updateComplete;
+
+      expect(el).shadowDom.to.equal(`
+        <slot class="main-slot"></slot>
+        <div class="select-face">
+          <span class="text">
+            Ipsum
+          </span>
+          <span class="icon">
+          </span>
+        </div>
+      `);
+      expect(el.value).to.eq('Ipsum');
+      expect(el.selectedIndex).to.eq(1);
+    });
+
+    it('select face should be empty when the value is invalid', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.value = 'trololo';
+      await el.updateComplete;
+
+      expect(el).shadowDom.to.equal(`
+        <slot class="main-slot"></slot>
+        <div class="select-face">
+          <span class="text">
+            <span class="empty-label-placeholder"></span>
+          </span>
+          <span class="icon">
+          </span>
+        </div>
+      `);
+      expect(el.value).to.eq('trololo');
+      expect(el.selectedIndex).to.eq(-1);
+    });
+
+    it('should display selected value when selectedIndex prop is changed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.selectedIndex = 1;
+      await el.updateComplete;
+
+      expect(el).shadowDom.to.equal(`
+        <slot class="main-slot"></slot>
+        <div class="select-face">
+          <span class="text">
+            Ipsum
+          </span>
+          <span class="icon">
+          </span>
+        </div>
+      `);
+      expect(el.value).to.eq('Ipsum');
+      expect(el.selectedIndex).to.eq(1);
+    });
+
+    it('select face should be empty when the selectedIndex prop is invalid', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.selectedIndex = 999;
+      await el.updateComplete;
+
+      expect(el).shadowDom.to.equal(`
+        <slot class="main-slot"></slot>
+        <div class="select-face">
+          <span class="text">
+            <span class="empty-label-placeholder"></span>
+          </span>
+          <span class="icon">
+          </span>
+        </div>
+      `);
+      expect(el.value).to.eq('');
+      expect(el.selectedIndex).to.eq(999);
+    });
+
     it('should display selected value when an option is clicked', async () => {
       const el = (await fixture(html`
         <vscode-single-select>
