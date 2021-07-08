@@ -8,13 +8,9 @@ import {
   query,
   queryAssignedNodes,
 } from 'lit-element';
-import {VscodeCheckbox} from './vscode-checkbox';
 import {VscodeCheckboxGroup} from './vscode-checkbox-group';
 import {VscodeFormGroup} from './vscode-form-group';
-import {VscodeRadio} from './vscode-radio';
 import {VscodeRadioGroup} from './vscode-radio-group';
-
-// type FormGroupLayout = 'horizontal' | 'vertical';
 
 enum FormGroupLayout {
   HORIZONTAL = 'horizontal',
@@ -65,12 +61,6 @@ export class VscodeFormContainer extends LitElement {
     );
 
     groups.forEach((group) => {
-      /* const label = group.querySelector('vscode-label');
-
-      if (label) {
-        console.log(label);
-        label.sideAligned = layout === 'horizontal' ? 'end' : 'start';
-      } */
       group.vertical = layout === FormGroupLayout.VERTICAL;
 
       const widgetGroups = group.querySelectorAll(
