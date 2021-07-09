@@ -129,6 +129,10 @@ export class VscodeCheckbox extends LitElement {
 
       .label {
         cursor: pointer;
+      }
+
+      .label-inner {
+        display: block;
         padding-left: 27px;
       }
 
@@ -175,7 +179,9 @@ export class VscodeCheckbox extends LitElement {
         />
         <div class="icon">${check}</div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
-          <slot><span class="label-text">${this.label}</span></slot>
+          <span class="label-inner">
+            <slot><span class="label-text">${this.label}</span></slot>
+          </span>
         </label>
       </div>
     `;

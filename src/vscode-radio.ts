@@ -182,6 +182,10 @@ export class VscodeRadio extends LitElement {
 
       .label {
         cursor: pointer;
+      }
+
+      .label-inner {
+        display: block;
         padding-left: 27px;
       }
 
@@ -218,7 +222,9 @@ export class VscodeRadio extends LitElement {
         />
         <div class="${iconClasses}"></div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
-          <slot><span class="label-text">${this.label}</span></slot>
+          <span class="label-inner">
+            <slot><span class="label-text">${this.label}</span></slot>
+          </span>
         </label>
       </div>
     `;
