@@ -122,7 +122,12 @@ export class VscodeFormContainer extends LitElement {
     this._resizeObserver = null;
   }
 
-  static styles = css``;
+  static styles = css`
+    :host {
+      display: block;
+      max-width: 727px;
+    }
+  `;
 
   firstUpdated(): void {
     this._firstUpdateComplete = true;
