@@ -1,46 +1,25 @@
-import {
-  LitElement,
-  html,
-  css,
-  property,
-  customElement,
-  CSSResult,
-} from 'lit-element';
-import {nothing, TemplateResult} from 'lit-html';
-import {applyForegroundRGBA} from './includes/themeHelpers';
+import {CSSResult, customElement, html, property, TemplateResult} from 'lit-element';
+import {nothing} from 'lit-html';
+import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
+import baseStyles from './includes/form-button-widget/base.styles';
+import checkboxStyles from './includes/form-button-widget/checkbox.styles';
+import formHelperTextStyles from './includes/formHelperTextStyles';
 
 @customElement('vscode-checkbox')
-export class VscodeCheckbox extends LitElement {
-  @property() label = '';
-  @property({type: Boolean}) checked = false;
-  @property() value = '';
-  @property({type: Number, reflect: true}) tabindex = 0;
-  @property({type: Boolean}) disabled = false;
+export class VscodeCheckbox extends FormButtonWidgetBase {
+  @property({type: Boolean})
+  checked = false;
 
-  constructor() {
-    super();
-    applyForegroundRGBA();
-    this.addEventListener('keydown', this._handleKeyDown.bind(this));
-  }
+  @property()
+  label = '';
 
-  attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
-    super.attributeChangedCallback(name, oldVal, newVal);
+  @property()
+  value = '';
 
-    if (name === 'disabled' && this.hasAttribute('disabled')) {
-      this._prevTabindex = this.tabindex;
-      this.tabindex = -1;
-    } else if (name === 'disabled' && !this.hasAttribute('disabled')) {
-      this.tabindex = this._prevTabindex;
-    }
-  }
+  @property({type: Boolean})
+  disabled = false;
 
-  private _prevTabindex = 0;
-
-  private _uid = `id_${new Date().valueOf()}_${Math.floor(
-    Math.random() * 9999
-  )}`;
-
-  private _handleClick() {
+  protected _handleClick(): void {
     if (this.disabled) {
       return;
     }
@@ -60,93 +39,14 @@ export class VscodeCheckbox extends LitElement {
     );
   }
 
-  private _handleKeyDown(event: KeyboardEvent) {
+  protected _handleKeyDown(event: KeyboardEvent): void {
     if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
       this.checked = !this.checked;
     }
   }
 
-  static get styles(): CSSResult {
-    return css`
-      :host {
-        color: var(--vsc-foreground-translucent);
-        display: inline-block;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
-        line-height: 1.4;
-      }
-
-      :host(:focus) {
-        outline: none;
-      }
-
-      :host([disabled]) {
-        opacity: 0.4;
-      }
-
-      .wrapper {
-        cursor: pointer;
-        display: block;
-        font-size: var(--vscode-font-size);
-        margin-bottom: 4px;
-        margin-top: 4px;
-        min-height: 18px;
-        position: relative;
-        user-select: none;
-      }
-
-      :host([disabled]) .wrapper {
-        cursor: default;
-      }
-
-      .checkbox {
-        position: absolute;
-        height: 1px;
-        width: 1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap;
-      }
-
-      .icon {
-        align-items: center;
-        background-color: var(--vscode-settings-checkboxBackground);
-        background-size: 16px;
-        border: 1px solid var(--vscode-settings-checkboxBorder);
-        border-radius: 3px;
-        box-sizing: border-box;
-        display: flex;
-        height: 18px;
-        justify-content: center;
-        left: 0;
-        margin-left: 0;
-        margin-right: 9px;
-        padding: 0;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        width: 18px;
-      }
-
-      :host(:focus):host(:not([disabled])) .icon {
-        outline: 1px solid var(--vscode-focusBorder);
-        outline-offset: -1px;
-      }
-
-      .label {
-        cursor: pointer;
-      }
-
-      .label-inner {
-        display: block;
-        padding-left: 27px;
-      }
-
-      :host([disabled]) .label {
-        cursor: default;
-      }
-    `;
+  static get styles(): CSSResult[] {
+    return [baseStyles, checkboxStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {
