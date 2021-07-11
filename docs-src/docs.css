@@ -13,7 +13,7 @@ body {
   color: var(--color-dark-gray);
   display: flex;
   flex-wrap: wrap;
-  font-family: var(--vscode-font-family, sans-serif);
+  font-family: "Segoe WPC", "Segoe UI", sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -25,7 +25,7 @@ body.landing-page {
 }
 
 a {
-  color: var(--vscode-textLink-activeForeground, #006ab1);
+  color: #006ab1;
 }
 
 .content-wrapper,

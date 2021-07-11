@@ -10,7 +10,7 @@ javascript```
   const consoleMsg = Array.from($0.style)
     .sort((a, b) => a.localeCompare(b))
     .map(
-      (s) => `  ${s.replace(/\./g, '\\.')}: ${$0.style.getPropertyValue(s)};\n`
+      (s) => `${s.replace(/\./g, '\\.')}: ${$0.style.getPropertyValue(s)};\n`
     )
     .join('');
 
