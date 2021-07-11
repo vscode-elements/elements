@@ -9,6 +9,7 @@ import {
 } from 'lit-element';
 import {TemplateResult} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
+import { applyForegroundRGBA } from './includes/themeHelpers';
 
 @customElement('vscode-radio')
 export class VscodeRadio extends LitElement {
@@ -40,6 +41,7 @@ export class VscodeRadio extends LitElement {
 
   constructor() {
     super();
+    applyForegroundRGBA();
     this.addEventListener('keydown', this._handleKeyDown.bind(this));
   }
 
@@ -108,7 +110,12 @@ export class VscodeRadio extends LitElement {
   static get styles(): CSSResult {
     return css`
       :host {
+        color: var(--vsc-foreground-translucent);
         display: inline-block;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        font-weight: var(--vscode-font-weight);
+        line-height: 1.4;
       }
 
       :host(:focus) {
@@ -189,13 +196,8 @@ export class VscodeRadio extends LitElement {
         padding-left: 27px;
       }
 
-      .label-text {
-        color: var(--vscode-breadcrumb-foreground);
-        cursor: pointer;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
-        line-height: 1.4;
+      ::slotted(a) {
+        color: var(--vscode-textLink-foreground);
       }
 
       :host([disabled]) .label-text {

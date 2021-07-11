@@ -59,7 +59,7 @@ export class VscodeLabel extends LitElement {
     }
 
     .wrapper {
-      color: var(--vscode--input-foreground);
+      color: var(--vscode--settings-headerForeground);
       font-size: var(--vscode-font-size);
       font-weight: 600;
       line-height: ${INPUT_LINE_HEIGHT_RATIO};
@@ -68,6 +68,11 @@ export class VscodeLabel extends LitElement {
 
     ::slotted(.normal) {
       font-weight: normal;
+    }
+
+    ::slotted(.lightened) {
+      color: var(--vscode-foreground);
+      opacity: 0.9;
     }
   `;
 

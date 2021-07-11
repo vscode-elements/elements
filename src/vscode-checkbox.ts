@@ -7,6 +7,7 @@ import {
   CSSResult,
 } from 'lit-element';
 import {nothing, TemplateResult} from 'lit-html';
+import {applyForegroundRGBA} from './includes/themeHelpers';
 
 @customElement('vscode-checkbox')
 export class VscodeCheckbox extends LitElement {
@@ -18,6 +19,7 @@ export class VscodeCheckbox extends LitElement {
 
   constructor() {
     super();
+    applyForegroundRGBA();
     this.addEventListener('keydown', this._handleKeyDown.bind(this));
   }
 
@@ -67,7 +69,12 @@ export class VscodeCheckbox extends LitElement {
   static get styles(): CSSResult {
     return css`
       :host {
+        color: var(--vsc-foreground-translucent);
         display: inline-block;
+        font-family: var(--vscode-font-family);
+        font-size: var(--vscode-font-size);
+        font-weight: var(--vscode-font-weight);
+        line-height: 1.4;
       }
 
       :host(:focus) {
@@ -136,16 +143,7 @@ export class VscodeCheckbox extends LitElement {
         padding-left: 27px;
       }
 
-      .label-text {
-        color: var(--vscode-breadcrumb-foreground);
-        cursor: pointer;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
-        line-height: 1.4;
-      }
-
-      :host([disabled]) .label-text {
+      :host([disabled]) .label {
         cursor: default;
       }
     `;

@@ -197,7 +197,7 @@
 --vscode-icon-foreground: #424242;
 --vscode-input-background: #fafbfc;
 --vscode-input-border: #e1e4e8;
---vscode-input-foreground: #00ff00;
+--vscode-input-foreground: #2f363d;
 --vscode-input-placeholderForeground: #959da5;
 --vscode-inputOption-activeBackground: rgba(33, 136, 255, 0.2);
 --vscode-inputOption-activeBorder: rgba(0, 122, 204, 0);
