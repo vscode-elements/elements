@@ -1,358 +1,1163 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>&lt;vscode-single-select&gt; Demo</title>
+    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/vscode-codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script type="module" src="../dev-assets/component-preview.js"></script>
+    <script type="module" src="../dist/vscode-icon.js"></script>
+    <script type="module" src="../dist/vscode-option.js"></script>
+    <script type="module" src="../dist/vscode-single-select.js"></script>
+    <script type="module" src="../dist/vscode-multi-select.js"></script>
+    <style>
+      [data-cloak] vscode-option {
+        display: none;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>VSCode Webview Elements demo page</title>
-  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
-  <script src="../dev-assets/preview-page.js"></script>
-  <script src="../dist/vscode-button.js" type="module"></script>
-  <script src="../dist/vscode-option.js" type="module"></script>
-  <script src="../dist/vscode-select.js" type="module"></script>
-</head>
+  <body>
+    <h1>vscode-single-select</h1>
 
-<body class="vscode-light">
-  <div class="theme-switcher">
-    <div class="theme-switcher-option light">
-      <button value="vscode-light" type="button">Light</button>
-    </div>
-    <div class="theme-switcher-option dark">
-      <button value="vscode-dark" type="button">Dark</button>
-    </div>
-    <div class="theme-switcher-option hc">
-      <button value="vscode-high-contrast" type="button">
-        High contrast
-      </button>
-    </div>
-  </div>
+    <h2>Basic example</h2>
+    <component-preview>
+      <vscode-single-select value="lorem" data-cloak id="sl-1">
+        <vscode-option>Afghanistan</vscode-option>
+        <vscode-option description="Test ">Albania</vscode-option>
+        <vscode-option>Algeria</vscode-option>
+        <vscode-option>Andorra</vscode-option>
+        <vscode-option>Angola</vscode-option>
+        <vscode-option>Antigua and Barbuda</vscode-option>
+        <vscode-option>Argentina</vscode-option>
+        <vscode-option>Armenia</vscode-option>
+        <vscode-option>Australia</vscode-option>
+        <vscode-option>Austria</vscode-option>
+        <vscode-option>Azerbaijan</vscode-option>
+        <vscode-option>Bahamas</vscode-option>
+        <vscode-option>Bahrain</vscode-option>
+        <vscode-option>Bangladesh</vscode-option>
+        <vscode-option>Barbados</vscode-option>
+        <vscode-option>Belarus</vscode-option>
+        <vscode-option>Belgium</vscode-option>
+        <vscode-option>Belize</vscode-option>
+        <vscode-option>Benin</vscode-option>
+        <vscode-option>Bhutan</vscode-option>
+        <vscode-option>Bolivia</vscode-option>
+        <vscode-option>Bosnia and Herzegovina</vscode-option>
+        <vscode-option>Botswana</vscode-option>
+        <vscode-option>Brazil</vscode-option>
+        <vscode-option>Brunei</vscode-option>
+        <vscode-option>Bulgaria</vscode-option>
+        <vscode-option>Burkina Faso</vscode-option>
+        <vscode-option>Burundi</vscode-option>
+        <vscode-option>Côte d'Ivoire</vscode-option>
+        <vscode-option>Cabo Verde</vscode-option>
+        <vscode-option>Cambodia</vscode-option>
+        <vscode-option>Cameroon</vscode-option>
+        <vscode-option>Canada</vscode-option>
+        <vscode-option>Central African Republic</vscode-option>
+        <vscode-option>Chad</vscode-option>
+        <vscode-option>Chile</vscode-option>
+        <vscode-option>China</vscode-option>
+        <vscode-option>Colombia</vscode-option>
+        <vscode-option>Comoros</vscode-option>
+        <vscode-option>Congo (Congo-Brazzaville)</vscode-option>
+        <vscode-option>Costa Rica</vscode-option>
+        <vscode-option>Croatia</vscode-option>
+        <vscode-option>Cuba</vscode-option>
+        <vscode-option selected>Cyprus</vscode-option>
+        <vscode-option>Czechia (Czech Republic)</vscode-option>
+        <vscode-option>Democratic Republic of the Congo</vscode-option>
+        <vscode-option>Denmark</vscode-option>
+        <vscode-option>Djibouti</vscode-option>
+        <vscode-option>Dominica</vscode-option>
+        <vscode-option>Dominican Republic</vscode-option>
+        <vscode-option>Ecuador</vscode-option>
+        <vscode-option>Egypt</vscode-option>
+        <vscode-option>El Salvador</vscode-option>
+        <vscode-option>Equatorial Guinea</vscode-option>
+        <vscode-option>Eritrea</vscode-option>
+        <vscode-option>Estonia</vscode-option>
+        <vscode-option>Eswatini (fmr. "Swaziland")</vscode-option>
+        <vscode-option>Ethiopia</vscode-option>
+        <vscode-option>Fiji</vscode-option>
+        <vscode-option>Finland</vscode-option>
+        <vscode-option>France</vscode-option>
+        <vscode-option>Gabon</vscode-option>
+        <vscode-option>Gambia</vscode-option>
+        <vscode-option>Georgia</vscode-option>
+        <vscode-option>Germany</vscode-option>
+        <vscode-option>Ghana</vscode-option>
+        <vscode-option>Greece</vscode-option>
+        <vscode-option>Grenada</vscode-option>
+        <vscode-option>Guatemala</vscode-option>
+        <vscode-option>Guinea</vscode-option>
+        <vscode-option>Guinea-Bissau</vscode-option>
+        <vscode-option>Guyana</vscode-option>
+        <vscode-option>Haiti</vscode-option>
+        <vscode-option>Holy See</vscode-option>
+        <vscode-option>Honduras</vscode-option>
+        <vscode-option>Hungary</vscode-option>
+        <vscode-option>Iceland</vscode-option>
+        <vscode-option>India</vscode-option>
+        <vscode-option>Indonesia</vscode-option>
+        <vscode-option>Iran</vscode-option>
+        <vscode-option>Iraq</vscode-option>
+        <vscode-option>Ireland</vscode-option>
+        <vscode-option>Israel</vscode-option>
+        <vscode-option>Italy</vscode-option>
+        <vscode-option>Jamaica</vscode-option>
+        <vscode-option>Japan</vscode-option>
+        <vscode-option>Jordan</vscode-option>
+        <vscode-option>Kazakhstan</vscode-option>
+        <vscode-option>Kenya</vscode-option>
+        <vscode-option>Kiribati</vscode-option>
+        <vscode-option>Kuwait</vscode-option>
+        <vscode-option>Kyrgyzstan</vscode-option>
+        <vscode-option>Laos</vscode-option>
+        <vscode-option>Latvia</vscode-option>
+        <vscode-option>Lebanon</vscode-option>
+        <vscode-option>Lesotho</vscode-option>
+        <vscode-option>Liberia</vscode-option>
+        <vscode-option>Libya</vscode-option>
+        <vscode-option>Liechtenstein</vscode-option>
+        <vscode-option>Lithuania</vscode-option>
+        <vscode-option>Luxembourg</vscode-option>
+        <vscode-option>Madagascar</vscode-option>
+        <vscode-option>Malawi</vscode-option>
+        <vscode-option>Malaysia</vscode-option>
+        <vscode-option>Maldives</vscode-option>
+        <vscode-option>Mali</vscode-option>
+        <vscode-option>Malta</vscode-option>
+        <vscode-option>Marshall Islands</vscode-option>
+        <vscode-option>Mauritania</vscode-option>
+        <vscode-option>Mauritius</vscode-option>
+        <vscode-option>Mexico</vscode-option>
+        <vscode-option>Micronesia</vscode-option>
+        <vscode-option>Moldova</vscode-option>
+        <vscode-option>Monaco</vscode-option>
+        <vscode-option>Mongolia</vscode-option>
+        <vscode-option>Montenegro</vscode-option>
+        <vscode-option>Morocco</vscode-option>
+        <vscode-option>Mozambique</vscode-option>
+        <vscode-option>Myanmar (formerly Burma)</vscode-option>
+        <vscode-option>Namibia</vscode-option>
+        <vscode-option>Nauru</vscode-option>
+        <vscode-option>Nepal</vscode-option>
+        <vscode-option>Netherlands</vscode-option>
+        <vscode-option>New Zealand</vscode-option>
+        <vscode-option>Nicaragua</vscode-option>
+        <vscode-option>Niger</vscode-option>
+        <vscode-option>Nigeria</vscode-option>
+        <vscode-option>North Korea</vscode-option>
+        <vscode-option>North Macedonia</vscode-option>
+        <vscode-option>Norway</vscode-option>
+        <vscode-option>Oman</vscode-option>
+        <vscode-option>Pakistan</vscode-option>
+        <vscode-option>Palau</vscode-option>
+        <vscode-option>Palestine State</vscode-option>
+        <vscode-option>Panama</vscode-option>
+        <vscode-option>Papua New Guinea</vscode-option>
+        <vscode-option>Paraguay</vscode-option>
+        <vscode-option>Peru</vscode-option>
+        <vscode-option>Philippines</vscode-option>
+        <vscode-option>Poland</vscode-option>
+        <vscode-option>Portugal</vscode-option>
+        <vscode-option>Qatar</vscode-option>
+        <vscode-option>Romania</vscode-option>
+        <vscode-option>Russia</vscode-option>
+        <vscode-option>Rwanda</vscode-option>
+        <vscode-option>Saint Kitts and Nevis</vscode-option>
+        <vscode-option>Saint Lucia</vscode-option>
+        <vscode-option>Saint Vincent and the Grenadines</vscode-option>
+        <vscode-option>Samoa</vscode-option>
+        <vscode-option>San Marino</vscode-option>
+        <vscode-option>Sao Tome and Principe</vscode-option>
+        <vscode-option>Saudi Arabia</vscode-option>
+        <vscode-option>Senegal</vscode-option>
+        <vscode-option>Serbia</vscode-option>
+        <vscode-option>Seychelles</vscode-option>
+        <vscode-option>Sierra Leone</vscode-option>
+        <vscode-option>Singapore</vscode-option>
+        <vscode-option>Slovakia</vscode-option>
+        <vscode-option>Slovenia</vscode-option>
+        <vscode-option>Solomon Islands</vscode-option>
+        <vscode-option>Somalia</vscode-option>
+        <vscode-option>South Africa</vscode-option>
+        <vscode-option>South Korea</vscode-option>
+        <vscode-option>South Sudan</vscode-option>
+        <vscode-option>Spain</vscode-option>
+        <vscode-option>Sri Lanka</vscode-option>
+        <vscode-option>Sudan</vscode-option>
+        <vscode-option>Suriname</vscode-option>
+        <vscode-option>Sweden</vscode-option>
+        <vscode-option>Switzerland</vscode-option>
+        <vscode-option>Syria</vscode-option>
+        <vscode-option>Tajikistan</vscode-option>
+        <vscode-option>Tanzania</vscode-option>
+        <vscode-option>Thailand</vscode-option>
+        <vscode-option>Timor-Leste</vscode-option>
+        <vscode-option>Togo</vscode-option>
+        <vscode-option>Tonga</vscode-option>
+        <vscode-option>Trinidad and Tobago</vscode-option>
+        <vscode-option>Tunisia</vscode-option>
+        <vscode-option>Turkey</vscode-option>
+        <vscode-option>Turkmenistan</vscode-option>
+        <vscode-option>Tuvalu</vscode-option>
+        <vscode-option>Uganda</vscode-option>
+        <vscode-option>Ukraine</vscode-option>
+        <vscode-option>United Arab Emirates</vscode-option>
+        <vscode-option>United Kingdom</vscode-option>
+        <vscode-option>United States of America</vscode-option>
+        <vscode-option>Uruguay</vscode-option>
+        <vscode-option>Uzbekistan</vscode-option>
+        <vscode-option>Vanuatu</vscode-option>
+        <vscode-option>Venezuela</vscode-option>
+        <vscode-option>Vietnam</vscode-option>
+        <vscode-option>Yemen</vscode-option>
+        <vscode-option>Zambia</vscode-option>
+        <vscode-option>Zimbabwe</vscode-option>
+      </vscode-single-select>
+    </component-preview>
+    <script type="module">
+      const sl = document.querySelector('#sl-1');
 
-  <div class="story" id="vscode-select__default">
-    <h2 class="story-title">Basic</h2>
-    <vscode-select>
-      <vscode-option>Lorem</vscode-option>
-      <vscode-option>Ipsum</vscode-option>
-      <vscode-option>Dolor</vscode-option>
-    </vscode-select>
-    <div class="logger"></div>
-    <script>
-      (() => {
-        const sl = document.querySelector(
-          '#vscode-select__default vscode-select'
+      sl.addEventListener('vsc-change', (ev) => {
+        console.log(
+          'event detail:',
+          ev.detail,
+          'value:',
+          sl.value,
+          'selectedIndex:',
+          sl.selectedIndex
         );
-        const loggerEl = document.querySelector(
-          '#vscode-select__default .logger'
-        );
-
-        loggerEl.innerHTML = sl.value;
-
-        sl.addEventListener('vsc-change', (event) => {
-          loggerEl.innerHTML = event.detail.value;
-        });
-      })();
+      });
     </script>
-  </div>
 
-  <div class="story" id="vscode-select__multiple">
-    <h2 class="story-title">Multiple</h2>
-    <vscode-select multiple>
-      <vscode-option>Lorem</vscode-option>
-      <vscode-option>Ipsum</vscode-option>
-      <vscode-option>Dolor</vscode-option>
-    </vscode-select>
-    <pre class="logger"></pre>
-    <script>
-      (() => {
-        const sl = document.querySelector(
-          '#vscode-select__multiple vscode-select'
-        );
-        const loggerEl = document.querySelector(
-          '#vscode-select__multiple .logger'
-        );
+    <h2>Combo box example</h2>
+    <component-preview>
+      <vscode-single-select
+        value="lorem"
+        data-cloak
+        id="sl-2"
+        combobox
+        filter="fuzzy"
+      >
+        <vscode-option>Afghanistan</vscode-option>
+        <vscode-option description="Test ">Albania</vscode-option>
+        <vscode-option>Algeria</vscode-option>
+        <vscode-option>Andorra</vscode-option>
+        <vscode-option>Angola</vscode-option>
+        <vscode-option>Antigua and Barbuda</vscode-option>
+        <vscode-option>Argentina</vscode-option>
+        <vscode-option>Armenia</vscode-option>
+        <vscode-option>Australia</vscode-option>
+        <vscode-option selected>Austria</vscode-option>
+        <vscode-option>Azerbaijan</vscode-option>
+        <vscode-option>Bahamas</vscode-option>
+        <vscode-option>Bahrain</vscode-option>
+        <vscode-option>Bangladesh</vscode-option>
+        <vscode-option>Barbados</vscode-option>
+        <vscode-option>Belarus</vscode-option>
+        <vscode-option>Belgium</vscode-option>
+        <vscode-option>Belize</vscode-option>
+        <vscode-option>Benin</vscode-option>
+        <vscode-option>Bhutan</vscode-option>
+        <vscode-option>Bolivia</vscode-option>
+        <vscode-option>Bosnia and Herzegovina</vscode-option>
+        <vscode-option>Botswana</vscode-option>
+        <vscode-option>Brazil</vscode-option>
+        <vscode-option>Brunei</vscode-option>
+        <vscode-option>Bulgaria</vscode-option>
+        <vscode-option>Burkina Faso</vscode-option>
+        <vscode-option>Burundi</vscode-option>
+        <vscode-option>Côte d'Ivoire</vscode-option>
+        <vscode-option>Cabo Verde</vscode-option>
+        <vscode-option>Cambodia</vscode-option>
+        <vscode-option>Cameroon</vscode-option>
+        <vscode-option>Canada</vscode-option>
+        <vscode-option>Central African Republic</vscode-option>
+        <vscode-option>Chad</vscode-option>
+        <vscode-option>Chile</vscode-option>
+        <vscode-option>China</vscode-option>
+        <vscode-option>Colombia</vscode-option>
+        <vscode-option>Comoros</vscode-option>
+        <vscode-option>Congo (Congo-Brazzaville)</vscode-option>
+        <vscode-option>Costa Rica</vscode-option>
+        <vscode-option>Croatia</vscode-option>
+        <vscode-option>Cuba</vscode-option>
+        <vscode-option>Cyprus</vscode-option>
+        <vscode-option>Czechia (Czech Republic)</vscode-option>
+        <vscode-option>Democratic Republic of the Congo</vscode-option>
+        <vscode-option>Denmark</vscode-option>
+        <vscode-option>Djibouti</vscode-option>
+        <vscode-option>Dominica</vscode-option>
+        <vscode-option>Dominican Republic</vscode-option>
+        <vscode-option>Ecuador</vscode-option>
+        <vscode-option>Egypt</vscode-option>
+        <vscode-option>El Salvador</vscode-option>
+        <vscode-option>Equatorial Guinea</vscode-option>
+        <vscode-option>Eritrea</vscode-option>
+        <vscode-option>Estonia</vscode-option>
+        <vscode-option>Eswatini (fmr. "Swaziland")</vscode-option>
+        <vscode-option>Ethiopia</vscode-option>
+        <vscode-option>Fiji</vscode-option>
+        <vscode-option>Finland</vscode-option>
+        <vscode-option>France</vscode-option>
+        <vscode-option>Gabon</vscode-option>
+        <vscode-option>Gambia</vscode-option>
+        <vscode-option>Georgia</vscode-option>
+        <vscode-option>Germany</vscode-option>
+        <vscode-option>Ghana</vscode-option>
+        <vscode-option>Greece</vscode-option>
+        <vscode-option>Grenada</vscode-option>
+        <vscode-option>Guatemala</vscode-option>
+        <vscode-option>Guinea</vscode-option>
+        <vscode-option>Guinea-Bissau</vscode-option>
+        <vscode-option>Guyana</vscode-option>
+        <vscode-option>Haiti</vscode-option>
+        <vscode-option>Holy See</vscode-option>
+        <vscode-option>Honduras</vscode-option>
+        <vscode-option>Hungary</vscode-option>
+        <vscode-option>Iceland</vscode-option>
+        <vscode-option>India</vscode-option>
+        <vscode-option>Indonesia</vscode-option>
+        <vscode-option>Iran</vscode-option>
+        <vscode-option>Iraq</vscode-option>
+        <vscode-option>Ireland</vscode-option>
+        <vscode-option>Israel</vscode-option>
+        <vscode-option>Italy</vscode-option>
+        <vscode-option>Jamaica</vscode-option>
+        <vscode-option>Japan</vscode-option>
+        <vscode-option>Jordan</vscode-option>
+        <vscode-option>Kazakhstan</vscode-option>
+        <vscode-option>Kenya</vscode-option>
+        <vscode-option>Kiribati</vscode-option>
+        <vscode-option>Kuwait</vscode-option>
+        <vscode-option>Kyrgyzstan</vscode-option>
+        <vscode-option>Laos</vscode-option>
+        <vscode-option>Latvia</vscode-option>
+        <vscode-option>Lebanon</vscode-option>
+        <vscode-option>Lesotho</vscode-option>
+        <vscode-option>Liberia</vscode-option>
+        <vscode-option>Libya</vscode-option>
+        <vscode-option>Liechtenstein</vscode-option>
+        <vscode-option>Lithuania</vscode-option>
+        <vscode-option>Luxembourg</vscode-option>
+        <vscode-option>Madagascar</vscode-option>
+        <vscode-option>Malawi</vscode-option>
+        <vscode-option>Malaysia</vscode-option>
+        <vscode-option>Maldives</vscode-option>
+        <vscode-option>Mali</vscode-option>
+        <vscode-option>Malta</vscode-option>
+        <vscode-option>Marshall Islands</vscode-option>
+        <vscode-option>Mauritania</vscode-option>
+        <vscode-option>Mauritius</vscode-option>
+        <vscode-option>Mexico</vscode-option>
+        <vscode-option>Micronesia</vscode-option>
+        <vscode-option>Moldova</vscode-option>
+        <vscode-option>Monaco</vscode-option>
+        <vscode-option>Mongolia</vscode-option>
+        <vscode-option>Montenegro</vscode-option>
+        <vscode-option>Morocco</vscode-option>
+        <vscode-option>Mozambique</vscode-option>
+        <vscode-option>Myanmar (formerly Burma)</vscode-option>
+        <vscode-option>Namibia</vscode-option>
+        <vscode-option>Nauru</vscode-option>
+        <vscode-option>Nepal</vscode-option>
+        <vscode-option>Netherlands</vscode-option>
+        <vscode-option>New Zealand</vscode-option>
+        <vscode-option>Nicaragua</vscode-option>
+        <vscode-option>Niger</vscode-option>
+        <vscode-option>Nigeria</vscode-option>
+        <vscode-option>North Korea</vscode-option>
+        <vscode-option>North Macedonia</vscode-option>
+        <vscode-option>Norway</vscode-option>
+        <vscode-option>Oman</vscode-option>
+        <vscode-option>Pakistan</vscode-option>
+        <vscode-option>Palau</vscode-option>
+        <vscode-option>Palestine State</vscode-option>
+        <vscode-option>Panama</vscode-option>
+        <vscode-option>Papua New Guinea</vscode-option>
+        <vscode-option>Paraguay</vscode-option>
+        <vscode-option>Peru</vscode-option>
+        <vscode-option>Philippines</vscode-option>
+        <vscode-option>Poland</vscode-option>
+        <vscode-option>Portugal</vscode-option>
+        <vscode-option>Qatar</vscode-option>
+        <vscode-option>Romania</vscode-option>
+        <vscode-option>Russia</vscode-option>
+        <vscode-option>Rwanda</vscode-option>
+        <vscode-option>Saint Kitts and Nevis</vscode-option>
+        <vscode-option>Saint Lucia</vscode-option>
+        <vscode-option>Saint Vincent and the Grenadines</vscode-option>
+        <vscode-option>Samoa</vscode-option>
+        <vscode-option>San Marino</vscode-option>
+        <vscode-option>Sao Tome and Principe</vscode-option>
+        <vscode-option>Saudi Arabia</vscode-option>
+        <vscode-option>Senegal</vscode-option>
+        <vscode-option>Serbia</vscode-option>
+        <vscode-option>Seychelles</vscode-option>
+        <vscode-option>Sierra Leone</vscode-option>
+        <vscode-option>Singapore</vscode-option>
+        <vscode-option>Slovakia</vscode-option>
+        <vscode-option>Slovenia</vscode-option>
+        <vscode-option>Solomon Islands</vscode-option>
+        <vscode-option>Somalia</vscode-option>
+        <vscode-option>South Africa</vscode-option>
+        <vscode-option>South Korea</vscode-option>
+        <vscode-option>South Sudan</vscode-option>
+        <vscode-option>Spain</vscode-option>
+        <vscode-option>Sri Lanka</vscode-option>
+        <vscode-option>Sudan</vscode-option>
+        <vscode-option>Suriname</vscode-option>
+        <vscode-option>Sweden</vscode-option>
+        <vscode-option>Switzerland</vscode-option>
+        <vscode-option>Syria</vscode-option>
+        <vscode-option>Tajikistan</vscode-option>
+        <vscode-option>Tanzania</vscode-option>
+        <vscode-option>Thailand</vscode-option>
+        <vscode-option>Timor-Leste</vscode-option>
+        <vscode-option>Togo</vscode-option>
+        <vscode-option>Tonga</vscode-option>
+        <vscode-option>Trinidad and Tobago</vscode-option>
+        <vscode-option>Tunisia</vscode-option>
+        <vscode-option>Turkey</vscode-option>
+        <vscode-option>Turkmenistan</vscode-option>
+        <vscode-option>Tuvalu</vscode-option>
+        <vscode-option>Uganda</vscode-option>
+        <vscode-option>Ukraine</vscode-option>
+        <vscode-option>United Arab Emirates</vscode-option>
+        <vscode-option>United Kingdom</vscode-option>
+        <vscode-option>United States of America</vscode-option>
+        <vscode-option>Uruguay</vscode-option>
+        <vscode-option>Uzbekistan</vscode-option>
+        <vscode-option>Vanuatu</vscode-option>
+        <vscode-option>Venezuela</vscode-option>
+        <vscode-option>Vietnam</vscode-option>
+        <vscode-option>Yemen</vscode-option>
+        <vscode-option>Zambia</vscode-option>
+        <vscode-option>Zimbabwe</vscode-option>
+      </vscode-single-select>
+    </component-preview>
+    <script type="module">
+      const sl = document.querySelector('#sl-2');
 
-        loggerEl.innerHTML = sl.value;
-
-        sl.addEventListener('vsc-change', (event) => {
-          console.log(event);
-        });
-      })();
+      sl.addEventListener('vsc-change', (ev) => {
+        console.log(ev.detail);
+      });
     </script>
-  </div>
 
-  <div class="story" id="vscode-select__value">
-    <h2 class="story-title">Explicit values</h2>
-    <vscode-select>
-      <vscode-option value="test value 1">Lorem</vscode-option>
-      <vscode-option value="test value 2">Ipsum</vscode-option>
-      <vscode-option value="test value 3">Dolor</vscode-option>
-    </vscode-select>
-    <div class="logger"></div>
-    <script>
-      (() => {
-        const sl = document.querySelector(
-          '#vscode-select__value vscode-select'
+    <h2>Gitmoji example</h2>
+    <component-preview>
+      <vscode-single-select data-cloak combobox id="sl-gitmoji">
+        <vscode-option
+          description="Improve structure / format of the code."
+          value="🎨"
+          >🎨 art</vscode-option
+        >
+        <vscode-option description="Improve performance." value="⚡️"
+          >⚡️ zap</vscode-option
+        >
+        <vscode-option description="Remove code or files." value="🔥"
+          >🔥 fire</vscode-option
+        >
+        <vscode-option description="Fix a bug." value="🐛"
+          >🐛 bug</vscode-option
+        >
+        <vscode-option description="Critical hotfix." value="🚑"
+          >🚑 ambulance</vscode-option
+        >
+        <vscode-option description="Introduce new features." value="✨"
+          >✨ sparkles</vscode-option
+        >
+        <vscode-option description="Add or update documentation." value="📝"
+          >📝 memo</vscode-option
+        >
+        <vscode-option description="Deploy stuff." value="🚀"
+          >🚀 rocket</vscode-option
+        >
+        <vscode-option
+          description="Add or update the UI and style files."
+          value="💄"
+          >💄 lipstick</vscode-option
+        >
+        <vscode-option description="Begin a project." value="🎉"
+          >🎉 tada</vscode-option
+        >
+        <vscode-option description="Add or update tests." value="✅"
+          >✅ white_check_mark</vscode-option
+        >
+        <vscode-option description="Fix security issues." value="🔒"
+          >🔒 lock</vscode-option
+        >
+        <vscode-option description="Release / Version tags." value="🔖"
+          >🔖 bookmark</vscode-option
+        >
+        <vscode-option description="Fix compiler / linter warnings." value="🚨"
+          >🚨 rotating_light</vscode-option
+        >
+        <vscode-option description="Work in progress." value="🚧"
+          >🚧 construction</vscode-option
+        >
+        <vscode-option description="Fix CI Build." value="💚"
+          >💚 green_heart</vscode-option
+        >
+        <vscode-option description="Downgrade dependencies." value="⬇️"
+          >⬇️ arrow_down</vscode-option
+        >
+        <vscode-option description="Upgrade dependencies." value="⬆️"
+          >⬆️ arrow_up</vscode-option
+        >
+        <vscode-option
+          description="Pin dependencies to specific versions."
+          value="📌"
+          >📌 pushpin</vscode-option
+        >
+        <vscode-option description="Add or update CI build system." value="👷"
+          >👷 construction_worker</vscode-option
+        >
+        <vscode-option
+          description="Add or update analytics or track code."
+          value="📈"
+          >📈 chart_with_upwards_trend</vscode-option
+        >
+        <vscode-option description="Refactor code." value="♻️"
+          >♻️ recycle</vscode-option
+        >
+        <vscode-option description="Add a dependency." value="➕"
+          >➕ heavy_plus_sign</vscode-option
+        >
+        <vscode-option description="Remove a dependency." value="➖"
+          >➖ heavy_minus_sign</vscode-option
+        >
+        <vscode-option
+          description="Add or update configuration files."
+          value="🔧"
+          >🔧 wrench</vscode-option
+        >
+        <vscode-option
+          description="Add or update development scripts."
+          value="🔨"
+          >🔨 hammer</vscode-option
+        >
+        <vscode-option
+          description="Internationalization and localization."
+          value="🌐"
+          >🌐 globe_with_meridians</vscode-option
+        >
+        <vscode-option description="Fix typos." value="✏️"
+          >✏️ :pencil2:</vscode-option
+        >
+        <vscode-option
+          description="Write bad code that needs to be improved."
+          value="💩"
+          >💩 poop</vscode-option
+        >
+        <vscode-option description="Revert changes." value="⏪"
+          >⏪ rewind</vscode-option
+        >
+        <vscode-option description="Merge branches." value="🔀"
+          >🔀 twisted_rightwards_arrows</vscode-option
+        >
+        <vscode-option
+          description="Add or update compiled files or packages."
+          value="📦"
+          >📦 package</vscode-option
+        >
+        <vscode-option
+          description="Update code due to external API changes."
+          value="👽"
+          >👽 alien</vscode-option
+        >
+        <vscode-option
+          description="Move or rename resources (e.g.: files, paths, routes)."
+          value="🚚"
+          >🚚 truck</vscode-option
+        >
+        <vscode-option description="Add or update license." value="📄"
+          >📄 page_facing_up</vscode-option
+        >
+        <vscode-option description="Introduce breaking changes." value="💥"
+          >💥 boom</vscode-option
+        >
+        <vscode-option description="Add or update assets." value="🍱"
+          >🍱 bento</vscode-option
+        >
+        <vscode-option description="Improve accessibility." value="♿️"
+          >♿️ wheelchair</vscode-option
+        >
+        <vscode-option
+          description="Add or update comments in source code."
+          value="💡"
+          >💡 bulb</vscode-option
+        >
+        <vscode-option description="Write code drunkenly." value="🍻"
+          >🍻 beers</vscode-option
+        >
+        <vscode-option description="Add or update text and literals." value="💬"
+          >💬 speech_balloon</vscode-option
+        >
+        <vscode-option description="Perform database related changes." value="🗃"
+          >🗃 card_file_box</vscode-option
+        >
+        <vscode-option description="Add or update logs." value="🔊"
+          >🔊 loud_sound</vscode-option
+        >
+        <vscode-option description="Remove logs." value="🔇"
+          >🔇 mute</vscode-option
+        >
+        <vscode-option description="Add or update contributor(s)." value="👥"
+          >👥 busts_in_silhouette</vscode-option
+        >
+        <vscode-option
+          description="Improve user experience / usability."
+          value="🚸"
+          >🚸 children_crossing</vscode-option
+        >
+        <vscode-option description="Make architectural changes." value="🏗"
+          >🏗 building_construction</vscode-option
+        >
+        <vscode-option description="Work on responsive design." value="📱"
+          >📱 iphone</vscode-option
+        >
+        <vscode-option description="Mock things." value="🤡"
+          >🤡 clown_face</vscode-option
+        >
+        <vscode-option description="Add or update an easter egg." value="🥚"
+          >🥚 egg</vscode-option
+        >
+        <vscode-option description="Add or update a .gitignore file." value="🙈"
+          >🙈 see_no_evil</vscode-option
+        >
+        <vscode-option description="Add or update snapshots." value="📸"
+          >📸 camera_flash</vscode-option
+        >
+        <vscode-option description="Perform experiments." value="⚗"
+          >⚗ alembic</vscode-option
+        >
+        <vscode-option description="Improve SEO." value="🔍"
+          >🔍 mag</vscode-option
+        >
+        <vscode-option description="Add or update types." value="🏷️"
+          >🏷️ label</vscode-option
+        >
+        <vscode-option description="Add or update seed files." value="🌱"
+          >🌱 seedling</vscode-option
+        >
+        <vscode-option
+          description="Add, update, or remove feature flags."
+          value="🚩"
+          >🚩 triangular_flag_on_post</vscode-option
+        >
+        <vscode-option description="Catch errors." value="🥅"
+          >🥅 goal_net</vscode-option
+        >
+        <vscode-option
+          description="Add or update animations and transitions."
+          value="💫"
+          >💫 dizzy</vscode-option
+        >
+        <vscode-option
+          description="Deprecate code that needs to be cleaned up."
+          value="🗑"
+          >🗑 wastebasket</vscode-option
+        >
+        <vscode-option
+          description="Work on code related to authorization, roles and permissions."
+          value="🛂"
+          >🛂 passport_control</vscode-option
+        >
+        <vscode-option
+          description="Simple fix for a non-critical issue."
+          value="🩹"
+          >🩹 adhesive_bandage</vscode-option
+        >
+        <vscode-option description="Data exploration/inspection." value="🧐"
+          >🧐 monocle_face</vscode-option
+        >
+        <vscode-option description="Remove dead code." value="⚰️"
+          >⚰️ coffin</vscode-option
+        >
+      </vscode-single-select>
+    </component-preview>
+    <script type="module">
+      const sl = document.querySelector('#sl-gitmoji');
+
+      sl.addEventListener('vsc-change', (ev) => {
+        console.log(
+          'event detail:',
+          ev.detail,
+          'value:',
+          sl.value,
+          'selectedIndexes:',
+          sl.selectedIndexes
         );
-        const loggerEl = document.querySelector(
-          '#vscode-select__value .logger'
-        );
-
-        loggerEl.innerHTML = sl.value;
-
-        sl.addEventListener('vsc-change', (event) => {
-          loggerEl.innerHTML = event.detail.value;
-        });
-      })();
+      });
     </script>
-  </div>
 
-  <div class="story" id="vscode-select__options">
-    <h2 class="story-title">Add options</h2>
-    <vscode-select></vscode-select>
-    <div class="logger"></div>
-    <script>
-      (() => {
-        const sl = document.querySelector(
-          '#vscode-select__options vscode-select'
+    <h2>Multi select example</h2>
+    <component-preview>
+      <vscode-multi-select value='["lorem", "ipsum"]' data-cloak id="sl-3">
+        <vscode-option value="">---</vscode-option>
+        <vscode-option>lorem</vscode-option>
+        <vscode-option description="ipsum description" selected
+          >ipsum</vscode-option
+        >
+        <vscode-option selected>dolor</vscode-option>
+      </vscode-multi-select>
+    </component-preview>
+    <script type="module">
+      const sl = document.querySelector('#sl-3');
+
+      sl.addEventListener('vsc-change', (ev) => {
+        console.log(
+          'event detail:',
+          ev.detail,
+          'value:',
+          sl.value,
+          'selectedIndexes:',
+          sl.selectedIndexes
         );
-        const loggerEl = document.querySelector(
-          '#vscode-select__options .logger'
-        );
-
-        sl.options = [
-          {label: 'Lorem', description: 'Lorem description', selected: true},
-          {label: 'Ipsum', description: 'Ipsum description'},
-          {label: 'Dolor', description: 'Dolor description'},
-        ];
-
-        loggerEl.innerHTML = sl.value;
-
-        sl.addEventListener('vsc-change', (event) => {
-          loggerEl.innerHTML = event.detail.value;
-        });
-      })();
+      });
     </script>
-  </div>
 
-  <div class="story" id="vscode-select__selected">
-    <h2 class="story-title">Selected option</h2>
-    <vscode-select value="'test value 2'">
-      <vscode-option value="test value 1">Lorem</vscode-option>
-      <vscode-option value="test value 2" selected>Ipsum</vscode-option>
-      <vscode-option value="test value 3">Dolor</vscode-option>
-    </vscode-select>
-  </div>
+    <h2>Multi combo box example</h2>
+    <component-preview>
+      <vscode-multi-select data-cloak id="sl-4" combobox filter="fuzzy">
+        <vscode-option>Afghanistan</vscode-option>
+        <vscode-option description="Test ">Albania</vscode-option>
+        <vscode-option>Algeria</vscode-option>
+        <vscode-option>Andorra</vscode-option>
+        <vscode-option>Angola</vscode-option>
+        <vscode-option>Antigua and Barbuda</vscode-option>
+        <vscode-option>Argentina</vscode-option>
+        <vscode-option>Armenia</vscode-option>
+        <vscode-option>Australia</vscode-option>
+        <vscode-option>Austria</vscode-option>
+        <vscode-option>Azerbaijan</vscode-option>
+        <vscode-option>Bahamas</vscode-option>
+        <vscode-option>Bahrain</vscode-option>
+        <vscode-option>Bangladesh</vscode-option>
+        <vscode-option>Barbados</vscode-option>
+        <vscode-option>Belarus</vscode-option>
+        <vscode-option>Belgium</vscode-option>
+        <vscode-option>Belize</vscode-option>
+        <vscode-option>Benin</vscode-option>
+        <vscode-option>Bhutan</vscode-option>
+        <vscode-option>Bolivia</vscode-option>
+        <vscode-option>Bosnia and Herzegovina</vscode-option>
+        <vscode-option>Botswana</vscode-option>
+        <vscode-option>Brazil</vscode-option>
+        <vscode-option>Brunei</vscode-option>
+        <vscode-option>Bulgaria</vscode-option>
+        <vscode-option>Burkina Faso</vscode-option>
+        <vscode-option>Burundi</vscode-option>
+        <vscode-option>Côte d'Ivoire</vscode-option>
+        <vscode-option>Cabo Verde</vscode-option>
+        <vscode-option>Cambodia</vscode-option>
+        <vscode-option>Cameroon</vscode-option>
+        <vscode-option>Canada</vscode-option>
+        <vscode-option>Central African Republic</vscode-option>
+        <vscode-option>Chad</vscode-option>
+        <vscode-option>Chile</vscode-option>
+        <vscode-option>China</vscode-option>
+        <vscode-option>Colombia</vscode-option>
+        <vscode-option>Comoros</vscode-option>
+        <vscode-option>Congo (Congo-Brazzaville)</vscode-option>
+        <vscode-option>Costa Rica</vscode-option>
+        <vscode-option>Croatia</vscode-option>
+        <vscode-option>Cuba</vscode-option>
+        <vscode-option>Cyprus</vscode-option>
+        <vscode-option>Czechia (Czech Republic)</vscode-option>
+        <vscode-option>Democratic Republic of the Congo</vscode-option>
+        <vscode-option>Denmark</vscode-option>
+        <vscode-option>Djibouti</vscode-option>
+        <vscode-option>Dominica</vscode-option>
+        <vscode-option>Dominican Republic</vscode-option>
+        <vscode-option>Ecuador</vscode-option>
+        <vscode-option>Egypt</vscode-option>
+        <vscode-option>El Salvador</vscode-option>
+        <vscode-option>Equatorial Guinea</vscode-option>
+        <vscode-option>Eritrea</vscode-option>
+        <vscode-option>Estonia</vscode-option>
+        <vscode-option>Eswatini (fmr. "Swaziland")</vscode-option>
+        <vscode-option>Ethiopia</vscode-option>
+        <vscode-option>Fiji</vscode-option>
+        <vscode-option>Finland</vscode-option>
+        <vscode-option>France</vscode-option>
+        <vscode-option>Gabon</vscode-option>
+        <vscode-option>Gambia</vscode-option>
+        <vscode-option>Georgia</vscode-option>
+        <vscode-option>Germany</vscode-option>
+        <vscode-option>Ghana</vscode-option>
+        <vscode-option>Greece</vscode-option>
+        <vscode-option>Grenada</vscode-option>
+        <vscode-option>Guatemala</vscode-option>
+        <vscode-option>Guinea</vscode-option>
+        <vscode-option>Guinea-Bissau</vscode-option>
+        <vscode-option>Guyana</vscode-option>
+        <vscode-option>Haiti</vscode-option>
+        <vscode-option>Holy See</vscode-option>
+        <vscode-option>Honduras</vscode-option>
+        <vscode-option>Hungary</vscode-option>
+        <vscode-option>Iceland</vscode-option>
+        <vscode-option>India</vscode-option>
+        <vscode-option>Indonesia</vscode-option>
+        <vscode-option>Iran</vscode-option>
+        <vscode-option>Iraq</vscode-option>
+        <vscode-option>Ireland</vscode-option>
+        <vscode-option>Israel</vscode-option>
+        <vscode-option>Italy</vscode-option>
+        <vscode-option>Jamaica</vscode-option>
+        <vscode-option>Japan</vscode-option>
+        <vscode-option>Jordan</vscode-option>
+        <vscode-option>Kazakhstan</vscode-option>
+        <vscode-option>Kenya</vscode-option>
+        <vscode-option>Kiribati</vscode-option>
+        <vscode-option>Kuwait</vscode-option>
+        <vscode-option>Kyrgyzstan</vscode-option>
+        <vscode-option>Laos</vscode-option>
+        <vscode-option>Latvia</vscode-option>
+        <vscode-option>Lebanon</vscode-option>
+        <vscode-option>Lesotho</vscode-option>
+        <vscode-option>Liberia</vscode-option>
+        <vscode-option>Libya</vscode-option>
+        <vscode-option>Liechtenstein</vscode-option>
+        <vscode-option>Lithuania</vscode-option>
+        <vscode-option>Luxembourg</vscode-option>
+        <vscode-option>Madagascar</vscode-option>
+        <vscode-option>Malawi</vscode-option>
+        <vscode-option>Malaysia</vscode-option>
+        <vscode-option>Maldives</vscode-option>
+        <vscode-option>Mali</vscode-option>
+        <vscode-option>Malta</vscode-option>
+        <vscode-option>Marshall Islands</vscode-option>
+        <vscode-option>Mauritania</vscode-option>
+        <vscode-option>Mauritius</vscode-option>
+        <vscode-option>Mexico</vscode-option>
+        <vscode-option>Micronesia</vscode-option>
+        <vscode-option>Moldova</vscode-option>
+        <vscode-option>Monaco</vscode-option>
+        <vscode-option>Mongolia</vscode-option>
+        <vscode-option>Montenegro</vscode-option>
+        <vscode-option>Morocco</vscode-option>
+        <vscode-option>Mozambique</vscode-option>
+        <vscode-option>Myanmar (formerly Burma)</vscode-option>
+        <vscode-option>Namibia</vscode-option>
+        <vscode-option>Nauru</vscode-option>
+        <vscode-option>Nepal</vscode-option>
+        <vscode-option>Netherlands</vscode-option>
+        <vscode-option>New Zealand</vscode-option>
+        <vscode-option>Nicaragua</vscode-option>
+        <vscode-option>Niger</vscode-option>
+        <vscode-option>Nigeria</vscode-option>
+        <vscode-option>North Korea</vscode-option>
+        <vscode-option>North Macedonia</vscode-option>
+        <vscode-option>Norway</vscode-option>
+        <vscode-option>Oman</vscode-option>
+        <vscode-option>Pakistan</vscode-option>
+        <vscode-option>Palau</vscode-option>
+        <vscode-option>Palestine State</vscode-option>
+        <vscode-option>Panama</vscode-option>
+        <vscode-option>Papua New Guinea</vscode-option>
+        <vscode-option>Paraguay</vscode-option>
+        <vscode-option>Peru</vscode-option>
+        <vscode-option>Philippines</vscode-option>
+        <vscode-option>Poland</vscode-option>
+        <vscode-option>Portugal</vscode-option>
+        <vscode-option>Qatar</vscode-option>
+        <vscode-option>Romania</vscode-option>
+        <vscode-option>Russia</vscode-option>
+        <vscode-option>Rwanda</vscode-option>
+        <vscode-option>Saint Kitts and Nevis</vscode-option>
+        <vscode-option>Saint Lucia</vscode-option>
+        <vscode-option>Saint Vincent and the Grenadines</vscode-option>
+        <vscode-option>Samoa</vscode-option>
+        <vscode-option>San Marino</vscode-option>
+        <vscode-option>Sao Tome and Principe</vscode-option>
+        <vscode-option>Saudi Arabia</vscode-option>
+        <vscode-option>Senegal</vscode-option>
+        <vscode-option>Serbia</vscode-option>
+        <vscode-option>Seychelles</vscode-option>
+        <vscode-option>Sierra Leone</vscode-option>
+        <vscode-option>Singapore</vscode-option>
+        <vscode-option>Slovakia</vscode-option>
+        <vscode-option>Slovenia</vscode-option>
+        <vscode-option>Solomon Islands</vscode-option>
+        <vscode-option>Somalia</vscode-option>
+        <vscode-option>South Africa</vscode-option>
+        <vscode-option>South Korea</vscode-option>
+        <vscode-option>South Sudan</vscode-option>
+        <vscode-option>Spain</vscode-option>
+        <vscode-option>Sri Lanka</vscode-option>
+        <vscode-option>Sudan</vscode-option>
+        <vscode-option>Suriname</vscode-option>
+        <vscode-option>Sweden</vscode-option>
+        <vscode-option>Switzerland</vscode-option>
+        <vscode-option>Syria</vscode-option>
+        <vscode-option>Tajikistan</vscode-option>
+        <vscode-option>Tanzania</vscode-option>
+        <vscode-option>Thailand</vscode-option>
+        <vscode-option>Timor-Leste</vscode-option>
+        <vscode-option>Togo</vscode-option>
+        <vscode-option>Tonga</vscode-option>
+        <vscode-option>Trinidad and Tobago</vscode-option>
+        <vscode-option>Tunisia</vscode-option>
+        <vscode-option>Turkey</vscode-option>
+        <vscode-option>Turkmenistan</vscode-option>
+        <vscode-option>Tuvalu</vscode-option>
+        <vscode-option>Uganda</vscode-option>
+        <vscode-option>Ukraine</vscode-option>
+        <vscode-option>United Arab Emirates</vscode-option>
+        <vscode-option>United Kingdom</vscode-option>
+        <vscode-option>United States of America</vscode-option>
+        <vscode-option>Uruguay</vscode-option>
+        <vscode-option>Uzbekistan</vscode-option>
+        <vscode-option>Vanuatu</vscode-option>
+        <vscode-option>Venezuela</vscode-option>
+        <vscode-option>Vietnam</vscode-option>
+        <vscode-option>Yemen</vscode-option>
+        <vscode-option>Zambia</vscode-option>
+        <vscode-option>Zimbabwe</vscode-option>
+      </vscode-multi-select>
+    </component-preview>
+    <script type="module">
+      const sl = document.querySelector('#sl-4');
 
-  <div class="story" id="vscode-select__description">
-    <h2 class="story-title">Option descriptions</h2>
-    <vscode-select>
-      <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
-      <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
-      <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
-    </vscode-select>
-  </div>
-
-  <div class="story" id="vscode-select__create-element">
-    <h2 class="story-title">Document.createElement()</h2>
-    <div class="element-wrapper"></div>
-    <script>
-      (() => {
-        const options = [
-          {
-            label: 'Lorem',
-            value: 'test value 1',
-            description: 'test description 1',
-          },
-          {
-            label: 'Ipsum',
-            value: 'test value 2',
-            description: 'test description 2',
-          },
-          {
-            label: 'Dolor',
-            value: 'test value 3',
-            description: 'test description 3',
-          },
-        ];
-
-        const optionsMarkup = `
-          <vscode-option value="test value 1" description="test description 1">Lorem</vscode-option>
-          <vscode-option value="test value 2" description="test description 2">Ipsum</vscode-option>
-          <vscode-option value="test value 3" description="test description 3">Dolor</vscode-option>
-        `;
-
-        const wrapper = document.querySelector(
-          '#vscode-select__create-element .element-wrapper'
-        );
-        const el = document.createElement('vscode-select');
-        el.innerHTML = optionsMarkup;
-        el.selectedIndex = 1;
-
-        wrapper.appendChild(el);
-      })();
+      sl.addEventListener('vsc-change', (ev) => {
+        console.log(ev.detail);
+      });
     </script>
-  </div>
 
-  <div class="story" id="vscode-select__create-append-element">
-    <h2 class="story-title">Document.createElement(), appendChild()</h2>
-    <div class="element-wrapper"></div>
-    <script>
-      (() => {
-        const wrapper = document.querySelector(
-          '#vscode-select__create-append-element .element-wrapper'
-        );
-        const el = document.createElement('vscode-select');
-
-        const op1 = document.createElement('vscode-option');
-        op1.innerText = 'Lorem';
-        op1.setAttribute('value', 'test value 1');
-        op1.setAttribute('description', 'test description 1');
-
-        const op2 = document.createElement('vscode-option');
-        op2.innerText = 'Ipsum';
-        op2.setAttribute('value', 'test value 2');
-        op2.setAttribute('description', 'test description 2');
-
-        const op3 = document.createElement('vscode-option');
-        op3.innerText = 'Dolor';
-        op3.setAttribute('value', 'test value 3');
-        op3.setAttribute('description', 'test description 3');
-
-        el.selectedIndex = 1;
-
-        el.appendChild(op1);
-        el.appendChild(op2);
-        el.appendChild(op3);
-
-        wrapper.appendChild(el);
-      })();
-    </script>
-  </div>
-
-  <div class="story" id="vscode-select__inner-html">
-    <h2 class="story-title">Element.innerHTML()</h2>
-    <div class="element-wrapper"></div>
-    <script>
-      (() => {
-        const html = `
-          <vscode-select>
-            <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
-            <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
-            <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
-          </vscode-select>
-        `;
-
-        const wrapper = document.querySelector(
-          '#vscode-select__inner-html .element-wrapper'
-        );
-
-        wrapper.innerHTML = html;
-      })();
-    </script>
-  </div>
-
-  <div class="story" id="vscode-select__post-manipulation">
-    <h2 class="story-title">Post-manipulation</h2>
-    <vscode-select>
-      <vscode-option value="test value 1" description="Test description 1">Lorem</vscode-option>
-      <vscode-option value="test value 2" description="Test description 2">Ipsum</vscode-option>
-      <vscode-option value="test value 3" description="Test description 3">Dolor</vscode-option>
-    </vscode-select>
-    <div class="logger"></div>
-    <button type="button" class="btn-append">Append option</button>
-    <button type="button" class="btn-replace">Replace options</button>
-    <script>
-      (() => {
-        const sl = document.querySelector(
-          '#vscode-select__post-manipulation vscode-select'
-        );
-        const loggerEl = document.querySelector(
-          '#vscode-select__post-manipulation .logger'
-        );
-        const btnAppend = document.querySelector(
-          '#vscode-select__post-manipulation .btn-append'
-        );
-        const btnReplace = document.querySelector(
-          '#vscode-select__post-manipulation .btn-replace'
-        );
-
-        loggerEl.innerHTML = sl.value;
-
-        sl.addEventListener('vsc-change', (event) => {
-          loggerEl.innerHTML = event.detail.value;
-        });
-
-        btnAppend.addEventListener('click', () => {
-          const counter = sl.options.length + 1;
-
-          const op = document.createElement('vscode-option');
-          op.innerText = `Test label ${counter}`;
-          op.value = `Test value ${counter}`;
-          op.description = `Test description ${counter}`;
-
-          sl.appendChild(op);
-        });
-
-        btnReplace.addEventListener('click', () => {
-          const optionsMarkup = `
-            <vscode-option value="replaced test value 1" description="replaced test description 1">Replaced Lorem</vscode-option>
-            <vscode-option value="replaced test value 2" description="replaced test description 2">Replaced Ipsum</vscode-option>
-            <vscode-option value="replaced test value 3" description="replaced test description 3">Replaced Dolor</vscode-option>
-          `;
-
-          sl.innerHTML = optionsMarkup;
-        });
-      })();
-    </script>
-  </div>
-
-  <div class="story">
-    <h2 class="story-title">Native select - multiple</h2>
-    <label for="native-select-multiple">Multiple select example</label>
-    <select name="" id="native-select-multiple" multiple>
-      <option value="testvalue0">Lorem</option>
-      <option value="testvalue1" selected>Ipsum</option>
-      <option value="testvalue2" selected>Dolor</option>
-      <option value="testvalue3">Sit</option>
+    <select name="test" id="sl-native">
+      <option>Afghanistan</option>
+      <option description="Test ">Albania</option>
+      <option>Algeria</option>
+      <option>Andorra</option>
+      <option>Angola</option>
+      <option>Antigua and Barbuda</option>
+      <option>Argentina</option>
+      <option>Armenia</option>
+      <option>Australia</option>
+      <option>Austria</option>
+      <option>Azerbaijan</option>
+      <option>Bahamas</option>
+      <option>Bahrain</option>
+      <option>Bangladesh</option>
+      <option>Barbados</option>
+      <option>Belarus</option>
+      <option>Belgium</option>
+      <option>Belize</option>
+      <option>Benin</option>
+      <option>Bhutan</option>
+      <option>Bolivia</option>
+      <option>Bosnia and Herzegovina</option>
+      <option>Botswana</option>
+      <option>Brazil</option>
+      <option>Brunei</option>
+      <option>Bulgaria</option>
+      <option>Burkina Faso</option>
+      <option>Burundi</option>
+      <option>Côte d'Ivoire</option>
+      <option>Cabo Verde</option>
+      <option>Cambodia</option>
+      <option>Cameroon</option>
+      <option>Canada</option>
+      <option>Central African Republic</option>
+      <option>Chad</option>
+      <option>Chile</option>
+      <option>China</option>
+      <option>Colombia</option>
+      <option>Comoros</option>
+      <option>Congo (Congo-Brazzaville)</option>
+      <option>Costa Rica</option>
+      <option>Croatia</option>
+      <option>Cuba</option>
+      <option>Cyprus</option>
+      <option>Czechia (Czech Republic)</option>
+      <option>Democratic Republic of the Congo</option>
+      <option>Denmark</option>
+      <option>Djibouti</option>
+      <option>Dominica</option>
+      <option>Dominican Republic</option>
+      <option>Ecuador</option>
+      <option>Egypt</option>
+      <option>El Salvador</option>
+      <option>Equatorial Guinea</option>
+      <option>Eritrea</option>
+      <option>Estonia</option>
+      <option>Eswatini (fmr. "Swaziland")</option>
+      <option>Ethiopia</option>
+      <option>Fiji</option>
+      <option>Finland</option>
+      <option>France</option>
+      <option>Gabon</option>
+      <option>Gambia</option>
+      <option>Georgia</option>
+      <option>Germany</option>
+      <option>Ghana</option>
+      <option>Greece</option>
+      <option>Grenada</option>
+      <option>Guatemala</option>
+      <option>Guinea</option>
+      <option>Guinea-Bissau</option>
+      <option>Guyana</option>
+      <option>Haiti</option>
+      <option>Holy See</option>
+      <option>Honduras</option>
+      <option>Hungary</option>
+      <option>Iceland</option>
+      <option>India</option>
+      <option>Indonesia</option>
+      <option>Iran</option>
+      <option>Iraq</option>
+      <option>Ireland</option>
+      <option>Israel</option>
+      <option>Italy</option>
+      <option>Jamaica</option>
+      <option>Japan</option>
+      <option>Jordan</option>
+      <option>Kazakhstan</option>
+      <option>Kenya</option>
+      <option>Kiribati</option>
+      <option>Kuwait</option>
+      <option>Kyrgyzstan</option>
+      <option>Laos</option>
+      <option>Latvia</option>
+      <option>Lebanon</option>
+      <option>Lesotho</option>
+      <option>Liberia</option>
+      <option>Libya</option>
+      <option>Liechtenstein</option>
+      <option>Lithuania</option>
+      <option>Luxembourg</option>
+      <option>Madagascar</option>
+      <option>Malawi</option>
+      <option>Malaysia</option>
+      <option>Maldives</option>
+      <option>Mali</option>
+      <option>Malta</option>
+      <option>Marshall Islands</option>
+      <option>Mauritania</option>
+      <option>Mauritius</option>
+      <option>Mexico</option>
+      <option>Micronesia</option>
+      <option>Moldova</option>
+      <option>Monaco</option>
+      <option>Mongolia</option>
+      <option>Montenegro</option>
+      <option>Morocco</option>
+      <option>Mozambique</option>
+      <option>Myanmar (formerly Burma)</option>
+      <option>Namibia</option>
+      <option>Nauru</option>
+      <option>Nepal</option>
+      <option>Netherlands</option>
+      <option>New Zealand</option>
+      <option>Nicaragua</option>
+      <option>Niger</option>
+      <option>Nigeria</option>
+      <option>North Korea</option>
+      <option>North Macedonia</option>
+      <option>Norway</option>
+      <option>Oman</option>
+      <option>Pakistan</option>
+      <option>Palau</option>
+      <option>Palestine State</option>
+      <option>Panama</option>
+      <option>Papua New Guinea</option>
+      <option>Paraguay</option>
+      <option>Peru</option>
+      <option>Philippines</option>
+      <option>Poland</option>
+      <option>Portugal</option>
+      <option>Qatar</option>
+      <option>Romania</option>
+      <option>Russia</option>
+      <option>Rwanda</option>
+      <option>Saint Kitts and Nevis</option>
+      <option>Saint Lucia</option>
+      <option>Saint Vincent and the Grenadines</option>
+      <option>Samoa</option>
+      <option>San Marino</option>
+      <option>Sao Tome and Principe</option>
+      <option>Saudi Arabia</option>
+      <option>Senegal</option>
+      <option>Serbia</option>
+      <option>Seychelles</option>
+      <option>Sierra Leone</option>
+      <option>Singapore</option>
+      <option>Slovakia</option>
+      <option>Slovenia</option>
+      <option>Solomon Islands</option>
+      <option>Somalia</option>
+      <option>South Africa</option>
+      <option>South Korea</option>
+      <option>South Sudan</option>
+      <option>Spain</option>
+      <option>Sri Lanka</option>
+      <option>Sudan</option>
+      <option>Suriname</option>
+      <option>Sweden</option>
+      <option>Switzerland</option>
+      <option>Syria</option>
+      <option>Tajikistan</option>
+      <option>Tanzania</option>
+      <option>Thailand</option>
+      <option>Timor-Leste</option>
+      <option>Togo</option>
+      <option>Tonga</option>
+      <option>Trinidad and Tobago</option>
+      <option>Tunisia</option>
+      <option>Turkey</option>
+      <option>Turkmenistan</option>
+      <option>Tuvalu</option>
+      <option>Uganda</option>
+      <option>Ukraine</option>
+      <option>United Arab Emirates</option>
+      <option>United Kingdom</option>
+      <option>United States of America</option>
+      <option>Uruguay</option>
+      <option>Uzbekistan</option>
+      <option>Vanuatu</option>
+      <option>Venezuela</option>
+      <option>Vietnam</option>
+      <option>Yemen</option>
+      <option>Zambia</option>
+      <option>Zimbabwe</option>
     </select>
-    <script>
-      (() => {
-        const el = document.querySelector('#native-select-multiple');
 
-        el.addEventListener('change', (event) => {
-          console.log('value:', el.value);
-          console.log('selectedIndex:', el.selectedIndex);
-        });
-      })();
+    <script type="module">
+      const sl = document.querySelector('#sl-native');
+
+      sl.addEventListener('change', (ev) => {
+        console.log(ev);
+      });
     </script>
-  </div>
 
-  <div class="story">
-    <h2 class="story-title">Native select</h2>
-    <label for="native-select">Single select example</label>
-    <select name="" id="native-select">
-      <option value="testvalue0">Lorem</option>
-      <option value="testvalue1">Ipsum</option>
-      <option value="testvalue2" selected>Dolor</option>
-      <option value="testvalue3">Sit</option>
-    </select>
-    <script>
-      (() => {
-        const el = document.querySelector('#native-select');
-
-        el.addEventListener('change', (event) => {
-          console.log('value:', el.value);
-          console.log('selectedIndex:', el.selectedIndex);
-        });
-      })();
-    </script>
-  </div>
-
-  <div style="height: 200px"></div>
-</body>
-
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </body>
 </html>

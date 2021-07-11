@@ -21,7 +21,7 @@ interface OptionListStat {
 
 const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 19;
-const LIST_HEIGHT = 192;
+const LIST_HEIGHT = 194;
 
 export class VscodeSelectBase extends LitElement {
   @property({type: String, reflect: true, attribute: 'aria-expanded'})

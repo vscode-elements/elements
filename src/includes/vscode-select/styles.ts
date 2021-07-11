@@ -155,9 +155,9 @@ export default css`
     cursor: pointer;
     list-style: none;
     margin: 0;
-    max-height: 192px;
+    max-height: 194px;
     overflow: auto;
-    padding: 1px;
+    padding: 2px;
   }
 
   .option {
@@ -173,10 +173,9 @@ export default css`
   }
 
   .option.active {
-    background-color: var(
-      --vscode-quickInputList-focusBackground,
-      var(--vscode-list-focusBackground)
-    );
+    background-color: var(--vscode-quickInputList-focusBackground);
+    color: var(--vscode-quickInputList-focusForeground);
+    outline: 1px solid var(--vscode-list-focusOutline);
   }
 
   .option-label {
@@ -190,10 +189,8 @@ export default css`
   }
 
   .dropdown.multiple .option.selected.active {
-    background-color: var(
-      --vscode-quickInputList-focusBackground,
-      var(--vscode-list-focusBackground)
-    );
+    background-color: var(--vscode-quickInputList-focusBackground);
+    color: var(--vscode-quickInputList-focusForeground);
   }
 
   .checkbox-icon {
