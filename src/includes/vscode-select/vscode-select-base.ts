@@ -474,6 +474,14 @@ export class VscodeSelectBase extends LitElement {
       this._value = stat.values[0];
       this._values = stat.values;
     }
+
+    if (
+      !this._multiple &&
+      !this.combobox &&
+      stat.selectedIndexes.length === 0
+    ) {
+      this._selectedIndex = 0;
+    }
   }
 
   protected _onComboboxInputFocus(ev: FocusEvent): void {

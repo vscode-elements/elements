@@ -58,7 +58,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     }
   }
   get value(): string {
-    return this._value as string;
+    return this._options[this._selectedIndex].value as string;
   }
 
   @internalProperty()

@@ -81,7 +81,7 @@ describe('vscode-single-select', () => {
           </span>
         </div>
       `);
-      expect(el.value).to.eq('trololo');
+      expect(el.value).to.eq('');
       expect(el.selectedIndex).to.eq(-1);
     });
 
@@ -193,14 +193,14 @@ describe('vscode-single-select', () => {
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
-            <span class="empty-label-placeholder"></span>
+            Lorem
           </span>
           <span class="icon">
           </span>
         </div>
       `);
-      expect(el.value).to.eq('');
-      expect(el.selectedIndex).to.eq(-1);
+      expect(el.value).to.eq('Lorem');
+      expect(el.selectedIndex).to.eq(0);
     });
 
     it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
@@ -280,8 +280,7 @@ describe('vscode-single-select', () => {
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
-            <span class="empty-label-placeholder">
-            </span>
+            Lorem
           </span>
           <span class="icon">
           </span>
@@ -289,7 +288,7 @@ describe('vscode-single-select', () => {
         <div class="dropdown">
           <ul class="options">
             <li
-              class="option"
+              class="active option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -332,8 +331,7 @@ describe('vscode-single-select', () => {
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
-            <span class="empty-label-placeholder">
-            </span>
+            Lorem
           </span>
           <span class="icon">
           </span>
@@ -341,7 +339,7 @@ describe('vscode-single-select', () => {
         <div class="dropdown">
           <ul class="options">
             <li
-              class="option"
+              class="active option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -360,8 +358,7 @@ describe('vscode-single-select', () => {
         </slot>
         <div class="select-face">
           <span class="text">
-            <span class="empty-label-placeholder">
-            </span>
+            Lorem
           </span>
           <span class="icon">
           </span>
@@ -382,8 +379,6 @@ describe('vscode-single-select', () => {
       const spy = sinon.spy(el, 'dispatchEvent');
 
       el.dispatchEvent(new MouseEvent('click'));
-      await el.updateComplete;
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
@@ -423,8 +418,7 @@ describe('vscode-single-select', () => {
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
-            <span class="empty-label-placeholder">
-            </span>
+            Lorem
           </span>
           <span class="icon">
           </span>
@@ -432,7 +426,7 @@ describe('vscode-single-select', () => {
         <div class="dropdown">
           <ul class="options">
             <li
-              class="option"
+              class="active option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -450,8 +444,7 @@ describe('vscode-single-select', () => {
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
-            <span class="empty-label-placeholder">
-            </span>
+            Lorem
           </span>
           <span class="icon">
           </span>
