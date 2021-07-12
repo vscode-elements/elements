@@ -132,6 +132,7 @@ export class VscodeButton extends LitElement {
       :host(:focus) {
         background-color: var(--vscode-button-hoverBackground);
         outline: 1px solid var(--vscode-focusBorder);
+        outline-offset: 2px;
       }
 
       :host([disabled]:focus) {
