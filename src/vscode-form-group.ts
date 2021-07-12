@@ -63,6 +63,17 @@ export class VscodeFormGroup extends LitElement {
       :host([vertical]) ::slotted(vscode-form-helper) {
         margin-left: 0;
       }
+
+      ::slotted(vscode-button:first-child) {
+        margin-left: calc(
+          var(--vsc-inline-label-width, var(--label-default-width)) +
+            var(--label-right-margin)
+        );
+      }
+
+      ::slotted(vscode-button) {
+        margin-right: 4px;
+      }
     `;
   }
 
