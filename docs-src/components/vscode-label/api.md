@@ -7,17 +7,19 @@ component: vscode-label
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-label
+# VscodeLabel
 
 An example element.
 
 ## Properties
 
-| Property   | Attribute  | Type      | Default |
-|------------|------------|-----------|---------|
-| `colon`    | `colon`    | `boolean` | false   |
-| `required` | `required` | `boolean` | false   |
-| `wrap`     | `wrap`     | `boolean` | false   |
+| Property      | Attribute      | Type               | Default |
+|---------------|----------------|--------------------|---------|
+| `colon`       | `colon`        | `boolean`          | false   |
+| `for`         | `for`          | `string`           | ""      |
+| `required`    | `required`     | `boolean`          | false   |
+| `sideAligned` | `side-aligned` | `"start" | "end"` | "start" |
+| `wrap`        | `wrap`         | `boolean`          | false   |
 
 ## Slots
 

@@ -36,7 +36,6 @@ interface TreeItem {
    path?: number[];
 }
 
-
 interface SelectEventDetail {
    icons: TreeItemIconConfig | undefined;
    itemType: ItemType;

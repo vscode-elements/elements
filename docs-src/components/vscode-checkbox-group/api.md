@@ -1,13 +1,13 @@
 ---
 layout: component.njk
-title: FormRow
+title: CheckboxGroup
 tags: api
-component: vscode-form-row
+component: vscode-checkbox-group
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# VscodeFormRow
+# VscodeCheckboxGroup
 
 ## Properties
 

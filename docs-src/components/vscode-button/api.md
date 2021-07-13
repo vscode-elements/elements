@@ -14,6 +14,7 @@ component: vscode-button
 | Property    | Attribute   | Type      | Default  | Description                                      |
 |-------------|-------------|-----------|----------|--------------------------------------------------|
 | `disabled`  | `disabled`  | `boolean` | false    |                                                  |
+| `focused`   | `focused`   | `boolean` | false    |                                                  |
 | `icon`      | `icon`      | `string`  | ""       | A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) before the label |
 | `iconAfter` | `iconAfter` | `string`  | ""       | A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label |
 | `role`      | `role`      | `string`  | "button" |                                                  |

@@ -1,0 +1,60 @@
+---
+layout: component.njk
+title: CheckboxGroup
+tags: component
+component: vscode-checkbox-group
+toc:
+  - label: Horizontal group
+    path: horizontal-group
+  - label: Vertical group
+    path: vertical-group
+---
+
+# VscodeCheckboxGroup
+
+```typescript
+import { 
+  VscodeCheckbox, 
+  VscodeCheckboxGroup 
+} '@bendera/vscode-webview-elements';
+```
+
+## Horizontal group
+
+<component-preview>
+  <vscode-checkbox-group>
+    <vscode-checkbox label="Lorem"></vscode-checkbox>
+    <vscode-checkbox label="Ipsum"></vscode-checkbox>
+    <vscode-checkbox label="Dolor"></vscode-checkbox>
+  </vscode-checkbox-group>
+</component-preview>
+
+### HTML
+
+```html
+<vscode-checkbox-group>
+  <vscode-checkbox label="Lorem"></vscode-checkbox>
+  <vscode-checkbox label="Ipsum"></vscode-checkbox>
+  <vscode-checkbox label="Dolor"></vscode-checkbox>
+</vscode-checkbox-group>
+```
+
+## Vertical group
+
+<component-preview>
+  <vscode-checkbox-group vertical>
+    <vscode-checkbox label="Lorem"></vscode-checkbox>
+    <vscode-checkbox label="Ipsum"></vscode-checkbox>
+    <vscode-checkbox label="Dolor"></vscode-checkbox>
+  </vscode-checkbox-group>
+</component-preview>
+
+### HTML
+
+```html
+<vscode-checkbox-group vertical>
+  <vscode-checkbox label="Lorem"></vscode-checkbox>
+  <vscode-checkbox label="Ipsum"></vscode-checkbox>
+  <vscode-checkbox label="Dolor"></vscode-checkbox>
+</vscode-checkbox-group>
+```

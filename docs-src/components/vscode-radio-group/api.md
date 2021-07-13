@@ -1,13 +1,13 @@
 ---
 layout: component.njk
-title: FormRow
+title: RadioGroup
 tags: api
-component: vscode-form-row
+component: vscode-radio-group
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# VscodeFormRow
+# VscodeRadioGroup
 
 ## Properties
 
