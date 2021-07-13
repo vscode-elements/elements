@@ -21,7 +21,7 @@ type FormButtonWidgetGroup = VscodeRadioGroup | VscodeCheckboxGroup;
 
 @customElement('vscode-form-container')
 export class VscodeFormContainer extends LitElement {
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   set responsive(isResponsive: boolean) {
     this._responsive = isResponsive;
 
@@ -48,14 +48,13 @@ export class VscodeFormContainer extends LitElement {
   @queryAssignedNodes()
   private _assignedNodes!: VscodeFormGroup[];
 
-  private _responsive = true;
+  private _responsive = false;
 
   private _firstUpdateComplete = false;
 
   private _currentFormGroupLayout!: FormGroupLayout;
 
   private _toggleCompactLayout(layout: FormGroupLayout) {
-    console.log('layout:', layout);
     const groups = this._assignedNodes.filter(
       (el) => el.matches && el.matches('vscode-form-group')
     );

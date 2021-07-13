@@ -265,6 +265,14 @@ export class VscodeInputbox extends LitElement {
         width: 320px;
       }
 
+      :host(.narrow) {
+        width: 200px;
+      }
+
+      :host(.wide) {
+        width: 500px;
+      }
+
       .container {
         position: relative;
       }

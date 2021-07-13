@@ -66,6 +66,11 @@ export class VscodeLabel extends LitElement {
       padding: 5px 0;
     }
 
+    :host-context(vscode-form-group.settings-group) .wrapper {
+      line-height: 18px;
+      padding: 0;
+    }
+
     ::slotted(.normal) {
       font-weight: normal;
     }

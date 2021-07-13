@@ -23,6 +23,12 @@ export class VscodeFormGroup extends LitElement {
         margin: 15px 0;
       }
 
+      :host(.settings-group) {
+        margin: 0;
+        padding: 12px 14px 18px;
+        width: 727px;
+      }
+
       .wrapper {
         display: flex;
         flex-wrap: wrap;
@@ -48,6 +54,13 @@ export class VscodeFormGroup extends LitElement {
         margin-right: var(--label-right-margin);
       }
 
+      :host(.settings-group) ::slotted(vscode-label) {
+        height: 18px;
+        line-height: 18px;
+        margin-bottom: 4px;
+        margin-right: 0;
+      }
+
       ::slotted(vscode-form-helper) {
         margin-left: calc(
           var(--vsc-inline-label-width, var(--label-default-width)) +
@@ -55,13 +68,24 @@ export class VscodeFormGroup extends LitElement {
         );
       }
 
+      :host([vertical]) ::slotted(vscode-form-helper) {
+        margin-left: 0;
+      }
+
+      :host(.settings-group) ::slotted(vscode-form-helper) {
+        margin-bottom: 0;
+        margin-top: 0;
+      }
+
       :host([vertical]) ::slotted(vscode-label) {
         display: block;
         text-align: left;
       }
 
-      :host([vertical]) ::slotted(vscode-form-helper) {
-        margin-left: 0;
+      :host(.settings-group) ::slotted(vscode-inputbox),
+      :host(.settings-group) ::slotted(vscode-single-select),
+      :host(.settings-group) ::slotted(vscode-multi-select) {
+        margin-top: 9px;
       }
 
       ::slotted(vscode-button:first-child) {
