@@ -39,6 +39,20 @@ module.exports = function (eleventyConfig) {
       });
   });
 
+  eleventyConfig.addCollection('forms', function (collectionApi) {
+    return collectionApi
+      .getFilteredByTag('forms')
+      .sort((firstEl, secondEl) => {
+        if (firstEl.data.weight > secondEl.data.weight) {
+          return 1;
+        } else if (firstEl.data.weight < secondEl.data.weight) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+  });
+
   eleventyConfig.setBrowserSyncConfig({
     notify: true,
     open: true,
