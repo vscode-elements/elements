@@ -216,7 +216,7 @@ export default css`
   }
 
   .checkbox-icon.checked:before {
-    background-color: currentColor;
+    background-color: var(--vscode-foreground);
     left: 1px;
     top: 2.5px;
   }
@@ -241,6 +241,7 @@ export default css`
     align-items: center;
     background-color: transparent;
     border: 0;
+    color: var(--vscode-foreground);
     cursor: pointer;
     display: flex;
     height: 24px;
