@@ -1,4 +1,11 @@
-import {LitElement, html, customElement, property, css} from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  property,
+  css,
+  TemplateResult,
+} from 'lit-element';
 
 /**
  * An example element.
@@ -29,7 +36,7 @@ export class %className% extends LitElement {
   @property({type: Number})
   count = 0;
 
-  render() {
+  render(): TemplateResult {
     return html`
       <h1>Hello, ${this.name}!</h1>
       <button @click=${this._onClick} part="button">

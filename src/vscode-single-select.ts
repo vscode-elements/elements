@@ -29,6 +29,12 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   @property({type: Number})
   set selectedIndex(val: number) {
     this._selectedIndex = val;
+    this._value = this._options[this._selectedIndex]
+      ? this._options[this._selectedIndex].value
+      : '';
+    this._labelText = this._options[this._selectedIndex]
+      ? this._options[this._selectedIndex].label
+      : '';
   }
   get selectedIndex(): number {
     return this._selectedIndex;
@@ -46,10 +52,13 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
     if (this._selectedIndex > -1) {
       this._options[this._selectedIndex].selected = true;
+      this._labelText = this._options[this._selectedIndex].label;
+    } else {
+      this._labelText = '';
     }
   }
   get value(): string {
-    return this._value as string;
+    return this._options[this._selectedIndex].value as string;
   }
 
   @internalProperty()

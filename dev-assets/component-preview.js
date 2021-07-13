@@ -1,9 +1,39 @@
 /* eslint-disable no-undef */
+let directoryUrl;
+let instanceCounter = 0;
+const themeSelectorInstances = {};
+const themes = {};
+
+function getDirectoryUrl() {
+  if (directoryUrl) {
+    return directoryUrl;
+  }
+
+  const urlParts = import.meta.url.split('/');
+  urlParts.pop();
+  return urlParts.join('/');
+}
+
+async function fetchTheme(themeName) {
+  const res = await fetch(`${getDirectoryUrl()}/${themeName}.txt`);
+  const theme = await res.text();
+
+  return theme;
+}
+
+directoryUrl = getDirectoryUrl();
+
 const tmpl = document.createElement('template');
 
 tmpl.innerHTML = `
   <style>
     :host {
+      all: initial;
+      display: block;
+      margin: 32px 0;
+    }
+
+    .canvas {
       all: initial;
       background-color: var(--vscode-editor-background);
       color: var(--vscode-foreground);
@@ -14,83 +44,152 @@ tmpl.innerHTML = `
       padding: 20px;
     }
 
-    .theme-switcher {
-      display: flex;
-      margin: -3px 0 20px;
+    .theme-selector-wrapper {
+      position: relative;
     }
 
-    .theme-switcher-option {
-      align-items: center;
+    .theme-selector {
+      background-color: var(--vscode-editor-background);
+      box-sizing: border-box;
       display: flex;
-      margin-right: 20px;
+      padding: 2px 20px 0;
+      position: relative;
+      width: 100%;
+      z-index: 2;
     }
 
-    .theme-switcher-option button {
+    .theme-selector:after {
+      background-color: var(--vscode-foreground);
+      bottom: 0;
+      content: '';
+      display: block;
+      height: 1px;
+      left: 0;
+      opacity: 0.2;
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+    }
+
+    .theme-selector button {
       background-color: transparent;
       border: 0;
-      border-bottom: 2px solid transparent;
+      border-bottom: 1px solid transparent;
       cursor: pointer;
-      color: var(--vscode-editor-foreground);
+      color: var(--vscode-foreground);
+      display: block;
+      margin-right: 20px;
       outline: none;
       padding: 5px 0;
     }
 
-    .theme-switcher-option button:focus-visible span {
+    .theme-selector button.active {
+      border-bottom-color: var(--vscode-foreground);
+    }
+
+    .theme-selector button span {
       display: block;
-      outline: 1px solid var(--vscode-focusBorder);
       outline-offset: 2px;
+      pointer-events: none;
     }
 
-    .theme-switcher-option.light button {
-      border-bottom-color: var(--component-preview-light-active-color);
-    }
-
-    .theme-switcher-option.dark button {
-      border-bottom-color: var(--component-preview-dark-active-color);
-    }
-
-    .theme-switcher-option.hc button {
-      border-bottom-color: var(--component-preview-hc-active-color);
+    .theme-selector button:focus-visible span {
+      outline: 1px solid var(--vscode-focusBorder);
     }
   </style>
-  <div class="theme-switcher">
-    <div class="theme-switcher-option light">
-      <button value="vscode-light" type="button"><span>Light</span></button>
-    </div>
-    <div class="theme-switcher-option dark">
-      <button value="vscode-dark" type="button"><span>Dark</span></button>
-    </div>
-    <div class="theme-switcher-option hc">
-      <button value="vscode-high-contrast" type="button"><span>High contrast</span></button>
+  <div class="theme-selector-wrapper">
+    <div id="theme-selector" class="theme-selector">
+      <button type="button" value="light" class="active"><span>Light</span></button>
+      <button type="button" value="dark"><span>Dark</span></button>
+      <button type="button" value="high-contrast"><span>High Contrast</span></button>
+      <button type="button" value="github-light"><span>GitHub Light</span></button>
+      <button type="button" value="one-dark-pro"><span>One Dark Pro</span></button>
     </div>
   </div>
-  <slot></slot>
+  <div class="canvas">
+    <slot></slot>
+  </div>
 `;
 
 class ComponentPreview extends HTMLElement {
   constructor() {
     super();
 
-    let shadowRoot = this.attachShadow({ mode: 'open'});
+    let shadowRoot = this.attachShadow({mode: 'open'});
     shadowRoot.appendChild(tmpl.content.cloneNode(true));
 
-    const buttons = shadowRoot.querySelectorAll(
-      '.theme-switcher-option button'
+    this._elThemeSelector = shadowRoot.querySelector('.theme-selector');
+    this._elButtons = this._elThemeSelector.querySelectorAll('button');
+
+    instanceCounter++;
+    themeSelectorInstances[
+      `instance-${instanceCounter}`
+    ] = this._elThemeSelector;
+
+    this._onThemeSelectorButtonClickBound = this._onThemeSelectorButtonClick.bind(
+      this
     );
 
-    Array.from(buttons).forEach(element => {
-      element.addEventListener('click', event => {
-        document.body.classList.remove(
-          'vscode-light',
-          'vscode-dark',
-          'vscode-high-contrast'
-        );
-
-        const button = event.composedPath().find((el) => el.matches('button'));
-
-        document.body.classList.add(button.value);
-      });
+    this._elButtons.forEach((b) => {
+      b.addEventListener('click', this._onThemeSelectorButtonClickBound);
     });
+
+    this._applyTheme('light');
+  }
+
+  _onThemeSelectorButtonClick(ev) {
+    const value = ev.target.value;
+
+    this._runOperationOnEachThemeSelector('setValue', value);
+    this._runOperationOnEachThemeSelector('disable');
+
+    this._applyTheme(value).then(() => {
+      this._runOperationOnEachThemeSelector('enable');
+    });
+  }
+
+  _runOperationOnEachThemeSelector(command, ...args) {
+    const instanceKeys = Object.keys(themeSelectorInstances);
+
+    instanceKeys.forEach((k) => {
+      switch (command) {
+        case 'enable':
+          themeSelectorInstances[k].querySelectorAll('button').forEach((b) => {
+            b.disabled = false;
+          });
+          break;
+        case 'disable':
+          themeSelectorInstances[k].querySelectorAll('button').forEach((b) => {
+            b.disabled = true;
+          });
+          break;
+        case 'setValue':
+          themeSelectorInstances[k].querySelectorAll('button').forEach((b) => {
+            b.classList.toggle('active', b.value === args[0]);
+          });
+          break;
+        default:
+      }
+    });
+  }
+
+  async _applyTheme(themeName) {
+    themes[themeName] = themes[themeName] || {};
+
+    if (themes[themeName].data) {
+      document.documentElement.style = themes[themeName].data;
+      return;
+    }
+
+    if (!themes[themeName].isFetching) {
+      themes[themeName].isFetching = true;
+
+      const theme = await fetchTheme(themeName);
+
+      themes[themeName].isFetching = false;
+      themes[themeName].data = theme;
+      document.documentElement.style = themes[themeName].data;
+    }
   }
 }
 

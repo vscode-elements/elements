@@ -35,7 +35,7 @@ const generateFile = async (templateFile, filePath, componentName) => {
   await mkdir(dirname(filePath), { recursive: true });
 
   template = template.replace(/%tagName%/gm, componentName);
-  template = template.replace(/%className%/gm, kebabToPascal(componentName.replace('vscode-', '')));
+  template = template.replace(/%className%/gm, kebabToPascal(componentName));
 
   try {
     await writeFile(filePath, template);

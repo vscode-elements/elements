@@ -29,12 +29,27 @@ export class VscodeButton extends LitElement {
    */
   @property() iconAfter = '';
 
+  @property({type: Boolean, reflect: true})
+  focused = false;
+
   private _prevTabindex = 0;
 
   constructor() {
     super();
     this.addEventListener('keydown', this._handleKeyDown.bind(this));
     this.addEventListener('click', this._handleClick.bind(this));
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('focus', this._handleFocusBound);
+    this.addEventListener('blur', this._handleBlurBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('focus', this._handleFocusBound);
+    this.removeEventListener('blur', this._handleBlurBound);
   }
 
   attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
@@ -79,6 +94,18 @@ export class VscodeButton extends LitElement {
     }
   }
 
+  private _handleFocus() {
+    this.focused = true;
+  }
+
+  private _handleFocusBound = this._handleFocus.bind(this);
+
+  private _handleBlur() {
+    this.focused = false;
+  }
+
+  private _handleBlurBound = this._handleBlur.bind(this);
+
   static get styles(): CSSResult {
     return css`
       :host {
@@ -92,7 +119,7 @@ export class VscodeButton extends LitElement {
         display: inline-flex;
         font-size: var(--vscode-font-size);
         font-weight: var(--vscode-font-weight);
-        line-height: 24px;
+        line-height: 26px;
         padding: 0 14px;
         user-select: none;
       }
@@ -132,6 +159,7 @@ export class VscodeButton extends LitElement {
       :host(:focus) {
         background-color: var(--vscode-button-hoverBackground);
         outline: 1px solid var(--vscode-focusBorder);
+        outline-offset: 2px;
       }
 
       :host([disabled]:focus) {

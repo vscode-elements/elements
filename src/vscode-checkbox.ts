@@ -1,44 +1,36 @@
 import {
-  LitElement,
-  html,
-  css,
-  property,
-  customElement,
   CSSResult,
+  customElement,
+  html,
+  property,
+  state,
+  TemplateResult,
 } from 'lit-element';
-import {nothing, TemplateResult} from 'lit-html';
+import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
+import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
+import baseStyles from './includes/form-button-widget/base.styles';
+import checkboxStyles from './includes/form-button-widget/checkbox.styles';
+import formHelperTextStyles from './includes/formHelperTextStyles';
 
 @customElement('vscode-checkbox')
-export class VscodeCheckbox extends LitElement {
-  @property() label = '';
-  @property({type: Boolean}) checked = false;
-  @property() value = '';
-  @property({type: Number, reflect: true}) tabindex = 0;
-  @property({type: Boolean}) disabled = false;
+export class VscodeCheckbox extends FormButtonWidgetBase {
+  @property({type: Boolean})
+  checked = false;
 
-  constructor() {
-    super();
-    this.addEventListener('keydown', this._handleKeyDown.bind(this));
-  }
+  @property()
+  label = '';
 
-  attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
-    super.attributeChangedCallback(name, oldVal, newVal);
+  @property()
+  value = '';
 
-    if (name === 'disabled' && this.hasAttribute('disabled')) {
-      this._prevTabindex = this.tabindex;
-      this.tabindex = -1;
-    } else if (name === 'disabled' && !this.hasAttribute('disabled')) {
-      this.tabindex = this._prevTabindex;
-    }
-  }
+  @property({type: Boolean})
+  disabled = false;
 
-  private _prevTabindex = 0;
+  @state()
+  private isSlotEmpty = true;
 
-  private _uid = `id_${new Date().valueOf()}_${Math.floor(
-    Math.random() * 9999
-  )}`;
-
-  private _handleClick() {
+  protected _handleClick(): void {
     if (this.disabled) {
       return;
     }
@@ -58,89 +50,32 @@ export class VscodeCheckbox extends LitElement {
     );
   }
 
-  private _handleKeyDown(event: KeyboardEvent) {
+  protected _handleKeyDown(event: KeyboardEvent): void {
     if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
       this.checked = !this.checked;
     }
   }
 
-  static get styles(): CSSResult {
-    return css`
-      :host {
-        display: inline-block;
-      }
+  private _handleSlotChange() {
+    this.isSlotEmpty = this.innerHTML === '';
+  }
 
-      :host(:focus) {
-        outline: none;
-      }
-
-      :host([disabled]) {
-        opacity: 0.4;
-      }
-
-      .wrapper {
-        cursor: pointer;
-        display: block;
-        font-size: var(--vscode-font-size);
-        position: relative;
-        user-select: none;
-      }
-
-      :host([disabled]) .wrapper {
-        cursor: default;
-      }
-
-      .checkbox {
-        position: absolute;
-        height: 1px;
-        width: 1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap;
-      }
-
-      .icon {
-        background-color: var(--vscode-settings-checkboxBackground);
-        background-size: 16px;
-        border: 1px solid var(--vscode-settings-checkboxBorder);
-        border-radius: 3px;
-        box-sizing: border-box;
-        height: 18px;
-        left: 0;
-        margin-left: 0;
-        margin-right: 9px;
-        padding: 0;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        width: 18px;
-      }
-
-      :host(:focus):host(:not([disabled])) .icon {
-        outline: 1px solid var(--vscode-focusBorder);
-        outline-offset: -1px;
-      }
-
-      .label {
-        padding-left: 27px;
-      }
-
-      .label-text {
-        color: var(--vscode-breadcrumb-foreground);
-        cursor: pointer;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
-        line-height: 1.4;
-      }
-
-      :host([disabled]) .label-text {
-        cursor: default;
-      }
-    `;
+  static get styles(): CSSResult[] {
+    return [baseStyles, checkboxStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {
+    const isLabelEmpty = !this.label && this.isSlotEmpty;
+    const iconClasses = classMap({
+      icon: true,
+      checked: this.checked,
+      'before-empty-label': isLabelEmpty,
+    });
+    const labelInnerClasses = classMap({
+      'label-inner': true,
+      empty: isLabelEmpty,
+    });
+
     const icon = html`<svg
       width="16"
       height="16"
@@ -166,9 +101,11 @@ export class VscodeCheckbox extends LitElement {
           value="${this.value}"
           tabindex="-1"
         />
-        <div class="icon">${check}</div>
+        <div class="${iconClasses}">${check}</div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
-          <slot><span class="label-text">${this.label}</span></slot>
+          <span class="${labelInnerClasses}">
+            <slot @slotchange="${this._handleSlotChange}">${this.label}</slot>
+          </span>
         </label>
       </div>
     `;

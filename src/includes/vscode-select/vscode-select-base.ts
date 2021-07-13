@@ -21,7 +21,7 @@ interface OptionListStat {
 
 const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 19;
-const LIST_HEIGHT = 192;
+const LIST_HEIGHT = 194;
 
 export class VscodeSelectBase extends LitElement {
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
@@ -473,6 +473,14 @@ export class VscodeSelectBase extends LitElement {
       this._selectedIndexes = stat.selectedIndexes;
       this._value = stat.values[0];
       this._values = stat.values;
+    }
+
+    if (
+      !this._multiple &&
+      !this.combobox &&
+      stat.selectedIndexes.length === 0
+    ) {
+      this._selectedIndex = 0;
     }
   }
 
