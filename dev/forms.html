@@ -6,19 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Form Demo</title>
     <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-    <style>
-      .label {
-        display: inline-block;
-        line-height: 17px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-      }
-
-      .inline-form {
-        align-items: center;
-        display: flex;
-      }
-    </style>
     <script type="module" src="../dev-assets/component-preview.js"></script>
     <script type="module" src="../dist/vscode-tabs.js"></script>
     <script type="module" src="../dist/vscode-form-container.js"></script>
@@ -46,7 +33,7 @@
 
   <body>
     <div class="story">
-      <h2 class="story-title">Inline form</h2>
+      <h2 class="story-title">Responsive form</h2>
       <div class="story-content">
         <component-preview>
           <vscode-form-container>
@@ -79,6 +66,16 @@
                 <vscode-option>Ipsum</vscode-option>
                 <vscode-option>Dolor</vscode-option>
               </vscode-single-select>
+            </vscode-form-group>
+            <vscode-form-group>
+              <vscode-label for="select-02" side-aligned="end">
+                <span class="lightened">Duis eget</span> erat accumsan:
+              </vscode-label>
+              <vscode-multi-select id="select-02">
+                <vscode-option>Lorem</vscode-option>
+                <vscode-option>Ipsum</vscode-option>
+                <vscode-option>Dolor</vscode-option>
+              </vscode-multi-select>
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="checkbox-01" side-aligned="end">
@@ -129,6 +126,161 @@
       </div>
     </div>
     <div class="story">
+      <h2 class="story-title">A custom inline form</h2>
+      <div class="story-content">
+        <component-preview>
+          <style>
+            .new-request-form {
+              display: flex;
+            }
+
+            .select-method {
+              margin-right: -1px;
+              width: 80px;
+            }
+
+            .button-send {
+              margin-left: -1px;
+            }
+
+            .select-method[focused],
+            .inputbox-url[focused],
+            .button-send[focused] {
+              position: relative;
+              z-index: 1;
+            }
+          </style>
+          <div class="new-request-form">
+            <vscode-single-select class="select-method">
+              <vscode-option selected>GET</vscode-option>
+              <vscode-option>POST</vscode-option>
+              <vscode-option>PUT</vscode-option>
+              <vscode-option>DELETE</vscode-option>
+              <vscode-option>PATCH</vscode-option>
+              <vscode-option>HEAD</vscode-option>
+              <vscode-option>OPTION</vscode-option>
+            </vscode-single-select>
+            <vscode-inputbox class="inputbox-url"></vscode-inputbox>
+            <vscode-button class="button-send">Send</vscode-button>
+          </div>
+        </component-preview>
+      </div>
+    </div>
+    <div class="story">
+      <h2 class="story-title">A native form</h2>
+      <div class="story-content">
+        <component-preview>
+          <style>
+            .log-settings-row {
+              align-items: center;
+              display: flex;
+              flex-wrap: wrap;
+            }
+
+            .log-settings-row vscode-label,
+            .log-settings-row vscode-single-select,
+            .log-settings-row vscode-checkbox,
+            .log-settings-row vscode-inputbox,
+            .log-settings-row vscode-button {
+              margin-top: 2px;
+              margin-bottom: 2px;
+            }
+
+            .select,
+            .checkbox,
+            .input {
+              margin-left: 4px;
+            }
+
+            .label {
+              white-space: nowrap;
+              width: auto;
+            }
+
+            .select-container {
+              margin-right: 10px;
+            }
+
+            .checkbox {
+              margin-right: 10px;
+            }
+
+            .input-since,
+            .input-tail {
+              width: 50px;
+            }
+
+            .input-tail {
+              margin-right: 10px;
+            }
+
+            .select-since {
+              margin-right: 10px;
+              width: 100px;
+            }
+
+            .button-run {
+              margin-left: auto;
+              margin-right: 4px;
+            }
+
+            .select-filter {
+              width: 120px;
+            }
+
+            .input-keywords {
+              margin-right: 10px;
+            }
+
+            .button-scroll {
+              margin-left: auto;
+            }
+          </style>
+          <div class="log-settings-row">
+            <vscode-label for="select-container" class="label">Container:</vscode-label>
+            <vscode-single-select id="select-container" class="select select-container">
+              <vscode-option>nginx-container</vscode-option>
+              <vscode-option>redis-container</vscode-option>
+            </vscode-single-select>
+
+            <vscode-label for="checkbox-follow-logs" class="label">Follow Logs:</vscode-label>
+            <vscode-checkbox label="" id="checkbox-follow-logs" class="checkbox"></vscode-checkbox>
+
+            <vscode-label for="checkbox-show-timestamp" class="label">Show timestamp:</vscode-label>
+            <vscode-checkbox label="" id="checkbox-show-timestamp" class="checkbox"></vscode-checkbox>
+
+            <vscode-label for="input-since" class="label">Since:</vscode-label>
+            <vscode-inputbox value="0" id="input-since" class="input input-since"></vscode-inputbox>
+            <vscode-single-select class="select select-since">
+              <vscode-option>minutes</vscode-option>
+              <vscode-option>hours</vscode-option>
+            </vscode-single-select>
+
+            <vscode-label for="input-tail" class="label">Tail:</vscode-label>
+            <vscode-inputbox value="-1" id="input-tail" class="input input-tail"></vscode-inputbox>
+
+            <vscode-label for="checkbox-to-terminal" class="label">To terminal:</vscode-label>
+            <vscode-checkbox id="checkbox-to-terminal" class="checkbox"></vscode-checkbox>
+
+            <vscode-button class="button-run">Run</vscode-button>
+            <vscode-button>Reset</vscode-button>
+          </div>
+          <div class="log-settings-row">
+            <vscode-label for="select-filter" class="label">Filter:</vscode-label>
+            <vscode-single-select id="select-filter" class="select select-filter">
+              <vscode-option>all</vscode-option>
+            </vscode-single-select>
+            <vscode-inputbox placeholder="Enter your keywords" class="input input-keywords"></vscode-inputbox>
+
+            <vscode-label for="checkbox-wrap-lines" class="label">Wrap lines:</vscode-label>
+            <vscode-checkbox id="checkbox-wrap-lines" class="checkbox"></vscode-checkbox>
+
+            <vscode-button class="button-scroll">Scroll To Bottom</vscode-button>
+          </div>
+        </component-preview>
+      </div>
+    </div>
+    <div class="story">
       <h2 class="story-title">A native form</h2>
       <div class="story-content">
         <form action="#">
@@ -138,16 +290,6 @@
           <input type="radio" name="radio-example" id="rb-2"><label for="rb-2">option 2</label><br>
           <input type="radio" name="radio-example" id="rb-3"><label for="rb-3">option 3</label><br>
         </form>
-      </div>
-    </div>
-    <div class="story">
-      <h2 class="story-title">Form example</h2>
-      <div class="story-content">
-        <vscode-form-layout>
-          <vscode-form-group layout="block">
-            <vscode-label>Lorem <span class="normal">ipsum</span></vscode-label>
-          </vscode-form-group>
-        </vscode-form-layout>
       </div>
     </div>
   </body>
