@@ -1,5 +1,13 @@
-import {CSSResult, customElement, html, property, TemplateResult} from 'lit-element';
+import {
+  CSSResult,
+  customElement,
+  html,
+  property,
+  state,
+  TemplateResult,
+} from 'lit-element';
 import {nothing} from 'lit-html';
+import {classMap} from 'lit-html/directives/class-map';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
 import baseStyles from './includes/form-button-widget/base.styles';
 import checkboxStyles from './includes/form-button-widget/checkbox.styles';
@@ -18,6 +26,9 @@ export class VscodeCheckbox extends FormButtonWidgetBase {
 
   @property({type: Boolean})
   disabled = false;
+
+  @state()
+  private isSlotEmpty = true;
 
   protected _handleClick(): void {
     if (this.disabled) {
@@ -45,11 +56,26 @@ export class VscodeCheckbox extends FormButtonWidgetBase {
     }
   }
 
+  private _handleSlotChange() {
+    this.isSlotEmpty = this.innerHTML === '';
+  }
+
   static get styles(): CSSResult[] {
     return [baseStyles, checkboxStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {
+    const isLabelEmpty = !this.label && this.isSlotEmpty;
+    const iconClasses = classMap({
+      icon: true,
+      checked: this.checked,
+      'before-empty-label': isLabelEmpty,
+    });
+    const labelInnerClasses = classMap({
+      'label-inner': true,
+      empty: isLabelEmpty,
+    });
+
     const icon = html`<svg
       width="16"
       height="16"
@@ -75,10 +101,10 @@ export class VscodeCheckbox extends FormButtonWidgetBase {
           value="${this.value}"
           tabindex="-1"
         />
-        <div class="icon">${check}</div>
+        <div class="${iconClasses}">${check}</div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
-          <span class="label-inner">
-            <slot><span class="label-text">${this.label}</span></slot>
+          <span class="${labelInnerClasses}">
+            <slot @slotchange="${this._handleSlotChange}">${this.label}</slot>
           </span>
         </label>
       </div>

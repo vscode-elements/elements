@@ -1,10 +1,4 @@
-import {
-  html,
-  property,
-  customElement,
-  CSSResult,
-  state,
-} from 'lit-element';
+import {html, property, customElement, CSSResult, state} from 'lit-element';
 import {TemplateResult} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
@@ -36,6 +30,9 @@ export class VscodeRadio extends FormButtonWidgetBase {
 
   @state()
   _checked = false;
+
+  @state()
+  private isSlotEmpty = true;
 
   private _checkButton() {
     const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
@@ -82,14 +79,24 @@ export class VscodeRadio extends FormButtonWidgetBase {
     }
   }
 
+  private _handleSlotChange() {
+    this.isSlotEmpty = this.innerHTML === '';
+  }
+
   static get styles(): CSSResult[] {
     return [baseStyles, radioStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {
+    const isLabelEmpty = !this.label && this.isSlotEmpty;
     const iconClasses = classMap({
       icon: true,
       checked: this.checked,
+      'before-empty-label': isLabelEmpty,
+    });
+    const labelInnerClasses = classMap({
+      'label-inner': true,
+      empty: isLabelEmpty,
     });
 
     return html`
@@ -104,8 +111,8 @@ export class VscodeRadio extends FormButtonWidgetBase {
         />
         <div class="${iconClasses}"></div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
-          <span class="label-inner">
-            <slot><span class="label-text">${this.label}</span></slot>
+          <span class="${labelInnerClasses}">
+            <slot @slotchange="${this._handleSlotChange}">${this.label}</slot>
           </span>
         </label>
       </div>
