@@ -109,7 +109,7 @@ export class VscodeInputbox extends LitElement {
   @property({type: String})
   type: InputType = 'text';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   focused = false;
 
   @property({type: String})

@@ -8,10 +8,25 @@ export class FormButtonWidgetBase extends LitElement {
   @property({type: Number, reflect: true})
   tabindex = 0;
 
+  @property({type: Boolean, reflect: true})
+  focused = false;
+
   constructor() {
     super();
     applyForegroundRGBA();
     this.addEventListener('keydown', this._handleKeyDown.bind(this));
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('focus', this._handleFocusBound);
+    this.addEventListener('blur', this._handleBlurBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('focus', this._handleFocusBound);
+    this.removeEventListener('blur', this._handleBlurBound);
   }
 
   attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
@@ -38,4 +53,16 @@ export class FormButtonWidgetBase extends LitElement {
   protected _handleKeyDown(_event: KeyboardEvent): void {
     throw new Error('Not implemented');
   }
+
+  private _handleFocus(): void {
+    this.focused = true;
+  }
+
+  private _handleFocusBound = this._handleFocus.bind(this);
+
+  private _handleBlur(): void {
+    this.focused = false;
+  }
+
+  private _handleBlurBound = this._handleBlur.bind(this);
 }

@@ -29,12 +29,27 @@ export class VscodeButton extends LitElement {
    */
   @property() iconAfter = '';
 
+  @property({type: Boolean, reflect: true})
+  focused = false;
+
   private _prevTabindex = 0;
 
   constructor() {
     super();
     this.addEventListener('keydown', this._handleKeyDown.bind(this));
     this.addEventListener('click', this._handleClick.bind(this));
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('focus', this._handleFocusBound);
+    this.addEventListener('blur', this._handleBlurBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('focus', this._handleFocusBound);
+    this.removeEventListener('blur', this._handleBlurBound);
   }
 
   attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
@@ -78,6 +93,18 @@ export class VscodeButton extends LitElement {
       );
     }
   }
+
+  private _handleFocus() {
+    this.focused = true;
+  }
+
+  private _handleFocusBound = this._handleFocus.bind(this);
+
+  private _handleBlur() {
+    this.focused = false;
+  }
+
+  private _handleBlurBound = this._handleBlur.bind(this);
 
   static get styles(): CSSResult {
     return css`
