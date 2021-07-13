@@ -1,0 +1,11 @@
+---
+layout: page.njk
+title: Form Examples
+---
+<ul>
+  {%- for frm in collections.forms -%}
+    <li{% if page.url == frm.url %} aria-current="page" class="current"{% endif %}>
+      <a href="{{ frm.url | url }}">{{ frm.data.title }}</a>
+    </li>
+  {%- endfor -%}
+</ul>

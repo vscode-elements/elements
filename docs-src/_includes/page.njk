@@ -39,6 +39,16 @@
           <ul>
             <li><a href="{{ '/pages/getting-started' | url }}"{% if page.url == '/pages/getting-started/' %} class="current"{% endif %}>Getting Started</a></li>
             <li>
+              <a href="{{ '/pages/form-examples' | url }}"{% if page.url == '/pages/form-examples/' %} class="current"{% endif %}>Form examples</a>
+              <ul>
+                {%- for frm in collections.forms -%}
+                  <li>
+                    <a href="{{ frm.url | url }}"{% if page.url == frm.url %} aria-current="page" class="current"{% endif %}>{{ frm.data.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </li>
+            <li>
               <a href="{{ '/components' | url }}"{% if page.url == '/components/' %} class="current"{% endif %}>Components</a>
               <ul>
                 {%- for cmp in collections.component -%}
