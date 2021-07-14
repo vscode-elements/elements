@@ -20,34 +20,13 @@ interface FocusableElement extends Element {
  */
 @customElement('vscode-label')
 export class VscodeLabel extends LitElement {
-  @property({type: Boolean})
-  colon = false;
-
-  @property({type: Boolean})
-  required = false;
-
-  @property({reflect: true, attribute: 'side-aligned'})
-  sideAligned: 'start' | 'end' = 'start';
-
   @property()
   for = '';
 
   static styles = css`
     :host {
       cursor: default;
-      display: inline-block;
-    }
-
-    :host([side-aligned]),
-    :host([sideAligned]),
-    :host([sidealigned]) {
-      width: 150px;
-    }
-
-    :host([side-aligned='end']),
-    :host([sideAligned='end']),
-    :host([sidealigned='end']) {
-      text-align: right;
+      display: block;
     }
 
     .wrapper {

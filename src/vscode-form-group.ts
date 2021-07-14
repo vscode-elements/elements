@@ -52,9 +52,10 @@ export class VscodeFormGroup extends LitElement {
         );
       }
 
-      ::slotted(vscode-label) {
-        width: var(--vsc-inline-label-width, var(--label-default-width));
+      :host([variant="horizontal"]) ::slotted(vscode-label) {
         margin-right: var(--label-right-margin);
+        text-align: right;
+        width: var(--vsc-inline-label-width, var(--label-default-width));
       }
 
       :host([variant="settings-group"]) ::slotted(vscode-label) {
