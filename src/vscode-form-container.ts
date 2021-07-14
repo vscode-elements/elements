@@ -10,7 +10,7 @@ import {
 } from 'lit-element';
 import {VscodeCheckbox} from './vscode-checkbox';
 import {VscodeCheckboxGroup} from './vscode-checkbox-group';
-import {VscodeFormGroup} from './vscode-form-group';
+import {VscodeFormGroup, FormGroupVariant} from './vscode-form-group';
 import {VscodeInputbox} from './vscode-inputbox';
 import {VscodeMultiSelect} from './vscode-multi-select';
 import {VscodeRadio} from './vscode-radio';
@@ -145,30 +145,40 @@ export class VscodeFormContainer extends LitElement {
     );
 
     groups.forEach((group) => {
-      group.vertical = layout === FormGroupLayout.VERTICAL;
+      if (!group.dataset.originalVariant) {
+        group.dataset.originalVariant = group.variant;
+      }
+
+      const oVariant = group.dataset.originalVariant as FormGroupVariant;
+
+      if (layout === FormGroupLayout.VERTICAL && oVariant === 'horizontal') {
+        group.variant = 'vertical';
+      } else {
+        group.variant = oVariant;
+      }
 
       const widgetGroups = group.querySelectorAll(
         'vscode-checkbox-group, vscode-radio-group'
       ) as NodeListOf<FormButtonWidgetGroup>;
 
       widgetGroups.forEach((widgetGroup) => {
-        if (!widgetGroup.dataset.originalLayout) {
-          widgetGroup.dataset.originalLayout = widgetGroup.hasAttribute(
+        if (!widgetGroup.dataset.originalVariant) {
+          widgetGroup.dataset.originalVariant = widgetGroup.hasAttribute(
             'vertical'
           )
             ? FormGroupLayout.VERTICAL
             : FormGroupLayout.HORIZONTAL;
         }
 
-        const originalLayout = widgetGroup.dataset.originalLayout;
+        const originalVariant = widgetGroup.dataset.originalVariant;
 
         if (
           layout === FormGroupLayout.HORIZONTAL &&
-          originalLayout === FormGroupLayout.HORIZONTAL
+          originalVariant === FormGroupLayout.HORIZONTAL
         ) {
-          widgetGroup.vertical = false;
+          widgetGroup.variant = 'horizontal';
         } else {
-          widgetGroup.vertical = true;
+          widgetGroup.variant = 'vertical';
         }
       });
     });

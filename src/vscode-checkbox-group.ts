@@ -9,8 +9,8 @@ import {
 
 @customElement('vscode-checkbox-group')
 export class VscodeCheckboxGroup extends LitElement {
-  @property({type: Boolean, reflect: true})
-  vertical = false;
+  @property({reflect: true})
+  variant: 'horizontal' | 'vertical' = 'horizontal';
 
   static styles = css`
     :host {
@@ -22,7 +22,7 @@ export class VscodeCheckboxGroup extends LitElement {
       flex-wrap: wrap;
     }
 
-    :host([vertical]) .wrapper {
+    :host([variant="vertical"]) .wrapper {
       display: block;
     }
 
@@ -34,12 +34,12 @@ export class VscodeCheckboxGroup extends LitElement {
       margin-right: 0;
     }
 
-    :host([vertical]) ::slotted(vscode-checkbox) {
+    :host([variant="vertical"]) ::slotted(vscode-checkbox) {
       display: block;
       margin-bottom: 15px;
     }
 
-    :host([vertical]) ::slotted(vscode-checkbox:last-child) {
+    :host([variant="vertical"]) ::slotted(vscode-checkbox:last-child) {
       margin-bottom: 0;
     }
   `;

@@ -38,7 +38,7 @@
       <div class="story-content">
         <component-preview>
           <vscode-form-container responsive id="responsive-form">
-            <vscode-form-group vertical>
+            <vscode-form-group>
               <vscode-label for="inputbox-01" side-aligned="end">
                 Lorem <span class="normal">ipsum</span>:
               </vscode-label>
@@ -294,25 +294,25 @@
       <div class="story-content">
         <component-preview>
           <vscode-form-container>
-            <vscode-form-group vertical class="settings-group">
+            <vscode-form-group variant="settings-group">
               <vscode-label><span class="lightened">Editor:</span> Font Size</vscode-label>
               <vscode-form-helper>
                 <p>Controls the font size in pixels.</p>
               </vscode-form-helper>
               <vscode-inputbox class="narrow" value="14"></vscode-inputbox>
             </vscode-form-group>
-            <vscode-form-group vertical class="settings-group">
+            <vscode-form-group variant="settings-group">
               <vscode-label><span class="lightened">Editor:</span> Font Family</vscode-label>
               <vscode-form-helper>
                 <p>Controls the font family.</p>
               </vscode-form-helper>
               <vscode-inputbox class="wide" value="'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"></vscode-inputbox>
             </vscode-form-group>
-            <vscode-form-group vertical class="settings-group">
+            <vscode-form-group variant="settings-group">
               <vscode-label><span class="lightened">Editor:</span> Insert Spaces</vscode-label>
               <vscode-checkbox><p>Insert spaces when pressing <code>Tab</code>. This setting is overridden based on the file contents when <a href="#" title="#editor.detectIndentation">Editor: Detect Indentation</a> is on.</p></vscode-checkbox>
             </vscode-form-group>
-            <vscode-form-group vertical class="settings-group">
+            <vscode-form-group variant="settings-group">
               <vscode-label><span class="lightened">Editor:</span> Word Wrap</vscode-label>
               <vscode-form-helper><p>Controls how lines should wrap.</p></vscode-form-helper>
               <vscode-single-select>
@@ -320,7 +320,7 @@
                 <vscode-option>off</vscode-option>
               </vscode-single-select>
             </vscode-form-group>
-            <vscode-form-group vertical class="settings-group">
+            <vscode-form-group variant="settings-group">
               <vscode-label>Title</vscode-label>
               <vscode-form-helper>
                 <p>Controls the window title based on the active editor. Variables are substituted based on the context:</p>

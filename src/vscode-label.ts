@@ -35,17 +35,12 @@ export class VscodeLabel extends LitElement {
   static styles = css`
     :host {
       cursor: default;
-      display: block;
-    }
-
-    :host([inline]) {
       display: inline-block;
     }
 
     :host([side-aligned]),
     :host([sideAligned]),
     :host([sidealigned]) {
-      display: inline-block;
       width: 150px;
     }
 
@@ -63,7 +58,7 @@ export class VscodeLabel extends LitElement {
       padding: 5px 0;
     }
 
-    :host-context(vscode-form-group.settings-group) .wrapper {
+    :host-context(vscode-form-group[variant="settings-group"]) .wrapper {
       line-height: 18px;
       padding: 0;
     }
