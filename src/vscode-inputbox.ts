@@ -261,11 +261,11 @@ export class VscodeInputbox extends LitElement {
         width: 320px;
       }
 
-      :host(.narrow) {
+      :host([size-variant="narrow"]) {
         width: 200px;
       }
 
-      :host(.wide) {
+      :host([size-variant="wide"]) {
         width: 500px;
       }
 
