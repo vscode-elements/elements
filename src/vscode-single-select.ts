@@ -42,8 +42,6 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
   @property({type: String})
   set value(val: string) {
-    this._value = val;
-
     if (this._options[this._selectedIndex]) {
       this._options[this._selectedIndex].selected = false;
     }
@@ -53,12 +51,18 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     if (this._selectedIndex > -1) {
       this._options[this._selectedIndex].selected = true;
       this._labelText = this._options[this._selectedIndex].label;
+      this._value = val;
     } else {
       this._labelText = '';
+      this._value = '';
     }
   }
   get value(): string {
-    return this._options[this._selectedIndex].value as string;
+    if(this._options[this._selectedIndex]) {
+      return this._options[this._selectedIndex]?.value;
+    }
+
+    return '';
   }
 
   @internalProperty()
