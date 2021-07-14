@@ -12,12 +12,6 @@ interface FocusableElement extends Element {
   focus: () => void;
 }
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement('vscode-label')
 export class VscodeLabel extends LitElement {
   @property()

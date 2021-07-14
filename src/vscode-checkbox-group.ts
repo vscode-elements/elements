@@ -44,9 +44,6 @@ export class VscodeCheckboxGroup extends LitElement {
     }
   `;
 
-  @property({type: Boolean, reflect: true})
-  inline = false;
-
   render(): TemplateResult {
     return html`
       <div class="wrapper">
@@ -58,6 +55,6 @@ export class VscodeCheckboxGroup extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-form-row': VscodeCheckboxGroup;
+    'vscode-checkbox-group': VscodeCheckboxGroup;
   }
 }
