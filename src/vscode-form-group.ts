@@ -105,9 +105,6 @@ export class VscodeFormGroup extends LitElement {
     `;
   }
 
-  @property({type: Boolean, reflect: true})
-  inline = false;
-
   render(): TemplateResult {
     return html`
       <div class="wrapper">

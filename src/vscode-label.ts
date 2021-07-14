@@ -29,9 +29,6 @@ export class VscodeLabel extends LitElement {
   @property({reflect: true, attribute: 'side-aligned'})
   sideAligned: 'start' | 'end' = 'start';
 
-  @property({type: Boolean})
-  wrap = false;
-
   @property()
   for = '';
 
