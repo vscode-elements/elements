@@ -11,7 +11,8 @@ component: vscode-form-container
 
 ## Properties
 
-| Property     | Attribute    | Type      | Default |
-|--------------|--------------|-----------|---------|
-| `breakpoint` | `breakpoint` | `number`  | 490     |
-| `responsive` | `responsive` | `boolean` |         |
+| Property     | Attribute    | Modifiers | Type       | Default |
+|--------------|--------------|-----------|------------|---------|
+| `breakpoint` | `breakpoint` |           | `number`   | 490     |
+| `data`       | `data`       | readonly  | `FormData` |         |
+| `responsive` | `responsive` |           | `boolean`  |         |
