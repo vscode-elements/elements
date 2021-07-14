@@ -5,7 +5,11 @@ tags: component
 component: vscode-multi-select
 ---
 
-# vscode-multi-select
+# VscodeMultiSelect
+
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-multiselect';
+```
 
 ## Basic example
 

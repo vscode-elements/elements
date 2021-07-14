@@ -1,22 +1,23 @@
 ---
 layout: component.njk
-title: Checkbox
+title: Radio
 tags: api
-component: vscode-checkbox
+component: vscode-radio
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# VscodeCheckbox
+# VscodeRadio
 
 ## Properties
 
 | Property   | Attribute  | Type      | Default |
 |------------|------------|-----------|---------|
-| `checked`  | `checked`  | `boolean` | false   |
+| `checked`  | `checked`  | `boolean` |         |
 | `disabled` | `disabled` | `boolean` | false   |
 | `focused`  | `focused`  | `boolean` | false   |
 | `label`    | `label`    | `string`  | ""      |
+| `name`     | `name`     | `string`  | ""      |
 | `tabindex` | `tabindex` | `number`  | 0       |
 | `value`    | `value`    | `string`  | ""      |
 

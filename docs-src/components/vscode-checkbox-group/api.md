@@ -1,17 +1,17 @@
 ---
 layout: component.njk
-title: Scrollable
+title: CheckboxGroup
 tags: api
-component: vscode-scrollable
+component: vscode-checkbox-group
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# VscodeScrollable
+# VscodeCheckboxGroup
 
 ## Properties
 
 | Property   | Attribute  | Type      | Default |
 |------------|------------|-----------|---------|
-| `scrolled` | `scrolled` | `boolean` | false   |
-| `shadow`   | `shadow`   | `boolean` | true    |
+| `inline`   | `inline`   | `boolean` | false   |
+| `vertical` | `vertical` | `boolean` | false   |

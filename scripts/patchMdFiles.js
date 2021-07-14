@@ -18,21 +18,23 @@ const processFile = (path) => {
       let foundMainHeader = [];
       foundMainHeader = [...data.matchAll(/^#{1} (.*)$/gm)];
 
-      const title = foundMainHeader.length > 0 ? foundMainHeader[0][1] : '';
-      const plainKebab = title.replace('vscode-', '');
+      const fullKebab = foundMainHeader.length > 0 ? foundMainHeader[0][1] : '';
+      const plainKebab = fullKebab.replace('vscode-', '');
+      const fullClassName = kebabToPascal(fullKebab);
       const plainClassName = kebabToPascal(plainKebab);
 
       let frontMatter = '---\n';
       frontMatter += 'layout: component.njk\n';
       frontMatter += `title: ${plainClassName}\n`;
       frontMatter += `tags: api\n`;
-      frontMatter += `component: ${title}\n`;
+      frontMatter += `component: ${fullKebab}\n`;
       frontMatter += '---\n\n';
       frontMatter += '<!-- This file is auto-generated. Do not edit! -->\n\n';
 
       let fixedData = data;
 
       fixedData = fixedData.replace(/\\\|/g, '|');
+      fixedData = fixedData.replace(`# ${fullKebab}`, `# ${fullClassName}`);
 
       const newData = frontMatter + fixedData;
 

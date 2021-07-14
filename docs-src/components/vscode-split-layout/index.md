@@ -5,7 +5,11 @@ tags: component
 component: vscode-split-layout
 ---
 
-# vscode-split-layout
+# VscodeSplitLayout
+
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-split-layout';
+```
 
 ## Example
 

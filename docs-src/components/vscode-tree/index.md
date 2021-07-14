@@ -10,7 +10,11 @@ toc:
     path: flat-list
 ---
 
-# vscode-tree
+# VscodeTree
+
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-tree';
+```
 
 ## Basic example
 

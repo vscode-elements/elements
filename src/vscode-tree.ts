@@ -42,6 +42,15 @@ enum ItemType {
   LEAF = 'leaf',
 }
 
+interface SelectEventDetail {
+  icons: TreeItemIconConfig | undefined;
+  itemType: ItemType;
+  label: string;
+  open: boolean;
+  value: string;
+  path: string; // ex.: 0/0/1
+}
+
 const ARROW_OUTER_WIDTH = 18;
 
 const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
@@ -73,6 +82,8 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
  * ## Type definitions
  *
  * ```typescript
+ * type ItemType = 'branch' | 'leaf';
+ *
  * interface TreeItemIconConfig {
  *   branch?: string;
  *   open?: string;
@@ -86,8 +97,22 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
  *   selected?: boolean;
  *   focused?: boolean;
  *   icons?: TreeItemIconConfig;
+ *
+ *   // If it's not defined the value will be equal to the label
  *   value?: string;
+ *
+ *   // Item path in the tree. For example [0,0,1] means:
+ *   // tree[0].subItems[0].subItems[1]
  *   path?: number[];
+ * }
+ *
+ * interface SelectEventDetail {
+ *   icons: TreeItemIconConfig | undefined;
+ *   itemType: ItemType;
+ *   label: string;
+ *   open: boolean;
+ *   value: string;
+ *   path: string; // ex.: 0/0/1
  * }
  * ```
  */
@@ -328,7 +353,7 @@ export class VscodeTree extends LitElement {
     };
 
     this.dispatchEvent(
-      new CustomEvent('vsc-select', {
+      new CustomEvent<SelectEventDetail>('vsc-select', {
         bubbles: true,
         composed: true,
         detail,

@@ -124,7 +124,7 @@ body > .content-wrapper {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 3;
 }
 
 .page-header .content-wrapper {
@@ -270,6 +270,11 @@ body > .content-wrapper {
   padding-left: 8px;
 }
 
+.main-nav .warning {
+  display: inline-block;
+  margin-left: 5px;
+}
+
 .main-nav .current {
   border-left: 3px solid var(--color-vscode-blue);
   display: block;
@@ -322,6 +327,14 @@ body > .content-wrapper {
 .sub-nav li a.current {
   background-color: var(--color-vscode-blue);
   color: var(--color-light-gray);
+}
+
+.deprecated-message {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  margin: 20px 0;
+  padding: 0 20px;
 }
 
 .page pre[class*="language-"] {

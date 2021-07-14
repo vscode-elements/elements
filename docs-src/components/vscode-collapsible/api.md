@@ -7,7 +7,7 @@ component: vscode-collapsible
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-collapsible
+# VscodeCollapsible
 
 ## Properties
 

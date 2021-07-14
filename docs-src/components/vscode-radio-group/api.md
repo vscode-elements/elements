@@ -1,17 +1,17 @@
 ---
 layout: component.njk
-title: Scrollable
+title: RadioGroup
 tags: api
-component: vscode-scrollable
+component: vscode-radio-group
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# VscodeScrollable
+# VscodeRadioGroup
 
 ## Properties
 
 | Property   | Attribute  | Type      | Default |
 |------------|------------|-----------|---------|
-| `scrolled` | `scrolled` | `boolean` | false   |
-| `shadow`   | `shadow`   | `boolean` | true    |
+| `inline`   | `inline`   | `boolean` | false   |
+| `vertical` | `vertical` | `boolean` | false   |

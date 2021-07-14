@@ -5,7 +5,11 @@ tags: component
 component: vscode-collapsible
 ---
 
-# vscode-collapsible
+# VscodeCollapsible
+
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-collapsible';
+```
 
 ## Basic example
 

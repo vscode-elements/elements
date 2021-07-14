@@ -3,9 +3,14 @@ layout: component.njk
 title: FormItem
 tags: component
 component: vscode-form-item
+deprecated: true
 ---
 
-# vscode-form-item
+# VscodeFormItem
+
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-form-item';
+```
 
 ## Basic example
 

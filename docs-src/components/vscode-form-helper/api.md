@@ -1,10 +1,10 @@
 ---
 layout: component.njk
-title: FormControl
+title: FormHelper
 tags: api
-component: vscode-form-control
+component: vscode-form-helper
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# VscodeFormControl
+# VscodeFormHelper

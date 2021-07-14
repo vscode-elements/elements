@@ -5,7 +5,11 @@ tags: component
 component: vscode-tabs
 ---
 
-# vscode-tabs
+# VscodeTabs
+
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-tabs';
+```
 
 <component-preview>
   <vscode-tabs selectedIndex="1">

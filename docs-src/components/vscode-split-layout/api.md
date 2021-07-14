@@ -7,7 +7,7 @@ component: vscode-split-layout
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# vscode-split-layout
+# VscodeSplitLayout
 
 ## Properties
 

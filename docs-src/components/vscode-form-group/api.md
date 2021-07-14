@@ -1,17 +1,17 @@
 ---
 layout: component.njk
-title: Scrollable
+title: FormGroup
 tags: api
-component: vscode-scrollable
+component: vscode-form-group
 ---
 
 <!-- This file is auto-generated. Do not edit! -->
 
-# VscodeScrollable
+# VscodeFormGroup
 
 ## Properties
 
 | Property   | Attribute  | Type      | Default |
 |------------|------------|-----------|---------|
-| `scrolled` | `scrolled` | `boolean` | false   |
-| `shadow`   | `shadow`   | `boolean` | true    |
+| `inline`   | `inline`   | `boolean` | false   |
+| `vertical` | `vertical` | `boolean` | false   |

@@ -5,7 +5,11 @@ tags: component
 component: vscode-button
 ---
 
-# vscode-button
+# VscodeButton
+
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-button';
+```
 
 ## Example
 
