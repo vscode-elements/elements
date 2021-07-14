@@ -28,7 +28,7 @@ export class VscodeFormGroup extends LitElement {
       :host([variant="settings-group"]) {
         margin: 0;
         padding: 12px 14px 18px;
-        width: 727px;
+        max-width: 727px;
       }
 
       .wrapper {
@@ -41,8 +41,8 @@ export class VscodeFormGroup extends LitElement {
         display: block;
       }
 
-      ::slotted(vscode-checkbox-group),
-      ::slotted(vscode-radio-group) {
+      :host([variant="horizontal"]) ::slotted(vscode-checkbox-group),
+      :host([variant="horizontal"]) ::slotted(vscode-radio-group) {
         width: calc(
           100% -
             calc(
