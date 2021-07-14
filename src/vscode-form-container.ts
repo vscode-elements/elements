@@ -8,9 +8,14 @@ import {
   query,
   queryAssignedNodes,
 } from 'lit-element';
+import {VscodeCheckbox} from './vscode-checkbox';
 import {VscodeCheckboxGroup} from './vscode-checkbox-group';
 import {VscodeFormGroup} from './vscode-form-group';
+import {VscodeInputbox} from './vscode-inputbox';
+import {VscodeMultiSelect} from './vscode-multi-select';
+import {VscodeRadio} from './vscode-radio';
 import {VscodeRadioGroup} from './vscode-radio-group';
+import {VscodeSingleSelect} from './vscode-single-select';
 
 enum FormGroupLayout {
   HORIZONTAL = 'horizontal',
@@ -18,6 +23,37 @@ enum FormGroupLayout {
 }
 
 type FormButtonWidgetGroup = VscodeRadioGroup | VscodeCheckboxGroup;
+
+type VscFormWidget =
+  | VscodeInputbox
+  | VscodeSingleSelect
+  | VscodeMultiSelect
+  | VscodeCheckbox
+  | VscodeRadio;
+
+interface FormData {
+  [key: string]: string | string[];
+}
+
+const isInputbox = (el: Element): el is VscodeInputbox => {
+  return el.tagName.toLocaleLowerCase() === 'vscode-inputbox';
+};
+
+const isSingleSelect = (el: Element): el is VscodeSingleSelect => {
+  return el.tagName.toLocaleLowerCase() === 'vscode-single-select';
+};
+
+const isMultiSelect = (el: Element): el is VscodeMultiSelect => {
+  return el.tagName.toLocaleLowerCase() === 'vscode-multi-select';
+};
+
+const isCheckbox = (el: Element): el is VscodeCheckbox => {
+  return el.tagName.toLocaleLowerCase() === 'vscode-checkbox';
+};
+
+const isRadio = (el: Element): el is VscodeRadio => {
+  return el.tagName.toLocaleLowerCase() === 'vscode-radio';
+};
 
 @customElement('vscode-form-container')
 export class VscodeFormContainer extends LitElement {
@@ -39,6 +75,55 @@ export class VscodeFormContainer extends LitElement {
 
   @property({type: Number})
   breakpoint = 490;
+
+  @property({type: Object})
+  get data(): FormData {
+    const query = [
+      'vscode-inputbox',
+      'vscode-single-select',
+      'vscode-multi-select',
+      'vscode-checkbox',
+      'vscode-radio',
+    ].join(',');
+    const vscFormWidgets = this.querySelectorAll(
+      query
+    ) as NodeListOf<VscFormWidget>;
+    const data: FormData = {};
+
+    vscFormWidgets.forEach((widget) => {
+      if (!widget.hasAttribute('name')) {
+        return;
+      }
+
+      const name = widget.getAttribute('name') as string;
+
+      if (!name) {
+        return;
+      }
+
+      if ((isCheckbox(widget) && widget.checked) || isMultiSelect(widget)) {
+        data[name] = Array.isArray(data[name])
+          ? [...data[name], widget.value as string]
+          : [widget.value as string];
+      }
+
+      if (isCheckbox(widget) && !widget.checked) {
+        data[name] = Array.isArray(data[name]) ? data[name] : [];
+      }
+
+      if (
+        (isRadio(widget) && widget.checked) ||
+        isInputbox(widget) ||
+        isSingleSelect(widget)
+      ) {
+        data[name] = widget.value;
+      } else if (isRadio(widget) && !widget.checked) {
+        data[name] = data[name] ? data[name] : '';
+      }
+    });
+
+    return data;
+  }
 
   private _resizeObserver!: ResizeObserver | null;
 
@@ -68,7 +153,9 @@ export class VscodeFormContainer extends LitElement {
 
       widgetGroups.forEach((widgetGroup) => {
         if (!widgetGroup.dataset.originalLayout) {
-          widgetGroup.dataset.originalLayout = widgetGroup.hasAttribute('vertical')
+          widgetGroup.dataset.originalLayout = widgetGroup.hasAttribute(
+            'vertical'
+          )
             ? FormGroupLayout.VERTICAL
             : FormGroupLayout.HORIZONTAL;
         }
@@ -80,7 +167,7 @@ export class VscodeFormContainer extends LitElement {
           originalLayout === FormGroupLayout.HORIZONTAL
         ) {
           widgetGroup.vertical = false;
-        } else{
+        } else {
           widgetGroup.vertical = true;
         }
       });

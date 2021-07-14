@@ -37,12 +37,12 @@
       <h2 class="story-title">Responsive form</h2>
       <div class="story-content">
         <component-preview>
-          <vscode-form-container responsive>
+          <vscode-form-container responsive id="responsive-form">
             <vscode-form-group vertical>
               <vscode-label for="inputbox-01" side-aligned="end">
                 Lorem <span class="normal">ipsum</span>:
               </vscode-label>
-              <vscode-inputbox id="inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
+              <vscode-inputbox id="inputbox-01" name="input-1" placeholder="Placeholder example"></vscode-inputbox>
               <vscode-form-helper>
                 <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
                 <ul>
@@ -56,13 +56,13 @@
               <vscode-label for="inputbox-02" side-aligned="end">
                 Dolor sit:
               </vscode-label>
-              <vscode-inputbox id="inputbox-02" multiline></vscode-inputbox>
+              <vscode-inputbox id="inputbox-02" multiline name="input-2"></vscode-inputbox>
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="select-01" side-aligned="end">
                 <span class="lightened">Duis eget</span> erat accumsan:
               </vscode-label>
-              <vscode-single-select id="select-01">
+              <vscode-single-select id="select-01" name="select-1">
                 <vscode-option>Lorem</vscode-option>
                 <vscode-option>Ipsum</vscode-option>
                 <vscode-option>Dolor</vscode-option>
@@ -72,7 +72,7 @@
               <vscode-label for="select-02" side-aligned="end">
                 <span class="lightened">Duis eget</span> erat accumsan:
               </vscode-label>
-              <vscode-multi-select id="select-02">
+              <vscode-multi-select id="select-02" name="select-2">
                 <vscode-option>Lorem</vscode-option>
                 <vscode-option>Ipsum</vscode-option>
                 <vscode-option>Dolor</vscode-option>
@@ -83,9 +83,9 @@
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-checkbox-group>
-                <vscode-checkbox id="checkbox-01" label="Lorem ipsum"></vscode-checkbox>
-                <vscode-checkbox id="checkbox-02" label="Donec mi risus"></vscode-checkbox>
-                <vscode-checkbox id="checkbox-03">Duis <a href="#">ullamcorper</a></vscode-checkbox>
+                <vscode-checkbox id="checkbox-01" name="checkbox-group-1" value="lorem" label="Lorem ipsum"></vscode-checkbox>
+                <vscode-checkbox id="checkbox-02" name="checkbox-group-1" value="ipsum" label="Donec mi risus"></vscode-checkbox>
+                <vscode-checkbox id="checkbox-03" name="checkbox-group-1" value="dolor">Duis <a href="#">ullamcorper</a></vscode-checkbox>
               </vscode-checkbox-group>
             </vscode-form-group>
             <vscode-form-group>
@@ -93,9 +93,9 @@
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-checkbox-group vertical>
-                <vscode-checkbox id="checkbox-04">Lorem ipsum</vscode-checkbox>
-                <vscode-checkbox id="checkbox-05">Donec mi risus</vscode-checkbox>
-                <vscode-checkbox id="checkbox-06">Nullam tincidunt eros sit amet sollicitudin pharetra. Ut quis rutrum enim, non finibus odio. Morbi tempus lacus neque, eget rutrum sapien porttitor vitae. Vivamus placerat nisl eu turpis tristique, eu consectetur libero finibus. Duis vitae orci at risus ultrices gravida. Ut vitae nulla velit. Mauris sed enim eleifend, euismod tortor vitae, vehicula odio.</vscode-checkbox>
+                <vscode-checkbox id="checkbox-04" name="checkbox-group-2" value="sit">Lorem ipsum</vscode-checkbox>
+                <vscode-checkbox id="checkbox-05" name="checkbox-group-2" value="et">Donec mi risus</vscode-checkbox>
+                <vscode-checkbox id="checkbox-06" name="checkbox-group-2" value="amur">Nullam tincidunt eros sit amet sollicitudin pharetra. Ut quis rutrum enim, non finibus odio. Morbi tempus lacus neque, eget rutrum sapien porttitor vitae. Vivamus placerat nisl eu turpis tristique, eu consectetur libero finibus. Duis vitae orci at risus ultrices gravida. Ut vitae nulla velit. Mauris sed enim eleifend, euismod tortor vitae, vehicula odio.</vscode-checkbox>
               </vscode-checkbox-group>
             </vscode-form-group>
             <vscode-form-group>
@@ -103,9 +103,9 @@
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-radio-group>
-                <vscode-radio id="radio-01" name="radio-example">Lorem ipsum</vscode-radio>
-                <vscode-radio id="radio-02" name="radio-example">Donec mi risus</vscode-radio>
-                <vscode-radio id="radio-03" name="radio-example">Duis <a href="#">ullamcorper</a></vscode-radio>
+                <vscode-radio id="radio-01" name="radio-group-1" value="lorem">Lorem ipsum</vscode-radio>
+                <vscode-radio id="radio-02" name="radio-group-1" value="ipsum">Donec mi risus</vscode-radio>
+                <vscode-radio id="radio-03" name="radio-group-1" value="dolor">Duis <a href="#">ullamcorper</a></vscode-radio>
               </vscode-radio-group>
             </vscode-form-group>
             <vscode-form-group>
@@ -113,16 +113,24 @@
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-radio-group vertical>
-                <vscode-radio id="radio-04" name="radio-example-2">Lorem ipsum</vscode-radio>
-                <vscode-radio id="radio-05" name="radio-example-2">Donec mi risus</vscode-radio>
-                <vscode-radio id="radio-06" name="radio-example-2">Duis ullamcorper</vscode-radio>
+                <vscode-radio id="radio-04" name="radio-group-2" value="sit">Lorem ipsum</vscode-radio>
+                <vscode-radio id="radio-05" name="radio-group-2" value="et">Donec mi risus</vscode-radio>
+                <vscode-radio id="radio-06" name="radio-group-2" value="amur">Duis ullamcorper</vscode-radio>
               </vscode-radio-group>
             </vscode-form-group>
             <vscode-form-group>
-              <vscode-button>Save</vscode-button>
+              <vscode-button id="save-button">Save</vscode-button>
               <vscode-button secondary>Cancel</vscode-button>
             </vscode-form-group>
           </vscode-form-container>
+          <script type="module">
+            const fr = document.getElementById('responsive-form');
+            const bt = document.getElementById('save-button');
+
+            bt.addEventListener('click', () => {
+              console.log(fr.data);
+            });
+          </script>
         </component-preview>
       </div>
     </div>
@@ -345,9 +353,12 @@
         <form action="#">
           <label for="tf-1">Textfield 1</label>
           <input type="text" placeholder="Textfield 1">
-          <input type="radio" name="radio-example" id="rb-1"><label for="rb-1">option 1</label><br>
-          <input type="radio" name="radio-example" id="rb-2"><label for="rb-2">option 2</label><br>
-          <input type="radio" name="radio-example" id="rb-3"><label for="rb-3">option 3</label><br>
+          <input type="radio" name="radio-example" id="rb-1" value="op1"><label for="rb-1">option 1</label><br>
+          <input type="radio" name="radio-example" id="rb-2" value="op2"><label for="rb-2">option 2</label><br>
+          <input type="radio" name="radio-example" id="rb-3" value="op3"><label for="rb-3">option 3</label><br>
+          <input type="checkbox" name="checkbox-example" id="cb-1" value="op1"><label for="cb-1">option 1</label><br>
+          <input type="checkbox" name="checkbox-example" id="cb-2" value="op2"><label for="cb-2">option 2</label><br>
+          <input type="checkbox" name="checkbox-example" id="cb-3" value="op3"><label for="cb-3">option 3</label><br>
         </form>
       </div>
     </div>
