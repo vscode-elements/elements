@@ -168,10 +168,6 @@ export class VscodeInputbox extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.resizeTextareaIfRequired();
-
-    this.addEventListener('focus', () => {
-      console.log('focus', this.shadowRoot?.querySelector('input')?.focus());
-    });
   }
 
   updated(
