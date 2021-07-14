@@ -11,7 +11,7 @@ component: vscode-radio-group
 
 ## Properties
 
-| Property   | Attribute  | Type      | Default |
-|------------|------------|-----------|---------|
-| `inline`   | `inline`   | `boolean` | false   |
-| `vertical` | `vertical` | `boolean` | false   |
+| Property  | Attribute | Type                         | Default      |
+|-----------|-----------|------------------------------|--------------|
+| `inline`  | `inline`  | `boolean`                    | false        |
+| `variant` | `variant` | `"horizontal" | "vertical"` | "horizontal" |

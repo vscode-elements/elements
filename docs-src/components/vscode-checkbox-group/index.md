@@ -42,7 +42,7 @@ import {
 ## Vertical group
 
 <component-preview>
-  <vscode-checkbox-group vertical>
+  <vscode-checkbox-group variant="vertical">
     <vscode-checkbox label="Lorem"></vscode-checkbox>
     <vscode-checkbox label="Ipsum"></vscode-checkbox>
     <vscode-checkbox label="Dolor"></vscode-checkbox>
@@ -52,7 +52,7 @@ import {
 ### HTML
 
 ```html
-<vscode-checkbox-group vertical>
+<vscode-checkbox-group variant="vertical">
   <vscode-checkbox label="Lorem"></vscode-checkbox>
   <vscode-checkbox label="Ipsum"></vscode-checkbox>
   <vscode-checkbox label="Dolor"></vscode-checkbox>

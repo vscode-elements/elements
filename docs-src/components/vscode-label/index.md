@@ -1,38 +1,14 @@
 ---
 layout: component.njk
-title: VscodeLabel
+title: Label
 tags: component
 component: vscode-label
 ---
 
-# vscode-label
-
-<style>
-  vscode-label p {
-    border: solid 1px blue;
-    padding: 8px;
-  }
-</style>
+# VscodeLabel
 
 <component-preview>
-  <vscode-label>
-    <p>This is child content</p>
+  <vscode-label for="select-01" side-aligned="end">
+    <span class="lightened">Editor:</span> Font Size
   </vscode-label>
 </component-preview>
-
-### CSS
-
-```css
-p {
-  border: solid 1px blue;
-  padding: 8px;
-}
-```
-
-### HTML
-
-```html
-<vscode-label>
-  <p>This is child content</p>
-</vscode-label>
-```

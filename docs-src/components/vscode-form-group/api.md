@@ -11,7 +11,6 @@ component: vscode-form-group
 
 ## Properties
 
-| Property   | Attribute  | Type      | Default |
-|------------|------------|-----------|---------|
-| `inline`   | `inline`   | `boolean` | false   |
-| `vertical` | `vertical` | `boolean` | false   |
+| Property  | Attribute | Type               | Default      |
+|-----------|-----------|--------------------|--------------|
+| `variant` | `variant` | `FormGroupVariant` | "horizontal" |

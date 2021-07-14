@@ -22,7 +22,7 @@ import { VscodeFormContainer } '@bendera/vscode-webview-elements';
 
 <component-preview>
   <vscode-form-container>
-    <vscode-form-group vertical>
+    <vscode-form-group>
       <vscode-label for="basic-inputbox-01">
         Lorem <span class="normal">ipsum</span>:
       </vscode-label>
@@ -42,7 +42,7 @@ import { VscodeFormContainer } '@bendera/vscode-webview-elements';
 
 ```html
 <vscode-form-container>
-  <vscode-form-group vertical>
+  <vscode-form-group>
     <vscode-label for="basic-inputbox-01">
       Lorem <span class="normal">ipsum</span>:
     </vscode-label>
@@ -64,8 +64,8 @@ Try to resize the browser window. The children elements will be resized to the c
 
 <component-preview>
   <vscode-form-container responsive breakpoint="500">
-    <vscode-form-group vertical>
-      <vscode-label for="responsive-inputbox-01" side-aligned="end">
+    <vscode-form-group>
+      <vscode-label for="responsive-inputbox-01">
         Lorem <span class="normal">ipsum</span>:
       </vscode-label>
       <vscode-inputbox id="responsive-inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
@@ -84,8 +84,8 @@ Try to resize the browser window. The children elements will be resized to the c
 
 ```html
 <vscode-form-container responsive breakpoint="500">
-  <vscode-form-group vertical>
-    <vscode-label for="responsive-inputbox-01" side-aligned="end">
+  <vscode-form-group>
+    <vscode-label for="responsive-inputbox-01">
       Lorem <span class="normal">ipsum</span>:
     </vscode-label>
     <vscode-inputbox id="responsive-inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
@@ -107,7 +107,7 @@ Click on the "save" button and check the developer console.
 <component-preview>
   <vscode-form-container id="form-data-example">
     <vscode-form-group>
-      <vscode-label for="data-example-inputbox" side-aligned="end">
+      <vscode-label for="data-example-inputbox">
         Lorem <span class="normal">ipsum</span>:
       </vscode-label>
       <vscode-inputbox id="data-example-inputbox" name="data-example-inputbox" placeholder="Placeholder example"></vscode-inputbox>
@@ -116,7 +116,7 @@ Click on the "save" button and check the developer console.
       </vscode-form-helper>
     </vscode-form-group>
     <vscode-form-group>
-      <vscode-label for="data-example-single-select" side-aligned="end">
+      <vscode-label for="data-example-single-select">
         <span class="lightened">Duis eget</span> erat accumsan:
       </vscode-label>
       <vscode-single-select id="data-example-single-select" name="data-example-single-select">
@@ -126,7 +126,7 @@ Click on the "save" button and check the developer console.
       </vscode-single-select>
     </vscode-form-group>
     <vscode-form-group>
-      <vscode-label for="data-example-multi-select" side-aligned="end">
+      <vscode-label for="data-example-multi-select">
         <span class="lightened">Duis eget</span> erat accumsan:
       </vscode-label>
       <vscode-multi-select id="data-example-multi-select" name="data-example-multi-select">
@@ -136,7 +136,7 @@ Click on the "save" button and check the developer console.
       </vscode-multi-select>
     </vscode-form-group>
     <vscode-form-group>
-      <vscode-label for="data-example-checkbox-1" side-aligned="end">
+      <vscode-label for="data-example-checkbox-1">
         Phasellus quam arcu:
       </vscode-label>
       <vscode-checkbox-group>
@@ -146,7 +146,7 @@ Click on the "save" button and check the developer console.
       </vscode-checkbox-group>
     </vscode-form-group>
     <vscode-form-group>
-      <vscode-label for="data-example-radio-1" side-aligned="end">
+      <vscode-label for="data-example-radio-1">
         Phasellus quam arcu:
       </vscode-label>
       <vscode-radio-group>
@@ -176,7 +176,7 @@ Click on the "save" button and check the developer console.
 ```html
 <vscode-form-container id="form-data-example">
   <vscode-form-group>
-    <vscode-label for="data-example-inputbox" side-aligned="end">
+    <vscode-label for="data-example-inputbox">
       Lorem <span class="normal">ipsum</span>:
     </vscode-label>
     <vscode-inputbox id="data-example-inputbox" name="data-example-inputbox" placeholder="Placeholder example"></vscode-inputbox>
@@ -185,7 +185,7 @@ Click on the "save" button and check the developer console.
     </vscode-form-helper>
   </vscode-form-group>
   <vscode-form-group>
-    <vscode-label for="data-example-single-select" side-aligned="end">
+    <vscode-label for="data-example-single-select">
       <span class="lightened">Duis eget</span> erat accumsan:
     </vscode-label>
     <vscode-single-select id="data-example-single-select" name="data-example-single-select">
@@ -195,7 +195,7 @@ Click on the "save" button and check the developer console.
     </vscode-single-select>
   </vscode-form-group>
   <vscode-form-group>
-    <vscode-label for="data-example-multi-select" side-aligned="end">
+    <vscode-label for="data-example-multi-select">
       <span class="lightened">Duis eget</span> erat accumsan:
     </vscode-label>
     <vscode-multi-select id="data-example-multi-select" name="data-example-multi-select">
@@ -205,7 +205,7 @@ Click on the "save" button and check the developer console.
     </vscode-multi-select>
   </vscode-form-group>
   <vscode-form-group>
-    <vscode-label for="data-example-checkbox-1" side-aligned="end">
+    <vscode-label for="data-example-checkbox-1">
       Phasellus quam arcu:
     </vscode-label>
     <vscode-checkbox-group>
@@ -215,7 +215,7 @@ Click on the "save" button and check the developer console.
     </vscode-checkbox-group>
   </vscode-form-group>
   <vscode-form-group>
-    <vscode-label for="data-example-radio-1" side-aligned="end">
+    <vscode-label for="data-example-radio-1">
       Phasellus quam arcu:
     </vscode-label>
     <vscode-radio-group>
