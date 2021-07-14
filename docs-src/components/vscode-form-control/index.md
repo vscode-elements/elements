@@ -3,6 +3,7 @@ layout: component.njk
 title: FormControl
 tags: component
 component: vscode-form-control
+deprecated: true
 ---
 
 # VscodeFormControl

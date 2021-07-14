@@ -3,6 +3,7 @@ layout: component.njk
 title: FormDescription
 tags: component
 component: vscode-form-description
+deprecated: true
 ---
 
 # VscodeFormDescription

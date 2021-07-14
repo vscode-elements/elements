@@ -3,6 +3,7 @@ layout: component.njk
 title: FormLabel
 tags: component
 component: vscode-form-label
+deprecated: true
 ---
 
 # VscodeFormLabel

@@ -53,7 +53,7 @@
               <ul>
                 {%- for cmp in collections.component -%}
                   <li>
-                    <a href="{{ cmp.url | url }}"{% if page.url == cmp.url or page.url == cmp.url + 'api/' %} aria-current="page" class="current"{% endif %}>{{ cmp.data.title }}</a>
+                    <a href="{{ cmp.url | url }}"{% if page.url == cmp.url or page.url == cmp.url + 'api/' %} aria-current="page" class="current"{% endif %}>{{ cmp.data.title }}{% if cmp.data.deprecated %}<span class="warning" title="Deprecated">⚠</span>{% endif %}</a>
                   </li>
                 {%- endfor -%}
               </ul>
@@ -64,6 +64,11 @@
       <div class="main-content">
         <div class="page">
           {% block subnav %}{% endblock %}
+          {% if deprecated %}
+            <div class="deprecated-message">
+              <p>Warning! This component is deprecated and will be removed in the next release.</p>
+            </div>
+          {% endif %}
           {{ content | safe }}
         </div>
         <p class="last-modified">Last modified: {{ page.date.toUTCString() }}</p>

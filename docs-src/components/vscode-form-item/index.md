@@ -3,6 +3,7 @@ layout: component.njk
 title: FormItem
 tags: component
 component: vscode-form-item
+deprecated: true
 ---
 
 # VscodeFormItem
