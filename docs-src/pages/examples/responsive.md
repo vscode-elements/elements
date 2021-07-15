@@ -7,8 +7,8 @@ weight: 1
 
 # Responsive form
 
- <component-preview>
-  <vscode-form-container responsive id="responsive-form">
+<component-preview>
+  <vscode-form-container responsive id="example-form">
     <vscode-form-group>
       <vscode-label for="inputbox-01">
         Lorem <span class="normal">ipsum</span>:
@@ -95,11 +95,22 @@ weight: 1
     </vscode-form-group>
   </vscode-form-container>
 </component-preview>
+<button class="form-data-button">Show form data</button>
+<pre class="form-data-log"></pre>
+
+<script type="module">
+  const log = document.querySelector('.form-data-log');
+  const button = document.querySelector('.form-data-button');
+
+  button.addEventListener('click', () => {
+    log.innerHTML = JSON.stringify(document.querySelector('#example-form').data, null, 2);
+  });
+</script>
 
 ## HTML
 
 ```html
-<vscode-form-container responsive id="responsive-form">
+<vscode-form-container responsive id="example-form">
   <vscode-form-group>
     <vscode-label for="inputbox-01">
       Lorem <span class="normal">ipsum</span>:
@@ -185,4 +196,18 @@ weight: 1
     <vscode-button secondary>Cancel</vscode-button>
   </vscode-form-group>
 </vscode-form-container>
+
+<button class="form-data-button">Show form data</button>
+<pre class="form-data-log"></pre>
+```
+
+## JavaScript
+
+```javascript
+const log = document.querySelector('.form-data-log');
+const button = document.querySelector('.form-data-button');
+
+button.addEventListener('click', () => {
+  log.innerHTML = JSON.stringify(document.querySelector('#example-form').data, null, 2);
+});
 ```

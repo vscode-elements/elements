@@ -9,6 +9,12 @@ component: vscode-inputbox
 
 # VscodeInputbox
 
+## Attributes
+
+| Attribute | Type             | Description      |
+|-----------|------------------|------------------|
+| `variant` | `narrow | wide` | Predefined sizes |
+
 ## Properties
 
 | Property       | Attribute     | Modifiers | Type                                             | Default     | Description           |

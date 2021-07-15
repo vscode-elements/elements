@@ -38,8 +38,9 @@
       <div class="story-content">
         <component-preview>
           <vscode-form-container responsive id="responsive-form">
+
             <vscode-form-group>
-              <vscode-label for="inputbox-01" side-aligned="end">
+              <vscode-label for="inputbox-01">
                 Lorem <span class="normal">ipsum</span>:
               </vscode-label>
               <vscode-inputbox id="inputbox-01" name="input-1" placeholder="Placeholder example"></vscode-inputbox>
@@ -52,14 +53,16 @@
                 </ul>
               </vscode-form-helper>
             </vscode-form-group>
+
             <vscode-form-group>
-              <vscode-label for="inputbox-02" side-aligned="end">
+              <vscode-label for="inputbox-02">
                 Dolor sit:
               </vscode-label>
               <vscode-inputbox id="inputbox-02" multiline name="input-2"></vscode-inputbox>
             </vscode-form-group>
+
             <vscode-form-group>
-              <vscode-label for="select-01" side-aligned="end">
+              <vscode-label for="select-01">
                 <span class="lightened">Duis eget</span> erat accumsan:
               </vscode-label>
               <vscode-single-select id="select-01" name="select-1">
@@ -68,8 +71,9 @@
                 <vscode-option>Dolor</vscode-option>
               </vscode-single-select>
             </vscode-form-group>
+
             <vscode-form-group>
-              <vscode-label for="select-02" side-aligned="end">
+              <vscode-label for="select-02">
                 <span class="lightened">Duis eget</span> erat accumsan:
               </vscode-label>
               <vscode-multi-select id="select-02" name="select-2">
@@ -78,8 +82,9 @@
                 <vscode-option>Dolor</vscode-option>
               </vscode-multi-select>
             </vscode-form-group>
+
             <vscode-form-group>
-              <vscode-label for="checkbox-01" side-aligned="end">
+              <vscode-label for="checkbox-01">
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-checkbox-group>
@@ -88,18 +93,20 @@
                 <vscode-checkbox id="checkbox-03" name="checkbox-group-1" value="dolor">Duis <a href="#">ullamcorper</a></vscode-checkbox>
               </vscode-checkbox-group>
             </vscode-form-group>
+
             <vscode-form-group>
-              <vscode-label for="checkbox-04" side-aligned="end">
+              <vscode-label for="checkbox-04">
                 Phasellus quam arcu:
               </vscode-label>
-              <vscode-checkbox-group vertical>
+              <vscode-checkbox-group variant="vertical">
                 <vscode-checkbox id="checkbox-04" name="checkbox-group-2" value="sit">Lorem ipsum</vscode-checkbox>
                 <vscode-checkbox id="checkbox-05" name="checkbox-group-2" value="et">Donec mi risus</vscode-checkbox>
                 <vscode-checkbox id="checkbox-06" name="checkbox-group-2" value="amur">Nullam tincidunt eros sit amet sollicitudin pharetra. Ut quis rutrum enim, non finibus odio. Morbi tempus lacus neque, eget rutrum sapien porttitor vitae. Vivamus placerat nisl eu turpis tristique, eu consectetur libero finibus. Duis vitae orci at risus ultrices gravida. Ut vitae nulla velit. Mauris sed enim eleifend, euismod tortor vitae, vehicula odio.</vscode-checkbox>
               </vscode-checkbox-group>
             </vscode-form-group>
+
             <vscode-form-group>
-              <vscode-label for="radio-01" side-aligned="end">
+              <vscode-label for="radio-01">
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-radio-group>
@@ -108,30 +115,35 @@
                 <vscode-radio id="radio-03" name="radio-group-1" value="dolor">Duis <a href="#">ullamcorper</a></vscode-radio>
               </vscode-radio-group>
             </vscode-form-group>
+
             <vscode-form-group>
-              <vscode-label for="radio-04" side-aligned="end">
+              <vscode-label for="radio-04">
                 Phasellus quam arcu:
               </vscode-label>
-              <vscode-radio-group vertical>
+              <vscode-radio-group variant="vertical">
                 <vscode-radio id="radio-04" name="radio-group-2" value="sit">Lorem ipsum</vscode-radio>
                 <vscode-radio id="radio-05" name="radio-group-2" value="et">Donec mi risus</vscode-radio>
                 <vscode-radio id="radio-06" name="radio-group-2" value="amur">Duis ullamcorper</vscode-radio>
               </vscode-radio-group>
             </vscode-form-group>
+
             <vscode-form-group>
               <vscode-button id="save-button">Save</vscode-button>
               <vscode-button secondary>Cancel</vscode-button>
             </vscode-form-group>
-          </vscode-form-container>
-          <script type="module">
-            const fr = document.getElementById('responsive-form');
-            const bt = document.getElementById('save-button');
 
-            bt.addEventListener('click', () => {
-              console.log(fr.data);
-            });
-          </script>
+          </vscode-form-container>
         </component-preview>
+        <button class="form-data-button">Show form data</button>
+        <pre class="form-data-log"></pre>
+        <script type="module">
+          const log = document.querySelector('.form-data-log');
+          const button = document.querySelector('.form-data-button');
+
+          button.addEventListener('click', () => {
+            log.innerHTML = JSON.stringify(document.querySelector('#responsive-form').data, null, 2);
+          });
+        </script>
       </div>
     </div>
     <div class="story">
@@ -245,47 +257,51 @@
               margin-left: auto;
             }
           </style>
-          <div class="log-settings-row">
-            <vscode-label for="select-container" class="label">Container:</vscode-label>
-            <vscode-single-select id="select-container" class="select select-container">
-              <vscode-option>nginx-container</vscode-option>
-              <vscode-option>redis-container</vscode-option>
-            </vscode-single-select>
+          <vscode-form-container>
+            <div class="log-settings-row">
+              <vscode-label for="select-container" class="label">Container:</vscode-label>
+              <vscode-single-select id="select-container" class="select select-container">
+                <vscode-option>nginx-container</vscode-option>
+                <vscode-option>redis-container</vscode-option>
+              </vscode-single-select>
 
-            <vscode-label for="checkbox-follow-logs" class="label">Follow Logs:</vscode-label>
-            <vscode-checkbox label="" id="checkbox-follow-logs" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-follow-logs" class="label">Follow Logs:</vscode-label>
+              <vscode-checkbox label="" id="checkbox-follow-logs" class="checkbox"></vscode-checkbox>
 
-            <vscode-label for="checkbox-show-timestamp" class="label">Show timestamp:</vscode-label>
-            <vscode-checkbox label="" id="checkbox-show-timestamp" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-show-timestamp" class="label">Show timestamp:</vscode-label>
+              <vscode-checkbox label="" id="checkbox-show-timestamp" class="checkbox"></vscode-checkbox>
 
-            <vscode-label for="input-since" class="label">Since:</vscode-label>
-            <vscode-inputbox value="0" id="input-since" class="input input-since"></vscode-inputbox>
-            <vscode-single-select class="select select-since">
-              <vscode-option>minutes</vscode-option>
-              <vscode-option>hours</vscode-option>
-            </vscode-single-select>
+              <vscode-label for="input-since" class="label">Since:</vscode-label>
+              <vscode-inputbox value="0" id="input-since" class="input input-since"></vscode-inputbox>
+              <vscode-single-select class="select select-since">
+                <vscode-option>minutes</vscode-option>
+                <vscode-option>hours</vscode-option>
+              </vscode-single-select>
 
-            <vscode-label for="input-tail" class="label">Tail:</vscode-label>
-            <vscode-inputbox value="-1" id="input-tail" class="input input-tail"></vscode-inputbox>
+              <vscode-label for="input-tail" class="label">Tail:</vscode-label>
+              <vscode-inputbox value="-1" id="input-tail" class="input input-tail"></vscode-inputbox>
 
-            <vscode-label for="checkbox-to-terminal" class="label">To terminal:</vscode-label>
-            <vscode-checkbox id="checkbox-to-terminal" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-to-terminal" class="label">To terminal:</vscode-label>
+              <vscode-checkbox id="checkbox-to-terminal" class="checkbox"></vscode-checkbox>
 
-            <vscode-button class="button-run">Run</vscode-button>
-            <vscode-button>Reset</vscode-button>
-          </div>
-          <div class="log-settings-row">
-            <vscode-label for="select-filter" class="label">Filter:</vscode-label>
-            <vscode-single-select id="select-filter" class="select select-filter">
-              <vscode-option>all</vscode-option>
-            </vscode-single-select>
-            <vscode-inputbox placeholder="Enter your keywords" class="input input-keywords"></vscode-inputbox>
+              <div>
+                <vscode-button class="button-run">Run</vscode-button>
+                <vscode-button>Reset</vscode-button>
+              </div>
+            </div>
+            <div class="log-settings-row">
+              <vscode-label for="select-filter" class="label">Filter:</vscode-label>
+              <vscode-single-select id="select-filter" class="select select-filter">
+                <vscode-option>all</vscode-option>
+              </vscode-single-select>
+              <vscode-inputbox placeholder="Enter your keywords" class="input input-keywords"></vscode-inputbox>
 
-            <vscode-label for="checkbox-wrap-lines" class="label">Wrap lines:</vscode-label>
-            <vscode-checkbox id="checkbox-wrap-lines" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-wrap-lines" class="label">Wrap lines:</vscode-label>
+              <vscode-checkbox id="checkbox-wrap-lines" class="checkbox"></vscode-checkbox>
 
-            <vscode-button class="button-scroll">Scroll To Bottom</vscode-button>
-          </div>
+              <vscode-button class="button-scroll">Scroll To Bottom</vscode-button>
+            </div>
+          </vscode-form-container>
         </component-preview>
       </div>
     </div>
