@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Unreleased
+## [0.4.0] - 2021-07-15
+
+### Added
+
+- Added new components: FormContainer, FormGroup, FromHelper, Label, Radio, RadioGrop, CheckboxGroup.
+
+### Fixed
+
+- Theme variable names are readjusted in the Tree, SingleSelect and MultiSelect components.
+- Button outline styles has been restored.
+
+### Deprecated
+
+- The following components will be removed: FormControl, FormDescription, FormItem, FormLabel. Use the new form components instead.
 
 ## [0.3.1] - 2021-06-12
 
