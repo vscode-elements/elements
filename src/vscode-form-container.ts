@@ -163,11 +163,7 @@ export class VscodeFormContainer extends LitElement {
 
       widgetGroups.forEach((widgetGroup) => {
         if (!widgetGroup.dataset.originalVariant) {
-          widgetGroup.dataset.originalVariant = widgetGroup.hasAttribute(
-            'vertical'
-          )
-            ? FormGroupLayout.VERTICAL
-            : FormGroupLayout.HORIZONTAL;
+          widgetGroup.dataset.originalVariant = widgetGroup.variant;
         }
 
         const originalVariant = widgetGroup.dataset.originalVariant;
