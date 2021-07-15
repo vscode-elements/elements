@@ -15,7 +15,7 @@ toc:
 # VscodeFormContainer
 
 ```typescript
-import { VscodeFormContainer } '@bendera/vscode-webview-elements';
+import '@bendera/vscode-webview-elements/dist/vscode-form-container';
 ```
 
 ## Basic form

@@ -8,7 +8,7 @@ component: vscode-radio
 # VscodeRadio
 
 ```typescript
-import { VscodeRadio } from '@bendera/vscode-webview-elements';
+import '@bendera/vscode-webview-elements/dist/vscode-radio';
 ```
 
 ## Basic example

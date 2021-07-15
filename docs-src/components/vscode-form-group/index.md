@@ -7,6 +7,10 @@ component: vscode-form-group
 
 # VscodeFormGroup
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-form-group';
+```
+
 ## Basic example
 
 Form group is a container component to organize the form widgets. It applies 

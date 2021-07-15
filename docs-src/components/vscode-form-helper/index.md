@@ -7,6 +7,10 @@ component: vscode-form-helper
 
 # VscodeFormHelper
 
+```typescript
+import '@bendera/vscode-webview-elements/dist/vscode-form-helper';
+```
+
 ## Example
 
 <component-preview>

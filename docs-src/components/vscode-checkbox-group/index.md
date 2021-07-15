@@ -13,10 +13,7 @@ toc:
 # VscodeCheckboxGroup
 
 ```typescript
-import { 
-  VscodeCheckbox, 
-  VscodeCheckboxGroup 
-} '@bendera/vscode-webview-elements';
+import '@bendera/vscode-webview-elements/dist/vscode-checkbox-group';
 ```
 
 ## Horizontal group

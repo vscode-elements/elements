@@ -13,10 +13,7 @@ toc:
 # VscodeRadioGroup
 
 ```typescript
-import { 
-  VscodeRadio, 
-  VscodeRadioGroup 
-} '@bendera/vscode-webview-elements';
+import '@bendera/vscode-webview-elements/dist/vscode-radio-group';
 ```
 
 ## Horizontal group
