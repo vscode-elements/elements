@@ -22,7 +22,7 @@ enum FormGroupLayout {
   VERTICAL = 'vertical',
 }
 
-type FormButtonWidgetGroup = VscodeRadioGroup | VscodeCheckboxGroup;
+type CheckboxOrRadioGroup = VscodeRadioGroup | VscodeCheckboxGroup;
 
 type VscFormWidget =
   | VscodeInputbox
@@ -78,6 +78,24 @@ export class VscodeFormContainer extends LitElement {
 
   @property({type: Object})
   get data(): FormData {
+    return this._collectFormData();
+  }
+
+  private _resizeObserver!: ResizeObserver | null;
+
+  @query('.wrapper')
+  private _wrapperElement!: Element;
+
+  @queryAssignedNodes()
+  private _assignedNodes!: VscodeFormGroup[];
+
+  private _responsive = false;
+
+  private _firstUpdateComplete = false;
+
+  private _currentFormGroupLayout!: FormGroupLayout;
+
+  private _collectFormData() {
     const query = [
       'vscode-inputbox',
       'vscode-single-select',
@@ -125,26 +143,12 @@ export class VscodeFormContainer extends LitElement {
     return data;
   }
 
-  private _resizeObserver!: ResizeObserver | null;
-
-  @query('.wrapper')
-  private _wrapperElement!: Element;
-
-  @queryAssignedNodes()
-  private _assignedNodes!: VscodeFormGroup[];
-
-  private _responsive = false;
-
-  private _firstUpdateComplete = false;
-
-  private _currentFormGroupLayout!: FormGroupLayout;
-
   private _toggleCompactLayout(layout: FormGroupLayout) {
-    const groups = this._assignedNodes.filter(
+    const formGroups = this._assignedNodes.filter(
       (el) => el.matches && el.matches('vscode-form-group')
     );
 
-    groups.forEach((group) => {
+    formGroups.forEach((group) => {
       if (!group.dataset.originalVariant) {
         group.dataset.originalVariant = group.variant;
       }
@@ -157,11 +161,11 @@ export class VscodeFormContainer extends LitElement {
         group.variant = oVariant;
       }
 
-      const widgetGroups = group.querySelectorAll(
+      const checkboxOrRadioGroup = group.querySelectorAll(
         'vscode-checkbox-group, vscode-radio-group'
-      ) as NodeListOf<FormButtonWidgetGroup>;
+      ) as NodeListOf<CheckboxOrRadioGroup>;
 
-      widgetGroups.forEach((widgetGroup) => {
+      checkboxOrRadioGroup.forEach((widgetGroup) => {
         if (!widgetGroup.dataset.originalVariant) {
           widgetGroup.dataset.originalVariant = widgetGroup.variant;
         }
