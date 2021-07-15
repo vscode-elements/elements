@@ -13,9 +13,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inputbox &ndash; VSCode Webview Elements</title>
-  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-dark-theme.css">
-  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-high-contrast-theme.css">
-  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/default-light-theme.css">
   <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/preview-styles.css">
   <link rel="stylesheet" href="/vscode-webview-elements/codicon.css" id="vscode-codicon-stylesheet">
   <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
@@ -24,74 +21,123 @@
   <script type="module" src="/vscode-webview-elements/bundled.js"></script>
 </head>
 <body class="vscode-light">
-  <div class="content-wrapper">
-    <header class="page-header">
+  <header class="page-header">
+    <div class="content-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
-      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.3.1</span>
-    </header>
-    <aside class="sidebar">
-      <nav class="main-nav">
-        <ul>
-          <li><a href="/vscode-webview-elements/pages/getting-started">Getting Started</a></li>
-          <li>
-            <a href="/vscode-webview-elements/components">Components</a>
-            <ul><li>
-                  <a href="/vscode-webview-elements/components/vscode-button/">Button</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-checkbox/">Checkbox</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-collapsible/">Collapsible</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-context-menu/">ContextMenu</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-context-menu-item/">ContextMenuItem</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-form-control/">FormControl</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-form-description/">FormDescription</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-form-item/">FormItem</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-form-label/">FormLabel</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-icon/">Icon</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-inputbox/" aria-current="page" class="current">Inputbox</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-multi-select/">MultiSelect</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-scrollable/">Scrollable</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-single-select/">SingleSelect</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-tabs/">Tabs</a>
-                </li><li>
-                  <a href="/vscode-webview-elements/components/vscode-tree/">Tree</a>
-                </li></ul>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-    <div class="main-content">
-      <div class="page">
-        
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.4.0</span>
+      
+    </div>
+  </header>
+  <div class="content-wrapper">
+    <div class="page-content" id="top">
+      <aside class="sidebar">
+        <nav class="main-nav">
+          <ul>
+            <li><a href="/vscode-webview-elements/pages/getting-started">Getting Started</a></li>
+            <li>
+              <a href="/vscode-webview-elements/pages/examples">Examples</a>
+              <ul><li>
+                    <a href="/vscode-webview-elements/pages/examples/responsive/">Responsive form</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/pages/examples/settings-page/">Settings page</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/pages/examples/inline-1/">Inline form example 1</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/pages/examples/inline-2/">Inline form example 2</a>
+                  </li></ul>
+            </li>
+            <li>
+              <a href="/vscode-webview-elements/components">Components</a>
+              <ul><li>
+                    <a href="/vscode-webview-elements/components/vscode-button/">Button</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-checkbox/">Checkbox</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-checkbox-group/">CheckboxGroup</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-collapsible/">Collapsible</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-context-menu/">ContextMenu</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-context-menu-item/">ContextMenuItem</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-form-container/">FormContainer</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-form-control/">FormControl<span class="warning" title="Deprecated">⚠</span></a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-form-description/">FormDescription<span class="warning" title="Deprecated">⚠</span></a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-form-group/">FormGroup</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-form-helper/">FormHelper</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-form-item/">FormItem<span class="warning" title="Deprecated">⚠</span></a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-form-label/">FormLabel<span class="warning" title="Deprecated">⚠</span></a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-icon/">Icon</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-inputbox/" aria-current="page" class="current">Inputbox</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-label/">Label</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-multi-select/">MultiSelect</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-radio/">Radio</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-radio-group/">RadioGroup</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-scrollable/">Scrollable</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-single-select/">SingleSelect</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-tabs/">Tabs</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-tree/">Tree</a>
+                  </li></ul>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <div class="main-content">
+        <div class="page">
+          
 <ul class="sub-nav">
   <li><a href="/vscode-webview-elements/components/vscode-inputbox/" >Examples</a></li>
   <li><a href="/vscode-webview-elements/components/vscode-inputbox/api" class="current">API</a></li>
 </ul>
 
-        <!-- This file is auto-generated. Do not edit! -->
-<h1>vscode-inputbox</h1>
-<h2>Properties</h2>
+          
+          <!-- This file is auto-generated. Do not edit! -->
+<h1><a id="vscodeinputbox" class="anchor" href="#vscodeinputbox" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>VscodeInputbox</h1>
+<h2><a id="attributes" class="anchor" href="#attributes" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Attributes</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>variant</code></td>
+<td>`narrow</td>
+<td>wide`</td>
+</tr>
+</tbody>
+</table>
+<h2><a id="properties" class="anchor" href="#properties" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Properties</h2>
 <table>
 <thead>
 <tr>
 <th>Property</th>
 <th>Attribute</th>
+<th>Modifiers</th>
 <th>Type</th>
 <th>Default</th>
 <th>Description</th>
@@ -99,15 +145,33 @@
 </thead>
 <tbody>
 <tr>
+<td><code>focusElement</code></td>
+<td></td>
+<td>readonly</td>
+<td>`HTMLInputElement</td>
+<td>HTMLTextAreaElement`</td>
+<td></td>
+</tr>
+<tr>
 <td><code>focused</code></td>
 <td><code>focused</code></td>
+<td></td>
 <td><code>boolean</code></td>
 <td>false</td>
 <td></td>
 </tr>
 <tr>
+<td><code>label</code></td>
+<td><code>label</code></td>
+<td></td>
+<td><code>string</code></td>
+<td>&quot;&quot;</td>
+<td></td>
+</tr>
+<tr>
 <td><code>lines</code></td>
 <td><code>lines</code></td>
+<td></td>
 <td><code>number</code></td>
 <td>2</td>
 <td></td>
@@ -115,20 +179,23 @@
 <tr>
 <td><code>max</code></td>
 <td><code>max</code></td>
-<td><code>number | undefined</code></td>
-<td>&quot;undefined&quot;</td>
 <td></td>
+<td>`number</td>
+<td>undefined`</td>
+<td>&quot;undefined&quot;</td>
 </tr>
 <tr>
 <td><code>maxLength</code></td>
 <td><code>maxLength</code></td>
-<td><code>number | undefined</code></td>
-<td>&quot;undefined&quot;</td>
 <td></td>
+<td>`number</td>
+<td>undefined`</td>
+<td>&quot;undefined&quot;</td>
 </tr>
 <tr>
 <td><code>maxLines</code></td>
 <td><code>maxLines</code></td>
+<td></td>
 <td><code>number</code></td>
 <td>5</td>
 <td></td>
@@ -136,6 +203,7 @@
 <tr>
 <td><code>message</code></td>
 <td><code>message</code></td>
+<td></td>
 <td><code>string</code></td>
 <td>&quot;&quot;</td>
 <td></td>
@@ -143,20 +211,23 @@
 <tr>
 <td><code>min</code></td>
 <td><code>min</code></td>
-<td><code>number | undefined</code></td>
-<td>&quot;undefined&quot;</td>
 <td></td>
+<td>`number</td>
+<td>undefined`</td>
+<td>&quot;undefined&quot;</td>
 </tr>
 <tr>
 <td><code>minLength</code></td>
 <td><code>minLength</code></td>
-<td><code>number | undefined</code></td>
-<td>&quot;undefined&quot;</td>
 <td></td>
+<td>`number</td>
+<td>undefined`</td>
+<td>&quot;undefined&quot;</td>
 </tr>
 <tr>
 <td><code>multiline</code></td>
 <td><code>multiline</code></td>
+<td></td>
 <td><code>boolean</code></td>
 <td>false</td>
 <td></td>
@@ -164,6 +235,7 @@
 <tr>
 <td><code>multiple</code></td>
 <td><code>multiple</code></td>
+<td></td>
 <td><code>boolean</code></td>
 <td>false</td>
 <td></td>
@@ -171,6 +243,7 @@
 <tr>
 <td><code>panelInput</code></td>
 <td><code>panelInput</code></td>
+<td></td>
 <td><code>boolean</code></td>
 <td>false</td>
 <td></td>
@@ -178,6 +251,7 @@
 <tr>
 <td><code>placeholder</code></td>
 <td><code>placeholder</code></td>
+<td></td>
 <td><code>string</code></td>
 <td>&quot;&quot;</td>
 <td></td>
@@ -185,6 +259,7 @@
 <tr>
 <td><code>readonly</code></td>
 <td><code>readonly</code></td>
+<td></td>
 <td><code>boolean</code></td>
 <td>false</td>
 <td></td>
@@ -192,6 +267,7 @@
 <tr>
 <td><code>severity</code></td>
 <td><code>severity</code></td>
+<td></td>
 <td><code>string</code></td>
 <td></td>
 <td></td>
@@ -199,27 +275,49 @@
 <tr>
 <td><code>step</code></td>
 <td><code>step</code></td>
-<td><code>number | undefined</code></td>
-<td>&quot;undefined&quot;</td>
 <td></td>
+<td>`number</td>
+<td>undefined`</td>
+<td>&quot;undefined&quot;</td>
 </tr>
 <tr>
 <td><code>type</code></td>
 <td><code>type</code></td>
-<td><code>&quot;color&quot;|&quot;date&quot;|&quot;datetime-local&quot;|&quot;email&quot;|&quot;file&quot;|&quot;month&quot;|&quot;number&quot;|&quot;password&quot;|&quot;tel&quot;|&quot;text&quot;|&quot;time&quot;|&quot;url&quot;|&quot;week&quot;</code></td>
-<td>&quot;text&quot;</td>
-<td>Text-like input types</td>
+<td></td>
+<td>`&quot;color&quot;</td>
+<td>&quot;date&quot;</td>
+<td>&quot;datetime-local&quot;</td>
 </tr>
 <tr>
 <td><code>value</code></td>
 <td><code>value</code></td>
+<td></td>
 <td><code>string</code></td>
 <td>&quot;&quot;</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<h2>Events</h2>
+<h2><a id="methods" class="anchor" href="#methods" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>focus</code></td>
+<td><code>(): void</code></td>
+</tr>
+<tr>
+<td><code>toString</code></td>
+<td><code>(): string</code></td>
+</tr>
+</tbody>
+</table>
+<h2><a id="events" class="anchor" href="#events" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Events</h2>
 <table>
 <thead>
 <tr>
@@ -238,7 +336,7 @@
 </tr>
 </tbody>
 </table>
-<h2>CSS Custom Properties</h2>
+<h2><a id="css-custom-properties" class="anchor" href="#css-custom-properties" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>CSS Custom Properties</h2>
 <table>
 <thead>
 <tr>
@@ -297,8 +395,9 @@
 </tbody>
 </table>
 
+        </div>
+        <p class="last-modified">Last modified: Thu, 15 Jul 2021 20:24:51 GMT</p>
       </div>
-      <p class="last-modified">Last modified: Wed, 19 May 2021 21:27:11 GMT</p>
     </div>
   </div>
 </body>

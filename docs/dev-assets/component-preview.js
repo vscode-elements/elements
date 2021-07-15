@@ -1,9 +1,50 @@
 /* eslint-disable no-undef */
+let directoryUrl;
+let instanceCounter = 0;
+const themeSelectorInstances = {};
+const themes = {};
+
+function getDirectoryUrl() {
+  if (directoryUrl) {
+    return directoryUrl;
+  }
+
+  const urlParts = import.meta.url.split('/');
+  urlParts.pop();
+  return urlParts.join('/');
+}
+
+async function fetchTheme(themeName) {
+  const res = await fetch(`${getDirectoryUrl()}/${themeName}.txt`);
+  const theme = await res.text();
+
+  return theme;
+}
+
+directoryUrl = getDirectoryUrl();
+
 const tmpl = document.createElement('template');
 
 tmpl.innerHTML = `
   <style>
     :host {
+      all: initial;
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+      display: block;
+      margin: 32px 0;
+    }
+
+    :host([fullscreen]) {
+      bottom: 0;
+      left: 0;
+      margin: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .canvas {
       all: initial;
       background-color: var(--vscode-editor-background);
       color: var(--vscode-foreground);
@@ -14,83 +55,224 @@ tmpl.innerHTML = `
       padding: 20px;
     }
 
-    .theme-switcher {
-      display: flex;
-      margin: -3px 0 20px;
+    :host([fullscreen]) .canvas {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 35px;
     }
 
-    .theme-switcher-option {
+    .theme-selector-wrapper {
+      position: relative;
+    }
+
+    .theme-selector {
       align-items: center;
+      background-color: var(--toolbar-background, #fff);
+      box-sizing: border-box;
       display: flex;
-      margin-right: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      width: 100%;
+      z-index: 2;
     }
 
-    .theme-switcher-option button {
+    .theme-selector:after {
+      background-color: var(--toolbar-normal, #24292e);
+      bottom: 0;
+      content: '';
+      display: block;
+      height: 1px;
+      left: 0;
+      opacity: 0.2;
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+    }
+
+    .theme-selector button.theme-button {
       background-color: transparent;
       border: 0;
-      border-bottom: 2px solid transparent;
+      border-bottom: 3px solid transparent;
       cursor: pointer;
-      color: var(--vscode-editor-foreground);
-      outline: none;
-      padding: 5px 0;
-    }
-
-    .theme-switcher-option button:focus-visible span {
+      color: var(--toolbar-normal, #24292e);
       display: block;
-      outline: 1px solid var(--vscode-focusBorder);
+      outline: none;
+      overflow: hidden;
+      padding: 10px 15px 7px;
+    }
+
+    .theme-selector button.theme-button.active {
+      border-bottom-color: var(--toolbar-active, #007acc);
+      color:  var(--toolbar-active, #007acc);
+    }
+
+    .theme-selector button.theme-button span {
+      display: block;
       outline-offset: 2px;
+      pointer-events: none;
+      white-space: nowrap;
     }
 
-    .theme-switcher-option.light button {
-      border-bottom-color: var(--component-preview-light-active-color);
+    .theme-selector button:focus-visible span {
+      outline: 1px solid var(--toolbar-active, #007acc);
     }
 
-    .theme-switcher-option.dark button {
-      border-bottom-color: var(--component-preview-dark-active-color);
+    .theme-selector .toggle-fullscreen-button {
+      align-items: center;
+      background-color: transparent;
+      border: 0;
+      color: var(--toolbar-normal, #24292e);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: 5px;
+      padding: 5px;
     }
 
-    .theme-switcher-option.hc button {
-      border-bottom-color: var(--component-preview-hc-active-color);
+    .theme-selector .toggle-fullscreen-button .normal {
+      display: none;
+    }
+
+    :host([fullscreen]) .toggle-fullscreen-button .normal {
+      display: block;
+    }
+
+    :host([fullscreen]) .toggle-fullscreen-button .full {
+      display: none;
+    }
+
+    .theme-selector .toggle-fullscreen-button:focus {
+      outline: none;
+    }
+
+    .theme-selector .toggle-fullscreen-button:focus-visible {
+      outline: 1px solid var(--toolbar-active, #007acc);
     }
   </style>
-  <div class="theme-switcher">
-    <div class="theme-switcher-option light">
-      <button value="vscode-light" type="button"><span>Light</span></button>
-    </div>
-    <div class="theme-switcher-option dark">
-      <button value="vscode-dark" type="button"><span>Dark</span></button>
-    </div>
-    <div class="theme-switcher-option hc">
-      <button value="vscode-high-contrast" type="button"><span>High contrast</span></button>
+  <div class="theme-selector-wrapper">
+    <div id="theme-selector" class="theme-selector">
+      <button type="button" value="light" class="theme-button active"><span>Light</span></button>
+      <button type="button" value="dark" class="theme-button"><span>Dark</span></button>
+      <button type="button" value="high-contrast" class="theme-button"><span>High Contrast</span></button>
+      <button type="button" value="github-light" class="theme-button"><span>GitHub Light</span></button>
+      <button type="button" value="one-dark-pro" class="theme-button"><span>One Dark Pro</span></button>
+      <button type="button" class="toggle-fullscreen-button" id="toggle-fullscreen" title="toggle fullscreen">
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="full">
+          <path d="M3 12h10V4H3v8zm2-6h6v4H5V6zM2 6H1V2.5l.5-.5H5v1H2v3zm13-3.5V6h-1V3h-3V2h3.5l.5.5zM14 10h1v3.5l-.5.5H11v-1h3v-3zM2 13h3v1H1.5l-.5-.5V10h1v3z"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="normal">
+          <path d="M3.5 4H1V3h2V1h1v2.5l-.5.5zM13 3V1h-1v2.5l.5.5H15V3h-2zm-1 9.5V15h1v-2h2v-1h-2.5l-.5.5zM1 12v1h2v2h1v-2.5l-.5-.5H1zm11-1.5l-.5.5h-7l-.5-.5v-5l.5-.5h7l.5.5v5zM10 7H6v2h4V7z"/>
+        </svg>
+      </button>
     </div>
   </div>
-  <slot></slot>
+  <div class="canvas">
+    <slot></slot>
+  </div>
 `;
 
 class ComponentPreview extends HTMLElement {
   constructor() {
     super();
 
-    let shadowRoot = this.attachShadow({ mode: 'open'});
+    let shadowRoot = this.attachShadow({mode: 'open'});
     shadowRoot.appendChild(tmpl.content.cloneNode(true));
 
-    const buttons = shadowRoot.querySelectorAll(
-      '.theme-switcher-option button'
+    this._elThemeSelector = shadowRoot.querySelector('.theme-selector');
+    this._elButtons = this._elThemeSelector.querySelectorAll(
+      'button.theme-button'
+    );
+    this._elToggleFullscreen = this._elThemeSelector.querySelector(
+      '.toggle-fullscreen-button'
     );
 
-    Array.from(buttons).forEach(element => {
-      element.addEventListener('click', event => {
-        document.body.classList.remove(
-          'vscode-light',
-          'vscode-dark',
-          'vscode-high-contrast'
-        );
+    instanceCounter++;
+    themeSelectorInstances[
+      `instance-${instanceCounter}`
+    ] = this._elThemeSelector;
 
-        const button = event.composedPath().find((el) => el.matches('button'));
+    this._onThemeSelectorButtonClickBound = this._onThemeSelectorButtonClick.bind(
+      this
+    );
+    this._onToggleFullscreenButtonClickBound = this._onToggleFullscreenButtonClick.bind(
+      this
+    );
 
-        document.body.classList.add(button.value);
-      });
+    this._elButtons.forEach((b) => {
+      b.addEventListener('click', this._onThemeSelectorButtonClickBound);
     });
+    this._elToggleFullscreen.addEventListener(
+      'click',
+      this._onToggleFullscreenButtonClickBound
+    );
+
+    this._applyTheme('light');
+  }
+
+  _onThemeSelectorButtonClick(ev) {
+    const value = ev.target.value;
+
+    this._runOperationOnEachThemeSelector('setValue', value);
+    this._runOperationOnEachThemeSelector('disable');
+
+    this._applyTheme(value).then(() => {
+      this._runOperationOnEachThemeSelector('enable');
+    });
+  }
+
+  _onToggleFullscreenButtonClick() {
+    if (!this.hasAttribute('fullscreen')) {
+      this.setAttribute('fullscreen', '');
+    } else {
+      this.removeAttribute('fullscreen');
+    }
+  }
+
+  _runOperationOnEachThemeSelector(command, ...args) {
+    const instanceKeys = Object.keys(themeSelectorInstances);
+
+    instanceKeys.forEach((k) => {
+      switch (command) {
+        case 'enable':
+          themeSelectorInstances[k].querySelectorAll('button').forEach((b) => {
+            b.disabled = false;
+          });
+          break;
+        case 'disable':
+          themeSelectorInstances[k].querySelectorAll('button').forEach((b) => {
+            b.disabled = true;
+          });
+          break;
+        case 'setValue':
+          themeSelectorInstances[k].querySelectorAll('button').forEach((b) => {
+            b.classList.toggle('active', b.value === args[0]);
+          });
+          break;
+        default:
+      }
+    });
+  }
+
+  async _applyTheme(themeName) {
+    themes[themeName] = themes[themeName] || {};
+
+    if (themes[themeName].data) {
+      document.documentElement.style = themes[themeName].data;
+      return;
+    }
+
+    if (!themes[themeName].isFetching) {
+      themes[themeName].isFetching = true;
+
+      const theme = await fetchTheme(themeName);
+
+      themes[themeName].isFetching = false;
+      themes[themeName].data = theme;
+      document.documentElement.style = themes[themeName].data;
+    }
   }
 }
 
