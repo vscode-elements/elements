@@ -29,8 +29,19 @@ tmpl.innerHTML = `
   <style>
     :host {
       all: initial;
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
       display: block;
       margin: 32px 0;
+    }
+
+    :host([fullscreen]) {
+      bottom: 0;
+      left: 0;
+      margin: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 1000;
     }
 
     .canvas {
@@ -44,22 +55,31 @@ tmpl.innerHTML = `
       padding: 20px;
     }
 
+    :host([fullscreen]) .canvas {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 35px;
+    }
+
     .theme-selector-wrapper {
       position: relative;
     }
 
     .theme-selector {
-      background-color: var(--vscode-editor-background);
+      align-items: center;
+      background-color: var(--toolbar-background, #fff);
       box-sizing: border-box;
       display: flex;
-      padding: 2px 20px 0;
+      flex-wrap: wrap;
       position: relative;
       width: 100%;
       z-index: 2;
     }
 
     .theme-selector:after {
-      background-color: var(--vscode-foreground);
+      background-color: var(--toolbar-normal, #24292e);
       bottom: 0;
       content: '';
       display: block;
@@ -71,39 +91,82 @@ tmpl.innerHTML = `
       width: 100%;
     }
 
-    .theme-selector button {
+    .theme-selector button.theme-button {
       background-color: transparent;
       border: 0;
-      border-bottom: 1px solid transparent;
+      border-bottom: 3px solid transparent;
       cursor: pointer;
-      color: var(--vscode-foreground);
+      color: var(--toolbar-normal, #24292e);
       display: block;
-      margin-right: 20px;
       outline: none;
-      padding: 5px 0;
+      overflow: hidden;
+      padding: 10px 15px 7px;
     }
 
-    .theme-selector button.active {
-      border-bottom-color: var(--vscode-foreground);
+    .theme-selector button.theme-button.active {
+      border-bottom-color: var(--toolbar-active, #007acc);
+      color:  var(--toolbar-active, #007acc);
     }
 
-    .theme-selector button span {
+    .theme-selector button.theme-button span {
       display: block;
       outline-offset: 2px;
       pointer-events: none;
+      white-space: nowrap;
     }
 
     .theme-selector button:focus-visible span {
-      outline: 1px solid var(--vscode-focusBorder);
+      outline: 1px solid var(--toolbar-active, #007acc);
+    }
+
+    .theme-selector .toggle-fullscreen-button {
+      align-items: center;
+      background-color: transparent;
+      border: 0;
+      color: var(--toolbar-normal, #24292e);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: 5px;
+      padding: 5px;
+    }
+
+    .theme-selector .toggle-fullscreen-button .normal {
+      display: none;
+    }
+
+    :host([fullscreen]) .toggle-fullscreen-button .normal {
+      display: block;
+    }
+
+    :host([fullscreen]) .toggle-fullscreen-button .full {
+      display: none;
+    }
+
+    .theme-selector .toggle-fullscreen-button:focus {
+      outline: none;
+    }
+
+    .theme-selector .toggle-fullscreen-button:focus-visible {
+      outline: 1px solid var(--toolbar-active, #007acc);
     }
   </style>
   <div class="theme-selector-wrapper">
     <div id="theme-selector" class="theme-selector">
-      <button type="button" value="light" class="active"><span>Light</span></button>
-      <button type="button" value="dark"><span>Dark</span></button>
-      <button type="button" value="high-contrast"><span>High Contrast</span></button>
-      <button type="button" value="github-light"><span>GitHub Light</span></button>
-      <button type="button" value="one-dark-pro"><span>One Dark Pro</span></button>
+      <button type="button" value="light" class="theme-button active"><span>Light</span></button>
+      <button type="button" value="dark" class="theme-button"><span>Dark</span></button>
+      <button type="button" value="high-contrast" class="theme-button"><span>High Contrast</span></button>
+      <button type="button" value="github-light" class="theme-button"><span>GitHub Light</span></button>
+      <button type="button" value="one-dark-pro" class="theme-button"><span>One Dark Pro</span></button>
+      <button type="button" class="toggle-fullscreen-button" id="toggle-fullscreen" title="toggle fullscreen">
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="full">
+          <path d="M3 12h10V4H3v8zm2-6h6v4H5V6zM2 6H1V2.5l.5-.5H5v1H2v3zm13-3.5V6h-1V3h-3V2h3.5l.5.5zM14 10h1v3.5l-.5.5H11v-1h3v-3zM2 13h3v1H1.5l-.5-.5V10h1v3z"/>
+        </svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="normal">
+          <path d="M3.5 4H1V3h2V1h1v2.5l-.5.5zM13 3V1h-1v2.5l.5.5H15V3h-2zm-1 9.5V15h1v-2h2v-1h-2.5l-.5.5zM1 12v1h2v2h1v-2.5l-.5-.5H1zm11-1.5l-.5.5h-7l-.5-.5v-5l.5-.5h7l.5.5v5zM10 7H6v2h4V7z"/>
+        </svg>
+      </button>
     </div>
   </div>
   <div class="canvas">
@@ -119,7 +182,12 @@ class ComponentPreview extends HTMLElement {
     shadowRoot.appendChild(tmpl.content.cloneNode(true));
 
     this._elThemeSelector = shadowRoot.querySelector('.theme-selector');
-    this._elButtons = this._elThemeSelector.querySelectorAll('button');
+    this._elButtons = this._elThemeSelector.querySelectorAll(
+      'button.theme-button'
+    );
+    this._elToggleFullscreen = this._elThemeSelector.querySelector(
+      '.toggle-fullscreen-button'
+    );
 
     instanceCounter++;
     themeSelectorInstances[
@@ -129,10 +197,17 @@ class ComponentPreview extends HTMLElement {
     this._onThemeSelectorButtonClickBound = this._onThemeSelectorButtonClick.bind(
       this
     );
+    this._onToggleFullscreenButtonClickBound = this._onToggleFullscreenButtonClick.bind(
+      this
+    );
 
     this._elButtons.forEach((b) => {
       b.addEventListener('click', this._onThemeSelectorButtonClickBound);
     });
+    this._elToggleFullscreen.addEventListener(
+      'click',
+      this._onToggleFullscreenButtonClickBound
+    );
 
     this._applyTheme('light');
   }
@@ -146,6 +221,14 @@ class ComponentPreview extends HTMLElement {
     this._applyTheme(value).then(() => {
       this._runOperationOnEachThemeSelector('enable');
     });
+  }
+
+  _onToggleFullscreenButtonClick() {
+    if (!this.hasAttribute('fullscreen')) {
+      this.setAttribute('fullscreen', '');
+    } else {
+      this.removeAttribute('fullscreen');
+    }
   }
 
   _runOperationOnEachThemeSelector(command, ...args) {
