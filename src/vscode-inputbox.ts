@@ -45,6 +45,8 @@ const calcHeightFromLines = (lines: number) => {
 };
 
 /**
+ * @attr {narrow | wide} variant - Predefined sizes
+ *
  * @cssprop --vscode-scrollbarSlider-background
  * @cssprop --vscode-scrollbarSlider-hoverBackground
  * @cssprop --vscode-scrollbarSlider-activeBackground
