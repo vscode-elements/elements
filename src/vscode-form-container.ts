@@ -119,17 +119,15 @@ export class VscodeFormContainer extends LitElement {
         return;
       }
 
-      if ((isCheckbox(widget) && widget.checked) || isMultiSelect(widget)) {
+      if ((isCheckbox(widget) && widget.checked)) {
         data[name] = Array.isArray(data[name])
           ? [...data[name], widget.value as string]
           : [widget.value as string];
-      }
-
-      if (isCheckbox(widget) && !widget.checked) {
+      } else if (isMultiSelect(widget)) {
+        data[name] = widget.value;
+      } else if (isCheckbox(widget) && !widget.checked) {
         data[name] = Array.isArray(data[name]) ? data[name] : [];
-      }
-
-      if (
+      } else if (
         (isRadio(widget) && widget.checked) ||
         isInputbox(widget) ||
         isSingleSelect(widget)
