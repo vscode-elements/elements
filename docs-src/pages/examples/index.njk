@@ -1,0 +1,11 @@
+---
+layout: page.njk
+title: Examples
+---
+<ul>
+  {%- for ex in collections.example -%}
+    <li{% if page.url == ex.url %} aria-current="page" class="current"{% endif %}>
+      <a href="{{ ex.url | url }}">{{ ex.data.title }}</a>
+    </li>
+  {%- endfor -%}
+</ul>

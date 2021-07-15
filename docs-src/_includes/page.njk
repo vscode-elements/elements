@@ -39,11 +39,11 @@
           <ul>
             <li><a href="{{ '/pages/getting-started' | url }}"{% if page.url == '/pages/getting-started/' %} class="current"{% endif %}>Getting Started</a></li>
             <li>
-              <a href="{{ '/pages/form-examples' | url }}"{% if page.url == '/pages/form-examples/' %} class="current"{% endif %}>Form examples</a>
+              <a href="{{ '/pages/examples' | url }}"{% if page.url == '/pages/examples/' %} class="current"{% endif %}>Examples</a>
               <ul>
-                {%- for frm in collections.forms -%}
+                {%- for ex in collections.example -%}
                   <li>
-                    <a href="{{ frm.url | url }}"{% if page.url == frm.url %} aria-current="page" class="current"{% endif %}>{{ frm.data.title }}</a>
+                    <a href="{{ ex.url | url }}"{% if page.url == ex.url %} aria-current="page" class="current"{% endif %}>{{ ex.data.title }}</a>
                   </li>
                 {%- endfor -%}
               </ul>

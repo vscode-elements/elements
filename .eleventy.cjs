@@ -39,9 +39,9 @@ module.exports = function (eleventyConfig) {
       });
   });
 
-  eleventyConfig.addCollection('forms', function (collectionApi) {
+  eleventyConfig.addCollection('example', function (collectionApi) {
     return collectionApi
-      .getFilteredByTag('forms')
+      .getFilteredByTag('example')
       .sort((firstEl, secondEl) => {
         if (firstEl.data.weight > secondEl.data.weight) {
           return 1;

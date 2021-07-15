@@ -1,7 +1,7 @@
 ---
 layout: page.njk
 title: Settings page
-tags: forms
+tags: example
 weight: 2
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: page.njk
 title: Responsive form
-tags: forms
+tags: example
 weight: 1
 ---
 
