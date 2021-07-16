@@ -4,7 +4,8 @@
   --color-dark-gray: #24292e;
 }
 
-body, html {
+body,
+html {
   height: 100%;
 }
 
@@ -13,7 +14,7 @@ body {
   color: var(--color-dark-gray);
   display: flex;
   flex-wrap: wrap;
-  font-family: "Segoe WPC", "Segoe UI", sans-serif;
+  font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -175,7 +176,6 @@ body > .content-wrapper {
   height: 30px;
   margin: 0;
   padding: 0 20px;
-
 }
 
 .in-page-nav h2 span {
@@ -337,7 +337,7 @@ body > .content-wrapper {
   padding: 0 20px;
 }
 
-.page pre[class*="language-"] {
+.page pre[class*='language-'] {
   font-size: 16px;
 }
 
@@ -369,27 +369,46 @@ body > .content-wrapper {
   display: flex;
 }
 
-.page h1 .anchor,
-.page h2 .anchor,
-.page h3 .anchor {
-  display: inline-block;
-  margin-left: -21px;
-  padding-right: 5px;
+@keyframes highlight {
+  from {
+    background-color: yellow;
+  }
+
+  to {
+    background-color: transparent;
+  }
 }
 
-.page h1 .anchor .octicon,
-.page h2 .anchor .octicon,
-.page h3 .anchor .octicon {
-  display: block;
-  height: 16px;
-  visibility: hidden;
-  width: 16px;
+.page h1:target,
+.page h2:target,
+.page h3:target {
+  animation: highlight 3000ms;
+  outline: none;
 }
 
-.page h1:hover .anchor .octicon,
-.page h2:hover .anchor .octicon,
-.page h3:hover .anchor .octicon {
-  visibility: visible;
+.page h1 a,
+.page h2 a,
+.page h3 a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.page h1 a:hover,
+.page h2 a:hover,
+.page h3 a:hover {
+  text-decoration: underline;
+}
+
+.page h1 a:focus,
+.page h2 a:focus,
+.page h3 a:focus {
+  outline: none;
+}
+
+.page h1 a:focus-visible,
+.page h2 a:focus-visible,
+.page h3 a:focus-visible {
+  outline: 1px solid currentColor;
 }
 
 .page table {

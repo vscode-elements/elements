@@ -4,14 +4,14 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 module.exports = function (eleventyConfig) {
   const markdownIt = require('markdown-it');
-  const githubHeadings = require('@gerhobbelt/markdown-it-github-headings');
+  const anchor = require('markdown-it-anchor');
 
-  const mdOpts = {
-    html: true,
-  };
-  const mdLib = markdownIt(mdOpts).use(githubHeadings, {
-    prefixHeadingIds: false,
-  });
+  const mdLib = markdownIt({
+    html: true
+  })
+    .use(anchor,{
+      permalink: anchor.permalink.headerLink()
+    });
 
   eleventyConfig.setLibrary('md', mdLib);
 
@@ -68,6 +68,8 @@ module.exports = function (eleventyConfig) {
   if (process.env.PATH_PREFIX && process.env.NODE_ENV !== 'development') {
     conf.pathPrefix = process.env.PATH_PREFIX;
   }
+
+  conf.markdownTemplateEngine = false;
 
   return conf;
 };
