@@ -113,10 +113,10 @@
 
           
           <!-- This file is auto-generated. Do not edit! -->
-<h1><a id="vscodetree" class="anchor" href="#vscodetree" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>VscodeTree</h1>
-<h2><a id="type-definitions" class="anchor" href="#type-definitions" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Type definitions</h2>
+<h1 id="vscodetree" tabindex="-1"><a class="header-anchor" href="#vscodetree">VscodeTree</a></h1>
+<h2 id="type-definitions" tabindex="-1"><a class="header-anchor" href="#type-definitions">Type definitions</a></h2>
 <pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">ItemType</span> <span class="token operator">=</span> <span class="token string">'branch'</span> <span class="token operator">|</span> <span class="token string">'leaf'</span><span class="token punctuation">;</span><br><br><span class="token keyword">interface</span> <span class="token class-name">TreeItemIconConfig</span> <span class="token punctuation">{</span><br>   branch<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>   open<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>   leaf<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">interface</span> <span class="token class-name">TreeItem</span> <span class="token punctuation">{</span><br>   label<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>   subItems<span class="token operator">?</span><span class="token operator">:</span> TreeItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br>   open<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span><br>   selected<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span><br>   focused<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span><br>   icons<span class="token operator">?</span><span class="token operator">:</span> TreeItemIconConfig<span class="token punctuation">;</span><br><br>   <span class="token comment">// If it's not defined the value will be equal to the label</span><br>   value<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br><br>   <span class="token comment">// Item path in the tree. For example [0,0,1] means:</span><br>   <span class="token comment">// tree[0].subItems[0].subItems[1]</span><br>   path<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">interface</span> <span class="token class-name">SelectEventDetail</span> <span class="token punctuation">{</span><br>   icons<span class="token operator">:</span> TreeItemIconConfig <span class="token operator">|</span> <span class="token keyword">undefined</span><span class="token punctuation">;</span><br>   itemType<span class="token operator">:</span> ItemType<span class="token punctuation">;</span><br>   label<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>   open<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span><br>   value<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>   path<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span> <span class="token comment">// ex.: 0/0/1</span><br><span class="token punctuation">}</span></code></pre>
-<h2><a id="properties" class="anchor" href="#properties" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Properties</h2>
+<h2 id="properties" tabindex="-1"><a class="header-anchor" href="#properties">Properties</a></h2>
 <table>
 <thead>
 <tr>
@@ -159,7 +159,7 @@
 </tr>
 </tbody>
 </table>
-<h2><a id="methods" class="anchor" href="#methods" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Methods</h2>
+<h2 id="methods" tabindex="-1"><a class="header-anchor" href="#methods">Methods</a></h2>
 <table>
 <thead>
 <tr>
@@ -174,7 +174,7 @@
 </tr>
 </tbody>
 </table>
-<h2><a id="events" class="anchor" href="#events" aria-hidden="true"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Events</h2>
+<h2 id="events" tabindex="-1"><a class="header-anchor" href="#events">Events</a></h2>
 <table>
 <thead>
 <tr>
@@ -191,7 +191,7 @@
 </table>
 
         </div>
-        <p class="last-modified">Last modified: Wed, 14 Jul 2021 19:31:13 GMT</p>
+        <p class="last-modified">Last modified: Thu, 15 Jul 2021 23:05:22 GMT</p>
       </div>
     </div>
   </div>
