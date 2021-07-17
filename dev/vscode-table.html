@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>&lt;vscode-table&gt; Demo</title>
+  <script type="module" src="../dev-assets/component-preview.js"></script>
+  <script type="module" src="../dist/vscode-scrollable.js"></script>
+  <script type="module" src="../dist/vscode-table.js"></script>
+  <script type="module" src="../dist/vscode-table-head.js"></script>
+  <script type="module" src="../dist/vscode-table-row.js"></script>
+</head>
+
+<body class="vscode-light">
+  <div class="story">
+    <h2 class="story-title">Basic example</h2>
+    <div class="story-content">
+      <component-preview>
+        <vscode-table>
+          <vscode-table-head slot="header">
+            <vscode-table-row>
+              <div class="th">aa</div>
+              <div class="th">bb</div>
+              <div class="th">cc</div>
+            </vscode-table-row>
+          </vscode-table-head>
+          <div slot="body">
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+            <vscode-table-row>
+              <div class="td">dd</div>
+              <div class="td">ee</div>
+              <div class="td">ff</div>
+            </vscode-table-row>
+          </div>
+        </vscode-table>
+      </component-preview>
+    </div>
+  </div>
+  <div class="story">
+    <h2 class="story-title">Bsic HTML impl.</h2>
+    <div class="story-content">
+      <style>
+        .table {
+          display: table;
+        }
+
+        .table-head {
+          display: table-header-group;
+        }
+
+        .tr {
+          display: table-row;
+        }
+
+        .th {
+          display: table-cell;
+          font-weight: bold;
+        }
+
+        .td {
+          display: table-cell;
+        }
+      </style>
+
+      <div class="table">
+        <div class="table-head">
+          <div class="tr">
+            <div class="th">aa</div>
+            <div class="th">bb</div>
+            <div class="th">cc</div>
+          </div>
+        </div>
+        <div class="table-body">
+          <div class="tr">
+            <div class="td">dd</div>
+            <div class="td">ee</div>
+            <div class="td">ff</div>
+          </div>
+          <div class="tr">
+            <div class="td">dd</div>
+            <div class="td">ee</div>
+            <div class="td">ff</div>
+          </div>
+          <div class="tr">
+            <div class="td">dd</div>
+            <div class="td">ee</div>
+            <div class="td">ff</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

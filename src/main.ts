@@ -21,5 +21,6 @@ export {VscodeRadioGroup} from './vscode-radio-group';
 export {VscodeSingleSelect} from './vscode-single-select';
 export {VscodeScrollable} from './vscode-scrollable';
 export {VscodeSplitLayout} from './vscode-split-layout';
+export {VscodeTable} from './vscode-table';
 export {VscodeTabs} from './vscode-tabs';
 export {VscodeTree} from './vscode-tree';
