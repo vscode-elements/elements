@@ -29,6 +29,18 @@ export class VscodeScrollable extends LitElement {
   @state()
   private _isDragging = false;
 
+  @state()
+  private _thumbVisible = false;
+
+  @state()
+  private _thumbFade = false;
+
+  @state()
+  private _thumbHover = false;
+
+  @state()
+  private _thumbActive = false;
+
   @query('.content')
   private _contentElement!: HTMLDivElement;
 
@@ -60,6 +72,9 @@ export class VscodeScrollable extends LitElement {
         this._onScrollableContainerScroll.bind(this)
       );
     });
+
+    this.addEventListener('mouseover', this._onComponentMouseOverBound);
+    this.addEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
   disconnectedCallback(): void {
@@ -67,6 +82,9 @@ export class VscodeScrollable extends LitElement {
 
     this._resizeObserver.unobserve(this);
     this._resizeObserver.disconnect();
+
+    this.removeEventListener('mouseover', this._onComponentMouseOverBound);
+    this.removeEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
   private _resizeObserverCallback() {
@@ -95,6 +113,8 @@ export class VscodeScrollable extends LitElement {
     this._mouseStartY = event.screenY;
     this._scrollThumbStartY = thCr.top - cmpCr.top;
     this._isDragging = true;
+    this._thumbActive = true;
+
     document.addEventListener('mousemove', this._onScrollThumbMouseMoveBound);
     document.addEventListener('mouseup', this._onScrollThumbMouseUpBound);
   }
@@ -124,8 +144,19 @@ export class VscodeScrollable extends LitElement {
   private _onScrollThumbMouseMoveBound =
     this._onScrollThumbMouseMove.bind(this);
 
-  private _onScrollThumbMouseUp() {
+  private _onScrollThumbMouseUp(event: MouseEvent) {
     this._isDragging = false;
+    this._thumbActive = false;
+
+    const cr = this.getBoundingClientRect();
+    const {x, y, width, height} = cr;
+    const {pageX, pageY} = event;
+
+    if (pageX > x + width || pageX < x || pageY > y + height || pageY < y) {
+      this._thumbFade = true;
+      this._thumbVisible = false;
+    }
+
     document.removeEventListener(
       'mousemove',
       this._onScrollThumbMouseMoveBound
@@ -155,6 +186,25 @@ export class VscodeScrollable extends LitElement {
     scrollThumbY / (cmpH - thumbH) * overflown = scrollTop;
     */
   }
+
+  private _onComponentMouseOver() {
+    console.log('aaa');
+    this._thumbVisible = true;
+    this._thumbFade = false;
+  }
+
+  private _onComponentMouseOverBound = this._onComponentMouseOver.bind(this);
+
+  private _onComponentMouseOut() {
+    console.log('bbb');
+
+    if (!this._thumbActive) {
+      this._thumbVisible = false;
+      this._thumbFade = true;
+    }
+  }
+
+  private _onComponentMouseOutBound = this._onComponentMouseOut.bind(this);
 
   static get styles(): CSSResult {
     return css`
@@ -207,6 +257,10 @@ export class VscodeScrollable extends LitElement {
         background-color: var(--vscode-scrollbarSlider-activeBackground);
       } */
 
+      /**
+        opacity, invisible fade 800ms
+        opacity 1 100ms
+       */
       .shadow {
         box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
         display: none;
@@ -232,10 +286,32 @@ export class VscodeScrollable extends LitElement {
       }
 
       .scrollbar-thumb {
-        background-color: red;
+        background-color: transparent;
+        opacity: 0;
         position: absolute;
         right: 0;
         width: 10px;
+      }
+
+      .scrollbar-thumb.visible {
+        background-color: var(--vscode-scrollbarSlider-background);
+        opacity: 1;
+        transition: opacity 100ms;
+      }
+
+      .scrollbar-thumb.fade {
+        background-color: var(--vscode-scrollbarSlider-background);
+        opacity: 0;
+        transition: opacity 800ms;
+      }
+
+      .scrollbar-thumb.visible:hover {
+        background-color: var(--vscode-scrollbarSlider-hoverBackground);
+      }
+
+      .scrollbar-thumb.visible.active,
+      .scrollbar-thumb.visible.active:hover {
+        background-color: var(--vscode-scrollbarSlider-activeBackground);
       }
 
       .content {
@@ -246,6 +322,12 @@ export class VscodeScrollable extends LitElement {
 
   render(): TemplateResult {
     const shadowClasses = classMap({shadow: true, visible: this.scrolled});
+    const thumbClasses = classMap({
+      'scrollbar-thumb': true,
+      visible: this._thumbVisible,
+      fade: this._thumbFade,
+      active: this._thumbActive,
+    });
 
     return html`
       <div
@@ -257,7 +339,7 @@ export class VscodeScrollable extends LitElement {
         <div class="${shadowClasses}"></div>
         <div class="scrollbar-track">
           <div
-            class="scrollbar-thumb"
+            class="${thumbClasses}"
             style="${styleMap({
               height: `${this._scrollThumbHeight}px`,
               top: `${this._scrollThumbY}px`,
