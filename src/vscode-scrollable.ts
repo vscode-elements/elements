@@ -14,10 +14,10 @@ import {styleMap} from 'lit-html/directives/style-map';
 
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends LitElement {
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   shadow = true;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   scrolled = false;
 
   @state()
