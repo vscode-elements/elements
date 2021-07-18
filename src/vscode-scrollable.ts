@@ -14,11 +14,11 @@ import {styleMap} from 'lit-html/directives/style-map';
 
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends LitElement {
-  @property({type: Boolean}) shadow = true;
-  @property({type: Boolean, reflect: false}) scrolled = false;
+  @property({type: Boolean})
+  shadow = true;
 
-  @state()
-  private _contentHeight = 0;
+  @property({type: Boolean})
+  scrolled = false;
 
   @state()
   private _scrollThumbHeight = 0;
@@ -34,9 +34,6 @@ export class VscodeScrollable extends LitElement {
 
   @state()
   private _thumbFade = false;
-
-  @state()
-  private _thumbHover = false;
 
   @state()
   private _thumbActive = false;
@@ -64,9 +61,6 @@ export class VscodeScrollable extends LitElement {
     this._resizeObserver.observe(this);
 
     this.requestUpdate().then(() => {
-      /* this._scrollableContainer = this.shadowRoot?.querySelector(
-        '.scrollable-container'
-      ) as HTMLDivElement; */
       this._scrollableContainer.addEventListener(
         'scroll',
         this._onScrollableContainerScroll.bind(this)
@@ -98,14 +92,6 @@ export class VscodeScrollable extends LitElement {
   private _resizeObserverCallbackBound =
     this._resizeObserverCallback.bind(this);
 
-  private _onSlotChange() {
-    const cr = this.shadowRoot
-      ?.querySelector('.content')
-      ?.getBoundingClientRect();
-
-    this._contentHeight = cr?.height as number;
-  }
-
   private _onScrollThumbMouseDown(event: MouseEvent) {
     const cmpCr = this.getBoundingClientRect();
     const thCr = this._scrollThumbElement.getBoundingClientRect();
@@ -136,7 +122,6 @@ export class VscodeScrollable extends LitElement {
     }
 
     this._scrollThumbY = nextPos;
-    // nextPost / (cmpH - thumbH) * (contentH - cmpH) = scrollTop
     this._scrollableContainer.scrollTop =
       (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
   }
@@ -176,19 +161,11 @@ export class VscodeScrollable extends LitElement {
 
     const overflown = contentH - cmpH;
     const ratio = scrollTop / overflown;
-    console.log('o', overflown);
 
     this._scrollThumbY = ratio * (cmpH - thumbH);
-    console.log(this._scrollableContainer.scrollTop);
-
-    /*
-    scrollThumbY = scrollTop / overflown * (cmpH - thumbH)
-    scrollThumbY / (cmpH - thumbH) * overflown = scrollTop;
-    */
   }
 
   private _onComponentMouseOver() {
-    console.log('aaa');
     this._thumbVisible = true;
     this._thumbFade = false;
   }
@@ -196,8 +173,6 @@ export class VscodeScrollable extends LitElement {
   private _onComponentMouseOverBound = this._onComponentMouseOver.bind(this);
 
   private _onComponentMouseOut() {
-    console.log('bbb');
-
     if (!this._thumbActive) {
       this._thumbVisible = false;
       this._thumbFade = true;
@@ -223,44 +198,6 @@ export class VscodeScrollable extends LitElement {
         width: 0;
       }
 
-      /* .scrollable-container::-webkit-scrollbar {
-        cursor: default;
-        width: 10px;
-      }
-
-      .scrollable-container::-webkit-scrollbar-button {
-        display: none;
-      }
-
-      .scrollable-container:hover::-webkit-scrollbar-button {
-        display: none;
-      }
-
-      .scrollable-container::-webkit-scrollbar-track {
-        background-color: transparent;
-        width: 10px;
-      }
-
-      .scrollable-container::-webkit-scrollbar-thumb {
-        background-color: transparent;
-      }
-
-      .scrollable-container:hover::-webkit-scrollbar-thumb {
-        background-color: var(--vscode-scrollbarSlider-background);
-      }
-
-      .scrollable-container:hover::-webkit-scrollbar-thumb:hover {
-        background-color: var(--vscode-scrollbarSlider-hoverBackground);
-      }
-
-      .scrollable-container:hover::-webkit-scrollbar-thumb:active {
-        background-color: var(--vscode-scrollbarSlider-activeBackground);
-      } */
-
-      /**
-        opacity, invisible fade 800ms
-        opacity 1 100ms
-       */
       .shadow {
         box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
         display: none;
@@ -348,7 +285,7 @@ export class VscodeScrollable extends LitElement {
           ></div>
         </div>
         <div class="content">
-          <slot @slotchange="${this._onSlotChange}"></slot>
+          <slot></slot>
         </div>
       </div>
     `;
