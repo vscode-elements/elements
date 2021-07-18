@@ -19,6 +19,10 @@ export class VscodeTableCell extends LitElement {
       vertical-align: middle;
     }
 
+    :host-context(vscode-table[bordered]) {
+      border-top: 1px solid var(--vscode-editorGroup-border);
+    }
+
     .wrapper {
       padding-bottom: var(--padding-bottom, 0);
       padding-left: var(--padding-left, 10px);

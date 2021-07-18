@@ -10,7 +10,6 @@ import {
 export class VscodeTableBody extends LitElement {
   static styles = css`
     :host {
-      border-top: 1px solid var(--vscode-editorGroup-border);
       display: table;
       width: 100%;
     }
