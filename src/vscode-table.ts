@@ -14,7 +14,6 @@ import './vscode-scrollable';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 
-const HANDLER_WIDTH = 5;
 const MINIMUM_CELL_WIDTH = 100;
 
 @customElement('vscode-table')
@@ -256,7 +255,8 @@ export class VscodeTable extends LitElement {
     }
 
     .resize-handler {
-      /* cursor: ew-resize; */
+      background-color: var(--vscode-sash-hoverBorder);
+      cursor: ew-resize;
       height: 100%;
       position: absolute;
       top: 0;
@@ -264,9 +264,9 @@ export class VscodeTable extends LitElement {
     }
 
     .resize-handler div {
-      background-color: red;
+      background-color: transparent;
       height: 100%;
-      left: -10px;
+      left: -2px;
       position: absolute;
       width: 5px;
     }
