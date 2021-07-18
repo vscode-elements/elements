@@ -138,7 +138,7 @@ export class VscodeTable extends LitElement {
     this._initResizeObserver();
   }
 
-  private _sashMouseDown(event: MouseEvent) {
+  private _onSashMouseDown(event: MouseEvent) {
     event.stopPropagation();
     const {pageX, currentTarget} = event;
     const el = currentTarget as HTMLDivElement;
@@ -174,11 +174,11 @@ export class VscodeTable extends LitElement {
       this._cellsToResize.push(cells[index + 1]);
     }
 
-    document.addEventListener('mousemove', this._resizingMouseMoveBound);
-    document.addEventListener('mouseup', this._resizingMouseUpBound);
+    document.addEventListener('mousemove', this._onResizingMouseMoveBound);
+    document.addEventListener('mouseup', this._onResizingMouseUpBound);
   }
 
-  private _resizingMouseMove(event: MouseEvent) {
+  private _onResizingMouseMove(event: MouseEvent) {
     const {pageX} = event;
     const sashPos = this._sashPositions[this._activeSashElementIndex];
     const prevSashPos =
@@ -217,18 +217,18 @@ export class VscodeTable extends LitElement {
     }
   }
 
-  private _resizingMouseMoveBound = this._resizingMouseMove.bind(this);
+  private _onResizingMouseMoveBound = this._onResizingMouseMove.bind(this);
 
-  private _resizingMouseUp() {
+  private _onResizingMouseUp() {
     this._isDragging = false;
     this._activeSashElement = null;
     this._activeSashElementIndex = -1;
 
-    document.removeEventListener('mousemove', this._resizingMouseMoveBound);
-    document.removeEventListener('mouseup', this._resizingMouseUpBound);
+    document.removeEventListener('mousemove', this._onResizingMouseMoveBound);
+    document.removeEventListener('mouseup', this._onResizingMouseUpBound);
   }
 
-  private _resizingMouseUpBound = this._resizingMouseUp.bind(this);
+  private _onResizingMouseUpBound = this._onResizingMouseUp.bind(this);
 
   static styles = css`
     :host {
@@ -282,7 +282,7 @@ export class VscodeTable extends LitElement {
             style="${styleMap({
               left: `${val}px`,
             })}"
-            @mousedown="${this._sashMouseDown}"
+            @mousedown="${this._onSashMouseDown}"
           >
             <div></div>
           </div>
