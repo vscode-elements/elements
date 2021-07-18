@@ -2,7 +2,6 @@ import {
   LitElement,
   html,
   customElement,
-  property,
   css,
   TemplateResult,
 } from 'lit-element';

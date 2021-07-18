@@ -2,13 +2,12 @@ import {
   LitElement,
   html,
   customElement,
-  property,
   css,
   TemplateResult,
 } from 'lit-element';
 
-@customElement('vscode-table-th')
-export class VscodeTableTh extends LitElement {
+@customElement('vscode-table-header-cell')
+export class VscodeTableHeaderCell extends LitElement {
   static styles = css`
     :host {
       align-items: center;
@@ -19,7 +18,10 @@ export class VscodeTableTh extends LitElement {
     }
 
     .wrapper {
-      padding-left: 10px;
+      padding-bottom: var(--padding-bottom, 0);
+      padding-left: var(--padding-left, 10px);
+      padding-right: var(--padding-right, 0);
+      padding-top: var(--padding-top, 0);
     }
   `;
 
@@ -34,6 +36,6 @@ export class VscodeTableTh extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-th': VscodeTableTh;
+    'vscode-table-header-cell': VscodeTableHeaderCell;
   }
 }

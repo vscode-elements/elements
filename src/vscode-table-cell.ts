@@ -6,10 +6,9 @@ import {
   css,
   TemplateResult,
 } from 'lit-element';
-import {styleMap} from 'lit-html/directives/style-map';
 
-@customElement('vscode-table-td')
-export class VscodeTableTd extends LitElement {
+@customElement('vscode-table-cell')
+export class VscodeTableCell extends LitElement {
   @property({reflect: true})
   role = 'cell';
 
@@ -21,7 +20,10 @@ export class VscodeTableTd extends LitElement {
     }
 
     .wrapper {
-      padding-left: 10px;
+      padding-bottom: var(--padding-bottom, 0);
+      padding-left: var(--padding-left, 10px);
+      padding-right: var(--padding-right, 0);
+      padding-top: var(--padding-top, 0);
     }
   `;
 
@@ -36,6 +38,6 @@ export class VscodeTableTd extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-td': VscodeTableTd;
+    'vscode-table-cell': VscodeTableCell;
   }
 }

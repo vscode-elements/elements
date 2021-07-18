@@ -2,13 +2,12 @@ import {
   LitElement,
   html,
   customElement,
-  property,
   css,
   TemplateResult,
 } from 'lit-element';
 
-@customElement('vscode-table-head')
-export class VscodeTableHead extends LitElement {
+@customElement('vscode-table-header')
+export class VscodeTableHeader extends LitElement {
   static styles = css`
     :host {
       background-color: rgba(130, 130, 130, 0.04);
@@ -26,6 +25,6 @@ export class VscodeTableHead extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-head': VscodeTableHead;
+    'vscode-table-header': VscodeTableHeader;
   }
 }
