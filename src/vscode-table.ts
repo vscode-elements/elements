@@ -6,9 +6,16 @@ import {
   css,
   TemplateResult,
   query,
+  state,
 } from 'lit-element';
+import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-scrollable';
-import { VscodeTableCell } from './vscode-table-cell';
+import {VscodeTableCell} from './vscode-table-cell';
+import {VscodeTableHeaderCell} from './vscode-table-header-cell';
+
+const HANDLER_WIDTH = 5;
+const MINIMUM_CELL_WIDTH = 100;
 
 @customElement('vscode-table')
 export class VscodeTable extends LitElement {
@@ -27,12 +34,24 @@ export class VscodeTable extends LitElement {
   @query('slot[name="body"]')
   private _bodySlot!: HTMLSlotElement;
 
+  @state()
+  _sashPositions: number[] = [];
+
+  @state()
+  _isDragging = false;
+
   private _colums: string[] = [];
   private _resizeObserver!: ResizeObserver;
+  private _activeSashElement!: HTMLDivElement | null;
+  private _activeSashElementIndex = -1;
+  private _activeSashCursorOffset = 0;
+  private _componentX = 0;
+  private _componentW = 0;
+  private _cellsToResize!: VscodeTableCell[];
+  private _headerCellsToResize!: VscodeTableHeaderCell[];
 
   connectedCallback(): void {
     super.connectedCallback();
-    console.log(this.columns);
   }
 
   disconnectedCallback(): void {
@@ -65,9 +84,20 @@ export class VscodeTable extends LitElement {
     );
 
     window.requestAnimationFrame(() => {
+      const l = cells.length;
+      let prevHandlerPos = 0;
+      this._sashPositions = [];
+
       cells.forEach((cell, index) => {
         const br = cell.getBoundingClientRect();
-        headerCells[index].style.flexBasis = `${br.width}px`;
+        const pos = br.width;
+
+        if (index < l - 1) {
+          this._sashPositions.push(prevHandlerPos + pos);
+          prevHandlerPos = prevHandlerPos + pos;
+        }
+
+        headerCells[index].style.flexBasis = `${pos}px`;
       });
     });
   }
@@ -109,6 +139,98 @@ export class VscodeTable extends LitElement {
     this._initResizeObserver();
   }
 
+  private _resizeHandlerMouseDown(event: MouseEvent) {
+    event.stopPropagation();
+    const {pageX, currentTarget} = event;
+    const el = currentTarget as HTMLDivElement;
+    const index = Number(el.dataset.index);
+    const cr = el.getBoundingClientRect();
+    const elX = cr.x;
+    const cmpCr = this.getBoundingClientRect();
+
+    this._isDragging = true;
+    this._activeSashElement = el;
+    this._activeSashElementIndex = index;
+    this._activeSashCursorOffset = pageX - elX;
+    this._componentX = cmpCr.x;
+    this._componentW = cmpCr.width;
+
+    const thead = this._headerSlot.assignedElements()[0];
+    const headerCells = thead.querySelectorAll('vscode-table-header-cell');
+    this._headerCellsToResize = [];
+    this._headerCellsToResize.push(headerCells[index]);
+
+    if (headerCells[index + 1]) {
+      this._headerCellsToResize[1] = headerCells[index + 1];
+    }
+
+    const tbody = this._bodySlot.assignedElements()[0];
+    const cells = tbody.querySelectorAll<VscodeTableCell>(
+      'vscode-table-row:first-child > vscode-table-cell'
+    );
+    this._cellsToResize = [];
+    this._cellsToResize.push(cells[index]);
+
+    if (cells[index + 1]) {
+      this._cellsToResize.push(cells[index + 1]);
+    }
+
+    document.addEventListener('mousemove', this._resizingMouseMoveBound);
+    document.addEventListener('mouseup', this._resizingMouseUpBound);
+  }
+
+  private _resizingMouseMove(event: MouseEvent) {
+    const {pageX} = event;
+    const sashPos = this._sashPositions[this._activeSashElementIndex];
+    const prevSashPos =
+      this._sashPositions[this._activeSashElementIndex - 1] || 0;
+    const nextSashPos =
+      this._sashPositions[this._activeSashElementIndex + 1] || this._componentW;
+
+    const minX = this._sashPositions[this._activeSashElementIndex - 1]
+      ? this._sashPositions[this._activeSashElementIndex - 1] +
+        MINIMUM_CELL_WIDTH
+      : MINIMUM_CELL_WIDTH;
+    const maxX = this._sashPositions[this._activeSashElementIndex + 1]
+      ? this._sashPositions[this._activeSashElementIndex + 1] -
+        MINIMUM_CELL_WIDTH
+      : this._componentW - MINIMUM_CELL_WIDTH;
+
+    let newX = pageX - this._componentX - this._activeSashCursorOffset;
+    newX = Math.max(newX, minX);
+    newX = Math.min(newX, maxX);
+
+    (this._activeSashElement as HTMLDivElement).style.left = `${newX}px`;
+    this._sashPositions[this._activeSashElementIndex] = newX;
+
+    this._headerCellsToResize[0].style.flexBasis = `${sashPos - prevSashPos}px`;
+
+    if (this._headerCellsToResize[1]) {
+      this._headerCellsToResize[1].style.flexBasis = `${
+        nextSashPos - sashPos
+      }px`;
+    }
+
+    this._cellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
+
+    if (this._cellsToResize[1]) {
+      this._cellsToResize[1].style.width = `${nextSashPos - sashPos}px`;
+    }
+  }
+
+  private _resizingMouseMoveBound = this._resizingMouseMove.bind(this);
+
+  private _resizingMouseUp() {
+    this._isDragging = false;
+    this._activeSashElement = null;
+    this._activeSashElementIndex = -1;
+
+    document.removeEventListener('mousemove', this._resizingMouseMoveBound);
+    document.removeEventListener('mouseup', this._resizingMouseUpBound);
+  }
+
+  private _resizingMouseUpBound = this._resizingMouseUp.bind(this);
+
   static styles = css`
     :host {
       display: block;
@@ -125,19 +247,62 @@ export class VscodeTable extends LitElement {
     .wrapper {
       max-width: 100%;
       overflow: hidden;
+      position: relative;
       width: 100%;
+    }
+
+    .wrapper.select-banned {
+      user-select: none;
+    }
+
+    .resize-handler {
+      /* cursor: ew-resize; */
+      height: 100%;
+      position: absolute;
+      top: 0;
+      width: 1px;
+    }
+
+    .resize-handler div {
+      background-color: red;
+      height: 100%;
+      left: -10px;
+      position: absolute;
+      width: 5px;
     }
   `;
 
   render(): TemplateResult {
+    const resizeHandlers = this._sashPositions.map(
+      (val, index) =>
+        html`
+          <div
+            class="resize-handler"
+            data-index="${index}"
+            style="${styleMap({
+              left: `${val}px`,
+            })}"
+            @mousedown="${this._resizeHandlerMouseDown}"
+          >
+            <div></div>
+          </div>
+        `
+    );
+
+    const wrapperClasses = classMap({
+      wrapper: true,
+      'select-banned': this._isDragging,
+    });
+
     return html`
-      <div class="wrapper">
+      <div class="${wrapperClasses}">
         <slot name="header"></slot>
         <vscode-scrollable class="scrollable">
           <div>
             <slot name="body" @slotchange="${this._onBodySlotChange}"></slot>
           </div>
         </vscode-scrollable>
+        ${resizeHandlers}
       </div>
     `;
   }

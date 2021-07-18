@@ -14,7 +14,11 @@ export class VscodeTableBody extends LitElement {
       width: 100%;
     }
 
-    ::slotted(vscode-table-row:nth-child(odd)) {
+    :host-context(vscode-table[zebra]) ::slotted(vscode-table-row:nth-child(odd)) {
+      background-color: rgba(130, 130, 130, 0.04);;
+    }
+
+    :host-context(vscode-table[zebra-even]) ::slotted(vscode-table-row:nth-child(even)) {
       background-color: rgba(130, 130, 130, 0.04);;
     }
   `;
