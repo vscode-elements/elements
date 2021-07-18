@@ -10,134 +10,143 @@
   <script type="module" src="../dist/vscode-scrollable.js"></script>
   <script type="module" src="../dist/vscode-table.js"></script>
   <script type="module" src="../dist/vscode-table-head.js"></script>
+  <script type="module" src="../dist/vscode-table-th.js"></script>
+  <script type="module" src="../dist/vscode-table-td.js"></script>
   <script type="module" src="../dist/vscode-table-row.js"></script>
+  <script type="module" src="../dist/vscode-table-body.js"></script>
 </head>
 
 <body class="vscode-light">
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
+      <style>
+        .table-cell-content {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      </style>
       <component-preview>
         <vscode-table>
           <vscode-table-head slot="header">
-            <vscode-table-row>
-              <div class="th">aa</div>
-              <div class="th">bb</div>
-              <div class="th">cc</div>
-            </vscode-table-row>
+            <vscode-table-th>aa</vscode-table-th>
+            <vscode-table-th>bb</vscode-table-th>
+            <vscode-table-th>cc</vscode-table-th>
           </vscode-table-head>
-          <div slot="body">
+          <vscode-table-body slot="body">
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>
+                <div class="table-cell-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie at felis nec condimentum. Pellentesque tincidunt tempor ante eu lobortis. Sed eget interdum enim. Vestibulum leo tortor, dignissim et posuere quis, aliquet sed lectus. Integer aliquet quis lacus a auctor. Phasellus rutrum faucibus neque ut imperdiet. Quisque dictum ligula eget tempus mollis. Curabitur imperdiet lectus a elit aliquam aliquam. Donec et feugiat nisi. Maecenas ac tempor orci. Cras volutpat vitae lacus in viverra. Aenean scelerisque dictum convallis. Quisque dignissim quis nibh in dapibus. Pellentesque egestas feugiat elementum. Praesent non tellus a sem dictum posuere lobortis ut dolor.</div>
+              </vscode-table-td>
+              <vscode-table-td>Aliquam ornare arcu gravida, tristique lorem vitae, ultrices dui.</vscode-table-td>
+              <vscode-table-td>Nulla auctor nulla vel ullamcorper aliquet.</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
             <vscode-table-row>
-              <div class="td">dd</div>
-              <div class="td">ee</div>
-              <div class="td">ff</div>
+              <vscode-table-td>dd</vscode-table-td>
+              <vscode-table-td>ee</vscode-table-td>
+              <vscode-table-td>ff</vscode-table-td>
             </vscode-table-row>
-          </div>
+          </vscode-table-body>
         </vscode-table>
       </component-preview>
     </div>
@@ -178,19 +187,19 @@
         </div>
         <div class="table-body">
           <div class="tr">
-            <div class="td">dd</div>
-            <div class="td">ee</div>
-            <div class="td">ff</div>
+            <vscode-table-td>dd</div>
+            <vscode-table-td>ee</div>
+            <vscode-table-td>ff</div>
           </div>
           <div class="tr">
-            <div class="td">dd</div>
-            <div class="td">ee</div>
-            <div class="td">ff</div>
+            <vscode-table-td>dd</div>
+            <vscode-table-td>ee</div>
+            <vscode-table-td>ff</div>
           </div>
           <div class="tr">
-            <div class="td">dd</div>
-            <div class="td">ee</div>
-            <div class="td">ff</div>
+            <vscode-table-td>dd</div>
+            <vscode-table-td>ee</div>
+            <vscode-table-td>ff</div>
           </div>
         </div>
       </div>

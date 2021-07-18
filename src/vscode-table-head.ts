@@ -11,7 +11,8 @@ import {
 export class VscodeTableHead extends LitElement {
   static styles = css`
     :host {
-      display: table-header-group;
+      background-color: rgba(130, 130, 130, 0.04);
+      display: flex;
       width: 100%;
     }
   `;
