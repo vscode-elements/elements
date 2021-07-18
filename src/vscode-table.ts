@@ -138,7 +138,7 @@ export class VscodeTable extends LitElement {
     this._initResizeObserver();
   }
 
-  private _resizeHandlerMouseDown(event: MouseEvent) {
+  private _sashMouseDown(event: MouseEvent) {
     event.stopPropagation();
     const {pageX, currentTarget} = event;
     const el = currentTarget as HTMLDivElement;
@@ -273,7 +273,7 @@ export class VscodeTable extends LitElement {
   `;
 
   render(): TemplateResult {
-    const resizeHandlers = this._sashPositions.map(
+    const sashes = this._sashPositions.map(
       (val, index) =>
         html`
           <div
@@ -282,7 +282,7 @@ export class VscodeTable extends LitElement {
             style="${styleMap({
               left: `${val}px`,
             })}"
-            @mousedown="${this._resizeHandlerMouseDown}"
+            @mousedown="${this._sashMouseDown}"
           >
             <div></div>
           </div>
@@ -302,7 +302,7 @@ export class VscodeTable extends LitElement {
             <slot name="body" @slotchange="${this._onBodySlotChange}"></slot>
           </div>
         </vscode-scrollable>
-        ${resizeHandlers}
+        ${sashes}
       </div>
     `;
   }
