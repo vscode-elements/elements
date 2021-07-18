@@ -33,6 +33,26 @@ export class VscodeIcon extends LitElement {
    */
   @property({type: Number, attribute: 'spin-duration'}) spinDuration = 1.5;
 
+  @property({type: Boolean, attribute: 'action-icon'})
+  set actionIcon(val: boolean) {
+    this._actionIcon = val;
+
+    if (val) {
+      if (!this.hasAttribute('role')) {
+        this.setAttribute('role', 'button');
+      }
+    } else {
+      if (this.hasAttribute('role') && this.getAttribute('role') === 'button') {
+        this.removeAttribute('role');
+      }
+    }
+  }
+  get actionIcon(): boolean{
+    return this._actionIcon;
+  }
+
+  private _actionIcon = false;
+
   private _getStylesheetConfig(): {
     href: string | undefined;
     nonce: string | undefined;
@@ -52,6 +72,20 @@ export class VscodeIcon extends LitElement {
 
       .codicon[class*='codicon-'] {
         display: block;
+      }
+
+      .wrapper {
+        display: block;
+      }
+
+      :host([action-icon]) .wrapper {
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 3px;
+      }
+
+      :host([action-icon]) .wrapper:hover {
+        background-color: var(--vscode-toolbar-hoverBackground);
       }
 
       @keyframes icon-spin {
@@ -77,19 +111,21 @@ export class VscodeIcon extends LitElement {
         href="${ifDefined(href)}"
         nonce="${ifDefined(nonce)}"
       />
-      <span
-        class="${classMap({
-          codicon: true,
-          ['codicon-' + this.name]: true,
-          spin: this.spin,
-        })}"
-        style="${styleMap({
-          animationDuration: String(this.spinDuration) + 's',
-          fontSize: this.size + 'px',
-          height: this.size + 'px',
-          width: this.size + 'px',
-        })}"
-      ></span>
+      <span class="wrapper">
+        <span
+          class="${classMap({
+            codicon: true,
+            ['codicon-' + this.name]: true,
+            spin: this.spin,
+          })}"
+          style="${styleMap({
+            animationDuration: String(this.spinDuration) + 's',
+            fontSize: this.size + 'px',
+            height: this.size + 'px',
+            width: this.size + 'px',
+          })}"
+        ></span>
+      </span>
     `;
   }
 }
