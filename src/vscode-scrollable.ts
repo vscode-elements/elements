@@ -1,13 +1,13 @@
 import {
-  LitElement,
-  html,
   css,
-  property,
-  customElement,
   CSSResult,
-  TemplateResult,
-  state,
+  customElement,
+  html,
+  LitElement,
+  property,
   query,
+  state,
+  TemplateResult,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -21,13 +21,13 @@ export class VscodeScrollable extends LitElement {
   scrolled = false;
 
   @state()
-  private _scrollThumbHeight = 0;
-
-  @state()
-  private _scrollThumbY = 0;
-
-  @state()
   private _isDragging = false;
+
+  @state()
+  private _thumbHeight = 0;
+
+  @state()
+  private _thumbY = 0;
 
   @state()
   private _thumbVisible = false;
@@ -85,7 +85,7 @@ export class VscodeScrollable extends LitElement {
     const compCr = this.getBoundingClientRect();
     const contentCr = this._contentElement.getBoundingClientRect();
 
-    this._scrollThumbHeight =
+    this._thumbHeight =
       compCr.height * (compCr.height / contentCr.height);
   }
 
@@ -121,7 +121,7 @@ export class VscodeScrollable extends LitElement {
       nextPos = predictedPos;
     }
 
-    this._scrollThumbY = nextPos;
+    this._thumbY = nextPos;
     this._scrollableContainer.scrollTop =
       (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
   }
@@ -162,7 +162,7 @@ export class VscodeScrollable extends LitElement {
     const overflown = contentH - cmpH;
     const ratio = scrollTop / overflown;
 
-    this._scrollThumbY = ratio * (cmpH - thumbH);
+    this._thumbY = ratio * (cmpH - thumbH);
   }
 
   private _onComponentMouseOver() {
@@ -278,8 +278,8 @@ export class VscodeScrollable extends LitElement {
           <div
             class="${thumbClasses}"
             style="${styleMap({
-              height: `${this._scrollThumbHeight}px`,
-              top: `${this._scrollThumbY}px`,
+              height: `${this._thumbHeight}px`,
+              top: `${this._thumbY}px`,
             })}"
             @mousedown=${this._onScrollThumbMouseDown}
           ></div>
