@@ -34,11 +34,12 @@ export class VscodeTable extends LitElement {
   private _bodySlot!: HTMLSlotElement;
 
   @state()
-  _sashPositions: number[] = [];
+  private _sashPositions: number[] = [];
 
   @state()
-  _isDragging = false;
+  private _isDragging = false;
 
+  private _sashHovers: boolean[] = [];
   private _colums: string[] = [];
   private _resizeObserver!: ResizeObserver;
   private _activeSashElement!: HTMLDivElement | null;
@@ -76,6 +77,12 @@ export class VscodeTable extends LitElement {
   private _updateHeaderCellSizes() {
     const thead = this._headerSlot.assignedElements()[0];
     const headerCells = thead.querySelectorAll('vscode-table-header-cell');
+
+    this._sashHovers = [];
+
+    for (let i = 0; i < headerCells.length - 1; i++) {
+      this._sashHovers.push(false);
+    }
 
     const tbody = this._bodySlot.assignedElements()[0];
     const cells = tbody.querySelectorAll(
@@ -138,6 +145,29 @@ export class VscodeTable extends LitElement {
     this._initResizeObserver();
   }
 
+  private _onSashMouseOver(event: MouseEvent) {
+    if (this._isDragging) {
+      return;
+    }
+
+    const target = event.currentTarget as HTMLDivElement;
+    const index = Number(target.dataset.index);
+    console.log(index);
+    this._sashHovers[index] = true;
+    this.requestUpdate();
+  }
+
+  private _onSashMouseOut(event: MouseEvent) {
+    if (this._isDragging) {
+      return;
+    }
+
+    const target = event.currentTarget as HTMLDivElement;
+    const index = Number(target.dataset.index);
+    this._sashHovers[index] = false;
+    this.requestUpdate();
+  }
+
   private _onSashMouseDown(event: MouseEvent) {
     event.stopPropagation();
     const {pageX, currentTarget} = event;
@@ -150,6 +180,7 @@ export class VscodeTable extends LitElement {
     this._isDragging = true;
     this._activeSashElement = el;
     this._activeSashElementIndex = index;
+    this._sashHovers[this._activeSashElementIndex] = true;
     this._activeSashCursorOffset = pageX - elX;
     this._componentX = cmpCr.x;
     this._componentW = cmpCr.width;
@@ -220,6 +251,7 @@ export class VscodeTable extends LitElement {
   private _onResizingMouseMoveBound = this._onResizingMouseMove.bind(this);
 
   private _onResizingMouseUp() {
+    this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
     this._activeSashElement = null;
     this._activeSashElementIndex = -1;
@@ -254,8 +286,8 @@ export class VscodeTable extends LitElement {
       user-select: none;
     }
 
-    .resize-handler {
-      background-color: var(--vscode-sash-hoverBorder);
+    .sash {
+      background-color: var(--vscode-editorGroup-border);
       cursor: ew-resize;
       height: 100%;
       position: absolute;
@@ -263,7 +295,12 @@ export class VscodeTable extends LitElement {
       width: 1px;
     }
 
-    .resize-handler div {
+    .sash.hover {
+      background-color: var(--vscode-sash-hoverBorder);
+      transition: background-color 50ms linear 300ms;
+    }
+
+    .sash .sash-visible {
       background-color: transparent;
       height: 100%;
       left: -2px;
@@ -273,21 +310,29 @@ export class VscodeTable extends LitElement {
   `;
 
   render(): TemplateResult {
-    const sashes = this._sashPositions.map(
-      (val, index) =>
-        html`
-          <div
-            class="resize-handler"
-            data-index="${index}"
-            style="${styleMap({
-              left: `${val}px`,
-            })}"
-            @mousedown="${this._onSashMouseDown}"
-          >
-            <div></div>
-          </div>
-        `
-    );
+    const sashes = this._sashPositions.map((val, index) => {
+      console.log('HOVER:', this._sashHovers[index]);
+
+      const classes = classMap({
+        sash: true,
+        hover: this._sashHovers[index],
+      });
+
+      return html`
+        <div
+          class="${classes}"
+          data-index="${index}"
+          style="${styleMap({
+            left: `${val}px`,
+          })}"
+          @mousedown="${this._onSashMouseDown}"
+          @mouseover="${this._onSashMouseOver}"
+          @mouseout="${this._onSashMouseOut}"
+        >
+          <div class="sash-visible"></div>
+        </div>
+      `;
+    });
 
     const wrapperClasses = classMap({
       wrapper: true,
