@@ -12,8 +12,12 @@ export class VscodeTableHeaderCell extends LitElement {
     :host {
       align-items: center;
       display: flex;
+      font-family: var(--vscode-font-style);
+      font-size: var(--vscode-font-size);
       font-weight: bold;
-      height: 30px;
+      line-height: 20px;
+      padding-bottom: 5px;
+      padding-top: 5px;
       vertical-align: middle;
     }
 

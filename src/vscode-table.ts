@@ -152,7 +152,6 @@ export class VscodeTable extends LitElement {
 
     const target = event.currentTarget as HTMLDivElement;
     const index = Number(target.dataset.index);
-    console.log(index);
     this._sashHovers[index] = true;
     this.requestUpdate();
   }
@@ -286,6 +285,14 @@ export class VscodeTable extends LitElement {
       user-select: none;
     }
 
+    :host(:not([bordered])) .sash {
+      visibility: hidden;
+    }
+
+    :host(:not([bordered])) .wrapper:hover .sash {
+      visibility: visible;
+    }
+
     .sash {
       background-color: var(--vscode-editorGroup-border);
       cursor: ew-resize;
@@ -311,8 +318,6 @@ export class VscodeTable extends LitElement {
 
   render(): TemplateResult {
     const sashes = this._sashPositions.map((val, index) => {
-      console.log('HOVER:', this._sashHovers[index]);
-
       const classes = classMap({
         sash: true,
         hover: this._sashHovers[index],
