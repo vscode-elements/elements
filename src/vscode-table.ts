@@ -14,8 +14,6 @@ import './vscode-scrollable';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 
-const MINIMUM_CELL_WIDTH = 100;
-
 @customElement('vscode-table')
 export class VscodeTable extends LitElement {
   @property({type: Array})
@@ -26,6 +24,9 @@ export class VscodeTable extends LitElement {
   get columns(): string[] {
     return this._colums;
   }
+
+  @property({type: Number, attribute: 'min-column-width'})
+  minColumnWidth = 100;
 
   @query('slot[name="header"]')
   private _headerSlot!: HTMLSlotElement;
@@ -218,12 +219,12 @@ export class VscodeTable extends LitElement {
 
     const minX = this._sashPositions[this._activeSashElementIndex - 1]
       ? this._sashPositions[this._activeSashElementIndex - 1] +
-        MINIMUM_CELL_WIDTH
-      : MINIMUM_CELL_WIDTH;
+        this.minColumnWidth
+      : this.minColumnWidth;
     const maxX = this._sashPositions[this._activeSashElementIndex + 1]
       ? this._sashPositions[this._activeSashElementIndex + 1] -
-        MINIMUM_CELL_WIDTH
-      : this._componentW - MINIMUM_CELL_WIDTH;
+        this.minColumnWidth
+      : this._componentW - this.minColumnWidth;
 
     let newX = pageX - this._componentX - this._activeSashCursorOffset;
     newX = Math.max(newX, minX);
