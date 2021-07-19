@@ -67,6 +67,10 @@ export class VscodeTable extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
+
+    if (this.hasAttribute('vsc-cloak')) {
+      this.removeAttribute('vsc-cloak');
+    }
   }
 
   disconnectedCallback(): void {
