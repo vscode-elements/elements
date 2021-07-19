@@ -11,7 +11,7 @@ import {
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-scrollable';
-import { VscodeScrollable } from './vscode-scrollable';
+import {VscodeScrollable} from './vscode-scrollable';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 
@@ -58,6 +58,8 @@ export class VscodeTable extends LitElement {
   private _componentW = 0;
   private _cellsToResize!: VscodeTableCell[];
   private _headerCellsToResize!: VscodeTableHeaderCell[];
+  private _prevHeaderHeight = 0;
+  private _prevComponentHeight = 0;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -83,17 +85,14 @@ export class VscodeTable extends LitElement {
 
   private _resizeObserverCallback() {
     this._updateHeaderCellSizes();
+    this._updateScrollpaneSize();
   }
 
   private _resizeObserverCallbackBound =
     this._resizeObserverCallback.bind(this);
 
   private _headerResizeObserverCallback() {
-    const headerCr = this._headerElement.getBoundingClientRect();
-    const cmpCr = this.getBoundingClientRect();
-    const scrollableH = cmpCr.height - headerCr.height;
-
-    this._scrollableElement.style.height = `${scrollableH}px`;
+    this._updateScrollpaneSize();
   }
 
   private _headerResizeObserverCallbackBound =
@@ -162,6 +161,23 @@ export class VscodeTable extends LitElement {
     });
 
     this._updateHeaderCellSizes();
+  }
+
+  private _updateScrollpaneSize() {
+    const headerCr = this._headerElement.getBoundingClientRect();
+    const cmpCr = this.getBoundingClientRect();
+
+    if (
+      headerCr.height === this._prevHeaderHeight &&
+      cmpCr.height === this._prevComponentHeight
+    ) {
+      return;
+    }
+
+    this._prevHeaderHeight = headerCr.height;
+    this._prevComponentHeight = cmpCr.height;
+    const scrollableH = cmpCr.height - headerCr.height;
+    this._scrollableElement.style.height = `${scrollableH}px`;
   }
 
   private _onBodySlotChange() {
