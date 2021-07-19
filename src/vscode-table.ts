@@ -432,6 +432,7 @@ export class VscodeTable extends LitElement {
 
     return html`
       <div class="${wrapperClasses}">
+        <slot name="caption"></slot>
         <div class="header">
           <slot name="header"></slot>
         </div>
