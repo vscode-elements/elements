@@ -50,6 +50,7 @@ export class VscodeScrollable extends LitElement {
   private _resizeObserver!: ResizeObserver;
   private _scrollThumbStartY = 0;
   private _mouseStartY = 0;
+  private _scrollbarVisible = true;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -82,15 +83,29 @@ export class VscodeScrollable extends LitElement {
   }
 
   private _resizeObserverCallback() {
-    const compCr = this.getBoundingClientRect();
-    const contentCr = this._contentElement.getBoundingClientRect();
-
-    this._thumbHeight =
-      compCr.height * (compCr.height / contentCr.height);
+    this._updateScrollbar();
   }
 
   private _resizeObserverCallbackBound =
     this._resizeObserverCallback.bind(this);
+
+  private _updateScrollbar() {
+    const compCr = this.getBoundingClientRect();
+    const contentCr = this._contentElement.getBoundingClientRect();
+
+    if (compCr.height >= contentCr.height) {
+      this._scrollbarVisible = false;
+    } else {
+      this._scrollbarVisible = true;
+      this._thumbHeight = compCr.height * (compCr.height / contentCr.height);
+    }
+
+    this.requestUpdate();
+  }
+
+  private _onSlotChange() {
+    this._updateScrollbar();
+  }
 
   private _onScrollThumbMouseDown(event: MouseEvent) {
     const cmpCr = this.getBoundingClientRect();
@@ -222,6 +237,10 @@ export class VscodeScrollable extends LitElement {
         width: 10px;
       }
 
+      .scrollbar-track.hidden {
+        display: none;
+      }
+
       .scrollbar-thumb {
         background-color: transparent;
         opacity: 0;
@@ -265,6 +284,10 @@ export class VscodeScrollable extends LitElement {
       fade: this._thumbFade,
       active: this._thumbActive,
     });
+    const scrollbarClasses = classMap({
+      'scrollbar-track': true,
+      hidden: !this._scrollbarVisible,
+    });
 
     return html`
       <div
@@ -274,7 +297,7 @@ export class VscodeScrollable extends LitElement {
         })}"
       >
         <div class="${shadowClasses}"></div>
-        <div class="scrollbar-track">
+        <div class="${scrollbarClasses}">
           <div
             class="${thumbClasses}"
             style="${styleMap({
@@ -285,7 +308,7 @@ export class VscodeScrollable extends LitElement {
           ></div>
         </div>
         <div class="content">
-          <slot></slot>
+          <slot @slotchange="${this._onSlotChange}"></slot>
         </div>
       </div>
     `;
