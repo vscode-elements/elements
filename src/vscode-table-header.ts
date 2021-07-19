@@ -4,10 +4,14 @@ import {
   customElement,
   css,
   TemplateResult,
+  property,
 } from 'lit-element';
 
 @customElement('vscode-table-header')
 export class VscodeTableHeader extends LitElement {
+  @property({reflect: true})
+  role = 'rowgroup';
+
   static styles = css`
     :host {
       background-color: rgba(130, 130, 130, 0.04);

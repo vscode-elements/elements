@@ -4,10 +4,14 @@ import {
   customElement,
   css,
   TemplateResult,
+  property,
 } from 'lit-element';
 
 @customElement('vscode-table-header-cell')
 export class VscodeTableHeaderCell extends LitElement {
+  @property({reflect: true})
+  role = 'columnheader';
+
   static styles = css`
     :host {
       align-items: center;

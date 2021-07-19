@@ -18,6 +18,9 @@ import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 
 @customElement('vscode-table')
 export class VscodeTable extends LitElement {
+  @property({reflect: true})
+  role = 'table';
+
   @property({type: Array})
   set columns(val: string[]) {
     this._colums = val;

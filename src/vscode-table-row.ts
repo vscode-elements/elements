@@ -2,13 +2,16 @@ import {
   LitElement,
   html,
   customElement,
-  property,
   css,
   TemplateResult,
+  property,
 } from 'lit-element';
 
 @customElement('vscode-table-row')
 export class VscodeTableRow extends LitElement {
+  @property({reflect: true})
+  role = 'row';
+
   static styles = css`
     :host {
       display: table-row;

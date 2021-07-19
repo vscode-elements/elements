@@ -4,10 +4,14 @@ import {
   customElement,
   css,
   TemplateResult,
+  property,
 } from 'lit-element';
 
 @customElement('vscode-table-body')
 export class VscodeTableBody extends LitElement {
+  @property({reflect: true})
+  role = 'rowgroup';
+
   static styles = css`
     :host {
       display: table;
