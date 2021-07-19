@@ -5,7 +5,7 @@ To list all webview theme variables:
 3. Inspect the html tag in the webview's html
 4. Run the following snippet in the dev console
 
-javascript```
+```javascript
 (function () {
   const consoleMsg = Array.from($0.style)
     .sort((a, b) => a.localeCompare(b))
