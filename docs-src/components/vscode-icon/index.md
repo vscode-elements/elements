@@ -37,6 +37,22 @@ import '@bendera/vscode-webview-elements/dist/vscode-icon';
 <vscode-icon name="account" size="64"></vscode-icon>
 ```
 
+## Action icons
+
+<component-preview>
+  <vscode-icon name="account" action-icon></vscode-icon>
+  <vscode-icon name="add" action-icon></vscode-icon>
+  <vscode-icon name="git-compare" action-icon></vscode-icon>
+</component-preview>
+
+### HTML
+
+```html
+<vscode-icon name="account" action-icon></vscode-icon>
+<vscode-icon name="add" action-icon></vscode-icon>
+<vscode-icon name="git-compare" action-icon></vscode-icon>
+```
+
 ## Animated icons
 
 <component-preview>
