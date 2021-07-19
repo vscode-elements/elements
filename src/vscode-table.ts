@@ -7,6 +7,7 @@ import {
   TemplateResult,
   query,
   state,
+  queryAll,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -40,6 +41,9 @@ export class VscodeTable extends LitElement {
 
   @query('.scrollable')
   private _scrollableElement!: VscodeScrollable;
+
+  @queryAll('.sash-visible')
+  private _sashVisibleElements!: HTMLDivElement[];
 
   @state()
   private _sashPositions: number[] = [];
@@ -178,6 +182,11 @@ export class VscodeTable extends LitElement {
     this._prevComponentHeight = cmpCr.height;
     const scrollableH = cmpCr.height - headerCr.height;
     this._scrollableElement.style.height = `${scrollableH}px`;
+
+    this._sashVisibleElements.forEach((el) => {
+      el.style.height = `${scrollableH}px`;
+      el.style.top = `${headerCr.height}px`;
+    })
   }
 
   private _onBodySlotChange() {
@@ -336,7 +345,6 @@ export class VscodeTable extends LitElement {
     }
 
     .sash {
-      background-color: var(--vscode-editorGroup-border);
       cursor: ew-resize;
       height: 100%;
       position: absolute;
@@ -344,12 +352,20 @@ export class VscodeTable extends LitElement {
       width: 1px;
     }
 
-    .sash.hover {
+    .sash-visible {
+      background-color: var(--vscode-editorGroup-border);
+      height: 100%;
+      position: absolute;
+      top: 0;
+      width: 1px;
+    }
+
+    .sash.hover .sash-visible {
       background-color: var(--vscode-sash-hoverBorder);
       transition: background-color 50ms linear 300ms;
     }
 
-    .sash .sash-visible {
+    .sash .sash-clickable {
       background-color: transparent;
       height: 100%;
       left: -2px;
@@ -377,6 +393,7 @@ export class VscodeTable extends LitElement {
           @mouseout="${this._onSashMouseOut}"
         >
           <div class="sash-visible"></div>
+          <div class="sash-clickable"></div>
         </div>
       `;
     });
