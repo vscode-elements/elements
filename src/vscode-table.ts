@@ -30,6 +30,9 @@ export class VscodeTable extends LitElement {
   @property({type: Number, attribute: 'min-column-width'})
   minColumnWidth = 100;
 
+  @property({type: Boolean, attribute: 'delayed-resizing'})
+  delayedResizing = false;
+
   @query('slot[name="header"]')
   private _headerSlot!: HTMLSlotElement;
 
@@ -262,8 +265,7 @@ export class VscodeTable extends LitElement {
     document.addEventListener('mouseup', this._onResizingMouseUpBound);
   }
 
-  private _onResizingMouseMove(event: MouseEvent) {
-    const {pageX} = event;
+  private _resizeColumns(mouseX: number, resizeBodyCells = true) {
     const sashPos = this._sashPositions[this._activeSashElementIndex];
     const prevSashPos =
       this._sashPositions[this._activeSashElementIndex - 1] || 0;
@@ -279,7 +281,7 @@ export class VscodeTable extends LitElement {
         this.minColumnWidth
       : this._componentW - this.minColumnWidth;
 
-    let newX = pageX - this._componentX - this._activeSashCursorOffset;
+    let newX = mouseX - this._componentX - this._activeSashCursorOffset;
     newX = Math.max(newX, minX);
     newX = Math.min(newX, maxX);
 
@@ -294,16 +296,34 @@ export class VscodeTable extends LitElement {
       }px`;
     }
 
-    this._cellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
+    if (resizeBodyCells) {
+      this._cellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
 
-    if (this._cellsToResize[1]) {
-      this._cellsToResize[1].style.width = `${nextSashPos - sashPos}px`;
+      if (this._cellsToResize[1]) {
+        this._cellsToResize[1].style.width = `${nextSashPos - sashPos}px`;
+      }
+    }
+  }
+
+  private _onResizingMouseMove(event: MouseEvent) {
+    const {pageX} = event;
+
+    if (!this.delayedResizing) {
+      this._resizeColumns(pageX, true);
+    } else {
+      this._resizeColumns(pageX, false);
     }
   }
 
   private _onResizingMouseMoveBound = this._onResizingMouseMove.bind(this);
 
-  private _onResizingMouseUp() {
+  private _onResizingMouseUp(event: MouseEvent) {
+    const {pageX} = event;
+
+    if(this.delayedResizing) {
+      this._resizeColumns(pageX, true);
+    }
+
     this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
     this._activeSashElement = null;
