@@ -11,6 +11,7 @@ import {
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-scrollable';
+import { VscodeScrollable } from './vscode-scrollable';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 
@@ -34,6 +35,12 @@ export class VscodeTable extends LitElement {
   @query('slot[name="body"]')
   private _bodySlot!: HTMLSlotElement;
 
+  @query('.header')
+  private _headerElement!: HTMLDivElement;
+
+  @query('.scrollable')
+  private _scrollableElement!: VscodeScrollable;
+
   @state()
   private _sashPositions: number[] = [];
 
@@ -43,6 +50,7 @@ export class VscodeTable extends LitElement {
   private _sashHovers: boolean[] = [];
   private _colums: string[] = [];
   private _resizeObserver!: ResizeObserver;
+  private _headerResizeObserver!: ResizeObserver;
   private _activeSashElement!: HTMLDivElement | null;
   private _activeSashElementIndex = -1;
   private _activeSashCursorOffset = 0;
@@ -66,6 +74,11 @@ export class VscodeTable extends LitElement {
       this._resizeObserverCallbackBound
     );
     this._resizeObserver.observe(this);
+
+    this._headerResizeObserver = new ResizeObserver(
+      this._headerResizeObserverCallbackBound
+    );
+    this._headerResizeObserver.observe(this._headerElement);
   }
 
   private _resizeObserverCallback() {
@@ -74,6 +87,17 @@ export class VscodeTable extends LitElement {
 
   private _resizeObserverCallbackBound =
     this._resizeObserverCallback.bind(this);
+
+  private _headerResizeObserverCallback() {
+    const headerCr = this._headerElement.getBoundingClientRect();
+    const cmpCr = this.getBoundingClientRect();
+    const scrollableH = cmpCr.height - headerCr.height;
+
+    this._scrollableElement.style.height = `${scrollableH}px`;
+  }
+
+  private _headerResizeObserverCallbackBound =
+    this._headerResizeObserverCallback.bind(this);
 
   private _updateHeaderCellSizes() {
     const thead = this._headerSlot.assignedElements()[0];
@@ -271,11 +295,8 @@ export class VscodeTable extends LitElement {
       width: 100%;
     }
 
-    .scrollable {
-      height: 200px;
-    }
-
     .wrapper {
+      height: 100%;
       max-width: 100%;
       overflow: hidden;
       position: relative;
@@ -284,6 +305,10 @@ export class VscodeTable extends LitElement {
 
     .wrapper.select-banned {
       user-select: none;
+    }
+
+    .scrollable {
+      height: 100%;
     }
 
     :host(:not([bordered])) .sash {
@@ -347,7 +372,9 @@ export class VscodeTable extends LitElement {
 
     return html`
       <div class="${wrapperClasses}">
-        <slot name="header"></slot>
+        <div class="header">
+          <slot name="header" @slotchange=${this._headerSlotChange}></slot>
+        </div>
         <vscode-scrollable class="scrollable">
           <div>
             <slot name="body" @slotchange="${this._onBodySlotChange}"></slot>
