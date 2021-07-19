@@ -16,6 +16,10 @@ import {VscodeScrollable} from './vscode-scrollable';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 
+/**
+ * @attr {Boolean} zebra
+ * @attr {Boolean} bordered
+ */
 @customElement('vscode-table')
 export class VscodeTable extends LitElement {
   @property({reflect: true})

@@ -9,6 +9,13 @@ component: vscode-table
 
 # VscodeTable
 
+## Attributes
+
+| Attribute  | Type      |
+|------------|-----------|
+| `bordered` | `Boolean` |
+| `zebra`    | `Boolean` |
+
 ## Properties
 
 | Property          | Attribute          | Type       | Default |
