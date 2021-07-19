@@ -1,13 +1,13 @@
 import {
-  LitElement,
-  html,
-  customElement,
-  property,
   css,
-  TemplateResult,
+  customElement,
+  html,
+  LitElement,
+  property,
   query,
-  state,
   queryAll,
+  state,
+  TemplateResult,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -328,7 +328,7 @@ export class VscodeTable extends LitElement {
       width: 100%;
     }
 
-    .wrapper.select-banned {
+    .wrapper.select-disabled {
       user-select: none;
     }
 
@@ -400,7 +400,7 @@ export class VscodeTable extends LitElement {
 
     const wrapperClasses = classMap({
       wrapper: true,
-      'select-banned': this._isDragging,
+      'select-disabled': this._isDragging,
     });
 
     return html`
