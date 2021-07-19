@@ -57,7 +57,7 @@ const main = async () => {
 
   try {
     await generateFile('./component-template.txt', `src/${componentName}.ts`, componentName);
-    await generateFile('./test-template.txt', `src/test/${componentName}_test.ts`, componentName);
+    await generateFile('./test-template.txt', `src/test/${componentName}.test.ts`, componentName);
     // await generateFile('./overview-md-template.txt', `docs-src/components/${componentName}/overview.md`, componentName);
     await generateFile('./example-basic-md-template.txt', `docs-src/components/${componentName}/index.md`, componentName);
     // await generateFile('./example-another-md-template.txt', `docs-src/components/${componentName}/examples/another-example.md`, componentName);
