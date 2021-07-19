@@ -13,6 +13,7 @@ component: vscode-icon
 
 | Property       | Attribute       | Type      | Default | Description                                      |
 |----------------|-----------------|-----------|---------|--------------------------------------------------|
+| `actionIcon`   | `action-icon`   | `boolean` |         |                                                  |
 | `name`         | `name`          | `string`  | ""      | Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html |
 | `size`         | `size`          | `number`  | 16      | Icon size in pixels                              |
 | `spin`         | `spin`          | `boolean` | false   | Enable rotation animation                        |
