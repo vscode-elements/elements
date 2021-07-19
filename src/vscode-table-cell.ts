@@ -16,7 +16,9 @@ export class VscodeTableCell extends LitElement {
     :host {
       display: table-cell;
       height: 24px;
+      overflow: hidden;
       vertical-align: middle;
+      white-space: nowrap;
     }
 
     :host-context(vscode-table[bordered]) {

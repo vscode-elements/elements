@@ -11,6 +11,7 @@ export class VscodeTableBody extends LitElement {
   static styles = css`
     :host {
       display: table;
+      table-layout: fixed;
       width: 100%;
     }
 
