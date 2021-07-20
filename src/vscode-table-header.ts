@@ -15,7 +15,8 @@ export class VscodeTableHeader extends LitElement {
   static styles = css`
     :host {
       background-color: rgba(130, 130, 130, 0.04);
-      display: flex;
+      display: table;
+      table-layout: fixed;
       width: 100%;
     }
   `;

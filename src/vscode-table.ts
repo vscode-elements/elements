@@ -145,7 +145,7 @@ export class VscodeTable extends LitElement {
           prevHandlerPos = prevHandlerPos + pos;
         }
 
-        headerCells[index].style.flexBasis = `${pos}px`;
+        headerCells[index].style.width = `${pos}px`;
       });
     });
   }
@@ -221,6 +221,8 @@ export class VscodeTable extends LitElement {
   }
 
   private _onSashMouseOut(event: MouseEvent) {
+    event.stopPropagation();
+
     if (this._isDragging) {
       return;
     }
@@ -233,6 +235,7 @@ export class VscodeTable extends LitElement {
 
   private _onSashMouseDown(event: MouseEvent) {
     event.stopPropagation();
+
     const {pageX, currentTarget} = event;
     const el = currentTarget as HTMLDivElement;
     const index = Number(el.dataset.index);
@@ -295,10 +298,10 @@ export class VscodeTable extends LitElement {
     (this._activeSashElement as HTMLDivElement).style.left = `${newX}px`;
     this._sashPositions[this._activeSashElementIndex] = newX;
 
-    this._headerCellsToResize[0].style.flexBasis = `${sashPos - prevSashPos}px`;
+    this._headerCellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
 
     if (this._headerCellsToResize[1]) {
-      this._headerCellsToResize[1].style.flexBasis = `${
+      this._headerCellsToResize[1].style.width = `${
         nextSashPos - sashPos
       }px`;
     }
@@ -313,6 +316,8 @@ export class VscodeTable extends LitElement {
   }
 
   private _onResizingMouseMove(event: MouseEvent) {
+    event.stopPropagation();
+
     const {pageX} = event;
 
     if (!this.delayedResizing) {

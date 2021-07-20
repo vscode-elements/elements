@@ -14,22 +14,27 @@ export class VscodeTableHeaderCell extends LitElement {
 
   static styles = css`
     :host {
-      align-items: center;
-      display: flex;
+      box-sizing: border-box;
+      display: table-cell;
       font-family: var(--vscode-font-style);
       font-size: var(--vscode-font-size);
       font-weight: bold;
       line-height: 20px;
+      overflow: hidden;
       padding-bottom: 5px;
+      padding-left: 10px;
+      padding-right: 0;
       padding-top: 5px;
-      vertical-align: middle;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .wrapper {
-      padding-bottom: var(--padding-bottom, 0);
-      padding-left: var(--padding-left, 10px);
-      padding-right: var(--padding-right, 0);
-      padding-top: var(--padding-top, 0);
+      box-sizing: inherit;
+      overflow: inherit;
+      text-overflow: inherit;
+      white-space: inherit;
+      width: 100%;
     }
   `;
 

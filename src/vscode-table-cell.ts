@@ -14,9 +14,12 @@ export class VscodeTableCell extends LitElement {
 
   static styles = css`
     :host {
+      box-sizing: border-box;
       display: table-cell;
       height: 24px;
       overflow: hidden;
+      padding-left: 10px;
+      text-overflow: ellipsis;
       vertical-align: middle;
       white-space: nowrap;
     }
@@ -26,10 +29,10 @@ export class VscodeTableCell extends LitElement {
     }
 
     .wrapper {
-      padding-bottom: var(--padding-bottom, 0);
-      padding-left: var(--padding-left, 10px);
-      padding-right: var(--padding-right, 0);
-      padding-top: var(--padding-top, 0);
+      overflow: inherit;
+      text-overflow: inherit;
+      white-space: inherit;
+      width: 100%;
     }
   `;
 
