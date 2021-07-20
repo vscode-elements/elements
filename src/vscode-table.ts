@@ -6,6 +6,7 @@ import {
   property,
   query,
   queryAll,
+  queryAssignedNodes,
   state,
   TemplateResult,
 } from 'lit-element';
@@ -14,6 +15,7 @@ import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-scrollable';
 import {VscodeScrollable} from './vscode-scrollable';
 import {VscodeTableCell} from './vscode-table-cell';
+import {VscodeTableHeader} from './vscode-table-header';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 
 /**
@@ -58,6 +60,9 @@ export class VscodeTable extends LitElement {
   @queryAll('.sash-visible')
   private _sashVisibleElements!: HTMLDivElement[];
 
+  @queryAssignedNodes('header', true, 'vscode-table-header')
+  private _assignedHeaderElements!: NodeListOf<VscodeTableHeader>;
+
   @state()
   private _sashPositions: number[] = [];
 
@@ -72,7 +77,9 @@ export class VscodeTable extends LitElement {
   private _activeSashElementIndex = -1;
   private _activeSashCursorOffset = 0;
   private _componentX = 0;
+  private _componentH = 0;
   private _componentW = 0;
+  private _headerCells: VscodeTableHeaderCell[] = [];
   private _cellsToResize!: VscodeTableCell[];
   private _headerCellsToResize!: VscodeTableHeaderCell[];
   private _prevHeaderHeight = 0;
@@ -92,9 +99,33 @@ export class VscodeTable extends LitElement {
     this._componentResizeObserver.disconnect();
   }
 
+  private _queryHeaderCells() {
+    const headers = this._assignedHeaderElements;
+
+    if (!headers.length) {
+      return [];
+    }
+
+    return [
+      ...headers[0].querySelectorAll<VscodeTableHeaderCell>(
+        'vscode-table-header-cell'
+      ),
+    ];
+  }
+
+  private _getHeaderCells() {
+    if(!this._headerCells.length) {
+      this._headerCells = this._queryHeaderCells();
+
+      return this._headerCells;
+    }
+
+    return this._headerCells;
+  }
+
   private _initResizeObserver() {
     this._componentResizeObserver = new ResizeObserver(
-      this._resizeObserverCallbackBound
+      this._componentResizeObserverCallbackBound
     );
     this._componentResizeObserver.observe(this);
 
@@ -104,13 +135,19 @@ export class VscodeTable extends LitElement {
     this._headerResizeObserver.observe(this._headerElement);
   }
 
-  private _resizeObserverCallback() {
+  private _componentResizeObserverCallback() {
+    const cr = this.getBoundingClientRect();
+
+    this._componentH = cr.height;
+    this._componentW = cr.width;
+    this._componentX = cr.x;
+
     this._updateHeaderCellSizes();
     this._updateScrollpaneSize();
   }
 
-  private _resizeObserverCallbackBound =
-    this._resizeObserverCallback.bind(this);
+  private _componentResizeObserverCallbackBound =
+    this._componentResizeObserverCallback.bind(this);
 
   private _headerResizeObserverCallback() {
     this._updateScrollpaneSize();
@@ -190,20 +227,24 @@ export class VscodeTable extends LitElement {
 
     if (
       headerCr.height === this._prevHeaderHeight &&
-      cmpCr.height === this._prevComponentHeight
+      this._componentH === this._prevComponentHeight
     ) {
       return;
     }
 
     this._prevHeaderHeight = headerCr.height;
-    this._prevComponentHeight = cmpCr.height;
-    const scrollableH = cmpCr.height - headerCr.height;
+    this._prevComponentHeight = this._componentH;
+    const scrollableH = this._componentH - headerCr.height;
     this._scrollableElement.style.height = `${scrollableH}px`;
 
     this._sashVisibleElements.forEach((el) => {
       el.style.height = `${scrollableH}px`;
       el.style.top = `${headerCr.height}px`;
-    })
+    });
+  }
+
+  private _onHeaderSlotChange() {
+    this._headerCells = this._queryHeaderCells();
   }
 
   private _onBodySlotChange() {
@@ -254,8 +295,7 @@ export class VscodeTable extends LitElement {
     this._componentX = cmpCr.x;
     this._componentW = cmpCr.width;
 
-    const thead = this._headerSlot.assignedElements()[0];
-    const headerCells = thead.querySelectorAll('vscode-table-header-cell');
+    const headerCells = this._getHeaderCells();
     this._headerCellsToResize = [];
     this._headerCellsToResize.push(headerCells[index]);
 
@@ -335,7 +375,7 @@ export class VscodeTable extends LitElement {
   private _onResizingMouseUp(event: MouseEvent) {
     const {pageX} = event;
 
-    if(this.delayedResizing) {
+    if (this.delayedResizing) {
       this._resizeColumns(pageX, true);
     }
 
@@ -445,7 +485,7 @@ export class VscodeTable extends LitElement {
     return html`
       <div class="${wrapperClasses}">
         <slot name="caption"></slot>
-        <div class="header">
+        <div class="header" @slotchange="${this._onHeaderSlotChange}">
           <slot name="header"></slot>
         </div>
         <vscode-scrollable class="scrollable">
