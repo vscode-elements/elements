@@ -114,7 +114,7 @@ export class VscodeTable extends LitElement {
   }
 
   private _getHeaderCells() {
-    if(!this._headerCells.length) {
+    if (!this._headerCells.length) {
       this._headerCells = this._queryHeaderCells();
 
       return this._headerCells;
@@ -223,7 +223,6 @@ export class VscodeTable extends LitElement {
 
   private _updateScrollpaneSize() {
     const headerCr = this._headerElement.getBoundingClientRect();
-    const cmpCr = this.getBoundingClientRect();
 
     if (
       headerCr.height === this._prevHeaderHeight &&
