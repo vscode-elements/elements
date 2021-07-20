@@ -317,6 +317,23 @@ export class VscodeTable extends LitElement {
     document.addEventListener('mouseup', this._onResizingMouseUpBound);
   }
 
+  private _updateActiveSashPosition(mouseX: number) {
+    const {prevSashPos, nextSashPos} = this._getSashPositions();
+    const minX = prevSashPos
+      ? prevSashPos + this.minColumnWidth
+      : this.minColumnWidth;
+    const maxX = nextSashPos
+      ? nextSashPos - this.minColumnWidth
+      : this._componentW - this.minColumnWidth;
+
+    let newX = mouseX - this._componentX - this._activeSashCursorOffset;
+    newX = Math.max(newX, minX);
+    newX = Math.min(newX, maxX);
+
+    (this._activeSashElement as HTMLDivElement).style.left = `${newX}px`;
+    this._sashPositions[this._activeSashElementIndex] = newX;
+  }
+
   private _getSashPositions(): {
     sashPos: number;
     prevSashPos: number;
@@ -335,21 +352,8 @@ export class VscodeTable extends LitElement {
     };
   }
 
-  private _resizeColumns(mouseX: number, resizeBodyCells = true) {
+  private _resizeColumns(resizeBodyCells = true) {
     const {sashPos, prevSashPos, nextSashPos} = this._getSashPositions();
-    const minX = prevSashPos
-      ? prevSashPos + this.minColumnWidth
-      : this.minColumnWidth;
-    const maxX = nextSashPos
-      ? nextSashPos - this.minColumnWidth
-      : this._componentW - this.minColumnWidth;
-
-    let newX = mouseX - this._componentX - this._activeSashCursorOffset;
-    newX = Math.max(newX, minX);
-    newX = Math.min(newX, maxX);
-
-    (this._activeSashElement as HTMLDivElement).style.left = `${newX}px`;
-    this._sashPositions[this._activeSashElementIndex] = newX;
 
     this._headerCellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
 
@@ -368,23 +372,20 @@ export class VscodeTable extends LitElement {
 
   private _onResizingMouseMove(event: MouseEvent) {
     event.stopPropagation();
-
-    const {pageX} = event;
+    this._updateActiveSashPosition(event.pageX);
 
     if (!this.delayedResizing) {
-      this._resizeColumns(pageX, true);
+      this._resizeColumns(true);
     } else {
-      this._resizeColumns(pageX, false);
+      this._resizeColumns(false);
     }
   }
 
   private _onResizingMouseMoveBound = this._onResizingMouseMove.bind(this);
 
-  private _onResizingMouseUp(event: MouseEvent) {
-    const {pageX} = event;
-
+  private _onResizingMouseUp() {
     if (this.delayedResizing) {
-      this._resizeColumns(pageX, true);
+      this._resizeColumns(true);
     }
 
     this._sashHovers[this._activeSashElementIndex] = false;
