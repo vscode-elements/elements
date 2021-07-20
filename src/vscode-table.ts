@@ -25,10 +25,13 @@ export class VscodeTable extends LitElement {
   @property({reflect: true})
   role = 'table';
 
+  /**
+   * Initial column sizes. It accepts any valid CSS value.
+   */
   @property({type: Array})
   set columns(val: string[]) {
     this._colums = val;
-    this._updateColumnSizes();
+    this._applyDefaultColumnSizes();
   }
   get columns(): string[] {
     return this._colums;
@@ -150,7 +153,7 @@ export class VscodeTable extends LitElement {
     });
   }
 
-  private _updateColumnSizes() {
+  private _applyDefaultColumnSizes() {
     if (!this._bodySlot) {
       return;
     }
@@ -205,7 +208,7 @@ export class VscodeTable extends LitElement {
 
   private _onBodySlotChange() {
     this._updateHeaderCellSizes();
-    this._updateColumnSizes();
+    this._applyDefaultColumnSizes();
     this._initResizeObserver();
   }
 
