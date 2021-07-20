@@ -67,6 +67,9 @@ export class VscodeTable extends LitElement {
   private _sashPositions: number[] = [];
 
   @state()
+  private _percentageSashPositions = false;
+
+  @state()
   private _isDragging = false;
 
   private _sashHovers: boolean[] = [];
@@ -317,7 +320,7 @@ export class VscodeTable extends LitElement {
     document.addEventListener('mouseup', this._onResizingMouseUpBound);
   }
 
-  private _updateActiveSashPosition(mouseX: number) {
+  private _updateActiveSashPosition(mouseX: number, percentage = false) {
     const {prevSashPos, nextSashPos} = this._getSashPositions();
     const minX = prevSashPos
       ? prevSashPos + this.minColumnWidth
@@ -325,13 +328,14 @@ export class VscodeTable extends LitElement {
     const maxX = nextSashPos
       ? nextSashPos - this.minColumnWidth
       : this._componentW - this.minColumnWidth;
-
     let newX = mouseX - this._componentX - this._activeSashCursorOffset;
+
     newX = Math.max(newX, minX);
     newX = Math.min(newX, maxX);
 
-    (this._activeSashElement as HTMLDivElement).style.left = `${newX}px`;
     this._sashPositions[this._activeSashElementIndex] = newX;
+    this._percentageSashPositions = percentage;
+    this.requestUpdate();
   }
 
   private _getSashPositions(): {
@@ -352,20 +356,29 @@ export class VscodeTable extends LitElement {
     };
   }
 
-  private _resizeColumns(resizeBodyCells = true) {
+  private _resizeColumns(resizeBodyCells = true, percentage = false) {
     const {sashPos, prevSashPos, nextSashPos} = this._getSashPositions();
 
-    this._headerCellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
+    const prevColW = sashPos - prevSashPos;
+    const nextColW = nextSashPos - sashPos;
+    const prevColCss = percentage
+      ? `${(prevColW / this._componentW) * 100}%`
+      : `${prevColW}px`;
+    const nextColCss = percentage
+    ? `${(nextColW / this._componentW) * 100}%`
+    : `${nextColW}px`;
+
+    this._headerCellsToResize[0].style.width = prevColCss;
 
     if (this._headerCellsToResize[1]) {
-      this._headerCellsToResize[1].style.width = `${nextSashPos - sashPos}px`;
+      this._headerCellsToResize[1].style.width = nextColCss;
     }
 
     if (resizeBodyCells) {
-      this._cellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
+      this._cellsToResize[0].style.width = prevColCss;
 
       if (this._cellsToResize[1]) {
-        this._cellsToResize[1].style.width = `${nextSashPos - sashPos}px`;
+        this._cellsToResize[1].style.width = nextColCss;
       }
     }
   }
@@ -383,11 +396,9 @@ export class VscodeTable extends LitElement {
 
   private _onResizingMouseMoveBound = this._onResizingMouseMove.bind(this);
 
-  private _onResizingMouseUp() {
-    if (this.delayedResizing) {
-      this._resizeColumns(true);
-    }
-
+  private _onResizingMouseUp(event: MouseEvent) {
+    this._resizeColumns(true, true);
+    this._updateActiveSashPosition(event.pageX, true);
     this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
     this._activeSashElement = null;
@@ -469,13 +480,19 @@ export class VscodeTable extends LitElement {
         hover: this._sashHovers[index],
       });
 
+      let pos = val;
+
+      if (this._percentageSashPositions) {
+        pos = (val / this._componentW) * 100;
+      }
+
+      const left = this._percentageSashPositions ? `${pos}%` : `${pos}px`;
+
       return html`
         <div
           class="${classes}"
           data-index="${index}"
-          style="${styleMap({
-            left: `${val}px`,
-          })}"
+          style="${styleMap({left})}"
           @mousedown="${this._onSashMouseDown}"
           @mouseover="${this._onSashMouseOver}"
           @mouseout="${this._onSashMouseOut}"
