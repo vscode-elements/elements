@@ -318,20 +318,31 @@ export class VscodeTable extends LitElement {
     document.addEventListener('mouseup', this._onResizingMouseUpBound);
   }
 
-  private _resizeColumns(mouseX: number, resizeBodyCells = true) {
+  private _getSashPositions(): {
+    sashPos: number;
+    prevSashPos: number;
+    nextSashPos: number;
+  } {
     const sashPos = this._sashPositions[this._activeSashElementIndex];
     const prevSashPos =
       this._sashPositions[this._activeSashElementIndex - 1] || 0;
     const nextSashPos =
       this._sashPositions[this._activeSashElementIndex + 1] || this._componentW;
 
-    const minX = this._sashPositions[this._activeSashElementIndex - 1]
-      ? this._sashPositions[this._activeSashElementIndex - 1] +
-        this.minColumnWidth
+    return {
+      sashPos,
+      prevSashPos,
+      nextSashPos,
+    };
+  }
+
+  private _resizeColumns(mouseX: number, resizeBodyCells = true) {
+    const {sashPos, prevSashPos, nextSashPos} = this._getSashPositions();
+    const minX = prevSashPos
+      ? prevSashPos + this.minColumnWidth
       : this.minColumnWidth;
-    const maxX = this._sashPositions[this._activeSashElementIndex + 1]
-      ? this._sashPositions[this._activeSashElementIndex + 1] -
-        this.minColumnWidth
+    const maxX = nextSashPos
+      ? nextSashPos - this.minColumnWidth
       : this._componentW - this.minColumnWidth;
 
     let newX = mouseX - this._componentX - this._activeSashCursorOffset;
@@ -344,9 +355,7 @@ export class VscodeTable extends LitElement {
     this._headerCellsToResize[0].style.width = `${sashPos - prevSashPos}px`;
 
     if (this._headerCellsToResize[1]) {
-      this._headerCellsToResize[1].style.width = `${
-        nextSashPos - sashPos
-      }px`;
+      this._headerCellsToResize[1].style.width = `${nextSashPos - sashPos}px`;
     }
 
     if (resizeBodyCells) {
