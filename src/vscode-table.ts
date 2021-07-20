@@ -428,6 +428,10 @@ export class VscodeTable extends LitElement {
       user-select: none;
     }
 
+    .wrapper.resize-cursor {
+      cursor: ew-resize;
+    }
+
     .scrollable {
       height: 100%;
     }
@@ -503,6 +507,7 @@ export class VscodeTable extends LitElement {
     const wrapperClasses = classMap({
       wrapper: true,
       'select-disabled': this._isDragging,
+      'resize-cursor': this._isDragging,
     });
 
     return html`
