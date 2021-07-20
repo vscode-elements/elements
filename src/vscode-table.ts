@@ -76,7 +76,6 @@ export class VscodeTable extends LitElement {
   private _colums: string[] = [];
   private _componentResizeObserver!: ResizeObserver;
   private _headerResizeObserver!: ResizeObserver;
-  private _activeSashElement!: HTMLDivElement | null;
   private _activeSashElementIndex = -1;
   private _activeSashCursorOffset = 0;
   private _componentX = 0;
@@ -290,7 +289,6 @@ export class VscodeTable extends LitElement {
     const cmpCr = this.getBoundingClientRect();
 
     this._isDragging = true;
-    this._activeSashElement = el;
     this._activeSashElementIndex = index;
     this._sashHovers[this._activeSashElementIndex] = true;
     this._activeSashCursorOffset = pageX - elX;
@@ -401,7 +399,6 @@ export class VscodeTable extends LitElement {
     this._updateActiveSashPosition(event.pageX, true);
     this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
-    this._activeSashElement = null;
     this._activeSashElementIndex = -1;
 
     document.removeEventListener('mousemove', this._onResizingMouseMoveBound);
