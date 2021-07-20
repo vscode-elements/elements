@@ -66,7 +66,7 @@ export class VscodeTable extends LitElement {
 
   private _sashHovers: boolean[] = [];
   private _colums: string[] = [];
-  private _resizeObserver!: ResizeObserver;
+  private _componentResizeObserver!: ResizeObserver;
   private _headerResizeObserver!: ResizeObserver;
   private _activeSashElement!: HTMLDivElement | null;
   private _activeSashElementIndex = -1;
@@ -88,15 +88,15 @@ export class VscodeTable extends LitElement {
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._resizeObserver.unobserve(this);
-    this._resizeObserver.disconnect();
+    this._componentResizeObserver.unobserve(this);
+    this._componentResizeObserver.disconnect();
   }
 
   private _initResizeObserver() {
-    this._resizeObserver = new ResizeObserver(
+    this._componentResizeObserver = new ResizeObserver(
       this._resizeObserverCallbackBound
     );
-    this._resizeObserver.observe(this);
+    this._componentResizeObserver.observe(this);
 
     this._headerResizeObserver = new ResizeObserver(
       this._headerResizeObserverCallbackBound
