@@ -14,9 +14,15 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import './vscode-scrollable';
 import {VscodeScrollable} from './vscode-scrollable';
+import {VscodeTableBody} from './vscode-table-body';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeader} from './vscode-table-header';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
+
+const normalizeLengthStr = (rawValue: string, fullWidth: number) => {
+  const isNumber = /^[0-9]+$/.test(rawValue);
+  const isPercentage = /^[0-9]+$/.test(rawValue);
+};
 
 /**
  * @attr {Boolean} zebra
@@ -32,11 +38,14 @@ export class VscodeTable extends LitElement {
    */
   @property({type: Array})
   set columns(val: string[]) {
-    this._colums = val;
-    this._applyDefaultColumnSizes();
+    this._columns = val;
+
+    if (this.isConnected) {
+      this._initDefaultColumnSizes();
+    }
   }
   get columns(): string[] {
-    return this._colums;
+    return this._columns;
   }
 
   @property({type: Number, attribute: 'min-column-width'})
@@ -63,6 +72,9 @@ export class VscodeTable extends LitElement {
   @queryAssignedNodes('header', true, 'vscode-table-header')
   private _assignedHeaderElements!: NodeListOf<VscodeTableHeader>;
 
+  @queryAssignedNodes('body', true, 'vscode-table-body')
+  private _assignedBodyElements!: NodeListOf<VscodeTableBody>;
+
   @state()
   private _sashPositions: number[] = [];
 
@@ -72,8 +84,12 @@ export class VscodeTable extends LitElement {
   @state()
   private _isDragging = false;
 
+  /**
+   * Sash hover state flags, used in the render.
+   */
   private _sashHovers: boolean[] = [];
-  private _colums: string[] = [];
+  private _columns: string[] = [];
+  private _columnWidthPercentages: number[] = [];
   private _componentResizeObserver!: ResizeObserver;
   private _headerResizeObserver!: ResizeObserver;
   private _activeSashElementIndex = -1;
@@ -81,7 +97,16 @@ export class VscodeTable extends LitElement {
   private _componentX = 0;
   private _componentH = 0;
   private _componentW = 0;
+  /**
+   * Cached querySelectorAll result. Updated when the header slot changes.
+   * It shouldn't be used directly, check the "_getHeaderCells" function.
+   */
   private _headerCells: VscodeTableHeaderCell[] = [];
+  /**
+   * Cached querySelectorAll result. Updated when the body slot changes.
+   * It shouldn't be used directly, check the "_getCellsOfFirstRow" function.
+   */
+  private _cellsOfFirstRow: VscodeTableCell[] = [];
   private _cellsToResize!: VscodeTableCell[];
   private _headerCellsToResize!: VscodeTableHeaderCell[];
   private _prevHeaderHeight = 0;
@@ -93,6 +118,9 @@ export class VscodeTable extends LitElement {
     if (this.hasAttribute('vsc-cloak')) {
       this.removeAttribute('vsc-cloak');
     }
+
+    this._memoizeComponentDimensions();
+    this._initDefaultColumnSizes();
   }
 
   disconnectedCallback(): void {
@@ -101,28 +129,64 @@ export class VscodeTable extends LitElement {
     this._componentResizeObserver.disconnect();
   }
 
+  private _px2Percent(px: number) {
+    return (px / this._componentW) * 100;
+  }
+
+  private _percent2Px(percent: number) {
+    return (this._componentW * percent) / 100;
+  }
+
+  private _memoizeComponentDimensions() {
+    const cr = this.getBoundingClientRect();
+
+    this._componentH = cr.height;
+    this._componentW = cr.width;
+    this._componentX = cr.x;
+  }
+
   private _queryHeaderCells() {
     const headers = this._assignedHeaderElements;
 
-    if (!headers.length) {
+    if (!(headers && headers[0])) {
       return [];
     }
 
-    return [
-      ...headers[0].querySelectorAll<VscodeTableHeaderCell>(
+    return Array.from(
+      headers[0].querySelectorAll<VscodeTableHeaderCell>(
         'vscode-table-header-cell'
-      ),
-    ];
+      )
+    );
   }
 
   private _getHeaderCells() {
     if (!this._headerCells.length) {
       this._headerCells = this._queryHeaderCells();
-
-      return this._headerCells;
     }
 
     return this._headerCells;
+  }
+
+  private _queryCellsOfFirstRow() {
+    const assignedBodyElements = this._assignedBodyElements;
+
+    if (!(assignedBodyElements && assignedBodyElements[0])) {
+      return [];
+    }
+
+    return Array.from(
+      assignedBodyElements[0].querySelectorAll<VscodeTableCell>(
+        'vscode-table-row:first-child vscode-table-cell'
+      )
+    );
+  }
+
+  private _getCellsOfFirstRow() {
+    if (!this._cellsOfFirstRow.length) {
+      this._cellsOfFirstRow = this._queryCellsOfFirstRow();
+    }
+
+    return this._cellsOfFirstRow;
   }
 
   private _initResizeObserver() {
@@ -138,13 +202,7 @@ export class VscodeTable extends LitElement {
   }
 
   private _componentResizeObserverCallback() {
-    const cr = this.getBoundingClientRect();
-
-    this._componentH = cr.height;
-    this._componentW = cr.width;
-    this._componentX = cr.x;
-
-    this._updateHeaderCellSizes();
+    this._memoizeComponentDimensions();
     this._updateScrollpaneSize();
   }
 
@@ -158,69 +216,92 @@ export class VscodeTable extends LitElement {
   private _headerResizeObserverCallbackBound =
     this._headerResizeObserverCallback.bind(this);
 
-  private _updateHeaderCellSizes() {
-    const thead = this._headerSlot.assignedElements()[0];
-    const headerCells = thead.querySelectorAll('vscode-table-header-cell');
+  private _calcColWidthPercentages(): number[] {
+    const numCols = this._getHeaderCells().length;
+    let cols: (string | number)[] = this.columns.slice(0, numCols);
+    const numAutoCols =
+      cols.filter((c) => c === 'auto').length + numCols - cols.length;
+    let availablePercent = 100;
 
-    this._sashHovers = [];
+    cols = cols.map((col) => {
+      let retval: string | number;
 
-    for (let i = 0; i < headerCells.length - 1; i++) {
-      this._sashHovers.push(false);
+      if (typeof col === 'number' && !Number.isNaN(col)) {
+        const percent = (col / this._componentW) * 100;
+        availablePercent -= percent;
+        retval = percent;
+      } else if (typeof col === 'string' && /^[0-9]+$/.test(col)) {
+        const val = Number(col);
+        const percent = (val / this._componentW) * 100;
+        availablePercent -= percent;
+        retval = percent;
+      } else if (typeof col === 'string' && /^[0-9]+%$/.test(col)) {
+        const percent = Number(col.substring(0, col.length - 1));
+        availablePercent -= percent;
+        retval = percent;
+      } else if (typeof col === 'string' && /^[0-9]+px$/.test(col)) {
+        const val = Number(col.substring(0, col.length - 2));
+        const percent = (val / this._componentW) * 100;
+        availablePercent -= percent;
+        retval = percent;
+      } else {
+        retval = 'auto';
+      }
+
+      return retval;
+    });
+
+    if (cols.length < numCols) {
+      for (let i = cols.length; i < numCols; i++) {
+        cols.push('auto');
+      }
     }
 
-    const tbody = this._bodySlot.assignedElements()[0];
-    const cells = tbody.querySelectorAll(
-      'vscode-table-row:first-child vscode-table-cell'
-    );
+    cols = cols.map((col) => {
+      if (col === 'auto') {
+        return availablePercent / numAutoCols;
+      }
 
-    window.requestAnimationFrame(() => {
-      const l = cells.length;
-      let prevHandlerPos = 0;
-      this._sashPositions = [];
+      return col as number;
+    });
 
-      cells.forEach((cell, index) => {
-        const br = cell.getBoundingClientRect();
-        const pos = br.width;
+    return cols as number[];
+  }
 
-        if (index < l - 1) {
-          this._sashPositions.push(prevHandlerPos + pos);
-          prevHandlerPos = prevHandlerPos + pos;
-        }
-
-        headerCells[index].style.width = `${pos}px`;
-      });
+  private _initHeaderCellSizes(colWidths: number[]) {
+    this._getHeaderCells().forEach((cell, index) => {
+      cell.style.width = `${colWidths[index]}%`;
     });
   }
 
-  private _applyDefaultColumnSizes() {
-    if (!this._bodySlot) {
-      return;
-    }
+  private _initBodyColumnSizes(colWidths: number[]) {
+    this._getCellsOfFirstRow().forEach((cell, index) => {
+      cell.style.width = `${colWidths[index]}%`;
+    });
+  }
 
-    const bodySlotAssignedElements = this._bodySlot.assignedElements();
+  private _initSashes(colWidths: number[]) {
+    const l = colWidths.length;
+    let prevHandlerPos = 0;
+    this._sashPositions = [];
+    this._percentageSashPositions = true;
 
-    if (!bodySlotAssignedElements || bodySlotAssignedElements.length < 1) {
-      return;
-    }
+    colWidths.forEach((collW, index) => {
+      if (index < l - 1) {
+        const pos = prevHandlerPos + collW;
 
-    const tbody = bodySlotAssignedElements[0];
-    const cellsOfFirstRow = tbody.querySelectorAll<VscodeTableCell>(
-      'vscode-table-row:first-child > vscode-table-cell'
-    );
-
-    if (!cellsOfFirstRow) {
-      return;
-    }
-
-    cellsOfFirstRow.forEach((cell, index) => {
-      if (this._colums[index]) {
-        cell.style.width = this._colums[index];
-      } else {
-        cell.style.width = 'auto';
+        this._sashPositions.push(pos);
+        prevHandlerPos = pos;
       }
     });
+  }
 
-    this._updateHeaderCellSizes();
+  private _initDefaultColumnSizes() {
+    const colWidths = this._calcColWidthPercentages();
+
+    this._initHeaderCellSizes(colWidths);
+    this._initBodyColumnSizes(colWidths);
+    this._initSashes(colWidths);
   }
 
   private _updateScrollpaneSize() {
@@ -249,8 +330,8 @@ export class VscodeTable extends LitElement {
   }
 
   private _onBodySlotChange() {
-    this._updateHeaderCellSizes();
-    this._applyDefaultColumnSizes();
+    // this._updateHeaderCellSizes();
+    this._initDefaultColumnSizes();
     this._initResizeObserver();
   }
 
@@ -291,7 +372,8 @@ export class VscodeTable extends LitElement {
     this._isDragging = true;
     this._activeSashElementIndex = index;
     this._sashHovers[this._activeSashElementIndex] = true;
-    this._activeSashCursorOffset = pageX - elX;
+    this._activeSashCursorOffset = this._px2Percent(pageX - elX);
+    console.log(this._activeSashCursorOffset);
     this._componentX = cmpCr.x;
     this._componentW = cmpCr.width;
 
@@ -320,13 +402,16 @@ export class VscodeTable extends LitElement {
 
   private _updateActiveSashPosition(mouseX: number, percentage = false) {
     const {prevSashPos, nextSashPos} = this._getSashPositions();
-    const minX = prevSashPos
-      ? prevSashPos + this.minColumnWidth
+    const minColumnWidth = percentage
+      ? this._px2Percent(this.minColumnWidth)
       : this.minColumnWidth;
+    const minX = prevSashPos
+      ? prevSashPos + minColumnWidth
+      : minColumnWidth;
     const maxX = nextSashPos
-      ? nextSashPos - this.minColumnWidth
-      : this._componentW - this.minColumnWidth;
-    let newX = mouseX - this._componentX - this._activeSashCursorOffset;
+      ? nextSashPos - minColumnWidth
+      : this._componentW - minColumnWidth;
+    let newX = this._px2Percent(mouseX) - this._componentX - this._activeSashCursorOffset;
 
     newX = Math.max(newX, minX);
     newX = Math.min(newX, maxX);
@@ -363,8 +448,8 @@ export class VscodeTable extends LitElement {
       ? `${(prevColW / this._componentW) * 100}%`
       : `${prevColW}px`;
     const nextColCss = percentage
-    ? `${(nextColW / this._componentW) * 100}%`
-    : `${nextColW}px`;
+      ? `${(nextColW / this._componentW) * 100}%`
+      : `${nextColW}px`;
 
     this._headerCellsToResize[0].style.width = prevColCss;
 
@@ -383,7 +468,7 @@ export class VscodeTable extends LitElement {
 
   private _onResizingMouseMove(event: MouseEvent) {
     event.stopPropagation();
-    this._updateActiveSashPosition(event.pageX);
+    this._updateActiveSashPosition(event.pageX, true);
 
     if (!this.delayedResizing) {
       this._resizeColumns(true);
@@ -481,13 +566,13 @@ export class VscodeTable extends LitElement {
         hover: this._sashHovers[index],
       });
 
-      let pos = val;
+      // let pos = val;
 
-      if (this._percentageSashPositions) {
+      /* if (this._percentageSashPositions) {
         pos = (val / this._componentW) * 100;
-      }
+      } */
 
-      const left = this._percentageSashPositions ? `${pos}%` : `${pos}px`;
+      const left = `${val}%`;
 
       return html`
         <div

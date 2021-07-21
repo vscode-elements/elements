@@ -370,8 +370,6 @@ any resemblance to real persons is coincidental.
 </vscode-table>
 ```
 
-<!-- 
-
 ## Initial column widths
 
 <style>
@@ -471,8 +469,6 @@ any resemblance to real persons is coincidental.
     </vscode-table-body>
   </vscode-table>
 </component-preview>
-
--->
 
 ## Delayed resizing
 
