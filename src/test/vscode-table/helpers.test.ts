@@ -13,8 +13,8 @@ describe('vscode-table helpers', () => {
   });
 
   it('input type is percentage', () => {
-    expect(rawValueToPercentage('50%', 200)).to.eq(100);
-    expect(rawValueToPercentage('10.5%', 200)).to.eq(21);
+    expect(rawValueToPercentage('50%', 200)).to.eq(50);
+    expect(rawValueToPercentage('10.5%', 200)).to.eq(10.5);
   });
 
   it('input type is pixel', () => {

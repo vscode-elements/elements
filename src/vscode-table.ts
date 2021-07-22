@@ -18,9 +18,10 @@ import {VscodeTableBody} from './vscode-table-body';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeader} from './vscode-table-header';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
-import { rawValueToPercentage } from './vscode-table/helpers';
+import {rawValueToPercentage} from './vscode-table/helpers';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
+const DEFAULT_COLUMN_WIDTH = 5;
 
 /**
  * @attr {Boolean} zebra
@@ -57,7 +58,7 @@ export class VscodeTable extends LitElement {
    * Minimum column width in percentage
    */
   @property({type: Number, attribute: 'min-column-width'})
-  minColumnWidth = 5;
+  minColumnWidth = DEFAULT_COLUMN_WIDTH;
 
   @property({type: Boolean, attribute: 'delayed-resizing'})
   delayedResizing = false;
@@ -385,7 +386,15 @@ export class VscodeTable extends LitElement {
   private _updateActiveSashPosition(mouseX: number) {
     const {prevSashPos, nextSashPos} = this._getSashPositions();
     console.log('nextSashPos:', nextSashPos, 'prevSashPos:', prevSashPos);
-    const minColumnWidth = this.minColumnWidth;
+    let minColumnWidth = rawValueToPercentage(
+      this.minColumnWidth,
+      this._componentW
+    );
+
+    if (minColumnWidth === null) {
+      minColumnWidth = DEFAULT_COLUMN_WIDTH;
+    }
+
     const minX = prevSashPos ? prevSashPos + minColumnWidth : minColumnWidth;
     const maxX = nextSashPos
       ? nextSashPos - minColumnWidth
