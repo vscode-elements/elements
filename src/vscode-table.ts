@@ -24,6 +24,8 @@ const normalizeLengthStr = (rawValue: string, fullWidth: number) => {
   const isPercentage = /^[0-9]+$/.test(rawValue);
 };
 
+const COMPONENT_WIDTH_PERCENTAGE = 100;
+
 /**
  * @attr {Boolean} zebra
  * @attr {Boolean} bordered
@@ -48,8 +50,11 @@ export class VscodeTable extends LitElement {
     return this._columns;
   }
 
+  /**
+   * Minimum column width in percentage
+   */
   @property({type: Number, attribute: 'min-column-width'})
-  minColumnWidth = 100;
+  minColumnWidth = 5;
 
   @property({type: Boolean, attribute: 'delayed-resizing'})
   delayedResizing = false;
@@ -75,6 +80,9 @@ export class VscodeTable extends LitElement {
   @queryAssignedNodes('body', true, 'vscode-table-body')
   private _assignedBodyElements!: NodeListOf<VscodeTableBody>;
 
+  /**
+   * Percentage values
+   */
   @state()
   private _sashPositions: number[] = [];
 
@@ -284,7 +292,6 @@ export class VscodeTable extends LitElement {
     const l = colWidths.length;
     let prevHandlerPos = 0;
     this._sashPositions = [];
-    this._percentageSashPositions = true;
 
     colWidths.forEach((collW, index) => {
       if (index < l - 1) {
@@ -367,15 +374,11 @@ export class VscodeTable extends LitElement {
     const index = Number(el.dataset.index);
     const cr = el.getBoundingClientRect();
     const elX = cr.x;
-    const cmpCr = this.getBoundingClientRect();
 
     this._isDragging = true;
     this._activeSashElementIndex = index;
     this._sashHovers[this._activeSashElementIndex] = true;
     this._activeSashCursorOffset = this._px2Percent(pageX - elX);
-    console.log(this._activeSashCursorOffset);
-    this._componentX = cmpCr.x;
-    this._componentW = cmpCr.width;
 
     const headerCells = this._getHeaderCells();
     this._headerCellsToResize = [];
@@ -402,22 +405,21 @@ export class VscodeTable extends LitElement {
 
   private _updateActiveSashPosition(mouseX: number, percentage = false) {
     const {prevSashPos, nextSashPos} = this._getSashPositions();
-    const minColumnWidth = percentage
-      ? this._px2Percent(this.minColumnWidth)
-      : this.minColumnWidth;
-    const minX = prevSashPos
-      ? prevSashPos + minColumnWidth
-      : minColumnWidth;
+    console.log('nextSashPos:', nextSashPos, 'prevSashPos:', prevSashPos);
+    const minColumnWidth = this.minColumnWidth;
+    const minX = prevSashPos ? prevSashPos + minColumnWidth : minColumnWidth;
     const maxX = nextSashPos
       ? nextSashPos - minColumnWidth
-      : this._componentW - minColumnWidth;
-    let newX = this._px2Percent(mouseX) - this._componentX - this._activeSashCursorOffset;
+      : COMPONENT_WIDTH_PERCENTAGE - minColumnWidth;
+    console.log('maxX:', maxX, nextSashPos, minColumnWidth);
+    let newX = this._px2Percent(
+      mouseX - this._componentX - this._percent2Px(this._activeSashCursorOffset)
+    );
 
     newX = Math.max(newX, minX);
     newX = Math.min(newX, maxX);
 
     this._sashPositions[this._activeSashElementIndex] = newX;
-    this._percentageSashPositions = percentage;
     this.requestUpdate();
   }
 
@@ -430,7 +432,8 @@ export class VscodeTable extends LitElement {
     const prevSashPos =
       this._sashPositions[this._activeSashElementIndex - 1] || 0;
     const nextSashPos =
-      this._sashPositions[this._activeSashElementIndex + 1] || this._componentW;
+      this._sashPositions[this._activeSashElementIndex + 1] ||
+      COMPONENT_WIDTH_PERCENTAGE;
 
     return {
       sashPos,
@@ -444,12 +447,8 @@ export class VscodeTable extends LitElement {
 
     const prevColW = sashPos - prevSashPos;
     const nextColW = nextSashPos - sashPos;
-    const prevColCss = percentage
-      ? `${(prevColW / this._componentW) * 100}%`
-      : `${prevColW}px`;
-    const nextColCss = percentage
-      ? `${(nextColW / this._componentW) * 100}%`
-      : `${nextColW}px`;
+    const prevColCss = `${prevColW}%`;
+    const nextColCss = `${nextColW}%`;
 
     this._headerCellsToResize[0].style.width = prevColCss;
 
