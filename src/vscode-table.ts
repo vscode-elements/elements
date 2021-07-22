@@ -18,11 +18,7 @@ import {VscodeTableBody} from './vscode-table-body';
 import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeader} from './vscode-table-header';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
-
-const normalizeLengthStr = (rawValue: string, fullWidth: number) => {
-  const isNumber = /^[0-9]+$/.test(rawValue);
-  const isPercentage = /^[0-9]+$/.test(rawValue);
-};
+import { rawValueToPercentage } from './vscode-table/helpers';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 
@@ -36,7 +32,14 @@ export class VscodeTable extends LitElement {
   role = 'table';
 
   /**
-   * Initial column sizes. It accepts any valid CSS value.
+   * Initial column sizes in a JSON-encoded array.
+   * Accepted values are:
+   * - number
+   * - string-type number (ex.: "100")
+   * - px value (ex.: "100px")
+   * - percentage value (ex.: "50%")
+   * - percentage value (ex.: "50%")
+   * - "auto" keyword
    */
   @property({type: Array})
   set columns(val: string[]) {
@@ -59,9 +62,6 @@ export class VscodeTable extends LitElement {
   @property({type: Boolean, attribute: 'delayed-resizing'})
   delayedResizing = false;
 
-  @query('slot[name="header"]')
-  private _headerSlot!: HTMLSlotElement;
-
   @query('slot[name="body"]')
   private _bodySlot!: HTMLSlotElement;
 
@@ -81,13 +81,10 @@ export class VscodeTable extends LitElement {
   private _assignedBodyElements!: NodeListOf<VscodeTableBody>;
 
   /**
-   * Percentage values
+   * Sash positions in percentage
    */
   @state()
   private _sashPositions: number[] = [];
-
-  @state()
-  private _percentageSashPositions = false;
 
   @state()
   private _isDragging = false;
@@ -97,7 +94,6 @@ export class VscodeTable extends LitElement {
    */
   private _sashHovers: boolean[] = [];
   private _columns: string[] = [];
-  private _columnWidthPercentages: number[] = [];
   private _componentResizeObserver!: ResizeObserver;
   private _headerResizeObserver!: ResizeObserver;
   private _activeSashElementIndex = -1;
@@ -232,31 +228,15 @@ export class VscodeTable extends LitElement {
     let availablePercent = 100;
 
     cols = cols.map((col) => {
-      let retval: string | number;
+      const percentage = rawValueToPercentage(col, this._componentW);
 
-      if (typeof col === 'number' && !Number.isNaN(col)) {
-        const percent = (col / this._componentW) * 100;
-        availablePercent -= percent;
-        retval = percent;
-      } else if (typeof col === 'string' && /^[0-9]+$/.test(col)) {
-        const val = Number(col);
-        const percent = (val / this._componentW) * 100;
-        availablePercent -= percent;
-        retval = percent;
-      } else if (typeof col === 'string' && /^[0-9]+%$/.test(col)) {
-        const percent = Number(col.substring(0, col.length - 1));
-        availablePercent -= percent;
-        retval = percent;
-      } else if (typeof col === 'string' && /^[0-9]+px$/.test(col)) {
-        const val = Number(col.substring(0, col.length - 2));
-        const percent = (val / this._componentW) * 100;
-        availablePercent -= percent;
-        retval = percent;
-      } else {
-        retval = 'auto';
+      if (percentage === null) {
+        return 'auto';
       }
 
-      return retval;
+      availablePercent -= percentage;
+
+      return percentage;
     });
 
     if (cols.length < numCols) {
@@ -337,7 +317,6 @@ export class VscodeTable extends LitElement {
   }
 
   private _onBodySlotChange() {
-    // this._updateHeaderCellSizes();
     this._initDefaultColumnSizes();
     this._initResizeObserver();
   }
@@ -403,7 +382,7 @@ export class VscodeTable extends LitElement {
     document.addEventListener('mouseup', this._onResizingMouseUpBound);
   }
 
-  private _updateActiveSashPosition(mouseX: number, percentage = false) {
+  private _updateActiveSashPosition(mouseX: number) {
     const {prevSashPos, nextSashPos} = this._getSashPositions();
     console.log('nextSashPos:', nextSashPos, 'prevSashPos:', prevSashPos);
     const minColumnWidth = this.minColumnWidth;
@@ -442,7 +421,7 @@ export class VscodeTable extends LitElement {
     };
   }
 
-  private _resizeColumns(resizeBodyCells = true, percentage = false) {
+  private _resizeColumns(resizeBodyCells = true) {
     const {sashPos, prevSashPos, nextSashPos} = this._getSashPositions();
 
     const prevColW = sashPos - prevSashPos;
@@ -467,7 +446,7 @@ export class VscodeTable extends LitElement {
 
   private _onResizingMouseMove(event: MouseEvent) {
     event.stopPropagation();
-    this._updateActiveSashPosition(event.pageX, true);
+    this._updateActiveSashPosition(event.pageX);
 
     if (!this.delayedResizing) {
       this._resizeColumns(true);
@@ -479,8 +458,8 @@ export class VscodeTable extends LitElement {
   private _onResizingMouseMoveBound = this._onResizingMouseMove.bind(this);
 
   private _onResizingMouseUp(event: MouseEvent) {
-    this._resizeColumns(true, true);
-    this._updateActiveSashPosition(event.pageX, true);
+    this._resizeColumns(true);
+    this._updateActiveSashPosition(event.pageX);
     this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
     this._activeSashElementIndex = -1;
@@ -564,12 +543,6 @@ export class VscodeTable extends LitElement {
         sash: true,
         hover: this._sashHovers[index],
       });
-
-      // let pos = val;
-
-      /* if (this._percentageSashPositions) {
-        pos = (val / this._componentW) * 100;
-      } */
 
       const left = `${val}%`;
 
