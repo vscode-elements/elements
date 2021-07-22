@@ -385,7 +385,6 @@ export class VscodeTable extends LitElement {
 
   private _updateActiveSashPosition(mouseX: number) {
     const {prevSashPos, nextSashPos} = this._getSashPositions();
-    console.log('nextSashPos:', nextSashPos, 'prevSashPos:', prevSashPos);
     let minColumnWidth = rawValueToPercentage(
       this.minColumnWidth,
       this._componentW
@@ -399,7 +398,6 @@ export class VscodeTable extends LitElement {
     const maxX = nextSashPos
       ? nextSashPos - minColumnWidth
       : COMPONENT_WIDTH_PERCENTAGE - minColumnWidth;
-    console.log('maxX:', maxX, nextSashPos, minColumnWidth);
     let newX = this._px2Percent(
       mouseX - this._componentX - this._percent2Px(this._activeSashCursorOffset)
     );
