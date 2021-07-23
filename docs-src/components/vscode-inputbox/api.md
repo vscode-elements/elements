@@ -13,7 +13,7 @@ component: vscode-inputbox
 
 | Attribute | Type               | Description                                      |
 |-----------|--------------------|--------------------------------------------------|
-| `variant` | `"narrow"|"wide"` | The sizes are borrowed from the VSCode setting page. The narrow size is typically used for the numeric values and the wide size for the text. |
+| `variant` | `"narrow"|"wide"` | The sizes are borrowed from the VSCode settings page. The narrow size is typically used for the numeric values and the wide size for the text. |
 
 ## Properties
 
