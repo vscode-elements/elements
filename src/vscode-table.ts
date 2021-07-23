@@ -21,7 +21,6 @@ import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 import {rawValueToPercentage} from './vscode-table/helpers';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
-const DEFAULT_COLUMN_WIDTH = 5;
 
 /**
  * @attr {Boolean} zebra
@@ -55,10 +54,16 @@ export class VscodeTable extends LitElement {
   }
 
   /**
-   * Minimum column width in percentage
+   * Minimum column width. Valid values are:
+   * - number
+   * - string-type number (ex.: "100")
+   * - px value (ex.: "100px")
+   * - percentage value (ex.: "50%")
+   * - percentage value (ex.: "50%")
+   * - "auto" keyword
    */
-  @property({type: Number, attribute: 'min-column-width'})
-  minColumnWidth = DEFAULT_COLUMN_WIDTH;
+  @property({attribute: 'min-column-width'})
+  minColumnWidth = '50px';
 
   @property({type: Boolean, attribute: 'delayed-resizing'})
   delayedResizing = false;
@@ -391,7 +396,7 @@ export class VscodeTable extends LitElement {
     );
 
     if (minColumnWidth === null) {
-      minColumnWidth = DEFAULT_COLUMN_WIDTH;
+      minColumnWidth = 0;
     }
 
     const minX = prevSashPos ? prevSashPos + minColumnWidth : minColumnWidth;
