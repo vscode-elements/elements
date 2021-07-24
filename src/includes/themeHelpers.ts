@@ -23,10 +23,8 @@ const injectInlineStyles = (content: string) => {
   if (!styleTag) {
     const style = document.createElement('style');
     style.setAttribute('id', STYLE_TAG_ID);
-    style.innerHTML = ':root{ --vsc-foo-bar: #f00; }';
-
-    document.querySelector('head')?.appendChild(style);
     style.innerHTML = content;
+    document.querySelector('head')?.appendChild(style);
   } else {
     styleTag.innerHTML = content;
   }
