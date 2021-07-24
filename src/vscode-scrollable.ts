@@ -243,6 +243,7 @@ export class VscodeScrollable extends LitElement {
 
       .scrollbar-thumb {
         background-color: transparent;
+        min-height: var(--min-thumb-height, 20px);
         opacity: 0;
         position: absolute;
         right: 0;
