@@ -4,17 +4,19 @@ title: Table
 tags: component
 component: vscode-table
 toc:
-  - label: Basic example
-    path: basic-example
-  - label: Bordered table
-    path: bordered-table
-  - label: Zebra table
-    path: zebra-table
+  - label: A simple table
+    path: a-simple-table
+  - label: Scrollable table
+    path: scrollable-table
+  - label: Responsive table
+    path: responsive-table
+  - label: Resizable table
+    path: resizable-table
   - label: Initial column widths
     path: initial-column-widths
   - label: Delayed resizing
     path: delayed-resizing
-  - label: Complex HTML Content
+  - label: Complex HTML content
     path: complex-html-content
 ---
 
