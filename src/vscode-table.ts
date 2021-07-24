@@ -581,8 +581,8 @@ export class VscodeTable extends LitElement {
 
     return html`
       <div class="${wrapperClasses}">
-        <slot name="caption"></slot>
         <div class="header" @slotchange="${this._onHeaderSlotChange}">
+          <slot name="caption"></slot>
           <slot name="header"></slot>
         </div>
         <vscode-scrollable class="scrollable">
