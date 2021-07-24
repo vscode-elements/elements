@@ -34,6 +34,12 @@ export class VscodeTable extends LitElement {
   @property({type: Boolean})
   resizable = false;
 
+  @property({type: Boolean, reflect: true})
+  responsive = false;
+
+  @property({type: Number})
+  breakpoint = 300;
+
   /**
    * Initial column sizes in a JSON-encoded array.
    * Accepted values are:
@@ -97,6 +103,9 @@ export class VscodeTable extends LitElement {
 
   @state()
   private _isDragging = false;
+
+  @state()
+  private _compactView = false;
 
   /**
    * Sash hover state flags, used in the render.
@@ -172,6 +181,9 @@ export class VscodeTable extends LitElement {
     );
   }
 
+  /**
+   * Get cached header cells
+   */
   private _getHeaderCells() {
     if (!this._headerCells.length) {
       this._headerCells = this._queryHeaderCells();
@@ -194,6 +206,9 @@ export class VscodeTable extends LitElement {
     );
   }
 
+  /**
+   * Get cached cells of first row
+   */
   private _getCellsOfFirstRow() {
     if (!this._cellsOfFirstRow.length) {
       this._cellsOfFirstRow = this._queryCellsOfFirstRow();
@@ -217,6 +232,10 @@ export class VscodeTable extends LitElement {
   private _componentResizeObserverCallback() {
     this._memoizeComponentDimensions();
     this._updateScrollpaneSize();
+
+    if (this.responsive) {
+      this._toggleCompactView();
+    }
   }
 
   private _componentResizeObserverCallbackBound =
@@ -319,6 +338,43 @@ export class VscodeTable extends LitElement {
       el.style.height = `${scrollableH}px`;
       el.style.top = `${headerCr.height}px`;
     });
+  }
+
+  private _applyCompactViewColumnLabels() {
+    const headerCells = this._getHeaderCells();
+    const labels = headerCells.map((c) => c.innerText);
+    const rows = this.querySelectorAll('vscode-table-row');
+
+    rows.forEach((r) => {
+      const cells = r.querySelectorAll('vscode-table-cell');
+
+      cells.forEach((c, i) => {
+        c.columnLabel = labels[i];
+        c.compact = true;
+      });
+    });
+  }
+
+  private _clearCompactViewColumnLabels() {
+    this.querySelectorAll('vscode-table-cell').forEach((c) => {
+      c.columnLabel = '';
+      c.compact = false;
+    });
+  }
+
+  private _toggleCompactView() {
+    const cr = this.getBoundingClientRect();
+    const nextCompactView = cr.width < this.breakpoint;
+
+    if (this._compactView !== nextCompactView) {
+      this._compactView = nextCompactView;
+
+      if (nextCompactView) {
+        this._applyCompactViewColumnLabels();
+      } else {
+        this._clearCompactViewColumnLabels();
+      }
+    }
   }
 
   private _onHeaderSlotChange() {
@@ -510,6 +566,11 @@ export class VscodeTable extends LitElement {
       cursor: ew-resize;
     }
 
+    .wrapper.compact-view .header-slot-wrapper {
+      height: 0;
+      overflow: hidden;
+    }
+
     .scrollable {
       height: 100%;
     }
@@ -523,8 +584,8 @@ export class VscodeTable extends LitElement {
       width: 100%;
     }
 
-    :host(:not([bordered])) .wrapper:hover .scrollable:not([scrolled]):before,
-    :host([bordered]) .scrollable:not([scrolled]):before {
+    :host(:not([bordered])) .wrapper:not(.compact-view):hover .scrollable:not([scrolled]):before,
+    :host([bordered]) .wrapper:not(.compact-view) .scrollable:not([scrolled]):before {
       background-color: var(--vscode-editorGroup-border);
     }
 
@@ -541,6 +602,10 @@ export class VscodeTable extends LitElement {
       position: absolute;
       top: 0;
       width: 1px;
+    }
+
+    .wrapper.compact-view:hover .sash {
+      display: none;
     }
 
     .sash.resizable {
@@ -606,13 +671,16 @@ export class VscodeTable extends LitElement {
       wrapper: true,
       'select-disabled': this._isDragging,
       'resize-cursor': this._isDragging,
+      'compact-view': this._compactView,
     });
 
     return html`
       <div class="${wrapperClasses}">
         <div class="header" @slotchange="${this._onHeaderSlotChange}">
           <slot name="caption"></slot>
-          <slot name="header"></slot>
+          <div class="header-slot-wrapper">
+            <slot name="header"></slot>
+          </div>
         </div>
         <vscode-scrollable class="scrollable">
           <div>
