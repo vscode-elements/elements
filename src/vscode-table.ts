@@ -514,6 +514,20 @@ export class VscodeTable extends LitElement {
       height: 100%;
     }
 
+    .scrollable:before {
+      background-color: transparent;
+      content: '';
+      display: block;
+      height: 1px;
+      position: absolute;
+      width: 100%;
+    }
+
+    :host(:not([bordered])) .wrapper:hover .scrollable:not([scrolled]):before,
+    :host([bordered]) .scrollable:not([scrolled]):before {
+      background-color: var(--vscode-editorGroup-border);
+    }
+
     :host(:not([bordered])) .sash {
       visibility: hidden;
     }

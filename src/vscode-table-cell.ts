@@ -25,7 +25,7 @@ export class VscodeTableCell extends LitElement {
     }
 
     :host-context(vscode-table[bordered]) {
-      border-top: 1px solid var(--vscode-editorGroup-border);
+      border-bottom: 1px solid var(--vscode-editorGroup-border);
     }
 
     .wrapper {
