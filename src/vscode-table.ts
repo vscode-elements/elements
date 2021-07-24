@@ -31,6 +31,9 @@ export class VscodeTable extends LitElement {
   @property({reflect: true})
   role = 'table';
 
+  @property({type: Boolean})
+  resizable = false;
+
   /**
    * Initial column sizes in a JSON-encoded array.
    * Accepted values are:
@@ -520,11 +523,14 @@ export class VscodeTable extends LitElement {
     }
 
     .sash {
-      cursor: ew-resize;
       height: 100%;
       position: absolute;
       top: 0;
       width: 1px;
+    }
+
+    .sash.resizable {
+      cursor: ew-resize;
     }
 
     .sash-visible {
@@ -554,23 +560,32 @@ export class VscodeTable extends LitElement {
       const classes = classMap({
         sash: true,
         hover: this._sashHovers[index],
+        resizable: this.resizable,
       });
 
       const left = `${val}%`;
 
-      return html`
-        <div
-          class="${classes}"
-          data-index="${index}"
-          style="${styleMap({left})}"
-          @mousedown="${this._onSashMouseDown}"
-          @mouseover="${this._onSashMouseOver}"
-          @mouseout="${this._onSashMouseOut}"
-        >
-          <div class="sash-visible"></div>
-          <div class="sash-clickable"></div>
-        </div>
-      `;
+      return this.resizable
+        ? html`
+            <div
+              class="${classes}"
+              data-index="${index}"
+              style="${styleMap({left})}"
+              @mousedown="${this._onSashMouseDown}"
+              @mouseover="${this._onSashMouseOver}"
+              @mouseout="${this._onSashMouseOut}"
+            >
+              <div class="sash-visible"></div>
+              <div class="sash-clickable"></div>
+            </div>
+          `
+        : html`<div
+            class="${classes}"
+            data-index="${index}"
+            style="${styleMap({left})}"
+          >
+            <div class="sash-visible"></div>
+          </div>`;
     });
 
     const wrapperClasses = classMap({
