@@ -7,6 +7,7 @@ import {
   TemplateResult,
   CSSResult,
   internalProperty,
+  state,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -31,6 +32,12 @@ export class VscodeSplitLayout extends LitElement {
   @internalProperty() _handleLeft = 0;
   @internalProperty() _handleTop = 0;
   @internalProperty() _isDragActive = false;
+
+  @state()
+  private _hover = false;
+
+  @state()
+  private _hide = false;
 
   private _boundRect: DOMRect = new DOMRect();
   private _handleOffset = 0;
@@ -72,6 +79,18 @@ export class VscodeSplitLayout extends LitElement {
       this._startPaneBottom = maxPos - pos;
       this._endPaneTop = pos;
       this._handleTop = pos;
+    }
+  }
+
+  private _handleMouseOver() {
+    this._hover = true;
+    this._hide = false;
+  }
+
+  private _handleMouseOut(event: MouseEvent) {
+    if (event.buttons !== 1) {
+      this._hover = false;
+      this._hide = true;
     }
   }
 
@@ -191,6 +210,16 @@ export class VscodeSplitLayout extends LitElement {
         z-index: 2;
       }
 
+      .handle.hover {
+        background-color: var(--vscode-sash-hoverBorder);
+        transition: background-color 100ms linear 300ms;
+      }
+
+      .handle.hide {
+        background-color: transparent;
+        transition: background-color 100ms linear;
+      }
+
       .handle.split-vertical {
         cursor: ew-resize;
         height: 100%;
@@ -240,6 +269,8 @@ export class VscodeSplitLayout extends LitElement {
 
     const handleClasses = classMap({
       handle: true,
+      hover: this._hover,
+      hide: this._hide,
       'split-vertical': this.split === 'vertical',
       'split-horizontal': this.split === 'horizontal',
     });
@@ -255,6 +286,8 @@ export class VscodeSplitLayout extends LitElement {
       <div
         class="${handleClasses}"
         style="${handleStyles}"
+        @mouseover="${this._handleMouseOver}"
+        @mouseout="${this._handleMouseOut}"
         @mousedown="${this._handleMouseDown}"
         @dblclick="${this._handleDblClick}"
       ></div>
