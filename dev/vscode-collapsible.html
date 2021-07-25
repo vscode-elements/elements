@@ -7,46 +7,69 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>VSCode Webview Elements demo page</title>
   <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
-  <script src="../dev-assets/preview-page.js"></script>
-  <script src="../dist/vscode-collapsible.js" type="module"></script>
+  <link rel="stylesheet" href="../node_modules/vscode-codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
+  <script type="module" src="../dev-assets/component-preview.js"></script>
+  <script type="module" src="../dist/vscode-icon.js"></script>
+  <script type="module" src="../dist/vscode-collapsible.js"></script>
 </head>
 
 <body class="vscode-light">
-  <div class="theme-switcher">
-    <div class="theme-switcher-option light">
-      <button value="vscode-light" type="button">Light</button>
-    </div>
-    <div class="theme-switcher-option dark">
-      <button value="vscode-dark" type="button">Dark</button>
-    </div>
-    <div class="theme-switcher-option hc">
-      <button value="vscode-high-contrast" type="button">
-        High contrast
-      </button>
-    </div>
-  </div>
-
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
-      <vscode-collapsible open>
-        <div slot="actions">
-          <button>a</button>
-        </div>
-        <div slot="body">
-          <p>lorem ipsum dolor sit</p>
+      <component-preview>
+        <vscode-collapsible title="Lorem" open>
+          <div slot="actions">
+            <vscode-icon name="account" action-icon title="Account" tabindex="0"></vscode-icon>
+            <vscode-icon name="add" action-icon title="Add" tabindex="0"></vscode-icon>
+            <vscode-icon name="git-compare" action-icon title="Git compare" tabindex="0"></vscode-icon>
+          </div>
+          <div slot="body">
             <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+          </div>
+        </vscode-collapsible>
+        <vscode-collapsible title="Ipsum">
+          <div slot="actions">
+            <vscode-icon name="account" action-icon title="Account" tabindex="0"></vscode-icon>
+            <vscode-icon name="add" action-icon title="Add" tabindex="0"></vscode-icon>
+            <vscode-icon name="git-compare" action-icon title="Git compare" tabindex="0"></vscode-icon>
+          </div>
+          <div slot="body">
             <p>lorem ipsum dolor sit</p>
-            <p>lorem ipsum dolor sit</p>
-            <p>lorem ipsum dolor sit</p>
-            <p>lorem ipsum dolor sit</p>
-            <p>lorem ipsum dolor sit</p>
-        </div>
-      </vscode-collapsible>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+              <p>lorem ipsum dolor sit</p>
+          </div>
+        </vscode-collapsible>
+      </component-preview>
+      <script type="module">
+        const icons = document.querySelectorAll('vscode-icon[action-icon]');
+
+        icons.forEach((i) => {
+          i.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            console.log(event);
+          });
+
+          i.addEventListener('keydown', (event) => {
+            event.stopPropagation();
+
+            if (event.key === 'Enter') {
+              console.log(event);
+            }
+          });
+        });
+      </script>
     </div>
   </div>
 </body>
