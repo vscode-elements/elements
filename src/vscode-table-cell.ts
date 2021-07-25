@@ -40,17 +40,20 @@ export class VscodeTableCell extends LitElement {
     :host([compact]) {
       display: block;
       height: auto;
-      margin-bottom: 5px;
-      margin-top: 5px;
+      padding-bottom: 5px;
       width: 100% !important;
     }
 
     :host([compact]:first-child) {
-      margin-top: 10px;
+      padding-top: 10px;
+    }
+
+    :host-context(vscode-table[bordered][compact]) {
+      border: 0;
     }
 
     :host([compact]:last-child) {
-      margin-bottom: 10px;
+      padding-bottom: 10px;
     }
 
     :host-context(vscode-table[bordered]) {

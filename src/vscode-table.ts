@@ -77,6 +77,12 @@ export class VscodeTable extends LitElement {
   @property({type: Boolean, attribute: 'delayed-resizing'})
   delayedResizing = false;
 
+  /**
+   * For internal use only
+   */
+  @property({type: Boolean, reflect: true})
+  compact = false;
+
   @query('slot[name="body"]')
   private _bodySlot!: HTMLSlotElement;
 
@@ -103,9 +109,6 @@ export class VscodeTable extends LitElement {
 
   @state()
   private _isDragging = false;
-
-  @state()
-  private _compactView = false;
 
   /**
    * Sash hover state flags, used in the render.
@@ -366,8 +369,8 @@ export class VscodeTable extends LitElement {
     const cr = this.getBoundingClientRect();
     const nextCompactView = cr.width < this.breakpoint;
 
-    if (this._compactView !== nextCompactView) {
-      this._compactView = nextCompactView;
+    if (this.compact !== nextCompactView) {
+      this.compact = nextCompactView;
 
       if (nextCompactView) {
         this._applyCompactViewColumnLabels();
@@ -593,7 +596,7 @@ export class VscodeTable extends LitElement {
       visibility: hidden;
     }
 
-    :host(:not([bordered])) .wrapper:hover .sash {
+    :host(:not([compact])) .wrapper:hover .sash {
       visibility: visible;
     }
 
@@ -604,7 +607,7 @@ export class VscodeTable extends LitElement {
       width: 1px;
     }
 
-    .wrapper.compact-view:hover .sash {
+    .wrapper.compact-view .sash {
       display: none;
     }
 
@@ -671,7 +674,7 @@ export class VscodeTable extends LitElement {
       wrapper: true,
       'select-disabled': this._isDragging,
       'resize-cursor': this._isDragging,
-      'compact-view': this._compactView,
+      'compact-view': this.compact,
     });
 
     return html`

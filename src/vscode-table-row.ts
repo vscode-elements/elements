@@ -17,6 +17,14 @@ export class VscodeTableRow extends LitElement {
       display: table-row;
       width: 100%;
     }
+
+    :host-context(vscode-table[compact]) {
+      display: block;
+    }
+
+    :host-context(vscode-table[compact][bordered]) {
+      border-top: 1px solid var(--vscode-editorGroup-border);
+    }
   `;
 
   render(): TemplateResult {
