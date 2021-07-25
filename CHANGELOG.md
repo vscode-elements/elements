@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [0.6.0] - 2021-07-25
+
+### Added
+
+- Icon: 
+  - added proper theme variables
+  - added action icon pressed style
+  - added focus border style
+- Collapsible: 
+  - keyboard support
+  - icon visibility mimics the VSCode behavior: it is visible when the panel is open
+- Table: added responsive mode
+- SplitLayout: added hover color
+
 ## [0.5.2] - 2021-07-24
 
 ### Fixed
