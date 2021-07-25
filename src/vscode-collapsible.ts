@@ -25,6 +25,12 @@ export class VscodeCollapsible extends LitElement {
     this.open = !this.open;
   }
 
+  private _onHeaderKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.open = !this.open;
+    }
+  }
+
   static get styles(): CSSResult {
     return css`
       .collapsible {
@@ -117,6 +123,7 @@ export class VscodeCollapsible extends LitElement {
           tabindex="0"
           title="${this.title}"
           @click="${this._onHeaderClick}"
+          @keydown="${this._onHeaderKeyDown}"
         >
           ${icon}
           <h3 class="title">${this.title}</h3>
