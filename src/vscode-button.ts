@@ -190,11 +190,13 @@ export class VscodeButton extends LitElement {
       }
 
       .icon {
+        color: var(--vscode-button-foreground);
         left: 0;
         position: absolute;
       }
 
       .icon-after {
+        color: var(--vscode-button-foreground);
         position: absolute;
         right: 0;
       }

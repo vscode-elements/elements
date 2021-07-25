@@ -606,6 +606,11 @@ export class VscodeTree extends LitElement {
         margin-right: 6px;
       }
 
+      :host(:focus) .contents.selected.focused .label-icon,
+      :host(:focus) .contents.selected .label-icon {
+        color: var(--vscode-list-activeSelectionForeground);
+      }
+
       .multi .contents .label-icon {
         margin-top: 3px;
       }

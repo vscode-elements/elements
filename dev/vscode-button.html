@@ -7,37 +7,24 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>&lt;vscode-button&gt; Demo</title>
   <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
-  <script src="../dev-assets/preview-page.js"></script>
+  <link rel="stylesheet" href="../node_modules/vscode-codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
+  <script type="module" src="../dev-assets/component-preview.js"></script>
   <script type="module" src="../dist/vscode-button.js"></script>
 </head>
 
 <body class="vscode-light">
-  <div class="theme-switcher">
-    <div class="theme-switcher-option light">
-      <button value="vscode-light" type="button">Light</button>
-    </div>
-    <div class="theme-switcher-option dark">
-      <button value="vscode-dark" type="button">Dark</button>
-    </div>
-    <div class="theme-switcher-option hc">
-      <button value="vscode-high-contrast" type="button">
-        High contrast
-      </button>
-    </div>
-  </div>
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
-      <vscode-button id="button-1">Enabled</vscode-button>
-      <vscode-button secondary id="button-2">Hello World</vscode-button>
-      <button type="button" id="button-3" tabindex="0">Native button</button>
-      <button type="button" id="button-32" tabindex="0" disabled>Native button disabled</button>
-      <vscode-button id="button-4" disabled>Disabled</vscode-button>
-      <vscode-button id="button-5" disabled secondary>Disabled</vscode-button>
+      <component-preview>
+        <vscode-button id="button-1">Enabled</vscode-button>
+        <vscode-button secondary id="button-2">Hello World</vscode-button>
+        <button type="button" id="button-3" tabindex="0">Native button</button>
+        <button type="button" id="button-32" tabindex="0" disabled>Native button disabled</button>
+        <vscode-button id="button-4" disabled>Disabled</vscode-button>
+        <vscode-button id="button-5" disabled secondary>Disabled</vscode-button>
+        <vscode-button icon="account" iconafter="chevron-right">Icons</vscode-button>
+      </component-preview>
       <script>
         const bt1 = document.querySelector('#button-1');
         const bt3 = document.querySelector('#button-3');

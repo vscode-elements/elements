@@ -64,6 +64,7 @@ export class VscodeCollapsible extends LitElement {
       }
 
       .header-icon {
+        color: var(--vscode-icon-foreground);
         display: block;
         margin: 0 3px;
       }
