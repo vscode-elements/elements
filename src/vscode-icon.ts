@@ -67,6 +67,7 @@ export class VscodeIcon extends LitElement {
   static get styles(): CSSResult {
     return css`
       :host {
+        color: var(--vscode-icon-foreground);
         display: inline-block;
       }
 
@@ -86,6 +87,19 @@ export class VscodeIcon extends LitElement {
 
       :host([action-icon]) .wrapper:hover {
         background-color: var(--vscode-toolbar-hoverBackground);
+      }
+
+      :host([action-icon]) .wrapper:active {
+        background-color: var(--vscode-toolbar-activeBackground);
+      }
+
+      :host([action-icon]:focus) {
+        outline: none;
+      }
+
+      :host([action-icon]:focus-visible) {
+        outline: 1px solid var(--vscode-focusBorder);
+        outline-offset: -1px;
       }
 
       @keyframes icon-spin {
