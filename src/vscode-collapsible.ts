@@ -11,13 +11,15 @@ import {classMap} from 'lit-html/directives/class-map';
 
 /**
  * @slot body - Main content
- * @slot actions - The right side of the header
+ * @slot actions - Action icons in the header
  */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends LitElement {
-  @property({type: Number}) tabIndex = 0;
-  @property({type: String}) title = '';
-  @property({type: Boolean}) open = false;
+  @property({type: String})
+  title = '';
+
+  @property({type: Boolean})
+  open = false;
 
   private onHeaderClick() {
     this.open = !this.open;
@@ -65,13 +67,13 @@ export class VscodeCollapsible extends LitElement {
       }
 
       .actions {
+        display: none;
         margin-left: auto;
         margin-right: 4px;
-        opacity: 0;
       }
 
-      .collapsible:hover .actions {
-        opacity: 1;
+      .collapsible.open .actions {
+        display: block;
       }
 
       slot[name='actions']::slotted(div) {
@@ -112,7 +114,7 @@ export class VscodeCollapsible extends LitElement {
       <div class="${classes}">
         <div
           class="collapsible-header"
-          tabindex="${this.tabIndex}"
+          tabindex="0"
           title="${this.title}"
           @click="${this.onHeaderClick}"
         >
