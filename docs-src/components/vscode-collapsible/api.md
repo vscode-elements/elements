@@ -11,15 +11,14 @@ component: vscode-collapsible
 
 ## Properties
 
-| Property   | Attribute  | Type      | Default |
-|------------|------------|-----------|---------|
-| `open`     | `open`     | `boolean` | false   |
-| `tabIndex` | `tabIndex` | `number`  | 0       |
-| `title`    | `title`    | `string`  | ""      |
+| Property | Attribute | Type      | Default |
+|----------|-----------|-----------|---------|
+| `open`   | `open`    | `boolean` | false   |
+| `title`  | `title`   | `string`  | ""      |
 
 ## Slots
 
-| Name      | Description                  |
-|-----------|------------------------------|
-| `actions` | The right side of the header |
-| `body`    | Main content                 |
+| Name      | Description                |
+|-----------|----------------------------|
+| `actions` | Action icons in the header |
+| `body`    | Main content               |
