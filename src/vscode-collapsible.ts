@@ -21,7 +21,7 @@ export class VscodeCollapsible extends LitElement {
   @property({type: Boolean})
   open = false;
 
-  private onHeaderClick() {
+  private _onHeaderClick() {
     this.open = !this.open;
   }
 
@@ -116,7 +116,7 @@ export class VscodeCollapsible extends LitElement {
           class="collapsible-header"
           tabindex="0"
           title="${this.title}"
-          @click="${this.onHeaderClick}"
+          @click="${this._onHeaderClick}"
         >
           ${icon}
           <h3 class="title">${this.title}</h3>
