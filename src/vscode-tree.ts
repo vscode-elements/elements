@@ -588,6 +588,7 @@ export class VscodeTree extends LitElement {
       :host(:focus) .contents.focused {
         background-color: var(--vscode-list-focusBackground);
         outline: 1px solid var(--vscode-list-focusOutline);
+        outline-offset: -1px;
       }
 
       :host(:focus) .contents.selected.focused,
