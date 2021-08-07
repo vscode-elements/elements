@@ -1,14 +1,13 @@
 import {
-  LitElement,
-  html,
   css,
-  property,
-  customElement,
-  CSSResult,
+  CSSResultGroup,
+  html,
+  LitElement,
+  nothing,
   TemplateResult,
-} from 'lit-element';
-import {nothing} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map';
+} from 'lit';
+import {customElement, property} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 import './vscode-icon';
 
 /**
@@ -106,7 +105,7 @@ export class VscodeButton extends LitElement {
 
   private _handleBlurBound = this._handleBlur.bind(this);
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         align-items: center;

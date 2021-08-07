@@ -1,6 +1,7 @@
-import {html, customElement, property, TemplateResult} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
-import {classMap} from 'lit-html/directives/class-map';
+import {html, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {repeat} from 'lit/directives/repeat';
 import {chevronDownIcon} from './includes/vscode-select/template-elements';
 import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
 

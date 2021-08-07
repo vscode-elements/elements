@@ -1,16 +1,7 @@
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  query,
-  state,
-  TemplateResult,
-} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
 
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends LitElement {
@@ -61,7 +52,9 @@ export class VscodeScrollable extends LitElement {
 
     this._resizeObserver.observe(this);
 
-    this.requestUpdate().then(() => {
+    this.requestUpdate();
+
+    this.updateComplete.then(() => {
       this._scrollableContainer.addEventListener(
         'scroll',
         this._onScrollableContainerScroll.bind(this)
@@ -196,7 +189,7 @@ export class VscodeScrollable extends LitElement {
 
   private _onComponentMouseOutBound = this._onComponentMouseOut.bind(this);
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         display: block;

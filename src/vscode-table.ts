@@ -1,17 +1,14 @@
+import {css, html, LitElement, TemplateResult} from 'lit';
 import {
-  css,
   customElement,
-  html,
-  LitElement,
   property,
   query,
   queryAll,
   queryAssignedNodes,
   state,
-  TemplateResult,
-} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
+} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
 import './vscode-scrollable';
 import {VscodeScrollable} from './vscode-scrollable';
 import {VscodeTableBody} from './vscode-table-body';
@@ -587,8 +584,12 @@ export class VscodeTable extends LitElement {
       width: 100%;
     }
 
-    :host(:not([bordered])) .wrapper:not(.compact-view):hover .scrollable:not([scrolled]):before,
-    :host([bordered]) .wrapper:not(.compact-view) .scrollable:not([scrolled]):before {
+    :host(:not([bordered]))
+      .wrapper:not(.compact-view):hover
+      .scrollable:not([scrolled]):before,
+    :host([bordered])
+      .wrapper:not(.compact-view)
+      .scrollable:not([scrolled]):before {
       background-color: var(--vscode-editorGroup-border);
     }
 

@@ -1,4 +1,4 @@
-import { css } from "lit-element";
+import {css} from 'lit';
 
 /**
  * Text styles for the labels and form helpers
@@ -38,7 +38,6 @@ export default css`
   }
 
   :host-context(body.darwin) ::slotted(code) {
-    font-family: 'SF Mono', Monaco, Menlo, Inconsolata, 'Courier New',
-      monospace;
+    font-family: 'SF Mono', Monaco, Menlo, Inconsolata, 'Courier New', monospace;
   }
 `;

@@ -1,12 +1,12 @@
 import {
-  LitElement,
-  html,
   css,
-  property,
-  customElement,
-  CSSResult,
-} from 'lit-element';
-import {nothing, TemplateResult} from 'lit-html';
+  CSSResultGroup,
+  html,
+  nothing,
+  LitElement,
+  TemplateResult,
+} from 'lit';
+import {customElement, property} from 'lit/decorators';
 import './vscode-context-menu-item';
 
 interface MenuItemData {
@@ -43,7 +43,7 @@ export class VscodeContextMenu extends LitElement {
     );
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         display: block;

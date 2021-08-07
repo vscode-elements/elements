@@ -1,11 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  css,
-  TemplateResult,
-} from 'lit-element';
+import {css, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators';
 
 @customElement('vscode-radio-group')
 export class VscodeRadioGroup extends LitElement {
@@ -22,7 +16,7 @@ export class VscodeRadioGroup extends LitElement {
       flex-wrap: wrap;
     }
 
-    :host([variant="vertical"]) .wrapper {
+    :host([variant='vertical']) .wrapper {
       display: block;
     }
 
@@ -34,12 +28,12 @@ export class VscodeRadioGroup extends LitElement {
       margin-right: 0;
     }
 
-    :host([variant="vertical"]) ::slotted(vscode-radio) {
+    :host([variant='vertical']) ::slotted(vscode-radio) {
       display: block;
       margin-bottom: 15px;
     }
 
-    :host([variant="vertical"]) ::slotted(vscode-radio:last-child) {
+    :host([variant='vertical']) ::slotted(vscode-radio:last-child) {
       margin-bottom: 0;
     }
   `;

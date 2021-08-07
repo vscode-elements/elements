@@ -1,11 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  css,
-  TemplateResult,
-} from 'lit-element';
+import {css, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 
 interface FocusableElement extends Element {
@@ -31,7 +25,7 @@ export class VscodeLabel extends LitElement {
       padding: 5px 0;
     }
 
-    :host-context(vscode-form-group[variant="settings-group"]) .wrapper {
+    :host-context(vscode-form-group[variant='settings-group']) .wrapper {
       line-height: 18px;
       padding: 0;
     }

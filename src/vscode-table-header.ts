@@ -1,11 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  TemplateResult,
-  property,
-} from 'lit-element';
+import {css, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators';
 
 @customElement('vscode-table-header')
 export class VscodeTableHeader extends LitElement {
@@ -22,9 +16,7 @@ export class VscodeTableHeader extends LitElement {
   `;
 
   render(): TemplateResult {
-    return html`
-      <slot></slot>
-    `;
+    return html` <slot></slot> `;
   }
 }
 

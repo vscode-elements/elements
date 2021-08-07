@@ -1,15 +1,9 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  CSSResult,
-  TemplateResult,
-} from 'lit-element';
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators';
 
 @customElement('vscode-form-description')
 export class VscodeFormDescription extends LitElement {
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         color: var(--vscode-foreground);

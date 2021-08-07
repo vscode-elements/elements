@@ -1,6 +1,6 @@
-import {html, property, customElement, CSSResult, state} from 'lit-element';
-import {TemplateResult} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map';
+import {html, TemplateResult, CSSResultGroup} from 'lit';
+import {customElement, property, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
 import baseStyles from './includes/form-button-widget/base.styles';
 import radioStyles from './includes/form-button-widget/radio.styles';
@@ -86,7 +86,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
     this.isSlotEmpty = this.innerHTML === '';
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [baseStyles, radioStyles, formHelperTextStyles];
   }
 

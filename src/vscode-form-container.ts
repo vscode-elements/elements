@@ -1,13 +1,10 @@
+import {css, html, LitElement, TemplateResult} from 'lit';
 import {
-  LitElement,
-  html,
   customElement,
   property,
-  css,
-  TemplateResult,
   query,
   queryAssignedNodes,
-} from 'lit-element';
+} from 'lit/decorators';
 import {VscodeCheckbox} from './vscode-checkbox';
 import {VscodeCheckboxGroup} from './vscode-checkbox-group';
 import {VscodeFormGroup, FormGroupVariant} from './vscode-form-group';
@@ -119,7 +116,7 @@ export class VscodeFormContainer extends LitElement {
         return;
       }
 
-      if ((isCheckbox(widget) && widget.checked)) {
+      if (isCheckbox(widget) && widget.checked) {
         data[name] = Array.isArray(data[name])
           ? [...data[name], widget.value as string]
           : [widget.value as string];
@@ -200,9 +197,8 @@ export class VscodeFormContainer extends LitElement {
     }
   }
 
-  private _resizeObserverCallbackBound = this._resizeObserverCallback.bind(
-    this
-  );
+  private _resizeObserverCallbackBound =
+    this._resizeObserverCallback.bind(this);
 
   private _activateResponsiveLayout() {
     this._resizeObserver = new ResizeObserver(

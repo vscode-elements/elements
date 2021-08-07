@@ -1,11 +1,5 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  TemplateResult,
-  CSSResult,
-} from 'lit-element';
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators';
 import {applyForegroundRGBA} from './includes/themeHelpers';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 
@@ -16,7 +10,7 @@ export class VscodeFormHelper extends LitElement {
     applyForegroundRGBA();
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     const baseStyles = css`
       :host {
         color: var(--vsc-foreground-translucent);

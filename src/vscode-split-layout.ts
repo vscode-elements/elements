@@ -1,15 +1,7 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  css,
-  TemplateResult,
-  CSSResult,
-  state,
-} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
+import {LitElement, html, css, TemplateResult, CSSResultGroup} from 'lit';
+import {customElement, property, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
 
 const HANDLE_SIZE = 4;
 
@@ -160,7 +152,7 @@ export class VscodeSplitLayout extends LitElement {
     this._initPosition();
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         display: block;

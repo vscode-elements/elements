@@ -1,12 +1,5 @@
-import {
-  LitElement,
-  html,
-  css,
-  property,
-  customElement,
-  CSSResult,
-  TemplateResult,
-} from 'lit-element';
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators';
 
 @customElement('vscode-tabs')
 export class VscodeTabs extends LitElement {
@@ -84,7 +77,7 @@ export class VscodeTabs extends LitElement {
     );
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         display: block;

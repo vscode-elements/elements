@@ -1,12 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  css,
-  TemplateResult,
-  CSSResult,
-} from 'lit-element';
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators';
 
 export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
 
@@ -15,7 +8,7 @@ export class VscodeFormGroup extends LitElement {
   @property({reflect: true})
   variant: FormGroupVariant = 'horizontal';
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         --label-right-margin: 14px;
@@ -25,7 +18,7 @@ export class VscodeFormGroup extends LitElement {
         margin: 15px 0;
       }
 
-      :host([variant="settings-group"]) {
+      :host([variant='settings-group']) {
         margin: 0;
         padding: 12px 14px 18px;
         max-width: 727px;
@@ -36,13 +29,13 @@ export class VscodeFormGroup extends LitElement {
         flex-wrap: wrap;
       }
 
-      :host([variant="vertical"]) .wrapper,
-      :host([variant="settings-group"]) .wrapper {
+      :host([variant='vertical']) .wrapper,
+      :host([variant='settings-group']) .wrapper {
         display: block;
       }
 
-      :host([variant="horizontal"]) ::slotted(vscode-checkbox-group),
-      :host([variant="horizontal"]) ::slotted(vscode-radio-group) {
+      :host([variant='horizontal']) ::slotted(vscode-checkbox-group),
+      :host([variant='horizontal']) ::slotted(vscode-radio-group) {
         width: calc(
           100% -
             calc(
@@ -52,13 +45,13 @@ export class VscodeFormGroup extends LitElement {
         );
       }
 
-      :host([variant="horizontal"]) ::slotted(vscode-label) {
+      :host([variant='horizontal']) ::slotted(vscode-label) {
         margin-right: var(--label-right-margin);
         text-align: right;
         width: var(--vsc-inline-label-width, var(--label-default-width));
       }
 
-      :host([variant="settings-group"]) ::slotted(vscode-label) {
+      :host([variant='settings-group']) ::slotted(vscode-label) {
         height: 18px;
         line-height: 18px;
         margin-bottom: 4px;
@@ -72,27 +65,27 @@ export class VscodeFormGroup extends LitElement {
         );
       }
 
-      :host([variant="vertical"]) ::slotted(vscode-form-helper),
-      :host([variant="settings-group"]) ::slotted(vscode-form-helper) {
+      :host([variant='vertical']) ::slotted(vscode-form-helper),
+      :host([variant='settings-group']) ::slotted(vscode-form-helper) {
         display: block;
         margin-left: 0;
       }
 
-      :host([variant="settings-group"]) ::slotted(vscode-form-helper) {
+      :host([variant='settings-group']) ::slotted(vscode-form-helper) {
         margin-bottom: 0;
         margin-top: 0;
       }
 
-      :host([variant="vertical"]) ::slotted(vscode-label),
-      :host([variant="settings-group"]) ::slotted(vscode-label) {
+      :host([variant='vertical']) ::slotted(vscode-label),
+      :host([variant='settings-group']) ::slotted(vscode-label) {
         display: block;
         margin-left: 0;
         text-align: left;
       }
 
-      :host([variant="settings-group"]) ::slotted(vscode-inputbox),
-      :host([variant="settings-group"]) ::slotted(vscode-single-select),
-      :host([variant="settings-group"]) ::slotted(vscode-multi-select) {
+      :host([variant='settings-group']) ::slotted(vscode-inputbox),
+      :host([variant='settings-group']) ::slotted(vscode-single-select),
+      :host([variant='settings-group']) ::slotted(vscode-multi-select) {
         margin-top: 9px;
       }
 
@@ -103,7 +96,7 @@ export class VscodeFormGroup extends LitElement {
         );
       }
 
-      :host([variant="vertical"]) ::slotted(vscode-button) {
+      :host([variant='vertical']) ::slotted(vscode-button) {
         margin-left: 0;
       }
 

@@ -1,15 +1,8 @@
-import {
-  LitElement,
-  html,
-  css,
-  property,
-  customElement,
-  CSSResult,
-  TemplateResult,
-} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 @customElement('vscode-icon')
 export class VscodeIcon extends LitElement {
@@ -47,7 +40,7 @@ export class VscodeIcon extends LitElement {
       }
     }
   }
-  get actionIcon(): boolean{
+  get actionIcon(): boolean {
     return this._actionIcon;
   }
 
@@ -64,7 +57,7 @@ export class VscodeIcon extends LitElement {
     return {nonce, href};
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         color: var(--vscode-icon-foreground);

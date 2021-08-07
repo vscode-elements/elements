@@ -1,17 +1,8 @@
-import {
-  LitElement,
-  html,
-  css,
-  property,
-  customElement,
-  CSSResult,
-  TemplateResult,
-  query,
-  state,
-} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, query, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
+import {ifDefined} from 'lit/directives/if-defined';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 
 enum Severity {
@@ -256,7 +247,7 @@ export class VscodeInputbox extends LitElement {
     }
   };
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         display: inline-block;
@@ -264,11 +255,11 @@ export class VscodeInputbox extends LitElement {
         width: 320px;
       }
 
-      :host([size-variant="narrow"]) {
+      :host([size-variant='narrow']) {
         width: 200px;
       }
 
-      :host([size-variant="wide"]) {
+      :host([size-variant='wide']) {
         width: 500px;
       }
 

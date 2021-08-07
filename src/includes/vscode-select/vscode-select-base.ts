@@ -1,13 +1,6 @@
-import {
-  LitElement,
-  property,
-  query,
-  html,
-  TemplateResult,
-  state,
-} from 'lit-element';
-import {nothing} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {property, query, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 import '../../vscode-button';
 import {VscodeOption} from '../../vscode-option';
 import dropdownStyles from './styles';

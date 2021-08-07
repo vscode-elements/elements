@@ -1,15 +1,7 @@
-import {
-  LitElement,
-  html,
-  css,
-  property,
-  customElement,
-  CSSResult,
-  state,
-} from 'lit-element';
-import {nothing, TemplateResult} from 'lit-html';
-import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from 'lit-html/directives/style-map';
+import {css, CSSResultGroup, html, LitElement, nothing, TemplateResult} from 'lit';
+import {customElement, property, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
 import './vscode-icon';
 
 enum KeyName {
@@ -537,7 +529,7 @@ export class VscodeTree extends LitElement {
     this.removeEventListener('keydown', this.onComponentKeyDownBound);
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host {
         display: block;

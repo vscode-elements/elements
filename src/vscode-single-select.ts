@@ -1,11 +1,6 @@
-import {
-  customElement,
-  property,
-  html,
-  TemplateResult,
-  state,
-} from 'lit-element';
-import {classMap} from 'lit-html/directives/class-map';
+import {html, TemplateResult} from 'lit';
+import {customElement, property, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 import {chevronDownIcon} from './includes/vscode-select/template-elements';
 import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
 
@@ -59,7 +54,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     }
   }
   get value(): string {
-    if(this._options[this._selectedIndex]) {
+    if (this._options[this._selectedIndex]) {
       return this._options[this._selectedIndex]?.value;
     }
 
