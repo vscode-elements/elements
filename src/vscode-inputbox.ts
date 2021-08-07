@@ -1,9 +1,10 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
 import {ifDefined} from 'lit/directives/if-defined';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
+import {VscElement} from './includes/VscElement';
 
 enum Severity {
   DEFAULT = 'default',
@@ -58,7 +59,7 @@ const calcHeightFromLines = (lines: number) => {
  * @cssprop --vscode-editor-background
  */
 @customElement('vscode-inputbox')
-export class VscodeInputbox extends LitElement {
+export class VscodeInputbox extends VscElement {
   @property()
   label = '';
 

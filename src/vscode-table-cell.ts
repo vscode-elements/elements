@@ -1,8 +1,9 @@
-import {LitElement, html, css, TemplateResult, nothing} from 'lit';
+import {html, css, TemplateResult, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-table-cell')
-export class VscodeTableCell extends LitElement {
+export class VscodeTableCell extends VscElement {
   @property({reflect: true})
   role = 'cell';
 

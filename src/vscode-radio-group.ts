@@ -1,8 +1,9 @@
-import {css, html, LitElement, TemplateResult} from 'lit';
+import {css, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-radio-group')
-export class VscodeRadioGroup extends LitElement {
+export class VscodeRadioGroup extends VscElement {
   @property({reflect: true})
   variant: 'horizontal' | 'vertical' = 'horizontal';
 

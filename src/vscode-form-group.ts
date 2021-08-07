@@ -1,10 +1,11 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
 
 @customElement('vscode-form-group')
-export class VscodeFormGroup extends LitElement {
+export class VscodeFormGroup extends VscElement {
   @property({reflect: true})
   variant: FormGroupVariant = 'horizontal';
 

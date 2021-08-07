@@ -1,8 +1,9 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-form-control')
-export class VscodeFormControl extends LitElement {
+export class VscodeFormControl extends VscElement {
   static get styles(): CSSResultGroup {
     return css`
       :host {

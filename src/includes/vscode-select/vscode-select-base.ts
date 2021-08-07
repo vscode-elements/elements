@@ -1,4 +1,4 @@
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import '../../vscode-button';
@@ -6,6 +6,7 @@ import {VscodeOption} from '../../vscode-option';
 import dropdownStyles from './styles';
 import {InternalOption, Option, SearchMethod} from './types';
 import {filterOptionsByPattern} from './helpers';
+import {VscElement} from '../VscElement';
 
 interface OptionListStat {
   selectedIndexes: number[];
@@ -16,7 +17,7 @@ const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 19;
 const LIST_HEIGHT = 194;
 
-export class VscodeSelectBase extends LitElement {
+export class VscodeSelectBase extends VscElement {
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
   ariaExpanded = 'false';
 

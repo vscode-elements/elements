@@ -1,15 +1,9 @@
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  nothing,
-  TemplateResult,
-} from 'lit';
+import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-context-menu-item')
-export class VscodeContextMenuItem extends LitElement {
+export class VscodeContextMenuItem extends VscElement {
   @property({type: String}) label = '';
   @property({type: String}) keybinding = '';
   @property({type: String}) value = '';

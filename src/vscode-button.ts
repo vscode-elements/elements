@@ -1,20 +1,14 @@
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  nothing,
-  TemplateResult,
-} from 'lit';
+import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
+import {VscElement} from './includes/VscElement';
 import './vscode-icon';
 
 /**
  * @fires vsc-click - Dispatched only if the disabled attribute is false.
  */
 @customElement('vscode-button')
-export class VscodeButton extends LitElement {
+export class VscodeButton extends VscElement {
   @property({type: Number, reflect: true}) tabindex = 0;
   @property({type: Boolean}) secondary = false;
   @property({reflect: true}) role = 'button';

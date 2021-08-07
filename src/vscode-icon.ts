@@ -1,11 +1,12 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
 import {ifDefined} from 'lit/directives/if-defined';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-icon')
-export class VscodeIcon extends LitElement {
+export class VscodeIcon extends VscElement {
   /**
    * Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html
    */

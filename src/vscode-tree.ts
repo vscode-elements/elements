@@ -1,7 +1,8 @@
-import {css, CSSResultGroup, html, LitElement, nothing, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
+import {VscElement} from './includes/VscElement';
 import './vscode-icon';
 
 enum KeyName {
@@ -109,7 +110,7 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
  * ```
  */
 @customElement('vscode-tree')
-export class VscodeTree extends LitElement {
+export class VscodeTree extends VscElement {
   @property({type: Array, reflect: false})
   set data(val: TreeItem[]) {
     const oldVal = this._data;

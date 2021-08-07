@@ -1,8 +1,9 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-tabs')
-export class VscodeTabs extends LitElement {
+export class VscodeTabs extends VscElement {
   @property({type: Number})
   set selectedIndex(index: number) {
     this._selectedIndex = index;

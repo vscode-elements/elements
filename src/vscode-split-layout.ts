@@ -1,12 +1,13 @@
-import {LitElement, html, css, TemplateResult, CSSResultGroup} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
+import {VscElement} from './includes/VscElement';
 
 const HANDLE_SIZE = 4;
 
 @customElement('vscode-split-layout')
-export class VscodeSplitLayout extends LitElement {
+export class VscodeSplitLayout extends VscElement {
   @property()
   split: 'horizontal' | 'vertical' = 'vertical';
 

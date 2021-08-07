@@ -1,8 +1,8 @@
-import {LitElement} from 'lit';
 import {property} from 'lit/decorators';
 import {applyForegroundRGBA} from '../themeHelpers';
+import {VscElement} from '../VscElement';
 
-export class FormButtonWidgetBase extends LitElement {
+export class FormButtonWidgetBase extends VscElement {
   @property({type: Number, reflect: true})
   tabindex = 0;
 

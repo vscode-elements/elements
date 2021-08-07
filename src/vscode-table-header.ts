@@ -1,8 +1,9 @@
-import {css, html, LitElement, TemplateResult} from 'lit';
+import {css, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-table-header')
-export class VscodeTableHeader extends LitElement {
+export class VscodeTableHeader extends VscElement {
   @property({reflect: true})
   role = 'rowgroup';
 

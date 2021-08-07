@@ -1,10 +1,11 @@
-import {css, html, LitElement, TemplateResult} from 'lit';
+import {css, html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
   query,
   queryAssignedNodes,
 } from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 import {VscodeCheckbox} from './vscode-checkbox';
 import {VscodeCheckboxGroup} from './vscode-checkbox-group';
 import {VscodeFormGroup, FormGroupVariant} from './vscode-form-group';
@@ -53,7 +54,7 @@ const isRadio = (el: Element): el is VscodeRadio => {
 };
 
 @customElement('vscode-form-container')
-export class VscodeFormContainer extends LitElement {
+export class VscodeFormContainer extends VscElement {
   @property({type: Boolean, reflect: true})
   set responsive(isResponsive: boolean) {
     this._responsive = isResponsive;

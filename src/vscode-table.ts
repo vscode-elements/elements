@@ -1,4 +1,4 @@
-import {css, html, LitElement, TemplateResult} from 'lit';
+import {css, html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -9,6 +9,7 @@ import {
 } from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
+import {VscElement} from './includes/VscElement';
 import './vscode-scrollable';
 import {VscodeScrollable} from './vscode-scrollable';
 import {VscodeTableBody} from './vscode-table-body';
@@ -24,7 +25,7 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
  * @attr {Boolean} bordered
  */
 @customElement('vscode-table')
-export class VscodeTable extends LitElement {
+export class VscodeTable extends VscElement {
   @property({reflect: true})
   role = 'table';
 
@@ -136,10 +137,6 @@ export class VscodeTable extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    if (this.hasAttribute('vsc-cloak')) {
-      this.removeAttribute('vsc-cloak');
-    }
 
     this._memoizeComponentDimensions();
     this._initDefaultColumnSizes();

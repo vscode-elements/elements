@@ -1,8 +1,9 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-form-label')
-export class VscodeFormLabel extends LitElement {
+export class VscodeFormLabel extends VscElement {
   static get styles(): CSSResultGroup {
     return css`
       :host {

@@ -1,12 +1,6 @@
-import {
-  css,
-  CSSResultGroup,
-  html,
-  nothing,
-  LitElement,
-  TemplateResult,
-} from 'lit';
+import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
+import {VscElement} from './includes/VscElement';
 import './vscode-context-menu-item';
 
 interface MenuItemData {
@@ -18,7 +12,7 @@ interface MenuItemData {
 }
 
 @customElement('vscode-context-menu')
-export class VscodeContextMenu extends LitElement {
+export class VscodeContextMenu extends VscElement {
   /** <pre><code>interface MenuItemData {
    * &nbsp;&nbsp;label: string;
    * &nbsp;&nbsp;keybinding?: string;

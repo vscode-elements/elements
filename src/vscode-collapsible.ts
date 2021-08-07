@@ -1,13 +1,14 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
+import {VscElement} from './includes/VscElement';
 
 /**
  * @slot body - Main content
  * @slot actions - Action icons in the header
  */
 @customElement('vscode-collapsible')
-export class VscodeCollapsible extends LitElement {
+export class VscodeCollapsible extends VscElement {
   @property({type: String})
   title = '';
 

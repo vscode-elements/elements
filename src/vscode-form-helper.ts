@@ -1,10 +1,11 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
 import {applyForegroundRGBA} from './includes/themeHelpers';
 import formHelperTextStyles from './includes/formHelperTextStyles';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-form-helper')
-export class VscodeFormHelper extends LitElement {
+export class VscodeFormHelper extends VscElement {
   constructor() {
     super();
     applyForegroundRGBA();

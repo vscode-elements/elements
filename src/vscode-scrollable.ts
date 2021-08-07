@@ -1,10 +1,11 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import {styleMap} from 'lit/directives/style-map';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-scrollable')
-export class VscodeScrollable extends LitElement {
+export class VscodeScrollable extends VscElement {
   @property({type: Boolean, reflect: true})
   shadow = true;
 

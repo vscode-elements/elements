@@ -1,13 +1,14 @@
-import {css, html, LitElement, TemplateResult} from 'lit';
+import {css, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
+import {VscElement} from './includes/VscElement';
 
 interface FocusableElement extends Element {
   focus: () => void;
 }
 
 @customElement('vscode-label')
-export class VscodeLabel extends LitElement {
+export class VscodeLabel extends VscElement {
   @property()
   for = '';
 
