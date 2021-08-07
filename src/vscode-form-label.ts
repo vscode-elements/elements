@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators';
 
 @customElement('vscode-form-label')
 export class VscodeFormLabel extends LitElement {

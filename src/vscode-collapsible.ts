@@ -1,6 +1,6 @@
 import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {customElement, property} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 
 /**
  * @slot body - Main content

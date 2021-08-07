@@ -6,7 +6,7 @@ import {
   nothing,
   TemplateResult,
 } from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators';
 
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends LitElement {

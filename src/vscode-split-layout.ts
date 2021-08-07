@@ -1,7 +1,7 @@
 import {LitElement, html, css, TemplateResult, CSSResultGroup} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
+import {customElement, property, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
 
 const HANDLE_SIZE = 4;
 

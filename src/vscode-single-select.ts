@@ -1,6 +1,6 @@
 import {html, TemplateResult} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {customElement, property, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 import {chevronDownIcon} from './includes/vscode-select/template-elements';
 import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
 

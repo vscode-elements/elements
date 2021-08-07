@@ -6,7 +6,7 @@ import {
   LitElement,
   TemplateResult,
 } from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators';
 import './vscode-context-menu-item';
 
 interface MenuItemData {

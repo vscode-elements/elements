@@ -1,5 +1,5 @@
 import {html, LitElement, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators';
 
 @customElement('vscode-option')
 export class VscodeOption extends LitElement {

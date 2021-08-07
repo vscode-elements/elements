@@ -1,5 +1,5 @@
 import {css, html, LitElement, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators';
 
 @customElement('vscode-radio-group')
 export class VscodeRadioGroup extends LitElement {

@@ -1,8 +1,8 @@
 import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import {customElement, property} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
+import {styleMap} from 'lit/directives/style-map';
+import {ifDefined} from 'lit/directives/if-defined';
 
 @customElement('vscode-icon')
 export class VscodeIcon extends LitElement {

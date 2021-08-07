@@ -1,6 +1,6 @@
 import {html, TemplateResult, CSSResultGroup} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {customElement, property, state} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
 import baseStyles from './includes/form-button-widget/base.styles';
 import radioStyles from './includes/form-button-widget/radio.styles';

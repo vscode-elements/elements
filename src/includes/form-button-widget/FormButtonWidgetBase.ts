@@ -1,5 +1,5 @@
 import {LitElement} from 'lit';
-import {property} from 'lit/decorators.js';
+import {property} from 'lit/decorators';
 import {applyForegroundRGBA} from '../themeHelpers';
 
 export class FormButtonWidgetBase extends LitElement {
