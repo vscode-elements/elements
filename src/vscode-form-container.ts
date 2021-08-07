@@ -4,7 +4,7 @@ import {
   property,
   query,
   queryAssignedNodes,
-} from 'lit/decorators';
+} from 'lit/decorators.js';
 import {VscodeCheckbox} from './vscode-checkbox';
 import {VscodeCheckboxGroup} from './vscode-checkbox-group';
 import {VscodeFormGroup, FormGroupVariant} from './vscode-form-group';

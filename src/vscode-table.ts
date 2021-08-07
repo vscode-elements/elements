@@ -6,9 +6,9 @@ import {
   queryAll,
   queryAssignedNodes,
   state,
-} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {styleMap} from 'lit/directives/style-map';
+} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 import './vscode-scrollable';
 import {VscodeScrollable} from './vscode-scrollable';
 import {VscodeTableBody} from './vscode-table-body';

@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
 export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
 

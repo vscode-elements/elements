@@ -1,5 +1,5 @@
 import {LitElement, html, css, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
 @customElement('vscode-checkbox-group')
 export class VscodeCheckboxGroup extends LitElement {

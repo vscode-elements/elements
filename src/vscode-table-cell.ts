@@ -1,5 +1,5 @@
 import {LitElement, html, css, TemplateResult, nothing} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 
 @customElement('vscode-table-cell')
 export class VscodeTableCell extends LitElement {

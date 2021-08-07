@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 
 @customElement('vscode-form-control')
 export class VscodeFormControl extends LitElement {
