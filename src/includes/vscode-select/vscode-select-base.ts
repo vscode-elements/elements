@@ -1,10 +1,10 @@
 import {
   LitElement,
   property,
-  internalProperty,
   query,
   html,
   TemplateResult,
+  state,
 } from 'lit-element';
 import {nothing} from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map';
@@ -100,16 +100,16 @@ export class VscodeSelectBase extends LitElement {
     this.removeEventListener('blur', this._onComponentBlur);
   }
 
-  @internalProperty()
+  @state()
   protected _activeIndex = -1;
 
-  @internalProperty()
+  @state()
   protected _currentDescription = '';
 
-  @internalProperty()
+  @state()
   protected _filter: SearchMethod = 'fuzzy';
 
-  @internalProperty()
+  @state()
   protected get _filteredOptions(): InternalOption[] {
     if (!this.combobox || this._filterPattern === '') {
       return this._options;
@@ -122,28 +122,28 @@ export class VscodeSelectBase extends LitElement {
     );
   }
 
-  @internalProperty()
+  @state()
   protected _filterPattern = '';
 
-  @internalProperty()
+  @state()
   protected _selectedIndex = -1;
 
-  @internalProperty()
+  @state()
   protected _selectedIndexes: number[] = [];
 
-  @internalProperty()
+  @state()
   protected _showDropdown = false;
 
-  @internalProperty()
+  @state()
   protected _options: InternalOption[] = [];
 
-  @internalProperty()
+  @state()
   protected _value = '';
 
-  @internalProperty()
+  @state()
   protected _values: string[] = [];
 
-  @internalProperty()
+  @state()
   protected _listScrollTop = 0;
 
   @query('.main-slot')

@@ -6,7 +6,6 @@ import {
   css,
   TemplateResult,
   CSSResult,
-  internalProperty,
   state,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
@@ -25,13 +24,13 @@ export class VscodeSplitLayout extends LitElement {
   @property()
   initialPos = '50%';
 
-  @internalProperty() _startPaneRight = 0;
-  @internalProperty() _startPaneBottom = 0;
-  @internalProperty() _endPaneTop = 0;
-  @internalProperty() _endPaneLeft = 0;
-  @internalProperty() _handleLeft = 0;
-  @internalProperty() _handleTop = 0;
-  @internalProperty() _isDragActive = false;
+  @state() _startPaneRight = 0;
+  @state() _startPaneBottom = 0;
+  @state() _endPaneTop = 0;
+  @state() _endPaneLeft = 0;
+  @state() _handleLeft = 0;
+  @state() _handleTop = 0;
+  @state() _isDragActive = false;
 
   @state()
   private _hover = false;

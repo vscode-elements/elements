@@ -7,7 +7,7 @@ import {
   CSSResult,
   TemplateResult,
   query,
-  internalProperty,
+  state,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -157,7 +157,7 @@ export class VscodeInputbox extends LitElement {
   @query('.input-element')
   private _inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
-  @internalProperty()
+  @state()
   private _textareaHeight = 0;
 
   private _severity: Severity;

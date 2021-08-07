@@ -3,7 +3,7 @@ import {
   property,
   html,
   TemplateResult,
-  internalProperty,
+  state,
 } from 'lit-element';
 import {classMap} from 'lit-html/directives/class-map';
 import {chevronDownIcon} from './includes/vscode-select/template-elements';
@@ -66,7 +66,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     return '';
   }
 
-  @internalProperty()
+  @state()
   private _labelText = '';
 
   private updateInputValue() {
