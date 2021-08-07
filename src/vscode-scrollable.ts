@@ -191,84 +191,87 @@ export class VscodeScrollable extends VscElement {
   private _onComponentMouseOutBound = this._onComponentMouseOut.bind(this);
 
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        display: block;
-        position: relative;
-      }
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+          position: relative;
+        }
 
-      .scrollable-container {
-        height: 100%;
-        overflow: auto;
-      }
+        .scrollable-container {
+          height: 100%;
+          overflow: auto;
+        }
 
-      .scrollable-container::-webkit-scrollbar {
-        cursor: default;
-        width: 0;
-      }
+        .scrollable-container::-webkit-scrollbar {
+          cursor: default;
+          width: 0;
+        }
 
-      .shadow {
-        box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
-        display: none;
-        height: 3px;
-        left: 0;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        z-index: 1;
-        width: 100%;
-      }
+        .shadow {
+          box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
+          display: none;
+          height: 3px;
+          left: 0;
+          pointer-events: none;
+          position: absolute;
+          top: 0;
+          z-index: 1;
+          width: 100%;
+        }
 
-      .shadow.visible {
-        display: block;
-      }
+        .shadow.visible {
+          display: block;
+        }
 
-      .scrollbar-track {
-        height: 100%;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 10px;
-      }
+        .scrollbar-track {
+          height: 100%;
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 10px;
+        }
 
-      .scrollbar-track.hidden {
-        display: none;
-      }
+        .scrollbar-track.hidden {
+          display: none;
+        }
 
-      .scrollbar-thumb {
-        background-color: transparent;
-        min-height: var(--min-thumb-height, 20px);
-        opacity: 0;
-        position: absolute;
-        right: 0;
-        width: 10px;
-      }
+        .scrollbar-thumb {
+          background-color: transparent;
+          min-height: var(--min-thumb-height, 20px);
+          opacity: 0;
+          position: absolute;
+          right: 0;
+          width: 10px;
+        }
 
-      .scrollbar-thumb.visible {
-        background-color: var(--vscode-scrollbarSlider-background);
-        opacity: 1;
-        transition: opacity 100ms;
-      }
+        .scrollbar-thumb.visible {
+          background-color: var(--vscode-scrollbarSlider-background);
+          opacity: 1;
+          transition: opacity 100ms;
+        }
 
-      .scrollbar-thumb.fade {
-        background-color: var(--vscode-scrollbarSlider-background);
-        opacity: 0;
-        transition: opacity 800ms;
-      }
+        .scrollbar-thumb.fade {
+          background-color: var(--vscode-scrollbarSlider-background);
+          opacity: 0;
+          transition: opacity 800ms;
+        }
 
-      .scrollbar-thumb.visible:hover {
-        background-color: var(--vscode-scrollbarSlider-hoverBackground);
-      }
+        .scrollbar-thumb.visible:hover {
+          background-color: var(--vscode-scrollbarSlider-hoverBackground);
+        }
 
-      .scrollbar-thumb.visible.active,
-      .scrollbar-thumb.visible.active:hover {
-        background-color: var(--vscode-scrollbarSlider-activeBackground);
-      }
+        .scrollbar-thumb.visible.active,
+        .scrollbar-thumb.visible.active:hover {
+          background-color: var(--vscode-scrollbarSlider-activeBackground);
+        }
 
-      .content {
-        overflow: hidden;
-      }
-    `;
+        .content {
+          overflow: hidden;
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

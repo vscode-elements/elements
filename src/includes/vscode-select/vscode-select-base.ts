@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import {CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators';
 import {classMap} from 'lit/directives/class-map';
 import '../../vscode-button';
@@ -530,7 +530,9 @@ export class VscodeSelectBase extends VscElement {
     `;
   }
 
-  static styles = dropdownStyles;
+  static get styles(): CSSResultGroup {
+    return [super.styles, dropdownStyles];
+  }
 
   render(): TemplateResult {
     return html`

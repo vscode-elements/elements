@@ -1,4 +1,4 @@
-import {css, html, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -538,102 +538,107 @@ export class VscodeTable extends VscElement {
 
   private _onResizingMouseUpBound = this._onResizingMouseUp.bind(this);
 
-  static styles = css`
-    :host {
-      display: block;
-    }
+  static get styles(): CSSResultGroup {
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+        }
 
-    ::slotted(vscode-table-row) {
-      width: 100%;
-    }
+        ::slotted(vscode-table-row) {
+          width: 100%;
+        }
 
-    .wrapper {
-      height: 100%;
-      max-width: 100%;
-      overflow: hidden;
-      position: relative;
-      width: 100%;
-    }
+        .wrapper {
+          height: 100%;
+          max-width: 100%;
+          overflow: hidden;
+          position: relative;
+          width: 100%;
+        }
 
-    .wrapper.select-disabled {
-      user-select: none;
-    }
+        .wrapper.select-disabled {
+          user-select: none;
+        }
 
-    .wrapper.resize-cursor {
-      cursor: ew-resize;
-    }
+        .wrapper.resize-cursor {
+          cursor: ew-resize;
+        }
 
-    .wrapper.compact-view .header-slot-wrapper {
-      height: 0;
-      overflow: hidden;
-    }
+        .wrapper.compact-view .header-slot-wrapper {
+          height: 0;
+          overflow: hidden;
+        }
 
-    .scrollable {
-      height: 100%;
-    }
+        .scrollable {
+          height: 100%;
+        }
 
-    .scrollable:before {
-      background-color: transparent;
-      content: '';
-      display: block;
-      height: 1px;
-      position: absolute;
-      width: 100%;
-    }
+        .scrollable:before {
+          background-color: transparent;
+          content: '';
+          display: block;
+          height: 1px;
+          position: absolute;
+          width: 100%;
+        }
 
-    :host(:not([bordered]))
-      .wrapper:not(.compact-view):hover
-      .scrollable:not([scrolled]):before,
-    :host([bordered])
-      .wrapper:not(.compact-view)
-      .scrollable:not([scrolled]):before {
-      background-color: var(--vscode-editorGroup-border);
-    }
+        :host(:not([bordered]))
+          .wrapper:not(.compact-view):hover
+          .scrollable:not([scrolled]):before,
+        :host([bordered])
+          .wrapper:not(.compact-view)
+          .scrollable:not([scrolled]):before {
+          background-color: var(--vscode-editorGroup-border);
+        }
 
-    :host(:not([bordered])) .sash {
-      visibility: hidden;
-    }
+        :host(:not([bordered])) .sash {
+          visibility: hidden;
+        }
 
-    :host(:not([compact])) .wrapper:hover .sash {
-      visibility: visible;
-    }
+        :host(:not([compact])) .wrapper:hover .sash {
+          visibility: visible;
+        }
 
-    .sash {
-      height: 100%;
-      position: absolute;
-      top: 0;
-      width: 1px;
-    }
+        .sash {
+          height: 100%;
+          position: absolute;
+          top: 0;
+          width: 1px;
+        }
 
-    .wrapper.compact-view .sash {
-      display: none;
-    }
+        .wrapper.compact-view .sash {
+          display: none;
+        }
 
-    .sash.resizable {
-      cursor: ew-resize;
-    }
+        .sash.resizable {
+          cursor: ew-resize;
+        }
 
-    .sash-visible {
-      background-color: var(--vscode-editorGroup-border);
-      height: 100%;
-      position: absolute;
-      top: 0;
-      width: 1px;
-    }
+        .sash-visible {
+          background-color: var(--vscode-editorGroup-border);
+          height: 100%;
+          position: absolute;
+          top: 0;
+          width: 1px;
+        }
 
-    .sash.hover .sash-visible {
-      background-color: var(--vscode-sash-hoverBorder);
-      transition: background-color 50ms linear 300ms;
-    }
+        .sash.hover .sash-visible {
+          background-color: var(--vscode-sash-hoverBorder);
+          transition: background-color 50ms linear 300ms;
+        }
 
-    .sash .sash-clickable {
-      background-color: transparent;
-      height: 100%;
-      left: -2px;
-      position: absolute;
-      width: 5px;
-    }
-  `;
+        .sash .sash-clickable {
+          background-color: transparent;
+          height: 100%;
+          left: -2px;
+          position: absolute;
+          width: 5px;
+        }
+      `,
+    ];
+  }
 
   render(): TemplateResult {
     const sashes = this._sashPositions.map((val, index) => {

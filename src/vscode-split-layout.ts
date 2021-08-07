@@ -154,74 +154,77 @@ export class VscodeSplitLayout extends VscElement {
   }
 
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        display: block;
-        overflow: hidden;
-        position: relative;
-      }
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+          overflow: hidden;
+          position: relative;
+        }
 
-      .start {
-        left: 0;
-        top: 0;
-        overflow: hidden;
-        position: absolute;
-      }
+        .start {
+          left: 0;
+          top: 0;
+          overflow: hidden;
+          position: absolute;
+        }
 
-      .end {
-        bottom: 0;
-        overflow: hidden;
-        position: absolute;
-        right: 0;
-      }
+        .end {
+          bottom: 0;
+          overflow: hidden;
+          position: absolute;
+          right: 0;
+        }
 
-      .handle-overlay {
-        display: none;
-        height: 100%;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        z-index: 1;
-      }
+        .handle-overlay {
+          display: none;
+          height: 100%;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100%;
+          z-index: 1;
+        }
 
-      .handle-overlay.active {
-        display: block;
-      }
+        .handle-overlay.active {
+          display: block;
+        }
 
-      .handle-overlay.split-vertical {
-        cursor: ew-resize;
-      }
+        .handle-overlay.split-vertical {
+          cursor: ew-resize;
+        }
 
-      .handle-overlay.split-horizontal {
-        cursor: ns-resize;
-      }
+        .handle-overlay.split-horizontal {
+          cursor: ns-resize;
+        }
 
-      .handle {
-        position: absolute;
-        z-index: 2;
-      }
+        .handle {
+          position: absolute;
+          z-index: 2;
+        }
 
-      .handle.hover {
-        background-color: var(--vscode-sash-hoverBorder);
-        transition: background-color 100ms linear 300ms;
-      }
+        .handle.hover {
+          background-color: var(--vscode-sash-hoverBorder);
+          transition: background-color 100ms linear 300ms;
+        }
 
-      .handle.hide {
-        background-color: transparent;
-        transition: background-color 100ms linear;
-      }
+        .handle.hide {
+          background-color: transparent;
+          transition: background-color 100ms linear;
+        }
 
-      .handle.split-vertical {
-        cursor: ew-resize;
-        height: 100%;
-      }
+        .handle.split-vertical {
+          cursor: ew-resize;
+          height: 100%;
+        }
 
-      .handle.split-horizontal {
-        cursor: ns-resize;
-        width: 100%;
-      }
-    `;
+        .handle.split-horizontal {
+          cursor: ns-resize;
+          width: 100%;
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

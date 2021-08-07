@@ -26,71 +26,74 @@ export class VscodeCollapsible extends VscElement {
   }
 
   static get styles(): CSSResultGroup {
-    return css`
-      .collapsible {
-        background-color: var(--vscode-sideBar-background);
-      }
+    return [
+      super.styles,
+      css`
+        .collapsible {
+          background-color: var(--vscode-sideBar-background);
+        }
 
-      .collapsible-header {
-        align-items: center;
-        background-color: var(--vscode-sideBarSectionHeader-background);
-        cursor: pointer;
-        display: flex;
-        height: 22px;
-        line-height: 22px;
-        user-select: none;
-      }
+        .collapsible-header {
+          align-items: center;
+          background-color: var(--vscode-sideBarSectionHeader-background);
+          cursor: pointer;
+          display: flex;
+          height: 22px;
+          line-height: 22px;
+          user-select: none;
+        }
 
-      .collapsible-header:focus {
-        opacity: 1;
-        outline-offset: -1px;
-        outline-style: solid;
-        outline-width: 1px;
-        outline-color: var(--vscode-focusBorder);
-      }
+        .collapsible-header:focus {
+          opacity: 1;
+          outline-offset: -1px;
+          outline-style: solid;
+          outline-width: 1px;
+          outline-color: var(--vscode-focusBorder);
+        }
 
-      .collapsible-header h3 {
-        color: var(--vscode-sideBarTitle-foreground);
-        font-size: 11px;
-        font-weight: 700;
-        margin: 0;
-        text-transform: uppercase;
-      }
+        .collapsible-header h3 {
+          color: var(--vscode-sideBarTitle-foreground);
+          font-size: 11px;
+          font-weight: 700;
+          margin: 0;
+          text-transform: uppercase;
+        }
 
-      .header-icon {
-        color: var(--vscode-icon-foreground);
-        display: block;
-        margin: 0 3px;
-      }
+        .header-icon {
+          color: var(--vscode-icon-foreground);
+          display: block;
+          margin: 0 3px;
+        }
 
-      .collapsible.open .header-icon {
-        transform: rotate(90deg);
-      }
+        .collapsible.open .header-icon {
+          transform: rotate(90deg);
+        }
 
-      .actions {
-        display: none;
-        margin-left: auto;
-        margin-right: 4px;
-      }
+        .actions {
+          display: none;
+          margin-left: auto;
+          margin-right: 4px;
+        }
 
-      .collapsible.open .actions {
-        display: block;
-      }
+        .collapsible.open .actions {
+          display: block;
+        }
 
-      slot[name='actions']::slotted(div) {
-        align-items: center;
-        display: flex;
-      }
+        slot[name='actions']::slotted(div) {
+          align-items: center;
+          display: flex;
+        }
 
-      .collapsible-body {
-        display: none;
-        overflow: hidden;
-      }
+        .collapsible-body {
+          display: none;
+          overflow: hidden;
+        }
 
-      .collapsible.open .collapsible-body {
-        display: block;
-      }
-    `;
+        .collapsible.open .collapsible-body {
+          display: block;
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

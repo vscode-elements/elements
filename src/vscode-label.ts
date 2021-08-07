@@ -1,4 +1,4 @@
-import {css, html, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 import {VscElement} from './includes/VscElement';
@@ -12,34 +12,39 @@ export class VscodeLabel extends VscElement {
   @property()
   for = '';
 
-  static styles = css`
-    :host {
-      cursor: default;
-      display: block;
-    }
+  static get styles(): CSSResultGroup {
+    return [
+      super.styles,
+      css`
+        :host {
+          cursor: default;
+          display: block;
+        }
 
-    .wrapper {
-      color: var(--vscode--settings-headerForeground);
-      font-size: var(--vscode-font-size);
-      font-weight: 600;
-      line-height: ${INPUT_LINE_HEIGHT_RATIO};
-      padding: 5px 0;
-    }
+        .wrapper {
+          color: var(--vscode--settings-headerForeground);
+          font-size: var(--vscode-font-size);
+          font-weight: 600;
+          line-height: ${INPUT_LINE_HEIGHT_RATIO};
+          padding: 5px 0;
+        }
 
-    :host-context(vscode-form-group[variant='settings-group']) .wrapper {
-      line-height: 18px;
-      padding: 0;
-    }
+        :host-context(vscode-form-group[variant='settings-group']) .wrapper {
+          line-height: 18px;
+          padding: 0;
+        }
 
-    ::slotted(.normal) {
-      font-weight: normal;
-    }
+        ::slotted(.normal) {
+          font-weight: normal;
+        }
 
-    ::slotted(.lightened) {
-      color: var(--vscode-foreground);
-      opacity: 0.9;
-    }
-  `;
+        ::slotted(.lightened) {
+          color: var(--vscode-foreground);
+          opacity: 0.9;
+        }
+      `,
+    ];
+  }
 
   private _handleClick() {
     let target;

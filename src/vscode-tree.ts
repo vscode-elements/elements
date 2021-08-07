@@ -531,95 +531,98 @@ export class VscodeTree extends VscElement {
   }
 
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        display: block;
-        outline: none;
-        user-select: none;
-      }
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+          outline: none;
+          user-select: none;
+        }
 
-      .wrapper {
-        height: 100%;
-      }
+        .wrapper {
+          height: 100%;
+        }
 
-      :host(:focus) .wrapper.focused-none {
-        outline: 1px solid var(--vscode-list-focusOutline);
-      }
+        :host(:focus) .wrapper.focused-none {
+          outline: 1px solid var(--vscode-list-focusOutline);
+        }
 
-      li {
-        list-style: none;
-      }
+        li {
+          list-style: none;
+        }
 
-      ul,
-      li {
-        margin: 0;
-        padding: 0;
-      }
+        ul,
+        li {
+          margin: 0;
+          padding: 0;
+        }
 
-      .contents {
-        align-items: center;
-        display: flex;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
-      }
+        .contents {
+          align-items: center;
+          display: flex;
+          font-family: var(--vscode-font-family);
+          font-size: var(--vscode-font-size);
+          font-weight: var(--vscode-font-weight);
+        }
 
-      .multi .contents {
-        align-items: flex-start;
-      }
+        .multi .contents {
+          align-items: flex-start;
+        }
 
-      .contents:hover {
-        background-color: var(--vscode-list-hoverBackground);
-        color: var(--vscode-list-hoverForeground);
-        cursor: pointer;
-      }
+        .contents:hover {
+          background-color: var(--vscode-list-hoverBackground);
+          color: var(--vscode-list-hoverForeground);
+          cursor: pointer;
+        }
 
-      .contents.selected {
-        background-color: var(--vscode-list-inactiveSelectionBackground);
-      }
+        .contents.selected {
+          background-color: var(--vscode-list-inactiveSelectionBackground);
+        }
 
-      :host(:focus) .contents.focused {
-        background-color: var(--vscode-list-focusBackground);
-        outline: 1px solid var(--vscode-list-focusOutline);
-        outline-offset: -1px;
-      }
+        :host(:focus) .contents.focused {
+          background-color: var(--vscode-list-focusBackground);
+          outline: 1px solid var(--vscode-list-focusOutline);
+          outline-offset: -1px;
+        }
 
-      :host(:focus) .contents.selected.focused,
-      :host(:focus) .contents.selected {
-        background-color: var(--vscode-list-activeSelectionBackground);
-        color: var(--vscode-list-activeSelectionForeground);
-      }
+        :host(:focus) .contents.selected.focused,
+        :host(:focus) .contents.selected {
+          background-color: var(--vscode-list-activeSelectionBackground);
+          color: var(--vscode-list-activeSelectionForeground);
+        }
 
-      .icon-arrow {
-        display: block;
-        margin: 3px 2px 3px 0;
-      }
+        .icon-arrow {
+          display: block;
+          margin: 3px 2px 3px 0;
+        }
 
-      .label-icon {
-        display: block;
-        margin-right: 6px;
-      }
+        .label-icon {
+          display: block;
+          margin-right: 6px;
+        }
 
-      :host(:focus) .contents.selected.focused .label-icon,
-      :host(:focus) .contents.selected .label-icon {
-        color: var(--vscode-list-activeSelectionForeground);
-      }
+        :host(:focus) .contents.selected.focused .label-icon,
+        :host(:focus) .contents.selected .label-icon {
+          color: var(--vscode-list-activeSelectionForeground);
+        }
 
-      .multi .contents .label-icon {
-        margin-top: 3px;
-      }
+        .multi .contents .label-icon {
+          margin-top: 3px;
+        }
 
-      .label {
-        display: block;
-        line-height: 22px;
-      }
+        .label {
+          display: block;
+          line-height: 22px;
+        }
 
-      .single .label {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    `;
+        .single .label {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

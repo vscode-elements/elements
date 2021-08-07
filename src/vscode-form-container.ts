@@ -1,4 +1,4 @@
-import {css, html, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -213,12 +213,17 @@ export class VscodeFormContainer extends VscElement {
     this._resizeObserver = null;
   }
 
-  static styles = css`
-    :host {
-      display: block;
-      max-width: 727px;
-    }
-  `;
+  static get styles(): CSSResultGroup {
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+          max-width: 727px;
+        }
+      `,
+    ];
+  }
 
   firstUpdated(): void {
     this._firstUpdateComplete = true;

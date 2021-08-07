@@ -1,16 +1,19 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators';
-import { VscElement } from './includes/VscElement';
+import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-form-item')
 export class VscodeFormItem extends VscElement {
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        display: block;
-        padding: 12px 0 18px;
-      }
-    `;
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+          padding: 12px 0 18px;
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

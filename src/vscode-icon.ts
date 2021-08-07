@@ -59,55 +59,58 @@ export class VscodeIcon extends VscElement {
   }
 
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        color: var(--vscode-icon-foreground);
-        display: inline-block;
-      }
-
-      .codicon[class*='codicon-'] {
-        display: block;
-      }
-
-      .wrapper {
-        display: block;
-      }
-
-      :host([action-icon]) .wrapper {
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 3px;
-      }
-
-      :host([action-icon]) .wrapper:hover {
-        background-color: var(--vscode-toolbar-hoverBackground);
-      }
-
-      :host([action-icon]) .wrapper:active {
-        background-color: var(--vscode-toolbar-activeBackground);
-      }
-
-      :host([action-icon]:focus) {
-        outline: none;
-      }
-
-      :host([action-icon]:focus-visible) {
-        outline: 1px solid var(--vscode-focusBorder);
-        outline-offset: -1px;
-      }
-
-      @keyframes icon-spin {
-        100% {
-          transform: rotate(360deg);
+    return [
+      super.styles,
+      css`
+        :host {
+          color: var(--vscode-icon-foreground);
+          display: inline-block;
         }
-      }
 
-      .spin {
-        animation-name: icon-spin;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-      }
-    `;
+        .codicon[class*='codicon-'] {
+          display: block;
+        }
+
+        .wrapper {
+          display: block;
+        }
+
+        :host([action-icon]) .wrapper {
+          border-radius: 5px;
+          cursor: pointer;
+          padding: 3px;
+        }
+
+        :host([action-icon]) .wrapper:hover {
+          background-color: var(--vscode-toolbar-hoverBackground);
+        }
+
+        :host([action-icon]) .wrapper:active {
+          background-color: var(--vscode-toolbar-activeBackground);
+        }
+
+        :host([action-icon]:focus) {
+          outline: none;
+        }
+
+        :host([action-icon]:focus-visible) {
+          outline: 1px solid var(--vscode-focusBorder);
+          outline-offset: -1px;
+        }
+
+        @keyframes icon-spin {
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .spin {
+          animation-name: icon-spin;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

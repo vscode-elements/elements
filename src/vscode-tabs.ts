@@ -79,41 +79,44 @@ export class VscodeTabs extends VscElement {
   }
 
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        display: block;
-      }
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+        }
 
-      .header {
-        display: flex;
-        font-family: var(--vscode-font-family);
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
-        width: 100%;
-      }
+        .header {
+          display: flex;
+          font-family: var(--vscode-font-family);
+          font-size: var(--vscode-font-size);
+          font-weight: var(--vscode-font-weight);
+          width: 100%;
+        }
 
-      :host-context(.vscode-light) .header {
-        border-bottom: 1px solid #ccc;
-      }
+        :host-context(.vscode-light) .header {
+          border-bottom: 1px solid #ccc;
+        }
 
-      ::slotted(header) {
-        border-bottom: 1px solid transparent;
-        color: var(--vscode-foreground);
-        cursor: pointer;
-        display: block;
-        margin-bottom: -1px;
-        overflow: hidden;
-        padding: 7px 8px;
-        text-overflow: ellipsis;
-        user-select: none;
-        white-space: nowrap;
-      }
+        ::slotted(header) {
+          border-bottom: 1px solid transparent;
+          color: var(--vscode-foreground);
+          cursor: pointer;
+          display: block;
+          margin-bottom: -1px;
+          overflow: hidden;
+          padding: 7px 8px;
+          text-overflow: ellipsis;
+          user-select: none;
+          white-space: nowrap;
+        }
 
-      ::slotted(.is-active) {
-        border-bottom-color: var(--vscode-settings-headerForeground);
-        color: var(--vscode-settings-headerForeground);
-      }
-    `;
+        ::slotted(.is-active) {
+          border-bottom-color: var(--vscode-settings-headerForeground);
+          color: var(--vscode-settings-headerForeground);
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

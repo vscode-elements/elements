@@ -57,7 +57,7 @@ export class VscodeCheckbox extends FormButtonWidgetBase {
   }
 
   static get styles(): CSSResultGroup[] {
-    return [baseStyles, checkboxStyles, formHelperTextStyles];
+    return [super.styles, baseStyles, checkboxStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {

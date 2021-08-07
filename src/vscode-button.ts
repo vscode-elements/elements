@@ -100,100 +100,103 @@ export class VscodeButton extends VscElement {
   private _handleBlurBound = this._handleBlur.bind(this);
 
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        align-items: center;
-        background-color: var(--vscode-button-background);
-        border: 0;
-        border-radius: 0;
-        box-sizing: border-box;
-        color: var(--vscode-button-foreground);
-        cursor: pointer;
-        display: inline-flex;
-        font-size: var(--vscode-font-size);
-        font-weight: var(--vscode-font-weight);
-        line-height: 26px;
-        padding: 0 14px;
-        user-select: none;
-      }
+    return [
+      super.styles,
+      css`
+        :host {
+          align-items: center;
+          background-color: var(--vscode-button-background);
+          border: 0;
+          border-radius: 0;
+          box-sizing: border-box;
+          color: var(--vscode-button-foreground);
+          cursor: pointer;
+          display: inline-flex;
+          font-size: var(--vscode-font-size);
+          font-weight: var(--vscode-font-weight);
+          line-height: 26px;
+          padding: 0 14px;
+          user-select: none;
+        }
 
-      :host([secondary]) {
-        color: var(--vscode-button-secondaryForeground);
-        background-color: var(--vscode-button-secondaryBackground);
-      }
+        :host([secondary]) {
+          color: var(--vscode-button-secondaryForeground);
+          background-color: var(--vscode-button-secondaryBackground);
+        }
 
-      :host([disabled]) {
-        cursor: default;
-        opacity: 0.4;
-        pointer-events: none;
-      }
+        :host([disabled]) {
+          cursor: default;
+          opacity: 0.4;
+          pointer-events: none;
+        }
 
-      :host(:hover) {
-        background-color: var(--vscode-button-hoverBackground);
-      }
+        :host(:hover) {
+          background-color: var(--vscode-button-hoverBackground);
+        }
 
-      :host([disabled]:hover) {
-        background-color: var(--vscode-button-background);
-      }
+        :host([disabled]:hover) {
+          background-color: var(--vscode-button-background);
+        }
 
-      :host([secondary]:hover) {
-        background-color: var(--vscode-button-secondaryHoverBackground);
-      }
+        :host([secondary]:hover) {
+          background-color: var(--vscode-button-secondaryHoverBackground);
+        }
 
-      :host([secondary][disabled]:hover) {
-        background-color: var(--vscode-button-secondaryBackground);
-      }
+        :host([secondary][disabled]:hover) {
+          background-color: var(--vscode-button-secondaryBackground);
+        }
 
-      :host(:focus),
-      :host(:active) {
-        outline: none;
-      }
+        :host(:focus),
+        :host(:active) {
+          outline: none;
+        }
 
-      :host(:focus) {
-        background-color: var(--vscode-button-hoverBackground);
-        outline: 1px solid var(--vscode-focusBorder);
-        outline-offset: 2px;
-      }
+        :host(:focus) {
+          background-color: var(--vscode-button-hoverBackground);
+          outline: 1px solid var(--vscode-focusBorder);
+          outline-offset: 2px;
+        }
 
-      :host([disabled]:focus) {
-        background-color: var(--vscode-button-background);
-        outline: 0;
-      }
+        :host([disabled]:focus) {
+          background-color: var(--vscode-button-background);
+          outline: 0;
+        }
 
-      :host([secondary]:focus) {
-        background-color: var(--vscode-button-secondaryHoverBackground);
-      }
+        :host([secondary]:focus) {
+          background-color: var(--vscode-button-secondaryHoverBackground);
+        }
 
-      :host([secondary][disabled]:focus) {
-        background-color: var(--vscode-button-secondaryBackground);
-      }
+        :host([secondary][disabled]:focus) {
+          background-color: var(--vscode-button-secondaryBackground);
+        }
 
-      .wrapper {
-        align-items: center;
-        display: flex;
-        position: relative;
-      }
+        .wrapper {
+          align-items: center;
+          display: flex;
+          position: relative;
+        }
 
-      .wrapper.has-icon-before {
-        padding-left: 21px;
-      }
+        .wrapper.has-icon-before {
+          padding-left: 21px;
+        }
 
-      .wrapper.has-icon-after {
-        padding-right: 21px;
-      }
+        .wrapper.has-icon-after {
+          padding-right: 21px;
+        }
 
-      .icon {
-        color: var(--vscode-button-foreground);
-        left: 0;
-        position: absolute;
-      }
+        .icon {
+          color: var(--vscode-button-foreground);
+          left: 0;
+          position: absolute;
+        }
 
-      .icon-after {
-        color: var(--vscode-button-foreground);
-        position: absolute;
-        right: 0;
-      }
-    `;
+        .icon-after {
+          color: var(--vscode-button-foreground);
+          position: absolute;
+          right: 0;
+        }
+      `,
+    ];
   }
 
   render(): TemplateResult {

@@ -26,7 +26,7 @@ export class VscodeFormHelper extends VscElement {
       }
     `;
 
-    return [baseStyles, formHelperTextStyles];
+    return [super.styles, baseStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {

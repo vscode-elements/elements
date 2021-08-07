@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators';
 import {VscElement} from './includes/VscElement';
 
@@ -7,6 +7,10 @@ export class VscodeOption extends VscElement {
   @property({type: String}) value = '';
   @property({type: String}) description = '';
   @property({type: Boolean, reflect: true}) selected = false;
+
+  static get styles(): CSSResultGroup {
+    return [super.styles];
+  }
 
   render(): TemplateResult {
     return html`<slot></slot>`;

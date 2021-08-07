@@ -87,7 +87,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
   }
 
   static get styles(): CSSResultGroup[] {
-    return [baseStyles, radioStyles, formHelperTextStyles];
+    return [super.styles, baseStyles, radioStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {
