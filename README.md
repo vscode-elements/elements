@@ -1,4 +1,6 @@
 # VSCode Webview Elements 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fbendera%2Fvscode-webview-elements.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fbendera%2Fvscode-webview-elements?ref=badge_shield)
+
 
 For the end-user documentation, [click here](https://bendera.github.io/vscode-webview-elements/).
 This project made with [LitElement](https://lit-element.polymer-project.org/) and based on a modified version of the [LitElement TypeScript starter](https://github.com/PolymerLabs/lit-element-starter-ts).
@@ -53,3 +55,7 @@ npm run test:watch
 ```bash
 npm run test
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fbendera%2Fvscode-webview-elements.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fbendera%2Fvscode-webview-elements?ref=badge_large)
