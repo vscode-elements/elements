@@ -20,6 +20,12 @@ interface Option {
 }
 ```
 
+## Attributes
+
+| Attribute | Description                                      |
+|-----------|--------------------------------------------------|
+| `name`    | Name which is used as a variable name in the data of the form-container. |
+
 ## Properties
 
 | Property        | Attribute       | Type                                             | Default   | Description   |

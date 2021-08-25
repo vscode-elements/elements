@@ -11,15 +11,15 @@ component: vscode-radio
 
 ## Properties
 
-| Property   | Attribute  | Type      | Default |
-|------------|------------|-----------|---------|
-| `checked`  | `checked`  | `boolean` |         |
-| `disabled` | `disabled` | `boolean` | false   |
-| `focused`  | `focused`  | `boolean` | false   |
-| `label`    | `label`    | `string`  | ""      |
-| `name`     | `name`     | `string`  | ""      |
-| `tabindex` | `tabindex` | `number`  | 0       |
-| `value`    | `value`    | `string`  | ""      |
+| Property   | Attribute  | Type      | Default | Description                                      |
+|------------|------------|-----------|---------|--------------------------------------------------|
+| `checked`  | `checked`  | `boolean` |         |                                                  |
+| `disabled` | `disabled` | `boolean` | false   |                                                  |
+| `focused`  | `focused`  | `boolean` | false   |                                                  |
+| `label`    | `label`    | `string`  | ""      |                                                  |
+| `name`     | `name`     | `string`  | ""      | Name which is used as a variable name in the data of the form-container. |
+| `tabindex` | `tabindex` | `number`  | 0       |                                                  |
+| `value`    | `value`    | `string`  | ""      |                                                  |
 
 ## Events
 
