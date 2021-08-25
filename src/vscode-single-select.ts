@@ -20,6 +20,7 @@ import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
  *  selected: boolean;
  *}
  * ```
+ * @attr name - Name which is used as a variable name in the data of the form-container.
  */
 @customElement('vscode-single-select')
 export class VscodeSingleSelect extends VscodeSelectBase {

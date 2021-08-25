@@ -6,6 +6,9 @@ import baseStyles from './includes/form-button-widget/base.styles';
 import radioStyles from './includes/form-button-widget/radio.styles';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 
+/**
+ * @attr name - Name which is used as a variable name in the data of the form-container.
+ */
 @customElement('vscode-radio')
 export class VscodeRadio extends FormButtonWidgetBase {
   @property({type: Boolean})

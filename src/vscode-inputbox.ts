@@ -46,6 +46,7 @@ const calcHeightFromLines = (lines: number) => {
 
 /**
  * @attr {narrow|wide} variant - The sizes are borrowed from the VSCode settings page. The narrow size is typically used for the numeric values and the wide size for the text.
+ * @attr name - Name which is used as a variable name in the data of the form-container.
  *
  * @cssprop --vscode-scrollbarSlider-background
  * @cssprop --vscode-scrollbarSlider-hoverBackground

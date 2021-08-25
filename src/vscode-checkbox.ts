@@ -13,6 +13,9 @@ import baseStyles from './includes/form-button-widget/base.styles';
 import checkboxStyles from './includes/form-button-widget/checkbox.styles';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 
+/**
+ * @attr name - Name which is used as a variable name in the data of the form-container.
+ */
 @customElement('vscode-checkbox')
 export class VscodeCheckbox extends FormButtonWidgetBase {
   @property({type: Boolean})

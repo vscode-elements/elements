@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - The label didn't connect to the input widget in the shadow DOM.
 
+### Added
+
+- Added `@attr` jsdoc tag to the "name" attribute to prevent the "unknown attribute" warnings in the supported IDEs.
+
 ## [0.6.2] - 2021-08-04
 
 ### Fixed
