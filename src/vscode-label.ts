@@ -50,7 +50,7 @@ export class VscodeLabel extends LitElement {
     let target;
 
     if (this.for) {
-      const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
+      const root = this.getRootNode({composed: false}) as Document | ShadowRoot;
 
       if (root) {
         target = root.querySelector(`#${this.for}`);
