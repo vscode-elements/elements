@@ -1,7 +1,7 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {styleMap} from 'lit/directives/style-map';
+import {customElement, property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-scrollable')

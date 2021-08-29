@@ -1,6 +1,6 @@
 import {CSSResultGroup, html, nothing, TemplateResult} from 'lit';
-import {customElement, property, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {customElement, property, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
 import baseStyles from './includes/form-button-widget/base.styles';
 import checkboxStyles from './includes/form-button-widget/checkbox.styles';

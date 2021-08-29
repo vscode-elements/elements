@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
 import './vscode-context-menu-item';
 

@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 import {applyForegroundRGBA} from './includes/themeHelpers';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 import {VscElement} from './includes/VscElement';

@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators';
+import {customElement, property} from 'lit/decorators.js';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 import {VscElement} from './includes/VscElement';
 

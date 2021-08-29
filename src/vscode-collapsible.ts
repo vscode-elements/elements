@@ -1,6 +1,6 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {customElement, property} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from './includes/VscElement';
 
 /**

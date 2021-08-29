@@ -1,6 +1,6 @@
 import {CSSResultGroup, html, nothing, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
+import {property, query, state} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import '../../vscode-button';
 import {VscodeOption} from '../../vscode-option';
 import dropdownStyles from './styles';
