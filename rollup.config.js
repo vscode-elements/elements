@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-import alias from '@rollup/plugin-alias';
 import {terser} from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import visualizer from 'rollup-plugin-visualizer';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
-import aliases from './aliases.config';
 
 export default {
   input: 'dist/main.js',
@@ -24,9 +22,6 @@ export default {
     }
   },
   plugins: [
-    alias({
-      entries: aliases,
-    }),
     minifyHTML(),
     replace({
       preventAssignment: true,
