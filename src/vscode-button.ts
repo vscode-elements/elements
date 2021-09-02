@@ -173,7 +173,9 @@ export class VscodeButton extends VscElement {
         .wrapper {
           align-items: center;
           display: flex;
+          justify-content: center;
           position: relative;
+          width: 100%;
         }
 
         .wrapper.has-icon-before {
