@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Unreleased
+
+### Added
+
+- Added scrollPos and scrollMax property to Scrollable
+
+### Fixed
+
+- Button: Fixed-width button text aligned to center
+- Select: Removed the extra whitespaces from the value
+
 ## [0.6.3] - 2021-08-26
 
 ### Fixed
