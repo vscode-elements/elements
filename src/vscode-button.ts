@@ -172,6 +172,7 @@ export class VscodeButton extends VscElement {
 
         .wrapper {
           align-items: center;
+          box-sizing: border-box;
           display: flex;
           justify-content: center;
           position: relative;
