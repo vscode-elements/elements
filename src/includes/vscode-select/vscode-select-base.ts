@@ -181,10 +181,10 @@ export class VscodeSelectBase extends VscElement {
 
       const value = (el as VscodeOption).hasAttribute('value')
         ? elValue
-        : innerText;
+        : innerText.trim();
 
       const op: InternalOption = {
-        label: innerText,
+        label: innerText.trim(),
         value,
         description,
         selected,
