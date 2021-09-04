@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Button: Fixed-width button text aligned to center
 - Select: Removed the extra whitespaces from the value
+- Scrollable: The content covered the scrollbar if its position relative or absolute
 
 ## [0.6.3] - 2021-08-26
 
