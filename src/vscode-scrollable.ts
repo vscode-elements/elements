@@ -1,5 +1,11 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  query,
+  queryAssignedNodes,
+  state,
+} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
@@ -52,10 +58,14 @@ export class VscodeScrollable extends VscElement {
   @query('.scrollable-container')
   private _scrollableContainer!: HTMLDivElement;
 
+  @queryAssignedNodes()
+  private _assignedNodes!: NodeList;
+
   private _resizeObserver!: ResizeObserver;
   private _scrollThumbStartY = 0;
   private _mouseStartY = 0;
   private _scrollbarVisible = true;
+  private _scrollbarTrackZ = 0;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -110,8 +120,30 @@ export class VscodeScrollable extends VscElement {
     this.requestUpdate();
   }
 
+  private _zIndexFix() {
+    let highestZ = 0;
+
+    this._assignedNodes.forEach((n) => {
+      if ('style' in n) {
+        const computedZIndex = window.getComputedStyle(n as HTMLElement).zIndex;
+        const isNumber = /([0-9-])+/g.test(computedZIndex);
+
+        if (isNumber) {
+          highestZ =
+            Number(computedZIndex) > highestZ
+              ? Number(computedZIndex)
+              : highestZ;
+        }
+      }
+    });
+
+    this._scrollbarTrackZ = highestZ + 1;
+    this.requestUpdate();
+  }
+
   private _onSlotChange() {
     this._updateScrollbar();
+    this._zIndexFix();
   }
 
   private _onScrollThumbMouseDown(event: MouseEvent) {
@@ -244,6 +276,7 @@ export class VscodeScrollable extends VscElement {
           right: 0;
           top: 0;
           width: 10px;
+          z-index: 100;
         }
 
         .scrollbar-track.hidden {
@@ -308,7 +341,12 @@ export class VscodeScrollable extends VscElement {
         })}"
       >
         <div class="${shadowClasses}"></div>
-        <div class="${scrollbarClasses}">
+        <div
+          class="${scrollbarClasses}"
+          style="${styleMap({
+            'z-index': String(this._scrollbarTrackZ),
+          })}"
+        >
           <div
             class="${thumbClasses}"
             style="${styleMap({
