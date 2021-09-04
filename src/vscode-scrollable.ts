@@ -321,18 +321,6 @@ export class VscodeScrollable extends VscElement {
   }
 
   render(): TemplateResult {
-    const shadowClasses = classMap({shadow: true, visible: this.scrolled});
-    const thumbClasses = classMap({
-      'scrollbar-thumb': true,
-      visible: this._thumbVisible,
-      fade: this._thumbFade,
-      active: this._thumbActive,
-    });
-    const scrollbarClasses = classMap({
-      'scrollbar-track': true,
-      hidden: !this._scrollbarVisible,
-    });
-
     return html`
       <div
         class="scrollable-container"
@@ -340,15 +328,23 @@ export class VscodeScrollable extends VscElement {
           'user-select': this._isDragging ? 'none' : 'auto',
         })}"
       >
-        <div class="${shadowClasses}"></div>
+        <div class="${classMap({shadow: true, visible: this.scrolled})}"></div>
         <div
-          class="${scrollbarClasses}"
+          class="${classMap({
+            'scrollbar-track': true,
+            hidden: !this._scrollbarVisible,
+          })}"
           style="${styleMap({
             'z-index': String(this._scrollbarTrackZ),
           })}"
         >
           <div
-            class="${thumbClasses}"
+            class="${classMap({
+              'scrollbar-thumb': true,
+              visible: this._thumbVisible,
+              fade: this._thumbFade,
+              active: this._thumbActive,
+            })}"
             style="${styleMap({
               height: `${this._thumbHeight}px`,
               top: `${this._thumbY}px`,
