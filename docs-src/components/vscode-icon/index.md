@@ -79,6 +79,8 @@ import '@bendera/vscode-webview-elements/dist/vscode-icon';
 
 ## List of icons
 
+For the searchable list, see the [project page](https://microsoft.github.io/vscode-codicons/dist/codicon.html).
+
 <component-preview>
   <vscode-icon name="account" title="account"></vscode-icon>
   <vscode-icon name="activate-breakpoints" title="activate-breakpoints"></vscode-icon>
