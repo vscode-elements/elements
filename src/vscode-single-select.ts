@@ -136,7 +136,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   private _onOptionClick(ev: MouseEvent) {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) =>
-      (et as HTMLElement)?.matches('li.option')
+      et instanceof HTMLElement && et.matches('li.option')
     );
 
     if (!optEl) {
