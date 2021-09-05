@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-fs.readFile('./node_modules/vscode-codicons/src/template/mapping.json', 'utf-8', (err, data) => {
+fs.readFile('./node_modules/@vscode/codicons/src/template/mapping.json', 'utf-8', (err, data) => {
   if (err) {
     throw err;
   }

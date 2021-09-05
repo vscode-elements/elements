@@ -98,6 +98,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="arrow-small-up" title="arrow-small-up"></vscode-icon>
   <vscode-icon name="arrow-swap" title="arrow-swap"></vscode-icon>
   <vscode-icon name="arrow-up" title="arrow-up"></vscode-icon>
+  <vscode-icon name="azure" title="azure"></vscode-icon>
   <vscode-icon name="beaker" title="beaker"></vscode-icon>
   <vscode-icon name="bell" title="bell"></vscode-icon>
   <vscode-icon name="bell-dot" title="bell-dot"></vscode-icon>
@@ -147,6 +148,9 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="comment-add" title="comment-add"></vscode-icon>
   <vscode-icon name="comment-discussion" title="comment-discussion"></vscode-icon>
   <vscode-icon name="compare-changes" title="compare-changes"></vscode-icon>
+  <vscode-icon name="compass" title="compass"></vscode-icon>
+  <vscode-icon name="compass-active" title="compass-active"></vscode-icon>
+  <vscode-icon name="compass-dot" title="compass-dot"></vscode-icon>
   <vscode-icon name="console" title="console"></vscode-icon>
   <vscode-icon name="copy" title="copy"></vscode-icon>
   <vscode-icon name="credit-card" title="credit-card"></vscode-icon>
@@ -154,6 +158,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="dashboard" title="dashboard"></vscode-icon>
   <vscode-icon name="database" title="database"></vscode-icon>
   <vscode-icon name="debug" title="debug"></vscode-icon>
+  <vscode-icon name="debug-all" title="debug-all"></vscode-icon>
   <vscode-icon name="debug-alt" title="debug-alt"></vscode-icon>
   <vscode-icon name="debug-alt-small" title="debug-alt-small"></vscode-icon>
   <vscode-icon name="debug-breakpoint" title="debug-breakpoint"></vscode-icon>
@@ -174,6 +179,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="debug-breakpoint-unverified" title="debug-breakpoint-unverified"></vscode-icon>
   <vscode-icon name="debug-console" title="debug-console"></vscode-icon>
   <vscode-icon name="debug-continue" title="debug-continue"></vscode-icon>
+  <vscode-icon name="debug-coverage" title="debug-coverage"></vscode-icon>
   <vscode-icon name="debug-disconnect" title="debug-disconnect"></vscode-icon>
   <vscode-icon name="debug-hint" title="debug-hint"></vscode-icon>
   <vscode-icon name="debug-line-by-line" title="debug-line-by-line"></vscode-icon>
@@ -240,6 +246,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="fold-up" title="fold-up"></vscode-icon>
   <vscode-icon name="folder" title="folder"></vscode-icon>
   <vscode-icon name="folder-active" title="folder-active"></vscode-icon>
+  <vscode-icon name="folder-library" title="folder-library"></vscode-icon>
   <vscode-icon name="folder-opened" title="folder-opened"></vscode-icon>
   <vscode-icon name="gather" title="gather"></vscode-icon>
   <vscode-icon name="gear" title="gear"></vscode-icon>
@@ -258,7 +265,9 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="git-merge" title="git-merge"></vscode-icon>
   <vscode-icon name="git-pull-request" title="git-pull-request"></vscode-icon>
   <vscode-icon name="git-pull-request-abandoned" title="git-pull-request-abandoned"></vscode-icon>
+  <vscode-icon name="git-pull-request-closed" title="git-pull-request-closed"></vscode-icon>
   <vscode-icon name="git-pull-request-create" title="git-pull-request-create"></vscode-icon>
+  <vscode-icon name="git-pull-request-draft" title="git-pull-request-draft"></vscode-icon>
   <vscode-icon name="github" title="github"></vscode-icon>
   <vscode-icon name="github-action" title="github-action"></vscode-icon>
   <vscode-icon name="github-alt" title="github-alt"></vscode-icon>
@@ -277,7 +286,9 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="hubot" title="hubot"></vscode-icon>
   <vscode-icon name="inbox" title="inbox"></vscode-icon>
   <vscode-icon name="info" title="info"></vscode-icon>
+  <vscode-icon name="inspect" title="inspect"></vscode-icon>
   <vscode-icon name="issue-closed" title="issue-closed"></vscode-icon>
+  <vscode-icon name="issue-draft" title="issue-draft"></vscode-icon>
   <vscode-icon name="issue-opened" title="issue-opened"></vscode-icon>
   <vscode-icon name="issue-reopened" title="issue-reopened"></vscode-icon>
   <vscode-icon name="issues" title="issues"></vscode-icon>
@@ -289,6 +300,9 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="key" title="key"></vscode-icon>
   <vscode-icon name="keyboard" title="keyboard"></vscode-icon>
   <vscode-icon name="law" title="law"></vscode-icon>
+  <vscode-icon name="layers" title="layers"></vscode-icon>
+  <vscode-icon name="layers-active" title="layers-active"></vscode-icon>
+  <vscode-icon name="layers-dot" title="layers-dot"></vscode-icon>
   <vscode-icon name="library" title="library"></vscode-icon>
   <vscode-icon name="light-bulb" title="light-bulb"></vscode-icon>
   <vscode-icon name="lightbulb" title="lightbulb"></vscode-icon>
@@ -401,6 +415,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="run-above" title="run-above"></vscode-icon>
   <vscode-icon name="run-all" title="run-all"></vscode-icon>
   <vscode-icon name="run-below" title="run-below"></vscode-icon>
+  <vscode-icon name="run-errors" title="run-errors"></vscode-icon>
   <vscode-icon name="save" title="save"></vscode-icon>
   <vscode-icon name="save-all" title="save-all"></vscode-icon>
   <vscode-icon name="save-as" title="save-as"></vscode-icon>

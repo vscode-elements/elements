@@ -17,8 +17,8 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPassthroughCopy({
-    'node_modules/vscode-codicons/dist/codicon.css': 'codicon.css',
-    'node_modules/vscode-codicons/dist/codicon.ttf': 'codicon.ttf',
+    'node_modules/@vscode/codicons/dist/codicon.css': 'codicon.css',
+    'node_modules/@vscode/codicons/dist/codicon.ttf': 'codicon.ttf',
   });
   eleventyConfig.addPassthroughCopy({'dist/bundled.js': 'bundled.js'});
   eleventyConfig.addPassthroughCopy('docs-src/docs.css');

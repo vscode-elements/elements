@@ -1,6 +1,6 @@
 {
   "name": "@bendera/vscode-webview-elements",
-  "version": "0.6.3",
+  "version": "0.7.0-pre.4",
   "description": "Webcomponents for creating Visual Studio Code extensions",
   "main": "dist/main.js",
   "module": "dist/main.js",
@@ -68,6 +68,7 @@
     "@types/mocha": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^4.30.0",
     "@typescript-eslint/parser": "^4.30.0",
+    "@vscode/codicons": "^0.0.22",
     "@web/dev-server": "^0.1.22",
     "@web/dev-server-esbuild": "^0.2.14",
     "@web/dev-server-legacy": "^0.1.7",
@@ -98,7 +99,6 @@
     "rollup-plugin-visualizer": "^5.5.2",
     "sinon": "^11.1.2",
     "typescript": "^4.4.2",
-    "vscode-codicons": "0.0.17",
     "web-component-analyzer": "^1.2.0-next.0"
   }
 }
