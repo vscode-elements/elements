@@ -17,6 +17,9 @@ const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 19;
 const LIST_HEIGHT = 194;
 
+/**
+ * @cssprop --dropdown-z-index - workaround for dropdown z-index issues
+ */
 export class VscodeSelectBase extends VscElement {
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
   ariaExpanded = 'false';

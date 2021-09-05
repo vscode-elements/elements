@@ -142,7 +142,7 @@ export default css`
     position: absolute;
     top: 100%;
     width: 100%;
-    z-index: 2;
+    z-index: var(--dropdown-z-index, 2);
   }
 
   :host(:focus) .dropdown,
