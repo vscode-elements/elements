@@ -14,7 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Button: Fixed-width button text aligned to center
 - Select: Removed the extra whitespaces from the value
+- Select: css property to set the dropdown z-index to fix the overlapping issues
 - Scrollable: The content covered the scrollbar if its position relative or absolute
+- Scrollable: The scrollbar will be resized when the content height change
 
 ## [0.6.3] - 2021-08-26
 
