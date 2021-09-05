@@ -74,8 +74,6 @@ export class VscodeScrollable extends VscElement {
       this._resizeObserverCallbackBound
     );
 
-    this._resizeObserver.observe(this);
-
     this.requestUpdate();
 
     this.updateComplete.then(() => {
@@ -83,6 +81,7 @@ export class VscodeScrollable extends VscElement {
         'scroll',
         this._onScrollableContainerScroll.bind(this)
       );
+      this._resizeObserver.observe(this._contentElement);
     });
 
     this.addEventListener('mouseover', this._onComponentMouseOverBound);
@@ -100,6 +99,7 @@ export class VscodeScrollable extends VscElement {
   }
 
   private _resizeObserverCallback() {
+    console.log('resized');
     this._updateScrollbar();
   }
 

@@ -30,7 +30,7 @@
   </div>
 
   <div class="story">
-    <h2 class="story-title">Basic example</h2>
+    <h2 class="story-title">Z-index</h2>
     <div class="story-content">
       <style>
         .scroll-example-2 {
@@ -46,6 +46,85 @@
           </div>
         </vscode-scrollable>
       </component-preview>
+      <button type="button" id="append-extra-content">append</button>
+      <script type="module">
+        const bt = document.querySelector('#append-extra-content');
+
+        let p = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fringilla dolor eu semper mattis. Morbi nulla turpis, tincidunt vitae maximus et, fringilla ut erat. Fusce mi enim, dictum eu mollis quis, aliquam sit amet arcu. Aenean sit amet massa vel erat placerat aliquam. Nunc velit justo, dictum vel porta sed, congue non lorem. Quisque pulvinar elementum efficitur. In elementum nibh eu ipsum pretium, ut finibus massa viverra. Suspendisse fringilla tempus dui, sit amet pretium nibh dignissim in. Nullam placerat lorem lorem, ut euismod lorem venenatis quis. Sed varius, magna et tincidunt cursus, orci mi rhoncus neque, id cursus sapien ligula dignissim dolor. Fusce lectus metus, feugiat luctus sapien eu, tincidunt sagittis sapien. Nulla lobortis sapien ac arcu aliquam tempus.</p>';
+
+        p = p + p + p + p;
+
+        bt.addEventListener('click', () => {
+          document.querySelector('.scroll-example-2').innerHTML = p;
+        });
+      </script>
+    </div>
+  </div>
+
+  <div class="story">
+    <h2 class="story-title">Content height changed</h2>
+    <div class="story-content">
+      <style>
+        .scroll-example-3 {
+          height: 200px;
+          text-align: justify;
+          width: 200px;
+        }
+
+        .scroll-example-3__content {
+          height: 400px;
+          width: 200px;
+          overflow: hidden;
+        }
+
+        .scroll-example-3__content p {
+          margin: 0;
+        }
+      </style>
+      <component-preview>
+        <vscode-scrollable class="scroll-example-3">
+          <div style="background-color: red;" class="scroll-example-3__content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed tortor sed libero congue dictum at at tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed et mauris congue, ullamcorper elit nec, posuere nisi. In at lobortis ipsum, quis laoreet risus. Suspendisse potenti. Sed in lorem sapien. Nullam mollis sed urna ac feugiat. Donec eget nisi sodales, lacinia leo at, vehicula ex. Fusce condimentum nunc neque, quis interdum enim porta vitae. Proin sagittis sollicitudin leo, non iaculis massa volutpat et.
+              </p>
+              <p>
+              Duis efficitur mauris quis purus ultricies porttitor. Sed maximus volutpat dui, et vestibulum metus convallis quis. Praesent aliquam nec libero sit amet blandit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed convallis eros vel tellus elementum elementum. Nam ac massa risus. Vestibulum molestie rutrum molestie. Phasellus in dapibus nisi. In quis sem mi. Ut aliquet pulvinar leo nec scelerisque. Maecenas cursus sem blandit dignissim consequat. Morbi commodo nisl sit amet dui molestie pharetra.
+              </p>
+              <p>
+              Nullam quis aliquet libero. Morbi maximus fringilla elit in tincidunt. Ut viverra dui leo, sed tempor enim fringilla eu. Donec sed sapien consequat, volutpat ex at, dapibus nulla. In lacinia nisi eget magna facilisis pellentesque. Duis diam mi, iaculis eu ultrices non, viverra pharetra dolor. Integer hendrerit convallis hendrerit. Ut in laoreet purus. Ut sed risus varius lacus volutpat dapibus.
+              </p>
+              <p>
+              Fusce eu purus in tortor efficitur vulputate mollis a lectus. Fusce purus diam, accumsan nec nibh nec, eleifend efficitur justo. Quisque et ultrices ex, non placerat lectus. Suspendisse potenti. Donec leo nisl, iaculis nec metus id, eleifend mattis dolor. Suspendisse ac blandit neque. Quisque non sapien ultricies, porta sem quis, imperdiet sapien.
+              </p>
+              <p>
+              Vivamus ultrices magna mattis, congue tellus at, tempor augue. Mauris ac felis leo. In dapibus a orci quis molestie. Integer ac tortor sodales, auctor est eu, sodales nisl. Proin varius sodales eros, vitae ullamcorper diam lacinia et. Sed sit amet pulvinar tortor, eu eleifend metus. Etiam euismod lacus vitae turpis egestas tincidunt. Maecenas volutpat id leo ac egestas. Morbi fermentum tincidunt nisl, vel semper magna varius eget. Nam posuere orci ac est fringilla volutpat.
+              </p>
+              <p>
+              Vestibulum pellentesque leo et leo dictum luctus. Donec varius tincidunt nulla, ac fringilla nisi varius vel. Morbi eget malesuada enim. Aliquam mollis, ipsum sed pellentesque sodales, ante magna placerat magna, vitae condimentum augue nulla laoreet ligula. Aenean efficitur eros lorem, nec condimentum tellus dignissim non. Duis id tempor velit. Pellentesque ac sodales justo. Aliquam ullamcorper, ex at varius semper, magna leo auctor neque, ac imperdiet ante tellus sed massa. Etiam quis dictum purus. Aenean sollicitudin dui diam, iaculis fermentum massa tincidunt id.
+              </p>
+              <p>
+              Nunc suscipit est ornare augue faucibus, sed rutrum orci sollicitudin. Phasellus aliquam, velit eget sodales sollicitudin, tellus turpis vulputate nisi, sit amet lacinia nibh leo quis ante. Nullam quam arcu, dictum ut ante eu, luctus molestie sem. Sed auctor scelerisque dui, eget consectetur risus tempus quis. Aenean euismod nec felis a gravida. Ut id elementum felis. Curabitur hendrerit sapien condimentum magna suscipit, porttitor placerat quam tincidunt.
+              </p>
+              <p>
+              Morbi vitae ullamcorper purus. Ut eget elit justo. Integer ullamcorper semper odio quis faucibus. Vivamus in vestibulum ante. Donec et diam id tortor porta accumsan sed ut quam. Curabitur blandit dolor vitae consectetur semper. Nulla facilisi. Sed elementum diam tempor vulputate vestibulum. Nullam ultrices dignissim justo, sit amet blandit dui. Proin vitae dolor quis diam fermentum semper vel sed neque. Praesent ac justo et urna pharetra molestie in nec nisl. Vestibulum ac euismod nunc.
+              </p>
+              <p>
+              Donec malesuada fringilla tincidunt. Duis fermentum sit amet quam in commodo. Donec vulputate lacus vehicula ornare pharetra. Nulla ultrices dolor sed mauris cursus, at efficitur mauris malesuada. Aliquam nec diam eget risus finibus tempus vel sit amet eros. Suspendisse sed odio congue, fringilla ipsum efficitur, semper purus. Nulla dapibus mauris id ex scelerisque, eget rutrum tortor semper. Nunc mollis ex et lectus pulvinar tincidunt. Fusce posuere, nibh sed luctus suscipit, dui tellus imperdiet tortor, sit amet iaculis urna magna vestibulum ligula. Donec mollis, risus vel ultricies lacinia, odio enim pharetra augue, et tristique arcu nibh sit amet felis. Vestibulum risus orci, dapibus a tristique fringilla, tempor a elit. Aenean vitae felis in mauris fringilla finibus.
+              </p>
+              <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis vel mi quis facilisis. Quisque gravida ante in faucibus dictum. Donec malesuada iaculis tellus, nec porttitor quam ornare non. Proin bibendum placerat augue eu varius. Integer varius hendrerit aliquet. Donec vel vehicula mauris, vitae congue lacus.
+              </p>
+          </div>
+        </vscode-scrollable>
+      </component-preview>
+      <button type="button" id="content-height-change">change</button>
+      <script type="module">
+        const bt = document.querySelector('#content-height-change');
+
+        bt.addEventListener('click', () => {
+          document.querySelector('.scroll-example-3__content').style.height = '800px';
+        });
+      </script>
     </div>
   </div>
 
