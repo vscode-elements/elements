@@ -99,7 +99,6 @@ export class VscodeScrollable extends VscElement {
   }
 
   private _resizeObserverCallback() {
-    console.log('resized');
     this._updateScrollbar();
   }
 
