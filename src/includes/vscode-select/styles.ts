@@ -172,6 +172,11 @@ export default css`
     user-select: none;
   }
 
+  .option.disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
   .option.active {
     background-color: var(--vscode-quickInputList-focusBackground);
     color: var(--vscode-quickInputList-focusForeground);

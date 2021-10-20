@@ -7,6 +7,7 @@ export class VscodeOption extends VscElement {
   @property({type: String}) value = '';
   @property({type: String}) description = '';
   @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
   static get styles(): CSSResultGroup {
     return [super.styles];

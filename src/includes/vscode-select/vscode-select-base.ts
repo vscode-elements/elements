@@ -71,11 +71,12 @@ export class VscodeSelectBase extends VscElement {
     this._options = opts.map((op, index) => ({...op, index}));
   }
   get options(): Option[] {
-    return this._options.map(({label, value, description, selected}) => ({
+    return this._options.map(({label, value, description, selected, disabled}) => ({
       label,
       value,
       description,
       selected,
+      disabled,
     }));
   }
 
@@ -180,6 +181,7 @@ export class VscodeSelectBase extends VscElement {
         value: elValue,
         description,
         selected,
+        disabled
       } = el as VscodeOption;
 
       const value = (el as VscodeOption).hasAttribute('value')
@@ -192,6 +194,7 @@ export class VscodeSelectBase extends VscElement {
         description,
         selected,
         index: currentIndex,
+        disabled
       };
 
       currentIndex = options.push(op);
