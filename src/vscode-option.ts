@@ -6,6 +6,7 @@ export class VscodeOption extends LitElement {
   @property({type: String}) value = '';
   @property({type: String}) description = '';
   @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
   render(): TemplateResult {
     return html`<slot></slot>`;

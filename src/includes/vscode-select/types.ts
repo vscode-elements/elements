@@ -3,6 +3,7 @@ export interface Option {
   value: string;
   description: string;
   selected: boolean;
+  disabled: boolean;
 }
 
 export interface InternalOption extends Option {

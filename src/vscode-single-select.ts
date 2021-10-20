@@ -18,6 +18,7 @@ import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
  *  value: string;
  *  description: string;
  *  selected: boolean;
+ *  disabled: boolean;
  *}
  * ```
  * @attr name - Name which is used as a variable name in the data of the form-container.
@@ -142,11 +143,13 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) =>
       (et as HTMLElement)?.matches('li.option')
-    );
+    ) as HTMLElement | undefined;
 
-    if (!optEl) {
+    if (!optEl || optEl.matches('.disabled')) {
       return;
     }
+
+
 
     this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
     this._value = this._options[this._selectedIndex].value;
@@ -202,11 +205,11 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
   protected _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
-
     const options = list.map((op, index) => {
       const classes = classMap({
         option: true,
-        active: index === this._activeIndex,
+        active: index === this._activeIndex && !op.disabled,
+        disabled: op.disabled,
       });
 
       return html`
