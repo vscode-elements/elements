@@ -21,6 +21,20 @@ export class VscodeMultiSelect extends VscodeSelectBase {
   @property({type: Array})
   set value(val: string[]) {
     this._values = val;
+
+    const valMap: {[key: string]: number} = {};
+
+    this._options.forEach(({value}, index) => {
+      valMap[value] = index;
+    });
+
+    this._selectedIndexes = [];
+
+    val.forEach((v) =>{
+      if (valMap[v]) {
+        this._selectedIndexes.push(valMap[v]);
+      }
+    });
   }
   get value(): string[] {
     return this._values;
