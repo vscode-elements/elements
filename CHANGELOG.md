@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - Added scrollPos and scrollMax property to Scrollable
+- Select: allow disabled single select option (thx [ununian](https://github.com/ununian))
 
 ### Fixed
 
