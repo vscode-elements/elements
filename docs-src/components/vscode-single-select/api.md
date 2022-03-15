@@ -17,6 +17,7 @@ interface Option {
   value: string;
   description: string;
   selected: boolean;
+  disabled: boolean;
 }
 ```
 
@@ -46,3 +47,9 @@ interface Option {
 | Event        | Type                                             |
 |--------------|--------------------------------------------------|
 | `vsc-change` | `CustomEvent<{ selectedIndex: number; value: string; }>` |
+
+## CSS Custom Properties
+
+| Property             | Description                            |
+|----------------------|----------------------------------------|
+| `--dropdown-z-index` | workaround for dropdown z-index issues |

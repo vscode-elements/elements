@@ -11,7 +11,9 @@ component: vscode-scrollable
 
 ## Properties
 
-| Property   | Attribute  | Type      | Default |
-|------------|------------|-----------|---------|
-| `scrolled` | `scrolled` | `boolean` | false   |
-| `shadow`   | `shadow`   | `boolean` | true    |
+| Property    | Attribute   | Modifiers | Type      | Default |
+|-------------|-------------|-----------|-----------|---------|
+| `scrollMax` | `scrollMax` | readonly  | `number`  |         |
+| `scrollPos` | `scrollPos` |           | `number`  |         |
+| `scrolled`  | `scrolled`  |           | `boolean` | false   |
+| `shadow`    | `shadow`    |           | `boolean` | true    |

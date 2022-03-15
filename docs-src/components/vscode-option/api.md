@@ -14,5 +14,6 @@ component: vscode-option
 | Property      | Attribute     | Type      | Default |
 |---------------|---------------|-----------|---------|
 | `description` | `description` | `string`  | ""      |
+| `disabled`    | `disabled`    | `boolean` | false   |
 | `selected`    | `selected`    | `boolean` | false   |
 | `value`       | `value`       | `string`  | ""      |

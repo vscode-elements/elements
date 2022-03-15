@@ -34,3 +34,9 @@ component: vscode-multi-select
 | Event        | Type                                             |
 |--------------|--------------------------------------------------|
 | `vsc-change` | `CustomEvent<{ selectedIndex: number; value: string; }>` |
+
+## CSS Custom Properties
+
+| Property             | Description                            |
+|----------------------|----------------------------------------|
+| `--dropdown-z-index` | workaround for dropdown z-index issues |
