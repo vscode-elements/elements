@@ -107,15 +107,15 @@ export class VscodeButton extends VscElement {
           align-items: center;
           background-color: var(--vscode-button-background);
           border: 0;
-          border-radius: 0;
+          border-radius: 2px;
           box-sizing: border-box;
           color: var(--vscode-button-foreground);
           cursor: pointer;
           display: inline-flex;
           font-size: var(--vscode-font-size);
           font-weight: var(--vscode-font-weight);
-          line-height: 26px;
-          padding: 0 14px;
+          line-height: 22px;
+          padding: 2px 14px;
           user-select: none;
         }
 
