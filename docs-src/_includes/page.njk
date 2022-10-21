@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }} &ndash; VSCode Webview Elements</title>
+  <!-- script type="module" src="https://cdn.skypack.dev/@api-viewer/docs"></script -->
+  <script type="module" src="https://cdn.skypack.dev/pin/@api-viewer/docs@v1.0.0-pre.6-hhrJZZ8uDokgZa55nxB6/mode=imports,min/optimized/@api-viewer/docs.js"></script>
   <link rel="stylesheet" href="{{ '/dev-assets/preview-styles.css' | url }}">
   <link rel="stylesheet" href="{{ '/codicon.css' | url }}" id="vscode-codicon-stylesheet">
   <link rel="stylesheet" href="{{ '/docs.css' | url }}">
@@ -64,6 +66,7 @@
       <div class="main-content">
         <div class="page">
           {% block subnav %}{% endblock %}
+          {% block apidocs %}{% endblock %}
           {% if deprecated %}
             <div class="deprecated-message">
               <p>Warning! This component is deprecated and will be removed in the next release.</p>

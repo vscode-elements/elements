@@ -10,9 +10,17 @@
   <link rel="stylesheet" href="../node_modules/vscode-codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
   <script type="module" src="../dev-assets/component-preview.js"></script>
   <script type="module" src="../dist/vscode-button.js"></script>
+  <script type="module" src="https://unpkg.com/api-viewer-element?module"></script>
+  <script type="module">
+    import '../dist/vscode-button.js';
+  </script>
+  <script type="module">
+    import '../dist/vscode-checkbox.js';
+  </script>
 </head>
 
 <body class="vscode-light">
+  <api-viewer src="../dev-assets/custom-elements.json"></api-viewer>
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">

@@ -108,6 +108,7 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
  *   path: string; // ex.: 0/0/1
  * }
  * ```
+ * @deprecated - test
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
@@ -122,6 +123,9 @@ export class VscodeTree extends VscElement {
     return this._data;
   }
 
+  /**
+   * @deprecated
+   */
   @property({type: Number}) indent = 8;
   @property({type: Boolean}) arrows = false;
   @property({type: Boolean}) multiline = false;

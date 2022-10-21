@@ -9,6 +9,8 @@ component: vscode-button
 
 # VscodeButton
 
+bla bla **bla**
+
 ## Properties
 
 | Property    | Attribute   | Type      | Default  | Description                                      |
@@ -27,3 +29,9 @@ component: vscode-button
 |-------------|-----------------------------------------------|--------------------------------------------------|
 | `click`     | `MouseEvent`                                  |                                                  |
 | `vsc-click` | `CustomEvent<{ originalEvent: MouseEvent; }>` | Dispatched only if the disabled attribute is false. |
+
+## Slots
+
+| Name | Description          |
+|------|----------------------|
+|      | Slot for button text |

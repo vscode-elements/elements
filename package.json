@@ -32,7 +32,8 @@
     "test:watch": "wtr --watch",
     "checksize": "npm run build:bundle && cat dist/bundled.js | gzip -9 | wc -c",
     "generate": "node scripts/generateComponent.js",
-    "icons": "node scripts/generateIconList.js"
+    "icons": "node scripts/generateIconList.js",
+    "cem": "cem analyze --litelement --globs=\"src/vscode-*.ts\" --exclude=\"src/main.ts\""
   },
   "keywords": [
     "web-components",
@@ -58,6 +59,8 @@
   "devDependencies": {
     "@11ty/eleventy": "^1.0.2",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.2",
+    "@custom-elements-manifest/analyzer": "^0.6.4",
+    "@custom-elements-manifest/to-markdown": "^0.1.0",
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@gerhobbelt/markdown-it-github-headings": "^2.0.0-2",
     "@open-wc/testing": "^2.5.33",
@@ -77,6 +80,7 @@
     "@web/test-runner-mocha": "^0.7.4",
     "@web/test-runner-playwright": "^0.8.8",
     "@webcomponents/webcomponentsjs": "^2.6.0",
+    "api-viewer-element": "^1.0.0-pre.3",
     "color": "^4.0.1",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
@@ -99,6 +103,6 @@
     "rollup-plugin-visualizer": "^5.5.2",
     "sinon": "^11.1.2",
     "typescript": "^4.4.2",
-    "web-component-analyzer": "^1.2.0-next.0"
+    "web-component-analyzer": "^2.0.0-next.4"
   }
 }

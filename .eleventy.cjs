@@ -24,6 +24,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('docs-src/docs.css');
   eleventyConfig.addPassthroughCopy('docs-src/.nojekyll');
   eleventyConfig.addPassthroughCopy('dev-assets');
+  eleventyConfig.addPassthroughCopy('custom-elements.json');
 
   eleventyConfig.addCollection('component', function (collectionApi) {
     return collectionApi

@@ -13,11 +13,11 @@ component: vscode-single-select
 
 ```typescript
 interface Option {
-  label: string;
-  value: string;
-  description: string;
-  selected: boolean;
-  disabled: boolean;
+ label: string;
+ value: string;
+ description: string;
+ selected: boolean;
+ disabled: boolean;
 }
 ```
 

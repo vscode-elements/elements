@@ -15,34 +15,34 @@ component: vscode-tree
 type ItemType = 'branch' | 'leaf';
 
 interface TreeItemIconConfig {
-   branch?: string;
-   open?: string;
-   leaf?: string;
+  branch?: string;
+  open?: string;
+  leaf?: string;
 }
 
 interface TreeItem {
-   label: string;
-   subItems?: TreeItem[];
-   open?: boolean;
-   selected?: boolean;
-   focused?: boolean;
-   icons?: TreeItemIconConfig;
+  label: string;
+  subItems?: TreeItem[];
+  open?: boolean;
+  selected?: boolean;
+  focused?: boolean;
+  icons?: TreeItemIconConfig;
 
-   // If it's not defined the value will be equal to the label
-   value?: string;
+  // If it's not defined the value will be equal to the label
+  value?: string;
 
-   // Item path in the tree. For example [0,0,1] means:
-   // tree[0].subItems[0].subItems[1]
-   path?: number[];
+  // Item path in the tree. For example [0,0,1] means:
+  // tree[0].subItems[0].subItems[1]
+  path?: number[];
 }
 
 interface SelectEventDetail {
-   icons: TreeItemIconConfig | undefined;
-   itemType: ItemType;
-   label: string;
-   open: boolean;
-   value: string;
-   path: string; // ex.: 0/0/1
+  icons: TreeItemIconConfig | undefined;
+  itemType: ItemType;
+  label: string;
+  open: boolean;
+  value: string;
+  path: string; // ex.: 0/0/1
 }
 ```
 

@@ -6,3 +6,9 @@
   <li><a href="{{ '/components' | url }}/{{ component }}/api" {% if page.fileSlug == 'api' %}class="current"{% endif %}>API</a></li>
 </ul>
 {% endblock %}
+
+{% block apidocs %}
+{% if page.fileSlug == 'api' %}
+<api-docs src="/custom-elements.json" only="{{ component }}" selected="{{ component }}" class="api-docs"></api-docs>
+{% endif %}
+{% endblock %}
