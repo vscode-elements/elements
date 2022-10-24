@@ -67,7 +67,7 @@
               },
               "default": "''",
               "description": "A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label",
-              "attribute": "icon-after"
+              "attribute": "iconAfter"
             },
             {
               "kind": "field",
@@ -187,7 +187,7 @@
               "fieldName": "icon"
             },
             {
-              "name": "icon-after",
+              "name": "iconAfter",
               "type": {
                 "text": "string"
               },
@@ -2064,13 +2064,6 @@
           ],
           "attributes": [
             {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Combobox mode",
-              "name": "combobox"
-            },
-            {
               "description": "Name which is used as a variable name in the data of the form-container.",
               "name": "name"
             },
@@ -2306,7 +2299,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "|aa|bb|\n|--|--|\n|11|22|",
+          "description": "",
           "name": "VscodeRadio",
           "members": [
             {
@@ -2409,15 +2402,6 @@
               "kind": "method",
               "name": "_handleSlotChange",
               "privacy": "private"
-            },
-            {
-              "type": {
-                "text": "number"
-              },
-              "description": "Reflected tabindex to make component focusable",
-              "name": "tabindex",
-              "default": "0",
-              "kind": "field"
             }
           ],
           "events": [
@@ -2425,14 +2409,18 @@
               "name": "vsc-change",
               "type": {
                 "text": "CustomEvent"
-              },
-              "description": "See the detailed payload in the description"
+              }
             }
           ],
           "attributes": [
             {
-              "description": "Reflected tabindex to make component focusable",
-              "name": "tabindex"
+              "description": "Name which is used as a variable name in the data of the form-container.",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
             },
             {
               "name": "checked",
@@ -2448,15 +2436,6 @@
               },
               "default": "''",
               "fieldName": "label"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Name which is used as a variable name in the data of the form-container.",
-              "fieldName": "name"
             },
             {
               "name": "value",
