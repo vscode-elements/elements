@@ -4,11 +4,20 @@ import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends VscElement {
-  @property({type: String}) label = '';
-  @property({type: String}) keybinding = '';
-  @property({type: String}) value = '';
-  @property({type: Boolean}) separator = false;
-  @property({type: Number}) tabindex = 0;
+  @property({type: String})
+  label = '';
+
+  @property({type: String})
+  keybinding = '';
+
+  @property({type: String})
+  value = '';
+
+  @property({type: Boolean})
+  separator = false;
+
+  @property({type: Number})
+  tabindex = 0;
 
   private onItemClick() {
     this.dispatchEvent(
@@ -70,8 +79,7 @@ export class VscodeContextMenuItem extends VscElement {
           text-decoration: inherit;
         }
 
-        .context-menu-item a:hover,
-        :host-context(:focus) .context-menu-item a {
+        :host-context([selected]) .context-menu-item a {
           background-color: var(--vscode-menu-selectionBackground);
           color: var(--vscode-menu-selectionForeground);
         }

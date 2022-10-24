@@ -28,6 +28,7 @@ import '@bendera/vscode-webview-elements/dist/vscode-context-menu';
   bottom: 36px;
   left: 16px;
   position: absolute;
+  z-index: 2;
 }
 </style>
 

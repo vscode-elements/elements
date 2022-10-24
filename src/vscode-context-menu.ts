@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query, state} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
 import './vscode-context-menu-item';
 
@@ -13,20 +13,85 @@ interface MenuItemData {
 
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends VscElement {
-  /** <pre><code>interface MenuItemData {
-   * &nbsp;&nbsp;label: string;
-   * &nbsp;&nbsp;keybinding?: string;
-   * &nbsp;&nbsp;value?: string;
-   * &nbsp;&nbsp;separator?: boolean;
-   * &nbsp;&nbsp;tabindex?: number;
-   * }</code></pre>
-   */
-  @property({type: Array}) data: MenuItemData[] = [];
-  // TODO: hide on item click
-  @property({type: Boolean, reflect: true}) show = false;
+  @property({type: Array, attribute: false})
+  set data(data: MenuItemData[]) {
+    this._data = data;
 
-  private onItemClick(event: CustomEvent) {
+    const indexes: number[] = [];
+
+    data.forEach((v, i) => {
+      if (!v.separator) {
+        indexes.push(i);
+      }
+    });
+
+    this._clickableItemIndexes = indexes;
+  }
+  get data(): MenuItemData[] {
+    return this._data;
+  }
+
+  @property({type: Boolean, reflect: true})
+  set show(show: boolean) {
+    this._show = show;
+    this._selectedClickableItemIndex = -1;
+
+    if (show) {
+      this.updateComplete.then(() => {
+        if (this._wrapperEl) {
+          this._wrapperEl.focus();
+        }
+      });
+    }
+  }
+  get show(): boolean {
+    return this._show;
+  }
+
+  @property({type: Number, reflect: true})
+  tabindex = 0;
+
+  @state()
+  private _selectedClickableItemIndex = -1;
+
+  @state()
+  private _show = false;
+
+  @query('.context-menu')
+  private _wrapperEl!: HTMLDivElement;
+
+  private _data: MenuItemData[] = [];
+
+  private _clickableItemIndexes: number[] = [];
+
+  constructor() {
+    super();
+    this.addEventListener('keydown', this._onKeyDown);
+  }
+
+  private _onKeyDown(ev: KeyboardEvent) {
+    if (ev.key === 'ArrowDown') {
+      if (
+        this._selectedClickableItemIndex + 1 <
+        this._clickableItemIndexes.length
+      ) {
+        this._selectedClickableItemIndex += 1;
+      } else {
+        this._selectedClickableItemIndex = 0;
+      }
+    } else if (ev.key === 'ArrowUp') {
+      if (this._selectedClickableItemIndex === 0) {
+        this._selectedClickableItemIndex =
+          this._clickableItemIndexes.length - 1;
+      } else {
+        this._selectedClickableItemIndex -= 1;
+      }
+    }
+  }
+
+  private _onItemClick(event: CustomEvent) {
     const {detail} = event;
+    this._show = false;
 
     this.dispatchEvent(
       new CustomEvent('vsc-select', {
@@ -35,6 +100,18 @@ export class VscodeContextMenu extends VscElement {
         composed: true,
       })
     );
+  }
+
+  private _onItemHover(event: MouseEvent) {
+    const el = event.target as HTMLElement;
+    const index = el.dataset.index ? +el.dataset.index : -1;
+    const found = this._clickableItemIndexes.findIndex(
+      (item) => item === index
+    );
+
+    if (found !== -1) {
+      this._selectedClickableItemIndex = found;
+    }
   }
 
   static get styles(): CSSResultGroup {
@@ -52,10 +129,15 @@ export class VscodeContextMenu extends VscElement {
 
         .context-menu {
           background-color: var(--vscode-menu-background);
+          border-radius: 5px;
           box-shadow: 0 2px 8px var(--vscode-widget-shadow);
           color: var(--vscode-menu-foreground);
           padding: 0.5em 0;
           white-space: nowrap;
+        }
+
+        .context-menu:focus {
+          outline: 0;
         }
 
         .context-menu-item {
@@ -85,12 +167,6 @@ export class VscodeContextMenu extends VscElement {
           text-decoration: inherit;
         }
 
-        .context-menu-item a:hover,
-        .context-menu-item a:focus {
-          background-color: var(--vscode-menu-selectionBackground);
-          color: var(--vscode-menu-selectionForeground);
-        }
-
         .label {
           background: none;
           display: flex;
@@ -113,32 +189,43 @@ export class VscodeContextMenu extends VscElement {
   }
 
   render(): TemplateResult {
-    const menu = html`
-      <div class="context-menu">
+    if (!this._show) {
+      return html`${nothing}`;
+    }
+
+    const selectedIndex =
+      this._clickableItemIndexes[this._selectedClickableItemIndex];
+
+    return html`
+      <div class="context-menu" tabindex="0">
         ${this.data
           ? this.data.map(
-              ({
-                label = '',
-                keybinding = '',
-                value = '',
-                separator = false,
-                tabindex = 0,
-              }) => html`
+              (
+                {
+                  label = '',
+                  keybinding = '',
+                  value = '',
+                  separator = false,
+                  tabindex = 0,
+                },
+                index
+              ) => html`
                 <vscode-context-menu-item
                   label="${label}"
                   keybinding="${keybinding}"
                   value="${value}"
                   ?separator="${separator}"
+                  ?selected="${index === selectedIndex}"
                   tabindex="${tabindex}"
-                  @vsc-click="${this.onItemClick}"
+                  @vsc-click="${this._onItemClick}"
+                  @mouseover=${this._onItemHover}
+                  data-index=${index}
                 ></vscode-context-menu-item>
               `
             )
           : html`<slot></slot>`}
       </div>
     `;
-
-    return html` ${this.show ? menu : nothing} `;
   }
 }
 
