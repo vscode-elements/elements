@@ -17,13 +17,26 @@ export class VscodeSplitLayout extends VscElement {
   @property()
   initialPos = '50%';
 
-  @state() _startPaneRight = 0;
-  @state() _startPaneBottom = 0;
-  @state() _endPaneTop = 0;
-  @state() _endPaneLeft = 0;
-  @state() _handleLeft = 0;
-  @state() _handleTop = 0;
-  @state() _isDragActive = false;
+  @state()
+  private _startPaneRight = 0;
+
+  @state()
+  private _startPaneBottom = 0;
+
+  @state()
+  private _endPaneTop = 0;
+
+  @state()
+  private _endPaneLeft = 0;
+
+  @state()
+  private _handleLeft = 0;
+
+  @state()
+  private _handleTop = 0;
+
+  @state()
+  private _isDragActive = false;
 
   @state()
   private _hover = false;

@@ -40,7 +40,10 @@ export class VscodeMultiSelect extends VscodeSelectBase {
     return this._values;
   }
 
-  _multiple = true;
+  constructor() {
+    super();
+    this._multiple = true;
+  }
 
   private _onOptionClick(ev: MouseEvent) {
     const composedPath = ev.composedPath();

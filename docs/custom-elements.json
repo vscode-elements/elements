@@ -67,7 +67,7 @@
               },
               "default": "''",
               "description": "A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label",
-              "attribute": "icon-after"
+              "attribute": "iconAfter"
             },
             {
               "kind": "field",
@@ -187,7 +187,7 @@
               "fieldName": "icon"
             },
             {
-              "name": "icon-after",
+              "name": "iconAfter",
               "type": {
                 "text": "string"
               },
@@ -1966,14 +1966,6 @@
               "attribute": "value"
             },
             {
-              "kind": "field",
-              "name": "_multiple",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true"
-            },
-            {
               "kind": "method",
               "name": "_onOptionClick",
               "privacy": "private",
@@ -2062,22 +2054,15 @@
               }
             },
             {
+              "kind": "field",
+              "name": "_multiple",
               "type": {
                 "text": "boolean"
               },
-              "description": "Combobox mode",
-              "name": "combobox",
-              "kind": "field"
+              "default": "true"
             }
           ],
           "attributes": [
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Combobox mode",
-              "name": "combobox"
-            },
             {
               "description": "Name which is used as a variable name in the data of the form-container.",
               "name": "name"
@@ -2314,7 +2299,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "|aa|bb|\n|--|--|\n|11|22|",
+          "description": "",
           "name": "VscodeRadio",
           "members": [
             {
@@ -2417,15 +2402,6 @@
               "kind": "method",
               "name": "_handleSlotChange",
               "privacy": "private"
-            },
-            {
-              "type": {
-                "text": "number"
-              },
-              "description": "Reflected tabindex to make component focusable",
-              "name": "tabindex",
-              "default": "0",
-              "kind": "field"
             }
           ],
           "events": [
@@ -2433,14 +2409,18 @@
               "name": "vsc-change",
               "type": {
                 "text": "CustomEvent"
-              },
-              "description": "See the detailed payload in the description"
+              }
             }
           ],
           "attributes": [
             {
-              "description": "Reflected tabindex to make component focusable",
-              "name": "tabindex"
+              "description": "Name which is used as a variable name in the data of the form-container.",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
             },
             {
               "name": "checked",
@@ -2456,15 +2436,6 @@
               },
               "default": "''",
               "fieldName": "label"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Name which is used as a variable name in the data of the form-container.",
-              "fieldName": "name"
             },
             {
               "name": "value",
@@ -3087,6 +3058,7 @@
               "type": {
                 "text": "number"
               },
+              "privacy": "private",
               "default": "0"
             },
             {
@@ -3095,6 +3067,7 @@
               "type": {
                 "text": "number"
               },
+              "privacy": "private",
               "default": "0"
             },
             {
@@ -3103,6 +3076,7 @@
               "type": {
                 "text": "number"
               },
+              "privacy": "private",
               "default": "0"
             },
             {
@@ -3111,6 +3085,7 @@
               "type": {
                 "text": "number"
               },
+              "privacy": "private",
               "default": "0"
             },
             {
@@ -3119,6 +3094,7 @@
               "type": {
                 "text": "number"
               },
+              "privacy": "private",
               "default": "0"
             },
             {
@@ -3127,6 +3103,7 @@
               "type": {
                 "text": "number"
               },
+              "privacy": "private",
               "default": "0"
             },
             {
@@ -3135,6 +3112,7 @@
               "type": {
                 "text": "boolean"
               },
+              "privacy": "private",
               "default": "false"
             },
             {
