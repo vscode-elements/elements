@@ -8,14 +8,8 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "bla bla **bla**\n| Name                       | Type    | Description                                                                                                                                                            | Valid for |\n| -------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |\n| label                      | string  | The label of the form item.                                                                                                                                            | all       |\n| name                       | string  | The token name in the template.                                                                                                                                        | all       |\n| type                       | enum    | The type of the token. Valid values are:<br> **text**: displayed as a text input<br>**boolean**: displayed as a checkbox<br>**enum**: displayed as a dropdown selector | all       |\n| description                | string  | A longer text under the form item                                                                                                                                      | all       |\n| prefix                     | string  | Text before the value. It will only be applied if the value is not empty                                                                                               | all       |\n| suffix                     | string  | Text after the value. It will only be applied if the value is not empty                                                                                                | all       |\n| multiline                  | boolean | Multiline text input                                                                                                                                                   | text      |\n| lines                      | number  | Textarea initial height in lines                                                                                                                                       | text      |\n| maxLines                   | number  | Textarea maximum height in lines                                                                                                                                       | text      |\n| maxLength                  | number  | Maximum length of the value                                                                                                                                            | text      |\n| multiple                   | boolean | Multiple options                                                                                                                                                       | enum      |\n| separator                  | string  | Separator character when multiple options were selected                                                                                                                | enum      |\n| combobox                   | boolean | Is the selector filterable or not                                                                                                                                      | enum      |\n| options                    | array   | Available options                                                                                                                                                      | enum      |\n| options[_{n}_].label       | string  | The value of the option                                                                                                                                                | enum      |\n| options[_{n}_].description | string  | A longer description for the option                                                                                                                                    | enum      |",
+          "description": "",
           "name": "VscodeButton",
-          "slots": [
-            {
-              "description": "Slot for button text",
-              "name": ""
-            }
-          ],
           "members": [
             {
               "kind": "field",
@@ -73,7 +67,7 @@
               },
               "default": "''",
               "description": "A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label",
-              "attribute": "iconAfter"
+              "attribute": "icon-after"
             },
             {
               "kind": "field",
@@ -146,11 +140,8 @@
               "name": "vsc-click",
               "type": {
                 "text": "CustomEvent"
-              }
-            },
-            {
-              "description": "originalEvent: MouseEvent; }> - Dispatched only if the disabled attribute is false.",
-              "name": "vsc-click<{"
+              },
+              "description": "Dispatched only when button is not in disabled state."
             }
           ],
           "attributes": [
@@ -196,7 +187,7 @@
               "fieldName": "icon"
             },
             {
-              "name": "iconAfter",
+              "name": "icon-after",
               "type": {
                 "text": "string"
               },
@@ -2069,9 +2060,24 @@
                   "text": "TemplateResult"
                 }
               }
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Combobox mode",
+              "name": "combobox",
+              "kind": "field"
             }
           ],
           "attributes": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Combobox mode",
+              "name": "combobox"
+            },
             {
               "description": "Name which is used as a variable name in the data of the form-container.",
               "name": "name"
@@ -2308,7 +2314,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "|aa|bb|\n|--|--|\n|11|22|",
           "name": "VscodeRadio",
           "members": [
             {
@@ -2335,6 +2341,7 @@
                 "text": "string"
               },
               "default": "''",
+              "description": "Name which is used as a variable name in the data of the form-container.",
               "attribute": "name"
             },
             {
@@ -2361,6 +2368,7 @@
               "type": {
                 "text": "boolean"
               },
+              "privacy": "private",
               "default": "false"
             },
             {
@@ -2409,6 +2417,15 @@
               "kind": "method",
               "name": "_handleSlotChange",
               "privacy": "private"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "Reflected tabindex to make component focusable",
+              "name": "tabindex",
+              "default": "0",
+              "kind": "field"
             }
           ],
           "events": [
@@ -2416,18 +2433,14 @@
               "name": "vsc-change",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "See the detailed payload in the description"
             }
           ],
           "attributes": [
             {
-              "description": "Name which is used as a variable name in the data of the form-container.",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "name"
+              "description": "Reflected tabindex to make component focusable",
+              "name": "tabindex"
             },
             {
               "name": "checked",
@@ -2443,6 +2456,15 @@
               },
               "default": "''",
               "fieldName": "label"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Name which is used as a variable name in the data of the form-container.",
+              "fieldName": "name"
             },
             {
               "name": "value",
@@ -4382,7 +4404,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "## Type definitions\n\n```typescript\ntype ItemType = 'branch' | 'leaf';\n\ninterface TreeItemIconConfig {\n  branch?: string;\n  open?: string;\n  leaf?: string;\n}\n\ninterface TreeItem {\n  label: string;\n  subItems?: TreeItem[];\n  open?: boolean;\n  selected?: boolean;\n  focused?: boolean;\n  icons?: TreeItemIconConfig;\n\n  // If it's not defined the value will be equal to the label\n  value?: string;\n\n  // Item path in the tree. For example [0,0,1] means:\n  // tree[0].subItems[0].subItems[1]\n  path?: number[];\n}\n\ninterface SelectEventDetail {\n  icons: TreeItemIconConfig | undefined;\n  itemType: ItemType;\n  label: string;\n  open: boolean;\n  value: string;\n  path: string; // ex.: 0/0/1\n}\n```",
+          "description": "",
           "name": "VscodeTree",
           "members": [
             {
@@ -4735,7 +4757,6 @@
             "name": "VscElement",
             "module": "/src/includes/VscElement"
           },
-          "deprecated": "- test",
           "tagName": "vscode-tree",
           "customElement": true
         }

@@ -5,13 +5,4 @@ tags: api
 component: vscode-radio-group
 ---
 
-<!-- This file is auto-generated. Do not edit! -->
-
 # VscodeRadioGroup
-
-## Properties
-
-| Property  | Attribute | Type                         | Default      |
-|-----------|-----------|------------------------------|--------------|
-| `inline`  | `inline`  | `boolean`                    | false        |
-| `variant` | `variant` | `"horizontal" | "vertical"` | "horizontal" |

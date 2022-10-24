@@ -23,6 +23,9 @@ export class VscodeRadio extends FormButtonWidgetBase {
   @property()
   label = '';
 
+  /**
+   * Name which is used as a variable name in the data of the form-container.
+   */
   @property()
   name = '';
 

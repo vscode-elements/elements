@@ -464,8 +464,7 @@ body > .content-wrapper {
   --ave-border-radius: 0;
   --ave-header-background: var(--color-vscode-blue);
   --ave-primary-color: var(--color-vscode-blue);
-  /* border: 0; */
-  box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
+  border: 0;
   background-color: #fff;
   margin: 20px 0;
 }
