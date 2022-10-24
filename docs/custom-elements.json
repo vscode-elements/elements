@@ -67,7 +67,7 @@
               },
               "default": "''",
               "description": "A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label",
-              "attribute": "iconAfter"
+              "attribute": "icon-after"
             },
             {
               "kind": "field",
@@ -187,7 +187,7 @@
               "fieldName": "icon"
             },
             {
-              "name": "iconAfter",
+              "name": "icon-after",
               "type": {
                 "text": "string"
               },
@@ -2064,6 +2064,13 @@
           ],
           "attributes": [
             {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Combobox mode",
+              "name": "combobox"
+            },
+            {
               "description": "Name which is used as a variable name in the data of the form-container.",
               "name": "name"
             },
@@ -2299,7 +2306,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "|aa|bb|\n|--|--|\n|11|22|",
           "name": "VscodeRadio",
           "members": [
             {
@@ -2402,6 +2409,15 @@
               "kind": "method",
               "name": "_handleSlotChange",
               "privacy": "private"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "Reflected tabindex to make component focusable",
+              "name": "tabindex",
+              "default": "0",
+              "kind": "field"
             }
           ],
           "events": [
@@ -2409,18 +2425,14 @@
               "name": "vsc-change",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "See the detailed payload in the description"
             }
           ],
           "attributes": [
             {
-              "description": "Name which is used as a variable name in the data of the form-container.",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "name"
+              "description": "Reflected tabindex to make component focusable",
+              "name": "tabindex"
             },
             {
               "name": "checked",
@@ -2436,6 +2448,15 @@
               },
               "default": "''",
               "fieldName": "label"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Name which is used as a variable name in the data of the form-container.",
+              "fieldName": "name"
             },
             {
               "name": "value",

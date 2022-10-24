@@ -32,8 +32,7 @@
     "test:watch": "wtr --watch",
     "checksize": "npm run build:bundle && cat dist/bundled.js | gzip -9 | wc -c",
     "generate": "node scripts/generateComponent.js",
-    "icons": "node scripts/generateIconList.js",
-    "cem": "cem analyze --litelement --globs=\"src/vscode-*.ts\" --exclude=\"src/main.ts\""
+    "icons": "node scripts/generateIconList.js"
   },
   "keywords": [
     "web-components",
