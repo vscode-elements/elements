@@ -2,6 +2,14 @@ import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
 
+export interface VscClickEventDetail {
+  label: string;
+  keybinding: string;
+  value: string;
+  separator: boolean;
+  tabindex: number;
+}
+
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends VscElement {
   @property({type: String})
@@ -21,7 +29,7 @@ export class VscodeContextMenuItem extends VscElement {
 
   private onItemClick() {
     this.dispatchEvent(
-      new CustomEvent('vsc-click', {
+      new CustomEvent<VscClickEventDetail>('vsc-click', {
         detail: {
           label: this.label,
           keybinding: this.keybinding,

@@ -1,40 +1,88 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>&lt;vscode-context-menu&gt; Demo</title>
+    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <style>
+      .menu-wrapper {
+        overflow: visible;
+        position: relative;
+      }
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>&lt;vscode-context-menu&gt; Demo</title>
-  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
-  <script src="../dev-assets/preview-page.js"></script>
-  <script type="module" src="../dist/vscode-context-menu.js"></script>
-</head>
+      .toggle-menu-button {
+        cursor: pointer;
+        display: block;
+      }
 
-<body class="vscode-light">
-  <div class="theme-switcher">
-    <div class="theme-switcher-option light">
-      <button value="vscode-light" type="button">Light</button>
-    </div>
-    <div class="theme-switcher-option dark">
-      <button value="vscode-dark" type="button">Dark</button>
-    </div>
-    <div class="theme-switcher-option hc">
-      <button value="vscode-high-contrast" type="button">
-        High contrast
-      </button>
-    </div>
-  </div>
-  <div class="story">
-    <h2 class="story-title">Basic example</h2>
-    <div class="story-content">
-      <vscode-context-menu></vscode-context-menu>
-    </div>
-  </div>
-</body>
+      .context-menu {
+        bottom: 36px;
+        left: 16px;
+        position: absolute;
+        z-index: 2;
+      }
+    </style>
+    <script type="module" src="../dev-assets/component-preview.js"></script>
+    <script type="module" src="../dist/vscode-icon.js"></script>
+    <script type="module" src="../dist/vscode-context-menu.js"></script>
+  </head>
 
+  <body class="vscode-light">
+    <div class="story">
+      <h2 class="story-title">Basic example</h2>
+      <div class="story-content">
+        <component-preview>
+          <button id="toggle-menu-button">toggle</button>
+          <div class="menu-wrapper">
+            <vscode-context-menu
+              id="context-menu"
+              class="context-menu"
+            ></vscode-context-menu>
+          </div>
+        </component-preview>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const menu = document.querySelector('#context-menu');
+          const button = document.querySelector('#toggle-menu-button');
+
+          document.querySelector('#context-menu').data = [
+            {
+              label: 'Command palette...',
+              keybinding: 'Ctrl+Shift+A',
+              value: 'menuitem1',
+            },
+            {
+              separator: true,
+            },
+            {
+              label: 'Settings',
+              keybinding: 'Ctrl+Comma',
+              value: 'menuitem2',
+            },
+            {
+              label: 'Extensions',
+              keybinding: 'Ctrl+Shift+X',
+              value: 'menuitem3',
+            },
+          ];
+
+          button.addEventListener('click', () => {
+            menu.show = !menu.show;
+          });
+
+          menu.addEventListener('vsc-select', (event) => {
+            console.log(event);
+          });
+        });
+      </script>
+    </div>
+  </body>
 </html>

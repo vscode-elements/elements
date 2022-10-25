@@ -1,6 +1,7 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
+import {VscClickEventDetail} from './vscode-context-menu-item';
 import './vscode-context-menu-item';
 
 interface MenuItemData {
@@ -41,6 +42,12 @@ export class VscodeContextMenu extends VscElement {
         if (this._wrapperEl) {
           this._wrapperEl.focus();
         }
+
+        requestAnimationFrame(() => {
+          document.addEventListener('click', this._onClickOutsideBound, {
+            once: true,
+          });
+        });
       });
     }
   }
@@ -50,6 +57,21 @@ export class VscodeContextMenu extends VscElement {
 
   @property({type: Number, reflect: true})
   tabindex = 0;
+
+  constructor() {
+    super();
+    this.addEventListener('keydown', this._onKeyDown);
+  }
+
+  /* connectedCallback(): void {
+    super.connectedCallback();
+    document.addEventListener('click', this._onClickOutsideBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    document.removeEventListener('click', this._onClickOutsideBound);
+  } */
 
   @state()
   private _selectedClickableItemIndex = -1;
@@ -64,29 +86,85 @@ export class VscodeContextMenu extends VscElement {
 
   private _clickableItemIndexes: number[] = [];
 
-  constructor() {
-    super();
-    this.addEventListener('keydown', this._onKeyDown);
+  private _onClickOutside(ev: MouseEvent) {
+    if (!ev.composedPath().includes(this)) {
+      this._show = false;
+    }
   }
 
+  private _onClickOutsideBound = this._onClickOutside.bind(this);
+
   private _onKeyDown(ev: KeyboardEvent) {
-    if (ev.key === 'ArrowDown') {
-      if (
-        this._selectedClickableItemIndex + 1 <
-        this._clickableItemIndexes.length
-      ) {
-        this._selectedClickableItemIndex += 1;
-      } else {
-        this._selectedClickableItemIndex = 0;
-      }
-    } else if (ev.key === 'ArrowUp') {
-      if (this._selectedClickableItemIndex === 0) {
-        this._selectedClickableItemIndex =
-          this._clickableItemIndexes.length - 1;
-      } else {
-        this._selectedClickableItemIndex -= 1;
-      }
+    switch (ev.key) {
+      case 'ArrowUp':
+        this._handleArrowUp();
+        break;
+      case 'ArrowDown':
+        this._handleArrowDown();
+        break;
+      case 'Escape':
+        this._handleEscape();
+        break;
+      case 'Enter':
+        this._handleEnter();
+        break;
+      default:
     }
+  }
+
+  private _handleArrowUp() {
+    if (this._selectedClickableItemIndex === 0) {
+      this._selectedClickableItemIndex = this._clickableItemIndexes.length - 1;
+    } else {
+      this._selectedClickableItemIndex -= 1;
+    }
+  }
+
+  private _handleArrowDown() {
+    if (
+      this._selectedClickableItemIndex + 1 <
+      this._clickableItemIndexes.length
+    ) {
+      this._selectedClickableItemIndex += 1;
+    } else {
+      this._selectedClickableItemIndex = 0;
+    }
+  }
+
+  private _handleEscape() {
+    this._show = false;
+    document.removeEventListener('click', this._onClickOutsideBound);
+  }
+
+  private _handleEnter() {
+    if (this._selectedClickableItemIndex === -1) {
+      return;
+    }
+
+    const realItemIndex =
+      this._clickableItemIndexes[this._selectedClickableItemIndex];
+    const options = this._wrapperEl.querySelectorAll(
+      'vscode-context-menu-item'
+    );
+    const selectedOption = options[realItemIndex];
+    const {keybinding, label, value, separator, tabindex} = selectedOption;
+    const detail: VscClickEventDetail = {
+      keybinding,
+      label,
+      value,
+      separator,
+      tabindex,
+    };
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-select', {
+        detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
+    this._show = false;
+    document.removeEventListener('click', this._onClickOutsideBound);
   }
 
   private _onItemClick(event: CustomEvent) {
@@ -102,7 +180,7 @@ export class VscodeContextMenu extends VscElement {
     );
   }
 
-  private _onItemHover(event: MouseEvent) {
+  private _onItemMouseOver(event: MouseEvent) {
     const el = event.target as HTMLElement;
     const index = el.dataset.index ? +el.dataset.index : -1;
     const found = this._clickableItemIndexes.findIndex(
@@ -112,6 +190,10 @@ export class VscodeContextMenu extends VscElement {
     if (found !== -1) {
       this._selectedClickableItemIndex = found;
     }
+  }
+
+  private _onItemMouseOut() {
+    this._selectedClickableItemIndex = -1;
   }
 
   static get styles(): CSSResultGroup {
@@ -125,6 +207,7 @@ export class VscodeContextMenu extends VscElement {
           font-weight: var(--vscode-font-weight);
           line-height: 1.4em;
           position: relative;
+          width: 365px;
         }
 
         .context-menu {
@@ -218,7 +301,8 @@ export class VscodeContextMenu extends VscElement {
                   ?selected="${index === selectedIndex}"
                   tabindex="${tabindex}"
                   @vsc-click="${this._onItemClick}"
-                  @mouseover=${this._onItemHover}
+                  @mouseover=${this._onItemMouseOver}
+                  @mouseout=${this._onItemMouseOut}
                   data-index=${index}
                 ></vscode-context-menu-item>
               `
