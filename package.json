@@ -68,7 +68,7 @@
     "@types/mocha": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^4.30.0",
     "@typescript-eslint/parser": "^4.30.0",
-    "@vscode/codicons": "^0.0.22",
+    "@vscode/codicons": "^0.0.32",
     "@web/dev-server": "^0.1.22",
     "@web/dev-server-esbuild": "^0.2.14",
     "@web/dev-server-legacy": "^0.1.7",
