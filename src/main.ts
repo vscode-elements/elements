@@ -28,4 +28,5 @@ export {VscodeTableHeader} from './vscode-table-header';
 export {VscodeTableHeaderCell} from './vscode-table-header-cell';
 export {VscodeTableRow} from './vscode-table-row';
 export {VscodeTabs} from './vscode-tabs';
+export {VscodeTextfield} from './vscode-textfield';
 export {VscodeTree} from './vscode-tree';
