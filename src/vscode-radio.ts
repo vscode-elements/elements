@@ -14,6 +14,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
   @property({type: Boolean})
   set checked(val: boolean) {
     this._checked = val;
+    this.setAttribute('aria-checked', val ? 'true' : 'false');
   }
   get checked(): boolean {
     return this._checked;
@@ -32,7 +33,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
   disabled = false;
 
   @state()
-  _checked = false;
+  private _checked = false;
 
   @state()
   private isSlotEmpty = true;
@@ -48,6 +49,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
       `vscode-radio[name="${this.name}"]`
     ) as NodeListOf<VscodeRadio>;
     this._checked = true;
+    this.setAttribute('aria-checked', 'true');
 
     radios.forEach((r) => {
       if (r !== this) {
@@ -78,7 +80,8 @@ export class VscodeRadio extends FormButtonWidgetBase {
 
   protected _handleKeyDown(event: KeyboardEvent): void {
     if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
-      this.checked = true;
+      this._checked = true;
+      this.setAttribute('aria-checked', 'true');
     }
   }
 
@@ -94,7 +97,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
     const isLabelEmpty = !this.label && this.isSlotEmpty;
     const iconClasses = classMap({
       icon: true,
-      checked: this.checked,
+      checked: this._checked,
       'before-empty-label': isLabelEmpty,
     });
     const labelInnerClasses = classMap({
@@ -108,7 +111,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
           id="${this._uid}"
           class="radio"
           type="checkbox"
-          ?checked="${this.checked}"
+          ?checked="${this._checked}"
           value="${this.value}"
           tabindex="-1"
         />
