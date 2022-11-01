@@ -1,5 +1,8 @@
 import {css} from 'lit';
 
+const DEFAULT_FONT_SIZE = 13;
+const DEFAULT_LINE_HEIGHT = 18;
+
 export default css`
   :host {
     display: inline-block;
@@ -24,14 +27,14 @@ export default css`
     font-family: var(--vscode-font-family);
     font-size: var(--vscode-font-size);
     font-weight: var(--vscode-font-weight);
-    line-height: 1.3;
+    line-height: ${DEFAULT_LINE_HEIGHT / DEFAULT_FONT_SIZE};
     position: relative;
     user-select: none;
     width: 100%;
   }
 
   .select-face {
-    padding: 4px;
+    padding: 3px 4px;
   }
 
   .select-face.multiselect {
