@@ -7,8 +7,6 @@ component: vscode-tree
 
 # VscodeTree
 
-## Type definitions
-
 ```typescript
 interface TreeItemIconConfig {
   branch?: string;

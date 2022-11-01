@@ -14,7 +14,7 @@ import '@bendera/vscode-webview-elements/dist/vscode-button';
 ## Example
 
 <component-preview>
-  <vscode-button>Button</vscode-button> 
+  <vscode-button>Button</vscode-button>
   <vscode-button secondary>Secondary button</vscode-button>
   <vscode-button disabled>Disabled button</vscode-button>
   <vscode-button disabled secondary>Disabled secondary button</vscode-button>

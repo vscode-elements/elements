@@ -703,7 +703,6 @@
                 "text": "MenuItemData[]"
               },
               "default": "[]",
-              "description": "<pre><code>interface MenuItemData {\r\n&nbsp;&nbsp;label: string;\r\n&nbsp;&nbsp;keybinding?: string;\r\n&nbsp;&nbsp;value?: string;\r\n&nbsp;&nbsp;separator?: boolean;\r\n&nbsp;&nbsp;tabindex?: number;\r\n}</code></pre>",
               "attribute": "data"
             },
             {
@@ -745,7 +744,6 @@
                 "text": "MenuItemData[]"
               },
               "default": "[]",
-              "description": "<pre><code>interface MenuItemData {\r\n&nbsp;&nbsp;label: string;\r\n&nbsp;&nbsp;keybinding?: string;\r\n&nbsp;&nbsp;value?: string;\r\n&nbsp;&nbsp;separator?: boolean;\r\n&nbsp;&nbsp;tabindex?: number;\r\n}</code></pre>",
               "fieldName": "data"
             },
             {
@@ -4686,7 +4684,8 @@
               "name": "vsc-select",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "Dispatched when an item is selected. The event data shape is described in the `SelectEventDetail` interface."
             }
           ],
           "attributes": [

@@ -338,7 +338,7 @@ body > .content-wrapper {
 }
 
 .page pre[class*='language-'] {
-  font-size: 16px;
+  font-size: 0.875rem;
 }
 
 .page h1 {
@@ -464,7 +464,14 @@ body > .content-wrapper {
   --ave-border-radius: 0;
   --ave-header-background: var(--color-vscode-blue);
   --ave-primary-color: var(--color-vscode-blue);
+  background-color: #fafafa;
   border: 0;
-  background-color: #fff;
   margin: 20px 0;
+  max-width: 100%;
+}
+
+.api-docs::part(md-code) {
+  background-color: #ddd;
+  display: inline-block;
+  padding: 0 3px;
 }

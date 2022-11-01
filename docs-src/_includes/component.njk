@@ -7,7 +7,7 @@
 </ul>
 {% endblock %}
 
-{% block apidocs %}
+{% block apiViewerElement %}
 {% if page.fileSlug == 'api' %}
 <api-docs src="/custom-elements.json" only="{{ component }}" selected="{{ component }}" class="api-docs"></api-docs>
 {% endif %}

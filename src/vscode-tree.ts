@@ -72,6 +72,10 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
   return nextTree;
 };
 
+/**
+ * @fires vsc-select Dispatched when an item is selected. The event data shape is described in the
+ * `SelectEventDetail` interface.
+ */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
   @property({type: Array, reflect: false})
