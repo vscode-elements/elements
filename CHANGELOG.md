@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [0.7.1] - 2022-11-03
+
+### Fixed
+
+- **Tabs** (Fix [#32](https://github.com/bendera/vscode-webview-elements/issues/32)) Select the tab when a slotted element is clicked in the tab header
+
 ## [0.7.0] - 2022-03-15
 
 ### Added

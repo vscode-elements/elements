@@ -54,7 +54,18 @@ export class VscodeTabs extends VscElement {
   }
 
   private _onHeaderClick(event: MouseEvent) {
-    const index = (event.target as HTMLElement).dataset.index;
+    const path = event.composedPath();
+    const headerEl = path.find((et) => {
+      const el = et as Element;
+
+      if (!el.matches) {
+        return false;
+      }
+
+      return el.matches('[slot=header]');
+    });
+
+    const index = (headerEl as HTMLElement)?.dataset.index;
 
     if (!index) {
       return;
