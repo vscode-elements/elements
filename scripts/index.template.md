@@ -1,11 +1,11 @@
 ---
 layout: component.njk
-title: %className%
+title: %componentName%
 tags: component
 component: %tagName%
 ---
 
-# %tagName%
+# %componentName%
 
 <style>
   %tagName% p {

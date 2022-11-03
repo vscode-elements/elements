@@ -12,6 +12,9 @@ const mkdir = util.promisify(fs.mkdir);
 
 const camelize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
+const pascalToKebab = (s) =>
+  s.replace(/([a-z0–9])([A-Z])/g, '$1-$2').toLowerCase();
+
 const kebabToPascal = (kebab) => {
   const parts = kebab.split('-');
 
@@ -21,29 +24,29 @@ const kebabToPascal = (kebab) => {
   );
 };
 
-const generateFile = async (templateFile, filePath, componentName) => {
+const generateFile = async (templateFile, filePath, templateVars) => {
   if (fs.existsSync(filePath)) {
     console.log(`${filePath} exists, skipped`);
     return;
   }
 
-  let template = await readFile(
-    path.resolve(__dirname, templateFile),
-    'utf-8'
-  );
+  const {className, componentName, tagName} = templateVars;
 
-  await mkdir(dirname(filePath), { recursive: true });
+  let template = await readFile(path.resolve(__dirname, templateFile), 'utf-8');
 
-  template = template.replace(/%tagName%/gm, componentName);
-  template = template.replace(/%className%/gm, kebabToPascal(componentName));
+  await mkdir(dirname(filePath), {recursive: true});
+
+  template = template.replace(/%tagName%/gm, tagName);
+  template = template.replace(/%className%/gm, className);
+  template = template.replace(/%componentName%/gm, componentName);
 
   try {
     await writeFile(filePath, template);
     console.log(filePath, 'has been created');
   } catch (err) {
-    throw(err);
+    throw err;
   }
-}
+};
 
 const main = async () => {
   const componentName = process.argv[2];
@@ -55,18 +58,45 @@ const main = async () => {
 
   console.log('Generate', `${componentName}...`);
 
+  const className = `Vscode${camelize(componentName)}`;
+  const tagName = `vscode-${pascalToKebab(componentName)}`;
+
+  const templateVars = {
+    className,
+    componentName,
+    tagName,
+  };
+
   try {
-    await generateFile('./component-template.txt', `src/${componentName}.ts`, componentName);
-    await generateFile('./test-template.txt', `src/test/${componentName}.test.ts`, componentName);
-    // await generateFile('./overview-md-template.txt', `docs-src/components/${componentName}/overview.md`, componentName);
-    await generateFile('./example-basic-md-template.txt', `docs-src/components/${componentName}/index.md`, componentName);
-    // await generateFile('./example-another-md-template.txt', `docs-src/components/${componentName}/examples/another-example.md`, componentName);
-    await generateFile('./api-md-template.txt', `docs-src/components/${componentName}/api.md`, componentName);
-    // await generateFile('./install-md-template.txt', `docs-src/components/${componentName}/install.md`, componentName);
-    await generateFile('./demo-html-template.txt', `dev/${componentName}.html`, componentName);
+    await generateFile(
+      './component.template.ts',
+      `src/${tagName}.ts`,
+      templateVars
+    );
+    await generateFile(
+      './component.test.template.ts',
+      `src/test/${tagName}.test.ts`,
+      templateVars
+    );
+    await generateFile(
+      './index.template.md',
+      `docs-src/components/${tagName}/index.md`,
+      templateVars
+    );
+    await generateFile(
+      './api.template.md',
+      `docs-src/components/${tagName}/api.md`,
+      templateVars
+    );
+    await generateFile(
+      './dev-page.template.html',
+      `dev/${tagName}.html`,
+      templateVars
+    );
 
     console.log('Done.');
-    console.log('Don\'t forget to import your component in the main.ts file');
+    console.log("Don't forget to import your component in the main.ts file");
+    console.log("Don't forget to import your component in the main.ts file");
   } catch (err) {
     console.log(err);
   }
