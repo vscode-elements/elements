@@ -701,9 +701,7 @@
               "name": "data",
               "type": {
                 "text": "MenuItemData[]"
-              },
-              "default": "[]",
-              "attribute": "data"
+              }
             },
             {
               "kind": "field",
@@ -711,13 +709,117 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
               "attribute": "show",
               "reflects": true
             },
             {
+              "kind": "field",
+              "name": "tabindex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "attribute": "tabindex",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_selectedClickableItemIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "-1"
+            },
+            {
+              "kind": "field",
+              "name": "_show",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_wrapperEl",
+              "type": {
+                "text": "HTMLDivElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_data",
+              "type": {
+                "text": "MenuItemData[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "_clickableItemIndexes",
+              "type": {
+                "text": "number[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
               "kind": "method",
-              "name": "onItemClick",
+              "name": "_onClickOutside",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "_onClickOutsideBound",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onKeyDown",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_handleArrowUp",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_handleArrowDown",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_handleEscape",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_handleEnter",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onItemClick",
               "privacy": "private",
               "parameters": [
                 {
@@ -727,6 +829,24 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "_onItemMouseOver",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onItemMouseOut",
+              "privacy": "private"
             }
           ],
           "events": [
@@ -739,20 +859,19 @@
           ],
           "attributes": [
             {
-              "name": "data",
-              "type": {
-                "text": "MenuItemData[]"
-              },
-              "default": "[]",
-              "fieldName": "data"
-            },
-            {
               "name": "show",
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
               "fieldName": "show"
+            },
+            {
+              "name": "tabindex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "tabindex"
             }
           ],
           "superclass": {
@@ -2819,7 +2938,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "## Types\r\n\r\n```typescript\r\ninterface Option {\r\n label: string;\r\n value: string;\r\n description: string;\r\n selected: boolean;\r\n disabled: boolean;\r\n}\r\n```",
+          "description": "## Types\n\n```typescript\ninterface Option {\n label: string;\n value: string;\n description: string;\n selected: boolean;\n disabled: boolean;\n}\n```",
           "name": "VscodeSingleSelect",
           "members": [
             {
@@ -4370,6 +4489,431 @@
           "declaration": {
             "name": "VscodeTabs",
             "module": "src/vscode-tabs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-textfield.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A simple inline textfield",
+          "name": "VscodeTextfield",
+          "slots": [
+            {
+              "name": "content-before"
+            },
+            {
+              "name": "content-after"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "default": "undefined",
+              "attribute": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "focused",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "default": "undefined",
+              "attribute": "max"
+            },
+            {
+              "kind": "field",
+              "name": "maxlength",
+              "default": "undefined",
+              "attribute": "maxlength"
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "default": "undefined",
+              "attribute": "min"
+            },
+            {
+              "kind": "field",
+              "name": "minlength",
+              "default": "undefined",
+              "attribute": "minlength"
+            },
+            {
+              "kind": "field",
+              "name": "multiple",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "multiple"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "default": "undefined",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "pattern",
+              "default": "undefined",
+              "attribute": "pattern"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "default": "undefined",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "default": "undefined",
+              "attribute": "step"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "| 'color'\r\n    | 'date'\r\n    | 'datetime-local'\r\n    | 'email'\r\n    | 'month'\r\n    | 'number'\r\n    | 'password'\r\n    | 'search'\r\n    | 'tel'\r\n    | 'text'\r\n    | 'time'\r\n    | 'url'\r\n    | 'week'"
+              },
+              "default": "'text'",
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_inputEl",
+              "type": {
+                "text": "HTMLInputElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_labelText",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "method",
+              "name": "_validate",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_setLabelText",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onInvalid",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onInput",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "InputEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "InputEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onFocus",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onBlur",
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "name": "vsc-invalid",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "vsc-input",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "vsc-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "autocomplete",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "focused"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "max",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "max"
+            },
+            {
+              "name": "maxlength",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "maxlength"
+            },
+            {
+              "name": "min",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "min"
+            },
+            {
+              "name": "minlength",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "minlength"
+            },
+            {
+              "name": "multiple",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "multiple"
+            },
+            {
+              "name": "name",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "name"
+            },
+            {
+              "name": "pattern",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "pattern"
+            },
+            {
+              "name": "placeholder",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "step",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textfield.ts"
+              },
+              "fieldName": "step"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "| 'color'\r\n    | 'date'\r\n    | 'datetime-local'\r\n    | 'email'\r\n    | 'month'\r\n    | 'number'\r\n    | 'password'\r\n    | 'search'\r\n    | 'tel'\r\n    | 'text'\r\n    | 'time'\r\n    | 'url'\r\n    | 'week'"
+              },
+              "default": "'text'",
+              "fieldName": "type"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-textfield",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTextfield",
+          "declaration": {
+            "name": "VscodeTextfield",
+            "module": "src/vscode-textfield.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-textfield",
+          "declaration": {
+            "name": "VscodeTextfield",
+            "module": "src/vscode-textfield.ts"
           }
         }
       ]
