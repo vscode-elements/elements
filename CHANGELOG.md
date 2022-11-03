@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Unreleased
+
+### Added
+
+- Added Textfield component
+
+### Changed
+
+- Lit upgraded to 2.4.x
+- Added keyboard navigation to ContextMenu
+- Adapted the latest VSCode button styles (rounded corner)
+- Added `aria-checked` attribute to the radio buttons
+
+### Fixed
+
+- Fixed the active state bug in the ContextMenu
+- Fixed the Select height
+
 ## [0.7.1] - 2022-11-03
 
 ### Fixed
