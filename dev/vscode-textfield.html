@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>&lt;vscode-textfield&gt; Demo</title>
     <link
       rel="stylesheet"
@@ -17,37 +16,44 @@
   </head>
 
   <body class="vscode-light">
-    <div class="story">
-      <h2 class="story-title">Basic example</h2>
-      <div class="story-content">
-        <component-preview>
-          <vscode-label for="field-1">Lorem ipsum</vscode-label>
-          <vscode-textfield
-            id="field-1"
-            autocomplete
-            placeholder="Placeholder..."
-            required
-          >
-            <vscode-icon name="calendar" slot="content-before"></vscode-icon>
-            <vscode-icon
-              name="search"
-              slot="content-after"
-              action-icon
-              tabindex="0"
-            ></vscode-icon>
-          </vscode-textfield>
-          <script type="module">
-            const el = document.getElementById('field-1');
+    <main>
+      <div class="story">
+        <h2 class="story-title">Basic example</h2>
+        <div class="story-content">
+          <component-preview>
+            <vscode-label for="field-1">Lorem ipsum</vscode-label>
+            <vscode-textfield
+              id="field-1"
+              autocomplete
+              placeholder="Placeholder..."
+              required
+            >
+              <vscode-icon name="calendar" slot="content-before"></vscode-icon>
+              <vscode-icon
+                id="search-icon"
+                name="search"
+                slot="content-after"
+                action-icon
+                label="Search"
+              ></vscode-icon>
+            </vscode-textfield>
+            <script type="module">
+              const el = document.getElementById('field-1');
+              const icon = document.getElementById('search-icon');
 
-            el.addEventListener('vsc-invalid', (ev) => {
-              console.log(ev);
-            });
-            el.addEventListener('vsc-input', (ev) => {
-              console.log(ev);
-            });
-          </script>
-        </component-preview>
+              el.addEventListener('vsc-invalid', (ev) => {
+                console.log(ev);
+              });
+              el.addEventListener('vsc-input', (ev) => {
+                console.log(ev);
+              });
+              icon.addEventListener('vsc-click', (ev) => {
+                console.log(ev);
+              });
+            </script>
+          </component-preview>
+        </div>
       </div>
-    </div>
+    </main>
   </body>
 </html>
