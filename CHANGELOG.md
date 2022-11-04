@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Added keyboard navigation to ContextMenu
 - Adapted the latest VSCode button styles (rounded corner)
 - Added `aria-checked` attribute to the radio buttons
+- Icon component accessibility improvements
 
 ### Fixed
 

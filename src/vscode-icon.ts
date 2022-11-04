@@ -8,6 +8,12 @@ import {VscElement} from './includes/VscElement';
 @customElement('vscode-icon')
 export class VscodeIcon extends VscElement {
   /**
+   * Set a meaningful label in `action-icon` mode for the screen readers
+   */
+  @property()
+  label = '';
+
+  /**
    * Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html
    */
   @property({type: String}) name = '';
@@ -27,25 +33,11 @@ export class VscodeIcon extends VscElement {
    */
   @property({type: Number, attribute: 'spin-duration'}) spinDuration = 1.5;
 
+  /**
+   * Behaves like a button
+   */
   @property({type: Boolean, attribute: 'action-icon'})
-  set actionIcon(val: boolean) {
-    this._actionIcon = val;
-
-    if (val) {
-      if (!this.hasAttribute('role')) {
-        this.setAttribute('role', 'button');
-      }
-    } else {
-      if (this.hasAttribute('role') && this.getAttribute('role') === 'button') {
-        this.removeAttribute('role');
-      }
-    }
-  }
-  get actionIcon(): boolean {
-    return this._actionIcon;
-  }
-
-  private _actionIcon = false;
+  actionIcon = false;
 
   private _getStylesheetConfig(): {
     href: string | undefined;
@@ -57,6 +49,12 @@ export class VscodeIcon extends VscElement {
 
     return {nonce, href};
   }
+
+  private _onButtonClick = (ev: MouseEvent) => {
+    this.dispatchEvent(
+      new CustomEvent('vsc-click', {detail: {originalEvent: ev}})
+    );
+  };
 
   static get styles(): CSSResultGroup {
     return [
@@ -71,31 +69,36 @@ export class VscodeIcon extends VscElement {
           display: block;
         }
 
-        .wrapper {
+        .icon,
+        .button {
+          background-color: transparent;
           display: block;
+          padding: 0;
         }
 
-        :host([action-icon]) .wrapper {
+        .button {
+          border-color: transparent;
+          border-style: solid;
+          border-width: 1px;
           border-radius: 5px;
           cursor: pointer;
-          padding: 3px;
+          padding: 2px;
         }
 
-        :host([action-icon]) .wrapper:hover {
+        .button:hover {
           background-color: var(--vscode-toolbar-hoverBackground);
         }
 
-        :host([action-icon]) .wrapper:active {
+        .button:active {
           background-color: var(--vscode-toolbar-activeBackground);
         }
 
-        :host([action-icon]:focus) {
+        .button:focus {
           outline: none;
         }
 
-        :host([action-icon]:focus-visible) {
-          outline: 1px solid var(--vscode-focusBorder);
-          outline-offset: -1px;
+        .button:focus-visible {
+          border-color: var(--vscode-focusBorder);
         }
 
         @keyframes icon-spin {
@@ -116,27 +119,39 @@ export class VscodeIcon extends VscElement {
   render(): TemplateResult {
     const {href, nonce} = this._getStylesheetConfig();
 
+    const content = html`<span
+      class="${classMap({
+        codicon: true,
+        ['codicon-' + this.name]: true,
+        spin: this.spin,
+      })}"
+      style="${styleMap({
+        animationDuration: String(this.spinDuration) + 's',
+        fontSize: this.size + 'px',
+        height: this.size + 'px',
+        width: this.size + 'px',
+      })}"
+    ></span>`;
+
+    const wrapped = this.actionIcon
+      ? html` <button
+          class="button"
+          @click=${this._onButtonClick}
+          aria-label=${this.label}
+        >
+          ${content}
+        </button>`
+      : html` <span class="icon" aria-hidden="true" role="presentation"
+          >${content}</span
+        >`;
+
     return html`
       <link
         rel="stylesheet"
         href="${ifDefined(href)}"
         nonce="${ifDefined(nonce)}"
       />
-      <span class="wrapper">
-        <span
-          class="${classMap({
-            codicon: true,
-            ['codicon-' + this.name]: true,
-            spin: this.spin,
-          })}"
-          style="${styleMap({
-            animationDuration: String(this.spinDuration) + 's',
-            fontSize: this.size + 'px',
-            height: this.size + 'px',
-            width: this.size + 'px',
-          })}"
-        ></span>
-      </span>
+      ${wrapped}
     `;
   }
 }
