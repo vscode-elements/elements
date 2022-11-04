@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-tabs')
@@ -7,14 +7,22 @@ export class VscodeTabs extends VscElement {
   @property({type: Number})
   set selectedIndex(index: number) {
     this._selectedIndex = index;
-    this._setActiveTab();
+
+    this.updateComplete.then(() => {
+      this._setActiveTab();
+    });
   }
+
   get selectedIndex(): number {
     return this._selectedIndex;
   }
 
-  private _headerSlot: HTMLSlotElement | null = null;
-  private _mainSlot: HTMLSlotElement | null = null;
+  @query('slot[name=header]')
+  private _headerSlot!: HTMLSlotElement;
+
+  @query('slot:not([name=header])')
+  private _mainSlot!: HTMLSlotElement;
+
   private _selectedIndex: number;
 
   constructor() {
@@ -75,20 +83,6 @@ export class VscodeTabs extends VscElement {
     this._setActiveTab();
   }
 
-  firstUpdated(): void {
-    this._headerSlot = this.shadowRoot!.querySelector(
-      'slot[name=header]'
-    ) as HTMLSlotElement;
-    this._mainSlot = this.shadowRoot!.querySelector(
-      'slot:not([name=header])'
-    ) as HTMLSlotElement;
-
-    this._mainSlot.addEventListener(
-      'slotchange',
-      this._onSlotChanged.bind(this)
-    );
-  }
-
   static get styles(): CSSResultGroup {
     return [
       super.styles,
@@ -135,7 +129,7 @@ export class VscodeTabs extends VscElement {
       <div class="header" @click="${this._onHeaderClick}">
         <slot name="header"></slot>
       </div>
-      <slot></slot>
+      <slot @slotchange=${this._onSlotChanged}></slot>
     `;
   }
 }
