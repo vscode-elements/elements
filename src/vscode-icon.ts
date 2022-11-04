@@ -5,6 +5,11 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from './includes/VscElement';
 
+/**
+ * Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).
+ * In "action-icon" mode it behaves like a button. In this case, it is
+ * recommended that a meaningful label is specified with the `label` property.
+ */
 @customElement('vscode-icon')
 export class VscodeIcon extends VscElement {
   /**
@@ -16,22 +21,26 @@ export class VscodeIcon extends VscElement {
   /**
    * Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html
    */
-  @property({type: String}) name = '';
+  @property({type: String})
+  name = '';
 
   /**
    * Icon size in pixels
    */
-  @property({type: Number}) size = 16;
+  @property({type: Number})
+  size = 16;
 
   /**
    * Enable rotation animation
    */
-  @property({type: Boolean}) spin = false;
+  @property({type: Boolean})
+  spin = false;
 
   /**
    * Animation duration in seconds
    */
-  @property({type: Number, attribute: 'spin-duration'}) spinDuration = 1.5;
+  @property({type: Number, attribute: 'spin-duration'})
+  spinDuration = 1.5;
 
   /**
    * Behaves like a button
