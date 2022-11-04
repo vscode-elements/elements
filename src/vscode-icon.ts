@@ -109,6 +109,7 @@ export class VscodeIcon extends VscElement {
           border-style: solid;
           border-width: 1px;
           border-radius: 5px;
+          color: currentColor;
           cursor: pointer;
           padding: 2px;
         }
