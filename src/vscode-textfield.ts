@@ -197,6 +197,7 @@ export class VscodeTextfield extends VscElement {
 
         slot[name='content-before'],
         slot[name='content-after'] {
+          align-items: center;
           display: flex;
         }
 

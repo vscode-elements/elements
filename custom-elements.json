@@ -4,6 +4,62 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/vscode-badge.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeBadge",
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'default' | 'counter' | 'activity-bar-counter'"
+              },
+              "default": "'default'",
+              "attribute": "variant"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "'default' | 'counter' | 'activity-bar-counter'"
+              },
+              "default": "'default'",
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-badge",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeBadge",
+          "declaration": {
+            "name": "VscodeBadge",
+            "module": "src/vscode-badge.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-badge",
+          "declaration": {
+            "name": "VscodeBadge",
+            "module": "src/vscode-badge.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/vscode-button.ts",
       "declarations": [
         {
@@ -4624,7 +4680,7 @@
               "kind": "field",
               "name": "type",
               "type": {
-                "text": "| 'color'\r\n    | 'date'\r\n    | 'datetime-local'\r\n    | 'email'\r\n    | 'month'\r\n    | 'number'\r\n    | 'password'\r\n    | 'search'\r\n    | 'tel'\r\n    | 'text'\r\n    | 'time'\r\n    | 'url'\r\n    | 'week'"
+                "text": "| 'color'\n    | 'date'\n    | 'datetime-local'\n    | 'email'\n    | 'month'\n    | 'number'\n    | 'password'\n    | 'search'\n    | 'tel'\n    | 'text'\n    | 'time'\n    | 'url'\n    | 'week'"
               },
               "default": "'text'",
               "attribute": "type"
@@ -4877,7 +4933,7 @@
             {
               "name": "type",
               "type": {
-                "text": "| 'color'\r\n    | 'date'\r\n    | 'datetime-local'\r\n    | 'email'\r\n    | 'month'\r\n    | 'number'\r\n    | 'password'\r\n    | 'search'\r\n    | 'tel'\r\n    | 'text'\r\n    | 'time'\r\n    | 'url'\r\n    | 'week'"
+                "text": "| 'color'\n    | 'date'\n    | 'datetime-local'\n    | 'email'\n    | 'month'\n    | 'number'\n    | 'password'\n    | 'search'\n    | 'tel'\n    | 'text'\n    | 'time'\n    | 'url'\n    | 'week'"
               },
               "default": "'text'",
               "fieldName": "type"

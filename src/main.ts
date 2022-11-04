@@ -1,3 +1,4 @@
+export {VscodeBadge} from './vscode-badge';
 export {VscodeButton} from './vscode-button';
 export {VscodeCheckbox} from './vscode-checkbox';
 export {VscodeCheckboxGroup} from './vscode-checkbox-group';
