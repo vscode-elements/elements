@@ -17,7 +17,7 @@ export class VscodeTextfield extends VscElement {
   @property()
   autocomplete = undefined;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -50,10 +50,10 @@ export class VscodeTextfield extends VscElement {
   @property()
   placeholder = undefined;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   readonly = false;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   required = false;
 
   @property()
