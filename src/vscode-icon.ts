@@ -48,6 +48,25 @@ export class VscodeIcon extends VscElement {
   @property({type: Boolean, attribute: 'action-icon'})
   actionIcon = false;
 
+  static stylesheetHref: string | undefined = '';
+
+  static nonce: string | undefined = '';
+
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    const {href, nonce} = this._getStylesheetConfig();
+
+    VscodeIcon.stylesheetHref = href;
+    VscodeIcon.nonce = nonce;
+  }
+
+  /**
+   * For using web fonts in web components, the font stylesheet must be included
+   * twice: on the page and in the web component. This function looks for the
+   * font stylesheet on the page and returns the stylesheet URL and the nonce
+   * id.
+   */
   private _getStylesheetConfig(): {
     href: string | undefined;
     nonce: string | undefined;
@@ -126,7 +145,7 @@ export class VscodeIcon extends VscElement {
   }
 
   render(): TemplateResult {
-    const {href, nonce} = this._getStylesheetConfig();
+    const {stylesheetHref, nonce} = VscodeIcon;
 
     const content = html`<span
       class="${classMap({
@@ -157,7 +176,7 @@ export class VscodeIcon extends VscElement {
     return html`
       <link
         rel="stylesheet"
-        href="${ifDefined(href)}"
+        href="${ifDefined(stylesheetHref)}"
         nonce="${ifDefined(nonce)}"
       />
       ${wrapped}
