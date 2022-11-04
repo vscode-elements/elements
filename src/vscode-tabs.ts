@@ -4,7 +4,7 @@ import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {
-  @property({type: Number})
+  @property({type: Number, reflect: true})
   set selectedIndex(index: number) {
     this._selectedIndex = index;
 
@@ -99,8 +99,13 @@ export class VscodeTabs extends VscElement {
           width: 100%;
         }
 
-        :host-context(.vscode-light) .header {
-          border-bottom: 1px solid #ccc;
+        .header {
+          border-bottom-color: var(
+            --vscode-settings-headerBorder,
+            rgba(128, 128, 128, 0.35)
+          );
+          border-bottom-style: solid;
+          border-bottom-width: 1px;
         }
 
         ::slotted(header) {
