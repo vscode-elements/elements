@@ -4,7 +4,7 @@ import {
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
-import uniqueId from './includes/uniqueid';
+import uniqueId from './includes/uniqueId';
 import {VscElement} from './includes/VscElement';
 import {VscodeTabHeader} from './vscode-tab-header';
 import {VscodeTabPanel} from './vscode-tab-panel';
@@ -14,17 +14,36 @@ export class VscodeTabs extends VscElement {
   @property({reflect: true})
   role = 'tablist';
 
-  @property({type: Number, reflect: true})
-  set selectedIndex(index: number) {
-    this._selectedIndex = index;
+  @property({type: Number, reflect: true, attribute: 'selected-index'})
+  selectedIndex = 0;
 
-    this.updateComplete.then(() => {
-      this._setActiveTab();
-    });
+  constructor() {
+    super();
+    this._componentId = uniqueId();
   }
 
-  get selectedIndex(): number {
-    return this._selectedIndex;
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    this.addEventListener('keydown', this._onHostKeyDownBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener('keydown', this._onHostKeyDownBound);
+  }
+
+  attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null
+  ): void {
+    super.attributeChangedCallback(name, old, value);
+
+    if (name === 'selected-index') {
+      this._setActiveTab();
+    }
   }
 
   @queryAssignedElements({slot: 'header'})
@@ -33,40 +52,65 @@ export class VscodeTabs extends VscElement {
   @queryAssignedElements()
   private _mainSlotElements!: Element[];
 
-  private _selectedIndex: number;
-
   private _tabHeaders: VscodeTabHeader[] = [];
 
   private _tabPanels: VscodeTabPanel[] = [];
 
-  private _focusedHeader = -1;
-
   private _componentId = '';
 
-  constructor() {
-    super();
-    this._selectedIndex = 0;
-    this._componentId = uniqueId();
-  }
+  private _tabFocus = 0;
 
   private _setActiveTab() {
+    this._tabFocus = this.selectedIndex;
+
     this._tabPanels.forEach((el, i) => {
-      el.hidden = i !== this._selectedIndex;
+      el.hidden = i !== this.selectedIndex;
     });
 
     this._tabHeaders.forEach((el: VscodeTabHeader, i) => {
-      el.active = i === this._selectedIndex;
+      el.active = i === this.selectedIndex;
     });
 
     this.dispatchEvent(
       new CustomEvent('vsc-select', {
         detail: {
-          selectedIndex: this._selectedIndex,
+          selectedIndex: this.selectedIndex,
         },
         composed: true,
       })
     );
   }
+
+  private _onHostKeyDown(ev: KeyboardEvent) {
+    if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
+      ev.preventDefault();
+      this._tabHeaders[this._tabFocus].setAttribute('tabindex', '-1');
+
+      if (ev.key === 'ArrowLeft') {
+        if (this._tabFocus === 0) {
+          this._tabFocus = this._tabHeaders.length - 1;
+        } else {
+          this._tabFocus -= 1;
+        }
+      } else if (ev.key === 'ArrowRight') {
+        if (this._tabFocus === this._tabHeaders.length - 1) {
+          this._tabFocus = 0;
+        } else {
+          this._tabFocus += 1;
+        }
+      }
+
+      this._tabHeaders[this._tabFocus].setAttribute('tabindex', '0');
+      this._tabHeaders[this._tabFocus].focus();
+    }
+
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      this.selectedIndex = this._tabFocus;
+    }
+  }
+
+  private _onHostKeyDownBound = this._onHostKeyDown.bind(this);
 
   private _onMainSlotChange() {
     this._tabPanels = this._mainSlotElements.filter(
@@ -98,7 +142,7 @@ export class VscodeTabs extends VscElement {
     );
 
     if (headerEl) {
-      this._selectedIndex = (headerEl as VscodeTabHeader).tabId;
+      this.selectedIndex = (headerEl as VscodeTabHeader).tabId;
       this._setActiveTab();
     }
   }

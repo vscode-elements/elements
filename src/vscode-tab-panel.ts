@@ -23,6 +23,13 @@ export class VscodeTabPanel extends VscElement {
         :host {
           display: block
         }
+
+        :host(:focus-visible) {
+          outline-color: var(--vscode-focusBorder);
+          outline-offset: 3px;
+          outline-style: solid;
+          outline-width: 1px;
+        }
       `,
     ];
   }

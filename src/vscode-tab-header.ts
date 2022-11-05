@@ -16,8 +16,8 @@ export class VscodeTabHeader extends VscElement {
   @property({type: Number, reflect: true, attribute: 'tab-id'})
   tabId = -1;
 
-  @property({type: Number, reflect: true})
-  tabindex = 0;
+/*   @property({type: Number, reflect: true})
+  tabIndex = 0; */
 
   attributeChangedCallback(
     name: string,
@@ -27,12 +27,10 @@ export class VscodeTabHeader extends VscElement {
     super.attributeChangedCallback(name, old, value);
 
     if (name === 'active') {
-      this.ariaSelected = value !== null ? 'true' : 'false';
+      const active = value !== null;
+      this.ariaSelected = active ? 'true' : 'false';
+      this.tabIndex = active ? 0 : -1;
     }
-  }
-
-  static get observedAttributes(): string[] {
-    return ['active'];
   }
 
   static get styles(): CSSResultGroup {
@@ -58,8 +56,15 @@ export class VscodeTabHeader extends VscElement {
         }
 
         :host(:focus-visible) {
-          border-bottom-color: var(--vscode-focusBorder);
           outline: none;
+        }
+
+        :host(:focus-visible) span {
+          outline-color: var(--vscode-focusBorder);
+          outline-offset: 3px;
+          outline-style: solid;
+          outline-width: 1px;
+          display: inline-block;
         }
       `,
     ];
@@ -67,9 +72,9 @@ export class VscodeTabHeader extends VscElement {
 
   render(): TemplateResult {
     return html`
-      <slot name="content-before"></slot>
-      <slot></slot>
-      <slot name="content-after"></slot>
+      <span>
+        <slot></slot>
+      </span>
     `;
   }
 }

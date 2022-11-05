@@ -4,6 +4,6 @@ const uniqueId = (prefix = '') => {
   counter++;
 
   return `${prefix}${counter}`;
-}
+};
 
 export default uniqueId;
