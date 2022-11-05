@@ -81,23 +81,31 @@ export class VscodeTabs extends VscElement {
     );
   }
 
+  private _focusPrevTab() {
+    if (this._tabFocus === 0) {
+      this._tabFocus = this._tabHeaders.length - 1;
+    } else {
+      this._tabFocus -= 1;
+    }
+  }
+
+  private _focusNextTab() {
+    if (this._tabFocus === this._tabHeaders.length - 1) {
+      this._tabFocus = 0;
+    } else {
+      this._tabFocus += 1;
+    }
+  }
+
   private _onHostKeyDown(ev: KeyboardEvent) {
     if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
       ev.preventDefault();
       this._tabHeaders[this._tabFocus].setAttribute('tabindex', '-1');
 
       if (ev.key === 'ArrowLeft') {
-        if (this._tabFocus === 0) {
-          this._tabFocus = this._tabHeaders.length - 1;
-        } else {
-          this._tabFocus -= 1;
-        }
+        this._focusPrevTab();
       } else if (ev.key === 'ArrowRight') {
-        if (this._tabFocus === this._tabHeaders.length - 1) {
-          this._tabFocus = 0;
-        } else {
-          this._tabFocus += 1;
-        }
+        this._focusNextTab();
       }
 
       this._tabHeaders[this._tabFocus].setAttribute('tabindex', '0');
