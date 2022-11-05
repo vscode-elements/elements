@@ -19,7 +19,7 @@ export class VscodeIcon extends VscElement {
   label = '';
 
   /**
-   * Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html
+   * [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) icon name.
    */
   @property({type: String})
   name = '';
@@ -48,9 +48,9 @@ export class VscodeIcon extends VscElement {
   @property({type: Boolean, attribute: 'action-icon'})
   actionIcon = false;
 
-  static stylesheetHref: string | undefined = '';
+  private static stylesheetHref: string | undefined = '';
 
-  static nonce: string | undefined = '';
+  private static nonce: string | undefined = '';
 
   connectedCallback(): void {
     super.connectedCallback();

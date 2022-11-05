@@ -1,9 +1,19 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+} from 'lit/decorators.js';
+import uniqueId from './includes/uniqueid';
 import {VscElement} from './includes/VscElement';
+import {VscodeTabHeader} from './vscode-tab-header';
+import {VscodeTabPanel} from './vscode-tab-panel';
 
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {
+  @property({reflect: true})
+  role = 'tablist';
+
   @property({type: Number, reflect: true})
   set selectedIndex(index: number) {
     this._selectedIndex = index;
@@ -17,35 +27,36 @@ export class VscodeTabs extends VscElement {
     return this._selectedIndex;
   }
 
-  @query('slot[name=header]')
-  private _headerSlot!: HTMLSlotElement;
+  @queryAssignedElements({slot: 'header'})
+  private _headerSlotElements!: Element[];
 
-  @query('slot:not([name=header])')
-  private _mainSlot!: HTMLSlotElement;
+  @queryAssignedElements()
+  private _mainSlotElements!: Element[];
 
   private _selectedIndex: number;
+
+  private _tabHeaders: VscodeTabHeader[] = [];
+
+  private _tabPanels: VscodeTabPanel[] = [];
+
+  private _focusedHeader = -1;
+
+  private _componentId = '';
 
   constructor() {
     super();
     this._selectedIndex = 0;
+    this._componentId = uniqueId();
   }
 
   private _setActiveTab() {
-    if (!this._mainSlot || !this._headerSlot) {
-      return;
-    }
-
-    Array.from(this._mainSlot.assignedElements()).forEach((el: Element, i) => {
-      (el as HTMLElement).style.display =
-        i === this._selectedIndex ? 'block' : 'none';
+    this._tabPanels.forEach((el, i) => {
+      el.hidden = i !== this._selectedIndex;
     });
 
-    Array.from(this._headerSlot.assignedElements()).forEach(
-      (el: Element, i) => {
-        (el as HTMLElement).dataset.index = String(i);
-        el.classList.toggle('is-active', i === this._selectedIndex);
-      }
-    );
+    this._tabHeaders.forEach((el: VscodeTabHeader, i) => {
+      el.active = i === this._selectedIndex;
+    });
 
     this.dispatchEvent(
       new CustomEvent('vsc-select', {
@@ -57,30 +68,39 @@ export class VscodeTabs extends VscElement {
     );
   }
 
-  private _onSlotChanged() {
+  private _onMainSlotChange() {
+    this._tabPanels = this._mainSlotElements.filter(
+      (el) => el instanceof VscodeTabPanel
+    ) as VscodeTabPanel[];
+    this._tabPanels.forEach((el, i) => {
+      el.ariaLabelledby = `t${this._componentId}-h${i}`;
+      el.id = `t${this._componentId}-p${i}`;
+    });
+
     this._setActiveTab();
+  }
+
+  private _onHeaderSlotChange() {
+    this._tabHeaders = this._headerSlotElements.filter(
+      (el) => el instanceof VscodeTabHeader
+    ) as VscodeTabHeader[];
+    this._tabHeaders.forEach((el, i) => {
+      el.tabId = i;
+      el.id = `t${this._componentId}-h${i}`;
+      el.ariaControls = `t${this._componentId}-p${i}`;
+    });
   }
 
   private _onHeaderClick(event: MouseEvent) {
     const path = event.composedPath();
-    const headerEl = path.find((et) => {
-      const el = et as Element;
+    const headerEl = path.find(
+      (et) => (et as VscodeTabHeader) instanceof VscodeTabHeader
+    );
 
-      if (!el.matches) {
-        return false;
-      }
-
-      return el.matches('[slot=header]');
-    });
-
-    const index = (headerEl as HTMLElement)?.dataset.index;
-
-    if (!index) {
-      return;
+    if (headerEl) {
+      this._selectedIndex = (headerEl as VscodeTabHeader).tabId;
+      this._setActiveTab();
     }
-
-    this._selectedIndex = Number(index);
-    this._setActiveTab();
   }
 
   static get styles(): CSSResultGroup {
@@ -107,24 +127,6 @@ export class VscodeTabs extends VscElement {
           border-bottom-style: solid;
           border-bottom-width: 1px;
         }
-
-        ::slotted(header) {
-          border-bottom: 1px solid transparent;
-          color: var(--vscode-foreground);
-          cursor: pointer;
-          display: block;
-          margin-bottom: -1px;
-          overflow: hidden;
-          padding: 7px 8px;
-          text-overflow: ellipsis;
-          user-select: none;
-          white-space: nowrap;
-        }
-
-        ::slotted(.is-active) {
-          border-bottom-color: var(--vscode-settings-headerForeground);
-          color: var(--vscode-settings-headerForeground);
-        }
       `,
     ];
   }
@@ -132,9 +134,9 @@ export class VscodeTabs extends VscElement {
   render(): TemplateResult {
     return html`
       <div class="header" @click="${this._onHeaderClick}">
-        <slot name="header"></slot>
+        <slot name="header" @slotchange=${this._onHeaderSlotChange}></slot>
       </div>
-      <slot @slotchange=${this._onSlotChanged}></slot>
+      <slot @slotchange=${this._onMainSlotChange}></slot>
     `;
   }
 }
