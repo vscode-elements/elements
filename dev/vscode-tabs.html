@@ -10,6 +10,7 @@
     <script type="module" src="../dist/vscode-badge.js"></script>
     <script type="module" src="../dist/vscode-tabs.js"></script>
     <script type="module" src="../dist/vscode-tab-header.js"></script>
+    <script type="module" src="../dist/vscode-scrollable.js"></script>
   </head>
 
   <body class="vscode-light">
@@ -42,7 +43,9 @@
               </vscode-tab-panel>
               <!-- display:block -->
               <vscode-tab-header slot="header">
-                Ipsum<vscode-badge variant="counter">2</vscode-badge>
+                Ipsum<vscode-badge variant="counter" slot="content-after"
+                  >2</vscode-badge
+                >
               </vscode-tab-header>
               <vscode-tab-panel>
                 <p>
@@ -77,6 +80,99 @@
               </vscode-tab-panel>
             </vscode-tabs>
           </component-preview>
+        </div>
+      </div>
+      <div class="story">
+        <h2 class="story-title">Panel</h2>
+        <div class="story-content">
+          <component-preview>
+            <vscode-tabs selected-index="1" panel class="panel-example">
+              <!-- display:block -->
+              <vscode-tab-header slot="header">
+                Output<vscode-badge variant="counter" slot="content-after"
+                  >2</vscode-badge
+                >
+              </vscode-tab-header>
+              <vscode-tab-panel>
+                <vscode-scrollable>
+                  <pre>
+                    ["INFO" - 9:42:22 PM] Extension Name: esbenp.prettier-vscode.
+                    ["INFO" - 9:42:22 PM] Extension Version: 9.9.0.
+                    ["INFO" - 10:57:24 PM] Formatting file:///c%3A/workspace/vscode-webview-elements/src/vscode-tabs.ts
+                    ["INFO" - 10:57:24 PM] Using config file at 'c:\workspace\vscode-webview-elements\.prettierrc.json'
+                    ["INFO" - 10:57:24 PM] Using ignore file (if present) at c:\workspace\vscode-webview-elements\.prettierignore
+                    ["INFO" - 10:57:24 PM] File Info:
+                    {
+                      "ignored": false,
+                      "inferredParser": "typescript"
+                    }
+                    ["INFO" - 10:57:24 PM] Detected local configuration (i.e. .prettierrc or .editorconfig), VS Code configuration will not be used
+                    ["INFO" - 10:57:24 PM] Prettier Options:
+                    {
+                      "filepath": "c:\\workspace\\vscode-webview-elements\\src\\vscode-tabs.ts",
+                      "parser": "typescript",
+                      "useTabs": false,
+                      "tabWidth": 2,
+                      "endOfLine": "lf",
+                      "trailingComma": "es5",
+                      "singleQuote": true,
+                      "bracketSpacing": false,
+                      "arrowParens": "always"
+                    }
+                    ["INFO" - 10:57:24 PM] Formatting completed in 226ms.
+                    ["INFO" - 10:58:05 PM] Formatting file:///c%3A/workspace/vscode-webview-elements/src/vscode-tabs.ts
+                    ["INFO" - 10:58:05 PM] Using config file at 'c:\workspace\vscode-webview-elements\.prettierrc.json'
+                    ["INFO" - 10:58:05 PM] Using ignore file (if present) at c:\workspace\vscode-webview-elements\.prettierignore
+                    ["INFO" - 10:58:05 PM] File Info:
+                    {
+                      "ignored": false,
+                      "inferredParser": "typescript"
+                    }
+                    ["INFO" - 10:58:05 PM] Detected local configuration (i.e. .prettierrc or .editorconfig), VS Code configuration will not be used
+                    ["INFO" - 10:58:05 PM] Prettier Options:
+                    {
+                      "filepath": "c:\\workspace\\vscode-webview-elements\\src\\vscode-tabs.ts",
+                      "parser": "typescript",
+                      "useTabs": false,
+                      "tabWidth": 2,
+                      "endOfLine": "lf",
+                      "trailingComma": "es5",
+                      "singleQuote": true,
+                      "bracketSpacing": false,
+                      "arrowParens": "always"
+                    }
+                  </pre>
+                </vscode-scrollable>
+              </vscode-tab-panel>
+              <!-- display:block -->
+              <vscode-tab-header slot="header">Terminal</vscode-tab-header>
+              <vscode-tab-panel>
+                <pre>
+                  Web Dev Server started...
+                  [server]
+                  [server]   Root dir: C:\workspace\vscode-webview-elements
+                  [server]   Local:    http://localhost:8000/
+                  [server]   Network:  http://192.168.0.15:8000/
+                  [server]
+                </pre>
+              </vscode-tab-panel>
+            </vscode-tabs>
+          </component-preview>
+          <style>
+            .panel-example vscode-tab-panel,
+            .panel-example vscode-scrollable {
+              height: 200px;
+            }
+
+            vscode-tab-panel pre {
+              color: var(--vscode-terminal-foreground);
+              font-family: var(--vscode-editor-font-family);
+              font-size: var(--vscode-editor-font-size);
+              font-weight: var(--vscode-editor-font-weight);
+              margin: 0;
+              white-space: pre-line;
+            }
+          </style>
         </div>
       </div>
     </main>

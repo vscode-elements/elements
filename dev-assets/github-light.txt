@@ -360,7 +360,7 @@
 --vscode-panelSection-border: #e1e4e8;
 --vscode-panelSection-dropBackground: rgba(38, 119, 203, 0.18);
 --vscode-panelSectionHeader-background: rgba(128, 128, 128, 0.2);
---vscode-panelTitle-activeBorder: #ffffff;
+--vscode-panelTitle-activeBorder: #f9826c;
 --vscode-panelTitle-activeForeground: #2f363d;
 --vscode-panelTitle-inactiveForeground: #6a737d;
 --vscode-peekView-border: #1a85ff;

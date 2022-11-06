@@ -4,13 +4,24 @@ import {
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import uniqueId from './includes/uniqueId';
 import {VscElement} from './includes/VscElement';
 import {VscodeTabHeader} from './vscode-tab-header';
 import {VscodeTabPanel} from './vscode-tab-panel';
 
+/**
+ * @slot Default slot. It is used for tab panels.
+ * @slot header - Slot for tab headers.
+ */
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {
+  /**
+   * Panel-like look
+   */
+  @property({type: Boolean, reflect: true})
+  panel = false;
+
   @property({reflect: true})
   role = 'tablist';
 
@@ -43,6 +54,11 @@ export class VscodeTabs extends VscElement {
 
     if (name === 'selected-index') {
       this._setActiveTab();
+    }
+
+    if (name === 'panel') {
+      this._tabHeaders.forEach((h) => (h.panel = value !== null));
+      this._tabPanels.forEach((p) => (p.panel = value !== null));
     }
   }
 
@@ -127,6 +143,7 @@ export class VscodeTabs extends VscElement {
     this._tabPanels.forEach((el, i) => {
       el.ariaLabelledby = `t${this._componentId}-h${i}`;
       el.id = `t${this._componentId}-p${i}`;
+      el.panel = this.panel;
     });
 
     this._setActiveTab();
@@ -140,6 +157,7 @@ export class VscodeTabs extends VscElement {
       el.tabId = i;
       el.id = `t${this._componentId}-h${i}`;
       el.ariaControls = `t${this._componentId}-p${i}`;
+      el.panel = this.panel;
     });
   }
 
@@ -179,13 +197,24 @@ export class VscodeTabs extends VscElement {
           border-bottom-style: solid;
           border-bottom-width: 1px;
         }
+
+        .header.panel {
+          background-color: var(--vscode-panel-background);
+          border-bottom-width: 0;
+          box-sizing: border-box;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
       `,
     ];
   }
 
   render(): TemplateResult {
     return html`
-      <div class="header" @click="${this._onHeaderClick}">
+      <div
+        class=${classMap({header: true, panel: this.panel})}
+        @click="${this._onHeaderClick}"
+      >
         <slot name="header" @slotchange=${this._onHeaderSlotChange}></slot>
       </div>
       <slot @slotchange=${this._onMainSlotChange}></slot>

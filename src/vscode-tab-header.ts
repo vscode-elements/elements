@@ -1,5 +1,6 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-tab-header')
@@ -10,14 +11,17 @@ export class VscodeTabHeader extends VscElement {
   @property({reflect: true, attribute: 'aria-controls'})
   ariaControls = '';
 
+  /**
+   * Panel-like look
+   */
+  @property({type: Boolean, reflect: true})
+  panel = false;
+
   @property({reflect: true})
   role = 'tab';
 
   @property({type: Number, reflect: true, attribute: 'tab-id'})
   tabId = -1;
-
-/*   @property({type: Number, reflect: true})
-  tabIndex = 0; */
 
   attributeChangedCallback(
     name: string,
@@ -39,7 +43,6 @@ export class VscodeTabHeader extends VscElement {
       css`
         :host {
           border-bottom: 1px solid transparent;
-          color: var(--vscode-foreground);
           cursor: pointer;
           display: block;
           margin-bottom: -1px;
@@ -55,16 +58,71 @@ export class VscodeTabHeader extends VscElement {
           color: var(--vscode-settings-headerForeground);
         }
 
+        :host([panel]) {
+          border-bottom: 0;
+          margin-bottom: 0;
+          padding: 0;
+        }
+
         :host(:focus-visible) {
           outline: none;
         }
 
-        :host(:focus-visible) span {
+        .wrapper {
+          align-items: center;
+          color: var(--vscode-foreground);
+          display: flex;
+          position: relative;
+        }
+
+        .wrapper.panel {
+          color: var(--vscode-panelTitle-inactiveForeground);
+        }
+
+        .wrapper.panel.active,
+        .wrapper.panel:hover {
+          color: var(--vscode-panelTitle-activeForeground);
+        }
+
+        :host([panel]) .wrapper {
+          display: flex;
+          font-size: 11px;
+          height: 31px;
+          padding: 2px 10px;
+          text-transform: uppercase;
+        }
+
+        .active-indicator {
+          display: none;
+        }
+
+        .active-indicator.panel.active {
+          border-top: 1px solid var(--vscode-panelTitle-activeBorder);
+          bottom: 4px;
+          display: block;
+          left: 8px;
+          pointer-events: none;
+          position: absolute;
+          right: 8px;
+        }
+
+        :host(:focus-visible) .wrapper {
           outline-color: var(--vscode-focusBorder);
           outline-offset: 3px;
           outline-style: solid;
           outline-width: 1px;
-          display: inline-block;
+        }
+
+        :host(:focus-visible) .wrapper.panel {
+          outline-offset: -2px;
+        }
+
+        slot[name='content-before']::slotted(vscode-badge) {
+          margin-right: 8px;
+        }
+
+        slot[name='content-after']::slotted(vscode-badge) {
+          margin-left: 8px;
         }
       `,
     ];
@@ -72,9 +130,24 @@ export class VscodeTabHeader extends VscElement {
 
   render(): TemplateResult {
     return html`
-      <span>
-        <slot></slot>
-      </span>
+      <div
+        class=${classMap({
+          wrapper: true,
+          active: this.active,
+          panel: this.panel,
+        })}
+      >
+        <div class="before"><slot name="content-before"></slot></div>
+        <div class="main"><slot></slot></div>
+        <div class="after"><slot name="content-after"></slot></div>
+        <span
+          class=${classMap({
+            'active-indicator': true,
+            active: this.active,
+            panel: this.panel,
+          })}
+        ></span>
+      </div>
     `;
   }
 }
