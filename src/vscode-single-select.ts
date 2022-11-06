@@ -23,7 +23,7 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   @property({type: String, attribute: true, reflect: true})
   role = 'listbox';
 
-  @property({type: Number})
+  @property({type: Number, attribute: 'selected-index'})
   set selectedIndex(val: number) {
     this._selectedIndex = val;
     this._value = this._options[this._selectedIndex]

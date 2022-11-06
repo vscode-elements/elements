@@ -10,7 +10,7 @@ export class VscodeTableCell extends VscElement {
   /**
    * Cell label in the compact view of the responsive mode. For internal use only.
    */
-  @property()
+  @property({attribute: 'column-label'})
   columnLabel = '';
 
   /**

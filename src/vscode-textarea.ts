@@ -42,7 +42,7 @@ export class VscodeTextarea extends VscElement {
   @property()
   spellcheck = false;
 
-  @property({type: Boolean, reflect: true})
+  @property({type: Boolean, reflect: true, attribute: 'use-monospace-fonts'})
   useMonospaceFonts = false;
 
   @property()

@@ -18,7 +18,7 @@ export class VscodeScrollable extends VscElement {
   @property({type: Boolean, reflect: true})
   scrolled = false;
 
-  @property({type: Number})
+  @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
     this._scrollableContainer.scrollTop = val;
   }
@@ -26,7 +26,7 @@ export class VscodeScrollable extends VscElement {
     return this._scrollableContainer.scrollTop;
   }
 
-  @property({type: Number})
+  @property({type: Number, attribute: 'scroll-max'})
   get scrollMax(): number {
     return this._scrollableContainer.scrollHeight;
   }

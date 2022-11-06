@@ -10,7 +10,7 @@ import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
  */
 @customElement('vscode-multi-select')
 export class VscodeMultiSelect extends VscodeSelectBase {
-  @property({type: Array})
+  @property({type: Array, attribute: false})
   set selectedIndexes(val: number[]) {
     this._selectedIndexes = val;
   }

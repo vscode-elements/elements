@@ -11,10 +11,10 @@ export class VscodeSplitLayout extends VscElement {
   @property()
   split: 'horizontal' | 'vertical' = 'vertical';
 
-  @property({type: Boolean})
+  @property({type: Boolean, attribute: 'reset-on-dbl-click'})
   resetOnDblClick = false;
 
-  @property()
+  @property({attribute: 'initial-pos'})
   initialPos = '50%';
 
   @state()
