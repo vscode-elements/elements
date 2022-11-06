@@ -6,7 +6,7 @@ component: vscode-form-item
 deprecated: true
 ---
 
-# VscodeFormItem
+# FormItem
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-item';

@@ -6,4 +6,4 @@ component: vscode-form-label
 deprecated: true
 ---
 
-# VscodeFormLabel
+# FormLabel

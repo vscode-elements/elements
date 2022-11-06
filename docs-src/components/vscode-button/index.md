@@ -5,7 +5,7 @@ tags: component
 component: vscode-button
 ---
 
-# VscodeButton
+# Button
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-button';

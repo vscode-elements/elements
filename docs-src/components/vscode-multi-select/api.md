@@ -5,4 +5,4 @@ tags: api
 component: vscode-multi-select
 ---
 
-# VscodeMultiSelect
+# MultiSelect

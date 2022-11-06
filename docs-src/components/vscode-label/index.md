@@ -5,7 +5,7 @@ tags: component
 component: vscode-label
 ---
 
-# VscodeLabel
+# Label
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-label';

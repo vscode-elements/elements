@@ -5,4 +5,4 @@ tags: api
 component: vscode-checkbox-group
 ---
 
-# VscodeCheckboxGroup
+# CheckboxGroup

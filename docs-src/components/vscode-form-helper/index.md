@@ -5,7 +5,7 @@ tags: component
 component: vscode-form-helper
 ---
 
-# VscodeFormHelper
+# FormHelper
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-helper';

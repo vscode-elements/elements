@@ -20,7 +20,7 @@ toc:
     path: complex-html-content
 ---
 
-# VscodeTable
+# Table
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-table';

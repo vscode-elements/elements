@@ -12,7 +12,7 @@ toc:
     path: collecting-the-form-data
 ---
 
-# VscodeFormContainer
+# FormContainer
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-container';

@@ -10,7 +10,7 @@ toc:
     path: vertical-group
 ---
 
-# VscodeRadioGroup
+# RadioGroup
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-radio-group';

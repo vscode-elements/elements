@@ -5,4 +5,4 @@ tags: api
 component: vscode-table-header-cell
 ---
 
-# VscodeTableHeaderCell
+# TableHeaderCell

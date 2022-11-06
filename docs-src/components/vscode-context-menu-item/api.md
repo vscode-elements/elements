@@ -5,4 +5,4 @@ tags: api
 component: vscode-context-menu-item
 ---
 
-# VscodeContextMenuItem
+# ContextMenuItem

@@ -5,4 +5,4 @@ tags: api
 component: vscode-table-body
 ---
 
-# VscodeTableBody
+# TableBody

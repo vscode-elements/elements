@@ -5,7 +5,7 @@ tags: component
 component: vscode-checkbox
 ---
 
-# VscodeCheckbox
+# Checkbox
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-checkbox';

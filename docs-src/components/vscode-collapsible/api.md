@@ -5,5 +5,5 @@ tags: api
 component: vscode-collapsible
 ---
 
-# VscodeCollapsible
+# Collapsible
 

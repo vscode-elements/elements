@@ -5,7 +5,7 @@ tags: api
 component: vscode-form-container
 ---
 
-# VscodeFormContainer
+# FormContainer
 
 ```typescript
 interface FormData {

@@ -10,7 +10,7 @@ toc:
     path: vertical-group
 ---
 
-# VscodeCheckboxGroup
+# CheckboxGroup
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-checkbox-group';

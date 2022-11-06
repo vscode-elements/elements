@@ -6,4 +6,4 @@ component: vscode-form-description
 deprecated: true
 ---
 
-# VscodeFormDescription
+# FormDescription

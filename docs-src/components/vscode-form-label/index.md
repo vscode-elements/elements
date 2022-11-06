@@ -6,7 +6,7 @@ component: vscode-form-label
 deprecated: true
 ---
 
-# VscodeFormLabel
+# FormLabel
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-label';

@@ -5,7 +5,7 @@ tags: component
 component: vscode-textfield
 ---
 
-# VscodeTextfield
+# Textfield
 
 ## Basic example
 

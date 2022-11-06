@@ -5,7 +5,7 @@ tags: api
 component: vscode-context-menu
 ---
 
-# VscodeContextMenu
+# ContextMenu
 
 ```typescript
 interface MenuItemData {

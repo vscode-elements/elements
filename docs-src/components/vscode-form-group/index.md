@@ -5,7 +5,7 @@ tags: component
 component: vscode-form-group
 ---
 
-# VscodeFormGroup
+# FormGroup
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-group';

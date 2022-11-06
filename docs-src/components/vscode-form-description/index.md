@@ -6,7 +6,7 @@ component: vscode-form-description
 deprecated: true
 ---
 
-# VscodeFormDescription
+# FormDescription
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-description';

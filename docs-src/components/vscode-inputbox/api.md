@@ -5,5 +5,5 @@ tags: api
 component: vscode-inputbox
 ---
 
-# VscodeInputbox
+# Inputbox
 

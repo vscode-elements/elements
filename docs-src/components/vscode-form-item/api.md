@@ -6,4 +6,4 @@ component: vscode-form-item
 deprecated: true
 ---
 
-# VscodeFormItem
+# FormItem

@@ -5,7 +5,7 @@ tags: component
 component: vscode-single-select
 ---
 
-# VscodeSingleSelect
+# SingleSelect
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-single-select';

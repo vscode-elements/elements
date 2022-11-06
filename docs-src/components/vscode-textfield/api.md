@@ -5,4 +5,4 @@ tags: api
 component: vscode-textfield
 ---
 
-# VscodeTextfield
+# Textfield

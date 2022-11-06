@@ -5,7 +5,7 @@ tags: component
 component: vscode-scrollable
 ---
 
-# VscodeScrollable
+# Scrollable
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-scrollable';

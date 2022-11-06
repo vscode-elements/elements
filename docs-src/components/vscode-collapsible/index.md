@@ -10,7 +10,7 @@ toc:
     path: actions
 ---
 
-# VscodeCollapsible
+# Collapsible
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-collapsible';

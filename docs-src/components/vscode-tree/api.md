@@ -5,7 +5,7 @@ tags: api
 component: vscode-tree
 ---
 
-# VscodeTree
+# Tree
 
 ```typescript
 interface TreeItemIconConfig {

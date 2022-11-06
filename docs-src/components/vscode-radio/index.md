@@ -5,7 +5,7 @@ tags: component
 component: vscode-radio
 ---
 
-# VscodeRadio
+# Radio
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-radio';

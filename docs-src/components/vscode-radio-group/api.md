@@ -5,4 +5,4 @@ tags: api
 component: vscode-radio-group
 ---
 
-# VscodeRadioGroup
+# RadioGroup

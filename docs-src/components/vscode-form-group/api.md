@@ -5,5 +5,5 @@ tags: api
 component: vscode-form-group
 ---
 
-# VscodeFormGroup
+# FormGroup
 

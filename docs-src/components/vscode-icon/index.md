@@ -5,7 +5,7 @@ tags: component
 component: vscode-icon
 ---
 
-# VscodeIcon
+# Icon
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-icon';

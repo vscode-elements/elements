@@ -6,7 +6,7 @@ component: vscode-form-control
 deprecated: true
 ---
 
-# VscodeFormControl
+# FormControl
 
 ```typescript
 import '@bendera/vscode-webview-elements/dist/vscode-form-control';
