@@ -13,7 +13,7 @@ import {VscodeTabPanel} from './vscode-tab-panel';
 /**
  * @slot - Default slot. It is used for tab panels.
  * @slot header - Slot for tab headers.
- * @slot addons - Right side in the header.
+ * @slot addons - Right aligned area in the header.
  */
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {

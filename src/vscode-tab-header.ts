@@ -72,6 +72,7 @@ export class VscodeTabHeader extends VscElement {
           align-items: center;
           color: var(--vscode-foreground);
           display: flex;
+          min-height: 20px;
           position: relative;
         }
 
