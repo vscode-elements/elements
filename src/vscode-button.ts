@@ -24,12 +24,14 @@ export class VscodeButton extends VscElement {
   /**
    * A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) before the label
    */
-  @property() icon = '';
+  @property()
+  icon = '';
 
   /**
    * A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label
    */
-  @property() iconAfter = '';
+  @property({attribute: 'icon-after'})
+  iconAfter = '';
 
   @property({type: Boolean, reflect: true})
   focused = false;
