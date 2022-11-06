@@ -8,15 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Breaking changes
 
+- Attribute names have been standardized. From now every attribute name uses the kebab-case format.
 - `selectedIndex` attribute renamed to `selected-index` in the Tabs component.
+- `iconAfter` attribute renamed to `icon-after` in the Button component.
+- `selectedIndexes` attribute is removed from the MultiSelect component. It still accessible as a property.
+- `scrollPos` attribute renamed to `scroll-pos` in the Scrollable component.
+- `scrollMax` attribute renamed to `scroll-max` in the Scrollable component.
+- `selectedIndex` attribute renamed to `selected-index` in the SingleSelect component.
+- `resetOnDblClick` attribute renamed to `reset-on-dbl-click` in the SplitLayout component.
+- `columnLabel` attribute renamed to `column-label` in the TableCell component.
+- The Tabs component markup has been changed. See the documentation page for the examples.
 
 ### Added
 
 - Added Textfield and Textarea components.
-- Added TabHeader and TabPanel components.
-- Added Badge component.
-- Tabs panel mode.
-- Tabs addons slot.
 
 ### Changed
 
@@ -26,6 +31,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Added `aria-checked` attribute to the radio buttons.
 - Icon component accessibility improvements.
 - Tabs component is fully accessible.
+- TabHeader and TabPanel added to interoperate with Tabs.
+- `addons` slot has been added to the Tabs toolbar.
+- `content-before` and `content-after` slots have been added to the tab headers.
 
 ### Fixed
 
