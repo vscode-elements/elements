@@ -20,7 +20,7 @@ Disabled buttons don't dispatch click events, even if the event listener is adde
   <vscode-button id="button-2" secondary>Secondary button</vscode-button>
   <vscode-button id="button-3" disabled>Disabled button</vscode-button>
   <vscode-button id="button-4" disabled secondary>Disabled secondary button</vscode-button>
-  <vscode-button id="button-5" icon="account" iconafter="chevron-right">Icons</vscode-button>
+  <vscode-button id="button-5" icon="account" icon-after="chevron-right">Icons</vscode-button>
 </component-preview>
 
 <script>
@@ -48,7 +48,7 @@ Disabled buttons don't dispatch click events, even if the event listener is adde
 <vscode-button id="button-2" secondary>Secondary button</vscode-button>
 <vscode-button id="button-3" disabled>Disabled button</vscode-button>
 <vscode-button id="button-4" disabled secondary>Disabled secondary button</vscode-button>
-<vscode-button id="button-5" icon="account" iconafter="chevron-right">Icons</vscode-button>
+<vscode-button id="button-5" icon="account" icon-after="chevron-right">Icons</vscode-button>
 ```
 
 ### JavaScript
