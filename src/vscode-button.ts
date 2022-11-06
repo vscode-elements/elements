@@ -117,13 +117,13 @@ export class VscodeButton extends VscElement {
           background-color: var(--vscode-button-background);
           border: 0;
           border-radius: 2px;
-          box-sizing: border-box;
           color: var(--vscode-button-foreground);
           cursor: pointer;
-          display: inline-flex;
+          display: inline-block;
           font-size: var(--vscode-font-size);
           font-weight: var(--vscode-font-weight);
           line-height: 22px;
+          overflow: hidden;
           padding: 2px 14px;
           user-select: none;
         }
@@ -188,24 +188,20 @@ export class VscodeButton extends VscElement {
           width: 100%;
         }
 
-        .wrapper.has-icon-before {
-          padding-left: 21px;
-        }
-
-        .wrapper.has-icon-after {
-          padding-right: 21px;
+        slot {
+          display: block;
         }
 
         .icon {
           color: var(--vscode-button-foreground);
-          left: 0;
-          position: absolute;
+          display: block;
+          margin-right: 3px;
         }
 
         .icon-after {
           color: var(--vscode-button-foreground);
-          position: absolute;
-          right: 0;
+          display: block;
+          margin-left: 3px;
         }
       `,
     ];
