@@ -20,6 +20,7 @@ export default css`
   .combobox-face {
     background-color: var(--vscode-settings-textInputBackground);
     border-color: var(--vscode-settings-dropdownBorder, rgba(0, 0, 0, 0));
+    border-radius: 2px;
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
