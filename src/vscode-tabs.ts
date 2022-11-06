@@ -11,8 +11,9 @@ import {VscodeTabHeader} from './vscode-tab-header';
 import {VscodeTabPanel} from './vscode-tab-panel';
 
 /**
- * @slot Default slot. It is used for tab panels.
+ * @slot - Default slot. It is used for tab panels.
  * @slot header - Slot for tab headers.
+ * @slot addons - Right side in the header.
  */
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {
@@ -182,6 +183,7 @@ export class VscodeTabs extends VscElement {
         }
 
         .header {
+          align-items: center;
           display: flex;
           font-family: var(--vscode-font-family);
           font-size: var(--vscode-font-size);
@@ -205,6 +207,11 @@ export class VscodeTabs extends VscElement {
           padding-left: 8px;
           padding-right: 8px;
         }
+
+        slot[name=addons] {
+          display: block;
+          margin-left: auto;
+        }
       `,
     ];
   }
@@ -216,6 +223,7 @@ export class VscodeTabs extends VscElement {
         @click="${this._onHeaderClick}"
       >
         <slot name="header" @slotchange=${this._onHeaderSlotChange}></slot>
+        <slot name="addons"></slot>
       </div>
       <slot @slotchange=${this._onMainSlotChange}></slot>
     `;

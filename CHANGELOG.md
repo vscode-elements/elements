@@ -6,18 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Unreleased
 
+### Breaking changes
+
+- `selectedIndex` attribute renamed to `selected-index` in the Tabs component.
+
 ### Added
 
-- Added Textfield component
-- Added Badge component
+- Added Textfield and Textarea components.
+- Added TabHeader and TabPanel components.
+- Added Badge component.
+- Tabs panel mode.
+- Tabs addons slot.
 
 ### Changed
 
-- Lit upgraded to 2.4.x
-- Added keyboard navigation to ContextMenu
-- Adapted the latest VSCode button styles (rounded corner)
-- Added `aria-checked` attribute to the radio buttons
-- Icon component accessibility improvements
+- Lit upgraded to 2.4.x.
+- Added keyboard navigation to ContextMenu.
+- Adapted the latest VSCode button styles (rounded corner).
+- Added `aria-checked` attribute to the radio buttons.
+- Icon component accessibility improvements.
+- Tabs component is fully accessible.
 
 ### Fixed
 

@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>&lt;vscode-tabs&gt; Demo</title>
     <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" nonce="testid123">
     <script src="../dev-assets/component-preview.js" type="module"></script>
     <script type="module" src="../dist/vscode-badge.js"></script>
+    <script type="module" src="../dist/vscode-icon.js"></script>
     <script type="module" src="../dist/vscode-tabs.js"></script>
     <script type="module" src="../dist/vscode-tab-header.js"></script>
     <script type="module" src="../dist/vscode-scrollable.js"></script>
@@ -87,6 +89,8 @@
         <div class="story-content">
           <component-preview>
             <vscode-tabs selected-index="1" panel class="panel-example">
+              <vscode-icon label="Maximize Panel Size" title="Maximize Panel Size" name="chevron-up" slot="addons" action-icon></vscode-icon>
+              <vscode-icon label="Close Panel" title="Close Panel" name="close" slot="addons" action-icon></vscode-icon>
               <!-- display:block -->
               <vscode-tab-header slot="header">
                 Output<vscode-badge variant="counter" slot="content-after"
