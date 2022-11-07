@@ -7,7 +7,7 @@
     <li><a href="{{ '/components' | url }}/{{ component }}/api" {% if page.fileSlug == 'api' %}class="current"{% endif %}>API</a></li>
   </ul>
 
-  <div class="a11y-status">
+  {# <div class="a11y-status">
     {% if a11y == 'low' %}
     <vscode-icon name="person" title="ARIA labels are not applied at all." class="status-icon status-low"></vscode-icon>
     {% elif a11y == 'medium' %}
@@ -27,7 +27,7 @@
     {% else %}
     <vscode-icon name="keyboard" title="N/A" class="status-icon status-unknown"></vscode-icon>
     {% endif %}
-  </div>
+  </div> #}
 </div>
 {% endblock %}
 
