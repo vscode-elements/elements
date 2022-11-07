@@ -3,6 +3,8 @@ layout: component.njk
 title: Icon
 tags: component
 component: vscode-icon
+a11y: high
+kbd: high
 ---
 
 # Icon

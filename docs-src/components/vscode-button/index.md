@@ -3,6 +3,8 @@ layout: component.njk
 title: Button
 tags: component
 component: vscode-button
+a11y: high
+kbd: high
 ---
 
 # Button

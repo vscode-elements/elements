@@ -8,6 +8,8 @@ toc:
     path: basic-example
   - label: Actions
     path: actions
+a11y: low
+kbd: medium
 ---
 
 # Collapsible

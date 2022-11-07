@@ -67,11 +67,7 @@
       <div class="main-content">
         <div class="page">
           {% block subnav %}{% endblock %}
-          {% if deprecated %}
-            <div class="deprecated-message">
-              <p>Warning! This component is deprecated and will be removed in the next release.</p>
-            </div>
-          {% endif %}
+          {% block deprecationWarning %}{% endblock %}
           {{ content | safe }}
           {% block apiViewerElement %}{% endblock %}
         </div>

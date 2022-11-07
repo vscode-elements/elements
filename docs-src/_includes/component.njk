@@ -1,14 +1,46 @@
 {% extends "page.njk" %}
 
 {% block subnav %}
-<ul class="sub-nav">
-  <li><a href="{{ '/components' | url }}/{{ component }}/" {% if page.fileSlug == component %}class="current"{% endif %}>Examples</a></li>
-  <li><a href="{{ '/components' | url }}/{{ component }}/api" {% if page.fileSlug == 'api' %}class="current"{% endif %}>API</a></li>
-</ul>
+<div class="sub-nav">
+  <ul>
+    <li><a href="{{ '/components' | url }}/{{ component }}/" {% if page.fileSlug == component %}class="current"{% endif %}>Examples</a></li>
+    <li><a href="{{ '/components' | url }}/{{ component }}/api" {% if page.fileSlug == 'api' %}class="current"{% endif %}>API</a></li>
+  </ul>
+
+  <div class="a11y-status">
+    {% if a11y == 'low' %}
+    <vscode-icon name="person" title="ARIA labels are not applied at all." class="status-icon status-low"></vscode-icon>
+    {% elif a11y == 'medium' %}
+    <vscode-icon name="person" title="ARIA labels are partially applied / work in progress." class="status-icon status-medium"></vscode-icon>
+    {% elif a11y == 'high' %}
+    <vscode-icon name="person" title="All relevant ARIA labels are applied, there is no any known issue." class="status-icon status-high"></vscode-icon>
+    {% else %}
+    <vscode-icon name="person" title="N/A" class="status-icon status-unknown"></vscode-icon>
+    {% endif %}
+
+    {% if kbd == 'low' %}
+    <vscode-icon name="keyboard" title="There is no keyboard navigation at all." class="status-icon status-low"></vscode-icon>
+    {% elseif kbd == 'medium' %}
+    <vscode-icon name="keyboard" title="Keyboard navigation is partially implemented / work in progress." class="status-icon status-medium"></vscode-icon>
+    {% elseif kbd == 'high' %}
+    <vscode-icon name="keyboard" title="Keyboard navigation is fully supported." class="status-icon status-high"></vscode-icon>
+    {% else %}
+    <vscode-icon name="keyboard" title="N/A" class="status-icon status-unknown"></vscode-icon>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
 
 {% block apiViewerElement %}
-{% if page.fileSlug == 'api' %}
-<api-docs src="/custom-elements.json" only="{{ component }}" selected="{{ component }}" class="api-docs"></api-docs>
-{% endif %}
+  {% if page.fileSlug == 'api' %}
+  <api-docs src="/custom-elements.json" only="{{ component }}" selected="{{ component }}" class="api-docs"></api-docs>
+  {% endif %}
+{% endblock %}
+
+{% block deprecationWarning %}
+  {% if deprecated %}
+  <div class="deprecated-message">
+    <p>Warning! This component is deprecated and will be removed in a future release.</p>
+  </div>
+  {% endif %}
 {% endblock %}

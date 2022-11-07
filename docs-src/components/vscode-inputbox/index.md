@@ -3,6 +3,7 @@ layout: component.njk
 title: Inputbox
 tags: component
 component: vscode-inputbox
+deprecated: true
 ---
 
 # Inputbox

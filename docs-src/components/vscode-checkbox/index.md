@@ -3,6 +3,8 @@ layout: component.njk
 title: Checkbox
 tags: component
 component: vscode-checkbox
+a11y: medium
+kbd: medium
 ---
 
 # Checkbox

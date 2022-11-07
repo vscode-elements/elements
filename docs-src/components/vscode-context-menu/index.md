@@ -3,6 +3,8 @@ layout: component.njk
 title: ContextMenu
 tags: component
 component: vscode-context-menu
+a11y: low
+kbd: high
 ---
 
 # ContextMenu
@@ -34,7 +36,7 @@ import '@bendera/vscode-webview-elements/dist/vscode-context-menu';
 
 <component-preview>
   <div class="menu-wrapper">
-    <vscode-icon name="menu" size="32" id="toggle-menu-button" role="button" title="Toggle Menu" class="toggle-menu-button"></vscode-icon>
+    <vscode-icon name="menu" size="32" id="toggle-menu-button" action-icon title="Toggle Menu" class="toggle-menu-button"></vscode-icon>
     <vscode-context-menu id="context-menu" class="context-menu"></vscode-context-menu>
   </div>
 </component-preview>
