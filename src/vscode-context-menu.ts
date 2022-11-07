@@ -95,7 +95,18 @@ export class VscodeContextMenu extends VscElement {
   private _onClickOutsideBound = this._onClickOutside.bind(this);
 
   private _onKeyDown(ev: KeyboardEvent) {
-    switch (ev.key) {
+    const {key} = ev;
+
+    if (
+      key === 'ArrowUp' ||
+      key === 'ArrowDown' ||
+      key === 'Escape' ||
+      key === 'Enter'
+    ) {
+      ev.preventDefault();
+    }
+
+    switch (key) {
       case 'ArrowUp':
         this._handleArrowUp();
         break;
