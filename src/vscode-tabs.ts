@@ -77,6 +77,17 @@ export class VscodeTabs extends VscElement {
 
   private _tabFocus = 0;
 
+  private _dispatchSelectEvent() {
+    this.dispatchEvent(
+      new CustomEvent('vsc-select', {
+        detail: {
+          selectedIndex: this.selectedIndex,
+        },
+        composed: true,
+      })
+    );
+  }
+
   private _setActiveTab() {
     this._tabFocus = this.selectedIndex;
 
@@ -87,15 +98,6 @@ export class VscodeTabs extends VscElement {
     this._tabHeaders.forEach((el: VscodeTabHeader, i) => {
       el.active = i === this.selectedIndex;
     });
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-select', {
-        detail: {
-          selectedIndex: this.selectedIndex,
-        },
-        composed: true,
-      })
-    );
   }
 
   private _focusPrevTab() {
@@ -132,6 +134,7 @@ export class VscodeTabs extends VscElement {
     if (ev.key === 'Enter') {
       ev.preventDefault();
       this.selectedIndex = this._tabFocus;
+      this._dispatchSelectEvent();
     }
   }
 
@@ -184,6 +187,7 @@ export class VscodeTabs extends VscElement {
     if (headerEl) {
       this.selectedIndex = (headerEl as VscodeTabHeader).tabId;
       this._setActiveTab();
+      this._dispatchSelectEvent();
     }
   }
 
