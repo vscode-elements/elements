@@ -137,7 +137,19 @@ export class VscodeTabs extends VscElement {
 
   private _onHostKeyDownBound = this._onHostKeyDown.bind(this);
 
+  private _moveHeadersToHeaderSlot() {
+    const headers = this._mainSlotElements.filter(
+      (el) => el instanceof VscodeTabHeader
+    ) as VscodeTabHeader[];
+
+    if (headers.length > 0) {
+      headers.forEach((h) => h.setAttribute('slot', 'header'));
+    }
+  }
+
   private _onMainSlotChange() {
+    this._moveHeadersToHeaderSlot();
+
     this._tabPanels = this._mainSlotElements.filter(
       (el) => el instanceof VscodeTabPanel
     ) as VscodeTabPanel[];
@@ -159,6 +171,7 @@ export class VscodeTabs extends VscElement {
       el.id = `t${this._componentId}-h${i}`;
       el.ariaControls = `t${this._componentId}-p${i}`;
       el.panel = this.panel;
+      el.active = i === this.selectedIndex;
     });
   }
 
@@ -208,7 +221,7 @@ export class VscodeTabs extends VscElement {
           padding-right: 8px;
         }
 
-        slot[name=addons] {
+        slot[name='addons'] {
           display: block;
           margin-left: auto;
         }

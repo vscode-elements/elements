@@ -31,9 +31,9 @@
         <h2 class="story-title">Basic example</h2>
         <div class="story-content">
           <component-preview>
-            <vscode-tabs selected-index="1" class="tabs-1">
+            <vscode-tabs selected-index="1" class="tabs-1" id="tabs-1">
               <!-- display:block -->
-              <vscode-tab-header slot="header">Lorem Loooooooooooooooooooooooooooooooooooooong text</vscode-tab-header>
+              <vscode-tab-header>Lorem Loooooooooooooooooooooooooooooooooooooong text</vscode-tab-header>
               <vscode-tab-panel>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
@@ -54,7 +54,7 @@
                 </p>
               </vscode-tab-panel>
               <!-- display:block -->
-              <vscode-tab-header slot="header">
+              <vscode-tab-header>
                 Ipsum loooooooooooooooooooooooooooooooooooooong text<vscode-badge variant="counter" slot="content-after"
                   >2</vscode-badge
                 >
@@ -74,7 +74,7 @@
                 </p>
               </vscode-tab-panel>
               <!-- display:block -->
-              <vscode-tab-header slot="header">Dolor</vscode-tab-header>
+              <vscode-tab-header>Dolor</vscode-tab-header>
               <vscode-tab-panel>
                 <p>
                   Nulla facilisi. Vivamus semper sodales nulla non condimentum.
@@ -92,6 +92,25 @@
               </vscode-tab-panel>
             </vscode-tabs>
           </component-preview>
+          <script type="module">
+            const tabs = document.getElementById('tabs-1');
+            const newTabHeader = document.createElement('vscode-tab-header');
+
+            tabs.addEventListener('vsc-select', (ev) => {
+              console.log(ev);
+            })
+
+            tabs.selectedIndex = 3;
+
+            // newTabHeader.slot = 'header';
+            newTabHeader.innerHTML = 'New Tab Header';
+
+            const newTabPanel = document.createElement('vscode-tab-panel');
+            newTabPanel.innerHTML = 'New Tab Panel';
+
+            tabs.appendChild(newTabHeader);
+            tabs.appendChild(newTabPanel);
+          </script>
         </div>
       </div>
       <div class="story">
