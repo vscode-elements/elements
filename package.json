@@ -14,7 +14,7 @@
     "build": "npm run build:bundle",
     "build:ts": "tsc",
     "build:watch": "tsc --watch",
-    "build:bundle": "npm run build:ts && rollup -c --file dist/bundled.js",
+    "build:bundle": "npm run clean && npm run build:ts && rollup -c --file dist/bundled.js",
     "build:rollup": "rollup -c",
     "clean": "rimraf dist",
     "eleventy": "eleventy --config=.eleventy.cjs",
