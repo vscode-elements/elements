@@ -22,13 +22,18 @@
 
   <body class="vscode-light">
     <main>
+      <style>
+        .tabs-1 vscode-tab-header {
+          max-width: 200px;
+        }
+      </style>
       <div class="story">
         <h2 class="story-title">Basic example</h2>
         <div class="story-content">
           <component-preview>
-            <vscode-tabs selected-index="1">
+            <vscode-tabs selected-index="1" class="tabs-1">
               <!-- display:block -->
-              <vscode-tab-header slot="header">Lorem</vscode-tab-header>
+              <vscode-tab-header slot="header">Lorem Loooooooooooooooooooooooooooooooooooooong text</vscode-tab-header>
               <vscode-tab-panel>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
@@ -50,7 +55,7 @@
               </vscode-tab-panel>
               <!-- display:block -->
               <vscode-tab-header slot="header">
-                Ipsum<vscode-badge variant="counter" slot="content-after"
+                Ipsum loooooooooooooooooooooooooooooooooooooong text<vscode-badge variant="counter" slot="content-after"
                   >2</vscode-badge
                 >
               </vscode-tab-header>

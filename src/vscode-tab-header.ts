@@ -73,6 +73,8 @@ export class VscodeTabHeader extends VscElement {
           color: var(--vscode-foreground);
           display: flex;
           min-height: 20px;
+          overflow: inherit;
+          text-overflow: inherit;
           position: relative;
         }
 
@@ -91,6 +93,11 @@ export class VscodeTabHeader extends VscElement {
           height: 31px;
           padding: 2px 10px;
           text-transform: uppercase;
+        }
+
+        .main {
+          overflow: inherit;
+          text-overflow: inherit;
         }
 
         .active-indicator {
