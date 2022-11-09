@@ -21,7 +21,14 @@ export class VscodeRadio extends FormButtonWidgetBase {
   }
 
   @property()
-  label = '';
+  set label(val: string) {
+    this._label = val;
+    this.setAttribute('aria-label', val);
+  }
+
+  get label(): string {
+    return this._label;
+  }
 
   /**
    * Name which is used as a variable name in the data of the form-container.
@@ -35,11 +42,33 @@ export class VscodeRadio extends FormButtonWidgetBase {
   @property({type: Boolean})
   disabled = false;
 
+  @property({reflect: true})
+  role = 'radio';
+
+  private _label = '';
+
   @state()
   private _checked = false;
 
   @state()
   private isSlotEmpty = true;
+
+  private _dispatchCustomEvent() {
+    this.dispatchEvent(
+      new CustomEvent<{checked: boolean; label: string; value: string}>(
+        'vsc-change',
+        {
+          detail: {
+            checked: this.checked,
+            label: this.label,
+            value: this.value,
+          },
+          bubbles: true,
+          composed: true,
+        }
+      )
+    );
+  }
 
   private _checkButton() {
     const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
@@ -67,24 +96,15 @@ export class VscodeRadio extends FormButtonWidgetBase {
     }
 
     this._checkButton();
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {
-          checked: this.checked,
-          label: this.label,
-          value: this.value,
-        },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this._dispatchCustomEvent();
   }
 
   protected _handleKeyDown(event: KeyboardEvent): void {
     if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
       this._checked = true;
       this.setAttribute('aria-checked', 'true');
+      this._dispatchCustomEvent();
     }
   }
 
