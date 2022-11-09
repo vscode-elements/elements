@@ -1,5 +1,5 @@
 import {CSSResultGroup, css, html, TemplateResult} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from './includes/VscElement';
 
@@ -25,6 +25,13 @@ export class VscodeTextfield extends VscElement {
 
   @property({type: Boolean, reflect: true})
   invalid = false;
+
+  /**
+   * Set `aria-label` for the inner input element. Should not be set,
+   * vscode-label will do it automatically.
+   */
+  @property({attribute: false})
+  label = '';
 
   @property()
   max = undefined;
@@ -78,19 +85,10 @@ export class VscodeTextfield extends VscElement {
   @property()
   value = '';
 
-  attributeChangedCallback(name: string, old: string, value: string): void {
-    super.attributeChangedCallback(name, old, value);
-
-    if (name === 'id') {
-      this._setLabelText();
-    }
-  }
-
   connectedCallback(): void {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      this._setLabelText();
       this._validate();
     });
   }
@@ -107,24 +105,8 @@ export class VscodeTextfield extends VscElement {
   @query('#input')
   private _inputEl!: HTMLInputElement;
 
-  @state()
-  private _labelText = '';
-
   private _validate() {
     this.invalid = !this._inputEl.checkValidity();
-  }
-
-  private _setLabelText() {
-    const id = this.getAttribute('id');
-
-    if (id) {
-      const root = this.getRootNode({composed: true}) as Document;
-      const labelEl = root.querySelector(`[for=${id}]`);
-
-      if (labelEl) {
-        this._labelText = labelEl.textContent || '';
-      }
-    }
   }
 
   private _onInvalid(ev: Event) {
@@ -237,7 +219,7 @@ export class VscodeTextfield extends VscElement {
         id="input"
         type=${this.type}
         autocomplete=${ifDefined(this.autocomplete)}
-        aria-label=${this._labelText}
+        aria-label=${this.label}
         ?disabled=${this.disabled}
         max=${ifDefined(this.max)}
         maxlength=${ifDefined(this.maxlength)}

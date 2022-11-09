@@ -6,7 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Form Demo</title>
     <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-    <link rel="stylesheet" href="../node_modules/vscode-codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
+    <link
+      rel="stylesheet"
+      href="../node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
     <script type="module" src="../dev-assets/component-preview.js"></script>
     <script type="module" src="../dist/vscode-tabs.js"></script>
     <script type="module" src="../dist/vscode-form-container.js"></script>
@@ -21,6 +25,7 @@
     <script type="module" src="../dist/vscode-form-helper.js"></script>
     <script type="module" src="../dist/vscode-inputbox.js"></script>
     <script type="module" src="../dist/vscode-label.js"></script>
+    <script type="module" src="../dist/vscode-textarea.js"></script>
     <script type="module" src="../dist/vscode-textfield.js"></script>
     <style>
       .form-label b {
@@ -39,14 +44,22 @@
       <div class="story-content">
         <component-preview>
           <vscode-form-container responsive id="responsive-form">
-
             <vscode-form-group>
-              <vscode-label for="inputbox-01">
+              <vscode-label for="textfield-01">
                 Lorem <span class="normal">ipsum</span>:
               </vscode-label>
-              <vscode-textfield id="inputbox-01" name="input-1" placeholder="Placeholder example"></vscode-textfield>
+              <vscode-textfield
+                id="textfield-01"
+                name="input-1"
+                placeholder="Placeholder example"
+              ></vscode-textfield>
               <vscode-form-helper>
-                <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
+                <p>
+                  Lorem ipsum <code>let dolor = sit amet</code>, consectetur
+                  adipiscing elit.
+                  <span class="error">Suspendisse</span> faucibus imperdiet
+                  sapien, a gravida <a href="#">dolor</a>.
+                </p>
                 <ul>
                   <li>Lorem</li>
                   <li>Ipsum</li>
@@ -56,10 +69,13 @@
             </vscode-form-group>
 
             <vscode-form-group>
-              <vscode-label for="inputbox-02">
-                Dolor sit:
-              </vscode-label>
-              <vscode-inputbox id="inputbox-02" multiline name="input-2"></vscode-inputbox>
+              <vscode-label for="textarea-02"> Dolor sit: </vscode-label>
+              <vscode-textarea
+                id="textarea-02"
+                name="input-2"
+                placeholder="textarea"
+                maxlength="5000"
+              ></vscode-textarea>
             </vscode-form-group>
 
             <vscode-form-group>
@@ -89,9 +105,25 @@
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-checkbox-group>
-                <vscode-checkbox id="checkbox-01" name="checkbox-group-1" value="lorem" label="Lorem ipsum"></vscode-checkbox>
-                <vscode-checkbox id="checkbox-02" name="checkbox-group-1" value="ipsum" label="Donec mi risus"></vscode-checkbox>
-                <vscode-checkbox id="checkbox-03" name="checkbox-group-1" value="dolor">Duis <a href="#">ullamcorper</a></vscode-checkbox>
+                <vscode-checkbox
+                  id="checkbox-01"
+                  name="checkbox-group-1"
+                  value="lorem"
+                  label="Lorem ipsum"
+                ></vscode-checkbox>
+                <vscode-checkbox
+                  id="checkbox-02"
+                  name="checkbox-group-1"
+                  value="ipsum"
+                  label="Donec mi risus"
+                >
+                </vscode-checkbox>
+                <vscode-checkbox
+                  id="checkbox-03"
+                  name="checkbox-group-1"
+                  value="dolor"
+                  >Duis <b>ullamcorper</b>
+                </vscode-checkbox>
               </vscode-checkbox-group>
             </vscode-form-group>
 
@@ -100,31 +132,67 @@
                 Phasellus quam arcu:
               </vscode-label>
               <vscode-checkbox-group variant="vertical">
-                <vscode-checkbox id="checkbox-04" name="checkbox-group-2" value="sit">Lorem ipsum</vscode-checkbox>
-                <vscode-checkbox id="checkbox-05" name="checkbox-group-2" value="et">Donec mi risus</vscode-checkbox>
-                <vscode-checkbox id="checkbox-06" name="checkbox-group-2" value="amur">Nullam tincidunt eros sit amet sollicitudin pharetra. Ut quis rutrum enim, non finibus odio. Morbi tempus lacus neque, eget rutrum sapien porttitor vitae. Vivamus placerat nisl eu turpis tristique, eu consectetur libero finibus. Duis vitae orci at risus ultrices gravida. Ut vitae nulla velit. Mauris sed enim eleifend, euismod tortor vitae, vehicula odio.</vscode-checkbox>
+                <vscode-checkbox
+                  id="checkbox-04"
+                  name="checkbox-group-2"
+                  value="sit"
+                  >Lorem ipsum</vscode-checkbox
+                >
+                <vscode-checkbox
+                  id="checkbox-05"
+                  name="checkbox-group-2"
+                  value="et"
+                  >Donec mi risus</vscode-checkbox
+                >
+                <vscode-checkbox
+                  id="checkbox-06"
+                  name="checkbox-group-2"
+                  value="amur"
+                  >Nullam tincidunt eros sit amet sollicitudin pharetra. Ut quis
+                  rutrum enim, non finibus odio. Morbi tempus lacus neque, eget
+                  rutrum sapien porttitor vitae. Vivamus placerat nisl eu turpis
+                  tristique, eu consectetur libero finibus. Duis vitae orci at
+                  risus ultrices gravida. Ut vitae nulla velit. Mauris sed enim
+                  eleifend, euismod tortor vitae, vehicula
+                  odio.</vscode-checkbox
+                >
               </vscode-checkbox-group>
             </vscode-form-group>
 
             <vscode-form-group>
-              <vscode-label for="radio-01">
-                Phasellus quam arcu:
-              </vscode-label>
+              <vscode-label for="radio-01"> Phasellus quam arcu: </vscode-label>
               <vscode-radio-group>
-                <vscode-radio id="radio-01" name="radio-group-1" value="lorem">Lorem ipsum</vscode-radio>
-                <vscode-radio id="radio-02" name="radio-group-1" value="ipsum">Donec mi risus</vscode-radio>
-                <vscode-radio id="radio-03" name="radio-group-1" value="dolor">Duis <a href="#">ullamcorper</a></vscode-radio>
+                <vscode-radio
+                  id="radio-01"
+                  name="radio-group-1"
+                  value="lorem"
+                  label="Lorem ipsum"
+                ></vscode-radio>
+                <vscode-radio
+                  id="radio-02"
+                  name="radio-group-1"
+                  value="ipsum"
+                  label="Donec mi risus"
+                >
+                </vscode-radio>
+                <vscode-radio id="radio-03" name="radio-group-1" value="dolor"
+                  >Duis <a href="#">ullamcorper</a>
+                </vscode-radio>
               </vscode-radio-group>
             </vscode-form-group>
 
             <vscode-form-group>
-              <vscode-label for="radio-04">
-                Phasellus quam arcu:
-              </vscode-label>
+              <vscode-label for="radio-04"> Phasellus quam arcu: </vscode-label>
               <vscode-radio-group variant="vertical">
-                <vscode-radio id="radio-04" name="radio-group-2" value="sit">Lorem ipsum</vscode-radio>
-                <vscode-radio id="radio-05" name="radio-group-2" value="et">Donec mi risus</vscode-radio>
-                <vscode-radio id="radio-06" name="radio-group-2" value="amur">Duis ullamcorper</vscode-radio>
+                <vscode-radio id="radio-04" name="radio-group-2" value="sit"
+                  >Lorem ipsum</vscode-radio
+                >
+                <vscode-radio id="radio-05" name="radio-group-2" value="et"
+                  >Donec mi risus</vscode-radio
+                >
+                <vscode-radio id="radio-06" name="radio-group-2" value="amur"
+                  >Duis ullamcorper</vscode-radio
+                >
               </vscode-radio-group>
             </vscode-form-group>
 
@@ -132,7 +200,6 @@
               <vscode-button id="save-button">Save</vscode-button>
               <vscode-button secondary>Cancel</vscode-button>
             </vscode-form-group>
-
           </vscode-form-container>
         </component-preview>
         <button class="form-data-button">Show form data</button>
@@ -142,8 +209,27 @@
           const button = document.querySelector('.form-data-button');
 
           button.addEventListener('click', () => {
-            log.innerHTML = JSON.stringify(document.querySelector('#responsive-form').data, null, 2);
+            log.innerHTML = JSON.stringify(
+              document.querySelector('#responsive-form').data,
+              null,
+              2
+            );
           });
+
+          const form = document.getElementById('responsive-form');
+          const group = document.createElement('vscode-form-group');
+
+          form.appendChild(group);
+          const label = document.createElement('vscode-label');
+          label.htmlFor = 'appended-input';
+          label.innerHTML = 'Appended item';
+
+          group.appendChild(label);
+
+          const input = document.createElement('vscode-textfield');
+          input.id = 'appended-input';
+
+          group.appendChild(input);
         </script>
       </div>
     </div>
@@ -260,30 +346,62 @@
           </style>
           <vscode-form-container>
             <div class="log-settings-row">
-              <vscode-label for="select-container" class="label">Container:</vscode-label>
-              <vscode-single-select id="select-container" class="select select-container">
+              <vscode-label for="select-container" class="label"
+                >Container:</vscode-label
+              >
+              <vscode-single-select
+                id="select-container"
+                class="select select-container"
+              >
                 <vscode-option>nginx-container</vscode-option>
                 <vscode-option>redis-container</vscode-option>
               </vscode-single-select>
 
-              <vscode-label for="checkbox-follow-logs" class="label">Follow Logs:</vscode-label>
-              <vscode-checkbox label="" id="checkbox-follow-logs" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-follow-logs" class="label"
+                >Follow Logs:</vscode-label
+              >
+              <vscode-checkbox
+                label=""
+                id="checkbox-follow-logs"
+                class="checkbox"
+              ></vscode-checkbox>
 
-              <vscode-label for="checkbox-show-timestamp" class="label">Show timestamp:</vscode-label>
-              <vscode-checkbox label="" id="checkbox-show-timestamp" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-show-timestamp" class="label"
+                >Show timestamp:</vscode-label
+              >
+              <vscode-checkbox
+                label=""
+                id="checkbox-show-timestamp"
+                class="checkbox"
+              ></vscode-checkbox>
 
-              <vscode-label for="input-since" class="label">Since:</vscode-label>
-              <vscode-textfield value="0" id="input-since" class="input input-since"></vscode-textfield>
+              <vscode-label for="input-since" class="label"
+                >Since:</vscode-label
+              >
+              <vscode-textfield
+                value="0"
+                id="input-since"
+                class="input input-since"
+              ></vscode-textfield>
               <vscode-single-select class="select select-since">
                 <vscode-option>minutes</vscode-option>
                 <vscode-option>hours</vscode-option>
               </vscode-single-select>
 
               <vscode-label for="input-tail" class="label">Tail:</vscode-label>
-              <vscode-textfield value="-1" id="input-tail" class="input input-tail"></vscode-textfield>
+              <vscode-textfield
+                value="-1"
+                id="input-tail"
+                class="input input-tail"
+              ></vscode-textfield>
 
-              <vscode-label for="checkbox-to-terminal" class="label">To terminal:</vscode-label>
-              <vscode-checkbox id="checkbox-to-terminal" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-to-terminal" class="label"
+                >To terminal:</vscode-label
+              >
+              <vscode-checkbox
+                id="checkbox-to-terminal"
+                class="checkbox"
+              ></vscode-checkbox>
 
               <div>
                 <vscode-button class="button-run">Run</vscode-button>
@@ -291,16 +409,31 @@
               </div>
             </div>
             <div class="log-settings-row">
-              <vscode-label for="select-filter" class="label">Filter:</vscode-label>
-              <vscode-single-select id="select-filter" class="select select-filter">
+              <vscode-label for="select-filter" class="label"
+                >Filter:</vscode-label
+              >
+              <vscode-single-select
+                id="select-filter"
+                class="select select-filter"
+              >
                 <vscode-option>all</vscode-option>
               </vscode-single-select>
-              <vscode-textfield placeholder="Enter your keywords" class="input input-keywords"></vscode-textfield>
+              <vscode-textfield
+                placeholder="Enter your keywords"
+                class="input input-keywords"
+              ></vscode-textfield>
 
-              <vscode-label for="checkbox-wrap-lines" class="label">Wrap lines:</vscode-label>
-              <vscode-checkbox id="checkbox-wrap-lines" class="checkbox"></vscode-checkbox>
+              <vscode-label for="checkbox-wrap-lines" class="label"
+                >Wrap lines:</vscode-label
+              >
+              <vscode-checkbox
+                id="checkbox-wrap-lines"
+                class="checkbox"
+              ></vscode-checkbox>
 
-              <vscode-button class="button-scroll">Scroll To Bottom</vscode-button>
+              <vscode-button class="button-scroll"
+                >Scroll To Bottom</vscode-button
+              >
             </div>
           </vscode-form-container>
         </component-preview>
@@ -312,26 +445,53 @@
         <component-preview>
           <vscode-form-container>
             <vscode-form-group variant="settings-group">
-              <vscode-label><span class="lightened">Editor:</span> Font Size</vscode-label>
+              <vscode-label
+                ><span class="lightened">Editor:</span> Font Size</vscode-label
+              >
               <vscode-form-helper>
                 <p>Controls the font size in pixels.</p>
               </vscode-form-helper>
-              <vscode-inputbox size-variant="narrow" value="14"></vscode-inputbox>
+              <vscode-inputbox
+                size-variant="narrow"
+                value="14"
+              ></vscode-inputbox>
             </vscode-form-group>
             <vscode-form-group variant="settings-group">
-              <vscode-label><span class="lightened">Editor:</span> Font Family</vscode-label>
+              <vscode-label
+                ><span class="lightened">Editor:</span> Font
+                Family</vscode-label
+              >
               <vscode-form-helper>
                 <p>Controls the font family.</p>
               </vscode-form-helper>
-              <vscode-inputbox size-variant="wide" value="'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"></vscode-inputbox>
+              <vscode-inputbox
+                size-variant="wide"
+                value="'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"
+              ></vscode-inputbox>
             </vscode-form-group>
             <vscode-form-group variant="settings-group">
-              <vscode-label><span class="lightened">Editor:</span> Insert Spaces</vscode-label>
-              <vscode-checkbox><p>Insert spaces when pressing <code>Tab</code>. This setting is overridden based on the file contents when <a href="#" title="#editor.detectIndentation">Editor: Detect Indentation</a> is on.</p></vscode-checkbox>
+              <vscode-label
+                ><span class="lightened">Editor:</span> Insert
+                Spaces</vscode-label
+              >
+              <vscode-checkbox>
+                <p>
+                  Insert spaces when pressing <code>Tab</code>. This setting is
+                  overridden based on the file contents when
+                  <a href="#" title="#editor.detectIndentation"
+                    >Editor: Detect Indentation</a
+                  >
+                  is on.
+                </p>
+              </vscode-checkbox>
             </vscode-form-group>
             <vscode-form-group variant="settings-group">
-              <vscode-label><span class="lightened">Editor:</span> Word Wrap</vscode-label>
-              <vscode-form-helper><p>Controls how lines should wrap.</p></vscode-form-helper>
+              <vscode-label
+                ><span class="lightened">Editor:</span> Word Wrap</vscode-label
+              >
+              <vscode-form-helper>
+                <p>Controls how lines should wrap.</p>
+              </vscode-form-helper>
               <vscode-single-select>
                 <vscode-option>on</vscode-option>
                 <vscode-option>off</vscode-option>
@@ -340,22 +500,66 @@
             <vscode-form-group variant="settings-group">
               <vscode-label>Title</vscode-label>
               <vscode-form-helper>
-                <p>Controls the window title based on the active editor. Variables are substituted based on the context:</p>
+                <p>
+                  Controls the window title based on the active editor.
+                  Variables are substituted based on the context:
+                </p>
                 <ul>
-                  <li><code>${activeEditorShort}</code>: the file name (e.g. myFile.txt).</li>
-                  <li><code>${activeEditorMedium}</code>: the path of the file relative to the workspace folder (e.g. myFolder/myFileFolder/myFile.txt).</li>
-                  <li><code>${activeEditorLong}</code>: the full path of the file (e.g. /Users/Development/myFolder/myFileFolder/myFile.txt).</li>
-                  <li><code>${activeFolderShort}</code>: the name of the folder the file is contained in (e.g. myFileFolder).</li>
-                  <li><code>${activeFolderMedium}</code>: the path of the folder the file is contained in, relative to the workspace folder (e.g. myFolder/myFileFolder).</li>
-                  <li><code>${activeFolderLong}</code>: the full path of the folder the file is contained in (e.g. /Users/Development/myFolder/myFileFolder).</li>
-                  <li><code>${folderName}</code>: name of the workspace folder the file is contained in (e.g. myFolder).</li>
-                  <li><code>${folderPath}</code>: file path of the workspace folder the file is contained in (e.g. /Users/Development/myFolder).</li>
-                  <li><code>${rootName}</code>: name of the opened workspace or folder (e.g. myFolder or myWorkspace).</li>
-                  <li><code>${rootPath}</code>: file path of the opened workspace or folder (e.g. /Users/Development/myWorkspace).</li>
+                  <li>
+                    <code>${activeEditorShort}</code>: the file name (e.g.
+                    myFile.txt).
+                  </li>
+                  <li>
+                    <code>${activeEditorMedium}</code>: the path of the file
+                    relative to the workspace folder (e.g.
+                    myFolder/myFileFolder/myFile.txt).
+                  </li>
+                  <li>
+                    <code>${activeEditorLong}</code>: the full path of the file
+                    (e.g. /Users/Development/myFolder/myFileFolder/myFile.txt).
+                  </li>
+                  <li>
+                    <code>${activeFolderShort}</code>: the name of the folder
+                    the file is contained in (e.g. myFileFolder).
+                  </li>
+                  <li>
+                    <code>${activeFolderMedium}</code>: the path of the folder
+                    the file is contained in, relative to the workspace folder
+                    (e.g. myFolder/myFileFolder).
+                  </li>
+                  <li>
+                    <code>${activeFolderLong}</code>: the full path of the
+                    folder the file is contained in (e.g.
+                    /Users/Development/myFolder/myFileFolder).
+                  </li>
+                  <li>
+                    <code>${folderName}</code>: name of the workspace folder the
+                    file is contained in (e.g. myFolder).
+                  </li>
+                  <li>
+                    <code>${folderPath}</code>: file path of the workspace
+                    folder the file is contained in (e.g.
+                    /Users/Development/myFolder).
+                  </li>
+                  <li>
+                    <code>${rootName}</code>: name of the opened workspace or
+                    folder (e.g. myFolder or myWorkspace).
+                  </li>
+                  <li>
+                    <code>${rootPath}</code>: file path of the opened workspace
+                    or folder (e.g. /Users/Development/myWorkspace).
+                  </li>
                   <li><code>${appName}</code>: e.g. VS Code.</li>
                   <li><code>${remoteName}</code>: e.g. SSH</li>
-                  <li><code>${dirty}</code>: a dirty indicator if the active editor is dirty.</li>
-                  <li><code>${separator}</code>: a conditional separator (" - ") that only shows when surrounded by variables with values or static text.</li>
+                  <li>
+                    <code>${dirty}</code>: a dirty indicator if the active
+                    editor is dirty.
+                  </li>
+                  <li>
+                    <code>${separator}</code>: a conditional separator (" - ")
+                    that only shows when surrounded by variables with values or
+                    static text.
+                  </li>
                 </ul>
               </vscode-form-helper>
               <vscode-inputbox class="wide"></vscode-inputbox>
@@ -369,13 +573,43 @@
       <div class="story-content">
         <form action="#">
           <label for="tf-1">Textfield 1</label>
-          <input type="text" placeholder="Textfield 1">
-          <input type="radio" name="radio-example" id="rb-1" value="op1"><label for="rb-1">option 1</label><br>
-          <input type="radio" name="radio-example" id="rb-2" value="op2"><label for="rb-2">option 2</label><br>
-          <input type="radio" name="radio-example" id="rb-3" value="op3"><label for="rb-3">option 3</label><br>
-          <input type="checkbox" name="checkbox-example" id="cb-1" value="op1"><label for="cb-1">option 1</label><br>
-          <input type="checkbox" name="checkbox-example" id="cb-2" value="op2"><label for="cb-2">option 2</label><br>
-          <input type="checkbox" name="checkbox-example" id="cb-3" value="op3"><label for="cb-3">option 3</label><br>
+          <input type="text" placeholder="Textfield 1" />
+          <input
+            type="radio"
+            name="radio-example"
+            id="rb-1"
+            value="op1"
+          /><label for="rb-1">option 1</label><br />
+          <input
+            type="radio"
+            name="radio-example"
+            id="rb-2"
+            value="op2"
+          /><label for="rb-2">option 2</label><br />
+          <input
+            type="radio"
+            name="radio-example"
+            id="rb-3"
+            value="op3"
+          /><label for="rb-3">option 3</label><br />
+          <input
+            type="checkbox"
+            name="checkbox-example"
+            id="cb-1"
+            value="op1"
+          /><label for="cb-1">option 1</label><br />
+          <input
+            type="checkbox"
+            name="checkbox-example"
+            id="cb-2"
+            value="op2"
+          /><label for="cb-2">option 2</label><br />
+          <input
+            type="checkbox"
+            name="checkbox-example"
+            id="cb-3"
+            value="op3"
+          /><label for="cb-3">option 3</label><br />
         </form>
       </div>
     </div>

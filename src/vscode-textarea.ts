@@ -1,5 +1,6 @@
 import {CSSResultGroup, css, html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
@@ -17,6 +18,9 @@ export class VscodeTextarea extends VscElement {
 
   @property({type: Boolean, reflect: true})
   disabled = false;
+
+  @property({attribute: false})
+  label = '';
 
   @property()
   maxlength = undefined;
@@ -42,11 +46,22 @@ export class VscodeTextarea extends VscElement {
   @property()
   spellcheck = false;
 
-  @property({type: Boolean, reflect: true, attribute: 'use-monospace-fonts'})
-  useMonospaceFonts = false;
+  @property({type: Boolean, reflect: true})
+  monospace = false;
 
   @property()
   value = '';
+
+  get wrappedElement(): HTMLTextAreaElement {
+    return this._textareaEl;
+  }
+
+  focus() {
+    this._textareaEl.focus();
+  }
+
+  @query('#textarea')
+  private _textareaEl!: HTMLTextAreaElement;
 
   static get styles(): CSSResultGroup {
     return [
@@ -63,6 +78,7 @@ export class VscodeTextarea extends VscElement {
           border-radius: 2px;
           border-style: solid;
           border-width: 1px;
+          box-sizing: border-box;
           display: block;
           font-family: var(
             --vscode-font-family,
@@ -71,6 +87,13 @@ export class VscodeTextarea extends VscElement {
           font-size: var(--vscode-font-size, 13px);
           font-weight: var(--vscode-font-weight, normal);
           width: 100%;
+        }
+
+        textarea.monospace {
+          color: var(--vscode-editor-foreground);
+          font-family: var(--vscode-editor-font-family);
+          font-size: var(--vscode-editor-font-size);
+          font-weight: var(--vscode-editor-font-weight);
         }
 
         textarea:focus {
@@ -110,14 +133,24 @@ export class VscodeTextarea extends VscElement {
   render(): TemplateResult {
     return html`
       <textarea
+        autocomplete=${this.autocomplete}
+        ?disabled=${this.disabled}
+        aria-label=${this.label}
+        id="textarea"
         class=${classMap({
-          monospace: this.useMonospaceFonts,
+          monospace: this.monospace,
         })}
+        maxlength=${ifDefined(this.maxlength)}
+        minlength=${ifDefined(this.minlength)}
+        name=${ifDefined(this.name)}
+        placeholder=${ifDefined(this.placeholder)}
+        ?readonly=${this.readonly}
         style=${styleMap({
           resize: this.resize,
         })}
-      >
-${this.value}</textarea
+        ?required=${this.required}
+        ?spellcheck=${this.spellcheck}
+      >${this.value}</textarea
       >
     `;
   }
