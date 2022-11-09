@@ -1,9 +1,8 @@
-import {html, TemplateResult, CSSResultGroup} from 'lit';
+import {html, TemplateResult, CSSResultGroup, css, nothing} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
 import baseStyles from './includes/form-button-widget/base.styles';
-import radioStyles from './includes/form-button-widget/radio.styles';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 
 /**
@@ -23,7 +22,10 @@ export class VscodeRadio extends FormButtonWidgetBase {
   @property()
   set label(val: string) {
     this._label = val;
-    this.setAttribute('aria-label', val);
+
+    if (this._slottedText === '') {
+      this.setAttribute('aria-label', val);
+    }
   }
 
   get label(): string {
@@ -51,7 +53,7 @@ export class VscodeRadio extends FormButtonWidgetBase {
   private _checked = false;
 
   @state()
-  private isSlotEmpty = true;
+  private _slottedText = '';
 
   private _dispatchCustomEvent() {
     this.dispatchEvent(
@@ -109,23 +111,57 @@ export class VscodeRadio extends FormButtonWidgetBase {
   }
 
   private _handleSlotChange() {
-    this.isSlotEmpty = this.innerHTML === '';
+    this._slottedText = this.textContent ? this.textContent.trim() : '';
+
+    if (this._slottedText !== '') {
+      this.setAttribute('aria-label', this._slottedText);
+    }
   }
 
   static get styles(): CSSResultGroup[] {
-    return [super.styles, baseStyles, radioStyles, formHelperTextStyles];
+    return [
+      super.styles,
+      baseStyles,
+      css`
+        .icon {
+          border-radius: 9px;
+        }
+
+        .icon.checked:before {
+          background-color: currentColor;
+          border-radius: 4px;
+          content: '';
+          height: 8px;
+          left: 50%;
+          margin: -4px 0 0 -4px;
+          position: absolute;
+          top: 50%;
+          width: 8px;
+        }
+
+        :host(:focus):host(:not([disabled])) .icon {
+          outline: 1px solid var(--vscode-focusBorder);
+          outline-offset: -1px;
+        }
+      `,
+      formHelperTextStyles,
+    ];
+  }
+
+  private _renderLabelAttribute() {
+    return this._slottedText === ''
+      ? html`<span class="label-attr">${this._label}</span>`
+      : html`${nothing}`;
   }
 
   render(): TemplateResult {
-    const isLabelEmpty = !this.label && this.isSlotEmpty;
     const iconClasses = classMap({
       icon: true,
       checked: this._checked,
-      'before-empty-label': isLabelEmpty,
     });
     const labelInnerClasses = classMap({
       'label-inner': true,
-      empty: isLabelEmpty,
+      'is-slot-empty': this._slottedText === '',
     });
 
     return html`
@@ -141,7 +177,8 @@ export class VscodeRadio extends FormButtonWidgetBase {
         <div class="${iconClasses}"></div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
           <span class="${labelInnerClasses}">
-            <slot @slotchange="${this._handleSlotChange}">${this.label}</slot>
+            ${this._renderLabelAttribute()}
+            <slot @slotchange="${this._handleSlotChange}"></slot>
           </span>
         </label>
       </div>

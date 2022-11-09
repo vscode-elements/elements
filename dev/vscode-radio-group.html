@@ -6,6 +6,7 @@
     <title>&lt;vscode-radio-group&gt; Demo</title>
     <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
     <script type="module" src="../dev-assets/component-preview.js"></script>
+    <script type="module" src="../dist/vscode-label.js"></script>
     <script type="module" src="../dist/vscode-radio-group.js"></script>
     <script type="module" src="../dist/vscode-radio.js"></script>
   </head>
@@ -16,8 +17,8 @@
         <h2 class="story-title">Basic example</h2>
         <div class="story-content">
           <component-preview>
-            <vscode-label for="group-1" id="label-1">First group</vscode-label>
-            <vscode-radio-group id="group-1" aria-labelledby="label-1">
+            <vscode-label for="group-1">First group</vscode-label>
+            <vscode-radio-group id="group-1">
               <vscode-radio label="Lorem" name="horizontal-example"
                 ><b>L</b>orem</vscode-radio
               >
@@ -37,8 +38,8 @@
         <h2 class="story-title">Vertical example</h2>
         <div class="story-content">
           <component-preview>
-            <vscode-label for="group-2" id="label-2">Second group</vscode-label>
-            <vscode-radio-group variant="vertical" id="group-2" aria-labelledby="group-2">
+            <vscode-label for="group-2" id="manual-label-id">Second group</vscode-label>
+            <vscode-radio-group variant="vertical" id="group-2">
               <vscode-radio
                 name="vertical-example"
                 label="Lorem"
