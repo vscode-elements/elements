@@ -5497,7 +5497,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Set `aria-label` for the inner input element. Should not be set,\nvscode-label will do it automatically."
+              "description": "Set `aria-label` for the inner input element. Should not be set,\r\nvscode-label will do it automatically."
             },
             {
               "kind": "field",
@@ -5580,7 +5580,7 @@
               "kind": "field",
               "name": "type",
               "type": {
-                "text": "| 'color'\n    | 'date'\n    | 'datetime-local'\n    | 'email'\n    | 'month'\n    | 'number'\n    | 'password'\n    | 'search'\n    | 'tel'\n    | 'text'\n    | 'time'\n    | 'url'\n    | 'week'"
+                "text": "| 'color'\r\n    | 'date'\r\n    | 'datetime-local'\r\n    | 'email'\r\n    | 'month'\r\n    | 'number'\r\n    | 'password'\r\n    | 'search'\r\n    | 'tel'\r\n    | 'text'\r\n    | 'time'\r\n    | 'url'\r\n    | 'week'"
               },
               "default": "'text'",
               "attribute": "type"
@@ -5826,7 +5826,7 @@
             {
               "name": "type",
               "type": {
-                "text": "| 'color'\n    | 'date'\n    | 'datetime-local'\n    | 'email'\n    | 'month'\n    | 'number'\n    | 'password'\n    | 'search'\n    | 'tel'\n    | 'text'\n    | 'time'\n    | 'url'\n    | 'week'"
+                "text": "| 'color'\r\n    | 'date'\r\n    | 'datetime-local'\r\n    | 'email'\r\n    | 'month'\r\n    | 'number'\r\n    | 'password'\r\n    | 'search'\r\n    | 'tel'\r\n    | 'text'\r\n    | 'time'\r\n    | 'url'\r\n    | 'week'"
               },
               "default": "'text'",
               "fieldName": "type"
