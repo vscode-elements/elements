@@ -4,20 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Unreleased
+## [0.8.0] - 2022-11-10
 
 ### Breaking changes
 
 - Attribute names have been standardized. From now every attribute name uses the kebab-case format.
-- `selectedIndex` attribute renamed to `selected-index` in the Tabs component.
-- `iconAfter` attribute renamed to `icon-after` in the Button component.
+- `selectedIndex` attribute was renamed to `selected-index` in the Tabs component.
+- `iconAfter` attribute was renamed to `icon-after` in the Button component.
 - `selectedIndexes` attribute is removed from the MultiSelect component. It still accessible as a property.
-- `scrollPos` attribute renamed to `scroll-pos` in the Scrollable component.
-- `scrollMax` attribute renamed to `scroll-max` in the Scrollable component.
-- `selectedIndex` attribute renamed to `selected-index` in the SingleSelect component.
-- `resetOnDblClick` attribute renamed to `reset-on-dbl-click` in the SplitLayout component.
-- `columnLabel` attribute renamed to `column-label` in the TableCell component.
-- The Tabs component markup has been changed. See the documentation page for the examples.
+- `scrollPos` attribute was renamed to `scroll-pos` in the Scrollable component.
+- `scrollMax` attribute was renamed to `scroll-max` in the Scrollable component.
+- `selectedIndex` attribute was renamed to `selected-index` in the SingleSelect component.
+- `resetOnDblClick` attribute was renamed to `reset-on-dbl-click` in the SplitLayout component.
+- `columnLabel` attribute was renamed to `column-label` in the TableCell component.
+- The Tabs component markup has been changed. See the documentation page for examples.
 
 ### Deprecated
 
@@ -36,10 +36,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Icon component accessibility improvements.
 - Tabs component is fully accessible.
 - Radio and Checkbox are accessible.
-- TabHeader and TabPanel added to interoperate with Tabs.
+- TabHeader and TabPanel were added to interoperate with Tabs.
 - `addons` slot has been added to the Tabs toolbar.
 - `content-before` and `content-after` slots have been added to the tab headers.
-- Label automatically sets the label for radios, checkboxes and text inputs.
+- Label automatically sets the label for radios, checkboxes, and text inputs.
 
 ### Fixed
 
