@@ -47,6 +47,15 @@ body > .content-wrapper {
   padding: 0 20px;
 }
 
+.page > p code {
+  background-color: #ddd;
+  display: inline-block;
+  font-size: 16px;
+  font-family: Consolas, "Courier New", monospace;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
 .buttons-wrapper {
   display: flex;
   margin: 20px 0;
@@ -302,6 +311,11 @@ body > .content-wrapper {
 }
 
 .sub-nav {
+  align-items: center;
+  display: flex;
+}
+
+.sub-nav > ul{
   display: flex;
   font-size: 16px;
   line-height: 1.2;
@@ -309,14 +323,14 @@ body > .content-wrapper {
   padding: 0;
 }
 
-.sub-nav li {
+.sub-nav > ul li {
   display: block;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.sub-nav li a {
+.sub-nav > ul li a {
   color: var(--color-vscode-blue);
   display: block;
   line-height: 1.3;
@@ -324,9 +338,38 @@ body > .content-wrapper {
   text-decoration: none;
 }
 
-.sub-nav li a.current {
+.sub-nav > ul li a.current {
   background-color: var(--color-vscode-blue);
   color: var(--color-light-gray);
+}
+
+.a11y-status {
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+}
+
+.status-icon {
+  margin: 0 4px;
+  padding: 2px 6px;
+}
+
+.status-high {
+  background-color: #238551;
+  color: #fff;
+}
+
+.status-medium {
+  background-color: #fbb360;
+}
+
+.status-low {
+  background-color: #cd4246;
+  color: #fff;
+}
+
+.status-unknown {
+  background-color: #f6f7f9;
 }
 
 .deprecated-message {
@@ -338,7 +381,7 @@ body > .content-wrapper {
 }
 
 .page pre[class*='language-'] {
-  font-size: 16px;
+  font-size: 0.875rem;
 }
 
 .page h1 {
@@ -464,7 +507,14 @@ body > .content-wrapper {
   --ave-border-radius: 0;
   --ave-header-background: var(--color-vscode-blue);
   --ave-primary-color: var(--color-vscode-blue);
+  background-color: #fafafa;
   border: 0;
-  background-color: #fff;
   margin: 20px 0;
+  max-width: 100%;
+}
+
+.api-docs::part(md-code) {
+  background-color: #ddd;
+  display: inline-block;
+  padding: 0 3px;
 }

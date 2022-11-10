@@ -123,7 +123,7 @@
               },
               "default": "''",
               "description": "A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label",
-              "attribute": "iconAfter"
+              "attribute": "icon-after"
             },
             {
               "kind": "field",
@@ -243,7 +243,7 @@
               "fieldName": "icon"
             },
             {
-              "name": "iconAfter",
+              "name": "icon-after",
               "type": {
                 "text": "string"
               },
@@ -298,6 +298,16 @@
           "members": [
             {
               "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'group'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "variant",
               "type": {
                 "text": "'horizontal' | 'vertical'"
@@ -308,6 +318,14 @@
             }
           ],
           "attributes": [
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'group'",
+              "fieldName": "role"
+            },
             {
               "name": "variant",
               "type": {
@@ -359,17 +377,17 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
               "attribute": "checked"
             },
             {
               "kind": "field",
-              "name": "label",
+              "name": "role",
               "type": {
                 "text": "string"
               },
-              "default": "''",
-              "attribute": "label"
+              "default": "'checkbox'",
+              "attribute": "role",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -391,12 +409,12 @@
             },
             {
               "kind": "field",
-              "name": "isSlotEmpty",
+              "name": "_checked",
               "type": {
                 "text": "boolean"
               },
               "privacy": "private",
-              "default": "true"
+              "default": "false"
             },
             {
               "kind": "method",
@@ -419,7 +437,7 @@
               },
               "parameters": [
                 {
-                  "name": "event",
+                  "name": "ev",
                   "type": {
                     "text": "KeyboardEvent"
                   }
@@ -427,9 +445,9 @@
               ]
             },
             {
-              "kind": "method",
-              "name": "_handleSlotChange",
-              "privacy": "private"
+              "description": "Label text. It is only applied if componnet's innerHTML doesn't contain any text.",
+              "name": "label",
+              "kind": "field"
             }
           ],
           "events": [
@@ -446,20 +464,23 @@
               "name": "name"
             },
             {
+              "description": "Attribute pair of the `label` property.",
+              "name": "label"
+            },
+            {
               "name": "checked",
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
               "fieldName": "checked"
             },
             {
-              "name": "label",
+              "name": "role",
               "type": {
                 "text": "string"
               },
-              "default": "''",
-              "fieldName": "label"
+              "default": "'checkbox'",
+              "fieldName": "role"
             },
             {
               "name": "value",
@@ -476,6 +497,12 @@
               },
               "default": "false",
               "fieldName": "disabled"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "LabelledCheckboxOrRadioMixin",
+              "module": "/src/includes/form-button-widget/LabelledCheckboxOrRadio"
             }
           ],
           "superclass": {
@@ -1383,9 +1410,19 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).\r\nIn \"action-icon\" mode it behaves like a button. In this case, it is\r\nrecommended that a meaningful label is specified with the `label` property.",
           "name": "VscodeIcon",
           "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Set a meaningful label in `action-icon` mode for the screen readers",
+              "attribute": "label"
+            },
             {
               "kind": "field",
               "name": "name",
@@ -1393,7 +1430,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html",
+              "description": "[Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) icon name.",
               "attribute": "name"
             },
             {
@@ -1432,16 +1469,29 @@
               "type": {
                 "text": "boolean"
               },
+              "default": "false",
+              "description": "Behaves like a button",
               "attribute": "action-icon"
             },
             {
               "kind": "field",
-              "name": "_actionIcon",
+              "name": "stylesheetHref",
               "type": {
-                "text": "boolean"
+                "text": "string | undefined"
               },
               "privacy": "private",
-              "default": "false"
+              "static": true,
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "nonce",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "static": true,
+              "default": "''"
             },
             {
               "kind": "method",
@@ -1451,17 +1501,32 @@
                 "type": {
                   "text": "{\r\n    href: string | undefined;\r\n    nonce: string | undefined;\r\n  }"
                 }
-              }
+              },
+              "description": "For using web fonts in web components, the font stylesheet must be included\r\ntwice: on the page and in the web component. This function looks for the\r\nfont stylesheet on the page and returns the stylesheet URL and the nonce\r\nid."
+            },
+            {
+              "kind": "field",
+              "name": "_onButtonClick",
+              "privacy": "private"
             }
           ],
           "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Set a meaningful label in `action-icon` mode for the screen readers",
+              "fieldName": "label"
+            },
             {
               "name": "name",
               "type": {
                 "text": "string"
               },
               "default": "''",
-              "description": "Codicon icon name. @see https://microsoft.github.io/vscode-codicons/dist/codicon.html",
+              "description": "[Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) icon name.",
               "fieldName": "name"
             },
             {
@@ -1496,6 +1561,8 @@
               "type": {
                 "text": "boolean"
               },
+              "default": "false",
+              "description": "Behaves like a button",
               "fieldName": "actionIcon"
             }
           ],
@@ -2063,12 +2130,57 @@
           "members": [
             {
               "kind": "field",
-              "name": "for",
+              "name": "htmlFor",
               "type": {
                 "text": "string"
               },
-              "default": "''",
-              "attribute": "for"
+              "attribute": "for",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "id",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "id"
+            },
+            {
+              "kind": "field",
+              "name": "_id",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "_htmlFor",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "_connected",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "_getTarget",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_connectWithTarget",
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -2082,8 +2194,14 @@
               "type": {
                 "text": "string"
               },
-              "default": "''",
-              "fieldName": "for"
+              "fieldName": "htmlFor"
+            },
+            {
+              "name": "id",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "id"
             }
           ],
           "superclass": {
@@ -2127,8 +2245,7 @@
               "name": "selectedIndexes",
               "type": {
                 "text": "number[]"
-              },
-              "attribute": "selectedIndexes"
+              }
             },
             {
               "kind": "field",
@@ -2239,13 +2356,6 @@
             {
               "description": "Name which is used as a variable name in the data of the form-container.",
               "name": "name"
-            },
-            {
-              "name": "selectedIndexes",
-              "type": {
-                "text": "number[]"
-              },
-              "fieldName": "selectedIndexes"
             },
             {
               "name": "value",
@@ -2419,6 +2529,98 @@
               "default": "false",
               "attribute": "inline",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radiogroup'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_radios",
+              "type": {
+                "text": "VscodeRadio[]"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_focusedRadio",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "_checkedRadio",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "-1"
+            },
+            {
+              "kind": "method",
+              "name": "_beforeCheck",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_afterCheck",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_checkPrev",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_checkNext",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onKeyDown",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "_onKeyDownBound",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onSlotChange",
+              "privacy": "private"
             }
           ],
           "attributes": [
@@ -2437,6 +2639,14 @@
               },
               "default": "false",
               "fieldName": "inline"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radiogroup'",
+              "fieldName": "role"
             }
           ],
           "superclass": {
@@ -2485,15 +2695,6 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
               "name": "name",
               "type": {
                 "text": "string"
@@ -2522,6 +2723,16 @@
             },
             {
               "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radio'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "_checked",
               "type": {
                 "text": "boolean"
@@ -2531,12 +2742,17 @@
             },
             {
               "kind": "field",
-              "name": "isSlotEmpty",
+              "name": "_slottedText",
               "type": {
-                "text": "boolean"
+                "text": "string"
               },
               "privacy": "private",
-              "default": "true"
+              "default": "''"
+            },
+            {
+              "kind": "method",
+              "name": "_dispatchCustomEvent",
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -2572,9 +2788,9 @@
               ]
             },
             {
-              "kind": "method",
-              "name": "_handleSlotChange",
-              "privacy": "private"
+              "description": "Label text. It is only applied if componnet's innerHTML doesn't contain any text.",
+              "name": "label",
+              "kind": "field"
             }
           ],
           "events": [
@@ -2596,19 +2812,15 @@
               "fieldName": "name"
             },
             {
+              "description": "Attribute pair of the `label` property.",
+              "name": "label"
+            },
+            {
               "name": "checked",
               "type": {
                 "text": "boolean"
               },
               "fieldName": "checked"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
             },
             {
               "name": "value",
@@ -2625,6 +2837,20 @@
               },
               "default": "false",
               "fieldName": "disabled"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radio'",
+              "fieldName": "role"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "LabelledCheckboxOrRadioMixin",
+              "module": "/src/includes/form-button-widget/LabelledCheckboxOrRadio"
             }
           ],
           "superclass": {
@@ -2689,7 +2915,7 @@
               "type": {
                 "text": "number"
               },
-              "attribute": "scrollPos"
+              "attribute": "scroll-pos"
             },
             {
               "kind": "field",
@@ -2697,7 +2923,7 @@
               "type": {
                 "text": "number"
               },
-              "attribute": "scrollMax"
+              "attribute": "scroll-max"
             },
             {
               "kind": "field",
@@ -2947,14 +3173,14 @@
               "fieldName": "scrolled"
             },
             {
-              "name": "scrollPos",
+              "name": "scroll-pos",
               "type": {
                 "text": "number"
               },
               "fieldName": "scrollPos"
             },
             {
-              "name": "scrollMax",
+              "name": "scroll-max",
               "type": {
                 "text": "number"
               },
@@ -2994,7 +3220,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "## Types\n\n```typescript\ninterface Option {\n label: string;\n value: string;\n description: string;\n selected: boolean;\n disabled: boolean;\n}\n```",
+          "description": "## Types\r\n\r\n```typescript\r\ninterface Option {\r\n label: string;\r\n value: string;\r\n description: string;\r\n selected: boolean;\r\n disabled: boolean;\r\n}\r\n```",
           "name": "VscodeSingleSelect",
           "members": [
             {
@@ -3013,7 +3239,7 @@
               "type": {
                 "text": "number"
               },
-              "attribute": "selectedIndex"
+              "attribute": "selected-index"
             },
             {
               "kind": "field",
@@ -3148,7 +3374,7 @@
               "fieldName": "role"
             },
             {
-              "name": "selectedIndex",
+              "name": "selected-index",
               "type": {
                 "text": "number"
               },
@@ -3214,7 +3440,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "attribute": "resetOnDblClick"
+              "attribute": "reset-on-dbl-click"
             },
             {
               "kind": "field",
@@ -3223,7 +3449,7 @@
                 "text": "string"
               },
               "default": "'50%'",
-              "attribute": "initialPos"
+              "attribute": "initial-pos"
             },
             {
               "kind": "field",
@@ -3404,7 +3630,7 @@
               "fieldName": "split"
             },
             {
-              "name": "resetOnDblClick",
+              "name": "reset-on-dbl-click",
               "type": {
                 "text": "boolean"
               },
@@ -3412,7 +3638,7 @@
               "fieldName": "resetOnDblClick"
             },
             {
-              "name": "initialPos",
+              "name": "initial-pos",
               "type": {
                 "text": "string"
               },
@@ -3443,6 +3669,268 @@
           "declaration": {
             "name": "VscodeSplitLayout",
             "module": "src/vscode-split-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-tab-header.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeTabHeader",
+          "members": [
+            {
+              "kind": "field",
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "active",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "ariaControls",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "aria-controls",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "panel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Panel-like look",
+              "attribute": "panel",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'tab'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "tabId",
+              "type": {
+                "text": "number"
+              },
+              "default": "-1",
+              "attribute": "tab-id",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "active"
+            },
+            {
+              "name": "aria-controls",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "ariaControls"
+            },
+            {
+              "name": "panel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Panel-like look",
+              "fieldName": "panel"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'tab'",
+              "fieldName": "role"
+            },
+            {
+              "name": "tab-id",
+              "type": {
+                "text": "number"
+              },
+              "default": "-1",
+              "fieldName": "tabId"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-tab-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTabHeader",
+          "declaration": {
+            "name": "VscodeTabHeader",
+            "module": "src/vscode-tab-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-tab-header",
+          "declaration": {
+            "name": "VscodeTabHeader",
+            "module": "src/vscode-tab-header.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-tab-panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeTabPanel",
+          "members": [
+            {
+              "kind": "field",
+              "name": "hidden",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "hidden",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "ariaLabelledby",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "aria-labelledby",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "panel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Panel-like look",
+              "attribute": "panel",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'tabpanel'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "tabindex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "attribute": "tabindex",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "hidden",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hidden"
+            },
+            {
+              "name": "aria-labelledby",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "ariaLabelledby"
+            },
+            {
+              "name": "panel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Panel-like look",
+              "fieldName": "panel"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'tabpanel'",
+              "fieldName": "role"
+            },
+            {
+              "name": "tabindex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "tabindex"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-tab-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTabPanel",
+          "declaration": {
+            "name": "VscodeTabPanel",
+            "module": "src/vscode-tab-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-tab-panel",
+          "declaration": {
+            "name": "VscodeTabPanel",
+            "module": "src/vscode-tab-panel.ts"
           }
         }
       ]
@@ -3531,7 +4019,7 @@
               },
               "default": "''",
               "description": "Cell label in the compact view of the responsive mode. For internal use only.",
-              "attribute": "columnLabel"
+              "attribute": "column-label"
             },
             {
               "kind": "field",
@@ -3555,7 +4043,7 @@
               "fieldName": "role"
             },
             {
-              "name": "columnLabel",
+              "name": "column-label",
               "type": {
                 "text": "string"
               },
@@ -4445,36 +4933,98 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTabs",
+          "slots": [
+            {
+              "description": "Default slot. It is used for tab panels.",
+              "name": ""
+            },
+            {
+              "description": "Slot for tab headers.",
+              "name": "header"
+            },
+            {
+              "description": "Right aligned area in the header.",
+              "name": "addons"
+            }
+          ],
           "members": [
+            {
+              "kind": "field",
+              "name": "panel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Panel-like look",
+              "attribute": "panel",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'tablist'",
+              "attribute": "role",
+              "reflects": true
+            },
             {
               "kind": "field",
               "name": "selectedIndex",
               "type": {
                 "text": "number"
               },
-              "attribute": "selectedIndex"
+              "default": "0",
+              "attribute": "selected-index",
+              "reflects": true
             },
             {
               "kind": "field",
-              "name": "_headerSlot",
+              "name": "_headerSlotElements",
               "type": {
-                "text": "HTMLSlotElement | null"
+                "text": "Element[]"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_mainSlotElements",
+              "type": {
+                "text": "Element[]"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_tabHeaders",
+              "type": {
+                "text": "VscodeTabHeader[]"
               },
               "privacy": "private",
-              "default": "null"
+              "default": "[]"
             },
             {
               "kind": "field",
-              "name": "_mainSlot",
+              "name": "_tabPanels",
               "type": {
-                "text": "HTMLSlotElement | null"
+                "text": "VscodeTabPanel[]"
               },
               "privacy": "private",
-              "default": "null"
+              "default": "[]"
             },
             {
               "kind": "field",
-              "name": "_selectedIndex",
+              "name": "_componentId",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "_tabFocus",
               "type": {
                 "text": "number"
               },
@@ -4483,12 +5033,55 @@
             },
             {
               "kind": "method",
+              "name": "_dispatchSelectEvent",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
               "name": "_setActiveTab",
               "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "_onSlotChanged",
+              "name": "_focusPrevTab",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_focusNextTab",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onHostKeyDown",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "_onHostKeyDownBound",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_moveHeadersToHeaderSlot",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onMainSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onHeaderSlotChange",
               "privacy": "private"
             },
             {
@@ -4515,10 +5108,28 @@
           ],
           "attributes": [
             {
-              "name": "selectedIndex",
+              "name": "panel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Panel-like look",
+              "fieldName": "panel"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'tablist'",
+              "fieldName": "role"
+            },
+            {
+              "name": "selected-index",
               "type": {
                 "text": "number"
               },
+              "default": "0",
               "fieldName": "selectedIndex"
             }
           ],
@@ -4545,6 +5156,283 @@
           "declaration": {
             "name": "VscodeTabs",
             "module": "src/vscode-tabs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-textarea.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "An example element.",
+          "name": "VscodeTextarea",
+          "cssParts": [
+            {
+              "description": "The button",
+              "name": "button"
+            }
+          ],
+          "slots": [
+            {
+              "description": "This element has a slot",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "type": {
+                "text": "'on' | 'off' | undefined"
+              },
+              "default": "undefined",
+              "attribute": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "maxlength",
+              "default": "undefined",
+              "attribute": "maxlength"
+            },
+            {
+              "kind": "field",
+              "name": "minlength",
+              "default": "undefined",
+              "attribute": "minlength"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "default": "undefined",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "default": "undefined",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "resize",
+              "type": {
+                "text": "'both' | 'horizontal' | 'vertical' | 'none'"
+              },
+              "default": "'none'",
+              "attribute": "resize"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "spellcheck",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "spellcheck"
+            },
+            {
+              "kind": "field",
+              "name": "monospace",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "monospace",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "wrappedElement",
+              "type": {
+                "text": "HTMLTextAreaElement"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus"
+            },
+            {
+              "kind": "field",
+              "name": "_textareaEl",
+              "type": {
+                "text": "HTMLTextAreaElement"
+              },
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "'on' | 'off' | undefined"
+              },
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "maxlength",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "maxlength"
+            },
+            {
+              "name": "minlength",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "minlength"
+            },
+            {
+              "name": "name",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "name"
+            },
+            {
+              "name": "placeholder",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "resize",
+              "type": {
+                "text": "'both' | 'horizontal' | 'vertical' | 'none'"
+              },
+              "default": "'none'",
+              "fieldName": "resize"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "spellcheck",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "spellcheck"
+            },
+            {
+              "name": "monospace",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "monospace"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-textarea",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTextarea",
+          "declaration": {
+            "name": "VscodeTextarea",
+            "module": "src/vscode-textarea.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-textarea",
+          "declaration": {
+            "name": "VscodeTextarea",
+            "module": "src/vscode-textarea.ts"
           }
         }
       ]
@@ -4579,7 +5467,8 @@
                 "text": "boolean"
               },
               "default": "false",
-              "attribute": "disabled"
+              "attribute": "disabled",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4600,6 +5489,15 @@
               "default": "false",
               "attribute": "invalid",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Set `aria-label` for the inner input element. Should not be set,\nvscode-label will do it automatically."
             },
             {
               "kind": "field",
@@ -4659,7 +5557,8 @@
                 "text": "boolean"
               },
               "default": "false",
-              "attribute": "readonly"
+              "attribute": "readonly",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4668,7 +5567,8 @@
                 "text": "boolean"
               },
               "default": "false",
-              "attribute": "required"
+              "attribute": "required",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4693,6 +5593,13 @@
               },
               "default": "''",
               "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "wrappedElement",
+              "type": {
+                "text": "HTMLInputElement"
+              }
             },
             {
               "kind": "method",
@@ -4721,22 +5628,8 @@
               "privacy": "private"
             },
             {
-              "kind": "field",
-              "name": "_labelText",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "''"
-            },
-            {
               "kind": "method",
               "name": "_validate",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_setLabelText",
               "privacy": "private"
             },
             {
@@ -5116,9 +6009,9 @@
               "privacy": "private",
               "parameters": [
                 {
-                  "name": "{\n    indentLevel,\n    label,\n    path,\n    iconName,\n    open = false,\n    itemType,\n    selected = false,\n    focused = false,\n    subItems,\n  }",
+                  "name": "{\r\n    indentLevel,\r\n    label,\r\n    path,\r\n    iconName,\r\n    open = false,\r\n    itemType,\r\n    selected = false,\r\n    focused = false,\r\n    subItems,\r\n  }",
                   "type": {
-                    "text": "{\n    indentLevel: number;\n    label: string;\n    path: number[];\n    iconName: string | undefined;\n    open: boolean;\n    itemType: ItemType;\n    selected: boolean;\n    focused: boolean;\n    subItems: TreeItem[];\n  }"
+                    "text": "{\r\n    indentLevel: number;\r\n    label: string;\r\n    path: number[];\r\n    iconName: string | undefined;\r\n    open: boolean;\r\n    itemType: ItemType;\r\n    selected: boolean;\r\n    focused: boolean;\r\n    subItems: TreeItem[];\r\n  }"
                   }
                 }
               ]

@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1Y0GZ34XC7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1Y0GZ34XC7');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RadioGroup &ndash; VSCode Webview Elements</title>
   <!-- script type="module" src="https://cdn.skypack.dev/@api-viewer/docs"></script -->
   <script type="module" src="https://cdn.skypack.dev/pin/@api-viewer/docs@v1.0.0-pre.6-hhrJZZ8uDokgZa55nxB6/mode=imports,min/optimized/@api-viewer/docs.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&amp;display=swap&amp;text=VSCodeWebviewElements" rel="stylesheet">
-  <link rel="stylesheet" href="/dev-assets/preview-styles.css">
-  <link rel="stylesheet" href="/codicon.css" id="vscode-codicon-stylesheet">
-  <link rel="stylesheet" href="/docs.css">
-  <link rel="stylesheet" href="/dev-assets/prism-material-light.css">
-  <script type="module" src="/dev-assets/component-preview.js"></script>
-  <script type="module" src="/bundled.js"></script>
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/preview-styles.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/codicon.css" id="vscode-codicon-stylesheet">
+  <link rel="stylesheet" href="/vscode-webview-elements/docs.css">
+  <link rel="stylesheet" href="/vscode-webview-elements/dev-assets/prism-material-light.css">
+  <script type="module" src="/vscode-webview-elements/dev-assets/component-preview.js"></script>
+  <script type="module" src="/vscode-webview-elements/bundled.js"></script>
 </head>
 <body class="vscode-light">
   <header class="page-header">
     <div class="content-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
-      <a href="/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.7.0</span>
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.8.0</span>
+      
         <ul class="in-page-nav">
           <li>
             <h2><span>In-page Navigation</span></h2>
@@ -26,7 +36,7 @@
               <li><a href="#top">Go to top</a></li><li><a href="#horizontal-group">Horizontal group</a></li><li><a href="#vertical-group">Vertical group</a></li></ul>
           </li>
         </ul>
-
+      
     </div>
   </header>
   <div class="content-wrapper">
@@ -34,83 +44,93 @@
       <aside class="sidebar">
         <nav class="main-nav">
           <ul>
-            <li><a href="/pages/getting-started">Getting Started</a></li>
+            <li><a href="/vscode-webview-elements/pages/getting-started">Getting Started</a></li>
             <li>
-              <a href="/pages/examples">Examples</a>
+              <a href="/vscode-webview-elements/pages/examples">Examples</a>
               <ul><li>
-                    <a href="/pages/examples/responsive/">Responsive form</a>
+                    <a href="/vscode-webview-elements/pages/examples/responsive/">Responsive form</a>
                   </li><li>
-                    <a href="/pages/examples/settings-page/">Settings page</a>
+                    <a href="/vscode-webview-elements/pages/examples/settings-page/">Settings page</a>
                   </li><li>
-                    <a href="/pages/examples/inline-1/">Inline form example 1</a>
+                    <a href="/vscode-webview-elements/pages/examples/inline-1/">Inline form example 1</a>
                   </li><li>
-                    <a href="/pages/examples/inline-2/">Inline form example 2</a>
+                    <a href="/vscode-webview-elements/pages/examples/inline-2/">Inline form example 2</a>
                   </li></ul>
             </li>
             <li>
-              <a href="/components">Components</a>
+              <a href="/vscode-webview-elements/components">Components</a>
               <ul><li>
-                    <a href="/components/vscode-button/">Button</a>
+                    <a href="/vscode-webview-elements/components/vscode-badge/">Badge</a>
                   </li><li>
-                    <a href="/components/vscode-checkbox/">Checkbox</a>
+                    <a href="/vscode-webview-elements/components/vscode-button/">Button</a>
                   </li><li>
-                    <a href="/components/vscode-checkbox-group/">CheckboxGroup</a>
+                    <a href="/vscode-webview-elements/components/vscode-checkbox/">Checkbox</a>
                   </li><li>
-                    <a href="/components/vscode-collapsible/">Collapsible</a>
+                    <a href="/vscode-webview-elements/components/vscode-checkbox-group/">CheckboxGroup</a>
                   </li><li>
-                    <a href="/components/vscode-context-menu/">ContextMenu</a>
+                    <a href="/vscode-webview-elements/components/vscode-collapsible/">Collapsible</a>
                   </li><li>
-                    <a href="/components/vscode-context-menu-item/">ContextMenuItem</a>
+                    <a href="/vscode-webview-elements/components/vscode-context-menu/">ContextMenu</a>
                   </li><li>
-                    <a href="/components/vscode-form-container/">FormContainer</a>
+                    <a href="/vscode-webview-elements/components/vscode-context-menu-item/">ContextMenuItem</a>
                   </li><li>
-                    <a href="/components/vscode-form-control/">FormControl<span class="warning" title="Deprecated">⚠</span></a>
+                    <a href="/vscode-webview-elements/components/vscode-form-container/">FormContainer</a>
                   </li><li>
-                    <a href="/components/vscode-form-description/">FormDescription<span class="warning" title="Deprecated">⚠</span></a>
+                    <a href="/vscode-webview-elements/components/vscode-form-control/">FormControl<span class="warning" title="Deprecated">⚠</span></a>
                   </li><li>
-                    <a href="/components/vscode-form-group/">FormGroup</a>
+                    <a href="/vscode-webview-elements/components/vscode-form-description/">FormDescription<span class="warning" title="Deprecated">⚠</span></a>
                   </li><li>
-                    <a href="/components/vscode-form-helper/">FormHelper</a>
+                    <a href="/vscode-webview-elements/components/vscode-form-group/">FormGroup</a>
                   </li><li>
-                    <a href="/components/vscode-form-item/">FormItem<span class="warning" title="Deprecated">⚠</span></a>
+                    <a href="/vscode-webview-elements/components/vscode-form-helper/">FormHelper</a>
                   </li><li>
-                    <a href="/components/vscode-form-label/">FormLabel<span class="warning" title="Deprecated">⚠</span></a>
+                    <a href="/vscode-webview-elements/components/vscode-form-item/">FormItem<span class="warning" title="Deprecated">⚠</span></a>
                   </li><li>
-                    <a href="/components/vscode-icon/">Icon</a>
+                    <a href="/vscode-webview-elements/components/vscode-form-label/">FormLabel<span class="warning" title="Deprecated">⚠</span></a>
                   </li><li>
-                    <a href="/components/vscode-inputbox/">Inputbox</a>
+                    <a href="/vscode-webview-elements/components/vscode-icon/">Icon</a>
                   </li><li>
-                    <a href="/components/vscode-label/">Label</a>
+                    <a href="/vscode-webview-elements/components/vscode-inputbox/">Inputbox<span class="warning" title="Deprecated">⚠</span></a>
                   </li><li>
-                    <a href="/components/vscode-multi-select/">MultiSelect</a>
+                    <a href="/vscode-webview-elements/components/vscode-label/">Label</a>
                   </li><li>
-                    <a href="/components/vscode-option/">Option</a>
+                    <a href="/vscode-webview-elements/components/vscode-multi-select/">MultiSelect</a>
                   </li><li>
-                    <a href="/components/vscode-radio/">Radio</a>
+                    <a href="/vscode-webview-elements/components/vscode-option/">Option</a>
                   </li><li>
-                    <a href="/components/vscode-radio-group/" aria-current="page" class="current">RadioGroup</a>
+                    <a href="/vscode-webview-elements/components/vscode-radio/">Radio</a>
                   </li><li>
-                    <a href="/components/vscode-scrollable/">Scrollable</a>
+                    <a href="/vscode-webview-elements/components/vscode-radio-group/" aria-current="page" class="current">RadioGroup</a>
                   </li><li>
-                    <a href="/components/vscode-single-select/">SingleSelect</a>
+                    <a href="/vscode-webview-elements/components/vscode-scrollable/">Scrollable</a>
                   </li><li>
-                    <a href="/components/vscode-split-layout/">SplitLayout</a>
+                    <a href="/vscode-webview-elements/components/vscode-single-select/">SingleSelect</a>
                   </li><li>
-                    <a href="/components/vscode-table/">Table</a>
+                    <a href="/vscode-webview-elements/components/vscode-split-layout/">SplitLayout</a>
                   </li><li>
-                    <a href="/components/vscode-table-body/">TableBody</a>
+                    <a href="/vscode-webview-elements/components/vscode-tab-header/">TabHeader</a>
                   </li><li>
-                    <a href="/components/vscode-table-cell/">TableCell</a>
+                    <a href="/vscode-webview-elements/components/vscode-tab-panel/">TabPanel</a>
                   </li><li>
-                    <a href="/components/vscode-table-header/">TableHeader</a>
+                    <a href="/vscode-webview-elements/components/vscode-table/">Table</a>
                   </li><li>
-                    <a href="/components/vscode-table-header-cell/">TableHeaderCell</a>
+                    <a href="/vscode-webview-elements/components/vscode-table-body/">TableBody</a>
                   </li><li>
-                    <a href="/components/vscode-table-row/">TableRow</a>
+                    <a href="/vscode-webview-elements/components/vscode-table-cell/">TableCell</a>
                   </li><li>
-                    <a href="/components/vscode-tabs/">Tabs</a>
+                    <a href="/vscode-webview-elements/components/vscode-table-header/">TableHeader</a>
                   </li><li>
-                    <a href="/components/vscode-tree/">Tree</a>
+                    <a href="/vscode-webview-elements/components/vscode-table-header-cell/">TableHeaderCell</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-table-row/">TableRow</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-tabs/">Tabs</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-textarea/">Textarea</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-textfield/">Textfield</a>
+                  </li><li>
+                    <a href="/vscode-webview-elements/components/vscode-tree/">Tree</a>
                   </li></ul>
             </li>
           </ul>
@@ -118,13 +138,20 @@
       </aside>
       <div class="main-content">
         <div class="page">
+          
+<div class="sub-nav">
+  <ul>
+    <li><a href="/vscode-webview-elements/components/vscode-radio-group/" class="current">Examples</a></li>
+    <li><a href="/vscode-webview-elements/components/vscode-radio-group/api" >API</a></li>
+  </ul>
 
-<ul class="sub-nav">
-  <li><a href="/components/vscode-radio-group/" class="current">Examples</a></li>
-  <li><a href="/components/vscode-radio-group/api" >API</a></li>
-</ul>
+  
+</div>
 
-          <h1 id="vscoderadiogroup" tabindex="-1"><a class="header-anchor" href="#vscoderadiogroup">VscodeRadioGroup</a></h1>
+          
+  
+
+          <h1 id="radiogroup" tabindex="-1"><a class="header-anchor" href="#radiogroup">RadioGroup</a></h1>
 <pre class="language-typescript"><code class="language-typescript"><span class="token keyword">import</span> <span class="token string">'@bendera/vscode-webview-elements/dist/vscode-radio-group'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="horizontal-group" tabindex="-1"><a class="header-anchor" href="#horizontal-group">Horizontal group</a></h2>
 <component-preview>
@@ -147,7 +174,8 @@
 <h3 id="html-1" tabindex="-1"><a class="header-anchor" href="#html-1">HTML</a></h3>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-radio-group</span> <span class="token attr-name">variant</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vertical<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-radio</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vertical-example<span class="token punctuation">"</span></span> <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Lorem<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-radio</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-radio</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vertical-example<span class="token punctuation">"</span></span> <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Ipsum<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-radio</span><span class="token punctuation">></span></span><br>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-radio</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vertical-example<span class="token punctuation">"</span></span> <span class="token attr-name">label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Dolor<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-radio</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-radio-group</span><span class="token punctuation">></span></span></code></pre>
 
-
+          
+  
 
         </div>
         <p class="last-modified">Last modified: Wed, 19 Oct 2022 15:08:43 GMT</p>
