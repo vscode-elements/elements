@@ -1,15 +1,20 @@
-import {html, TemplateResult, CSSResultGroup, css, nothing} from 'lit';
+import {html, TemplateResult, CSSResultGroup, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
 import baseStyles from './includes/form-button-widget/base.styles';
 import formHelperTextStyles from './includes/formHelperTextStyles';
+import {LabelledCheckboxOrRadioMixin} from './includes/form-button-widget/LabelledCheckboxOrRadio';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
+ * @attr label - Attribute pair of the `label` property.
+ * @prop label - Label text. It is only applied if componnet's innerHTML doesn't contain any text.
  */
 @customElement('vscode-radio')
-export class VscodeRadio extends FormButtonWidgetBase {
+export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
+  FormButtonWidgetBase
+) {
   @property({type: Boolean})
   set checked(val: boolean) {
     this._checked = val;
@@ -17,19 +22,6 @@ export class VscodeRadio extends FormButtonWidgetBase {
   }
   get checked(): boolean {
     return this._checked;
-  }
-
-  @property()
-  set label(val: string) {
-    this._label = val;
-
-    if (this._slottedText === '') {
-      this.setAttribute('aria-label', val);
-    }
-  }
-
-  get label(): string {
-    return this._label;
   }
 
   /**
@@ -46,8 +38,6 @@ export class VscodeRadio extends FormButtonWidgetBase {
 
   @property({reflect: true})
   role = 'radio';
-
-  private _label = '';
 
   @state()
   private _checked = false;
@@ -110,14 +100,6 @@ export class VscodeRadio extends FormButtonWidgetBase {
     }
   }
 
-  private _handleSlotChange() {
-    this._slottedText = this.textContent ? this.textContent.trim() : '';
-
-    if (this._slottedText !== '') {
-      this.setAttribute('aria-label', this._slottedText);
-    }
-  }
-
   static get styles(): CSSResultGroup[] {
     return [
       super.styles,
@@ -146,12 +128,6 @@ export class VscodeRadio extends FormButtonWidgetBase {
       `,
       formHelperTextStyles,
     ];
-  }
-
-  private _renderLabelAttribute() {
-    return this._slottedText === ''
-      ? html`<span class="label-attr">${this._label}</span>`
-      : html`${nothing}`;
   }
 
   render(): TemplateResult {
