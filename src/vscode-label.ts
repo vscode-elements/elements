@@ -3,9 +3,10 @@ import {customElement, property} from 'lit/decorators.js';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 import uniqueId from './includes/uniqueId';
 import {VscElement} from './includes/VscElement';
-import { VscodeRadioGroup } from './vscode-radio-group';
-import { VscodeTextarea } from './vscode-textarea';
-import { VscodeTextfield } from './vscode-textfield';
+import {VscodeCheckboxGroup} from './vscode-checkbox-group';
+import {VscodeRadioGroup} from './vscode-radio-group';
+import {VscodeTextarea} from './vscode-textarea';
+import {VscodeTextfield} from './vscode-textfield';
 
 interface FocusableElement extends Element {
   focus: () => void;
@@ -82,7 +83,10 @@ export class VscodeLabel extends VscElement {
 
     const target = this._getTarget();
 
-    if (target instanceof VscodeRadioGroup) {
+    if (
+      target instanceof VscodeRadioGroup ||
+      target instanceof VscodeCheckboxGroup
+    ) {
       target.setAttribute('aria-labelledby', this._id);
     }
 

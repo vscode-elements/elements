@@ -5,6 +5,9 @@ import {VscElement} from './includes/VscElement';
 @customElement('vscode-checkbox-group')
 export class VscodeCheckboxGroup extends VscElement {
   @property({reflect: true})
+  role = 'group';
+
+  @property({reflect: true})
   variant: 'horizontal' | 'vertical' = 'horizontal';
 
   static get styles(): CSSResultGroup {

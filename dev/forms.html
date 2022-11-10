@@ -101,15 +101,16 @@
             </vscode-form-group>
 
             <vscode-form-group>
-              <vscode-label for="checkbox-01">
+              <vscode-label for="checkbox-group-1">
                 Phasellus quam arcu:
               </vscode-label>
-              <vscode-checkbox-group>
+              <vscode-checkbox-group id="checkbox-group-1">
                 <vscode-checkbox
                   id="checkbox-01"
                   name="checkbox-group-1"
                   value="lorem"
                   label="Lorem ipsum"
+                  checked
                 ></vscode-checkbox>
                 <vscode-checkbox
                   id="checkbox-02"
@@ -128,10 +129,10 @@
             </vscode-form-group>
 
             <vscode-form-group>
-              <vscode-label for="checkbox-04">
+              <vscode-label for="checkbox-group-2">
                 Phasellus quam arcu:
               </vscode-label>
-              <vscode-checkbox-group variant="vertical">
+              <vscode-checkbox-group variant="vertical" id="checkbox-group-2">
                 <vscode-checkbox
                   id="checkbox-04"
                   name="checkbox-group-2"
@@ -568,12 +569,12 @@
         </component-preview>
       </div>
     </div>
-    <div class="story">
+    <!-- <div class="story">
       <h2 class="story-title">A native form</h2>
       <div class="story-content">
         <form action="#">
           <label for="tf-1">Textfield 1</label>
-          <input type="text" placeholder="Textfield 1" />
+          <input type="text" placeholder="Textfield 1" id="tf-1" />
           <input
             type="radio"
             name="radio-example"
@@ -612,6 +613,6 @@
           /><label for="cb-3">option 3</label><br />
         </form>
       </div>
-    </div>
+    </div> -->
   </body>
 </html>

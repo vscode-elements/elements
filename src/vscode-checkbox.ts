@@ -1,5 +1,5 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
 import baseStyles from './includes/form-button-widget/base.styles';
@@ -16,7 +16,16 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   FormButtonWidgetBase
 ) {
   @property({type: Boolean})
-  checked = false;
+  set checked(val: boolean) {
+    this._checked = val;
+    this.setAttribute('aria-checked', val ? 'true' : 'false');
+  }
+  get checked(): boolean {
+    return this._checked;
+  }
+
+  @property({reflect: true})
+  role = 'checkbox';
 
   @property()
   value = '';
@@ -24,17 +33,27 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   @property({type: Boolean})
   disabled = false;
 
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
+  }
+
+  @state()
+  private _checked = false;
+
   protected _handleClick(): void {
     if (this.disabled) {
       return;
     }
 
-    this.checked = !this.checked;
+    this._checked = !this._checked;
+    this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
 
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
         detail: {
-          checked: this.checked,
+          checked: this._checked,
           label: this.label,
           value: this.value,
         },
@@ -47,7 +66,8 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   protected _handleKeyDown(ev: KeyboardEvent): void {
     if (!this.disabled && (ev.key === 'Enter' || ev.key === ' ')) {
       ev.preventDefault();
-      this.checked = !this.checked;
+      this._checked = !this._checked;
+      this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
     }
   }
 
@@ -72,7 +92,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   render(): TemplateResult {
     const iconClasses = classMap({
       icon: true,
-      checked: this.checked,
+      checked: this._checked,
     });
     const labelInnerClasses = classMap({
       'label-inner': true,
@@ -91,7 +111,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
         d="M14.431 3.323l-8.47 10-.79-.036-3.35-4.77.818-.574 2.978 4.24 8.051-9.506.764.646z"
       />
     </svg>`;
-    const check = this.checked ? icon : nothing;
+    const check = this._checked ? icon : nothing;
 
     return html`
       <div class="wrapper">
@@ -99,7 +119,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
           id="${this._uid}"
           class="checkbox"
           type="checkbox"
-          ?checked="${this.checked}"
+          ?checked="${this._checked}"
           value="${this.value}"
           tabindex="-1"
         />
