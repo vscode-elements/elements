@@ -85,6 +85,10 @@ export class VscodeTextfield extends VscElement {
   @property()
   value = '';
 
+  get wrappedElement(): HTMLInputElement {
+    return this._inputEl;
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
 
