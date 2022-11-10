@@ -19,6 +19,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `columnLabel` attribute renamed to `column-label` in the TableCell component.
 - The Tabs component markup has been changed. See the documentation page for the examples.
 
+### Deprecated
+
+- Inputbox has been deprecated. Use the Textarea or Textfield instead.
+
 ### Added
 
 - Added Textfield and Textarea components.
@@ -31,9 +35,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Added `aria-checked` attribute to the radio buttons.
 - Icon component accessibility improvements.
 - Tabs component is fully accessible.
+- Radio and Checkbox are accessible.
 - TabHeader and TabPanel added to interoperate with Tabs.
 - `addons` slot has been added to the Tabs toolbar.
 - `content-before` and `content-after` slots have been added to the tab headers.
+- Label automatically sets the label for radios, checkboxes and text inputs.
 
 ### Fixed
 
