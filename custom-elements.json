@@ -5053,7 +5053,7 @@
             },
             {
               "kind": "method",
-              "name": "_onHostKeyDown",
+              "name": "_onHeaderKeyDown",
               "privacy": "private",
               "parameters": [
                 {
@@ -5063,11 +5063,6 @@
                   }
                 }
               ]
-            },
-            {
-              "kind": "field",
-              "name": "_onHostKeyDownBound",
-              "privacy": "private"
             },
             {
               "kind": "method",
