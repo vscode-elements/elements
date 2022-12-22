@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "bump:preminor": "npm version preminor --preid=pre && npm run build && npm pack",
+    "bump:prepatch": "npm version prepatch --preid=pre && npm run build && npm pack",
     "bump:minor": "npm version minor && npm run build && npm pack",
     "bump:prerelease": "npm version prerelease && npm run build && npm pack",
     "build": "npm run build:bundle",
