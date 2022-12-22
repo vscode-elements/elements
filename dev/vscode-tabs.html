@@ -18,6 +18,7 @@
     <script type="module" src="../dist/vscode-tabs.js"></script>
     <script type="module" src="../dist/vscode-tab-header.js"></script>
     <script type="module" src="../dist/vscode-scrollable.js"></script>
+    <script type="module" src="../dist/vscode-textarea.js"></script>
   </head>
 
   <body class="vscode-light">
@@ -31,7 +32,7 @@
         <h2 class="story-title">Basic example</h2>
         <div class="story-content">
           <component-preview>
-            <vscode-tabs selected-index="1" class="tabs-1" id="tabs-1">
+            <vscode-tabs class="tabs-1" id="tabs-1">
               <!-- display:block -->
               <vscode-tab-header>Lorem Loooooooooooooooooooooooooooooooooooooong text</vscode-tab-header>
               <vscode-tab-panel>
@@ -52,6 +53,7 @@
                   sem. Donec malesuada diam nec nibh laoreet, iaculis iaculis
                   turpis semper.
                 </p>
+                <vscode-textarea></vscode-textarea>
               </vscode-tab-panel>
               <!-- display:block -->
               <vscode-tab-header>
@@ -117,7 +119,7 @@
         <h2 class="story-title">Panel</h2>
         <div class="story-content">
           <component-preview>
-            <vscode-tabs selected-index="1" panel class="panel-example">
+            <vscode-tabs panel class="panel-example">
               <vscode-icon
                 label="Maximize Panel Size"
                 title="Maximize Panel Size"
