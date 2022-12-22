@@ -34,18 +34,6 @@ export class VscodeTabs extends VscElement {
     this._componentId = uniqueId();
   }
 
-  connectedCallback(): void {
-    super.connectedCallback();
-
-    this.addEventListener('keydown', this._onHostKeyDownBound);
-  }
-
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener('keydown', this._onHostKeyDownBound);
-  }
-
   attributeChangedCallback(
     name: string,
     old: string | null,
@@ -116,7 +104,7 @@ export class VscodeTabs extends VscElement {
     }
   }
 
-  private _onHostKeyDown(ev: KeyboardEvent) {
+  private _onHeaderKeyDown(ev: KeyboardEvent) {
     if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') {
       ev.preventDefault();
       this._tabHeaders[this._tabFocus].setAttribute('tabindex', '-1');
@@ -137,8 +125,6 @@ export class VscodeTabs extends VscElement {
       this._dispatchSelectEvent();
     }
   }
-
-  private _onHostKeyDownBound = this._onHostKeyDown.bind(this);
 
   private _moveHeadersToHeaderSlot() {
     const headers = this._mainSlotElements.filter(
@@ -238,6 +224,7 @@ export class VscodeTabs extends VscElement {
       <div
         class=${classMap({header: true, panel: this.panel})}
         @click="${this._onHeaderClick}"
+        @keydown=${this._onHeaderKeyDown}
       >
         <slot name="header" @slotchange=${this._onHeaderSlotChange}></slot>
         <slot name="addons"></slot>
