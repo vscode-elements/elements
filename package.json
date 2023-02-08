@@ -15,11 +15,9 @@
     "bump:minor": "npm version minor && npm run build && npm pack",
     "bump:patch": "npm version patch && npm run build && npm pack",
     "bump:prerelease": "npm version prerelease && npm run build && npm pack",
-    "build": "npm run build:bundle",
-    "build:ts": "tsc",
+    "build": "wireit",
+    "build:ts": "wireit",
     "build:watch": "tsc --watch",
-    "build:bundle": "npm run clean && npm run build:ts && rollup -c --file dist/bundled.js",
-    "build:rollup": "rollup -c",
     "clean": "rimraf dist",
     "eleventy": "eleventy --config=.eleventy.cjs",
     "eleventy:watch": "eleventy --config=.eleventy.cjs --watch",
@@ -27,17 +25,95 @@
     "lint:eslint": "eslint src/**/*.ts",
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/**/* --write",
-    "docs": "npm run docs:clean && npm run build:bundle && npm run analyze && cross-env NODE_ENV=production npm run eleventy",
+    "docs": "wireit",
+    "docs:dev": "wireit",
     "docs:clean": "rimraf docs",
     "docs:start": "npm run docs:clean && npm run build && npm run analyze && cross-env NODE_ENV=development eleventy --config=.eleventy.cjs --serve --port=8081",
-    "analyze": "cem analyze --litelement --globs=\"src/*.ts\" --exclude=\"src/main.ts\"",
+    "analyze": "wireit",
     "serve": "wds --watch",
     "start": "concurrently \"npm run build:watch\" \"npm run serve\" --names \"tsc,server\"",
-    "test": "npm run build:ts && wtr --coverage",
+    "test": "wireit",
     "test:watch": "wtr --watch",
     "checksize": "npm run build:bundle && cat dist/bundled.js | gzip -9 | wc -c",
     "generate": "node scripts/generateComponent.js",
     "icons": "node scripts/generateIconList.js"
+  },
+  "wireit": {
+    "analyze": {
+      "command": "cem analyze --litelement --globs=\"src/*.ts\" --exclude=\"src/main.ts\"",
+      "files": [
+        "src/**/*.ts",
+        "tsconfig.json"
+      ],
+      "output": [
+        "custom-elements.json"
+      ]
+    },
+    "build": {
+      "command": "rollup -c --file dist/bundled.js",
+      "dependencies": [
+        "build:ts"
+      ],
+      "files": [
+        "rollup.config.json"
+      ],
+      "output": [
+        "dist/bundled.js"
+      ]
+    },
+    "build:ts": {
+      "command": "tsc",
+      "files": [
+        "src/**/*.ts",
+        "tsconfig.json"
+      ],
+      "output": [
+        "dist/**",
+        "!dist/bundled.js"
+      ]
+    },
+    "docs": {
+      "command": "eleventy --config=.eleventy.cjs",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "dependencies": [
+        "build",
+        "analyze"
+      ],
+      "files": [
+        "docs-src/**/*",
+        ".eleventy.cjs",
+        "custom-elements.json"
+      ],
+      "output": [
+        "docs/**/*"
+      ]
+    },
+    "docs:dev": {
+      "command": "eleventy --config=.eleventy.cjs",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "dependencies": [
+        "build",
+        "analyze"
+      ],
+      "files": [
+        "docs-src/**/*",
+        ".eleventy.cjs",
+        "custom-elements.json"
+      ],
+      "output": [
+        "docs/**/*"
+      ]
+    },
+    "test": {
+      "command": "wtr --coverage",
+      "dependencies": [
+        "build:ts"
+      ]
+    }
   },
   "keywords": [
     "web-components",
@@ -106,6 +182,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-visualizer": "^5.8.3",
     "sinon": "^14.0.1",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "wireit": "^0.9.5"
   }
 }
