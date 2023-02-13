@@ -17,22 +17,20 @@
     "bump:prerelease": "npm version prerelease && npm run build && npm pack",
     "build": "wireit",
     "build:ts": "wireit",
-    "build:watch": "tsc --watch",
+    "build:watch": "wireit",
     "clean": "rimraf dist",
-    "eleventy": "eleventy --config=.eleventy.cjs",
-    "eleventy:watch": "eleventy --config=.eleventy.cjs --watch",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint src/**/*.ts",
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/**/* --write",
     "docs": "wireit",
     "docs:dev": "wireit",
-    "docs:clean": "rimraf docs",
-    "docs:start": "npm run docs:clean && npm run build && npm run analyze && cross-env NODE_ENV=development eleventy --config=.eleventy.cjs --serve --port=8081",
+    "docs:start": "wireit",
     "analyze": "wireit",
-    "serve": "wds --watch",
-    "start": "concurrently \"npm run build:watch\" \"npm run serve\" --names \"tsc,server\"",
+    "serve": "wireit",
+    "start": "wireit",
     "test": "wireit",
+    "test:coverage": "wireit",
     "test:watch": "wtr --watch",
     "checksize": "npm run build:bundle && cat dist/bundled.js | gzip -9 | wc -c",
     "generate": "node scripts/generateComponent.js",
@@ -62,7 +60,7 @@
       ]
     },
     "build:ts": {
-      "command": "tsc",
+      "command": "tsc --build",
       "files": [
         "src/**/*.ts",
         "tsconfig.json"
@@ -71,6 +69,10 @@
         "dist/**",
         "!dist/bundled.js"
       ]
+    },
+    "build:watch": {
+      "command": "tsc --watch",
+      "service": true
     },
     "docs": {
       "command": "eleventy --config=.eleventy.cjs",
@@ -104,15 +106,54 @@
         ".eleventy.cjs",
         "custom-elements.json"
       ],
-      "output": [
-        "docs/**/*"
-      ]
+      "service": true
+    },
+    "docs:start": {
+      "command": "eleventy --config=.eleventy.cjs --serve --port=8081",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "dependencies": [
+        "build",
+        "analyze"
+      ],
+      "files": [
+        "docs-src/**/*",
+        ".eleventy.cjs",
+        "custom-elements.json"
+      ],
+      "service": true
+    },
+    "serve": {
+      "command": "wds --watch",
+      "service": true
+    },
+    "start": {
+      "command": "wds --watch",
+      "dependencies": [
+        "build:watch"
+      ],
+      "service": true
     },
     "test": {
+      "command": "wtr",
+      "dependencies": [
+        "build:ts"
+      ],
+      "files": [
+        "src/**/*.ts"
+      ],
+      "output": []
+    },
+    "test:coverage": {
       "command": "wtr --coverage",
       "dependencies": [
         "build:ts"
-      ]
+      ],
+      "files": [
+        "src/**/*.ts"
+      ],
+      "output": []
     }
   },
   "keywords": [
