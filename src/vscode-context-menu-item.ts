@@ -60,7 +60,6 @@ export class VscodeContextMenuItem extends VscElement {
         .context-menu-item {
           background-color: var(--vscode-menu-background);
           color: var(--vscode-menu-foreground);
-          border: 1px solid transparent;
           display: flex;
           user-select: none;
           white-space: nowrap;
@@ -69,9 +68,9 @@ export class VscodeContextMenuItem extends VscElement {
         .rule {
           border-bottom: 1px solid var(--vscode-menu-separatorBackground);
           display: block;
-          margin: 0 0 3px;
+          margin: 0 0 4px;
           opacity: 0.4;
-          padding-top: 3px;
+          padding-top: 4px;
           width: 100%;
         }
 
