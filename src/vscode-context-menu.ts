@@ -226,7 +226,7 @@ export class VscodeContextMenu extends VscElement {
           border-radius: 5px;
           box-shadow: 0 2px 8px var(--vscode-widget-shadow);
           color: var(--vscode-menu-foreground);
-          padding: 0.5em 0;
+          padding: 4px 0;
           white-space: nowrap;
         }
 

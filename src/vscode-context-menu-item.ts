@@ -69,19 +69,22 @@ export class VscodeContextMenuItem extends VscElement {
         .rule {
           border-bottom: 1px solid var(--vscode-menu-separatorBackground);
           display: block;
-          margin: 0 0.8em 0.2em;
+          margin: 0 0 3px;
           opacity: 0.4;
-          padding-top: 0.2em;
+          padding-top: 3px;
           width: 100%;
         }
 
         .context-menu-item a {
           align-items: center;
+          border-radius: 3px;
           color: var(--vscode-menu-foreground);
           cursor: default;
           display: flex;
           flex: 1 1 auto;
           height: 2em;
+          margin-left: 4px;
+          margin-right: 4px;
           outline: none;
           position: relative;
           text-decoration: inherit;
