@@ -11,9 +11,9 @@ describe('vscode-textfield', () => {
     const el = await fixture(html`<vscode-textfield></vscode-textfield>`) as VscodeTextfield;
     expect(el).shadowDom.to.equal(
       `
-        <h1>Hello, World!</h1>
-        <button part="button">Click Count: 0</button>
-        <slot></slot>
+      <slot name="content-before"></slot>
+      <input aria-label=""  id="input" type="text" value="">
+      <slot name="content-after"></slot>
       `
     );
 
