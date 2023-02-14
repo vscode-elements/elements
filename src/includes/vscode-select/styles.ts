@@ -139,6 +139,7 @@ export default css`
   .dropdown {
     background-color: var(--vscode-settings-textInputBackground);
     border-color: var(--vscode-settings-dropdownBorder);
+    border-radius: 0 0 3px 3px;
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
