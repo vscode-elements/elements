@@ -84,6 +84,7 @@
         "analyze"
       ],
       "files": [
+        ".env",
         "docs-src/**/*",
         ".eleventy.cjs",
         "custom-elements.json"
@@ -102,6 +103,7 @@
         "analyze"
       ],
       "files": [
+        ".env",
         "docs-src/**/*",
         ".eleventy.cjs",
         "custom-elements.json"
@@ -118,6 +120,7 @@
         "analyze"
       ],
       "files": [
+        ".env",
         "docs-src/**/*",
         ".eleventy.cjs",
         "custom-elements.json"
