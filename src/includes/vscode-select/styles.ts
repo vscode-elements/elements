@@ -35,6 +35,7 @@ export default css`
   }
 
   .select-face {
+    cursor: pointer;
     padding: 3px 4px;
   }
 
@@ -144,6 +145,7 @@ export default css`
     border-width: 1px;
     box-sizing: border-box;
     left: 0;
+    padding-bottom: 2px;
     position: absolute;
     top: 100%;
     width: 100%;
