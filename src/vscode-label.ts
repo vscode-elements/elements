@@ -1,5 +1,6 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 import uniqueId from './includes/uniqueId';
 import {VscElement} from './includes/VscElement';
@@ -36,6 +37,9 @@ export class VscodeLabel extends VscElement {
   get id(): string {
     return this._id;
   }
+
+  @property({type: Boolean})
+  required = false;
 
   attributeChangedCallback(
     name: string,
@@ -127,6 +131,10 @@ export class VscodeLabel extends VscElement {
           padding: 5px 0;
         }
 
+        .wrapper.required:after {
+          content: '*';
+        }
+
         :host-context(vscode-form-group[variant='settings-group']) .wrapper {
           line-height: 18px;
           padding: 0;
@@ -146,7 +154,11 @@ export class VscodeLabel extends VscElement {
 
   render(): TemplateResult {
     return html`
-      <label class="wrapper" @click=${this._handleClick}><slot></slot></label>
+      <label
+        class="${classMap({wrapper: true, required: this.required})}"
+        @click=${this._handleClick}
+        ><slot></slot
+      ></label>
     `;
   }
 }
