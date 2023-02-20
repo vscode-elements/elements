@@ -2147,6 +2147,15 @@
             },
             {
               "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
               "name": "_id",
               "type": {
                 "text": "string"
@@ -2202,6 +2211,14 @@
                 "text": "string"
               },
               "fieldName": "id"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
             }
           ],
           "superclass": {
@@ -2239,6 +2256,12 @@
           "kind": "class",
           "description": "",
           "name": "VscodeMultiSelect",
+          "cssProperties": [
+            {
+              "name": "--dropdown-z-index",
+              "default": "2"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -3222,6 +3245,12 @@
           "kind": "class",
           "description": "## Types\r\n\r\n```typescript\r\ninterface Option {\r\n label: string;\r\n value: string;\r\n description: string;\r\n selected: boolean;\r\n disabled: boolean;\r\n}\r\n```",
           "name": "VscodeSingleSelect",
+          "cssProperties": [
+            {
+              "name": "--dropdown-z-index",
+              "default": "2"
+            }
+          ],
           "members": [
             {
               "kind": "field",
