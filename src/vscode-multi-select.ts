@@ -7,6 +7,7 @@ import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
+ * @cssprop [--dropdown-z-index=2]
  */
 @customElement('vscode-multi-select')
 export class VscodeMultiSelect extends VscodeSelectBase {
