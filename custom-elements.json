@@ -3243,7 +3243,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "## Types\r\n\r\n```typescript\r\ninterface Option {\r\n label: string;\r\n value: string;\r\n description: string;\r\n selected: boolean;\r\n disabled: boolean;\r\n}\r\n```",
+          "description": "## Types\n\n```typescript\ninterface Option {\n label: string;\n value: string;\n description: string;\n selected: boolean;\n disabled: boolean;\n}\n```",
           "name": "VscodeSingleSelect",
           "cssProperties": [
             {
