@@ -132,7 +132,7 @@ export class VscodeLabel extends VscElement {
         }
 
         .wrapper.required:after {
-          content: '*';
+          content: ' *';
         }
 
         :host-context(vscode-form-group[variant='settings-group']) .wrapper {
