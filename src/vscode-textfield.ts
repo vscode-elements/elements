@@ -72,6 +72,7 @@ export class VscodeTextfield extends VscElement {
     | 'date'
     | 'datetime-local'
     | 'email'
+    | 'file'
     | 'month'
     | 'number'
     | 'password'
