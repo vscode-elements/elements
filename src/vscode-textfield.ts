@@ -84,7 +84,13 @@ export class VscodeTextfield extends VscElement {
     | 'week' = 'text';
 
   @property()
-  value = '';
+  set value(val: string) {
+    this._value = val;
+  }
+
+  get value(): string {
+    return this._value;
+  }
 
   get wrappedElement(): HTMLInputElement {
     return this._inputEl;
@@ -110,6 +116,8 @@ export class VscodeTextfield extends VscElement {
   @query('#input')
   private _inputEl!: HTMLInputElement;
 
+  private _value = '';
+
   private _validate() {
     this.invalid = !this._inputEl.checkValidity();
   }
@@ -121,12 +129,16 @@ export class VscodeTextfield extends VscElement {
   }
 
   private _onInput(ev: InputEvent) {
+    this._value = this._inputEl.value;
+
     this.dispatchEvent(
       new CustomEvent('vsc-input', {detail: {data: ev.data, originalEvent: ev}})
     );
   }
 
   private _onChange(ev: InputEvent) {
+    this._value = this._inputEl.value;
+
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
         detail: {data: ev.data, originalEvent: ev},
@@ -237,7 +249,7 @@ export class VscodeTextfield extends VscElement {
         ?readonly=${this.readonly}
         ?required=${this.required}
         step=${ifDefined(this.step)}
-        value=${this.value}
+        .value=${this._value}
         @blur=${this._onBlur}
         @change=${this._onChange}
         @focus=${this._onFocus}
