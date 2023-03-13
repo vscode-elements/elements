@@ -23,10 +23,10 @@ import '@bendera/vscode-webview-elements/dist/vscode-form-container';
 <component-preview>
   <vscode-form-container>
     <vscode-form-group>
-      <vscode-label for="basic-inputbox-01">
+      <vscode-label for="basic-textfield-01">
         Lorem <span class="normal">ipsum</span>:
       </vscode-label>
-      <vscode-inputbox id="basic-inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
+      <vscode-textfield id="basic-textfield-01" placeholder="Placeholder example"></vscode-textfield>
       <vscode-form-helper>
         <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
       </vscode-form-helper>
@@ -43,10 +43,10 @@ import '@bendera/vscode-webview-elements/dist/vscode-form-container';
 ```html
 <vscode-form-container>
   <vscode-form-group>
-    <vscode-label for="basic-inputbox-01">
+    <vscode-label for="basic-textfield-01">
       Lorem <span class="normal">ipsum</span>:
     </vscode-label>
-    <vscode-inputbox id="basic-inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
+    <vscode-textfield id="basic-textfield-01" placeholder="Placeholder example"></vscode-textfield>
     <vscode-form-helper>
       <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
     </vscode-form-helper>
@@ -65,10 +65,10 @@ Try to resize the browser window. The children elements will be resized to the c
 <component-preview>
   <vscode-form-container responsive breakpoint="500">
     <vscode-form-group>
-      <vscode-label for="responsive-inputbox-01">
+      <vscode-label for="responsive-textfield-01">
         Lorem <span class="normal">ipsum</span>:
       </vscode-label>
-      <vscode-inputbox id="responsive-inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
+      <vscode-textfield id="responsive-textfield-01" placeholder="Placeholder example"></vscode-textfield>
       <vscode-form-helper>
         <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
       </vscode-form-helper>
@@ -85,10 +85,10 @@ Try to resize the browser window. The children elements will be resized to the c
 ```html
 <vscode-form-container responsive breakpoint="500">
   <vscode-form-group>
-    <vscode-label for="responsive-inputbox-01">
+    <vscode-label for="responsive-textfield-01">
       Lorem <span class="normal">ipsum</span>:
     </vscode-label>
-    <vscode-inputbox id="responsive-inputbox-01" placeholder="Placeholder example"></vscode-inputbox>
+    <vscode-textfield id="responsive-textfield-01" placeholder="Placeholder example"></vscode-textfield>
     <vscode-form-helper>
       <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
     </vscode-form-helper>
@@ -107,10 +107,10 @@ Click on the "save" button and check the developer console.
 <component-preview>
   <vscode-form-container id="form-data-example">
     <vscode-form-group>
-      <vscode-label for="data-example-inputbox">
+      <vscode-label for="data-example-textfield">
         Lorem <span class="normal">ipsum</span>:
       </vscode-label>
-      <vscode-inputbox id="data-example-inputbox" name="data-example-inputbox" placeholder="Placeholder example"></vscode-inputbox>
+      <vscode-textfield id="data-example-textfield" name="data-example-textfield" placeholder="Placeholder example"></vscode-textfield>
       <vscode-form-helper>
         <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
       </vscode-form-helper>
@@ -176,10 +176,10 @@ Click on the "save" button and check the developer console.
 ```html
 <vscode-form-container id="form-data-example">
   <vscode-form-group>
-    <vscode-label for="data-example-inputbox">
+    <vscode-label for="data-example-textfield">
       Lorem <span class="normal">ipsum</span>:
     </vscode-label>
-    <vscode-inputbox id="data-example-inputbox" name="data-example-inputbox" placeholder="Placeholder example"></vscode-inputbox>
+    <vscode-textfield id="data-example-textfield" name="data-example-textfield" placeholder="Placeholder example"></vscode-textfield>
     <vscode-form-helper>
       <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
     </vscode-form-helper>

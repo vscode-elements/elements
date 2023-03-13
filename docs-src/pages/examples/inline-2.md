@@ -22,7 +22,7 @@ weight: 4
   }
 
   .select-method[focused],
-  .inputbox-url[focused],
+  .textfield-url[focused],
   .button-send[focused] {
     position: relative;
     z-index: 1;
@@ -41,7 +41,7 @@ weight: 4
         <vscode-option>HEAD</vscode-option>
         <vscode-option>OPTION</vscode-option>
       </vscode-single-select>
-      <vscode-inputbox class="inputbox-url" name="url"></vscode-inputbox>
+      <vscode-textfield class="textfield-url" name="url"></vscode-textfield>
       <vscode-button class="button-send">Send</vscode-button>
     </div>
   </vscode-form-container>
@@ -73,7 +73,7 @@ weight: 4
       <vscode-option>HEAD</vscode-option>
       <vscode-option>OPTION</vscode-option>
     </vscode-single-select>
-    <vscode-inputbox class="inputbox-url" name="url"></vscode-inputbox>
+    <vscode-textfield class="textfield-url" name="url"></vscode-textfield>
     <vscode-button class="button-send">Send</vscode-button>
   </div>
 </vscode-form-container>
@@ -96,7 +96,7 @@ weight: 4
 }
 
 .select-method[focused],
-.inputbox-url[focused],
+.textfield-url[focused],
 .button-send[focused] {
   position: relative;
   z-index: 1;

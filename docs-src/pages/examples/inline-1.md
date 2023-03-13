@@ -21,7 +21,7 @@ weight: 3
   .log-settings-row vscode-label,
   .log-settings-row vscode-single-select,
   .log-settings-row vscode-checkbox,
-  .log-settings-row vscode-inputbox,
+  .log-settings-row vscode-textfield,
   .log-settings-row vscode-button {
     margin-top: 2px;
     margin-bottom: 2px;
@@ -95,13 +95,13 @@ weight: 3
       <vscode-label for="checkbox-show-timestamp" class="label">Show timestamp:</vscode-label>
       <vscode-checkbox label="" id="checkbox-show-timestamp" name="flags" value="show-timestamps" value="true" class="checkbox"></vscode-checkbox>
       <vscode-label for="input-since" class="label">Since:</vscode-label>
-      <vscode-inputbox value="0" id="input-since" name="since" class="input input-since"></vscode-inputbox>
+      <vscode-textfield value="0" id="input-since" name="since" class="input input-since"></vscode-textfield>
       <vscode-single-select name="time-unit" class="select select-since">
         <vscode-option>minutes</vscode-option>
         <vscode-option>hours</vscode-option>
       </vscode-single-select>
       <vscode-label for="input-tail" class="label">Tail:</vscode-label>
-      <vscode-inputbox value="-1" id="input-tail" name="tail" class="input input-tail"></vscode-inputbox>
+      <vscode-textfield value="-1" id="input-tail" name="tail" class="input input-tail"></vscode-textfield>
       <vscode-label for="checkbox-to-terminal" class="label">To terminal:</vscode-label>
       <vscode-checkbox id="checkbox-to-terminal" name="flags" value="to-terminal" class="checkbox"></vscode-checkbox>
       <div class="buttons">
@@ -114,7 +114,7 @@ weight: 3
       <vscode-single-select id="select-filter" name="filter" class="select select-filter">
         <vscode-option>all</vscode-option>
       </vscode-single-select>
-      <vscode-inputbox placeholder="Enter your keywords" name="keyword" class="input input-keywords"></vscode-inputbox>
+      <vscode-textfield placeholder="Enter your keywords" name="keyword" class="input input-keywords"></vscode-textfield>
       <vscode-label for="checkbox-wrap-lines" class="label">Wrap lines:</vscode-label>
       <vscode-checkbox id="checkbox-wrap-lines" name="flags" value="wrap-lines" class="checkbox"></vscode-checkbox>
       <vscode-button class="button-scroll">Scroll To Bottom</vscode-button>
@@ -148,7 +148,7 @@ vscode-form-container {
 .log-settings-row vscode-label,
 .log-settings-row vscode-single-select,
 .log-settings-row vscode-checkbox,
-.log-settings-row vscode-inputbox,
+.log-settings-row vscode-textfield,
 .log-settings-row vscode-button {
   margin-top: 2px;
   margin-bottom: 2px;
@@ -228,14 +228,14 @@ vscode-form-container {
     <vscode-checkbox label="" id="checkbox-show-timestamp" name="flags" value="show-timestamps" value="true" class="checkbox"></vscode-checkbox>
 
     <vscode-label for="input-since" class="label">Since:</vscode-label>
-    <vscode-inputbox value="0" id="input-since" name="since" class="input input-since"></vscode-inputbox>
+    <vscode-textfield value="0" id="input-since" name="since" class="input input-since"></vscode-textfield>
     <vscode-single-select name="time-unit" class="select select-since">
       <vscode-option>minutes</vscode-option>
       <vscode-option>hours</vscode-option>
     </vscode-single-select>
 
     <vscode-label for="input-tail" class="label">Tail:</vscode-label>
-    <vscode-inputbox value="-1" id="input-tail" name="tail" class="input input-tail"></vscode-inputbox>
+    <vscode-textfield value="-1" id="input-tail" name="tail" class="input input-tail"></vscode-textfield>
 
     <vscode-label for="checkbox-to-terminal" class="label">To terminal:</vscode-label>
     <vscode-checkbox id="checkbox-to-terminal" name="flags" value="to-terminal" class="checkbox"></vscode-checkbox>
@@ -251,7 +251,7 @@ vscode-form-container {
     <vscode-single-select id="select-filter" name="filter" class="select select-filter">
       <vscode-option>all</vscode-option>
     </vscode-single-select>
-    <vscode-inputbox placeholder="Enter your keywords" name="keyword" class="input input-keywords"></vscode-inputbox>
+    <vscode-textfield placeholder="Enter your keywords" name="keyword" class="input input-keywords"></vscode-textfield>
 
     <vscode-label for="checkbox-wrap-lines" class="label">Wrap lines:</vscode-label>
     <vscode-checkbox id="checkbox-wrap-lines" name="flags" value="wrap-lines" class="checkbox"></vscode-checkbox>
