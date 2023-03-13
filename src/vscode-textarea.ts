@@ -1,5 +1,5 @@
 import {CSSResultGroup, css, html, TemplateResult} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {customElement, property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -50,7 +50,13 @@ export class VscodeTextarea extends VscElement {
   monospace = false;
 
   @property()
-  value = '';
+  set value(val: string) {
+    this._value = val;
+  }
+
+  get value(): string {
+    return this._value;
+  }
 
   get wrappedElement(): HTMLTextAreaElement {
     return this._textareaEl;
@@ -62,6 +68,29 @@ export class VscodeTextarea extends VscElement {
 
   @query('#textarea')
   private _textareaEl!: HTMLTextAreaElement;
+
+  @state()
+  private _value = '';
+
+  private _handleChange(ev: InputEvent) {
+    this._value = this._textareaEl.value;
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {data: ev.data, originalEvent: ev},
+      })
+    );
+  }
+
+  private _handleInput(ev: InputEvent) {
+    this._value = this._textareaEl.value;
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-input', {
+        detail: {data: ev.data, originalEvent: ev},
+      })
+    );
+  }
 
   static get styles(): CSSResultGroup {
     return [
@@ -150,7 +179,10 @@ export class VscodeTextarea extends VscElement {
         })}
         ?required=${this.required}
         ?spellcheck=${this.spellcheck}
-      >${this.value}</textarea
+        @change=${this._handleChange}
+        @input=${this._handleInput}
+      >
+${this._value}</textarea
       >
     `;
   }
