@@ -10,10 +10,10 @@ weight: 1
 <component-preview>
   <vscode-form-container responsive id="example-form">
     <vscode-form-group>
-      <vscode-label for="inputbox-01">
+      <vscode-label for="textfield-01">
         Lorem <span class="normal">ipsum</span>:
       </vscode-label>
-      <vscode-inputbox id="inputbox-01" name="input-1" placeholder="Placeholder example"></vscode-inputbox>
+      <vscode-textfield id="textfield-01" name="input-1" placeholder="Placeholder example"></vscode-textfield>
       <vscode-form-helper>
         <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
         <ul>
@@ -24,10 +24,10 @@ weight: 1
       </vscode-form-helper>
     </vscode-form-group>
     <vscode-form-group>
-      <vscode-label for="inputbox-02">
+      <vscode-label for="textfield-02">
         Dolor sit:
       </vscode-label>
-      <vscode-inputbox id="inputbox-02" multiline name="input-2"></vscode-inputbox>
+      <vscode-textfield id="textfield-02" multiline name="input-2"></vscode-textfield>
     </vscode-form-group>
     <vscode-form-group>
       <vscode-label for="select-01">
@@ -112,10 +112,10 @@ weight: 1
 ```html
 <vscode-form-container responsive id="example-form">
   <vscode-form-group>
-    <vscode-label for="inputbox-01">
+    <vscode-label for="textfield-01">
       Lorem <span class="normal">ipsum</span>:
     </vscode-label>
-    <vscode-inputbox id="inputbox-01" name="input-1" placeholder="Placeholder example"></vscode-inputbox>
+    <vscode-textfield id="textfield-01" name="input-1" placeholder="Placeholder example"></vscode-textfield>
     <vscode-form-helper>
       <p>Lorem ipsum <code>let dolor = sit amet</code>, consectetur adipiscing elit. <span class="error">Suspendisse</span> faucibus imperdiet sapien, a gravida <a href="#">dolor</a>.</p>
       <ul>
@@ -126,10 +126,10 @@ weight: 1
     </vscode-form-helper>
   </vscode-form-group>
   <vscode-form-group>
-    <vscode-label for="inputbox-02">
+    <vscode-label for="textfield-02">
       Dolor sit:
     </vscode-label>
-    <vscode-inputbox id="inputbox-02" multiline name="input-2"></vscode-inputbox>
+    <vscode-textfield id="textfield-02" multiline name="input-2"></vscode-textfield>
   </vscode-form-group>
   <vscode-form-group>
     <vscode-label for="select-01">

@@ -16,14 +16,14 @@ You can create your own settings pages that look like a real VSCode settings pag
       <vscode-form-helper>
         <p>Controls the font size in pixels.</p>
       </vscode-form-helper>
-      <vscode-inputbox size-variant="narrow" name="font-size" value="14"></vscode-inputbox>
+      <vscode-textfield size-variant="narrow" name="font-size" value="14"></vscode-textfield>
     </vscode-form-group>
     <vscode-form-group variant="settings-group">
       <vscode-label><span class="lightened">Editor:</span> Font Family</vscode-label>
       <vscode-form-helper>
         <p>Controls the font family.</p>
       </vscode-form-helper>
-      <vscode-inputbox size-variant="wide" name="font-family" value="'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"></vscode-inputbox>
+      <vscode-textfield size-variant="wide" name="font-family" value="'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"></vscode-textfield>
     </vscode-form-group>
     <vscode-form-group variant="settings-group">
       <vscode-label><span class="lightened">Editor:</span> Insert Spaces</vscode-label>
@@ -58,7 +58,7 @@ You can create your own settings pages that look like a real VSCode settings pag
           <li><code>${separator}</code>: a conditional separator (" - ") that only shows when surrounded by variables with values or static text.</li>
         </ul>
       </vscode-form-helper>
-      <vscode-inputbox name="window-title" size-variant="wide"></vscode-inputbox>
+      <vscode-textfield name="window-title" size-variant="wide"></vscode-textfield>
     </vscode-form-group>
   </vscode-form-container>
 </component-preview>
@@ -83,7 +83,7 @@ You can create your own settings pages that look like a real VSCode settings pag
     <vscode-form-helper>
       <p>Controls the font size in pixels.</p>
     </vscode-form-helper>
-    <vscode-inputbox size-variant="narrow" name="font-size" value="14"></vscode-inputbox>
+    <vscode-textfield size-variant="narrow" name="font-size" value="14"></vscode-textfield>
   </vscode-form-group>
 
   <vscode-form-group variant="settings-group">
@@ -91,7 +91,7 @@ You can create your own settings pages that look like a real VSCode settings pag
     <vscode-form-helper>
       <p>Controls the font family.</p>
     </vscode-form-helper>
-    <vscode-inputbox size-variant="wide" name="font-family" value="'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"></vscode-inputbox>
+    <vscode-textfield size-variant="wide" name="font-family" value="'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace"></vscode-textfield>
   </vscode-form-group>
 
   <vscode-form-group variant="settings-group">
@@ -129,7 +129,7 @@ You can create your own settings pages that look like a real VSCode settings pag
         <li><code>${separator}</code>: a conditional separator (" - ") that only shows when surrounded by variables with values or static text.</li>
       </ul>
     </vscode-form-helper>
-    <vscode-inputbox name="window-title" size-variant="wide"></vscode-inputbox>
+    <vscode-textfield name="window-title" size-variant="wide"></vscode-textfield>
   </vscode-form-group>
   
 </vscode-form-container>
