@@ -87,6 +87,8 @@ export class VscodeFormGroup extends VscElement {
         }
 
         :host([variant='settings-group']) ::slotted(vscode-inputbox),
+        :host([variant='settings-group']) ::slotted(vscode-textfield),
+        :host([variant='settings-group']) ::slotted(vscode-textarea),
         :host([variant='settings-group']) ::slotted(vscode-single-select),
         :host([variant='settings-group']) ::slotted(vscode-multi-select) {
           margin-top: 9px;

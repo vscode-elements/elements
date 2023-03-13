@@ -9,7 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - Textfield and Textarea values were not collected in the **FormContainer** form data.
-- The value of the `value` property was not syncronized properly with the value of the inner form widget in **Textfiled** and **Textarea**.
+- The value of the `value` property was not syncronized properly with the value of the inner form widget in **Textfield** and **Textarea**.
+- Fix top-margin of **Textfield** and **Textarea** in **FormGroup** when its `variant` is "settings-group".
 
 ## [0.10.2] - 2023-03-12
 
