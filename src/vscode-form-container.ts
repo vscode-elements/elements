@@ -33,8 +33,10 @@ interface FormData {
   [key: string]: string | string[];
 }
 
-const isInputbox = (el: Element): el is VscodeInputbox => {
-  return el.tagName.toLocaleLowerCase() === 'vscode-inputbox';
+const isTextInput = (el: Element): el is VscodeInputbox => {
+  return ['vscode-inputbox', 'vscode-textfield', 'vscode-textarea'].includes(
+    el.tagName.toLocaleLowerCase()
+  );
 };
 
 const isSingleSelect = (el: Element): el is VscodeSingleSelect => {
@@ -96,6 +98,8 @@ export class VscodeFormContainer extends VscElement {
   private _collectFormData() {
     const query = [
       'vscode-inputbox',
+      'vscode-textfield',
+      'vscode-textarea',
       'vscode-single-select',
       'vscode-multi-select',
       'vscode-checkbox',
@@ -127,7 +131,7 @@ export class VscodeFormContainer extends VscElement {
         data[name] = Array.isArray(data[name]) ? data[name] : [];
       } else if (
         (isRadio(widget) && widget.checked) ||
-        isInputbox(widget) ||
+        isTextInput(widget) ||
         isSingleSelect(widget)
       ) {
         data[name] = widget.value;
