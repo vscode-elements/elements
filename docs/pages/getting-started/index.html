@@ -27,7 +27,7 @@
   <header class="page-header">
     <div class="content-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.435 73.998" width="167" height="74" class="page-header__logo"><g fill="#007acc"><path d="M115.89 8.141L100.762.857a4.574 4.574 0 00-5.23.89L66.537 28.2l-12.63-9.584a3.042 3.042 0 00-3.908.173l-4.051 3.678a3.067 3.067 0 00-.015 4.526l10.963 10-10.963 10a3.067 3.067 0 00.015 4.526l4.051 3.692c1.107.992 2.745 1.064 3.908.173l12.63-9.584L95.53 72.251a4.552 4.552 0 005.216.89l15.144-7.284a4.576 4.576 0 002.6-4.138V12.28a4.552 4.552 0 00-2.6-4.138zm-15.761 45.56l-22.012-16.71 22.012-16.709zM134.34 0l-7.81 7.81L155.73 37l-29.2 29.188 7.81 7.81 33.095-33.094v-7.81zM40.904 7.81L11.704 37l29.2 29.188-7.81 7.81L0 40.904v-7.81L33.094 0z"/></g></svg>
-      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.10.3</span>
+      <a href="/vscode-webview-elements/" class="page-header__title">VSCode Webview Elements</a> <span class="page-header__version">0.11.0</span>
       
     </div>
   </header>
@@ -135,6 +135,8 @@
           <h1 id="getting-started" tabindex="-1"><a class="header-anchor" href="#getting-started">Getting started</a></h1>
 <p>VSCode Webview Elements is aimed to provide web components for extension development that fit the
 VSCode's UI design system. You can use these web components with the <a href="https://code.visualstudio.com/api/extension-guides/webview">Webview API</a>.</p>
+<h2 id="vscode-webview-ui-toolkit-vs-vscode-webview-elements" tabindex="-1"><a class="header-anchor" href="#vscode-webview-ui-toolkit-vs-vscode-webview-elements">VSCode Webview UI Toolkit vs VSCode Webview Elements</a></h2>
+<p>The <a href="https://github.com/microsoft/vscode-webview-ui-toolkit">VSCode Webview UI Toolkit</a> is the official component library for creating UI in the webview. Although VSCode Webview Elements seems redundant it already existed when the VSCode Webview UI Toolkit was released. On the other hand, it is still worth considering using it. VSCode Webview Elements are &quot;reverse-engineered&quot; components, which means, it strives to mimic pixel perfectly the VSCode's &quot;native&quot; lookout, while the Webview UI Toolkit just looks similar. Another benefit is the wider choice of components.</p>
 <h2 id="installation" tabindex="-1"><a class="header-anchor" href="#installation">Installation</a></h2>
 <p>You can access the library as NPM package:</p>
 <pre class="language-bash"><code class="language-bash"><span class="token function">npm</span> i @bendera/vscode-webview-elements</code></pre>
@@ -151,7 +153,7 @@ VSCode's UI design system. You can use these web components with the <a href="ht
 <h3 id="using-in-the-html" tabindex="-1"><a class="header-anchor" href="#using-in-the-html">Using in the HTML</a></h3>
 <p>After including scripts, you can use any component in the same way as a normal HTML tag. The custom elements will be registered automatically.</p>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>Lorem ispum dolor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><br><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vscode-button</span><span class="token punctuation">></span></span>Hello World!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>vscode-button</span><span class="token punctuation">></span></span></code></pre>
-<p>If you would like to use the Icon component, you must include the Codicon library on your page (the id attribute is important):</p>
+<p>If you would like to use the <a href="https://bendera.github.io/vscode-webview-elements/components/vscode-icon/">Icon component</a>, you must include the Codicon library on your page. The id attribute is important in order for the Icon component to find the proper stylesheet on the page:</p>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>path/to/codicon.css<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>vscode-codicon-stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></code></pre>
 <h3 id="demo-extension" tabindex="-1"><a class="header-anchor" href="#demo-extension">Demo extension</a></h3>
 <p>For more details, see the <a href="https://github.com/bendera/vscode-vscwe-demo/releases">demo extension</a>.</p>
