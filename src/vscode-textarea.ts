@@ -114,6 +114,7 @@ export class VscodeTextarea extends VscElement {
           border-style: solid;
           border-width: 1px;
           box-sizing: border-box;
+          color: var(--vscode-foreground);
           display: block;
           font-family: var(
             --vscode-font-family,
