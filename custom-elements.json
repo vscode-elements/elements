@@ -5430,6 +5430,22 @@
               "fieldName": "minlength"
             },
             {
+              "name": "rows",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "rows"
+            },
+            {
+              "name": "cols",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "cols"
+            },
+            {
               "name": "name",
               "default": "undefined",
               "resolveInitializer": {

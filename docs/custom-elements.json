@@ -5246,6 +5246,18 @@
             },
             {
               "kind": "field",
+              "name": "rows",
+              "default": "undefined",
+              "attribute": "rows"
+            },
+            {
+              "kind": "field",
+              "name": "cols",
+              "default": "undefined",
+              "attribute": "cols"
+            },
+            {
+              "kind": "field",
               "name": "name",
               "default": "undefined",
               "attribute": "name"
@@ -5416,6 +5428,22 @@
                 "module": "src/vscode-textarea.ts"
               },
               "fieldName": "minlength"
+            },
+            {
+              "name": "rows",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "rows"
+            },
+            {
+              "name": "cols",
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "src/vscode-textarea.ts"
+              },
+              "fieldName": "cols"
             },
             {
               "name": "name",
