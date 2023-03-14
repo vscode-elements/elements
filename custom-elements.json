@@ -5246,6 +5246,18 @@
             },
             {
               "kind": "field",
+              "name": "rows",
+              "default": "undefined",
+              "attribute": "rows"
+            },
+            {
+              "kind": "field",
+              "name": "cols",
+              "default": "undefined",
+              "attribute": "cols"
+            },
+            {
+              "kind": "field",
               "name": "name",
               "default": "undefined",
               "attribute": "name"

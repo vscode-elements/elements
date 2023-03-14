@@ -29,6 +29,12 @@ export class VscodeTextarea extends VscElement {
   minlength = undefined;
 
   @property()
+  rows = undefined;
+
+  @property()
+  cols = undefined;
+
+  @property()
   name = undefined;
 
   @property()
@@ -115,7 +121,6 @@ export class VscodeTextarea extends VscElement {
           );
           font-size: var(--vscode-font-size, 13px);
           font-weight: var(--vscode-font-weight, normal);
-          width: 100%;
         }
 
         textarea.monospace {
@@ -171,6 +176,8 @@ export class VscodeTextarea extends VscElement {
         })}
         maxlength=${ifDefined(this.maxlength)}
         minlength=${ifDefined(this.minlength)}
+        rows=${ifDefined(this.rows)}
+        cols=${ifDefined(this.cols)}
         name=${ifDefined(this.name)}
         placeholder=${ifDefined(this.placeholder)}
         ?readonly=${this.readonly}
