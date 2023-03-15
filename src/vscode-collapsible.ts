@@ -6,6 +6,13 @@ import {VscElement} from './includes/VscElement';
 /**
  * @slot body - Main content
  * @slot actions - Action icons in the header
+ *
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--background=var(--vscode-sideBar-background)]
+ * @cssprop [--header-background=var(--vscode-sideBarSectionHeader-background)]
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop [--title-foreground=var(--vscode-sideBarTitle-foreground)]
+ * @cssprop [--icon-foreground=var(--vscode-icon-foreground)]
  */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends VscElement {
@@ -29,13 +36,55 @@ export class VscodeCollapsible extends VscElement {
     return [
       super.styles,
       css`
+        :host {
+          --font-family: var(
+            --vscode-font-family,
+            'Segoe WPC',
+            'Segoe UI',
+            sans-serif
+          );
+        }
+
+        :host-context(body.vscode-dark) {
+          --background: var(--vscode-sideBar-background, #252526);
+          --header-background: var(
+            --vscode-sideBarSectionHeader-background,
+            #000000
+          );
+          --focus-border: var(--vscode-focusBorder, #007fd4);
+          --title-foreground: var(--vscode-sideBarTitle-foreground, #bbbbbb);
+          --icon-foreground: var(--vscode-icon-foreground, #c5c5c5);
+        }
+
+        :host-context(body.vscode-light) {
+          --background: var(--vscode-sideBar-background, #f3f3f3);
+          --header-background: var(
+            --vscode-sideBarSectionHeader-background,
+            rgba(0, 0, 0, 0)
+          );
+          --focus-border: var(--vscode-focusBorder, #0090f1);
+          --title-foreground: var(--vscode-sideBarTitle-foreground, #6f6f6f);
+          --icon-foreground: var(--vscode-icon-foreground, #424242);
+        }
+
+        :host-context(body.vscode-high-contrast) {
+          --background: var(--vscode-sideBar-background, #000000);
+          --header-background: var(
+            --vscode-sideBarSectionHeader-background,
+            #000000
+          );
+          --focus-border: var(--vscode-focusBorder, #f38518);
+          --title-foreground: var(--vscode-sideBarTitle-foreground, #ffffff);
+          --icon-foreground: var(--vscode-icon-foreground, #ffffff);
+        }
+
         .collapsible {
-          background-color: var(--vscode-sideBar-background);
+          background-color: var(--background);
         }
 
         .collapsible-header {
           align-items: center;
-          background-color: var(--vscode-sideBarSectionHeader-background);
+          background-color: var(--header-background);
           cursor: pointer;
           display: flex;
           height: 22px;
@@ -48,11 +97,12 @@ export class VscodeCollapsible extends VscElement {
           outline-offset: -1px;
           outline-style: solid;
           outline-width: 1px;
-          outline-color: var(--vscode-focusBorder);
+          outline-color: var(--focus-border);
         }
 
         .collapsible-header h3 {
-          color: var(--vscode-sideBarTitle-foreground);
+          color: var(--title-foreground);
+          font-family: var(--font-family);
           font-size: 11px;
           font-weight: 700;
           margin: 0;
@@ -60,7 +110,7 @@ export class VscodeCollapsible extends VscElement {
         }
 
         .header-icon {
-          color: var(--vscode-icon-foreground);
+          color: var(--icon-foreground);
           display: block;
           margin: 0 3px;
         }
