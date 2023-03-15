@@ -78,6 +78,9 @@ export class VscodeTextarea extends VscElement {
   @state()
   private _value = '';
 
+  @state()
+  private _textareaPointerCursor = false;
+
   private _handleChange(ev: InputEvent) {
     this._value = this._textareaEl.value;
 
@@ -96,6 +99,21 @@ export class VscodeTextarea extends VscElement {
         detail: {data: ev.data, originalEvent: ev},
       })
     );
+  }
+
+  private _handleMouseMove(ev: MouseEvent) {
+    if (this._textareaEl.clientHeight >= this._textareaEl.scrollHeight) {
+      this._textareaPointerCursor = false;
+      return;
+    }
+
+    const SCROLLBAR_WIDTH = 14;
+    const BORDER_WIDTH = 1;
+    const br = this._textareaEl.getBoundingClientRect();
+    const x = ev.clientX;
+
+    this._textareaPointerCursor =
+      x >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
   }
 
   static get styles(): CSSResultGroup {
@@ -150,6 +168,10 @@ export class VscodeTextarea extends VscElement {
           font-weight: var(--vscode-editor-font-weight);
         }
 
+        textarea.cursor-pointer {
+          cursor: pointer;
+        }
+
         textarea:focus {
           border-color: var(--vscode-focusBorder, #0090f1);
           outline: none;
@@ -160,7 +182,7 @@ export class VscodeTextarea extends VscElement {
         }
 
         textarea::-webkit-scrollbar {
-          width: 15px;
+          width: 14px;
         }
 
         textarea::-webkit-scrollbar-thumb {
@@ -193,6 +215,7 @@ export class VscodeTextarea extends VscElement {
         id="textarea"
         class=${classMap({
           monospace: this.monospace,
+          'cursor-pointer': this._textareaPointerCursor,
         })}
         maxlength=${ifDefined(this.maxlength)}
         minlength=${ifDefined(this.minlength)}
@@ -208,6 +231,7 @@ export class VscodeTextarea extends VscElement {
         ?spellcheck=${this.spellcheck}
         @change=${this._handleChange}
         @input=${this._handleInput}
+        @mousemove=${this._handleMouseMove}
       >
 ${this._value}</textarea
       >
