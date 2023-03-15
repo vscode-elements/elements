@@ -81,6 +81,9 @@ export class VscodeTextarea extends VscElement {
   @state()
   private _textareaPointerCursor = false;
 
+  @state()
+  private _shadow = false;
+
   private _handleChange(ev: InputEvent) {
     this._value = this._textareaEl.value;
 
@@ -116,6 +119,10 @@ export class VscodeTextarea extends VscElement {
       x >= br.left + br.width - SCROLLBAR_WIDTH - BORDER_WIDTH * 2;
   }
 
+  private _handleScroll() {
+    this._shadow = this._textareaEl.scrollTop > 0;
+  }
+
   static get styles(): CSSResultGroup {
     return [
       super.styles,
@@ -123,6 +130,7 @@ export class VscodeTextarea extends VscElement {
         :host {
           display: inline-block;
           height: 40px;
+          position: relative;
           width: 320px;
         }
 
@@ -132,6 +140,20 @@ export class VscodeTextarea extends VscElement {
 
         :host([rows]) {
           height: auto;
+        }
+
+        .shadow {
+          box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
+          display: none;
+          inset: 0 0 auto 0;
+          height: 6px;
+          pointer-events: none;
+          position: absolute;
+          width: 100%;
+        }
+
+        .shadow.visible {
+          display: block;
         }
 
         textarea {
@@ -208,6 +230,12 @@ export class VscodeTextarea extends VscElement {
 
   render(): TemplateResult {
     return html`
+      <div
+        class=${classMap({
+          shadow: true,
+          visible: this._shadow,
+        })}
+      ></div>
       <textarea
         autocomplete=${this.autocomplete}
         ?disabled=${this.disabled}
@@ -232,6 +260,7 @@ export class VscodeTextarea extends VscElement {
         @change=${this._handleChange}
         @input=${this._handleInput}
         @mousemove=${this._handleMouseMove}
+        @scroll=${this._handleScroll}
       >
 ${this._value}</textarea
       >
