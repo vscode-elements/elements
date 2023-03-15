@@ -103,8 +103,17 @@ export class VscodeTextarea extends VscElement {
       super.styles,
       css`
         :host {
-          display: block;
+          display: inline-block;
+          height: 40px;
           width: 320px;
+        }
+
+        :host([cols]) {
+          width: auto;
+        }
+
+        :host([rows]) {
+          height: auto;
         }
 
         textarea {
@@ -122,6 +131,16 @@ export class VscodeTextarea extends VscElement {
           );
           font-size: var(--vscode-font-size, 13px);
           font-weight: var(--vscode-font-weight, normal);
+          height: 100%;
+          width: 100%;
+        }
+
+        :host([cols]) textarea {
+          width: auto;
+        }
+
+        :host([rows]) textarea {
+          height: auto;
         }
 
         textarea.monospace {
