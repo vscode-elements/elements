@@ -224,6 +224,13 @@ export class VscodeTextarea extends VscElement {
             rgba(100, 100, 100, 0.7)
           );
         }
+
+        textarea::-webkit-scrollbar-thumb:active {
+          background-color: var(
+            --vscode-scrollbarSlider-activeBackground,
+            rgba(100, 100, 100, 0.7)
+          );
+        }
       `,
     ];
   }
