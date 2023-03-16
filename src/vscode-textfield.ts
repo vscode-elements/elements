@@ -3,9 +3,6 @@ import {customElement, property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from './includes/VscElement';
 
-const DEFAULT_FONT_SIZE = 13;
-const DEFAULT_LINE_HEIGHT = 18;
-
 /**
  * A simple inline textfield
  *
@@ -211,9 +208,13 @@ export class VscodeTextfield extends VscElement {
             "'Segoe WPC', 'Segoe UI', sans-serif"
           );
           font-size: var(--vscode-font-size, 13px);
-          line-height: ${DEFAULT_LINE_HEIGHT / DEFAULT_FONT_SIZE};
+          font-weight: var(--vscode-font-weight);
+          line-height: 18px;
           outline: none;
-          padding: 3px 4px;
+          padding-bottom: 3px;
+          padding-left: 4px;
+          padding-right: 4px;
+          padding-top: 3px;
           width: 100%;
         }
 
@@ -224,6 +225,30 @@ export class VscodeTextfield extends VscElement {
         input::placeholder {
           color: var(--vscode-input-placeholderForeground, #767676);
           opacity: 1;
+        }
+
+        input[type=file] {
+          line-height: 26px;
+          padding-bottom: 0;
+          padding-left: 2px;
+          padding-top: 0;
+        }
+
+        input[type=file]::file-selector-button {
+          background-color: var(--vscode-button-background);
+          border: 0;
+          border-radius: 2px;
+          color: var(--vscode-button-foreground);
+          cursor: pointer;
+          font-family: var(--vscode-font-family);
+          font-size: var(--vscode-font-size);
+          font-weight: var(--vscode-font-weight);
+          line-height: 20px;
+          padding: 1px 14px;
+        }
+
+        input[type=file]::file-selector-button:hover {
+          background-color: var(--vscode-button-hoverBackground);
         }
       `,
     ];

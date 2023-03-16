@@ -48,7 +48,7 @@ component: vscode-textfield
   </p>
 </component-preview>
 
-## HTML
+### HTML
 
 ```html
 <p>
@@ -72,4 +72,16 @@ component: vscode-textfield
     ></vscode-icon>
   </vscode-textfield>
 </p>
+```
+
+## File input
+
+<component-preview>
+  <vscode-textfield type="file"></vscode-textfield>
+</component-preview>
+
+### HTML
+
+```html
+<vscode-textfield type="file"></vscode-textfield>
 ```
