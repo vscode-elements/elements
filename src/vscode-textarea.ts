@@ -6,10 +6,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
 
 /**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
+ * Multi-line text input.
  */
 @customElement('vscode-textarea')
 export class VscodeTextarea extends VscElement {
@@ -52,6 +49,10 @@ export class VscodeTextarea extends VscElement {
   @property()
   spellcheck = false;
 
+  /**
+   * Use monospace fonts. The font family, weight, size, and color will be the same as set in the
+   * VSCode code editor.
+   */
   @property({type: Boolean, reflect: true})
   monospace = false;
 
@@ -64,6 +65,9 @@ export class VscodeTextarea extends VscElement {
     return this._value;
   }
 
+  /**
+   * Getter for the inner textarea element if it needs to be accessed for some reason.
+   */
   get wrappedElement(): HTMLTextAreaElement {
     return this._textareaEl;
   }
