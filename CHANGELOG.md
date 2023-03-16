@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   - Add an unobtrusive drop shadow when the text is scrolled.
   - Add active state to the scrollbar.
 - **Textarea**: Fixed the ugly resize handler when the scrollbar is visible.
+- **Textfield**: Customize the file input button styles.
 
 ## [0.11.0] - 2023-03-15
 
