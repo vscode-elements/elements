@@ -121,9 +121,8 @@
       ],
       "files": [
         ".env",
-        "docs-src/**/*",
         ".eleventy.cjs",
-        "custom-elements.json"
+        "src/**/*.ts"
       ],
       "service": true
     },
