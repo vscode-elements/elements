@@ -231,6 +231,16 @@ export class VscodeTextarea extends VscElement {
             rgba(100, 100, 100, 0.7)
           );
         }
+
+        textarea::-webkit-scrollbar-corner {
+          background-color: transparent;
+        }
+
+        textarea::-webkit-resizer {
+          background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAACJJREFUeJxjYMAOZuIQZ5j5//9/rJJESczEKYGsG6cEXgAAsEEefMxkua4AAAAASUVORK5CYII=');
+          background-repeat: no-repeat;
+          background-position: right bottom;
+        }
       `,
     ];
   }
