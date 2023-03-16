@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased] - 2023-03-
+
+### Changed
+
+- **Textarea**: The default display is `inline-block`, the default size is 320 x 40. It is 
+  automatically resized when `rows` or `cols` attributes are set.
+- **Textarea**: Follow the source control input box styles of VSCode more closely: 
+  - Change the cursor to hand when it is above the scrollbar.
+  - Add an unobtrusive drop shadow when the text is scrolled.
+  - Add active state to the scrollbar.
+- **Textarea**: Fixed the ugly resize handler when the scrollbar is visible.
+
 ## [0.11.0] - 2023-03-15
 
 ### Changed
