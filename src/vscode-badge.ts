@@ -1,5 +1,6 @@
 import {CSSResultGroup, css, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import declareThemeVariables from './includes/declareThemeVariables';
 import {VscElement} from './includes/VscElement';
 
 /**
@@ -17,55 +18,29 @@ export class VscodeBadge extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-badge-foreground',
+        },
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-badge-background',
+        },
+        {
+          componentProp: '--activity-bar-badge-background',
+          vscodeProp: '--vscode-activityBarBadge-background',
+        },
+        {
+          componentProp: '--activity-bar-badge-foreground',
+          vscodeProp: '--vscode-activityBarBadge-foreground',
+        },
+      ]),
       css`
-        :host {
-          --font-family: var(
-            --vscode-font-family,
-            "Segoe WPC",
-            "Segoe UI",
-            sans-serif
-          );
-        }
-
-        :host-context(body.vscode-dark) {
-          --background: var(--vscode-badge-background, #4d4d4d);
-          --foreground: var(--vscode-badge-foreground, #ffffff);
-          --activity-bar-badge-background: var(
-            --vscode-activityBarBadge-background,
-            #2188ff
-          );
-          --activity-bar-badge-foreground: var(
-            --vscode-activityBarBadge-foreground,
-            #ffffff
-          );
-        }
-
-        :host-context(body.vscode-light) {
-          --background: var(--vscode-badge-background, #c4c4c4);
-          --foreground: var(--vscode-badge-foreground, #333333);
-          --activity-bar-badge-background: var(
-            --vscode-activityBarBadge-background,
-            #007acc
-          );
-          --activity-bar-badge-foreground: var(
-            --vscode-activityBarBadge-foreground,
-            #ffffff
-          );
-        }
-
-        :host-context(body.vscode-high-contrast) {
-          --background: var(--vscode-badge-background, #000000);
-          --foreground: var(--vscode-badge-foreground, #ffffff);
-          --activity-bar-badge-background: var(
-            --vscode-activityBarBadge-background,
-            #000000
-          );
-          --activity-bar-badge-foreground: var(
-            --vscode-activityBarBadge-foreground,
-            #ffffff
-          );
-        }
-
         :host {
           background-color: var(--background);
           border-radius: 2px;
@@ -90,9 +65,9 @@ export class VscodeBadge extends VscElement {
         }
 
         :host([variant='activity-bar-counter']) {
-          background-color: var(--activityBarBadge-background);
+          background-color: var(--activity-bar-badge-background);
           border-radius: 20px;
-          color: var(--activityBarBadge-foreground);
+          color: var(--activity-bar-badge-foreground);
           font-size: 9px;
           font-weight: 600;
           line-height: 16px;

@@ -1,6 +1,7 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import declareThemeVariables from './includes/declareThemeVariables';
 import {VscElement} from './includes/VscElement';
 import './vscode-icon';
 
@@ -124,88 +125,45 @@ export class VscodeButton extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-button-background',
+        },
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-button-foreground',
+        },
+        {
+          componentProp: '--hover-background',
+          vscodeProp: '--vscode-button-hoverBackground',
+        },
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+        {
+          componentProp: '--font-weight',
+          vscodeProp: '--vscode-font-weight',
+        },
+        {
+          componentProp: '--secondary-background',
+          vscodeProp: '--vscode-button-secondaryBackground',
+        },
+        {
+          componentProp: '--secondary-foreground',
+          vscodeProp: '--vscode-button-secondaryForeground',
+        },
+        {
+          componentProp: '--secondary-hover-background',
+          vscodeProp: '--vscode-button-secondaryHoverBackground',
+        },
+      ]),
       css`
-        :host-context(body.vscode-dark) {
-          --background: var(--vscode-button-background, #0e639c);
-          --foreground: var(--vscode-button-foreground, #ffffff);
-          --hover-background: var(--vscode-button-hoverBackground, #1177bb);
-          --font-family: var(
-            --vscode-font-family,
-            'Segoe WPC',
-            'Segoe UI',
-            sans-serif
-          );
-          --font-size: var(--vscode-font-size, 13px);
-          --font-weight: var(--vscode-font-weight, normal);
-          --secondary-foreground: var(
-            --vscode-button-secondaryForeground,
-            #ffffff
-          );
-          --secondary-background: var(
-            --vscode-button-secondaryBackground,
-            #3a3d41
-          );
-          --secondary-hover-background: var(
-            --vscode-button-secondaryHoverBackground,
-            #45494e
-          );
-          --focus-border: var(--vscode-focusBorder, #007fd4);
-        }
-
-        :host-context(body.vscode-light) {
-          --background: var(--vscode-button-background, #007acc);
-          --foreground: var(--vscode-button-foreground, #ffffff);
-          --hover-background: var(--vscode-button-hoverBackground, #0062a3);
-          --font-family: var(
-            --vscode-font-family,
-            'Segoe WPC',
-            'Segoe UI',
-            sans-serif
-          );
-          --font-size: var(--vscode-font-size, 13px);
-          --font-weight: var(--vscode-font-weight, normal);
-          --secondary-foreground: var(
-            --vscode-button-secondaryForeground,
-            #ffffff
-          );
-          --secondary-background: var(
-            --vscode-button-secondaryBackground,
-            #5f6a79
-          );
-          --secondary-hover-background: var(
-            --vscode-button-secondaryHoverBackground,
-            #4c5561
-          );
-          --focus-border: var(--vscode-focusBorder, #0090f1);
-        }
-
-        :host-context(body.vscode-high-contrast) {
-          --background: var(--vscode-button-background, transparent);
-          --foreground: var(--vscode-button-foreground, #ffffff);
-          --hover-background: var(--vscode-button-hoverBackground, transparent);
-          --font-family: var(
-            --vscode-font-family,
-            'Segoe WPC',
-            'Segoe UI',
-            sans-serif
-          );
-          --font-size: var(--vscode-font-size, 13px);
-          --font-weight: var(--vscode-font-weight, normal);
-          --secondary-foreground: var(
-            --vscode-button-secondaryForeground,
-            #ffffff
-          );
-          --secondary-background: var(
-            --vscode-button-secondaryBackground,
-            transparent
-          );
-          --secondary-hover-background: var(
-            --vscode-button-secondaryHoverBackground,
-            transparent
-          );
-          --focus-border: var(--vscode-focusBorder, #f38518);
-        }
-
         :host {
           align-items: center;
           background-color: var(--background);
