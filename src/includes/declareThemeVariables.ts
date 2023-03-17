@@ -1,0 +1,162 @@
+import {unsafeCSS} from 'lit';
+
+type ThemeKind = 'dark' | 'light' | 'high-contrast';
+
+type VscodeThemeVariableName =
+  | '--vsc-foreground-translucent'
+  | '--vscode-activityBarBadge-background'
+  | '--vscode-activityBarBadge-foreground'
+  | '--vscode-badge-background'
+  | '--vscode-badge-foreground'
+  | '--vscode-button-background'
+  | '--vscode-button-foreground'
+  | '--vscode-button-hoverBackground'
+  | '--vscode-button-secondaryBackground'
+  | '--vscode-button-secondaryForeground'
+  | '--vscode-button-secondaryHoverBackground'
+  | '--vscode-focusBorder'
+  | '--vscode-font-family'
+  | '--vscode-font-size'
+  | '--vscode-font-weight'
+  | '--vscode-foreground'
+  | '--vscode-icon-foreground'
+  | '--vscode-settings-checkboxBackground'
+  | '--vscode-settings-checkboxBorder'
+  | '--vscode-settings-checkboxForeground'
+  | '--vscode-sideBar-background'
+  | '--vscode-sideBarSectionHeader-background'
+  | '--vscode-sideBarTitle-foreground';
+
+type FallbackThemeDefinition = Record<VscodeThemeVariableName, string>;
+
+type DefaultStyleRegistry = Record<ThemeKind, FallbackThemeDefinition>;
+
+const defaultStyles: DefaultStyleRegistry = {
+  dark: {
+    '--vsc-foreground-translucent': 'rgba(204, 204, 204, 0.9)',
+    '--vscode-activityBarBadge-background': '#2188ff',
+    '--vscode-activityBarBadge-foreground': '#ffffff',
+    '--vscode-badge-background': '#4d4d4d',
+    '--vscode-badge-foreground': '#ffffff',
+    '--vscode-button-background': '#0e639c',
+    '--vscode-button-foreground': '#ffffff',
+    '--vscode-button-hoverBackground': '#1177bb',
+    '--vscode-button-secondaryBackground': '#3a3d41',
+    '--vscode-button-secondaryForeground': '#ffffff',
+    '--vscode-button-secondaryHoverBackground': '#45494e',
+    '--vscode-focusBorder': '#007fd4',
+    '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
+    '--vscode-font-size': '13px',
+    '--vscode-font-weight': 'normal',
+    '--vscode-foreground': '#cccccc',
+    '--vscode-icon-foreground': '#c5c5c5',
+    '--vscode-settings-checkboxBackground': '#3c3c3c',
+    '--vscode-settings-checkboxBorder': '#6b6b6b',
+    '--vscode-settings-checkboxForeground': '#f0f0f0',
+    '--vscode-sideBar-background': '#252526',
+    '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
+    '--vscode-sideBarTitle-foreground': '#bbbbbb',
+  },
+  light: {
+    '--vsc-foreground-translucent': 'rgba(97, 97, 97, 0.9)',
+    '--vscode-activityBarBadge-background': '#007acc',
+    '--vscode-activityBarBadge-foreground': '#ffffff',
+    '--vscode-badge-background': '#c4c4c4',
+    '--vscode-badge-foreground': '#333333',
+    '--vscode-button-background': '#007acc',
+    '--vscode-button-foreground': '#ffffff',
+    '--vscode-button-hoverBackground': '#0062a3',
+    '--vscode-button-secondaryBackground': '#5f6a79',
+    '--vscode-button-secondaryForeground': '#ffffff',
+    '--vscode-button-secondaryHoverBackground': '#4c556',
+    '--vscode-focusBorder': '#0090f1',
+    '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
+    '--vscode-font-size': '13px',
+    '--vscode-font-weight': 'normal',
+    '--vscode-foreground': '#616161',
+    '--vscode-icon-foreground': '#424242',
+    '--vscode-settings-checkboxBackground': '#ffffff',
+    '--vscode-settings-checkboxBorder': '#919191',
+    '--vscode-settings-checkboxForeground': '#616161',
+    '--vscode-sideBar-background': '#f3f3f3',
+    '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
+    '--vscode-sideBarTitle-foreground': '#6f6f6f',
+  },
+  'high-contrast': {
+    '--vsc-foreground-translucent': 'rgba(255, 255, 255, 0.9)',
+    '--vscode-activityBarBadge-background': '#000000',
+    '--vscode-activityBarBadge-foreground': '#ffffff',
+    '--vscode-badge-background': '#000000',
+    '--vscode-badge-foreground': '#ffffff',
+    '--vscode-button-background': 'transparent',
+    '--vscode-button-foreground': '#ffffff',
+    '--vscode-button-hoverBackground': 'transparent',
+    '--vscode-button-secondaryBackground': 'transparent',
+    '--vscode-button-secondaryForeground': '#ffffff',
+    '--vscode-button-secondaryHoverBackground': 'transparent',
+    '--vscode-focusBorder': '#f38518',
+    '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
+    '--vscode-font-size': '13px',
+    '--vscode-font-weight': 'normal',
+    '--vscode-foreground': '#616161',
+    '--vscode-icon-foreground': '#ffffff',
+    '--vscode-settings-checkboxBackground': '#000000',
+    '--vscode-settings-checkboxBorder': '#6fc3df',
+    '--vscode-settings-checkboxForeground': '#ffffff',
+    '--vscode-sideBar-background': '#000000',
+    '--vscode-sideBarSectionHeader-background': 'transparent',
+    '--vscode-sideBarTitle-foreground': '#ffffff',
+  },
+};
+
+const createPropDeclaration = (
+  componentProp: string,
+  vscodeProp: string,
+  fallbackVal: string
+) => `${componentProp}: var(${vscodeProp}, ${fallbackVal});`;
+
+/**
+ * Declare custom CSS variables and initialize them with a default value in
+ * light, dark, and high contrast versions.
+ */
+const declareThemeVariables = (
+  themeVariableMap: {
+    componentProp: string;
+    vscodeProp: VscodeThemeVariableName;
+  }[]
+) => {
+  const variationDeclarations: Record<ThemeKind, string> = {
+    dark: '',
+    light: '',
+    'high-contrast': '',
+  };
+  const variations = Object.keys(variationDeclarations) as ThemeKind[];
+
+  themeVariableMap.forEach((t) => {
+    const {componentProp, vscodeProp} = t;
+
+    variations.forEach((themeKind) => {
+      const fallbackVal = defaultStyles[themeKind][vscodeProp];
+      const varDeclaration = createPropDeclaration(
+        componentProp,
+        vscodeProp,
+        fallbackVal
+      );
+      variationDeclarations[themeKind] += varDeclaration;
+    });
+  });
+
+  let rawCSS = '';
+
+  variations.forEach((v) => {
+    let css = `:host-context(body.vscode-${v}){`;
+    css += variationDeclarations[v];
+    css += '}';
+
+    rawCSS += css;
+  });
+
+  return unsafeCSS(rawCSS);
+};
+
+export default declareThemeVariables;
