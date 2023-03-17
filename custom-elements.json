@@ -5190,20 +5190,8 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "An example element.",
+          "description": "Multi-line text input.",
           "name": "VscodeTextarea",
-          "cssParts": [
-            {
-              "description": "The button",
-              "name": "button"
-            }
-          ],
-          "slots": [
-            {
-              "description": "This element has a slot",
-              "name": ""
-            }
-          ],
           "members": [
             {
               "kind": "field",
@@ -5313,6 +5301,7 @@
                 "text": "boolean"
               },
               "default": "false",
+              "description": "Use monospace fonts. The font family, weight, size, and color will be the same as set in the\nVSCode code editor.",
               "attribute": "monospace",
               "reflects": true
             },
@@ -5329,7 +5318,8 @@
               "name": "wrappedElement",
               "type": {
                 "text": "HTMLTextAreaElement"
-              }
+              },
+              "description": "Getter for the inner textarea element if it needs to be accessed for some reason."
             },
             {
               "kind": "method",
@@ -5351,6 +5341,24 @@
               },
               "privacy": "private",
               "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "_textareaPointerCursor",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_shadow",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
             },
             {
               "kind": "method",
@@ -5377,6 +5385,24 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "_handleMouseMove",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_handleScroll",
+              "privacy": "private"
             }
           ],
           "events": [
@@ -5499,6 +5525,7 @@
                 "text": "boolean"
               },
               "default": "false",
+              "description": "Use monospace fonts. The font family, weight, size, and color will be the same as set in the\nVSCode code editor.",
               "fieldName": "monospace"
             },
             {
