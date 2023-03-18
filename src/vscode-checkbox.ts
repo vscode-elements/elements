@@ -17,6 +17,7 @@ import {LabelledCheckboxOrRadioMixin} from './includes/form-button-widget/Labell
  * @cssprop [--foreground=var(--vsc-foreground-translucent)] - Label font color. 90% transparency version of `--vscode-foreground` by default.
  * @cssprop [--icon-background=var(--vscode-settings-checkboxBackground)]
  * @cssprop [--icon-border=var(--vscode-settings-checkboxBorder)]
+ * @cssprop [--icon-foreground=var(--vscode-settings-checkboxForeground)]
  * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
 @customElement('vscode-checkbox')
@@ -84,18 +85,6 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
       super.styles,
       baseStyles,
       css`
-        :host-context(body.vscode-dark) {
-          --focus-border: var(--vscode-focusBorder,#007fd4);
-        }
-
-        :host-context(body.vscode-light) {
-          --focus-border: var(--vscode-focusBorder, #0090f1);
-        }
-
-        :host-context(body.vscode-high-contrast) {
-          --focus-border: var(--vscode-focusBorder, #f38518);
-        }
-
         .icon {
           border-radius: 3px;
         }
