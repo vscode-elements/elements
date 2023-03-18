@@ -6,7 +6,7 @@
     {
       "label": "Run VSCode clean instance",
       "type": "shell",
-      "command": "code --disable-extensions"
+      "command": "code --disable-extensions --profile \"Clean\""
     }
   ]
 }
