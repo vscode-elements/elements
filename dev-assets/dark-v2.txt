@@ -96,9 +96,9 @@
 --vscode-editor-findRangeHighlightBackground: rgba(58, 61, 65, 0.4);
 --vscode-editor-focusedStackFrameHighlightBackground: rgba(122, 189, 122, 0.3);
 --vscode-editor-foldBackground: rgba(38, 79, 120, 0.3);
---vscode-editor-font-family: "Cascadia Code", Consolas, "Courier New", monospace;
---vscode-editor-font-size: 15px;
---vscode-editor-font-weight: 400;
+--vscode-editor-font-family: Consolas, "Courier New", monospace;
+--vscode-editor-font-size: 14px;
+--vscode-editor-font-weight: normal;
 --vscode-editor-foreground: #cccccc;
 --vscode-editor-hoverHighlightBackground: rgba(38, 79, 120, 0.25);
 --vscode-editor-inactiveSelectionBackground: #3a3d41;
@@ -588,5 +588,3 @@
 --vscode-welcomePage-tileHoverBackground: #252525;
 --vscode-widget-border: #303031;
 --vscode-widget-shadow: rgba(0, 0, 0, 0.36);
---vscode-window-activeBorder: #444444;
---vscode-window-inactiveBorder: #444444;

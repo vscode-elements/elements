@@ -83,9 +83,9 @@
 --vscode-editor-findMatchHighlightBorder: #f38518;
 --vscode-editor-findRangeHighlightBorder: rgba(243, 133, 24, 0.4);
 --vscode-editor-focusedStackFrameHighlightBackground: rgba(122, 189, 122, 0.3);
---vscode-editor-font-family: "Cascadia Code", Consolas, "Courier New", monospace;
---vscode-editor-font-size: 15px;
---vscode-editor-font-weight: 400;
+--vscode-editor-font-family: Consolas, "Courier New", monospace;
+--vscode-editor-font-size: 14px;
+--vscode-editor-font-weight: normal;
 --vscode-editor-foreground: #ffffff;
 --vscode-editor-hoverHighlightBackground: rgba(173, 214, 255, 0.15);
 --vscode-editor-inactiveSelectionBackground: rgba(255, 255, 255, 0.7);
@@ -502,5 +502,5 @@
 --vscode-welcomePage-tileBackground: #000000;
 --vscode-welcomePage-tileBorder: #6fc3df;
 --vscode-widget-border: #6fc3df;
---vscode-window-activeBorder: #444444;
---vscode-window-inactiveBorder: #444444;
+--vscode-window-activeBorder: #6fc3df;
+--vscode-window-inactiveBorder: #6fc3df;
