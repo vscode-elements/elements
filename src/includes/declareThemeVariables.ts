@@ -20,6 +20,13 @@ type VscodeThemeVariableName =
   | '--vscode-font-weight'
   | '--vscode-foreground'
   | '--vscode-icon-foreground'
+  | '--vscode-menu-background'
+  | '--vscode-menu-border'
+  | '--vscode-menu-foreground'
+  | '--vscode-menu-selectionBackground'
+  | '--vscode-menu-selectionBorder'
+  | '--vscode-menu-selectionForeground'
+  | '--vscode-menu-separatorBackground'
   | '--vscode-settings-checkboxBackground'
   | '--vscode-settings-checkboxBorder'
   | '--vscode-settings-checkboxForeground'
@@ -50,6 +57,13 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#cccccc',
     '--vscode-icon-foreground': '#c5c5c5',
+    '--vscode-menu-background': '#252526',
+    '--vscode-menu-border': '#454545',
+    '--vscode-menu-foreground': '#cccccc',
+    '--vscode-menu-selectionBackground': '#04395e',
+    '--vscode-menu-selectionBorder': 'transparent',
+    '--vscode-menu-selectionForeground': '#ffffff',
+    '--vscode-menu-separatorBackground': '#454545',
     '--vscode-settings-checkboxBackground': '#3c3c3c',
     '--vscode-settings-checkboxBorder': '#6b6b6b',
     '--vscode-settings-checkboxForeground': '#f0f0f0',
@@ -75,6 +89,13 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#616161',
     '--vscode-icon-foreground': '#424242',
+    '--vscode-menu-background': '#ffffff',
+    '--vscode-menu-border': '#d4d4d4',
+    '--vscode-menu-foreground': '#616161',
+    '--vscode-menu-selectionBackground': '#0060c0',
+    '--vscode-menu-selectionBorder': 'transparent',
+    '--vscode-menu-selectionForeground': '#ffffff',
+    '--vscode-menu-separatorBackground': '#d4d4d4',
     '--vscode-settings-checkboxBackground': '#ffffff',
     '--vscode-settings-checkboxBorder': '#919191',
     '--vscode-settings-checkboxForeground': '#616161',
@@ -100,6 +121,13 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#616161',
     '--vscode-icon-foreground': '#ffffff',
+    '--vscode-menu-background': '#000000',
+    '--vscode-menu-border': '#6fc3df',
+    '--vscode-menu-foreground': '#ffffff',
+    '--vscode-menu-selectionBorder': '#f38518',
+    '--vscode-menu-separatorBackground': '#d4d4d4',
+    '--vscode-menu-selectionBackground': 'transparent',
+    '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-settings-checkboxBackground': '#000000',
     '--vscode-settings-checkboxBorder': '#6fc3df',
     '--vscode-settings-checkboxForeground': '#ffffff',

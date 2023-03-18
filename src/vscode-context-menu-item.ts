@@ -1,5 +1,6 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import declareThemeVariables from './includes/declareThemeVariables';
 import {VscElement} from './includes/VscElement';
 
 export interface VscClickEventDetail {
@@ -10,6 +11,19 @@ export interface VscClickEventDetail {
   tabindex: number;
 }
 
+/**
+ * Child component of [ContextMenu](https://bendera.github.io/vscode-webview-elements/components/vscode-context-menu/).
+ *
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-weight=var(--vscode-font-weight)]
+ * @cssprop [--background=var(--vscode-menu-background)]
+ * @cssprop [--border=var(--vscode-menu-border)]
+ * @cssprop [--foreground=var(--vscode-menu-foreground)]
+ * @cssprop [--selection-background=var(--vscode-menu-selectionBackground)]
+ * @cssprop [--selection-foreground=var(--vscode-menu-selectionForeground)]
+ * @cssprop [--separator-background=var(--vscode-menu-separatorBackground)]
+ */
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends VscElement {
   @property({type: String})
@@ -46,27 +60,65 @@ export class VscodeContextMenuItem extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+        {
+          componentProp: '--font-weight',
+          vscodeProp: '--vscode-font-weight',
+        },
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-menu-background',
+        },
+        {
+          componentProp: '--border',
+          vscodeProp: '--vscode-menu-border',
+        },
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-menu-foreground',
+        },
+        {
+          componentProp: '--selection-background',
+          vscodeProp: '--vscode-menu-selectionBackground',
+        },
+        {
+          componentProp: '--selection-foreground',
+          vscodeProp: '--vscode-menu-selectionForeground',
+        },
+        {
+          componentProp: '--separator-background',
+          vscodeProp: '--vscode-menu-separatorBackground'
+        }
+      ]),
       css`
         :host {
           display: block;
-          font-family: var(--vscode-font-family);
-          font-size: var(--vscode-font-size);
-          font-weight: var(--vscode-font-weight);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
+          font-weight: var(--font-weight);
           line-height: 1.4em;
           outline: none;
           position: relative;
         }
 
         .context-menu-item {
-          background-color: var(--vscode-menu-background);
-          color: var(--vscode-menu-foreground);
+          background-color: var(--menu-background);
+          color: var(--menu-foreground);
           display: flex;
           user-select: none;
           white-space: nowrap;
         }
 
         .rule {
-          border-bottom: 1px solid var(--vscode-menu-separatorBackground);
+          border-bottom: 1px solid var(--separator-background);
           display: block;
           margin: 0 0 4px;
           opacity: 0.4;
@@ -77,7 +129,7 @@ export class VscodeContextMenuItem extends VscElement {
         .context-menu-item a {
           align-items: center;
           border-radius: 3px;
-          color: var(--vscode-menu-foreground);
+          color: var(--foreground);
           cursor: default;
           display: flex;
           flex: 1 1 auto;
@@ -90,8 +142,8 @@ export class VscodeContextMenuItem extends VscElement {
         }
 
         :host-context([selected]) .context-menu-item a {
-          background-color: var(--vscode-menu-selectionBackground);
-          color: var(--vscode-menu-selectionForeground);
+          background-color: var(--selection-background);
+          color: var(--selection-foreground);
         }
 
         .label {
