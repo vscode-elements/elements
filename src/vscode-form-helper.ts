@@ -3,7 +3,13 @@ import {customElement} from 'lit/decorators.js';
 import {applyForegroundRGBA} from './includes/themeHelpers';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
+/**
+ * Adds more detailed description to a [FromGroup](https://bendera.github.io/vscode-webview-elements/components/vscode-form-group/)
+ *
+ * @cssprop [--foreground=var(--vsc-foreground-translucent)] - Default text color. 90% transparency version of `--vscode-foreground` by default.
+ */
 @customElement('vscode-form-helper')
 export class VscodeFormHelper extends VscElement {
   constructor() {
@@ -12,9 +18,16 @@ export class VscodeFormHelper extends VscElement {
   }
 
   static get styles(): CSSResultGroup[] {
+    const fallbackStyles = declareThemeVariables([
+      {
+        componentProp: '--foreground',
+        vscodeProp: '--vsc-foreground-translucent',
+      },
+    ]);
+
     const baseStyles = css`
       :host {
-        color: var(--vsc-foreground-translucent);
+        color: var(--foreground);
         display: block;
         margin-bottom: 4px;
         margin-top: 4px;
@@ -26,7 +39,7 @@ export class VscodeFormHelper extends VscElement {
       }
     `;
 
-    return [super.styles, baseStyles, formHelperTextStyles];
+    return [super.styles, fallbackStyles, baseStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {
