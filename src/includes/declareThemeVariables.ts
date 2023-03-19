@@ -32,7 +32,10 @@ type VscodeThemeVariableName =
   | '--vscode-settings-checkboxForeground'
   | '--vscode-sideBar-background'
   | '--vscode-sideBarSectionHeader-background'
-  | '--vscode-sideBarTitle-foreground';
+  | '--vscode-sideBarTitle-foreground'
+  | '--vscode-toolbar-activeBackground'
+  | '--vscode-toolbar-hoverBackground'
+  | '--vscode-toolbar-hoverOutline';
 
 type FallbackThemeDefinition = Record<VscodeThemeVariableName, string>;
 
@@ -70,6 +73,9 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-sideBar-background': '#252526',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
     '--vscode-sideBarTitle-foreground': '#bbbbbb',
+    '--vscode-toolbar-activeBackground': 'rgba(99, 102, 103, 0.31)',
+    '--vscode-toolbar-hoverBackground': 'rgba(90, 93, 94, 0.31)',
+    '--vscode-toolbar-hoverOutline': 'transparent',
   },
   light: {
     '--vsc-foreground-translucent': 'rgba(97, 97, 97, 0.9)',
@@ -102,6 +108,9 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-sideBar-background': '#f3f3f3',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
     '--vscode-sideBarTitle-foreground': '#6f6f6f',
+    '--vscode-toolbar-activeBackground': 'rgba(166, 166, 166, 0.31)',
+    '--vscode-toolbar-hoverBackground': 'rgba(184, 184, 184, 0.31)',
+    '--vscode-toolbar-hoverOutline': 'transparent',
   },
   'high-contrast': {
     '--vsc-foreground-translucent': 'rgba(255, 255, 255, 0.9)',
@@ -134,6 +143,9 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-sideBar-background': '#000000',
     '--vscode-sideBarSectionHeader-background': 'transparent',
     '--vscode-sideBarTitle-foreground': '#ffffff',
+    '--vscode-toolbar-activeBackground': 'transparent',
+    '--vscode-toolbar-hoverBackground': 'transparent',
+    '--vscode-toolbar-hoverOutline': '#f38518',
   },
 };
 
