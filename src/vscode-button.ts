@@ -136,6 +136,10 @@ export class VscodeButton extends VscElement {
           vscodeProp: '--vscode-button-foreground',
         },
         {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-focusBorder',
+        },
+        {
           componentProp: '--icon-foreground',
           vscodeProp: '--vscode-button-foreground',
         },
