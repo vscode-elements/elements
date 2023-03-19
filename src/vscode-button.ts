@@ -10,6 +10,7 @@ import './vscode-icon';
  *
  * @cssprop [--background=var(--vscode-button-background)]
  * @cssprop [--foreground=var(--vscode-button-foreground)]
+ * @cssprop [--icon-foreground=var(--vscode-button-foreground)]
  * @cssprop [--hover-background=var(--vscode-button-hoverBackground)]
  * @cssprop [--font-family=var(--vscode-font-family)]
  * @cssprop [--font-size=var(--vscode-font-size)]
@@ -135,6 +136,10 @@ export class VscodeButton extends VscElement {
           vscodeProp: '--vscode-button-foreground',
         },
         {
+          componentProp: '--icon-foreground',
+          vscodeProp: '--vscode-button-foreground',
+        },
+        {
           componentProp: '--hover-background',
           vscodeProp: '--vscode-button-hoverBackground',
         },
@@ -246,13 +251,13 @@ export class VscodeButton extends VscElement {
         }
 
         .icon {
-          color: var(--foreground);
+          --foreground: var(--icon-foreground);
           display: block;
           margin-right: 3px;
         }
 
         .icon-after {
-          color: var(--foreground);
+          --foreground: var(--icon-foreground);
           display: block;
           margin-left: 3px;
         }
