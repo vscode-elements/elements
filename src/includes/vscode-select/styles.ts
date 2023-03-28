@@ -27,7 +27,7 @@ export default [
       vscodeProp: '--vscode-badge-background',
     },
     {
-      componentProp: '--foreground',
+      componentProp: '--badge-foreground',
       vscodeProp: '--vscode-badge-foreground',
     },
     {
@@ -82,16 +82,16 @@ export default [
 
     .select-face,
     .combobox-face {
-      background-color: var(--vscode-settings-textInputBackground);
-      border-color: var(--vscode-settings-dropdownBorder, rgba(0, 0, 0, 0));
+      background-color: var(--vscode-settings-dropdownBackground);
+      border-color: var(--vscode-settings-dropdownBorder);
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
-      color: var(--vscode-foreground);
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      color: var(--vscode-settings-dropdownForeground);
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      font-weight: var(--font-weight);
       line-height: ${DEFAULT_LINE_HEIGHT / DEFAULT_FONT_SIZE};
       position: relative;
       user-select: none;
@@ -108,9 +108,9 @@ export default [
     }
 
     .select-face-badge {
-      background-color: var(--vscode-badge-background);
+      background-color: var(--badge-background);
       border-radius: 2px;
-      color: var(--vscode-badge-foreground);
+      color: var(--badge-foreground);
       display: inline-block;
       flex-shrink: 0;
       font-size: 11px;
@@ -139,7 +139,7 @@ export default [
     :host(:focus) .combobox-face,
     :host([focused]) .select-face,
     :host([focused]) .combobox-face {
-      border-color: var(--vscode-focusBorder);
+      border-color: var(--focus-border);
       outline: none;
     }
 
@@ -147,10 +147,10 @@ export default [
       background-color: transparent;
       box-sizing: border-box;
       border: 0;
-      color: var(--vscode-foreground);
+      color: var(--foreground);
       display: block;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
+      font-family: var(--font-family);
+      font-size: var(--font-size);
       line-height: 1.3;
       padding: 4px;
       width: 100%;
@@ -163,7 +163,7 @@ export default [
     .combobox-button {
       background-color: transparent;
       border: 0;
-      color: var(--vscode-foreground);
+      color: var(--foreground);
       cursor: pointer;
       flex-shrink: 0;
       height: 24px;
@@ -202,8 +202,8 @@ export default [
     }
 
     .dropdown {
-      background-color: var(--vscode-settings-textInputBackground);
-      border-color: var(--vscode-settings-dropdownBorder);
+      background-color: var(--vscode-settings-dropdownBackground);
+      border-color: var(--vscode-settings-dropdownListBorder);
       border-radius: 0 0 3px 3px;
       border-style: solid;
       border-width: 1px;
@@ -292,7 +292,7 @@ export default [
     }
 
     .checkbox-icon.checked:before {
-      background-color: var(--vscode-foreground);
+      background-color: var(--foreground);
       left: 1px;
       top: 2.5px;
     }
@@ -317,7 +317,7 @@ export default [
       align-items: center;
       background-color: transparent;
       border: 0;
-      color: var(--vscode-foreground);
+      color: var(--foreground);
       cursor: pointer;
       display: flex;
       height: 24px;
@@ -331,18 +331,18 @@ export default [
     }
 
     .action-icon:focus-visible {
-      outline: 1px solid var(--vscode-focusBorder);
+      outline: 1px solid var(--focus-border);
       outline-offset: -1px;
     }
 
     .description {
-      border-color: var(--vscode-settings-dropdownBorder);
+      border-color: var(--border);
       border-style: solid;
       border-width: 1px 0 0;
-      color: var(--vscode-foreground);
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      color: var(--foreground);
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      font-weight: var(--font-weight);
       line-height: 1.3;
       padding: 6px 4px;
     }

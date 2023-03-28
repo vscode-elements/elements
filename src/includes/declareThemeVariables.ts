@@ -20,6 +20,8 @@ type VscodeThemeVariableName =
   | '--vscode-font-weight'
   | '--vscode-foreground'
   | '--vscode-icon-foreground'
+  | '--vscode-list-focusOutline'
+  | '--vscode-list-hoverBackground'
   | '--vscode-menu-background'
   | '--vscode-menu-border'
   | '--vscode-menu-foreground'
@@ -30,12 +32,16 @@ type VscodeThemeVariableName =
   | '--vscode-settings-checkboxBackground'
   | '--vscode-settings-checkboxBorder'
   | '--vscode-settings-checkboxForeground'
+  | '--vscode-settings-dropdownBorder'
+  | '--vscode-settings-textInputBackground'
   | '--vscode-sideBar-background'
   | '--vscode-sideBarSectionHeader-background'
   | '--vscode-sideBarTitle-foreground'
   | '--vscode-toolbar-activeBackground'
   | '--vscode-toolbar-hoverBackground'
-  | '--vscode-toolbar-hoverOutline';
+  | '--vscode-toolbar-hoverOutline'
+  | '--vscode-quickInputList-focusBackground'
+  | '--vscode-quickInputList-focusForeground';
 
 type FallbackThemeDefinition = Record<VscodeThemeVariableName, string>;
 
@@ -60,6 +66,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#cccccc',
     '--vscode-icon-foreground': '#c5c5c5',
+    '--vscode-list-focusOutline': '#007fd4',
+    '--vscode-list-hoverBackground': '#2a2d2e',
     '--vscode-menu-background': '#252526',
     '--vscode-menu-border': '#454545',
     '--vscode-menu-foreground': '#cccccc',
@@ -70,12 +78,16 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-checkboxBackground': '#3c3c3c',
     '--vscode-settings-checkboxBorder': '#6b6b6b',
     '--vscode-settings-checkboxForeground': '#f0f0f0',
+    '--vscode-settings-dropdownBorder': '#3c3c3c',
+    '--vscode-settings-textInputBackground': '#3c3c3c',
     '--vscode-sideBar-background': '#252526',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
     '--vscode-sideBarTitle-foreground': '#bbbbbb',
     '--vscode-toolbar-activeBackground': 'rgba(99, 102, 103, 0.31)',
     '--vscode-toolbar-hoverBackground': 'rgba(90, 93, 94, 0.31)',
     '--vscode-toolbar-hoverOutline': 'transparent',
+    '--vscode-quickInputList-focusBackground': '#04395e',
+    '--vscode-quickInputList-focusForeground': '#ffffff',
   },
   light: {
     '--vsc-foreground-translucent': 'rgba(97, 97, 97, 0.9)',
@@ -95,6 +107,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#616161',
     '--vscode-icon-foreground': '#424242',
+    '--vscode-list-focusOutline': '#0090f1',
+    '--vscode-list-hoverBackground': '#e8e8e8',
     '--vscode-menu-background': '#ffffff',
     '--vscode-menu-border': '#d4d4d4',
     '--vscode-menu-foreground': '#616161',
@@ -105,12 +119,16 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-checkboxBackground': '#ffffff',
     '--vscode-settings-checkboxBorder': '#919191',
     '--vscode-settings-checkboxForeground': '#616161',
+    '--vscode-settings-dropdownBorder': '#cecece',
+    '--vscode-settings-textInputBackground': '#ffffff',
     '--vscode-sideBar-background': '#f3f3f3',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
     '--vscode-sideBarTitle-foreground': '#6f6f6f',
     '--vscode-toolbar-activeBackground': 'rgba(166, 166, 166, 0.31)',
     '--vscode-toolbar-hoverBackground': 'rgba(184, 184, 184, 0.31)',
     '--vscode-toolbar-hoverOutline': 'transparent',
+    '--vscode-quickInputList-focusBackground': '#0060c0',
+    '--vscode-quickInputList-focusForeground': '#ffffff',
   },
   'high-contrast': {
     '--vsc-foreground-translucent': 'rgba(255, 255, 255, 0.9)',
@@ -130,6 +148,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#616161',
     '--vscode-icon-foreground': '#ffffff',
+    '--vscode-list-focusOutline': '#f38518',
+    '--vscode-list-hoverBackground': 'rgba(255, 255, 255, 0.1)',
     '--vscode-menu-background': '#000000',
     '--vscode-menu-border': '#6fc3df',
     '--vscode-menu-foreground': '#ffffff',
@@ -140,12 +160,16 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-checkboxBackground': '#000000',
     '--vscode-settings-checkboxBorder': '#6fc3df',
     '--vscode-settings-checkboxForeground': '#ffffff',
+    '--vscode-settings-dropdownBorder': '#6fc3df',
+    '--vscode-settings-textInputBackground': '#000000',
     '--vscode-sideBar-background': '#000000',
     '--vscode-sideBarSectionHeader-background': 'transparent',
     '--vscode-sideBarTitle-foreground': '#ffffff',
     '--vscode-toolbar-activeBackground': 'transparent',
     '--vscode-toolbar-hoverBackground': 'transparent',
     '--vscode-toolbar-hoverOutline': '#f38518',
+    '--vscode-quickInputList-focusBackground': '#000000',
+    '--vscode-quickInputList-focusForeground': '#ffffff',
   },
 };
 
