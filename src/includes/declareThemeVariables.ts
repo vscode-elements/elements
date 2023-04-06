@@ -100,7 +100,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-hoverBackground': '#0062a3',
     '--vscode-button-secondaryBackground': '#5f6a79',
     '--vscode-button-secondaryForeground': '#ffffff',
-    '--vscode-button-secondaryHoverBackground': '#4c556',
+    '--vscode-button-secondaryHoverBackground': '#4c5561',
     '--vscode-focusBorder': '#0090f1',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
