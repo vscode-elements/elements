@@ -1,6 +1,6 @@
 import {unsafeCSS} from 'lit';
 
-type ThemeKind = 'dark' | 'light' | 'high-contrast';
+type ThemeKind = 'dark' | 'light' | 'high-contrast' | 'high-contrast-light';
 
 type VscodeThemeVariableName =
   | '--vsc-foreground-translucent'
@@ -171,6 +171,47 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-quickInputList-focusBackground': '#000000',
     '--vscode-quickInputList-focusForeground': '#ffffff',
   },
+  'high-contrast-light': {
+    '--vsc-foreground-translucent': 'rgba(41, 41, 41, 0.9)',
+    '--vscode-activityBarBadge-background': '#0f4a85',
+    '--vscode-activityBarBadge-foreground': '#ffffff',
+    '--vscode-badge-background': '#0f4a85',
+    '--vscode-badge-foreground': '#ffffff',
+    '--vscode-button-background': '#0f4a85',
+    '--vscode-button-foreground': '#ffffff',
+    '--vscode-button-hoverBackground': '#0f4a85',
+    '--vscode-button-secondaryBackground': '#ffffff',
+    '--vscode-button-secondaryForeground': '#292929',
+    '--vscode-button-secondaryHoverBackground': '#ffffff',
+    '--vscode-focusBorder': '#006bbd',
+    '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
+    '--vscode-font-size': '13px',
+    '--vscode-font-weight': 'normal',
+    '--vscode-foreground': '#292929',
+    '--vscode-icon-foreground': '#292929',
+    '--vscode-list-focusOutline': '#006bbd',
+    '--vscode-list-hoverBackground': 'rgba(15, 74, 133, 0.1)',
+    '--vscode-menu-background': '#ffffff',
+    '--vscode-menu-border': '#0f4a85',
+    '--vscode-menu-foreground': '#292929',
+    '--vscode-menu-selectionBorder': '#006bbd',
+    '--vscode-menu-separatorBackground': '#0f4a85',
+    '--vscode-menu-selectionBackground': 'rgba(15, 74, 133, 0.1)',
+    '--vscode-menu-selectionForeground': '#292929',
+    '--vscode-settings-checkboxBackground': '#ffffff',
+    '--vscode-settings-checkboxBorder': '#0f4a85',
+    '--vscode-settings-checkboxForeground': '#292929',
+    '--vscode-settings-dropdownBorder': '#0f4a85',
+    '--vscode-settings-textInputBackground': '#ffffff',
+    '--vscode-sideBar-background': '#ffffff',
+    '--vscode-sideBarSectionHeader-background': 'transparent',
+    '--vscode-sideBarTitle-foreground': '#292929',
+    '--vscode-toolbar-activeBackground': 'transparent',
+    '--vscode-toolbar-hoverBackground': 'transparent',
+    '--vscode-toolbar-hoverOutline': '#006bbd',
+    '--vscode-quickInputList-focusBackground': '#ffffff',
+    '--vscode-quickInputList-focusForeground': '#292929',
+  },
 };
 
 const createPropDeclaration = (
@@ -193,6 +234,7 @@ const declareThemeVariables = (
     dark: '',
     light: '',
     'high-contrast': '',
+    'high-contrast-light': ''
   };
   const variations = Object.keys(variationDeclarations) as ThemeKind[];
 
