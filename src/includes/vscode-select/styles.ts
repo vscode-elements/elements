@@ -7,22 +7,6 @@ const DEFAULT_LINE_HEIGHT = 18;
 export default [
   declareThemeVariables([
     {
-      componentProp: '--active-background',
-      vscodeProp: '--vscode-quickInputList-focusBackground',
-    },
-    {
-      componentProp: '--active-foreground',
-      vscodeProp: '--vscode-quickInputList-focusForeground',
-    },
-    {
-      componentProp: '--active-outline',
-      vscodeProp: '--vscode-list-focusOutline',
-    },
-    {
-      componentProp: '--background',
-      vscodeProp: '--vscode-settings-textInputBackground',
-    },
-    {
       componentProp: '--badge-background',
       vscodeProp: '--vscode-badge-background',
     },
@@ -33,6 +17,18 @@ export default [
     {
       componentProp: '--border',
       vscodeProp: '--vscode-settings-dropdownBorder',
+    },
+    {
+      componentProp: '--checkbox-background',
+      vscodeProp: '--vscode-settings-checkboxBackground',
+    },
+    {
+      componentProp: '--dropdown-background',
+      vscodeProp: '--vscode-settings-dropdownBackground',
+    },
+    {
+      componentProp: '--dropdown-border',
+      vscodeProp: '--vscode-settings-dropdownListBorder'
     },
     {
       componentProp: '--focus-border',
@@ -53,6 +49,26 @@ export default [
     {
       componentProp: '--font-weight',
       vscodeProp: '--vscode-font-weight',
+    },
+    {
+      componentProp: '--list-active-selection-background',
+      vscodeProp: '--vscode-list-activeSelectionBackground'
+    },
+    {
+      componentProp: '--list-active-selection-foreground',
+      vscodeProp: '--vscode-list-activeSelectionForeground'
+    },
+    {
+      componentProp: '--list-focus-outline',
+      vscodeProp: '--vscode-list-focusOutline'
+    },
+    {
+      componentProp: '--list-hover-background',
+      vscodeProp: '--vscode-list-hoverBackground',
+    },
+    {
+      componentProp: '--list-hover-foreground',
+      vscodeProp: '--vscode-list-hoverForeground',
     },
     {
       componentProp: '--selected-background',
@@ -174,7 +190,7 @@ export default [
 
     .combobox-button:focus,
     .combobox-button:hover {
-      background-color: var(--vscode-list-hoverBackground);
+      background-color: var(--list-hover-background);
     }
 
     .combobox-button:focus {
@@ -182,7 +198,7 @@ export default [
     }
 
     .icon {
-      color: var(--vscode-foreground);
+      color: var(--foreground);
       display: block;
       height: 14px;
       pointer-events: none;
@@ -202,8 +218,8 @@ export default [
     }
 
     .dropdown {
-      background-color: var(--vscode-settings-dropdownBackground);
-      border-color: var(--vscode-settings-dropdownListBorder);
+      background-color: var(--dropdown-background);
+      border-color: var(--dropdown-border);
       border-radius: 0 0 3px 3px;
       border-style: solid;
       border-width: 1px;
@@ -218,7 +234,7 @@ export default [
 
     :host(:focus) .dropdown,
     :host([focused]) .dropdown {
-      border-color: var(--vscode-focusBorder);
+      border-color: var(--focus-border);
     }
 
     .options {
@@ -226,21 +242,37 @@ export default [
       cursor: pointer;
       list-style: none;
       margin: 0;
-      max-height: 194px;
+      max-height: 222px;
       overflow: auto;
-      padding: 2px;
+      padding: 1px;
     }
 
     .option {
       align-items: center;
-      color: var(--vscode-foreground);
+      color: var(--foreground);
       cursor: pointer;
       display: flex;
-      font-size: var(--vscode-font-size);
-      line-height: 17px;
-      min-height: calc(var(--vscode-font-size) * 1.3);
+      font-size: var(--font-size);
+      line-height: 18px;
+      min-height: calc(var(--font-size) * 1.3);
       padding: 1px 3px;
       user-select: none;
+      border-width: 1px;
+      border-style: solid;
+      border-color: transparent;
+    }
+
+    .option:hover {
+      background-color: var(--list-hover-background);
+      color: var(--list-hover-foreground);
+    }
+
+    :host-context(body[data-vscode-theme-kind='vscode-high-contrast'])
+      .option:hover,
+    :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
+      .option:hover {
+      border-style: dotted;
+      border-color: var(--list-focus-outline);
     }
 
     .option.disabled {
@@ -248,10 +280,21 @@ export default [
       opacity: 0.4;
     }
 
-    .option.active {
-      background-color: var(--vscode-quickInputList-focusBackground);
-      color: var(--vscode-quickInputList-focusForeground);
-      outline: 1px solid var(--vscode-list-focusOutline);
+    .option.active,
+    .option.active:hover {
+      background-color: var(--list-active-selection-background);
+      color: var(--list-active-selection-foreground);
+      border-color: var(--list-active-selection-background);
+      border-style: solid;
+      border-width: 1px;
+    }
+
+    :host-context(body[data-vscode-theme-kind='vscode-high-contrast'])
+      .option.active,
+    :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
+      .option.active:hover {
+      border-color: var(--list-focus-outline);
+      border-style: dashed;
     }
 
     .option-label {
@@ -261,16 +304,18 @@ export default [
     }
 
     .dropdown.multiple .option.selected {
-      background-color: var(--vscode-list-hoverBackground);
+      background-color: var(--list-hover-background);
+      border-color:  var(--list-hover-background);
     }
 
     .dropdown.multiple .option.selected.active {
-      background-color: var(--vscode-quickInputList-focusBackground);
-      color: var(--vscode-quickInputList-focusForeground);
+      background-color: var(--list-active-selection-background);
+      color: var(--list-active-selection-foreground);
+      border-color:  var(--list-active-selection-background);
     }
 
     .checkbox-icon {
-      background-color: var(--vscode-settings-checkboxBackground);
+      background-color: var(--checkbox-background);
       border: 1px solid currentColor;
       border-radius: 2px;
       box-sizing: border-box;
@@ -298,7 +343,7 @@ export default [
     }
 
     .checkbox-icon.checked:after {
-      background-color: var(--vscode-settings-checkboxBackground);
+      background-color: var(--checkbox-background);
       left: 1px;
       top: -0.5px;
     }
