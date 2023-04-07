@@ -209,6 +209,7 @@ export default [
     }
 
     .icon svg {
+      color: var(--foreground);
       height: 100%;
       width: 100%;
     }
@@ -252,7 +253,9 @@ export default [
       color: var(--foreground);
       cursor: pointer;
       display: flex;
+      font-family: var(--font-family);
       font-size: var(--font-size);
+      font-weight: var(--font-weight);
       line-height: 18px;
       min-height: calc(var(--font-size) * 1.3);
       padding: 1px 3px;
