@@ -3,9 +3,13 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
 const HANDLE_SIZE = 4;
 
+/**
+ * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]
+ */
 @customElement('vscode-split-layout')
 export class VscodeSplitLayout extends VscElement {
   @property()
@@ -169,6 +173,12 @@ export class VscodeSplitLayout extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--hover-border',
+          vscodeProp: '--vscode-sash-hoverBorder',
+        },
+      ]),
       css`
         :host {
           display: block;
@@ -218,7 +228,7 @@ export class VscodeSplitLayout extends VscElement {
         }
 
         .handle.hover {
-          background-color: var(--vscode-sash-hoverBorder);
+          background-color: var(--hover-border);
           transition: background-color 100ms linear 300ms;
         }
 

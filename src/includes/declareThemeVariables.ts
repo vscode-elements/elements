@@ -32,6 +32,7 @@ type VscodeThemeVariableName =
   | '--vscode-menu-selectionBorder'
   | '--vscode-menu-selectionForeground'
   | '--vscode-menu-separatorBackground'
+  | '--vscode-sash-hoverBorder'
   | '--vscode-scrollbar-shadow'
   | '--vscode-scrollbarSlider-background'
   | '--vscode-scrollbarSlider-hoverBackground'
@@ -87,6 +88,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#454545',
+    '--vscode-sash-hoverBorder': '#007fd4',
     '--vscode-scrollbar-shadow': '#000000',
     '--vscode-scrollbarSlider-activeBackground': 'rgba(191, 191, 191, 0.4)',
     '--vscode-scrollbarSlider-background': 'rgba(121, 121, 121, 0.4)',
@@ -137,6 +139,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#d4d4d4',
+    '--vscode-sash-hoverBorder': '#0090f1',
     '--vscode-scrollbar-shadow': '#dddddd',
     '--vscode-scrollbarSlider-activeBackground': 'rgba(0, 0, 0, 0.6)',
     '--vscode-scrollbarSlider-background': 'rgba(100, 100, 100, 0.4)',
@@ -187,6 +190,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#d4d4d4',
     '--vscode-menu-selectionBackground': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
+    '--vscode-sash-hoverBorder': '#f38518',
     '--vscode-scrollbar-shadow': 'transparent',
     '--vscode-scrollbarSlider-activeBackground': '#6fc3df',
     '--vscode-scrollbarSlider-background': 'rgba(111, 195, 223, 0.6)',
@@ -237,6 +241,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#0f4a85',
     '--vscode-menu-selectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-menu-selectionForeground': '#292929',
+    '--vscode-sash-hoverBorder': '#006bbd',
     '--vscode-scrollbar-shadow': 'transparent',
     '--vscode-scrollbarSlider-activeBackground': '#0f4a85',
     '--vscode-scrollbarSlider-background': 'rgba(15, 74, 133, 0.4)',
