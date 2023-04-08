@@ -32,6 +32,10 @@ type VscodeThemeVariableName =
   | '--vscode-menu-selectionBorder'
   | '--vscode-menu-selectionForeground'
   | '--vscode-menu-separatorBackground'
+  | '--vscode-scrollbar-shadow'
+  | '--vscode-scrollbarSlider-background'
+  | '--vscode-scrollbarSlider-hoverBackground'
+  | '--vscode-scrollbarSlider-activeBackground'
   | '--vscode-settings-checkboxBackground'
   | '--vscode-settings-checkboxBorder'
   | '--vscode-settings-checkboxForeground'
@@ -83,6 +87,10 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#454545',
+    '--vscode-scrollbar-shadow': '#000000',
+    '--vscode-scrollbarSlider-activeBackground': 'rgba(191, 191, 191, 0.4)',
+    '--vscode-scrollbarSlider-background': 'rgba(121, 121, 121, 0.4)',
+    '--vscode-scrollbarSlider-hoverBackground': 'rgba(100, 100, 100, 0.7)',
     '--vscode-settings-checkboxBackground': '#3c3c3c',
     '--vscode-settings-checkboxBorder': '#6b6b6b',
     '--vscode-settings-checkboxForeground': '#f0f0f0',
@@ -129,6 +137,10 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#d4d4d4',
+    '--vscode-scrollbar-shadow': '#dddddd',
+    '--vscode-scrollbarSlider-activeBackground': 'rgba(0, 0, 0, 0.6)',
+    '--vscode-scrollbarSlider-background': 'rgba(100, 100, 100, 0.4)',
+    '--vscode-scrollbarSlider-hoverBackground': 'rgba(100, 100, 100, 0.7)',
     '--vscode-settings-checkboxBackground': '#ffffff',
     '--vscode-settings-checkboxBorder': '#919191',
     '--vscode-settings-checkboxForeground': '#616161',
@@ -175,6 +187,10 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#d4d4d4',
     '--vscode-menu-selectionBackground': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
+    '--vscode-scrollbar-shadow': 'transparent',
+    '--vscode-scrollbarSlider-activeBackground': '#6fc3df',
+    '--vscode-scrollbarSlider-background': 'rgba(111, 195, 223, 0.6)',
+    '--vscode-scrollbarSlider-hoverBackground': 'rgba(111, 195, 223, 0.8)',
     '--vscode-settings-checkboxBackground': '#000000',
     '--vscode-settings-checkboxBorder': '#6fc3df',
     '--vscode-settings-checkboxForeground': '#ffffff',
@@ -221,6 +237,10 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#0f4a85',
     '--vscode-menu-selectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-menu-selectionForeground': '#292929',
+    '--vscode-scrollbar-shadow': 'transparent',
+    '--vscode-scrollbarSlider-activeBackground': '#0f4a85',
+    '--vscode-scrollbarSlider-background': 'rgba(15, 74, 133, 0.4)',
+    '--vscode-scrollbarSlider-hoverBackground': 'rgba(15, 74, 133, 0.8)',
     '--vscode-settings-checkboxBackground': '#ffffff',
     '--vscode-settings-checkboxBorder': '#0f4a85',
     '--vscode-settings-checkboxForeground': '#292929',
@@ -259,7 +279,7 @@ const declareThemeVariables = (
     dark: '',
     light: '',
     'high-contrast': '',
-    'high-contrast-light': ''
+    'high-contrast-light': '',
   };
   const variations = Object.keys(variationDeclarations) as ThemeKind[];
 

@@ -9,7 +9,15 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
+/**
+ * @cssprop [--min-thumb-height=20px]
+ * @cssprop [--scrollbar-shadow=var(--vscode-scrollbar-shadow)]
+ * @cssprop [--scrollbar-slider-background=var(--vscode-scrollbarSlider-background)]
+ * @cssprop [--scrollbar-slider-hover-background=var(--vscode-scrollbarSlider-hoverBackground)]
+ * @cssprop [--scrollbar-slider-active-background=var(--vscode-scrollbarSlider-activeBackground')]
+ */
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends VscElement {
   @property({type: Boolean, reflect: true})
@@ -237,6 +245,24 @@ export class VscodeScrollable extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--scrollbar-shadow',
+          vscodeProp: '--vscode-scrollbar-shadow',
+        },
+        {
+          componentProp: '--scrollbar-slider-background',
+          vscodeProp: '--vscode-scrollbarSlider-background',
+        },
+        {
+          componentProp: '--scrollbar-slider-hover-background',
+          vscodeProp: '--vscode-scrollbarSlider-hoverBackground',
+        },
+        {
+          componentProp: '--scrollbar-slider-active-background',
+          vscodeProp: '--vscode-scrollbarSlider-activeBackground',
+        },
+      ]),
       css`
         :host {
           display: block;
@@ -254,7 +280,7 @@ export class VscodeScrollable extends VscElement {
         }
 
         .shadow {
-          box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
+          box-shadow: var(--scrollbar-shadow) 0 6px 6px -6px inset;
           display: none;
           height: 3px;
           left: 0;
@@ -292,24 +318,24 @@ export class VscodeScrollable extends VscElement {
         }
 
         .scrollbar-thumb.visible {
-          background-color: var(--vscode-scrollbarSlider-background);
+          background-color: var(--scrollbar-slider-background);
           opacity: 1;
           transition: opacity 100ms;
         }
 
         .scrollbar-thumb.fade {
-          background-color: var(--vscode-scrollbarSlider-background);
+          background-color: var(--scrollbar-slider-background);
           opacity: 0;
           transition: opacity 800ms;
         }
 
         .scrollbar-thumb.visible:hover {
-          background-color: var(--vscode-scrollbarSlider-hoverBackground);
+          background-color: var(--scrollbar-slider-hover-background);
         }
 
         .scrollbar-thumb.visible.active,
         .scrollbar-thumb.visible.active:hover {
-          background-color: var(--vscode-scrollbarSlider-activeBackground);
+          background-color: var(--scrollbar-slider-active-background);
         }
 
         .content {
