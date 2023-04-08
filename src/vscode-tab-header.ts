@@ -2,7 +2,16 @@ import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
+/**
+ * @cssprop [--foreground=var(--vscode-foreground)]
+ * @cssprop [--panel-inactive-foreground=var(--vscode-panelTitle-inactiveForeground)]
+ * @cssprop [--panel-active-foreground=var(--vscode-panelTitle-activeForeground)]
+ * @cssprop [--panel-active-border=var(--vscode-panelTitle-activeBorder)]
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop [--active-foreground=var(--vscode-settings-headerForeground)]
+ */
 @customElement('vscode-tab-header')
 export class VscodeTabHeader extends VscElement {
   @property({type: Boolean, reflect: true})
@@ -40,6 +49,32 @@ export class VscodeTabHeader extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-foreground',
+        },
+        {
+          componentProp: '--panel-inactive-foreground',
+          vscodeProp: '--vscode-panelTitle-inactiveForeground',
+        },
+        {
+          componentProp: '--panel-active-foreground',
+          vscodeProp: '--vscode-panelTitle-activeForeground',
+        },
+        {
+          componentProp: '--panel-active-border',
+          vscodeProp: '--vscode-panelTitle-activeBorder',
+        },
+        {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-focusBorder',
+        },
+        {
+          componentProp: '--active-foreground',
+          vscodeProp: '--vscode-settings-headerForeground',
+        },
+      ]),
       css`
         :host {
           border-bottom: 1px solid transparent;
@@ -54,8 +89,8 @@ export class VscodeTabHeader extends VscElement {
         }
 
         :host([active]) {
-          border-bottom-color: var(--vscode-settings-headerForeground);
-          color: var(--vscode-settings-headerForeground);
+          border-bottom-color: var(--active-foreground);
+          color: var(--active-foreground);
         }
 
         :host([panel]) {
@@ -70,7 +105,7 @@ export class VscodeTabHeader extends VscElement {
 
         .wrapper {
           align-items: center;
-          color: var(--vscode-foreground);
+          color: var(--foreground);
           display: flex;
           min-height: 20px;
           overflow: inherit;
@@ -79,12 +114,12 @@ export class VscodeTabHeader extends VscElement {
         }
 
         .wrapper.panel {
-          color: var(--vscode-panelTitle-inactiveForeground);
+          color: var(--panel-inactive-foreground);
         }
 
         .wrapper.panel.active,
         .wrapper.panel:hover {
-          color: var(--vscode-panelTitle-activeForeground);
+          color: var(--panel-active-foreground);
         }
 
         :host([panel]) .wrapper {
@@ -105,7 +140,7 @@ export class VscodeTabHeader extends VscElement {
         }
 
         .active-indicator.panel.active {
-          border-top: 1px solid var(--vscode-panelTitle-activeBorder);
+          border-top: 1px solid var(--panel-active-border);
           bottom: 4px;
           display: block;
           left: 8px;
@@ -115,7 +150,7 @@ export class VscodeTabHeader extends VscElement {
         }
 
         :host(:focus-visible) .wrapper {
-          outline-color: var(--vscode-focusBorder);
+          outline-color: var(--focus-border);
           outline-offset: 3px;
           outline-style: solid;
           outline-width: 1px;

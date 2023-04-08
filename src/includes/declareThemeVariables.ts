@@ -32,6 +32,9 @@ type VscodeThemeVariableName =
   | '--vscode-menu-selectionBorder'
   | '--vscode-menu-selectionForeground'
   | '--vscode-menu-separatorBackground'
+  | '--vscode-panelTitle-activeBorder'
+  | '--vscode-panelTitle-activeForeground'
+  | '--vscode-panelTitle-inactiveForeground'
   | '--vscode-sash-hoverBorder'
   | '--vscode-scrollbar-shadow'
   | '--vscode-scrollbarSlider-background'
@@ -43,6 +46,7 @@ type VscodeThemeVariableName =
   | '--vscode-settings-dropdownBackground'
   | '--vscode-settings-dropdownBorder'
   | '--vscode-settings-dropdownListBorder'
+  | '--vscode-settings-headerForeground'
   | '--vscode-settings-textInputBackground'
   | '--vscode-sideBar-background'
   | '--vscode-sideBarSectionHeader-background'
@@ -88,6 +92,9 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#454545',
+    '--vscode-panelTitle-activeBorder': '#e7e7e7',
+    '--vscode-panelTitle-activeForeground': '#e7e7e7',
+    '--vscode-panelTitle-inactiveForeground': 'rgba(231, 231, 231, 0.6)',
     '--vscode-sash-hoverBorder': '#007fd4',
     '--vscode-scrollbar-shadow': '#000000',
     '--vscode-scrollbarSlider-activeBackground': 'rgba(191, 191, 191, 0.4)',
@@ -99,6 +106,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-dropdownBackground': '#3c3c3c',
     '--vscode-settings-dropdownBorder': '#3c3c3c',
     '--vscode-settings-dropdownListBorder': '#454545',
+    '--vscode-settings-headerForeground': '#e7e7e7',
     '--vscode-settings-textInputBackground': '#3c3c3c',
     '--vscode-sideBar-background': '#252526',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
@@ -139,6 +147,9 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#d4d4d4',
+    '--vscode-panelTitle-activeBorder': '#424242',
+    '--vscode-panelTitle-activeForeground': '#424242',
+    '--vscode-panelTitle-inactiveForeground': 'rgba(66, 66, 66, 0.75)',
     '--vscode-sash-hoverBorder': '#0090f1',
     '--vscode-scrollbar-shadow': '#dddddd',
     '--vscode-scrollbarSlider-activeBackground': 'rgba(0, 0, 0, 0.6)',
@@ -150,6 +161,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-dropdownBackground': '#ffffff',
     '--vscode-settings-dropdownBorder': '#cecece',
     '--vscode-settings-dropdownListBorder': '#c8c8c8',
+    '--vscode-settings-headerForeground': '#444444',
     '--vscode-settings-textInputBackground': '#ffffff',
     '--vscode-sideBar-background': '#f3f3f3',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
@@ -190,6 +202,9 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#d4d4d4',
     '--vscode-menu-selectionBackground': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
+    '--vscode-panelTitle-activeBorder': '#6fc3df',
+    '--vscode-panelTitle-activeForeground': '#ffffff',
+    '--vscode-panelTitle-inactiveForeground': '#ffffff',
     '--vscode-sash-hoverBorder': '#f38518',
     '--vscode-scrollbar-shadow': 'transparent',
     '--vscode-scrollbarSlider-activeBackground': '#6fc3df',
@@ -201,6 +216,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-dropdownBackground': '#000000',
     '--vscode-settings-dropdownBorder': '#6fc3df',
     '--vscode-settings-dropdownListBorder': '#6fc3df',
+    '--vscode-settings-headerForeground': '#ffffff',
     '--vscode-settings-textInputBackground': '#000000',
     '--vscode-sideBar-background': '#000000',
     '--vscode-sideBarSectionHeader-background': 'transparent',
@@ -241,6 +257,9 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#0f4a85',
     '--vscode-menu-selectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-menu-selectionForeground': '#292929',
+    '--vscode-panelTitle-activeBorder': '#b5200d',
+    '--vscode-panelTitle-activeForeground': '#292929',
+    '--vscode-panelTitle-inactiveForeground': '#292929',
     '--vscode-sash-hoverBorder': '#006bbd',
     '--vscode-scrollbar-shadow': 'transparent',
     '--vscode-scrollbarSlider-activeBackground': '#0f4a85',
@@ -252,6 +271,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-dropdownBackground': '#ffffff',
     '--vscode-settings-dropdownBorder': '#0f4a85',
     '--vscode-settings-dropdownListBorder': '#0f4a85',
+    '--vscode-settings-headerForeground': '#292929',
     '--vscode-settings-textInputBackground': '#ffffff',
     '--vscode-sideBar-background': '#ffffff',
     '--vscode-sideBarSectionHeader-background': 'transparent',
