@@ -1,7 +1,12 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
+/**
+ * @cssprop [--background=var(--vscode-panel--background)]
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ */
 @customElement('vscode-tab-panel')
 export class VscodeTabPanel extends VscElement {
   @property({type: Boolean, reflect: true})
@@ -25,6 +30,16 @@ export class VscodeTabPanel extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-focusBorder',
+        },
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-panel-background',
+        },
+      ]),
       css`
         :host {
           display: block;
@@ -32,14 +47,14 @@ export class VscodeTabPanel extends VscElement {
         }
 
         :host(:focus-visible) {
-          outline-color: var(--vscode-focusBorder);
+          outline-color: var(--focus-border);
           outline-offset: 3px;
           outline-style: solid;
           outline-width: 1px;
         }
 
         :host([panel]) {
-          background-color: var(--vscode-panel-background);
+          background-color: var(--background);
         }
       `,
     ];

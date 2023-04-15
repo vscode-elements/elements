@@ -14,8 +14,8 @@ interface OptionListStat {
 }
 
 const VISIBLE_OPTS = 10;
-const OPT_HEIGHT = 19;
-const LIST_HEIGHT = 194;
+const OPT_HEIGHT = 22;
+const LIST_HEIGHT = VISIBLE_OPTS + OPT_HEIGHT + 2;
 
 /**
  * @cssprop --dropdown-z-index - workaround for dropdown z-index issues

@@ -4,11 +4,17 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
 /**
  * Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).
  * In "action-icon" mode it behaves like a button. In this case, it is
  * recommended that a meaningful label is specified with the `label` property.
+ *
+ * @cssprop [--foreground=var(--vscode-icon-foreground)]
+ * @cssprop [--hover-background=var(--vscode-toolbar-hoverBackground)] - Hover state background color in `active-icon` mode
+ * @cssprop [--active-background=var(--vscode-toolbar-activeBackground)] - Active state background color in `active-icon` mode
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
 @customElement('vscode-icon')
 export class VscodeIcon extends VscElement {
@@ -87,9 +93,27 @@ export class VscodeIcon extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-icon-foreground',
+        },
+        {
+          componentProp: '--hover-background',
+          vscodeProp: '--vscode-toolbar-hoverBackground',
+        },
+        {
+          componentProp: '--active-background',
+          vscodeProp: '--vscode-toolbar-activeBackground',
+        },
+        {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-focusBorder',
+        },
+      ]),
       css`
         :host {
-          color: var(--vscode-icon-foreground);
+          color: var(--foreground);
           display: inline-block;
         }
 

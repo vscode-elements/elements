@@ -10,6 +10,32 @@
           "kind": "class",
           "description": "",
           "name": "VscodeBadge",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "description": "default and counter variant background color",
+              "name": "--background",
+              "default": "var(--vscode-badge-background)"
+            },
+            {
+              "description": "default and counter variant foreground color",
+              "name": "--foreground",
+              "default": "var(--vscode-badge-foreground)"
+            },
+            {
+              "description": "activity bar variant background color",
+              "name": "--activity-bar-badge-background",
+              "default": "var(--vscode-activityBarBadge-background)"
+            },
+            {
+              "description": "activity bar variant foreground color",
+              "name": "--activity-bar-badge-foreground",
+              "default": "var(--vscode-activityBarBadge-foreground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -66,6 +92,48 @@
           "kind": "class",
           "description": "",
           "name": "VscodeButton",
+          "cssProperties": [
+            {
+              "name": "--background",
+              "default": "var(--vscode-button-background)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-button-foreground)"
+            },
+            {
+              "name": "--hover-background",
+              "default": "var(--vscode-button-hoverBackground)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--secondary-foreground",
+              "default": "var(--vscode-button-secondaryForeground)"
+            },
+            {
+              "name": "--secondary-background",
+              "default": "var(--vscode-button-secondaryBackground)"
+            },
+            {
+              "name": "--secondary-hover-background",
+              "default": "var(--vscode-button-secondaryHoverBackground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            }
+          ],
           "members": [
             {
               "kind": "field",

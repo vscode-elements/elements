@@ -4,6 +4,10 @@ import {VscElement} from './includes/VscElement';
 
 export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
 
+/**
+ * @cssprop [--label-width=150px] - The width of the label in horizontal mode
+ * @cssprop [--label-right-margin=14px] - The right margin of the label in horizontal mode
+ */
 @customElement('vscode-form-group')
 export class VscodeFormGroup extends VscElement {
   @property({reflect: true})
@@ -15,7 +19,7 @@ export class VscodeFormGroup extends VscElement {
       css`
         :host {
           --label-right-margin: 14px;
-          --label-default-width: 150px;
+          --label-width: 150px;
 
           display: block;
           margin: 15px 0;
@@ -40,18 +44,14 @@ export class VscodeFormGroup extends VscElement {
         :host([variant='horizontal']) ::slotted(vscode-checkbox-group),
         :host([variant='horizontal']) ::slotted(vscode-radio-group) {
           width: calc(
-            100% -
-              calc(
-                var(--vsc-inline-label-width, var(--label-default-width)) +
-                  var(--label-right-margin)
-              )
+            100% - calc(var(--label-width) + var(--label-right-margin))
           );
         }
 
         :host([variant='horizontal']) ::slotted(vscode-label) {
           margin-right: var(--label-right-margin);
           text-align: right;
-          width: var(--vsc-inline-label-width, var(--label-default-width));
+          width: var(--label-width);
         }
 
         :host([variant='settings-group']) ::slotted(vscode-label) {
@@ -62,10 +62,7 @@ export class VscodeFormGroup extends VscElement {
         }
 
         ::slotted(vscode-form-helper) {
-          margin-left: calc(
-            var(--vsc-inline-label-width, var(--label-default-width)) +
-              var(--label-right-margin)
-          );
+          margin-left: calc(var(--label-width) + var(--label-right-margin));
         }
 
         :host([variant='vertical']) ::slotted(vscode-form-helper),
@@ -95,10 +92,7 @@ export class VscodeFormGroup extends VscElement {
         }
 
         ::slotted(vscode-button:first-child) {
-          margin-left: calc(
-            var(--vsc-inline-label-width, var(--label-default-width)) +
-              var(--label-right-margin)
-          );
+          margin-left: calc(var(--label-width) + var(--label-right-margin));
         }
 
         :host([variant='vertical']) ::slotted(vscode-button) {

@@ -1,6 +1,7 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import declareThemeVariables from './includes/declareThemeVariables';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 import uniqueId from './includes/uniqueId';
 import {VscElement} from './includes/VscElement';
@@ -13,6 +14,11 @@ interface FocusableElement extends Element {
   focus: () => void;
 }
 
+/**
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--foreground=var(--vscode-foreground)]
+ */
 @customElement('vscode-label')
 export class VscodeLabel extends VscElement {
   @property({reflect: true, attribute: 'for'})
@@ -116,6 +122,20 @@ export class VscodeLabel extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-foreground',
+        },
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+      ]),
       css`
         :host {
           cursor: default;
@@ -123,9 +143,10 @@ export class VscodeLabel extends VscElement {
         }
 
         .wrapper {
-          color: var(--vscode--settings-headerForeground);
+          color: var(--foreground);
           display: block;
-          font-size: var(--vscode-font-size);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
           font-weight: 600;
           line-height: ${INPUT_LINE_HEIGHT_RATIO};
           padding: 5px 0;

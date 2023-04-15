@@ -154,11 +154,13 @@ tmpl.innerHTML = `
   </style>
   <div class="theme-selector-wrapper">
     <div id="theme-selector" class="theme-selector">
-      <button type="button" value="light" class="theme-button active"><span>Light</span></button>
-      <button type="button" value="dark" class="theme-button"><span>Dark</span></button>
-      <button type="button" value="high-contrast" class="theme-button"><span>High Contrast</span></button>
-      <button type="button" value="github-light" class="theme-button"><span>GitHub Light</span></button>
-      <button type="button" value="one-dark-pro" class="theme-button"><span>One Dark Pro</span></button>
+      <button type="button" value="light" data-theme-kind="light" class="theme-button active"><span>Light</span></button>
+      <button type="button" value="light-v2" data-theme-kind="light" class="theme-button"><span>Light V2</span></button>
+      <button type="button" value="dark" data-theme-kind="dark" class="theme-button"><span>Dark</span></button>
+      <button type="button" value="dark-v2" data-theme-kind="dark" class="theme-button"><span>Dark V2</span></button>
+      <button type="button" value="hc-light" data-theme-kind="high-contrast-light" class="theme-button"><span>HC Light</span></button>
+      <button type="button" value="hc-dark" data-theme-kind="high-contrast" class="theme-button"><span>HC Dark</span></button>
+      <button type="button" value="fallback" data-theme-kind="light" class="theme-button"><span>Unstyled</span></button>
       <button type="button" class="toggle-fullscreen-button" id="toggle-fullscreen" title="toggle fullscreen">
         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="full">
           <path d="M3 12h10V4H3v8zm2-6h6v4H5V6zM2 6H1V2.5l.5-.5H5v1H2v3zm13-3.5V6h-1V3h-3V2h3.5l.5.5zM14 10h1v3.5l-.5.5H11v-1h3v-3zM2 13h3v1H1.5l-.5-.5V10h1v3z"/>
@@ -190,16 +192,13 @@ class ComponentPreview extends HTMLElement {
     );
 
     instanceCounter++;
-    themeSelectorInstances[
-      `instance-${instanceCounter}`
-    ] = this._elThemeSelector;
+    themeSelectorInstances[`instance-${instanceCounter}`] =
+      this._elThemeSelector;
 
-    this._onThemeSelectorButtonClickBound = this._onThemeSelectorButtonClick.bind(
-      this
-    );
-    this._onToggleFullscreenButtonClickBound = this._onToggleFullscreenButtonClick.bind(
-      this
-    );
+    this._onThemeSelectorButtonClickBound =
+      this._onThemeSelectorButtonClick.bind(this);
+    this._onToggleFullscreenButtonClickBound =
+      this._onToggleFullscreenButtonClick.bind(this);
 
     this._elButtons.forEach((b) => {
       b.addEventListener('click', this._onThemeSelectorButtonClickBound);
@@ -209,16 +208,18 @@ class ComponentPreview extends HTMLElement {
       this._onToggleFullscreenButtonClickBound
     );
 
-    this._applyTheme('light');
+    this._applyTheme('light', 'light');
   }
 
   _onThemeSelectorButtonClick(ev) {
-    const value = ev.target.value;
+    const bt = ev.target;
+    const value = bt.value;
+    const kind = bt.dataset.themeKind;
 
     this._runOperationOnEachThemeSelector('setValue', value);
     this._runOperationOnEachThemeSelector('disable');
 
-    this._applyTheme(value).then(() => {
+    this._applyTheme(value, kind).then(() => {
       this._runOperationOnEachThemeSelector('enable');
     });
   }
@@ -256,7 +257,16 @@ class ComponentPreview extends HTMLElement {
     });
   }
 
-  async _applyTheme(themeName) {
+  async _applyTheme(themeName, kind) {
+    document.body.classList.remove(
+      'vscode-light',
+      'vscode-dark',
+      'vscode-high-contrast',
+      'vscode-high-contrast-light'
+    );
+    document.body.classList.add(`vscode-${kind}`);
+    document.body.dataset.vscodeThemeKind = `vscode-${kind}`;
+
     themes[themeName] = themes[themeName] || {};
 
     if (themes[themeName].data) {

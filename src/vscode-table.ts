@@ -17,12 +17,16 @@ import {VscodeTableCell} from './vscode-table-cell';
 import {VscodeTableHeader} from './vscode-table-header';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 import {rawValueToPercentage} from './vscode-table/helpers';
+import declareThemeVariables from './includes/declareThemeVariables';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 
 /**
  * @attr {Boolean} zebra
  * @attr {Boolean} bordered
+ *
+ * @cssprop [--border=var(--vscode-editorGroup-border)]
+ * @cssprop [--resize-hover-border=var(--vscode-sash-hoverBorder)]
  */
 @customElement('vscode-table')
 export class VscodeTable extends VscElement {
@@ -93,6 +97,7 @@ export class VscodeTable extends VscElement {
   @queryAll('.sash-visible')
   private _sashVisibleElements!: HTMLDivElement[];
 
+  // TODO: replace deprecated decorators
   @queryAssignedNodes('header', true, 'vscode-table-header')
   private _assignedHeaderElements!: NodeListOf<VscodeTableHeader>;
 
@@ -541,6 +546,16 @@ export class VscodeTable extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--border',
+          vscodeProp: '--vscode-editorGroup-border',
+        },
+        {
+          componentProp: '--resize-hover-border',
+          vscodeProp: '--vscode-sash-hoverBorder',
+        },
+      ]),
       css`
         :host {
           display: block;
@@ -590,7 +605,7 @@ export class VscodeTable extends VscElement {
         :host([bordered])
           .wrapper:not(.compact-view)
           .scrollable:not([scrolled]):before {
-          background-color: var(--vscode-editorGroup-border);
+          background-color: var(--border);
         }
 
         :host(:not([bordered])) .sash {
@@ -617,7 +632,7 @@ export class VscodeTable extends VscElement {
         }
 
         .sash-visible {
-          background-color: var(--vscode-editorGroup-border);
+          background-color: var(--border);
           height: 100%;
           position: absolute;
           top: 0;
@@ -625,7 +640,7 @@ export class VscodeTable extends VscElement {
         }
 
         .sash.hover .sash-visible {
-          background-color: var(--vscode-sash-hoverBorder);
+          background-color: var(--resize-hover-border);
           transition: background-color 50ms linear 300ms;
         }
 

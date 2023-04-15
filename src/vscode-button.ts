@@ -1,11 +1,24 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import declareThemeVariables from './includes/declareThemeVariables';
 import {VscElement} from './includes/VscElement';
 import './vscode-icon';
 
 /**
  * @fires vsc-click Dispatched only when button is not in disabled state.
+ *
+ * @cssprop [--background=var(--vscode-button-background)]
+ * @cssprop [--foreground=var(--vscode-button-foreground)]
+ * @cssprop [--icon-foreground=var(--vscode-button-foreground)]
+ * @cssprop [--hover-background=var(--vscode-button-hoverBackground)]
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-weight=var(--vscode-font-weight)]
+ * @cssprop [--secondary-foreground=var(--vscode-button-secondaryForeground)]
+ * @cssprop [--secondary-background=var(--vscode-button-secondaryBackground)]
+ * @cssprop [--secondary-hover-background=var(--vscode-button-secondaryHoverBackground)]
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {
@@ -113,17 +126,64 @@ export class VscodeButton extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-button-background',
+        },
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-button-foreground',
+        },
+        {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-focusBorder',
+        },
+        {
+          componentProp: '--icon-foreground',
+          vscodeProp: '--vscode-button-foreground',
+        },
+        {
+          componentProp: '--hover-background',
+          vscodeProp: '--vscode-button-hoverBackground',
+        },
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+        {
+          componentProp: '--font-weight',
+          vscodeProp: '--vscode-font-weight',
+        },
+        {
+          componentProp: '--secondary-background',
+          vscodeProp: '--vscode-button-secondaryBackground',
+        },
+        {
+          componentProp: '--secondary-foreground',
+          vscodeProp: '--vscode-button-secondaryForeground',
+        },
+        {
+          componentProp: '--secondary-hover-background',
+          vscodeProp: '--vscode-button-secondaryHoverBackground',
+        },
+      ]),
       css`
         :host {
           align-items: center;
-          background-color: var(--vscode-button-background);
+          background-color: var(--background);
           border: 0;
           border-radius: 2px;
-          color: var(--vscode-button-foreground);
+          color: var(--foreground);
           cursor: pointer;
           display: inline-block;
-          font-size: var(--vscode-font-size);
-          font-weight: var(--vscode-font-weight);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
+          font-weight: var(--font-weight);
           line-height: 22px;
           overflow: hidden;
           padding: 2px 14px;
@@ -131,8 +191,8 @@ export class VscodeButton extends VscElement {
         }
 
         :host([secondary]) {
-          color: var(--vscode-button-secondaryForeground);
-          background-color: var(--vscode-button-secondaryBackground);
+          color: var(--secondary-foreground);
+          background-color: var(--secondary-background);
         }
 
         :host([disabled]) {
@@ -142,19 +202,19 @@ export class VscodeButton extends VscElement {
         }
 
         :host(:hover) {
-          background-color: var(--vscode-button-hoverBackground);
+          background-color: var(--hover-background);
         }
 
         :host([disabled]:hover) {
-          background-color: var(--vscode-button-background);
+          background-color: var(--background);
         }
 
         :host([secondary]:hover) {
-          background-color: var(--vscode-button-secondaryHoverBackground);
+          background-color: var(--secondary-hover-background);
         }
 
         :host([secondary][disabled]:hover) {
-          background-color: var(--vscode-button-secondaryBackground);
+          background-color: var(--secondary-background);
         }
 
         :host(:focus),
@@ -163,22 +223,22 @@ export class VscodeButton extends VscElement {
         }
 
         :host(:focus) {
-          background-color: var(--vscode-button-hoverBackground);
-          outline: 1px solid var(--vscode-focusBorder);
+          background-color: var(--hover-background);
+          outline: 1px solid var(--focus-border);
           outline-offset: 2px;
         }
 
         :host([disabled]:focus) {
-          background-color: var(--vscode-button-background);
+          background-color: var(--background);
           outline: 0;
         }
 
         :host([secondary]:focus) {
-          background-color: var(--vscode-button-secondaryHoverBackground);
+          background-color: var(--secondary-hover-background);
         }
 
         :host([secondary][disabled]:focus) {
-          background-color: var(--vscode-button-secondaryBackground);
+          background-color: var(--secondary-background);
         }
 
         .wrapper {
@@ -195,13 +255,13 @@ export class VscodeButton extends VscElement {
         }
 
         .icon {
-          color: var(--vscode-button-foreground);
+          --foreground: var(--icon-foreground);
           display: block;
           margin-right: 3px;
         }
 
         .icon-after {
-          color: var(--vscode-button-foreground);
+          --foreground: var(--icon-foreground);
           display: block;
           margin-left: 3px;
         }

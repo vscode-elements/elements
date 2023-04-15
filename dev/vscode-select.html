@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
     <link
       rel="stylesheet"
-      href="../node_modules/vscode-codicons/dist/codicon.css"
+      href="../node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
     />
     <script type="module" src="../dev-assets/component-preview.js"></script>
@@ -28,7 +28,12 @@
 
     <h2>Basic example</h2>
     <component-preview>
-      <vscode-single-select value="lorem" data-cloak id="sl-1">
+      <vscode-single-select
+        value="lorem"
+        data-cloak
+        id="sl-1"
+        style="--dropdown-z-index: 10"
+      >
         <vscode-option>Afghanistan</vscode-option>
         <vscode-option description="Test ">Albania</vscode-option>
         <vscode-option>Algeria</vscode-option>

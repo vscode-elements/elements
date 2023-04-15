@@ -10,6 +10,15 @@ import {LabelledCheckboxOrRadioMixin} from './includes/form-button-widget/Labell
  * @attr name - Name which is used as a variable name in the data of the form-container.
  * @attr label - Attribute pair of the `label` property.
  * @prop label - Label text. It is only applied if componnet's innerHTML doesn't contain any text.
+ *
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-weight=var(--vscode-font-weight)]
+ * @cssprop [--foreground=var(--vsc-foreground-translucent)] - Label font color. 90% transparency version of `--vscode-foreground` by default.
+ * @cssprop [--icon-background=var(--vscode-settings-checkboxBackground)]
+ * @cssprop [--icon-border=var(--vscode-settings-checkboxBorder)]
+ * @cssprop [--icon-foreground=var(--vscode-settings-checkboxForeground)]
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
 @customElement('vscode-checkbox')
 export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
@@ -81,7 +90,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
         }
 
         :host(:focus):host(:not([disabled])) .icon {
-          outline: 1px solid var(--vscode-focusBorder);
+          outline: 1px solid var(--focus-border);
           outline-offset: -1px;
         }
       `,

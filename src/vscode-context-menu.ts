@@ -211,6 +211,7 @@ export class VscodeContextMenu extends VscElement {
     return [
       super.styles,
       css`
+        /* TODO: drop shadow in HC themes */
         :host {
           display: block;
           font-family: var(--vscode-font-family);

@@ -1,7 +1,11 @@
 import {html, css, TemplateResult, nothing, CSSResultGroup} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
+/**
+ * @cssprop [--border=var(--vscode-editorGroup-border)]
+ */
 @customElement('vscode-table-cell')
 export class VscodeTableCell extends VscElement {
   @property({reflect: true})
@@ -22,6 +26,12 @@ export class VscodeTableCell extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--border',
+          vscodeProp: '--vscode-editorGroup-border',
+        },
+      ]),
       css`
         :host {
           box-sizing: border-box;
@@ -54,7 +64,7 @@ export class VscodeTableCell extends VscElement {
         }
 
         :host-context(vscode-table[bordered]) {
-          border-bottom: 1px solid var(--vscode-editorGroup-border);
+          border-bottom: 1px solid var(--border);
         }
 
         .wrapper {
