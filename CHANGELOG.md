@@ -12,6 +12,10 @@ Sometimes VSCode theme variables are renamed or removed by authors. When this ha
 of the components will change unpredictably. To prevent this, every component got a fallback style.
 The components will look "good" even if no theme variables are available.
 
+### Changed
+
+- **Button** styles was updated to follow VSCode changes.
+
 ## [0.12.0] - 2023-03-17
 
 ### Changed

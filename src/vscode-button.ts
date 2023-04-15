@@ -132,6 +132,10 @@ export class VscodeButton extends VscElement {
           vscodeProp: '--vscode-button-background',
         },
         {
+          componentProp: '--border',
+          vscodeProp: '--vscode-button-border',
+        },
+        {
           componentProp: '--foreground',
           vscodeProp: '--vscode-button-foreground',
         },
@@ -176,8 +180,10 @@ export class VscodeButton extends VscElement {
         :host {
           align-items: center;
           background-color: var(--background);
-          border: 0;
+          border-color: var(--border);
+          border-style: solid;
           border-radius: 2px;
+          border-width: 1px;
           color: var(--foreground);
           cursor: pointer;
           display: inline-block;
@@ -186,7 +192,7 @@ export class VscodeButton extends VscElement {
           font-weight: var(--font-weight);
           line-height: 22px;
           overflow: hidden;
-          padding: 2px 14px;
+          padding: 1px 13px;
           user-select: none;
         }
 

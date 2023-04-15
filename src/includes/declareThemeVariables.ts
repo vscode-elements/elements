@@ -9,6 +9,7 @@ type VscodeThemeVariableName =
   | '--vscode-badge-background'
   | '--vscode-badge-foreground'
   | '--vscode-button-background'
+  | '--vscode-button-border'
   | '--vscode-button-foreground'
   | '--vscode-button-hoverBackground'
   | '--vscode-button-secondaryBackground'
@@ -83,6 +84,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#4d4d4d',
     '--vscode-badge-foreground': '#ffffff',
     '--vscode-button-background': '#0e639c',
+    '--vscode-button-border': 'transparent',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': '#1177bb',
     '--vscode-button-secondaryBackground': '#3a3d41',
@@ -152,6 +154,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#c4c4c4',
     '--vscode-badge-foreground': '#333333',
     '--vscode-button-background': '#007acc',
+    '--vscode-button-border': 'transparent',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': '#0062a3',
     '--vscode-button-secondaryBackground': '#5f6a79',
@@ -221,6 +224,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#000000',
     '--vscode-badge-foreground': '#ffffff',
     '--vscode-button-background': 'transparent',
+    '--vscode-button-border': '#6fc3df',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': 'transparent',
     '--vscode-button-secondaryBackground': 'transparent',
@@ -290,6 +294,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#0f4a85',
     '--vscode-badge-foreground': '#ffffff',
     '--vscode-button-background': '#0f4a85',
+    '--vscode-button-border': '#0f4a85',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': '#0f4a85',
     '--vscode-button-secondaryBackground': '#ffffff',
