@@ -4,9 +4,29 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
 /**
  * Multi-line text input.
+ *
+ * @cssprop [--scrollbar-shadow=var(--vscode-scrollbar-shadow)]
+ * @cssprop [--background=var(--vscode-settings-textInputBackground)]
+ * @cssprop [--border=var(--vscode-settings-textInputBorder)]
+ * @cssprop [--foreground=var(--vscode-settings-textInputForeground)]
+ * @cssprop [--placeholder=var(--vscode-input-placeholderForeground)]
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-weight=var(--vscode-font-weight)]
+ * @cssprop [--monospace-background=var(--vscode-editor-background)]
+ * @cssprop [--monospace-foreground=var(--vscode-editor-foreground)]
+ * @cssprop [--monospace-font-family=var(--vscode-editor-font-family)]
+ * @cssprop [--monospace-font-size=var(--vscode-editor-font-size)]
+ * @cssprop [--monospace-font-weight=var(--vscode-editor-font-weight)]
+ * @cssprop [--monospace-placeholder=var(--vscode-editor-inlineValuesForeground)]
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop [--scrollbar-background=var(--vscode-scrollbarSlider-background)]
+ * @cssprop [--scrollbar-hover=var(--vscode-scrollbarSlider-hoverBackground)]
+ * @cssprop [--scrollbar-active=var(--vscode-scrollbarSlider-activeBackground)]
  */
 @customElement('vscode-textarea')
 export class VscodeTextarea extends VscElement {
@@ -130,6 +150,80 @@ export class VscodeTextarea extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--scrollbar-shadow',
+          vscodeProp: '--vscode-scrollbar-shadow',
+        },
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-settings-textInputBackground',
+        },
+        {
+          componentProp: '--border',
+          vscodeProp: '--vscode-settings-textInputBorder',
+        },
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-settings-textInputForeground',
+        },
+        {
+          componentProp: '--placeholder',
+          vscodeProp: '--vscode-input-placeholderForeground',
+        },
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+        {
+          componentProp: '--font-weight',
+          vscodeProp: '--vscode-font-weight',
+        },
+        {
+          componentProp: '--monospace-background',
+          vscodeProp: '--vscode-editor-background',
+        },
+        {
+          componentProp: '--monospace-foreground',
+          vscodeProp: '--vscode-editor-foreground',
+        },
+        {
+          componentProp: '--monospace-font-family',
+          vscodeProp: '--vscode-editor-font-family',
+        },
+        {
+          componentProp: '--monospace-font-size',
+          vscodeProp: '--vscode-editor-font-size',
+        },
+        {
+          componentProp: '--monospace-font-weight',
+          vscodeProp: '--vscode-editor-font-weight',
+        },
+        {
+          componentProp: '--monospace-placeholder',
+          vscodeProp: '--vscode-editor-inlineValuesForeground',
+        },
+        {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-focusBorder',
+        },
+        {
+          componentProp: '--scrollbar-background',
+          vscodeProp: '--vscode-scrollbarSlider-background',
+        },
+        {
+          componentProp: '--scrollbar-hover',
+          vscodeProp: '--vscode-scrollbarSlider-hoverBackground',
+        },
+        {
+          componentProp: '--scrollbar-active',
+          vscodeProp: '--vscode-scrollbarSlider-activeBackground',
+        },
+      ]),
       css`
         :host {
           display: inline-block;
@@ -147,7 +241,7 @@ export class VscodeTextarea extends VscElement {
         }
 
         .shadow {
-          box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
+          box-shadow: var(--scrollbar-shadow) 0 6px 6px -6px inset;
           display: none;
           inset: 0 0 auto 0;
           height: 6px;
@@ -161,20 +255,17 @@ export class VscodeTextarea extends VscElement {
         }
 
         textarea {
-          background-color: var(--vscode-input-background, #ffffff);
-          border-color: var(--vscode-settings-textInputBorder, #cecece);
+          background-color: var(--background);
+          border-color: var(--border);
           border-radius: 2px;
           border-style: solid;
           border-width: 1px;
           box-sizing: border-box;
-          color: var(--vscode-foreground);
+          color: var(--foreground);
           display: block;
-          font-family: var(
-            --vscode-font-family,
-            '"Segoe WPC", "Segoe UI", sans-serif'
-          );
-          font-size: var(--vscode-font-size, 13px);
-          font-weight: var(--vscode-font-weight, normal);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
+          font-weight: var(--font-weight);
           height: 100%;
           width: 100%;
         }
@@ -188,10 +279,15 @@ export class VscodeTextarea extends VscElement {
         }
 
         textarea.monospace {
-          color: var(--vscode-editor-foreground);
-          font-family: var(--vscode-editor-font-family);
-          font-size: var(--vscode-editor-font-size);
-          font-weight: var(--vscode-editor-font-weight);
+          background-color: var(--monospace-background);
+          color: var(--monospace-foreground);
+          font-family: var(--monospace-font-family);
+          font-size: var(--monospace-font-size);
+          font-weight: var(--monospace-font-weight);
+        }
+
+        .textarea.moospace::placeholder {
+          color: var(--monospace-placeholder);
         }
 
         textarea.cursor-pointer {
@@ -199,8 +295,13 @@ export class VscodeTextarea extends VscElement {
         }
 
         textarea:focus {
-          border-color: var(--vscode-focusBorder, #0090f1);
+          border-color: var(--focus-border);
           outline: none;
+        }
+
+        textarea::placeholder {
+          color: var(--placeholder);
+          opacity: 1;
         }
 
         textarea::-webkit-scrollbar-track {
@@ -216,24 +317,15 @@ export class VscodeTextarea extends VscElement {
         }
 
         textarea:hover::-webkit-scrollbar-thumb {
-          background-color: var(
-            --vscode-scrollbarSlider-background,
-            rgba(100, 100, 100, 0.4)
-          );
+          background-color: var(--scrollbar-background);
         }
 
         textarea::-webkit-scrollbar-thumb:hover {
-          background-color: var(
-            --vscode-scrollbarSlider-hoverBackground,
-            rgba(100, 100, 100, 0.7)
-          );
+          background-color: var(--scrollbar-hover);
         }
 
         textarea::-webkit-scrollbar-thumb:active {
-          background-color: var(
-            --vscode-scrollbarSlider-activeBackground,
-            rgba(100, 100, 100, 0.7)
-          );
+          background-color: var(--scrollbar-active);
         }
 
         textarea::-webkit-scrollbar-corner {

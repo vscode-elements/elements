@@ -15,12 +15,20 @@ type VscodeThemeVariableName =
   | '--vscode-button-secondaryForeground'
   | '--vscode-button-secondaryHoverBackground'
   | '--vscode-editorGroup-border'
+  | '--vscode-editor-background'
+  | '--vscode-editor-font-family'
+  | '--vscode-editor-font-size'
+  | '--vscode-editor-font-weight'
+  | '--vscode-editor-foreground'
+  | '--vscode-editor-inlineValuesForeground'
   | '--vscode-focusBorder'
   | '--vscode-font-family'
   | '--vscode-font-size'
   | '--vscode-font-weight'
   | '--vscode-foreground'
   | '--vscode-icon-foreground'
+  | '--vscode-input-background'
+  | '--vscode-input-placeholderForeground'
   | '--vscode-list-activeSelectionBackground'
   | '--vscode-list-activeSelectionForeground'
   | '--vscode-list-focusOutline'
@@ -51,6 +59,8 @@ type VscodeThemeVariableName =
   | '--vscode-settings-headerBorder'
   | '--vscode-settings-headerForeground'
   | '--vscode-settings-textInputBackground'
+  | '--vscode-settings-textInputBorder'
+  | '--vscode-settings-textInputForeground'
   | '--vscode-sideBar-background'
   | '--vscode-sideBarSectionHeader-background'
   | '--vscode-sideBarTitle-foreground'
@@ -78,12 +88,20 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryForeground': '#ffffff',
     '--vscode-button-secondaryHoverBackground': '#45494e',
     '--vscode-editorGroup-border': '#444444',
+    '--vscode-editor-background': '#1e1e1e',
+    '--vscode-editor-font-family': 'Consolas, "Courier New", monospace',
+    '--vscode-editor-font-size': '14px',
+    '--vscode-editor-font-weight': 'normal',
+    '--vscode-editor-foreground': '#d4d4d4',
+    '--vscode-editor-inlineValuesForeground': 'rgba(255, 255, 255, 0.5)',
     '--vscode-focusBorder': '#007fd4',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#cccccc',
     '--vscode-icon-foreground': '#c5c5c5',
+    '--vscode-input-background': '#3c3c3c',
+    '--vscode-input-placeholderForeground': '#a6a6a6',
     '--vscode-list-activeSelectionBackground': '#04395e',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#007fd4',
@@ -114,6 +132,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-headerBorder': 'rgba(128, 128, 128, 0.35)',
     '--vscode-settings-headerForeground': '#e7e7e7',
     '--vscode-settings-textInputBackground': '#3c3c3c',
+    '--vscode-settings-textInputBorder': 'transparent',
+    '--vscode-settings-textInputForeground': '#cccccc',
     '--vscode-sideBar-background': '#252526',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
     '--vscode-sideBarTitle-foreground': '#bbbbbb',
@@ -136,12 +156,20 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryForeground': '#ffffff',
     '--vscode-button-secondaryHoverBackground': '#4c5561',
     '--vscode-editorGroup-border': '#e7e7e7',
+    '--vscode-editor-background': '#ffffff',
+    '--vscode-editor-font-family': 'Consolas, "Courier New", monospace',
+    '--vscode-editor-font-size': '14px',
+    '--vscode-editor-font-weight': 'normal',
+    '--vscode-editor-foreground': '#000000',
+    '--vscode-editor-inlineValuesForeground': 'rgba(0, 0, 0, 0.5)',
     '--vscode-focusBorder': '#0090f1',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#616161',
     '--vscode-icon-foreground': '#424242',
+    '--vscode-input-background': '#ffffff',
+    '--vscode-input-placeholderForeground': '#767676',
     '--vscode-list-activeSelectionBackground': '#0060c0',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#0090f1',
@@ -172,6 +200,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-headerBorder': 'rgba(128, 128, 128, 0.35)',
     '--vscode-settings-headerForeground': '#444444',
     '--vscode-settings-textInputBackground': '#ffffff',
+    '--vscode-settings-textInputBorder': '#cecece',
+    '--vscode-settings-textInputForeground': '#616161',
     '--vscode-sideBar-background': '#f3f3f3',
     '--vscode-sideBarSectionHeader-background': 'rgba(0, 0, 0, 0)',
     '--vscode-sideBarTitle-foreground': '#6f6f6f',
@@ -194,12 +224,20 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryForeground': '#ffffff',
     '--vscode-button-secondaryHoverBackground': 'transparent',
     '--vscode-editorGroup-border': '#6fc3df',
+    '--vscode-editor-background': '#000000',
+    '--vscode-editor-font-family': 'Consolas, "Courier New", monospace',
+    '--vscode-editor-font-size': '14px',
+    '--vscode-editor-font-weight': 'normal',
+    '--vscode-editor-foreground': '#ffffff',
+    '--vscode-editor-inlineValuesForeground': 'rgba(255, 255, 255, 0.5)',
     '--vscode-focusBorder': '#f38518',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#616161',
     '--vscode-icon-foreground': '#ffffff',
+    '--vscode-input-background': '#000000',
+    '--vscode-input-placeholderForeground': 'rgba(255, 255, 255, 0.7)',
     '--vscode-list-activeSelectionBackground': '#000000',
     '--vscode-list-activeSelectionForeground': '#616161',
     '--vscode-list-focusOutline': '#f38518',
@@ -230,6 +268,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-headerBorder': '#6fc3df',
     '--vscode-settings-headerForeground': '#ffffff',
     '--vscode-settings-textInputBackground': '#000000',
+    '--vscode-settings-textInputBorder': '#6fc3df',
+    '--vscode-settings-textInputForeground': '#ffffff',
     '--vscode-sideBar-background': '#000000',
     '--vscode-sideBarSectionHeader-background': 'transparent',
     '--vscode-sideBarTitle-foreground': '#ffffff',
@@ -252,12 +292,20 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryForeground': '#292929',
     '--vscode-button-secondaryHoverBackground': '#ffffff',
     '--vscode-editorGroup-border': '#0f4a85',
+    '--vscode-editor-background': '#ffffff',
+    '--vscode-editor-font-family': 'Consolas, "Courier New", monospace',
+    '--vscode-editor-font-size': '14px',
+    '--vscode-editor-font-weight': 'normal',
+    '--vscode-editor-foreground': '#292929',
+    '--vscode-editor-inlineValuesForeground': 'rgba(0, 0, 0, 0.5)',
     '--vscode-focusBorder': '#006bbd',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
     '--vscode-font-weight': 'normal',
     '--vscode-foreground': '#292929',
     '--vscode-icon-foreground': '#292929',
+    '--vscode-input-background': '#ffffff',
+    '--vscode-input-placeholderForeground': 'rgba(41, 41, 41, 0.7)',
     '--vscode-list-activeSelectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-list-activeSelectionForeground': '#292929',
     '--vscode-list-focusOutline': '#006bbd',
@@ -288,6 +336,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-settings-headerBorder': '#0f4a85',
     '--vscode-settings-headerForeground': '#292929',
     '--vscode-settings-textInputBackground': '#ffffff',
+    '--vscode-settings-textInputBorder': '#0f4a85',
+    '--vscode-settings-textInputForeground': '#292929',
     '--vscode-sideBar-background': '#ffffff',
     '--vscode-sideBarSectionHeader-background': 'transparent',
     '--vscode-sideBarTitle-foreground': '#292929',
