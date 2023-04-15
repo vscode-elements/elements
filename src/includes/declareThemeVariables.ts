@@ -14,6 +14,7 @@ type VscodeThemeVariableName =
   | '--vscode-button-secondaryBackground'
   | '--vscode-button-secondaryForeground'
   | '--vscode-button-secondaryHoverBackground'
+  | '--vscode-editorGroup-border'
   | '--vscode-focusBorder'
   | '--vscode-font-family'
   | '--vscode-font-size'
@@ -75,6 +76,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryBackground': '#3a3d41',
     '--vscode-button-secondaryForeground': '#ffffff',
     '--vscode-button-secondaryHoverBackground': '#45494e',
+    '--vscode-editorGroup-border': '#444444',
     '--vscode-focusBorder': '#007fd4',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
@@ -131,6 +133,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryBackground': '#5f6a79',
     '--vscode-button-secondaryForeground': '#ffffff',
     '--vscode-button-secondaryHoverBackground': '#4c5561',
+    '--vscode-editorGroup-border': '#e7e7e7',
     '--vscode-focusBorder': '#0090f1',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
@@ -187,6 +190,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryBackground': 'transparent',
     '--vscode-button-secondaryForeground': '#ffffff',
     '--vscode-button-secondaryHoverBackground': 'transparent',
+    '--vscode-editorGroup-border': '#6fc3df',
     '--vscode-focusBorder': '#f38518',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
@@ -243,6 +247,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-button-secondaryBackground': '#ffffff',
     '--vscode-button-secondaryForeground': '#292929',
     '--vscode-button-secondaryHoverBackground': '#ffffff',
+    '--vscode-editorGroup-border': '#0f4a85',
     '--vscode-focusBorder': '#006bbd',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
