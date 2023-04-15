@@ -31,6 +31,7 @@ type VscodeThemeVariableName =
   | '--vscode-input-placeholderForeground'
   | '--vscode-list-activeSelectionBackground'
   | '--vscode-list-activeSelectionForeground'
+  | '--vscode-list-inactiveSelectionBackground'
   | '--vscode-list-focusOutline'
   | '--vscode-list-hoverBackground'
   | '--vscode-list-hoverForeground'
@@ -107,6 +108,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-list-focusOutline': '#007fd4',
     '--vscode-list-hoverBackground': '#2a2d2e',
     '--vscode-list-hoverForeground': '#cccccc',
+    '--vscode-list-inactiveSelectionBackground': '#37373d',
     '--vscode-menu-background': '#252526',
     '--vscode-menu-border': '#454545',
     '--vscode-menu-foreground': '#cccccc',
@@ -175,6 +177,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-list-focusOutline': '#0090f1',
     '--vscode-list-hoverBackground': '#e8e8e8',
     '--vscode-list-hoverForeground': '#616161',
+    '--vscode-list-inactiveSelectionBackground': '#e4e6f1',
     '--vscode-menu-background': '#ffffff',
     '--vscode-menu-border': '#d4d4d4',
     '--vscode-menu-foreground': '#616161',
@@ -239,10 +242,11 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-input-background': '#000000',
     '--vscode-input-placeholderForeground': 'rgba(255, 255, 255, 0.7)',
     '--vscode-list-activeSelectionBackground': '#000000',
-    '--vscode-list-activeSelectionForeground': '#616161',
+    '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#f38518',
     '--vscode-list-hoverBackground': 'rgba(255, 255, 255, 0.1)',
-    '--vscode-list-hoverForeground': '#616161',
+    '--vscode-list-hoverForeground': '#ffffff',
+    '--vscode-list-inactiveSelectionBackground': 'transparent',
     '--vscode-menu-background': '#000000',
     '--vscode-menu-border': '#6fc3df',
     '--vscode-menu-foreground': '#ffffff',
@@ -311,6 +315,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-list-focusOutline': '#006bbd',
     '--vscode-list-hoverBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-list-hoverForeground': '#292929',
+    '--vscode-list-inactiveSelectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-menu-background': '#ffffff',
     '--vscode-menu-border': '#0f4a85',
     '--vscode-menu-foreground': '#292929',

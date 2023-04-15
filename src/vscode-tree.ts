@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
 import './vscode-icon';
+import declareThemeVariables from './includes/declareThemeVariables';
 
 enum KeyName {
   ARROW_DOWN = 'ArrowDown',
@@ -75,6 +76,16 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
 /**
  * @fires vsc-select Dispatched when an item is selected. The event data shape is described in the
  * `SelectEventDetail` interface.
+ *
+ * @cssprop [--focus-border=var(--vscode-list-focusOutline)]
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-weight=var(--vscode-font-weight)]
+ * @cssprop [--hover-foreground=var(--vscode-list-hoverForeground)]
+ * @cssprop [--hover-background=var(--vscode-list-hoverBackground)]
+ * @cssprop [--inactive-selection-background=var(--vscode-list-inactiveSelectionBackground)]
+ * @cssprop [--active-selection-background=var(--vscode-list-activeSelectionBackground)]
+ * @cssprop [--active-selection-foreground=var(--vscode-list-activeSelectionForeground)]
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
@@ -503,6 +514,44 @@ export class VscodeTree extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-list-focusOutline',
+        },
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+        {
+          componentProp: '--font-weight',
+          vscodeProp: '--vscode-font-weight',
+        },
+        {
+          componentProp: '--hover-foreground',
+          vscodeProp: '--vscode-list-hoverForeground',
+        },
+        {
+          componentProp: '--hover-background',
+          vscodeProp: '--vscode-list-hoverBackground',
+        },
+        {
+          componentProp: '--inactive-selection-background',
+          vscodeProp: '--vscode-list-inactiveSelectionBackground',
+        },
+        {
+          componentProp: '--active-selection-background',
+          vscodeProp: '--vscode-list-activeSelectionBackground',
+        },
+        {
+          componentProp: '--active-selection-foreground',
+          vscodeProp: '--vscode-list-activeSelectionForeground',
+        },
+      ]),
       css`
         :host {
           display: block;
@@ -515,7 +564,7 @@ export class VscodeTree extends VscElement {
         }
 
         :host(:focus) .wrapper.focused-none {
-          outline: 1px solid var(--vscode-list-focusOutline);
+          outline: 1px solid var(--focus-border);
         }
 
         li {
@@ -531,9 +580,9 @@ export class VscodeTree extends VscElement {
         .contents {
           align-items: center;
           display: flex;
-          font-family: var(--vscode-font-family);
-          font-size: var(--vscode-font-size);
-          font-weight: var(--vscode-font-weight);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
+          font-weight: var(--font-weight);
         }
 
         .multi .contents {
@@ -541,25 +590,25 @@ export class VscodeTree extends VscElement {
         }
 
         .contents:hover {
-          background-color: var(--vscode-list-hoverBackground);
-          color: var(--vscode-list-hoverForeground);
+          background-color: var(--hover-background);
+          color: var(--hover-foreground);
           cursor: pointer;
         }
 
         .contents.selected {
-          background-color: var(--vscode-list-inactiveSelectionBackground);
+          background-color: var(--inactive-selection-background);
         }
 
         :host(:focus) .contents.focused {
-          background-color: var(--vscode-list-focusBackground);
-          outline: 1px solid var(--vscode-list-focusOutline);
+          background-color: var(--focus-background);
+          outline: 1px solid var(--focus-border);
           outline-offset: -1px;
         }
 
         :host(:focus) .contents.selected.focused,
         :host(:focus) .contents.selected {
-          background-color: var(--vscode-list-activeSelectionBackground);
-          color: var(--vscode-list-activeSelectionForeground);
+          background-color: var(--active-selection-background);
+          color: var(--active-selection-foreground);
         }
 
         .icon-arrow {
@@ -574,7 +623,7 @@ export class VscodeTree extends VscElement {
 
         :host(:focus) .contents.selected.focused .label-icon,
         :host(:focus) .contents.selected .label-icon {
-          color: var(--vscode-list-activeSelectionForeground);
+          color: var(--active-selection-foreground);
         }
 
         .multi .contents .label-icon {
