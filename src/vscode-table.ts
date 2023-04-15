@@ -93,6 +93,7 @@ export class VscodeTable extends VscElement {
   @queryAll('.sash-visible')
   private _sashVisibleElements!: HTMLDivElement[];
 
+  // TODO: replace deprecated decorators
   @queryAssignedNodes('header', true, 'vscode-table-header')
   private _assignedHeaderElements!: NodeListOf<VscodeTableHeader>;
 
