@@ -99,6 +99,7 @@ export class VscodeContextMenuItem extends VscElement {
         }
       ]),
       css`
+        /* TODO: border in HC themes */
         :host {
           display: block;
           font-family: var(--font-family);
