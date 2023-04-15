@@ -2,12 +2,25 @@ import {CSSResultGroup, css, html, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from './includes/VscElement';
+import declareThemeVariables from './includes/declareThemeVariables';
 
 /**
  * A simple inline textfield
  *
  * @slot content-before
  * @slot content-after
+ *
+ * @cssprop [--background=var(--vscode-settings-textInputBackground)]
+ * @cssprop [--border=var(--vscode-settings-textInputBorder)]
+ * @cssprop [--foreground=var(--vscode-settings-textInputForeground)]
+ * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-weight=var(--vscode-font-weight)]
+ * @cssprop [--placeholder=var(--vscode-input-placeholderForeground)]
+ * @cssprop [--button-background=var(--vscode-button-background)]
+ * @cssprop [--button-foreground=var(--vscode-button-foreground)]
+ * @cssprop [--button-hover=var(--vscode-button-hoverBackground)]
  */
 @customElement('vscode-textfield')
 export class VscodeTextfield extends VscElement {
@@ -154,14 +167,61 @@ export class VscodeTextfield extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-settings-textInputBackground',
+        },
+        {
+          componentProp: '--border',
+          vscodeProp: '--vscode-settings-textInputBorder',
+        },
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-settings-textInputForeground',
+        },
+        {
+          componentProp: '--focus-border',
+          vscodeProp: '--vscode-focusBorder',
+        },
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+        {
+          componentProp: '--font-weight',
+          vscodeProp: '--vscode-font-weight',
+        },
+        {
+          componentProp: '--placeholder',
+          vscodeProp: '--vscode-input-placeholderForeground',
+        },
+        {
+          componentProp: '--button-background',
+          vscodeProp: '--vscode-button-background',
+        },
+        {
+          componentProp: '--button-foreground',
+          vscodeProp: '--vscode-button-foreground',
+        },
+        {
+          componentProp: '--button-hover',
+          vscodeProp: '--vscode-button-hoverBackground',
+        },
+      ]),
       css`
         :host {
           align-items: center;
-          background-color: var(--vscode-input-background, #ffffff);
-          border-color: var(--vscode-settings-textInputBorder, #cecece);
+          background-color: var(--background);
+          border-color: var(--border);
           border-radius: 2px;
           border-style: solid;
           border-width: 1px;
+          color: var(--foreground);
           display: inline-flex;
           max-width: 100%;
           position: relative;
@@ -169,7 +229,7 @@ export class VscodeTextfield extends VscElement {
         }
 
         :host([focused]) {
-          border-color: var(--vscode-focusBorder, #0090f1);
+          border-color: var(--focus-border);
         }
 
         :host([disabled]) {
@@ -198,17 +258,14 @@ export class VscodeTextfield extends VscElement {
         }
 
         input {
-          background-color: var(--vscode-input-background, #ffffff);
+          background-color: var(--background);
           border: 0;
           box-sizing: border-box;
-          color: var(--vscode-input-foreground, #616161);
+          color: var(--foreground);
           display: block;
-          font-family: var(
-            --vscode-font-family,
-            "'Segoe WPC', 'Segoe UI', sans-serif"
-          );
-          font-size: var(--vscode-font-size, 13px);
-          font-weight: var(--vscode-font-weight);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
+          font-weight: var(--font-weight);
           line-height: 18px;
           outline: none;
           padding-bottom: 3px;
@@ -223,32 +280,32 @@ export class VscodeTextfield extends VscElement {
         }
 
         input::placeholder {
-          color: var(--vscode-input-placeholderForeground, #767676);
+          color: var(--placeholder);
           opacity: 1;
         }
 
-        input[type=file] {
+        input[type='file'] {
           line-height: 26px;
           padding-bottom: 0;
           padding-left: 2px;
           padding-top: 0;
         }
 
-        input[type=file]::file-selector-button {
-          background-color: var(--vscode-button-background);
+        input[type='file']::file-selector-button {
+          background-color: var(--button-background);
           border: 0;
           border-radius: 2px;
-          color: var(--vscode-button-foreground);
+          color: var(--button-foreground);
           cursor: pointer;
-          font-family: var(--vscode-font-family);
-          font-size: var(--vscode-font-size);
-          font-weight: var(--vscode-font-weight);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
+          font-weight: var(--font-weight);
           line-height: 20px;
           padding: 1px 14px;
         }
 
-        input[type=file]::file-selector-button:hover {
-          background-color: var(--vscode-button-hoverBackground);
+        input[type='file']::file-selector-button:hover {
+          background-color: var(--button-hover);
         }
       `,
     ];
