@@ -17,6 +17,7 @@ export class VscodeTableBody extends VscElement {
           width: 100%;
         }
 
+        /* TODO: add "--vscode-keybindingTable-*" themeable variables */
         :host-context(vscode-table[zebra])
           ::slotted(vscode-table-row:nth-child(even)) {
           background-color: rgba(130, 130, 130, 0.04);
