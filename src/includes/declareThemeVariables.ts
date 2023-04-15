@@ -32,6 +32,7 @@ type VscodeThemeVariableName =
   | '--vscode-menu-selectionBorder'
   | '--vscode-menu-selectionForeground'
   | '--vscode-menu-separatorBackground'
+  | '--vscode-panel-background'
   | '--vscode-panelTitle-activeBorder'
   | '--vscode-panelTitle-activeForeground'
   | '--vscode-panelTitle-inactiveForeground'
@@ -92,6 +93,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#454545',
+    '--vscode-panel-background': '#1e1e1e',
     '--vscode-panelTitle-activeBorder': '#e7e7e7',
     '--vscode-panelTitle-activeForeground': '#e7e7e7',
     '--vscode-panelTitle-inactiveForeground': 'rgba(231, 231, 231, 0.6)',
@@ -147,6 +149,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-selectionBorder': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
     '--vscode-menu-separatorBackground': '#d4d4d4',
+    '--vscode-panel-background': '#ffffff',
     '--vscode-panelTitle-activeBorder': '#424242',
     '--vscode-panelTitle-activeForeground': '#424242',
     '--vscode-panelTitle-inactiveForeground': 'rgba(66, 66, 66, 0.75)',
@@ -202,6 +205,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#d4d4d4',
     '--vscode-menu-selectionBackground': 'transparent',
     '--vscode-menu-selectionForeground': '#ffffff',
+    '--vscode-panel-background': '#000000',
     '--vscode-panelTitle-activeBorder': '#6fc3df',
     '--vscode-panelTitle-activeForeground': '#ffffff',
     '--vscode-panelTitle-inactiveForeground': '#ffffff',
@@ -257,6 +261,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-menu-separatorBackground': '#0f4a85',
     '--vscode-menu-selectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-menu-selectionForeground': '#292929',
+    '--vscode-panel-background': '#ffffff',
     '--vscode-panelTitle-activeBorder': '#b5200d',
     '--vscode-panelTitle-activeForeground': '#292929',
     '--vscode-panelTitle-inactiveForeground': '#292929',
