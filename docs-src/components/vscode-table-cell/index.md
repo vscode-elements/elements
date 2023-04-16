@@ -2,7 +2,7 @@
 layout: component.njk
 title: TableCell
 tags: component
-component: vscode-table-td
+component: vscode-table-cell
 ---
 
 # TableCell

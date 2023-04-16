@@ -2,6 +2,9 @@ import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
 
+/**
+ * @cssprop [--header-background=var(--vscode-keybindingTable-headerBackground)] - Inherited from [Table](/components/vscode-table/api/)
+ */
 @customElement('vscode-table-header')
 export class VscodeTableHeader extends VscElement {
   @property({reflect: true})
@@ -12,7 +15,7 @@ export class VscodeTableHeader extends VscElement {
       super.styles,
       css`
         :host {
-          background-color: rgba(130, 130, 130, 0.04);
+          background-color: var(--header-background);
           display: table;
           table-layout: fixed;
           width: 100%;

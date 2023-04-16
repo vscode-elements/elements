@@ -1,10 +1,12 @@
 import {html, css, TemplateResult, nothing, CSSResultGroup} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
-import declareThemeVariables from './includes/declareThemeVariables';
 
 /**
- * @cssprop [--border=var(--vscode-editorGroup-border)]
+ * @cssprop [--border=var(--vscode-editorGroup-border)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop [--foreground=var(--vscode-foreground)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop [--font-family=var(--vscode-font-family)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop [--font-size=var(--vscode-font-size)] - Inherited from [Table](/components/vscode-table/api/)
  */
 @customElement('vscode-table-cell')
 export class VscodeTableCell extends VscElement {
@@ -26,16 +28,13 @@ export class VscodeTableCell extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
-      declareThemeVariables([
-        {
-          componentProp: '--border',
-          vscodeProp: '--vscode-editorGroup-border',
-        },
-      ]),
       css`
         :host {
           box-sizing: border-box;
+          color: var(--foreground);
           display: table-cell;
+          font-family: var(--font-family);
+          font-size: var(--font-size);
           height: 24px;
           overflow: hidden;
           padding-left: 10px;

@@ -2,6 +2,9 @@ import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
 
+/**
+ * @cssprop [--tinted-row-background=var(--vscode-keybindingTable-rowsBackground)] - Inherited from [Table](/components/vscode-table/api/)
+ */
 @customElement('vscode-table-body')
 export class VscodeTableBody extends VscElement {
   @property({reflect: true})
@@ -17,15 +20,14 @@ export class VscodeTableBody extends VscElement {
           width: 100%;
         }
 
-        /* TODO: add "--vscode-keybindingTable-*" themeable variables */
         :host-context(vscode-table[zebra])
           ::slotted(vscode-table-row:nth-child(even)) {
-          background-color: rgba(130, 130, 130, 0.04);
+          background-color: var(--tinted-row-background);
         }
 
         :host-context(vscode-table[zebra-odd])
           ::slotted(vscode-table-row:nth-child(odd)) {
-          background-color: rgba(130, 130, 130, 0.04);
+            background-color: var(--tinted-row-background);
         }
       `,
     ];

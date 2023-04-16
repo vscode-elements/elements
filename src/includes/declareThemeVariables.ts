@@ -30,6 +30,8 @@ type VscodeThemeVariableName =
   | '--vscode-icon-foreground'
   | '--vscode-input-background'
   | '--vscode-input-placeholderForeground'
+  | '--vscode-keybindingTable-headerBackground'
+  | '--vscode-keybindingTable-rowsBackground'
   | '--vscode-list-activeSelectionBackground'
   | '--vscode-list-activeSelectionForeground'
   | '--vscode-list-inactiveSelectionBackground'
@@ -106,6 +108,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#c5c5c5',
     '--vscode-input-background': '#3c3c3c',
     '--vscode-input-placeholderForeground': '#a6a6a6',
+    '--vscode-keybindingTable-headerBackground': 'rgba(204, 204, 204, 0.04)',
+    '--vscode-keybindingTable-rowsBackground': 'rgba(204, 204, 204, 0.04)',
     '--vscode-list-activeSelectionBackground': '#04395e',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#007fd4',
@@ -177,6 +181,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#424242',
     '--vscode-input-background': '#ffffff',
     '--vscode-input-placeholderForeground': '#767676',
+    '--vscode-keybindingTable-headerBackground': 'rgba(97, 97, 97, 0.04)',
+    '--vscode-keybindingTable-rowsBackground': 'rgba(97, 97, 97, 0.04)',
     '--vscode-list-activeSelectionBackground': '#0060c0',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#0090f1',
@@ -248,6 +254,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#ffffff',
     '--vscode-input-background': '#000000',
     '--vscode-input-placeholderForeground': 'rgba(255, 255, 255, 0.7)',
+    '--vscode-keybindingTable-headerBackground': 'transparent',
+    '--vscode-keybindingTable-rowsBackground': 'transparent',
     '--vscode-list-activeSelectionBackground': '#000000',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#f38518',
@@ -319,6 +327,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#292929',
     '--vscode-input-background': '#ffffff',
     '--vscode-input-placeholderForeground': 'rgba(41, 41, 41, 0.7)',
+    '--vscode-keybindingTable-headerBackground': 'transparent',
+    '--vscode-keybindingTable-rowsBackground': 'transparent',
     '--vscode-list-activeSelectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-list-activeSelectionForeground': '#292929',
     '--vscode-list-focusOutline': '#006bbd',

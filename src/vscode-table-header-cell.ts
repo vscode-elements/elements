@@ -1,11 +1,11 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
-import declareThemeVariables from './includes/declareThemeVariables';
 
 /**
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--foreground=var(--vscode-foreground)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop [--font-family=var(--vscode-font-family)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop [--font-size=var(--vscode-font-size)] - Inherited from [Table](/components/vscode-table/api/)
  */
 @customElement('vscode-table-header-cell')
 export class VscodeTableHeaderCell extends VscElement {
@@ -15,19 +15,10 @@ export class VscodeTableHeaderCell extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
-      declareThemeVariables([
-        {
-          componentProp: '--font-size',
-          vscodeProp: '--vscode-font-size'
-        },
-        {
-          componentProp: 'font-family',
-          vscodeProp: '--vscode-font-family'
-        }
-      ]),
       css`
         :host {
           box-sizing: border-box;
+          color: var(--foreground);
           display: table-cell;
           font-family: var(--font-family);
           font-size: var(--font-size);
