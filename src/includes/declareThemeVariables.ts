@@ -9,6 +9,7 @@ type VscodeThemeVariableName =
   | '--vscode-badge-background'
   | '--vscode-badge-foreground'
   | '--vscode-button-background'
+  | '--vscode-button-border'
   | '--vscode-button-foreground'
   | '--vscode-button-hoverBackground'
   | '--vscode-button-secondaryBackground'
@@ -29,6 +30,8 @@ type VscodeThemeVariableName =
   | '--vscode-icon-foreground'
   | '--vscode-input-background'
   | '--vscode-input-placeholderForeground'
+  | '--vscode-keybindingTable-headerBackground'
+  | '--vscode-keybindingTable-rowsBackground'
   | '--vscode-list-activeSelectionBackground'
   | '--vscode-list-activeSelectionForeground'
   | '--vscode-list-inactiveSelectionBackground'
@@ -69,7 +72,8 @@ type VscodeThemeVariableName =
   | '--vscode-toolbar-hoverBackground'
   | '--vscode-toolbar-hoverOutline'
   | '--vscode-quickInputList-focusBackground'
-  | '--vscode-quickInputList-focusForeground';
+  | '--vscode-quickInputList-focusForeground'
+  | '--vscode-widget-shadow';
 
 type FallbackThemeDefinition = Record<VscodeThemeVariableName, string>;
 
@@ -83,6 +87,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#4d4d4d',
     '--vscode-badge-foreground': '#ffffff',
     '--vscode-button-background': '#0e639c',
+    '--vscode-button-border': 'transparent',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': '#1177bb',
     '--vscode-button-secondaryBackground': '#3a3d41',
@@ -103,6 +108,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#c5c5c5',
     '--vscode-input-background': '#3c3c3c',
     '--vscode-input-placeholderForeground': '#a6a6a6',
+    '--vscode-keybindingTable-headerBackground': 'rgba(204, 204, 204, 0.04)',
+    '--vscode-keybindingTable-rowsBackground': 'rgba(204, 204, 204, 0.04)',
     '--vscode-list-activeSelectionBackground': '#04395e',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#007fd4',
@@ -144,6 +151,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': 'transparent',
     '--vscode-quickInputList-focusBackground': '#04395e',
     '--vscode-quickInputList-focusForeground': '#ffffff',
+    '--vscode-widget-shadow': 'rgba(0, 0, 0, 0.36)',
   },
   light: {
     '--vsc-foreground-translucent': 'rgba(97, 97, 97, 0.9)',
@@ -152,6 +160,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#c4c4c4',
     '--vscode-badge-foreground': '#333333',
     '--vscode-button-background': '#007acc',
+    '--vscode-button-border': 'transparent',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': '#0062a3',
     '--vscode-button-secondaryBackground': '#5f6a79',
@@ -172,6 +181,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#424242',
     '--vscode-input-background': '#ffffff',
     '--vscode-input-placeholderForeground': '#767676',
+    '--vscode-keybindingTable-headerBackground': 'rgba(97, 97, 97, 0.04)',
+    '--vscode-keybindingTable-rowsBackground': 'rgba(97, 97, 97, 0.04)',
     '--vscode-list-activeSelectionBackground': '#0060c0',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#0090f1',
@@ -213,6 +224,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': 'transparent',
     '--vscode-quickInputList-focusBackground': '#0060c0',
     '--vscode-quickInputList-focusForeground': '#ffffff',
+    '--vscode-widget-shadow': 'rgba(0, 0, 0, 0.16)',
   },
   'high-contrast': {
     '--vsc-foreground-translucent': 'rgba(255, 255, 255, 0.9)',
@@ -221,6 +233,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#000000',
     '--vscode-badge-foreground': '#ffffff',
     '--vscode-button-background': 'transparent',
+    '--vscode-button-border': '#6fc3df',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': 'transparent',
     '--vscode-button-secondaryBackground': 'transparent',
@@ -241,6 +254,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#ffffff',
     '--vscode-input-background': '#000000',
     '--vscode-input-placeholderForeground': 'rgba(255, 255, 255, 0.7)',
+    '--vscode-keybindingTable-headerBackground': 'transparent',
+    '--vscode-keybindingTable-rowsBackground': 'transparent',
     '--vscode-list-activeSelectionBackground': '#000000',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#f38518',
@@ -282,6 +297,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': '#f38518',
     '--vscode-quickInputList-focusBackground': '#000000',
     '--vscode-quickInputList-focusForeground': '#ffffff',
+    '--vscode-widget-shadow': 'transparent',
   },
   'high-contrast-light': {
     '--vsc-foreground-translucent': 'rgba(41, 41, 41, 0.9)',
@@ -290,6 +306,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-badge-background': '#0f4a85',
     '--vscode-badge-foreground': '#ffffff',
     '--vscode-button-background': '#0f4a85',
+    '--vscode-button-border': '#0f4a85',
     '--vscode-button-foreground': '#ffffff',
     '--vscode-button-hoverBackground': '#0f4a85',
     '--vscode-button-secondaryBackground': '#ffffff',
@@ -310,6 +327,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-icon-foreground': '#292929',
     '--vscode-input-background': '#ffffff',
     '--vscode-input-placeholderForeground': 'rgba(41, 41, 41, 0.7)',
+    '--vscode-keybindingTable-headerBackground': 'transparent',
+    '--vscode-keybindingTable-rowsBackground': 'transparent',
     '--vscode-list-activeSelectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-list-activeSelectionForeground': '#292929',
     '--vscode-list-focusOutline': '#006bbd',
@@ -351,6 +370,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': '#006bbd',
     '--vscode-quickInputList-focusBackground': '#ffffff',
     '--vscode-quickInputList-focusForeground': '#292929',
+    '--vscode-widget-shadow': 'transparent',
   },
 };
 

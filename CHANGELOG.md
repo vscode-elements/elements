@@ -8,9 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-Sometimes VSCode theme variables are renamed or removed by authors. When this happens the appearance
+Sometimes VSCode theme variables are renamed or removed by the VSCode authors. When this happens the appearance
 of the components will change unpredictably. To prevent this, every component got a fallback style.
 The components will look "good" even if no theme variables are available.
+
+### Changed
+
+- **Button** and **ContextMenu** styles was updated to follow VSCode changes.
+- Customizable header background color and tinted row background color instead of the hard-coded ones in **Table**.
 
 ## [0.12.0] - 2023-03-17
 

@@ -22,11 +22,17 @@ import declareThemeVariables from './includes/declareThemeVariables';
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 
 /**
- * @attr {Boolean} zebra
+ * @attr {Boolean} zebra - Zebra stripes, even rows are tinted.
+ * @attr {Boolean} zebra-odd - Zebra stripes, odd rows are tinted.
  * @attr {Boolean} bordered
  *
  * @cssprop [--border=var(--vscode-editorGroup-border)]
+ * @cssprop [--foreground=var(--vscode-foreground)]
  * @cssprop [--resize-hover-border=var(--vscode-sash-hoverBorder)]
+ * @cssprop [--tinted-row-background=var(--vscode-keybindingTable-rowsBackground)]
+ * @cssprop [--header-background=var(--vscode-keybindingTable-headerBackground)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-family=var(--vscode-font-family)]
  */
 @customElement('vscode-table')
 export class VscodeTable extends VscElement {
@@ -552,9 +558,29 @@ export class VscodeTable extends VscElement {
           vscodeProp: '--vscode-editorGroup-border',
         },
         {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-foreground',
+        },
+        {
           componentProp: '--resize-hover-border',
           vscodeProp: '--vscode-sash-hoverBorder',
         },
+        {
+          componentProp: '--tinted-row-background',
+          vscodeProp: '--vscode-keybindingTable-rowsBackground',
+        },
+        {
+          componentProp: '--header-background',
+          vscodeProp: '--vscode-keybindingTable-headerBackground',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size'
+        },
+        {
+          componentProp: 'font-family',
+          vscodeProp: '--vscode-font-family'
+        }
       ]),
       css`
         :host {

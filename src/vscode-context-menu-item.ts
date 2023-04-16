@@ -18,7 +18,7 @@ export interface VscClickEventDetail {
  * @cssprop [--font-size=var(--vscode-font-size)]
  * @cssprop [--font-weight=var(--vscode-font-weight)]
  * @cssprop [--background=var(--vscode-menu-background)]
- * @cssprop [--border=var(--vscode-menu-border)]
+ * @cssprop [--border=var(--vscode-menu-selectionBorder)]
  * @cssprop [--foreground=var(--vscode-menu-foreground)]
  * @cssprop [--selection-background=var(--vscode-menu-selectionBackground)]
  * @cssprop [--selection-foreground=var(--vscode-menu-selectionForeground)]
@@ -79,7 +79,7 @@ export class VscodeContextMenuItem extends VscElement {
         },
         {
           componentProp: '--border',
-          vscodeProp: '--vscode-menu-border',
+          vscodeProp: '--vscode-menu-selectionBorder',
         },
         {
           componentProp: '--foreground',
@@ -99,7 +99,6 @@ export class VscodeContextMenuItem extends VscElement {
         }
       ]),
       css`
-        /* TODO: border in HC themes */
         :host {
           display: block;
           font-family: var(--font-family);
@@ -118,18 +117,21 @@ export class VscodeContextMenuItem extends VscElement {
           white-space: nowrap;
         }
 
-        .rule {
+        .ruler {
           border-bottom: 1px solid var(--separator-background);
           display: block;
           margin: 0 0 4px;
-          opacity: 0.4;
           padding-top: 4px;
           width: 100%;
         }
 
         .context-menu-item a {
           align-items: center;
+          border-color: transparent;
           border-radius: 3px;
+          border-style: solid;
+          border-width: 1px;
+          box-sizing: border-box;
           color: var(--foreground);
           cursor: default;
           display: flex;
@@ -144,6 +146,7 @@ export class VscodeContextMenuItem extends VscElement {
 
         :host-context([selected]) .context-menu-item a {
           background-color: var(--selection-background);
+          border-color: var(--border);
           color: var(--selection-foreground);
         }
 
@@ -153,7 +156,7 @@ export class VscodeContextMenuItem extends VscElement {
           flex: 1 1 auto;
           font-size: 12px;
           line-height: 1;
-          padding: 0 2em;
+          padding: 0 22px;
           text-decoration: none;
         }
 
@@ -161,7 +164,7 @@ export class VscodeContextMenuItem extends VscElement {
           display: block;
           flex: 2 1 auto;
           line-height: 1;
-          padding: 0 2em;
+          padding: 0 22px;
           text-align: right;
         }
       `,
@@ -173,7 +176,7 @@ export class VscodeContextMenuItem extends VscElement {
       ${this.separator
         ? html`
             <div class="context-menu-item separator">
-              <span class="rule"></span>
+              <span class="ruler"></span>
             </div>
           `
         : html`
