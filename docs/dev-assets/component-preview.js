@@ -158,7 +158,7 @@ tmpl.innerHTML = `
       <button type="button" value="light-v2" data-theme-kind="light" class="theme-button"><span>Light V2</span></button>
       <button type="button" value="dark" data-theme-kind="dark" class="theme-button"><span>Dark</span></button>
       <button type="button" value="dark-v2" data-theme-kind="dark" class="theme-button"><span>Dark V2</span></button>
-      <button type="button" value="hc-light" data-theme-kind="high-contrast" class="theme-button"><span>HC Light</span></button>
+      <button type="button" value="hc-light" data-theme-kind="high-contrast-light" class="theme-button"><span>HC Light</span></button>
       <button type="button" value="hc-dark" data-theme-kind="high-contrast" class="theme-button"><span>HC Dark</span></button>
       <button type="button" value="fallback" data-theme-kind="light" class="theme-button"><span>Unstyled</span></button>
       <button type="button" class="toggle-fullscreen-button" id="toggle-fullscreen" title="toggle fullscreen">
@@ -261,9 +261,11 @@ class ComponentPreview extends HTMLElement {
     document.body.classList.remove(
       'vscode-light',
       'vscode-dark',
-      'vscode-high-contrast'
+      'vscode-high-contrast',
+      'vscode-high-contrast-light'
     );
     document.body.classList.add(`vscode-${kind}`);
+    document.body.dataset.vscodeThemeKind = `vscode-${kind}`;
 
     themes[themeName] = themes[themeName] || {};
 

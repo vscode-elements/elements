@@ -10,6 +10,32 @@
           "kind": "class",
           "description": "",
           "name": "VscodeBadge",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "description": "default and counter variant background color",
+              "name": "--background",
+              "default": "var(--vscode-badge-background)"
+            },
+            {
+              "description": "default and counter variant foreground color",
+              "name": "--foreground",
+              "default": "var(--vscode-badge-foreground)"
+            },
+            {
+              "description": "activity bar variant background color",
+              "name": "--activity-bar-badge-background",
+              "default": "var(--vscode-activityBarBadge-background)"
+            },
+            {
+              "description": "activity bar variant foreground color",
+              "name": "--activity-bar-badge-foreground",
+              "default": "var(--vscode-activityBarBadge-foreground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -66,6 +92,52 @@
           "kind": "class",
           "description": "",
           "name": "VscodeButton",
+          "cssProperties": [
+            {
+              "name": "--background",
+              "default": "var(--vscode-button-background)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-button-foreground)"
+            },
+            {
+              "name": "--icon-foreground",
+              "default": "var(--vscode-button-foreground)"
+            },
+            {
+              "name": "--hover-background",
+              "default": "var(--vscode-button-hoverBackground)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--secondary-foreground",
+              "default": "var(--vscode-button-secondaryForeground)"
+            },
+            {
+              "name": "--secondary-background",
+              "default": "var(--vscode-button-secondaryBackground)"
+            },
+            {
+              "name": "--secondary-hover-background",
+              "default": "var(--vscode-button-secondaryHoverBackground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -370,6 +442,41 @@
           "kind": "class",
           "description": "",
           "name": "VscodeCheckbox",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "description": "Label font color. 90% transparency version of `--vscode-foreground` by default.",
+              "name": "--foreground",
+              "default": "var(--vsc-foreground-translucent)"
+            },
+            {
+              "name": "--icon-background",
+              "default": "var(--vscode-settings-checkboxBackground)"
+            },
+            {
+              "name": "--icon-border",
+              "default": "var(--vscode-settings-checkboxBorder)"
+            },
+            {
+              "name": "--icon-foreground",
+              "default": "var(--vscode-settings-checkboxForeground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -540,6 +647,32 @@
           "kind": "class",
           "description": "",
           "name": "VscodeCollapsible",
+          "cssProperties": [
+            {
+              "name": "--background",
+              "default": "var(--vscode-sideBar-background)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--header-background",
+              "default": "var(--vscode-sideBarSectionHeader-background)"
+            },
+            {
+              "name": "--icon-foreground",
+              "default": "var(--vscode-icon-foreground)"
+            },
+            {
+              "name": "--title-foreground",
+              "default": "var(--vscode-sideBarTitle-foreground)"
+            }
+          ],
           "slots": [
             {
               "description": "Main content",
@@ -639,8 +772,46 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "Child component of [ContextMenu](https://bendera.github.io/vscode-webview-elements/components/vscode-context-menu/).",
           "name": "VscodeContextMenuItem",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--background",
+              "default": "var(--vscode-menu-background)"
+            },
+            {
+              "name": "--border",
+              "default": "var(--vscode-menu-selectionBorder)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-menu-foreground)"
+            },
+            {
+              "name": "--selection-background",
+              "default": "var(--vscode-menu-selectionBackground)"
+            },
+            {
+              "name": "--selection-foreground",
+              "default": "var(--vscode-menu-selectionForeground)"
+            },
+            {
+              "name": "--separator-background",
+              "default": "var(--vscode-menu-separatorBackground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -778,6 +949,36 @@
           "kind": "class",
           "description": "",
           "name": "VscodeContextMenu",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--background",
+              "default": "var(--vscode-menu-background)"
+            },
+            {
+              "name": "--border",
+              "default": "var(--vscode-menu-border)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-menu-foreground)"
+            },
+            {
+              "name": "--shadow",
+              "default": "var(--vscode-widget-shadow)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1247,6 +1448,18 @@
           "kind": "class",
           "description": "",
           "name": "VscodeFormGroup",
+          "cssProperties": [
+            {
+              "description": "The width of the label in horizontal mode",
+              "name": "--label-width",
+              "default": "150px"
+            },
+            {
+              "description": "The right margin of the label in horizontal mode",
+              "name": "--label-right-margin",
+              "default": "14px"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1302,8 +1515,15 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "Adds more detailed description to a [FromGroup](https://bendera.github.io/vscode-webview-elements/components/vscode-form-group/)",
           "name": "VscodeFormHelper",
+          "cssProperties": [
+            {
+              "description": "Default text color. 90% transparency version of `--vscode-foreground` by default.",
+              "name": "--foreground",
+              "default": "var(--vsc-foreground-translucent)"
+            }
+          ],
           "members": [],
           "superclass": {
             "name": "VscElement",
@@ -1410,8 +1630,28 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).\r\nIn \"action-icon\" mode it behaves like a button. In this case, it is\r\nrecommended that a meaningful label is specified with the `label` property.",
+          "description": "Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).\nIn \"action-icon\" mode it behaves like a button. In this case, it is\nrecommended that a meaningful label is specified with the `label` property.",
           "name": "VscodeIcon",
+          "cssProperties": [
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-icon-foreground)"
+            },
+            {
+              "description": "Hover state background color in `active-icon` mode",
+              "name": "--hover-background",
+              "default": "var(--vscode-toolbar-hoverBackground)"
+            },
+            {
+              "description": "Active state background color in `active-icon` mode",
+              "name": "--active-background",
+              "default": "var(--vscode-toolbar-activeBackground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1499,10 +1739,10 @@
               "privacy": "private",
               "return": {
                 "type": {
-                  "text": "{\r\n    href: string | undefined;\r\n    nonce: string | undefined;\r\n  }"
+                  "text": "{\n    href: string | undefined;\n    nonce: string | undefined;\n  }"
                 }
               },
-              "description": "For using web fonts in web components, the font stylesheet must be included\r\ntwice: on the page and in the web component. This function looks for the\r\nfont stylesheet on the page and returns the stylesheet URL and the nonce\r\nid."
+              "description": "For using web fonts in web components, the font stylesheet must be included\ntwice: on the page and in the web component. This function looks for the\nfont stylesheet on the page and returns the stylesheet URL and the nonce\nid."
             },
             {
               "kind": "field",
@@ -2127,6 +2367,20 @@
           "kind": "class",
           "description": "",
           "name": "VscodeLabel",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -2260,6 +2514,82 @@
             {
               "name": "--dropdown-z-index",
               "default": "2"
+            },
+            {
+              "name": "--badge-background",
+              "default": "var(--vscode-badge-background)"
+            },
+            {
+              "name": "--badge-foreground",
+              "default": "var(--vscode-badge-foreground)"
+            },
+            {
+              "name": "--border",
+              "default": "var(--vscode-settings-dropdownBorder)"
+            },
+            {
+              "name": "--checkbox-background",
+              "default": "var(--vscode-settings-checkboxBackground)"
+            },
+            {
+              "name": "--dropdown-background",
+              "default": "var(--vscode-settings-dropdownBackground)"
+            },
+            {
+              "name": "--dropdown-border",
+              "default": "var(--vscode-settings-dropdownListBorder)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--list-active-selection-background",
+              "default": "var(--vscode-list-activeSelectionBackground)"
+            },
+            {
+              "name": "--list-active-selection-foreground",
+              "default": "var(--vscode-list-activeSelectionForeground)"
+            },
+            {
+              "name": "--list-focus-outline",
+              "default": "var(--vscode-list-focusOutline)"
+            },
+            {
+              "name": "--list-hover-background",
+              "default": "var(--vscode-list-hoverBackground)"
+            },
+            {
+              "name": "--list-hover-foreground",
+              "default": "var(--vscode-list-hoverForeground)"
+            },
+            {
+              "name": "--selected-background",
+              "default": "var(--vscode-list-hoverBackground)"
+            },
+            {
+              "name": "--input-background",
+              "default": "var(--vscode-settings-textInputBackground)"
+            },
+            {
+              "name": "--list-hover-background",
+              "default": "var(--vscode-list-hoverBackground)"
             }
           ],
           "members": [
@@ -2707,6 +3037,41 @@
           "kind": "class",
           "description": "",
           "name": "VscodeRadio",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "description": "Label font color. 90% transparency version of `--vscode-foreground` by default.",
+              "name": "--foreground",
+              "default": "var(--vsc-foreground-translucent)"
+            },
+            {
+              "name": "--icon-background",
+              "default": "var(--vscode-settings-checkboxBackground)"
+            },
+            {
+              "name": "--icon-border",
+              "default": "var(--vscode-settings-checkboxBorder)"
+            },
+            {
+              "name": "--icon-foreground",
+              "default": "var(--vscode-settings-checkboxForeground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -2911,6 +3276,28 @@
           "kind": "class",
           "description": "",
           "name": "VscodeScrollable",
+          "cssProperties": [
+            {
+              "name": "--min-thumb-height",
+              "default": "20px"
+            },
+            {
+              "name": "--scrollbar-shadow",
+              "default": "var(--vscode-scrollbar-shadow)"
+            },
+            {
+              "name": "--scrollbar-slider-background",
+              "default": "var(--vscode-scrollbarSlider-background)"
+            },
+            {
+              "name": "--scrollbar-slider-hover-background",
+              "default": "var(--vscode-scrollbarSlider-hoverBackground)"
+            },
+            {
+              "name": "--scrollbar-slider-active-background",
+              "default": "var(--vscode-scrollbarSlider-activeBackground')"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -3249,6 +3636,82 @@
             {
               "name": "--dropdown-z-index",
               "default": "2"
+            },
+            {
+              "name": "--badge-background",
+              "default": "var(--vscode-badge-background)"
+            },
+            {
+              "name": "--badge-foreground",
+              "default": "var(--vscode-badge-foreground)"
+            },
+            {
+              "name": "--border",
+              "default": "var(--vscode-settings-dropdownBorder)"
+            },
+            {
+              "name": "--checkbox-background",
+              "default": "var(--vscode-settings-checkboxBackground)"
+            },
+            {
+              "name": "--dropdown-background",
+              "default": "var(--vscode-settings-dropdownBackground)"
+            },
+            {
+              "name": "--dropdown-border",
+              "default": "var(--vscode-settings-dropdownListBorder)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--list-active-selection-background",
+              "default": "var(--vscode-list-activeSelectionBackground)"
+            },
+            {
+              "name": "--list-active-selection-foreground",
+              "default": "var(--vscode-list-activeSelectionForeground)"
+            },
+            {
+              "name": "--list-focus-outline",
+              "default": "var(--vscode-list-focusOutline)"
+            },
+            {
+              "name": "--list-hover-background",
+              "default": "var(--vscode-list-hoverBackground)"
+            },
+            {
+              "name": "--list-hover-foreground",
+              "default": "var(--vscode-list-hoverForeground)"
+            },
+            {
+              "name": "--selected-background",
+              "default": "var(--vscode-list-hoverBackground)"
+            },
+            {
+              "name": "--input-background",
+              "default": "var(--vscode-settings-textInputBackground)"
+            },
+            {
+              "name": "--list-hover-background",
+              "default": "var(--vscode-list-hoverBackground)"
             }
           ],
           "members": [
@@ -3452,6 +3915,12 @@
           "kind": "class",
           "description": "",
           "name": "VscodeSplitLayout",
+          "cssProperties": [
+            {
+              "name": "--hover-border",
+              "default": "var(--vscode-sash-hoverBorder)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -3710,6 +4179,32 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTabHeader",
+          "cssProperties": [
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "name": "--panel-inactive-foreground",
+              "default": "var(--vscode-panelTitle-inactiveForeground)"
+            },
+            {
+              "name": "--panel-active-foreground",
+              "default": "var(--vscode-panelTitle-activeForeground)"
+            },
+            {
+              "name": "--panel-active-border",
+              "default": "var(--vscode-panelTitle-activeBorder)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            },
+            {
+              "name": "--active-foreground",
+              "default": "var(--vscode-settings-headerForeground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -3841,6 +4336,16 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTabPanel",
+          "cssProperties": [
+            {
+              "name": "--background",
+              "default": "var(--vscode-panel--background)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -3972,6 +4477,13 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTableBody",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--tinted-row-background",
+              "default": "var(--vscode-keybindingTable-rowsBackground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -4029,6 +4541,28 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTableCell",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--border",
+              "default": "var(--vscode-editorGroup-border)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -4125,6 +4659,23 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTableHeaderCell",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -4182,6 +4733,13 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTableHeader",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--header-background",
+              "default": "var(--vscode-keybindingTable-headerBackground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -4239,6 +4797,13 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTableRow",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--border",
+              "default": "var(--vscode-editorGroup-border)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -4296,6 +4861,36 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTable",
+          "cssProperties": [
+            {
+              "name": "--border",
+              "default": "var(--vscode-editorGroup-border)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "name": "--resize-hover-border",
+              "default": "var(--vscode-sash-hoverBorder)"
+            },
+            {
+              "name": "--tinted-row-background",
+              "default": "var(--vscode-keybindingTable-rowsBackground)"
+            },
+            {
+              "name": "--header-background",
+              "default": "var(--vscode-keybindingTable-headerBackground)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -4338,7 +4933,7 @@
             {
               "kind": "field",
               "name": "columns",
-              "description": "Initial column sizes in a JSON-encoded array.\r\nAccepted values are:\r\n- number\r\n- string-type number (ex.: \"100\")\r\n- px value (ex.: \"100px\")\r\n- percentage value (ex.: \"50%\")\r\n- percentage value (ex.: \"50%\")\r\n- \"auto\" keyword",
+              "description": "Initial column sizes in a JSON-encoded array.\nAccepted values are:\n- number\n- string-type number (ex.: \"100\")\n- px value (ex.: \"100px\")\n- percentage value (ex.: \"50%\")\n- percentage value (ex.: \"50%\")\n- \"auto\" keyword",
               "type": {
                 "text": "string[]"
               },
@@ -4351,7 +4946,7 @@
                 "text": "string"
               },
               "default": "'50px'",
-              "description": "Minimum column width. Valid values are:\r\n- number\r\n- string-type number (ex.: \"100\")\r\n- px value (ex.: \"100px\")\r\n- percentage value (ex.: \"50%\")\r\n- percentage value (ex.: \"50%\")\r\n- \"auto\" keyword",
+              "description": "Minimum column width. Valid values are:\n- number\n- string-type number (ex.: \"100\")\n- px value (ex.: \"100px\")\n- percentage value (ex.: \"50%\")\n- percentage value (ex.: \"50%\")\n- \"auto\" keyword",
               "attribute": "min-column-width"
             },
             {
@@ -4529,7 +5124,7 @@
               },
               "privacy": "private",
               "default": "[]",
-              "description": "Cached querySelectorAll result. Updated when the header slot changes.\r\nIt shouldn't be used directly, check the \"_getHeaderCells\" function."
+              "description": "Cached querySelectorAll result. Updated when the header slot changes.\nIt shouldn't be used directly, check the \"_getHeaderCells\" function."
             },
             {
               "kind": "field",
@@ -4539,7 +5134,7 @@
               },
               "privacy": "private",
               "default": "[]",
-              "description": "Cached querySelectorAll result. Updated when the body slot changes.\r\nIt shouldn't be used directly, check the \"_getCellsOfFirstRow\" function."
+              "description": "Cached querySelectorAll result. Updated when the body slot changes.\nIt shouldn't be used directly, check the \"_getCellsOfFirstRow\" function."
             },
             {
               "kind": "field",
@@ -4795,7 +5390,7 @@
               "privacy": "private",
               "return": {
                 "type": {
-                  "text": "{\r\n    sashPos: number;\r\n    prevSashPos: number;\r\n    nextSashPos: number;\r\n  }"
+                  "text": "{\n    sashPos: number;\n    prevSashPos: number;\n    nextSashPos: number;\n  }"
                 }
               }
             },
@@ -4852,7 +5447,15 @@
               "type": {
                 "text": "Boolean"
               },
+              "description": "Zebra stripes, even rows are tinted.",
               "name": "zebra"
+            },
+            {
+              "type": {
+                "text": "Boolean"
+              },
+              "description": "Zebra stripes, odd rows are tinted.",
+              "name": "zebra-odd"
             },
             {
               "type": {
@@ -4894,7 +5497,7 @@
             },
             {
               "name": "columns",
-              "description": "Initial column sizes in a JSON-encoded array.\r\nAccepted values are:\r\n- number\r\n- string-type number (ex.: \"100\")\r\n- px value (ex.: \"100px\")\r\n- percentage value (ex.: \"50%\")\r\n- percentage value (ex.: \"50%\")\r\n- \"auto\" keyword",
+              "description": "Initial column sizes in a JSON-encoded array.\nAccepted values are:\n- number\n- string-type number (ex.: \"100\")\n- px value (ex.: \"100px\")\n- percentage value (ex.: \"50%\")\n- percentage value (ex.: \"50%\")\n- \"auto\" keyword",
               "type": {
                 "text": "string[]"
               },
@@ -4906,7 +5509,7 @@
                 "text": "string"
               },
               "default": "'50px'",
-              "description": "Minimum column width. Valid values are:\r\n- number\r\n- string-type number (ex.: \"100\")\r\n- px value (ex.: \"100px\")\r\n- percentage value (ex.: \"50%\")\r\n- percentage value (ex.: \"50%\")\r\n- \"auto\" keyword",
+              "description": "Minimum column width. Valid values are:\n- number\n- string-type number (ex.: \"100\")\n- px value (ex.: \"100px\")\n- percentage value (ex.: \"50%\")\n- percentage value (ex.: \"50%\")\n- \"auto\" keyword",
               "fieldName": "minColumnWidth"
             },
             {
@@ -4962,6 +5565,28 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTabs",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--header-border",
+              "default": "var(--vscode-settings-headerBorder)"
+            },
+            {
+              "name": "--panel-background",
+              "default": "var(--vscode-panel-background)"
+            }
+          ],
           "slots": [
             {
               "description": "Default slot. It is used for tab panels.",
@@ -5192,6 +5817,80 @@
           "kind": "class",
           "description": "Multi-line text input.",
           "name": "VscodeTextarea",
+          "cssProperties": [
+            {
+              "name": "--scrollbar-shadow",
+              "default": "var(--vscode-scrollbar-shadow)"
+            },
+            {
+              "name": "--background",
+              "default": "var(--vscode-settings-textInputBackground)"
+            },
+            {
+              "name": "--border",
+              "default": "var(--vscode-settings-textInputBorder)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-settings-textInputForeground)"
+            },
+            {
+              "name": "--placeholder",
+              "default": "var(--vscode-input-placeholderForeground)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--monospace-background",
+              "default": "var(--vscode-editor-background)"
+            },
+            {
+              "name": "--monospace-foreground",
+              "default": "var(--vscode-editor-foreground)"
+            },
+            {
+              "name": "--monospace-font-family",
+              "default": "var(--vscode-editor-font-family)"
+            },
+            {
+              "name": "--monospace-font-size",
+              "default": "var(--vscode-editor-font-size)"
+            },
+            {
+              "name": "--monospace-font-weight",
+              "default": "var(--vscode-editor-font-weight)"
+            },
+            {
+              "name": "--monospace-placeholder",
+              "default": "var(--vscode-editor-inlineValuesForeground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            },
+            {
+              "name": "--scrollbar-background",
+              "default": "var(--vscode-scrollbarSlider-background)"
+            },
+            {
+              "name": "--scrollbar-hover",
+              "default": "var(--vscode-scrollbarSlider-hoverBackground)"
+            },
+            {
+              "name": "--scrollbar-active",
+              "default": "var(--vscode-scrollbarSlider-activeBackground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -5571,6 +6270,52 @@
           "kind": "class",
           "description": "A simple inline textfield",
           "name": "VscodeTextfield",
+          "cssProperties": [
+            {
+              "name": "--background",
+              "default": "var(--vscode-settings-textInputBackground)"
+            },
+            {
+              "name": "--border",
+              "default": "var(--vscode-settings-textInputBorder)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-settings-textInputForeground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--placeholder",
+              "default": "var(--vscode-input-placeholderForeground)"
+            },
+            {
+              "name": "--button-background",
+              "default": "var(--vscode-button-background)"
+            },
+            {
+              "name": "--button-foreground",
+              "default": "var(--vscode-button-foreground)"
+            },
+            {
+              "name": "--button-hover",
+              "default": "var(--vscode-button-hoverBackground)"
+            }
+          ],
           "slots": [
             {
               "name": "content-before"
@@ -6008,6 +6753,44 @@
           "kind": "class",
           "description": "",
           "name": "VscodeTree",
+          "cssProperties": [
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-list-focusOutline)"
+            },
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--hover-foreground",
+              "default": "var(--vscode-list-hoverForeground)"
+            },
+            {
+              "name": "--hover-background",
+              "default": "var(--vscode-list-hoverBackground)"
+            },
+            {
+              "name": "--inactive-selection-background",
+              "default": "var(--vscode-list-inactiveSelectionBackground)"
+            },
+            {
+              "name": "--active-selection-background",
+              "default": "var(--vscode-list-activeSelectionBackground)"
+            },
+            {
+              "name": "--active-selection-foreground",
+              "default": "var(--vscode-list-activeSelectionForeground)"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -6142,9 +6925,9 @@
               "privacy": "private",
               "parameters": [
                 {
-                  "name": "{\r\n    indentLevel,\r\n    label,\r\n    path,\r\n    iconName,\r\n    open = false,\r\n    itemType,\r\n    selected = false,\r\n    focused = false,\r\n    subItems,\r\n  }",
+                  "name": "{\n    indentLevel,\n    label,\n    path,\n    iconName,\n    open = false,\n    itemType,\n    selected = false,\n    focused = false,\n    subItems,\n  }",
                   "type": {
-                    "text": "{\r\n    indentLevel: number;\r\n    label: string;\r\n    path: number[];\r\n    iconName: string | undefined;\r\n    open: boolean;\r\n    itemType: ItemType;\r\n    selected: boolean;\r\n    focused: boolean;\r\n    subItems: TreeItem[];\r\n  }"
+                    "text": "{\n    indentLevel: number;\n    label: string;\n    path: number[];\n    iconName: string | undefined;\n    open: boolean;\n    itemType: ItemType;\n    selected: boolean;\n    focused: boolean;\n    subItems: TreeItem[];\n  }"
                   }
                 }
               ]
