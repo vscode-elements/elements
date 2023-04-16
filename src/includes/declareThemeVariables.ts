@@ -70,7 +70,8 @@ type VscodeThemeVariableName =
   | '--vscode-toolbar-hoverBackground'
   | '--vscode-toolbar-hoverOutline'
   | '--vscode-quickInputList-focusBackground'
-  | '--vscode-quickInputList-focusForeground';
+  | '--vscode-quickInputList-focusForeground'
+  | '--vscode-widget-shadow';
 
 type FallbackThemeDefinition = Record<VscodeThemeVariableName, string>;
 
@@ -146,6 +147,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': 'transparent',
     '--vscode-quickInputList-focusBackground': '#04395e',
     '--vscode-quickInputList-focusForeground': '#ffffff',
+    '--vscode-widget-shadow': 'rgba(0, 0, 0, 0.36)',
   },
   light: {
     '--vsc-foreground-translucent': 'rgba(97, 97, 97, 0.9)',
@@ -216,6 +218,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': 'transparent',
     '--vscode-quickInputList-focusBackground': '#0060c0',
     '--vscode-quickInputList-focusForeground': '#ffffff',
+    '--vscode-widget-shadow': 'rgba(0, 0, 0, 0.16)',
   },
   'high-contrast': {
     '--vsc-foreground-translucent': 'rgba(255, 255, 255, 0.9)',
@@ -286,6 +289,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': '#f38518',
     '--vscode-quickInputList-focusBackground': '#000000',
     '--vscode-quickInputList-focusForeground': '#ffffff',
+    '--vscode-widget-shadow': 'transparent',
   },
   'high-contrast-light': {
     '--vsc-foreground-translucent': 'rgba(41, 41, 41, 0.9)',
@@ -356,6 +360,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-hoverOutline': '#006bbd',
     '--vscode-quickInputList-focusBackground': '#ffffff',
     '--vscode-quickInputList-focusForeground': '#292929',
+    '--vscode-widget-shadow': 'transparent',
   },
 };
 

@@ -3,6 +3,7 @@ import {customElement, property, query, state} from 'lit/decorators.js';
 import {VscElement} from './includes/VscElement';
 import {VscClickEventDetail} from './vscode-context-menu-item';
 import './vscode-context-menu-item';
+import declareThemeVariables from './includes/declareThemeVariables';
 
 interface MenuItemData {
   label: string;
@@ -12,6 +13,15 @@ interface MenuItemData {
   tabindex?: number;
 }
 
+/**
+ * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--font-size=var(--vscode-font-size)]
+ * @cssprop [--font-weight=var(--vscode-font-weight)]
+ * @cssprop [--background=var(--vscode-menu-background)]
+ * @cssprop [--border=var(--vscode-menu-border)]
+ * @cssprop [--foreground=var(--vscode-menu-foreground)]
+ * @cssprop [--shadow=var(--vscode-widget-shadow)]
+ */
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends VscElement {
   @property({type: Array, attribute: false})
@@ -210,74 +220,60 @@ export class VscodeContextMenu extends VscElement {
   static get styles(): CSSResultGroup {
     return [
       super.styles,
+      declareThemeVariables([
+        {
+          componentProp: '--font-family',
+          vscodeProp: '--vscode-font-family',
+        },
+        {
+          componentProp: '--font-size',
+          vscodeProp: '--vscode-font-size',
+        },
+        {
+          componentProp: '--font-weight',
+          vscodeProp: '--vscode-font-weight',
+        },
+        {
+          componentProp: '--background',
+          vscodeProp: '--vscode-menu-background',
+        },
+        {
+          componentProp: '--border',
+          vscodeProp: '--vscode-menu-border',
+        },
+        {
+          componentProp: '--foreground',
+          vscodeProp: '--vscode-menu-foreground',
+        },
+        {
+          componentProp: '--shadow',
+          vscodeProp: '--vscode-widget-shadow',
+        }
+      ]),
       css`
-        /* TODO: drop shadow in HC themes */
         :host {
           display: block;
-          font-family: var(--vscode-font-family);
-          font-size: var(--vscode-font-size);
-          font-weight: var(--vscode-font-weight);
+          font-family: var(--font-family);
+          font-size: var(--font-size);
+          font-weight: var(--font-weight);
           line-height: 1.4em;
           position: relative;
-          width: 365px;
         }
 
         .context-menu {
-          background-color: var(--vscode-menu-background);
+          background-color: var(--background);
+          border-color: var(--border);
           border-radius: 5px;
-          box-shadow: 0 2px 8px var(--vscode-widget-shadow);
-          color: var(--vscode-menu-foreground);
+          border-style: solid;
+          border-width: 1px;
+          box-shadow: 0 2px 8px var(--shadow);
+          color: var(--foreground);
           padding: 4px 0;
           white-space: nowrap;
         }
 
         .context-menu:focus {
           outline: 0;
-        }
-
-        .context-menu-item {
-          border: 1px solid transparent;
-          display: flex;
-          user-select: none;
-        }
-
-        .rule {
-          border-bottom: 1px solid var(--vscode-menu-separatorBackground);
-          display: block;
-          margin: 0 0.8em 0.2em;
-          opacity: 0.4;
-          padding-top: 0.2em;
-          width: 100%;
-        }
-
-        .context-menu-item a {
-          align-items: center;
-          color: var(--vscode-menu-foreground);
-          cursor: default;
-          display: flex;
-          flex: 1 1 auto;
-          height: 2em;
-          outline: none;
-          position: relative;
-          text-decoration: inherit;
-        }
-
-        .label {
-          background: none;
-          display: flex;
-          flex: 1 1 auto;
-          font-size: 12px;
-          line-height: 1;
-          padding: 0 2em;
-          text-decoration: none;
-        }
-
-        .keybinding {
-          display: block;
-          flex: 2 1 auto;
-          line-height: 1;
-          padding: 0 2em;
-          text-align: right;
         }
       `,
     ];
