@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Fixed
+
+- Radio button behaved as a checkbox in the **RadioGroup**. (Fix #59)
+
 ## [0.13.0] - 2023-04-16
 
 ### Added
