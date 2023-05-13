@@ -115,7 +115,7 @@ export class VscodeRadioGroup extends VscElement {
         this._radios[this._focusedRadio].tabIndex = -1;
       }
 
-      if (this._checkedRadio !== -1) {
+      if (this._checkedRadio !== -1 && this._checkedRadio !== clickedIndex) {
         this._radios[this._checkedRadio].checked = false;
       }
 
