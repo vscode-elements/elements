@@ -103,6 +103,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'pre' }}
         with:
+          artifacts: './bendera-vscode-webview-elements-*'
           prerelease: true
           draft: true
           tag: ${{ env.GIT_TAG }}
@@ -112,6 +113,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
         with:
+          artifacts: './bendera-vscode-webview-elements-*'
           prerelease: false
           draft: true
           tag: ${{ env.GIT_TAG }}
