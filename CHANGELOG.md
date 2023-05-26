@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Fixed
+
+- Preventing overflowing long texts in the **Select** description. (Fix #61)
+
 ## [0.13.1] - 2023-05-13
 
 ### Fixed
