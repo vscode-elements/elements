@@ -393,6 +393,7 @@ export default [
       font-weight: var(--font-weight);
       line-height: 1.3;
       padding: 6px 4px;
+      word-wrap:break-word;
     }
   `,
 ];
