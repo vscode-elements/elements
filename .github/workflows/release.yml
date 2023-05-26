@@ -35,8 +35,8 @@ jobs:
 
       - name: Setup Git
         run: |
-          git config --global user.name "github-action"
-          git config --global user.email "szoftverhiba+github-action@gmail.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "szoftverhiba+github-actions@gmail.com"
 
       - name: Get Current Version Number
         run: |
