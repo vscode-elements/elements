@@ -48,6 +48,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
           cache-dependency-path: |
             package-lock.json
@@ -96,7 +97,7 @@ jobs:
       - name: Publish to Npmjs.com
         run: npm publish bendera-vscode-webview-elements-${{ env.RELEASE_VERSION }}.tgz
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Github Release (Pre)
         uses: ncipollo/release-action@v1
