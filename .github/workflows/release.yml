@@ -94,10 +94,17 @@ jobs:
           npm run build
           npm pack
 
-      - name: Publish to Npmjs.com
+      - name: Publish to Npmjs.com (Pre)
+        run: npm publish --tag=next bendera-vscode-webview-elements-${{ env.RELEASE_VERSION }}.tgz
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ github.event.inputs.releaseChannel == 'pre' }}
+
+      - name: Publish to Npmjs.com (Stable)
         run: npm publish bendera-vscode-webview-elements-${{ env.RELEASE_VERSION }}.tgz
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ github.event.inputs.releaseChannel == 'stable' }}
 
       - name: Github Release (Pre)
         uses: ncipollo/release-action@v1
