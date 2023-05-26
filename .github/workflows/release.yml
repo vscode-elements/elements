@@ -103,7 +103,6 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'pre' }}
         with:
-          artifacts: './commit-message-editor-*'
           prerelease: true
           draft: true
           tag: ${{ env.GIT_TAG }}
@@ -113,7 +112,6 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
         with:
-          artifacts: './commit-message-editor-*'
           prerelease: false
           draft: true
           tag: ${{ env.GIT_TAG }}
