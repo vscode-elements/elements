@@ -1,5 +1,6 @@
 import {CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 
 @customElement('vscode-option')
@@ -10,7 +11,7 @@ export class VscodeOption extends VscElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   static get styles(): CSSResultGroup {
-    return [super.styles];
+    return [defaultStyles];
   }
 
   render(): TemplateResult {

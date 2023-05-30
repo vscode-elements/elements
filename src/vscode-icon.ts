@@ -5,6 +5,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from './includes/VscElement';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 /**
  * Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).
@@ -92,7 +93,7 @@ export class VscodeIcon extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--foreground',

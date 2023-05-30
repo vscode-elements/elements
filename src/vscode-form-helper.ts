@@ -4,6 +4,7 @@ import {applyForegroundRGBA} from './includes/themeHelpers';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 import {VscElement} from './includes/VscElement';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 /**
  * Adds more detailed description to a [FromGroup](https://bendera.github.io/vscode-webview-elements/components/vscode-form-group/)
@@ -39,7 +40,7 @@ export class VscodeFormHelper extends VscElement {
       }
     `;
 
-    return [super.styles, fallbackStyles, baseStyles, formHelperTextStyles];
+    return [defaultStyles, fallbackStyles, baseStyles, formHelperTextStyles];
   }
 
   render(): TemplateResult {

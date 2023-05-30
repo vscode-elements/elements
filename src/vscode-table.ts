@@ -18,6 +18,7 @@ import {VscodeTableHeader} from './vscode-table-header';
 import {VscodeTableHeaderCell} from './vscode-table-header-cell';
 import {rawValueToPercentage} from './vscode-table/helpers';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 
@@ -551,7 +552,7 @@ export class VscodeTable extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--border',

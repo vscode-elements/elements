@@ -2,6 +2,7 @@ import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 import './vscode-icon';
 
@@ -125,7 +126,7 @@ export class VscodeButton extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--background',

@@ -3,6 +3,7 @@ import {customElement, property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from './includes/VscElement';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 /**
  * A simple inline textfield
@@ -166,7 +167,7 @@ export class VscodeTextfield extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--background',

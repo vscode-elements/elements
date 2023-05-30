@@ -5,6 +5,7 @@ import {
   queryAssignedElements,
   state,
 } from 'lit/decorators.js';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 import {VscodeRadio} from './vscode-radio';
 
@@ -133,7 +134,7 @@ export class VscodeRadioGroup extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       css`
         :host {
           display: block;

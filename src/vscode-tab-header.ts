@@ -3,6 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from './includes/VscElement';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 /**
  * @cssprop [--foreground=var(--vscode-foreground)]
@@ -48,7 +49,7 @@ export class VscodeTabHeader extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--foreground',

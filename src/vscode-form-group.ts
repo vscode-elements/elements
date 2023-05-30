@@ -1,5 +1,6 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 
 export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
@@ -15,7 +16,7 @@ export class VscodeFormGroup extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       css`
         :host {
           --label-right-margin: 14px;

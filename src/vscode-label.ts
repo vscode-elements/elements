@@ -2,6 +2,7 @@ import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 import uniqueId from './includes/uniqueId';
 import {VscElement} from './includes/VscElement';
@@ -121,7 +122,7 @@ export class VscodeLabel extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--foreground',

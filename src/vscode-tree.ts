@@ -5,6 +5,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from './includes/VscElement';
 import './vscode-icon';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 enum KeyName {
   ARROW_DOWN = 'ArrowDown',
@@ -513,7 +514,7 @@ export class VscodeTree extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--focus-border',

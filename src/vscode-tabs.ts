@@ -10,6 +10,7 @@ import {VscElement} from './includes/VscElement';
 import {VscodeTabHeader} from './vscode-tab-header';
 import {VscodeTabPanel} from './vscode-tab-panel';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 /**
  * @slot - Default slot. It is used for tab panels.
@@ -186,7 +187,7 @@ export class VscodeTabs extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--font-family',

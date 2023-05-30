@@ -5,6 +5,7 @@ import {
   query,
   queryAssignedNodes,
 } from 'lit/decorators.js';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 import {VscodeCheckbox} from './vscode-checkbox';
 import {VscodeCheckboxGroup} from './vscode-checkbox-group';
@@ -219,7 +220,7 @@ export class VscodeFormContainer extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       css`
         :host {
           display: block;

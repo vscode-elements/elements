@@ -1,6 +1,7 @@
 import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 
 export interface VscClickEventDetail {
@@ -59,7 +60,7 @@ export class VscodeContextMenuItem extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--font-family',

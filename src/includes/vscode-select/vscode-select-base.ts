@@ -7,6 +7,7 @@ import dropdownStyles from './styles';
 import {InternalOption, Option, SearchMethod} from './types';
 import {filterOptionsByPattern} from './helpers';
 import {VscElement} from '../VscElement';
+import defaultStyles from '../default.styles';
 
 interface OptionListStat {
   selectedIndexes: number[];
@@ -537,7 +538,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   static get styles(): CSSResultGroup {
-    return [super.styles, dropdownStyles];
+    return [defaultStyles, dropdownStyles];
   }
 
   render(): TemplateResult {

@@ -1,5 +1,6 @@
 import {html, css, TemplateResult, nothing, CSSResultGroup} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 
 /**
@@ -27,7 +28,7 @@ export class VscodeTableCell extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       css`
         :host {
           box-sizing: border-box;

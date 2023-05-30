@@ -5,6 +5,7 @@ import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidg
 import baseStyles from './includes/form-button-widget/base.styles';
 import formHelperTextStyles from './includes/formHelperTextStyles';
 import {LabelledCheckboxOrRadioMixin} from './includes/form-button-widget/LabelledCheckboxOrRadio';
+import defaultStyles from './includes/default.styles';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
@@ -111,7 +112,7 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
 
   static get styles(): CSSResultGroup[] {
     return [
-      super.styles,
+      defaultStyles,
       baseStyles,
       css`
         .icon {

@@ -1,5 +1,6 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 
 /**
@@ -12,7 +13,7 @@ export class VscodeTableHeader extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       css`
         :host {
           background-color: var(--header-background);

@@ -1,6 +1,7 @@
 import {CSSResultGroup, css, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 import {VscElement} from './includes/VscElement';
 
 /**
@@ -17,7 +18,7 @@ export class VscodeBadge extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--foreground',

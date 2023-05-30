@@ -4,6 +4,7 @@ import {VscElement} from './includes/VscElement';
 import {VscClickEventDetail} from './vscode-context-menu-item';
 import './vscode-context-menu-item';
 import declareThemeVariables from './includes/declareThemeVariables';
+import defaultStyles from './includes/default.styles';
 
 interface MenuItemData {
   label: string;
@@ -219,7 +220,7 @@ export class VscodeContextMenu extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       declareThemeVariables([
         {
           componentProp: '--font-family',

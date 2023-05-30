@@ -5,6 +5,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
 import {VscElement} from './includes/VscElement';
+import defaultStyles from './includes/default.styles';
 
 enum Severity {
   DEFAULT = 'default',
@@ -250,7 +251,7 @@ export class VscodeInputbox extends VscElement {
 
   static get styles(): CSSResultGroup {
     return [
-      super.styles,
+      defaultStyles,
       css`
         :host {
           display: inline-block;
