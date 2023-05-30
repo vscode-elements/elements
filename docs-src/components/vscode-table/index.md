@@ -595,15 +595,15 @@ If the table gets a fixed height and the content is higher than the table, the c
     width: 100%;
   }
 
-  .large-table-example[vsc-cloak] {
+  .large-table-example:not(:defined) {
     background-color: var(--vscode-sideBar-background, #f6f8fa);
     display: block;
     height: 500px;
     width: 100%;
   }
 
-  .large-table-example[vsc-cloak] vscode-table-header,
-  .large-table-example[vsc-cloak] vscode-table-body {
+  .large-table-example:not(:defined) vscode-table-header,
+  .large-table-example:not(:defined) vscode-table-body {
     display: none;
   }
 </style>
@@ -4170,15 +4170,15 @@ styles too.
     width: 100%;
   }
 
-  .complex-table-example[vsc-cloak] {
+  .complex-table-example:not(:defined) {
     background-color: #f6f8fa;
     display: block;
     height: 500px;
     width: 100%;
   }
 
-  .complex-table-example[vsc-cloak] vscode-table-header,
-  .complex-table-example[vsc-cloak] vscode-table-body {
+  .complex-table-example:not(:defined) vscode-table-header,
+  .complex-table-example:not(:defined) vscode-table-body {
     display: none;
   }
 
@@ -4856,15 +4856,15 @@ styles too.
   width: 100%;
 }
 
-.complex-table-example[vsc-cloak] {
+.complex-table-example:not(:defined) {
   background-color: #f6f8fa;
   display: block;
   height: 500px;
   width: 100%;
 }
 
-.complex-table-example[vsc-cloak] vscode-table-header,
-.complex-table-example[vsc-cloak] vscode-table-body {
+.complex-table-example:not(:defined) vscode-table-header,
+.complex-table-example:not(:defined) vscode-table-body {
   display: none;
 }
 
