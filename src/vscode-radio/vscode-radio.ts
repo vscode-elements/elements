@@ -1,11 +1,9 @@
-import {html, TemplateResult, CSSResultGroup, css} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {FormButtonWidgetBase} from './includes/form-button-widget/FormButtonWidgetBase';
-import baseStyles from './includes/form-button-widget/base.styles';
-import formHelperTextStyles from './includes/formHelperTextStyles';
-import {LabelledCheckboxOrRadioMixin} from './includes/form-button-widget/LabelledCheckboxOrRadio';
-import defaultStyles from './includes/default.styles';
+import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase';
+import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio';
+import styles from './vscode-radio.styles';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
@@ -25,6 +23,8 @@ import defaultStyles from './includes/default.styles';
 export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
   FormButtonWidgetBase
 ) {
+  static styles = styles;
+
   @property({type: Boolean})
   set checked(val: boolean) {
     this._checked = val;
@@ -108,36 +108,6 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
       this.setAttribute('aria-checked', 'true');
       this._dispatchCustomEvent();
     }
-  }
-
-  static get styles(): CSSResultGroup[] {
-    return [
-      defaultStyles,
-      baseStyles,
-      css`
-        .icon {
-          border-radius: 9px;
-        }
-
-        .icon.checked:before {
-          background-color: currentColor;
-          border-radius: 4px;
-          content: '';
-          height: 8px;
-          left: 50%;
-          margin: -4px 0 0 -4px;
-          position: absolute;
-          top: 50%;
-          width: 8px;
-        }
-
-        :host(:focus):host(:not([disabled])) .icon {
-          outline: 1px solid var(--focus-border);
-          outline-offset: -1px;
-        }
-      `,
-      formHelperTextStyles,
-    ];
   }
 
   render(): TemplateResult {
