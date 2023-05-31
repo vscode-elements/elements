@@ -38,7 +38,7 @@
   },
   "wireit": {
     "analyze": {
-      "command": "cem analyze --litelement --globs=\"src/*.ts\" --exclude=\"src/main.ts\"",
+      "command": "cem analyze --litelement --globs=\"src/**/*.ts\" --exclude=\"src/main.ts\" --exclude=\"src/includes/**/*\" --exclude=\"src/test/**/*\"",
       "files": [
         "src/**/*.ts",
         "tsconfig.json"
