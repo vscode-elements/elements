@@ -1,9 +1,8 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
-import {VscElement} from './includes/VscElement';
+import {VscElement} from '../includes/VscElement';
+import styles from './vscode-collapsible.styles';
 
 /**
  * @slot body - Main content
@@ -18,6 +17,8 @@ import {VscElement} from './includes/VscElement';
  */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends VscElement {
+  static styles = styles;
+
   @property({type: String})
   title = '';
 
@@ -32,104 +33,6 @@ export class VscodeCollapsible extends VscElement {
     if (event.key === 'Enter') {
       this.open = !this.open;
     }
-  }
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--background',
-          vscodeProp: '--vscode-sideBar-background',
-        },
-        {
-          componentProp: '--focus-border',
-          vscodeProp: '--vscode-focusBorder',
-        },
-        {
-          componentProp: '--font-family',
-          vscodeProp: '--vscode-font-family',
-        },
-        {
-          componentProp: '--header-background',
-          vscodeProp: '--vscode-sideBarSectionHeader-background',
-        },
-        {
-          componentProp: '--icon-foreground',
-          vscodeProp: '--vscode-icon-foreground',
-        },
-        {
-          componentProp: '--title-foreground',
-          vscodeProp: '--vscode-sideBarTitle-foreground',
-        },
-      ]),
-      css`
-        .collapsible {
-          background-color: var(--background);
-        }
-
-        .collapsible-header {
-          align-items: center;
-          background-color: var(--header-background);
-          cursor: pointer;
-          display: flex;
-          height: 22px;
-          line-height: 22px;
-          user-select: none;
-        }
-
-        .collapsible-header:focus {
-          opacity: 1;
-          outline-offset: -1px;
-          outline-style: solid;
-          outline-width: 1px;
-          outline-color: var(--focus-border);
-        }
-
-        .collapsible-header h3 {
-          color: var(--title-foreground);
-          font-family: var(--font-family);
-          font-size: 11px;
-          font-weight: 700;
-          margin: 0;
-          text-transform: uppercase;
-        }
-
-        .header-icon {
-          color: var(--icon-foreground);
-          display: block;
-          margin: 0 3px;
-        }
-
-        .collapsible.open .header-icon {
-          transform: rotate(90deg);
-        }
-
-        .actions {
-          display: none;
-          margin-left: auto;
-          margin-right: 4px;
-        }
-
-        .collapsible.open .actions {
-          display: block;
-        }
-
-        slot[name='actions']::slotted(div) {
-          align-items: center;
-          display: flex;
-        }
-
-        .collapsible-body {
-          display: none;
-          overflow: hidden;
-        }
-
-        .collapsible.open .collapsible-body {
-          display: block;
-        }
-      `,
-    ];
   }
 
   render(): TemplateResult {

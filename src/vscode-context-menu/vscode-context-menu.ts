@@ -1,10 +1,9 @@
-import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
-import {VscElement} from './includes/VscElement';
-import {VscClickEventDetail} from './vscode-context-menu-item';
+import {VscElement} from '../includes/VscElement';
+import {VscClickEventDetail} from '../vscode-context-menu-item/vscode-context-menu-item';
 import './vscode-context-menu-item';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
+import styles from './vscode-context-menu.styles';
 
 interface MenuItemData {
   label: string;
@@ -25,6 +24,8 @@ interface MenuItemData {
  */
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends VscElement {
+  static styles = styles;
+
   @property({type: Array, attribute: false})
   set data(data: MenuItemData[]) {
     this._data = data;
@@ -216,68 +217,6 @@ export class VscodeContextMenu extends VscElement {
 
   private _onItemMouseOut() {
     this._selectedClickableItemIndex = -1;
-  }
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--font-family',
-          vscodeProp: '--vscode-font-family',
-        },
-        {
-          componentProp: '--font-size',
-          vscodeProp: '--vscode-font-size',
-        },
-        {
-          componentProp: '--font-weight',
-          vscodeProp: '--vscode-font-weight',
-        },
-        {
-          componentProp: '--background',
-          vscodeProp: '--vscode-menu-background',
-        },
-        {
-          componentProp: '--border',
-          vscodeProp: '--vscode-menu-border',
-        },
-        {
-          componentProp: '--foreground',
-          vscodeProp: '--vscode-menu-foreground',
-        },
-        {
-          componentProp: '--shadow',
-          vscodeProp: '--vscode-widget-shadow',
-        }
-      ]),
-      css`
-        :host {
-          display: block;
-          font-family: var(--font-family);
-          font-size: var(--font-size);
-          font-weight: var(--font-weight);
-          line-height: 1.4em;
-          position: relative;
-        }
-
-        .context-menu {
-          background-color: var(--background);
-          border-color: var(--border);
-          border-radius: 5px;
-          border-style: solid;
-          border-width: 1px;
-          box-shadow: 0 2px 8px var(--shadow);
-          color: var(--foreground);
-          padding: 4px 0;
-          white-space: nowrap;
-        }
-
-        .context-menu:focus {
-          outline: 0;
-        }
-      `,
-    ];
   }
 
   render(): TemplateResult {
