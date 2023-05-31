@@ -1,4 +1,4 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -9,16 +9,15 @@ import {
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {VscElement} from './includes/VscElement';
-import './vscode-scrollable';
-import {VscodeScrollable} from './vscode-scrollable';
-import {VscodeTableBody} from './vscode-table-body';
-import {VscodeTableCell} from './vscode-table-cell';
-import {VscodeTableHeader} from './vscode-table-header';
-import {VscodeTableHeaderCell} from './vscode-table-header-cell';
-import {rawValueToPercentage} from './vscode-table/helpers';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
+import {VscElement} from '../includes/VscElement';
+import '../vscode-scrollable';
+import {VscodeScrollable} from '../vscode-scrollable';
+import {VscodeTableBody} from '../vscode-table-body';
+import {VscodeTableCell} from '../vscode-table-cell';
+import {VscodeTableHeader} from '../vscode-table-header';
+import {VscodeTableHeaderCell} from '../vscode-table-header-cell';
+import {rawValueToPercentage} from './helpers';
+import styles from './vscode-table.styles';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 
@@ -37,6 +36,8 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
  */
 @customElement('vscode-table')
 export class VscodeTable extends VscElement {
+  static styles = styles;
+
   @property({reflect: true})
   role = 'table';
 
@@ -549,138 +550,6 @@ export class VscodeTable extends VscElement {
   }
 
   private _onResizingMouseUpBound = this._onResizingMouseUp.bind(this);
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--border',
-          vscodeProp: '--vscode-editorGroup-border',
-        },
-        {
-          componentProp: '--foreground',
-          vscodeProp: '--vscode-foreground',
-        },
-        {
-          componentProp: '--resize-hover-border',
-          vscodeProp: '--vscode-sash-hoverBorder',
-        },
-        {
-          componentProp: '--tinted-row-background',
-          vscodeProp: '--vscode-keybindingTable-rowsBackground',
-        },
-        {
-          componentProp: '--header-background',
-          vscodeProp: '--vscode-keybindingTable-headerBackground',
-        },
-        {
-          componentProp: '--font-size',
-          vscodeProp: '--vscode-font-size'
-        },
-        {
-          componentProp: 'font-family',
-          vscodeProp: '--vscode-font-family'
-        }
-      ]),
-      css`
-        :host {
-          display: block;
-        }
-
-        ::slotted(vscode-table-row) {
-          width: 100%;
-        }
-
-        .wrapper {
-          height: 100%;
-          max-width: 100%;
-          overflow: hidden;
-          position: relative;
-          width: 100%;
-        }
-
-        .wrapper.select-disabled {
-          user-select: none;
-        }
-
-        .wrapper.resize-cursor {
-          cursor: ew-resize;
-        }
-
-        .wrapper.compact-view .header-slot-wrapper {
-          height: 0;
-          overflow: hidden;
-        }
-
-        .scrollable {
-          height: 100%;
-        }
-
-        .scrollable:before {
-          background-color: transparent;
-          content: '';
-          display: block;
-          height: 1px;
-          position: absolute;
-          width: 100%;
-        }
-
-        :host(:not([bordered]))
-          .wrapper:not(.compact-view):hover
-          .scrollable:not([scrolled]):before,
-        :host([bordered])
-          .wrapper:not(.compact-view)
-          .scrollable:not([scrolled]):before {
-          background-color: var(--border);
-        }
-
-        :host(:not([bordered])) .sash {
-          visibility: hidden;
-        }
-
-        :host(:not([compact])) .wrapper:hover .sash {
-          visibility: visible;
-        }
-
-        .sash {
-          height: 100%;
-          position: absolute;
-          top: 0;
-          width: 1px;
-        }
-
-        .wrapper.compact-view .sash {
-          display: none;
-        }
-
-        .sash.resizable {
-          cursor: ew-resize;
-        }
-
-        .sash-visible {
-          background-color: var(--border);
-          height: 100%;
-          position: absolute;
-          top: 0;
-          width: 1px;
-        }
-
-        .sash.hover .sash-visible {
-          background-color: var(--resize-hover-border);
-          transition: background-color 50ms linear 300ms;
-        }
-
-        .sash .sash-clickable {
-          background-color: transparent;
-          height: 100%;
-          left: -2px;
-          position: absolute;
-          width: 5px;
-        }
-      `,
-    ];
-  }
 
   render(): TemplateResult {
     const sashes = this._sashPositions.map((val, index) => {
