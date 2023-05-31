@@ -3,9 +3,9 @@ import {customElement, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
-import {VscElement} from './includes/VscElement';
-import defaultStyles from './includes/default.styles';
+import {INPUT_LINE_HEIGHT_RATIO} from '../includes/helpers';
+import {VscElement} from '../includes/VscElement';
+import defaultStyles from '../includes/default.styles';
 
 enum Severity {
   DEFAULT = 'default',

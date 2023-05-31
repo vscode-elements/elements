@@ -1,10 +1,10 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {applyForegroundRGBA} from './includes/themeHelpers';
-import formHelperTextStyles from './includes/formHelperTextStyles';
-import {VscElement} from './includes/VscElement';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
+import {applyForegroundRGBA} from '../includes/themeHelpers';
+import formHelperTextStyles from '../includes/formHelperTextStyles';
+import {VscElement} from '../includes/VscElement';
+import declareThemeVariables from '../includes/declareThemeVariables';
+import defaultStyles from '../includes/default.styles';
 
 /**
  * Adds more detailed description to a [FromGroup](https://bendera.github.io/vscode-webview-elements/components/vscode-form-group/)

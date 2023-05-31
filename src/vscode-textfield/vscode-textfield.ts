@@ -1,9 +1,9 @@
 import {CSSResultGroup, css, html, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {VscElement} from './includes/VscElement';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
+import {VscElement} from '../includes/VscElement';
+import declareThemeVariables from '../includes/declareThemeVariables';
+import defaultStyles from '../includes/default.styles';
 
 /**
  * A simple inline textfield

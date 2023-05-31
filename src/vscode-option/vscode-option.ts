@@ -1,7 +1,7 @@
 import {CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import defaultStyles from './includes/default.styles';
-import {VscElement} from './includes/VscElement';
+import defaultStyles from '../includes/default.styles';
+import {VscElement} from '../includes/VscElement';
 
 @customElement('vscode-option')
 export class VscodeOption extends VscElement {

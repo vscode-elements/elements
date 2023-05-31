@@ -1,6 +1,4 @@
-import {CSSResultGroup} from 'lit';
 import {property} from 'lit/decorators.js';
-import defaultStyles from '../default.styles';
 import {applyForegroundRGBA} from '../themeHelpers';
 import {VscElement} from '../VscElement';
 
@@ -65,8 +63,4 @@ export class FormButtonWidgetBase extends VscElement {
   }
 
   private _handleBlurBound = this._handleBlur.bind(this);
-
-  static get styles(): CSSResultGroup {
-    return [defaultStyles];
-  }
 }

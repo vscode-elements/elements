@@ -3,9 +3,9 @@ import {customElement, property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {VscElement} from './includes/VscElement';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
+import {VscElement} from '../includes/VscElement';
+import declareThemeVariables from '../includes/declareThemeVariables';
+import defaultStyles from '../includes/default.styles';
 
 /**
  * Multi-line text input.

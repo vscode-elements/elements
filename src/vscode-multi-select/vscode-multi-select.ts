@@ -2,8 +2,8 @@ import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
-import {chevronDownIcon} from './includes/vscode-select/template-elements';
-import {VscodeSelectBase} from './includes/vscode-select/vscode-select-base';
+import {chevronDownIcon} from '../includes/vscode-select/template-elements';
+import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.

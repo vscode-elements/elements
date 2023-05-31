@@ -3,9 +3,9 @@ import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {VscElement} from './includes/VscElement';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
+import {VscElement} from '../includes/VscElement';
+import declareThemeVariables from '../includes/declareThemeVariables';
+import defaultStyles from '../includes/default.styles';
 
 /**
  * Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).

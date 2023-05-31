@@ -5,12 +5,12 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import uniqueId from './includes/uniqueId';
-import {VscElement} from './includes/VscElement';
-import {VscodeTabHeader} from './vscode-tab-header';
-import {VscodeTabPanel} from './vscode-tab-panel';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
+import uniqueId from '../includes/uniqueId';
+import {VscElement} from '../includes/VscElement';
+import {VscodeTabHeader} from '../vscode-tab-header';
+import {VscodeTabPanel} from '../vscode-tab-panel';
+import declareThemeVariables from '../includes/declareThemeVariables';
+import defaultStyles from '../includes/default.styles';
 
 /**
  * @slot - Default slot. It is used for tab panels.

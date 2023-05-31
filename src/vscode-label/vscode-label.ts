@@ -1,15 +1,15 @@
 import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import declareThemeVariables from './includes/declareThemeVariables';
-import defaultStyles from './includes/default.styles';
-import {INPUT_LINE_HEIGHT_RATIO} from './includes/helpers';
-import uniqueId from './includes/uniqueId';
-import {VscElement} from './includes/VscElement';
-import {VscodeCheckboxGroup} from './vscode-checkbox-group';
-import {VscodeRadioGroup} from './vscode-radio-group';
-import {VscodeTextarea} from './vscode-textarea';
-import {VscodeTextfield} from './vscode-textfield';
+import declareThemeVariables from '../includes/declareThemeVariables';
+import defaultStyles from '../includes/default.styles';
+import {INPUT_LINE_HEIGHT_RATIO} from '../includes/helpers';
+import uniqueId from '../includes/uniqueId';
+import {VscElement} from '../includes/VscElement';
+import {VscodeCheckboxGroup} from '../vscode-checkbox-group';
+import {VscodeRadioGroup} from '../vscode-radio-group';
+import {VscodeTextarea} from '../vscode-textarea';
+import {VscodeTextfield} from '../vscode-textfield';
 
 interface FocusableElement extends Element {
   focus: () => void;

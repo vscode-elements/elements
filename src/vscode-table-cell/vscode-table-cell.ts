@@ -1,7 +1,7 @@
 import {html, css, TemplateResult, nothing, CSSResultGroup} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import defaultStyles from './includes/default.styles';
-import {VscElement} from './includes/VscElement';
+import defaultStyles from '../includes/default.styles';
+import {VscElement} from '../includes/VscElement';
 
 /**
  * @cssprop [--border=var(--vscode-editorGroup-border)] - Inherited from [Table](/components/vscode-table/api/)
