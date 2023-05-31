@@ -1,20 +1,20 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
   query,
   queryAssignedNodes,
 } from 'lit/decorators.js';
-import defaultStyles from './includes/default.styles';
-import {VscElement} from './includes/VscElement';
-import {VscodeCheckbox} from './vscode-checkbox';
-import {VscodeCheckboxGroup} from './vscode-checkbox-group';
-import {VscodeFormGroup, FormGroupVariant} from './vscode-form-group';
-import {VscodeInputbox} from './vscode-inputbox';
-import {VscodeMultiSelect} from './vscode-multi-select';
-import {VscodeRadio} from './vscode-radio';
-import {VscodeRadioGroup} from './vscode-radio-group';
-import {VscodeSingleSelect} from './vscode-single-select';
+import {VscElement} from '../includes/VscElement';
+import {VscodeCheckbox} from '../vscode-checkbox';
+import {VscodeCheckboxGroup} from '../vscode-checkbox-group';
+import {VscodeFormGroup, FormGroupVariant} from '../vscode-form-group';
+import {VscodeInputbox} from '../vscode-inputbox';
+import {VscodeMultiSelect} from '../vscode-multi-select';
+import {VscodeRadio} from '../vscode-radio';
+import {VscodeRadioGroup} from '../vscode-radio-group';
+import {VscodeSingleSelect} from '../vscode-single-select';
+import styles from './vscode-form-container.styles';
 
 enum FormGroupLayout {
   HORIZONTAL = 'horizontal',
@@ -58,6 +58,8 @@ const isRadio = (el: Element): el is VscodeRadio => {
 
 @customElement('vscode-form-container')
 export class VscodeFormContainer extends VscElement {
+  static styles = styles;
+
   @property({type: Boolean, reflect: true})
   set responsive(isResponsive: boolean) {
     this._responsive = isResponsive;
@@ -216,18 +218,6 @@ export class VscodeFormContainer extends VscElement {
   private _deactivateResizeObserver() {
     this._resizeObserver?.disconnect();
     this._resizeObserver = null;
-  }
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      css`
-        :host {
-          display: block;
-          max-width: 727px;
-        }
-      `,
-    ];
   }
 
   firstUpdated(): void {

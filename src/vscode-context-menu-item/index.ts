@@ -1,1 +1,4 @@
-export {VscodeContextMenuItem} from './vscode-context-menu-item';
+export {
+  VscodeContextMenuItem,
+  VscClickEventDetail,
+} from './vscode-context-menu-item';

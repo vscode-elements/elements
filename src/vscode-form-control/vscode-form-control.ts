@@ -1,21 +1,14 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import defaultStyles from './includes/default.styles';
-import {VscElement} from './includes/VscElement';
+import {VscElement} from '../includes/VscElement';
+import styles from './vscode-form-control.styles';
 
+/**
+ * @deprecated
+ */
 @customElement('vscode-form-control')
 export class VscodeFormControl extends VscElement {
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      css`
-        :host {
-          display: block;
-          margin-top: 9px;
-        }
-      `,
-    ];
-  }
+  static styles = styles;
 
   render(): TemplateResult {
     return html` <slot></slot> `;
