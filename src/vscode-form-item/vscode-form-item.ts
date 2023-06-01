@@ -3,6 +3,9 @@ import {customElement} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement';
 import styles from './vscode-form-item.styles';
 
+/**
+ * @deprecated
+ */
 @customElement('vscode-form-item')
 export class VscodeFormItem extends VscElement {
   static styles = styles;
