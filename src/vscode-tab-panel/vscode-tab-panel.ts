@@ -1,8 +1,7 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement';
-import declareThemeVariables from '../includes/declareThemeVariables';
-import defaultStyles from '../includes/default.styles';
+import styles from './vscode-tab-panel.styles';
 
 /**
  * @cssprop [--background=var(--vscode-panel--background)]
@@ -10,6 +9,8 @@ import defaultStyles from '../includes/default.styles';
  */
 @customElement('vscode-tab-panel')
 export class VscodeTabPanel extends VscElement {
+  static styles = styles;
+
   @property({type: Boolean, reflect: true})
   hidden = false;
 
@@ -27,39 +28,6 @@ export class VscodeTabPanel extends VscElement {
 
   @property({type: Number, reflect: true})
   tabindex = 0;
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--focus-border',
-          vscodeProp: '--vscode-focusBorder',
-        },
-        {
-          componentProp: '--background',
-          vscodeProp: '--vscode-panel-background',
-        },
-      ]),
-      css`
-        :host {
-          display: block;
-          overflow: hidden;
-        }
-
-        :host(:focus-visible) {
-          outline-color: var(--focus-border);
-          outline-offset: 3px;
-          outline-style: solid;
-          outline-width: 1px;
-        }
-
-        :host([panel]) {
-          background-color: var(--background);
-        }
-      `,
-    ];
-  }
 
   render(): TemplateResult {
     return html` <slot></slot> `;

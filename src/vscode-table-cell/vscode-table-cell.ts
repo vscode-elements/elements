@@ -1,7 +1,7 @@
-import {html, css, TemplateResult, nothing, CSSResultGroup} from 'lit';
+import {html, TemplateResult, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import defaultStyles from '../includes/default.styles';
 import {VscElement} from '../includes/VscElement';
+import styles from './vscode-table-cell.styles';
 
 /**
  * @cssprop [--border=var(--vscode-editorGroup-border)] - Inherited from [Table](/components/vscode-table/api/)
@@ -11,6 +11,8 @@ import {VscElement} from '../includes/VscElement';
  */
 @customElement('vscode-table-cell')
 export class VscodeTableCell extends VscElement {
+  static styles = styles;
+
   @property({reflect: true})
   role = 'cell';
 
@@ -25,61 +27,6 @@ export class VscodeTableCell extends VscElement {
    */
   @property({type: Boolean, reflect: true})
   compact = false;
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      css`
-        :host {
-          box-sizing: border-box;
-          color: var(--foreground);
-          display: table-cell;
-          font-family: var(--font-family);
-          font-size: var(--font-size);
-          height: 24px;
-          overflow: hidden;
-          padding-left: 10px;
-          text-overflow: ellipsis;
-          vertical-align: middle;
-          white-space: nowrap;
-        }
-
-        :host([compact]) {
-          display: block;
-          height: auto;
-          padding-bottom: 5px;
-          width: 100% !important;
-        }
-
-        :host([compact]:first-child) {
-          padding-top: 10px;
-        }
-
-        :host-context(vscode-table[bordered][compact]) {
-          border: 0;
-        }
-
-        :host([compact]:last-child) {
-          padding-bottom: 10px;
-        }
-
-        :host-context(vscode-table[bordered]) {
-          border-bottom: 1px solid var(--border);
-        }
-
-        .wrapper {
-          overflow: inherit;
-          text-overflow: inherit;
-          white-space: inherit;
-          width: 100%;
-        }
-
-        .column-label {
-          font-weight: bold;
-        }
-      `,
-    ];
-  }
 
   render(): TemplateResult {
     const columnLabelElement = this.columnLabel

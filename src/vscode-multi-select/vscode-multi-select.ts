@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base';
+import styles from './vscode-multi-select.styles';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
@@ -31,6 +32,8 @@ import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base';
  */
 @customElement('vscode-multi-select')
 export class VscodeMultiSelect extends VscodeSelectBase {
+  static styles = styles;
+
   @property({type: Array, attribute: false})
   set selectedIndexes(val: number[]) {
     this._selectedIndexes = val;
@@ -51,7 +54,7 @@ export class VscodeMultiSelect extends VscodeSelectBase {
 
     this._selectedIndexes = [];
 
-    val.forEach((v) =>{
+    val.forEach((v) => {
       if (valMap[v]) {
         this._selectedIndexes.push(valMap[v]);
       }

@@ -1,38 +1,17 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import defaultStyles from '../includes/default.styles';
 import {VscElement} from '../includes/VscElement';
+import styles from './vscode-table-body.styles';
 
 /**
  * @cssprop [--tinted-row-background=var(--vscode-keybindingTable-rowsBackground)] - Inherited from [Table](/components/vscode-table/api/)
  */
 @customElement('vscode-table-body')
 export class VscodeTableBody extends VscElement {
+  static styles = styles;
+
   @property({reflect: true})
   role = 'rowgroup';
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      css`
-        :host {
-          display: table;
-          table-layout: fixed;
-          width: 100%;
-        }
-
-        :host-context(vscode-table[zebra])
-          ::slotted(vscode-table-row:nth-child(even)) {
-          background-color: var(--tinted-row-background);
-        }
-
-        :host-context(vscode-table[zebra-odd])
-          ::slotted(vscode-table-row:nth-child(odd)) {
-            background-color: var(--tinted-row-background);
-        }
-      `,
-    ];
-  }
 
   render(): TemplateResult {
     return html` <slot></slot> `;

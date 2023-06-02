@@ -4,7 +4,46 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/vscode-badge.ts",
+      "path": "src/vscode-badge/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeBadge",
+          "declaration": {
+            "name": "VscodeBadge",
+            "module": "./vscode-badge"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-badge/vscode-badge.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
+          },
+          "default": "[\n  defaultStyles,\n  declareThemeVariables([\n    {\n      componentProp: '--foreground',\n      vscodeProp: '--vscode-badge-foreground',\n    },\n    {\n      componentProp: '--font-family',\n      vscodeProp: '--vscode-font-family',\n    },\n    {\n      componentProp: '--background',\n      vscodeProp: '--vscode-badge-background',\n    },\n    {\n      componentProp: '--activity-bar-badge-background',\n      vscodeProp: '--vscode-activityBarBadge-background',\n    },\n    {\n      componentProp: '--activity-bar-badge-foreground',\n      vscodeProp: '--vscode-activityBarBadge-foreground',\n    },\n  ]),\n  css`\n    :host {\n      background-color: var(--background);\n      border-radius: 2px;\n      color: var(--foreground);\n      display: inline-block;\n      font-family: var(--font-family);\n      font-size: 11px;\n      font-weight: 400;\n      line-height: 14px;\n      min-width: 18px;\n      padding: 2px 3px;\n      text-align: center;\n      white-space: nowrap;\n    }\n\n    :host([variant='counter']) {\n      border-radius: 11px;\n      box-sizing: border-box;\n      height: 18px;\n      line-height: 1;\n      padding: 3px 5px;\n    }\n\n    :host([variant='activity-bar-counter']) {\n      background-color: var(--activity-bar-badge-background);\n      border-radius: 20px;\n      color: var(--activity-bar-badge-foreground);\n      font-size: 9px;\n      font-weight: 600;\n      line-height: 16px;\n      min-width: 8px;\n      padding: 0 4px;\n    }\n  `,\n]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "src/vscode-badge/vscode-badge.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-badge/vscode-badge.ts",
       "declarations": [
         {
           "kind": "class",
@@ -71,7 +110,7 @@
           "name": "VscodeBadge",
           "declaration": {
             "name": "VscodeBadge",
-            "module": "src/vscode-badge.ts"
+            "module": "src/vscode-badge/vscode-badge.ts"
           }
         },
         {
@@ -79,14 +118,297 @@
           "name": "vscode-badge",
           "declaration": {
             "name": "VscodeBadge",
-            "module": "src/vscode-badge.ts"
+            "module": "src/vscode-badge/vscode-badge.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-button.ts",
+      "path": "src/vscode-checkbox/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeCheckbox",
+          "declaration": {
+            "name": "VscodeCheckbox",
+            "module": "./vscode-checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-checkbox/vscode-checkbox.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
+          },
+          "default": "[\n  defaultStyles,\n  baseStyles,\n  css`\n    .icon {\n      border-radius: 3px;\n    }\n\n    :host(:focus):host(:not([disabled])) .icon {\n      outline: 1px solid var(--focus-border);\n      outline-offset: -1px;\n    }\n  `,\n  formHelperTextStyles\n]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "src/vscode-checkbox/vscode-checkbox.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-checkbox/vscode-checkbox.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeCheckbox",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "description": "Label font color. 90% transparency version of `--vscode-foreground` by default.",
+              "name": "--foreground",
+              "default": "var(--vsc-foreground-translucent)"
+            },
+            {
+              "name": "--icon-background",
+              "default": "var(--vscode-settings-checkboxBackground)"
+            },
+            {
+              "name": "--icon-border",
+              "default": "var(--vscode-settings-checkboxBorder)"
+            },
+            {
+              "name": "--icon-foreground",
+              "default": "var(--vscode-settings-checkboxForeground)"
+            },
+            {
+              "name": "--focus-border",
+              "default": "var(--vscode-focusBorder)"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "checked"
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'checkbox'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "_checked",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "_handleClick",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_handleKeyDown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "description": "Label text. It is only applied if componnet's innerHTML doesn't contain any text.",
+              "name": "label",
+              "kind": "field"
+            }
+          ],
+          "events": [
+            {
+              "name": "vsc-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "description": "Name which is used as a variable name in the data of the form-container.",
+              "name": "name"
+            },
+            {
+              "description": "Attribute pair of the `label` property.",
+              "name": "label"
+            },
+            {
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "fieldName": "checked"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'checkbox'",
+              "fieldName": "role"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "LabelledCheckboxOrRadioMixin",
+              "module": "/src/includes/form-button-widget/LabelledCheckboxOrRadio"
+            }
+          ],
+          "superclass": {
+            "name": "FormButtonWidgetBase",
+            "module": "/src/includes/form-button-widget/FormButtonWidgetBase"
+          },
+          "tagName": "vscode-checkbox",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeCheckbox",
+          "declaration": {
+            "name": "VscodeCheckbox",
+            "module": "src/vscode-checkbox/vscode-checkbox.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-checkbox",
+          "declaration": {
+            "name": "VscodeCheckbox",
+            "module": "src/vscode-checkbox/vscode-checkbox.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-button/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeButton",
+          "declaration": {
+            "name": "VscodeButton",
+            "module": "./vscode-button"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-button/vscode-button.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
+          },
+          "default": "[\n  defaultStyles,\n  declareThemeVariables([\n    {\n      componentProp: '--background',\n      vscodeProp: '--vscode-button-background',\n    },\n    {\n      componentProp: '--border',\n      vscodeProp: '--vscode-button-border',\n    },\n    {\n      componentProp: '--foreground',\n      vscodeProp: '--vscode-button-foreground',\n    },\n    {\n      componentProp: '--focus-border',\n      vscodeProp: '--vscode-focusBorder',\n    },\n    {\n      componentProp: '--icon-foreground',\n      vscodeProp: '--vscode-button-foreground',\n    },\n    {\n      componentProp: '--hover-background',\n      vscodeProp: '--vscode-button-hoverBackground',\n    },\n    {\n      componentProp: '--font-family',\n      vscodeProp: '--vscode-font-family',\n    },\n    {\n      componentProp: '--font-size',\n      vscodeProp: '--vscode-font-size',\n    },\n    {\n      componentProp: '--font-weight',\n      vscodeProp: '--vscode-font-weight',\n    },\n    {\n      componentProp: '--secondary-background',\n      vscodeProp: '--vscode-button-secondaryBackground',\n    },\n    {\n      componentProp: '--secondary-foreground',\n      vscodeProp: '--vscode-button-secondaryForeground',\n    },\n    {\n      componentProp: '--secondary-hover-background',\n      vscodeProp: '--vscode-button-secondaryHoverBackground',\n    },\n  ]),\n  css`\n    :host {\n      align-items: center;\n      background-color: var(--background);\n      border-color: var(--border);\n      border-style: solid;\n      border-radius: 2px;\n      border-width: 1px;\n      color: var(--foreground);\n      cursor: pointer;\n      display: inline-block;\n      font-family: var(--font-family);\n      font-size: var(--font-size);\n      font-weight: var(--font-weight);\n      line-height: 22px;\n      overflow: hidden;\n      padding: 1px 13px;\n      user-select: none;\n    }\n\n    :host([secondary]) {\n      color: var(--secondary-foreground);\n      background-color: var(--secondary-background);\n    }\n\n    :host([disabled]) {\n      cursor: default;\n      opacity: 0.4;\n      pointer-events: none;\n    }\n\n    :host(:hover) {\n      background-color: var(--hover-background);\n    }\n\n    :host([disabled]:hover) {\n      background-color: var(--background);\n    }\n\n    :host([secondary]:hover) {\n      background-color: var(--secondary-hover-background);\n    }\n\n    :host([secondary][disabled]:hover) {\n      background-color: var(--secondary-background);\n    }\n\n    :host(:focus),\n    :host(:active) {\n      outline: none;\n    }\n\n    :host(:focus) {\n      background-color: var(--hover-background);\n      outline: 1px solid var(--focus-border);\n      outline-offset: 2px;\n    }\n\n    :host([disabled]:focus) {\n      background-color: var(--background);\n      outline: 0;\n    }\n\n    :host([secondary]:focus) {\n      background-color: var(--secondary-hover-background);\n    }\n\n    :host([secondary][disabled]:focus) {\n      background-color: var(--secondary-background);\n    }\n\n    .wrapper {\n      align-items: center;\n      box-sizing: border-box;\n      display: flex;\n      justify-content: center;\n      position: relative;\n      width: 100%;\n    }\n\n    slot {\n      display: block;\n    }\n\n    .icon {\n      --foreground: var(--icon-foreground);\n      display: block;\n      margin-right: 3px;\n    }\n\n    .icon-after {\n      --foreground: var(--icon-foreground);\n      display: block;\n      margin-left: 3px;\n    }\n  `,\n]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "src/vscode-button/vscode-button.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-button/vscode-button.ts",
       "declarations": [
         {
           "kind": "class",
@@ -346,7 +668,7 @@
           "name": "VscodeButton",
           "declaration": {
             "name": "VscodeButton",
-            "module": "src/vscode-button.ts"
+            "module": "src/vscode-button/vscode-button.ts"
           }
         },
         {
@@ -354,14 +676,53 @@
           "name": "vscode-button",
           "declaration": {
             "name": "VscodeButton",
-            "module": "src/vscode-button.ts"
+            "module": "src/vscode-button/vscode-button.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-checkbox-group.ts",
+      "path": "src/vscode-checkbox-group/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeCheckboxGroup",
+          "declaration": {
+            "name": "VscodeCheckboxGroup",
+            "module": "./vscode-checkbox-group"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-checkbox-group/vscode-checkbox-group.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
+          },
+          "default": "[\n  defaultStyles,\n  css`\n    :host {\n      display: block;\n    }\n\n    .wrapper {\n      display: flex;\n      flex-wrap: wrap;\n    }\n\n    :host([variant='vertical']) .wrapper {\n      display: block;\n    }\n\n    ::slotted(vscode-checkbox) {\n      margin-right: 20px;\n    }\n\n    ::slotted(vscode-checkbox:last-child) {\n      margin-right: 0;\n    }\n\n    :host([variant='vertical']) ::slotted(vscode-checkbox) {\n      display: block;\n      margin-bottom: 15px;\n    }\n\n    :host([variant='vertical']) ::slotted(vscode-checkbox:last-child) {\n      margin-bottom: 0;\n    }\n  `,\n  formHelperTextStyles,\n]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "src/vscode-checkbox-group/vscode-checkbox-group.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-checkbox-group/vscode-checkbox-group.ts",
       "declarations": [
         {
           "kind": "class",
@@ -421,7 +782,7 @@
           "name": "VscodeCheckboxGroup",
           "declaration": {
             "name": "VscodeCheckboxGroup",
-            "module": "src/vscode-checkbox-group.ts"
+            "module": "src/vscode-checkbox-group/vscode-checkbox-group.ts"
           }
         },
         {
@@ -429,219 +790,53 @@
           "name": "vscode-checkbox-group",
           "declaration": {
             "name": "VscodeCheckboxGroup",
-            "module": "src/vscode-checkbox-group.ts"
+            "module": "src/vscode-checkbox-group/vscode-checkbox-group.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-checkbox.ts",
+      "path": "src/vscode-collapsible/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeCollapsible",
+          "declaration": {
+            "name": "VscodeCollapsible",
+            "module": "./vscode-collapsible"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-collapsible/vscode-collapsible.styles.ts",
       "declarations": [
         {
-          "kind": "class",
-          "description": "",
-          "name": "VscodeCheckbox",
-          "cssProperties": [
-            {
-              "name": "--font-family",
-              "default": "var(--vscode-font-family)"
-            },
-            {
-              "name": "--font-size",
-              "default": "var(--vscode-font-size)"
-            },
-            {
-              "name": "--font-weight",
-              "default": "var(--vscode-font-weight)"
-            },
-            {
-              "description": "Label font color. 90% transparency version of `--vscode-foreground` by default.",
-              "name": "--foreground",
-              "default": "var(--vsc-foreground-translucent)"
-            },
-            {
-              "name": "--icon-background",
-              "default": "var(--vscode-settings-checkboxBackground)"
-            },
-            {
-              "name": "--icon-border",
-              "default": "var(--vscode-settings-checkboxBorder)"
-            },
-            {
-              "name": "--icon-foreground",
-              "default": "var(--vscode-settings-checkboxForeground)"
-            },
-            {
-              "name": "--focus-border",
-              "default": "var(--vscode-focusBorder)"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "checked",
-              "type": {
-                "text": "boolean"
-              },
-              "attribute": "checked"
-            },
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'checkbox'",
-              "attribute": "role",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "disabled"
-            },
-            {
-              "kind": "field",
-              "name": "_checked",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "_handleClick",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_handleKeyDown",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "ev",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "description": "Label text. It is only applied if componnet's innerHTML doesn't contain any text.",
-              "name": "label",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "name": "vsc-change",
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "description": "Name which is used as a variable name in the data of the form-container.",
-              "name": "name"
-            },
-            {
-              "description": "Attribute pair of the `label` property.",
-              "name": "label"
-            },
-            {
-              "name": "checked",
-              "type": {
-                "text": "boolean"
-              },
-              "fieldName": "checked"
-            },
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'checkbox'",
-              "fieldName": "role"
-            },
-            {
-              "name": "value",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "value"
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "disabled"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "LabelledCheckboxOrRadioMixin",
-              "module": "/src/includes/form-button-widget/LabelledCheckboxOrRadio"
-            }
-          ],
-          "superclass": {
-            "name": "FormButtonWidgetBase",
-            "module": "/src/includes/form-button-widget/FormButtonWidgetBase"
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
           },
-          "tagName": "vscode-checkbox",
-          "customElement": true
+          "default": "[\n  defaultStyles,\n  declareThemeVariables([\n    {\n      componentProp: '--background',\n      vscodeProp: '--vscode-sideBar-background',\n    },\n    {\n      componentProp: '--focus-border',\n      vscodeProp: '--vscode-focusBorder',\n    },\n    {\n      componentProp: '--font-family',\n      vscodeProp: '--vscode-font-family',\n    },\n    {\n      componentProp: '--header-background',\n      vscodeProp: '--vscode-sideBarSectionHeader-background',\n    },\n    {\n      componentProp: '--icon-foreground',\n      vscodeProp: '--vscode-icon-foreground',\n    },\n    {\n      componentProp: '--title-foreground',\n      vscodeProp: '--vscode-sideBarTitle-foreground',\n    },\n  ]),\n  css`\n    .collapsible {\n      background-color: var(--background);\n    }\n\n    .collapsible-header {\n      align-items: center;\n      background-color: var(--header-background);\n      cursor: pointer;\n      display: flex;\n      height: 22px;\n      line-height: 22px;\n      user-select: none;\n    }\n\n    .collapsible-header:focus {\n      opacity: 1;\n      outline-offset: -1px;\n      outline-style: solid;\n      outline-width: 1px;\n      outline-color: var(--focus-border);\n    }\n\n    .collapsible-header h3 {\n      color: var(--title-foreground);\n      font-family: var(--font-family);\n      font-size: 11px;\n      font-weight: 700;\n      margin: 0;\n      text-transform: uppercase;\n    }\n\n    .header-icon {\n      color: var(--icon-foreground);\n      display: block;\n      margin: 0 3px;\n    }\n\n    .collapsible.open .header-icon {\n      transform: rotate(90deg);\n    }\n\n    .actions {\n      display: none;\n      margin-left: auto;\n      margin-right: 4px;\n    }\n\n    .collapsible.open .actions {\n      display: block;\n    }\n\n    slot[name='actions']::slotted(div) {\n      align-items: center;\n      display: flex;\n    }\n\n    .collapsible-body {\n      display: none;\n      overflow: hidden;\n    }\n\n    .collapsible.open .collapsible-body {\n      display: block;\n    }\n  `,\n]"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "VscodeCheckbox",
+          "name": "default",
           "declaration": {
-            "name": "VscodeCheckbox",
-            "module": "src/vscode-checkbox.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-checkbox",
-          "declaration": {
-            "name": "VscodeCheckbox",
-            "module": "src/vscode-checkbox.ts"
+            "name": "styles",
+            "module": "src/vscode-collapsible/vscode-collapsible.styles.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-collapsible.ts",
+      "path": "src/vscode-collapsible/vscode-collapsible.ts",
       "declarations": [
         {
           "kind": "class",
@@ -753,7 +948,7 @@
           "name": "VscodeCollapsible",
           "declaration": {
             "name": "VscodeCollapsible",
-            "module": "src/vscode-collapsible.ts"
+            "module": "src/vscode-collapsible/vscode-collapsible.ts"
           }
         },
         {
@@ -761,189 +956,53 @@
           "name": "vscode-collapsible",
           "declaration": {
             "name": "VscodeCollapsible",
-            "module": "src/vscode-collapsible.ts"
+            "module": "src/vscode-collapsible/vscode-collapsible.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-context-menu-item.ts",
+      "path": "src/vscode-context-menu/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeContextMenu",
+          "declaration": {
+            "name": "VscodeContextMenu",
+            "module": "./vscode-context-menu"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-context-menu/vscode-context-menu.styles.ts",
       "declarations": [
         {
-          "kind": "class",
-          "description": "Child component of [ContextMenu](https://bendera.github.io/vscode-webview-elements/components/vscode-context-menu/).",
-          "name": "VscodeContextMenuItem",
-          "cssProperties": [
-            {
-              "name": "--font-family",
-              "default": "var(--vscode-font-family)"
-            },
-            {
-              "name": "--font-size",
-              "default": "var(--vscode-font-size)"
-            },
-            {
-              "name": "--font-weight",
-              "default": "var(--vscode-font-weight)"
-            },
-            {
-              "name": "--background",
-              "default": "var(--vscode-menu-background)"
-            },
-            {
-              "name": "--border",
-              "default": "var(--vscode-menu-selectionBorder)"
-            },
-            {
-              "name": "--foreground",
-              "default": "var(--vscode-menu-foreground)"
-            },
-            {
-              "name": "--selection-background",
-              "default": "var(--vscode-menu-selectionBackground)"
-            },
-            {
-              "name": "--selection-foreground",
-              "default": "var(--vscode-menu-selectionForeground)"
-            },
-            {
-              "name": "--separator-background",
-              "default": "var(--vscode-menu-separatorBackground)"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "keybinding",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "keybinding"
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "separator",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "separator"
-            },
-            {
-              "kind": "field",
-              "name": "tabindex",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "attribute": "tabindex"
-            },
-            {
-              "kind": "method",
-              "name": "onItemClick",
-              "privacy": "private"
-            }
-          ],
-          "events": [
-            {
-              "name": "vsc-click",
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "keybinding",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "keybinding"
-            },
-            {
-              "name": "value",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "value"
-            },
-            {
-              "name": "separator",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "separator"
-            },
-            {
-              "name": "tabindex",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "fieldName": "tabindex"
-            }
-          ],
-          "superclass": {
-            "name": "VscElement",
-            "module": "/src/includes/VscElement"
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
           },
-          "tagName": "vscode-context-menu-item",
-          "customElement": true
+          "default": "[\n  defaultStyles,\n  declareThemeVariables([\n    {\n      componentProp: '--font-family',\n      vscodeProp: '--vscode-font-family',\n    },\n    {\n      componentProp: '--font-size',\n      vscodeProp: '--vscode-font-size',\n    },\n    {\n      componentProp: '--font-weight',\n      vscodeProp: '--vscode-font-weight',\n    },\n    {\n      componentProp: '--background',\n      vscodeProp: '--vscode-menu-background',\n    },\n    {\n      componentProp: '--border',\n      vscodeProp: '--vscode-menu-border',\n    },\n    {\n      componentProp: '--foreground',\n      vscodeProp: '--vscode-menu-foreground',\n    },\n    {\n      componentProp: '--shadow',\n      vscodeProp: '--vscode-widget-shadow',\n    },\n  ]),\n  css`\n    :host {\n      display: block;\n      font-family: var(--font-family);\n      font-size: var(--font-size);\n      font-weight: var(--font-weight);\n      line-height: 1.4em;\n      position: relative;\n    }\n\n    .context-menu {\n      background-color: var(--background);\n      border-color: var(--border);\n      border-radius: 5px;\n      border-style: solid;\n      border-width: 1px;\n      box-shadow: 0 2px 8px var(--shadow);\n      color: var(--foreground);\n      padding: 4px 0;\n      white-space: nowrap;\n    }\n\n    .context-menu:focus {\n      outline: 0;\n    }\n  `,\n]"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "VscodeContextMenuItem",
+          "name": "default",
           "declaration": {
-            "name": "VscodeContextMenuItem",
-            "module": "src/vscode-context-menu-item.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-context-menu-item",
-          "declaration": {
-            "name": "VscodeContextMenuItem",
-            "module": "src/vscode-context-menu-item.ts"
+            "name": "styles",
+            "module": "src/vscode-context-menu/vscode-context-menu.styles.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-context-menu.ts",
+      "path": "src/vscode-context-menu/vscode-context-menu.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1172,7 +1231,7 @@
           "name": "VscodeContextMenu",
           "declaration": {
             "name": "VscodeContextMenu",
-            "module": "src/vscode-context-menu.ts"
+            "module": "src/vscode-context-menu/vscode-context-menu.ts"
           }
         },
         {
@@ -1180,14 +1239,275 @@
           "name": "vscode-context-menu",
           "declaration": {
             "name": "VscodeContextMenu",
-            "module": "src/vscode-context-menu.ts"
+            "module": "src/vscode-context-menu/vscode-context-menu.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-form-container.ts",
+      "path": "src/vscode-context-menu-item/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeContextMenuItem",
+          "declaration": {
+            "name": "VscodeContextMenuItem",
+            "module": "./vscode-context-menu-item"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "VscClickEventDetail",
+          "declaration": {
+            "name": "VscClickEventDetail",
+            "module": "./vscode-context-menu-item"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-context-menu-item/vscode-context-menu-item.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
+          },
+          "default": "[\n  defaultStyles,\n  declareThemeVariables([\n    {\n      componentProp: '--font-family',\n      vscodeProp: '--vscode-font-family',\n    },\n    {\n      componentProp: '--font-size',\n      vscodeProp: '--vscode-font-size',\n    },\n    {\n      componentProp: '--font-weight',\n      vscodeProp: '--vscode-font-weight',\n    },\n    {\n      componentProp: '--background',\n      vscodeProp: '--vscode-menu-background',\n    },\n    {\n      componentProp: '--border',\n      vscodeProp: '--vscode-menu-selectionBorder',\n    },\n    {\n      componentProp: '--foreground',\n      vscodeProp: '--vscode-menu-foreground',\n    },\n    {\n      componentProp: '--selection-background',\n      vscodeProp: '--vscode-menu-selectionBackground',\n    },\n    {\n      componentProp: '--selection-foreground',\n      vscodeProp: '--vscode-menu-selectionForeground',\n    },\n    {\n      componentProp: '--separator-background',\n      vscodeProp: '--vscode-menu-separatorBackground',\n    },\n  ]),\n  css`\n    :host {\n      display: block;\n      font-family: var(--font-family);\n      font-size: var(--font-size);\n      font-weight: var(--font-weight);\n      line-height: 1.4em;\n      outline: none;\n      position: relative;\n    }\n\n    .context-menu-item {\n      background-color: var(--menu-background);\n      color: var(--menu-foreground);\n      display: flex;\n      user-select: none;\n      white-space: nowrap;\n    }\n\n    .ruler {\n      border-bottom: 1px solid var(--separator-background);\n      display: block;\n      margin: 0 0 4px;\n      padding-top: 4px;\n      width: 100%;\n    }\n\n    .context-menu-item a {\n      align-items: center;\n      border-color: transparent;\n      border-radius: 3px;\n      border-style: solid;\n      border-width: 1px;\n      box-sizing: border-box;\n      color: var(--foreground);\n      cursor: default;\n      display: flex;\n      flex: 1 1 auto;\n      height: 2em;\n      margin-left: 4px;\n      margin-right: 4px;\n      outline: none;\n      position: relative;\n      text-decoration: inherit;\n    }\n\n    :host-context([selected]) .context-menu-item a {\n      background-color: var(--selection-background);\n      border-color: var(--border);\n      color: var(--selection-foreground);\n    }\n\n    .label {\n      background: none;\n      display: flex;\n      flex: 1 1 auto;\n      font-size: 12px;\n      line-height: 1;\n      padding: 0 22px;\n      text-decoration: none;\n    }\n\n    .keybinding {\n      display: block;\n      flex: 2 1 auto;\n      line-height: 1;\n      padding: 0 22px;\n      text-align: right;\n    }\n  `,\n]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "src/vscode-context-menu-item/vscode-context-menu-item.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-context-menu-item/vscode-context-menu-item.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Child component of [ContextMenu](https://bendera.github.io/vscode-webview-elements/components/vscode-context-menu/).",
+          "name": "VscodeContextMenuItem",
+          "cssProperties": [
+            {
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            },
+            {
+              "name": "--font-weight",
+              "default": "var(--vscode-font-weight)"
+            },
+            {
+              "name": "--background",
+              "default": "var(--vscode-menu-background)"
+            },
+            {
+              "name": "--border",
+              "default": "var(--vscode-menu-selectionBorder)"
+            },
+            {
+              "name": "--foreground",
+              "default": "var(--vscode-menu-foreground)"
+            },
+            {
+              "name": "--selection-background",
+              "default": "var(--vscode-menu-selectionBackground)"
+            },
+            {
+              "name": "--selection-foreground",
+              "default": "var(--vscode-menu-selectionForeground)"
+            },
+            {
+              "name": "--separator-background",
+              "default": "var(--vscode-menu-separatorBackground)"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "keybinding",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "keybinding"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "separator",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "separator"
+            },
+            {
+              "kind": "field",
+              "name": "tabindex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "attribute": "tabindex"
+            },
+            {
+              "kind": "method",
+              "name": "onItemClick",
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "name": "vsc-click",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "keybinding",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "keybinding"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            },
+            {
+              "name": "separator",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "separator"
+            },
+            {
+              "name": "tabindex",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "tabindex"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-context-menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeContextMenuItem",
+          "declaration": {
+            "name": "VscodeContextMenuItem",
+            "module": "src/vscode-context-menu-item/vscode-context-menu-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-context-menu-item",
+          "declaration": {
+            "name": "VscodeContextMenuItem",
+            "module": "src/vscode-context-menu-item/vscode-context-menu-item.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-container/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormContainer",
+          "declaration": {
+            "name": "VscodeFormContainer",
+            "module": "./vscode-form-container"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-container/vscode-form-container.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
+          },
+          "default": "[\n  defaultStyles,\n  css`\n    :host {\n      display: block;\n      max-width: 727px;\n    }\n  `,\n]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "src/vscode-form-container/vscode-form-container.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-container/vscode-form-container.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1355,7 +1675,7 @@
           "name": "VscodeFormContainer",
           "declaration": {
             "name": "VscodeFormContainer",
-            "module": "src/vscode-form-container.ts"
+            "module": "src/vscode-form-container/vscode-form-container.ts"
           }
         },
         {
@@ -1363,50 +1683,53 @@
           "name": "vscode-form-container",
           "declaration": {
             "name": "VscodeFormContainer",
-            "module": "src/vscode-form-container.ts"
+            "module": "src/vscode-form-container/vscode-form-container.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-form-control.ts",
+      "path": "src/vscode-form-description/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormDescription",
+          "declaration": {
+            "name": "VscodeFormDescription",
+            "module": "./vscode-form-description"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-description/vscode-form-description.styles.ts",
       "declarations": [
         {
-          "kind": "class",
-          "description": "",
-          "name": "VscodeFormControl",
-          "members": [],
-          "superclass": {
-            "name": "VscElement",
-            "module": "/src/includes/VscElement"
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
           },
-          "tagName": "vscode-form-control",
-          "customElement": true
+          "default": "[\n  defaultStyles,\n  css`\n    :host {\n      color: var(--vscode-foreground);\n      cursor: default;\n      display: block;\n      font-family: var(--vscode-font-family);\n      font-size: var(--vscode-font-size);\n      line-height: 1.4;\n      margin: 3px 0;\n      opacity: 0.9;\n      overflow: hidden;\n      user-select: text;\n    }\n\n    ::slotted(a),\n    ::slotted(a:visited) {\n      color: var(--vscode-textLink-foreground);\n      text-decoration: none;\n    }\n\n    ::slotted(a:hover),\n    ::slotted(a:active) {\n      color: var(--vscode-textLink-activeForeground);\n      text-decoration: underline;\n    }\n\n    ::slotted(code) {\n      color: var(--vscode-textPreformat-foreground);\n    }\n\n    ::slotted(p) {\n      line-height: 1.4;\n      margin-bottom: 9px;\n      margin-top: 9px;\n    }\n\n    ::slotted(p:first-child) {\n      margin-top: 0;\n    }\n\n    ::slotted(p:last-child) {\n      margin-bottom: 0;\n    }\n  `,\n]"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "VscodeFormControl",
+          "name": "default",
           "declaration": {
-            "name": "VscodeFormControl",
-            "module": "src/vscode-form-control.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-form-control",
-          "declaration": {
-            "name": "VscodeFormControl",
-            "module": "src/vscode-form-control.ts"
+            "name": "styles",
+            "module": "src/vscode-form-description/vscode-form-description.styles.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-form-description.ts",
+      "path": "src/vscode-form-description/vscode-form-description.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1417,6 +1740,7 @@
             "name": "VscElement",
             "module": "/src/includes/VscElement"
           },
+          "deprecated": "true",
           "tagName": "vscode-form-description",
           "customElement": true
         }
@@ -1427,7 +1751,7 @@
           "name": "VscodeFormDescription",
           "declaration": {
             "name": "VscodeFormDescription",
-            "module": "src/vscode-form-description.ts"
+            "module": "src/vscode-form-description/vscode-form-description.ts"
           }
         },
         {
@@ -1435,14 +1759,113 @@
           "name": "vscode-form-description",
           "declaration": {
             "name": "VscodeFormDescription",
-            "module": "src/vscode-form-description.ts"
+            "module": "src/vscode-form-description/vscode-form-description.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-form-group.ts",
+      "path": "src/vscode-form-control/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormControl",
+          "declaration": {
+            "name": "VscodeFormControl",
+            "module": "./vscode-form-control"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-control/vscode-form-control.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
+          },
+          "default": "[\n  defaultStyles,\n  css`\n    :host {\n      display: block;\n      margin-top: 9px;\n    }\n  `,\n]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "src/vscode-form-control/vscode-form-control.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-control/vscode-form-control.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeFormControl",
+          "members": [],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "deprecated": "true",
+          "tagName": "vscode-form-control",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormControl",
+          "declaration": {
+            "name": "VscodeFormControl",
+            "module": "src/vscode-form-control/vscode-form-control.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-form-control",
+          "declaration": {
+            "name": "VscodeFormControl",
+            "module": "src/vscode-form-control/vscode-form-control.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-group/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormGroup",
+          "declaration": {
+            "name": "VscodeFormGroup",
+            "module": "./vscode-form-group"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FormGroupVariant",
+          "declaration": {
+            "name": "FormGroupVariant",
+            "module": "./vscode-form-group"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-group/vscode-form-group.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1496,7 +1919,7 @@
           "name": "VscodeFormGroup",
           "declaration": {
             "name": "VscodeFormGroup",
-            "module": "src/vscode-form-group.ts"
+            "module": "src/vscode-form-group/vscode-form-group.ts"
           }
         },
         {
@@ -1504,14 +1927,29 @@
           "name": "vscode-form-group",
           "declaration": {
             "name": "VscodeFormGroup",
-            "module": "src/vscode-form-group.ts"
+            "module": "src/vscode-form-group/vscode-form-group.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-form-helper.ts",
+      "path": "src/vscode-form-helper/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormHelper",
+          "declaration": {
+            "name": "VscodeFormHelper",
+            "module": "./vscode-form-helper"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-helper/vscode-form-helper.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1539,7 +1977,7 @@
           "name": "VscodeFormHelper",
           "declaration": {
             "name": "VscodeFormHelper",
-            "module": "src/vscode-form-helper.ts"
+            "module": "src/vscode-form-helper/vscode-form-helper.ts"
           }
         },
         {
@@ -1547,14 +1985,29 @@
           "name": "vscode-form-helper",
           "declaration": {
             "name": "VscodeFormHelper",
-            "module": "src/vscode-form-helper.ts"
+            "module": "src/vscode-form-helper/vscode-form-helper.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-form-item.ts",
+      "path": "src/vscode-form-item/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormItem",
+          "declaration": {
+            "name": "VscodeFormItem",
+            "module": "./vscode-form-item"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-item/vscode-form-item.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1575,7 +2028,7 @@
           "name": "VscodeFormItem",
           "declaration": {
             "name": "VscodeFormItem",
-            "module": "src/vscode-form-item.ts"
+            "module": "src/vscode-form-item/vscode-form-item.ts"
           }
         },
         {
@@ -1583,14 +2036,29 @@
           "name": "vscode-form-item",
           "declaration": {
             "name": "VscodeFormItem",
-            "module": "src/vscode-form-item.ts"
+            "module": "src/vscode-form-item/vscode-form-item.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-form-label.ts",
+      "path": "src/vscode-form-label/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeFormLabel",
+          "declaration": {
+            "name": "VscodeFormLabel",
+            "module": "./vscode-form-label"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-form-label/vscode-form-label.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1611,7 +2079,7 @@
           "name": "VscodeFormLabel",
           "declaration": {
             "name": "VscodeFormLabel",
-            "module": "src/vscode-form-label.ts"
+            "module": "src/vscode-form-label/vscode-form-label.ts"
           }
         },
         {
@@ -1619,14 +2087,29 @@
           "name": "vscode-form-label",
           "declaration": {
             "name": "VscodeFormLabel",
-            "module": "src/vscode-form-label.ts"
+            "module": "src/vscode-form-label/vscode-form-label.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-icon.ts",
+      "path": "src/vscode-icon/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeIcon",
+          "declaration": {
+            "name": "VscodeIcon",
+            "module": "./vscode-icon"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-icon/vscode-icon.ts",
       "declarations": [
         {
           "kind": "class",
@@ -1820,7 +2303,7 @@
           "name": "VscodeIcon",
           "declaration": {
             "name": "VscodeIcon",
-            "module": "src/vscode-icon.ts"
+            "module": "src/vscode-icon/vscode-icon.ts"
           }
         },
         {
@@ -1828,14 +2311,29 @@
           "name": "vscode-icon",
           "declaration": {
             "name": "VscodeIcon",
-            "module": "src/vscode-icon.ts"
+            "module": "src/vscode-icon/vscode-icon.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-inputbox.ts",
+      "path": "src/vscode-inputbox/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeInputbox",
+          "declaration": {
+            "name": "VscodeInputbox",
+            "module": "./vscode-inputbox"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-inputbox/vscode-inputbox.ts",
       "declarations": [
         {
           "kind": "class",
@@ -2267,7 +2765,7 @@
               },
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-inputbox.ts"
+                "module": "src/vscode-inputbox/vscode-inputbox.ts"
               },
               "fieldName": "min"
             },
@@ -2278,7 +2776,7 @@
               },
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-inputbox.ts"
+                "module": "src/vscode-inputbox/vscode-inputbox.ts"
               },
               "fieldName": "minLength"
             },
@@ -2289,7 +2787,7 @@
               },
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-inputbox.ts"
+                "module": "src/vscode-inputbox/vscode-inputbox.ts"
               },
               "fieldName": "max"
             },
@@ -2300,7 +2798,7 @@
               },
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-inputbox.ts"
+                "module": "src/vscode-inputbox/vscode-inputbox.ts"
               },
               "fieldName": "maxLength"
             },
@@ -2327,7 +2825,7 @@
               },
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-inputbox.ts"
+                "module": "src/vscode-inputbox/vscode-inputbox.ts"
               },
               "fieldName": "step"
             }
@@ -2346,7 +2844,7 @@
           "name": "VscodeInputbox",
           "declaration": {
             "name": "VscodeInputbox",
-            "module": "src/vscode-inputbox.ts"
+            "module": "src/vscode-inputbox/vscode-inputbox.ts"
           }
         },
         {
@@ -2354,14 +2852,29 @@
           "name": "vscode-inputbox",
           "declaration": {
             "name": "VscodeInputbox",
-            "module": "src/vscode-inputbox.ts"
+            "module": "src/vscode-inputbox/vscode-inputbox.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-label.ts",
+      "path": "src/vscode-label/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeLabel",
+          "declaration": {
+            "name": "VscodeLabel",
+            "module": "./vscode-label"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-label/vscode-label.ts",
       "declarations": [
         {
           "kind": "class",
@@ -2489,7 +3002,7 @@
           "name": "VscodeLabel",
           "declaration": {
             "name": "VscodeLabel",
-            "module": "src/vscode-label.ts"
+            "module": "src/vscode-label/vscode-label.ts"
           }
         },
         {
@@ -2497,14 +3010,29 @@
           "name": "vscode-label",
           "declaration": {
             "name": "VscodeLabel",
-            "module": "src/vscode-label.ts"
+            "module": "src/vscode-label/vscode-label.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-multi-select.ts",
+      "path": "src/vscode-multi-select/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeMultiSelect",
+          "declaration": {
+            "name": "VscodeMultiSelect",
+            "module": "./vscode-multi-select"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-multi-select/vscode-multi-select.ts",
       "declarations": [
         {
           "kind": "class",
@@ -2732,7 +3260,7 @@
           "name": "VscodeMultiSelect",
           "declaration": {
             "name": "VscodeMultiSelect",
-            "module": "src/vscode-multi-select.ts"
+            "module": "src/vscode-multi-select/vscode-multi-select.ts"
           }
         },
         {
@@ -2740,14 +3268,29 @@
           "name": "vscode-multi-select",
           "declaration": {
             "name": "VscodeMultiSelect",
-            "module": "src/vscode-multi-select.ts"
+            "module": "src/vscode-multi-select/vscode-multi-select.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-option.ts",
+      "path": "src/vscode-option/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeOption",
+          "declaration": {
+            "name": "VscodeOption",
+            "module": "./vscode-option"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-option/vscode-option.ts",
       "declarations": [
         {
           "kind": "class",
@@ -2841,7 +3384,7 @@
           "name": "VscodeOption",
           "declaration": {
             "name": "VscodeOption",
-            "module": "src/vscode-option.ts"
+            "module": "src/vscode-option/vscode-option.ts"
           }
         },
         {
@@ -2849,189 +3392,53 @@
           "name": "vscode-option",
           "declaration": {
             "name": "VscodeOption",
-            "module": "src/vscode-option.ts"
+            "module": "src/vscode-option/vscode-option.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-radio-group.ts",
+      "path": "src/vscode-radio/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeRadio",
+          "declaration": {
+            "name": "VscodeRadio",
+            "module": "./vscode-radio"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-radio/vscode-radio.styles.ts",
       "declarations": [
         {
-          "kind": "class",
-          "description": "",
-          "name": "VscodeRadioGroup",
-          "members": [
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "'horizontal' | 'vertical'"
-              },
-              "default": "'horizontal'",
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "inline",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "inline",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'radiogroup'",
-              "attribute": "role",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "_radios",
-              "type": {
-                "text": "VscodeRadio[]"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_focusedRadio",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0"
-            },
-            {
-              "kind": "field",
-              "name": "_checkedRadio",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "-1"
-            },
-            {
-              "kind": "method",
-              "name": "_beforeCheck",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_afterCheck",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_checkPrev",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_checkNext",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_onKeyDown",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "ev",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "_onKeyDownBound",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_onChange",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "ev",
-                  "type": {
-                    "text": "CustomEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_onSlotChange",
-              "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "variant",
-              "type": {
-                "text": "'horizontal' | 'vertical'"
-              },
-              "default": "'horizontal'",
-              "fieldName": "variant"
-            },
-            {
-              "name": "inline",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "inline"
-            },
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'radiogroup'",
-              "fieldName": "role"
-            }
-          ],
-          "superclass": {
-            "name": "VscElement",
-            "module": "/src/includes/VscElement"
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
           },
-          "tagName": "vscode-radio-group",
-          "customElement": true
+          "default": "[\n  defaultStyles,\n  baseStyles,\n  css`\n    .icon {\n      border-radius: 9px;\n    }\n\n    .icon.checked:before {\n      background-color: currentColor;\n      border-radius: 4px;\n      content: '';\n      height: 8px;\n      left: 50%;\n      margin: -4px 0 0 -4px;\n      position: absolute;\n      top: 50%;\n      width: 8px;\n    }\n\n    :host(:focus):host(:not([disabled])) .icon {\n      outline: 1px solid var(--focus-border);\n      outline-offset: -1px;\n    }\n  `,\n  formHelperTextStyles,\n]"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "VscodeRadioGroup",
+          "name": "default",
           "declaration": {
-            "name": "VscodeRadioGroup",
-            "module": "src/vscode-radio-group.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-radio-group",
-          "declaration": {
-            "name": "VscodeRadioGroup",
-            "module": "src/vscode-radio-group.ts"
+            "name": "styles",
+            "module": "src/vscode-radio/vscode-radio.styles.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-radio.ts",
+      "path": "src/vscode-radio/vscode-radio.ts",
       "declarations": [
         {
           "kind": "class",
@@ -3255,7 +3662,7 @@
           "name": "VscodeRadio",
           "declaration": {
             "name": "VscodeRadio",
-            "module": "src/vscode-radio.ts"
+            "module": "src/vscode-radio/vscode-radio.ts"
           }
         },
         {
@@ -3263,14 +3670,219 @@
           "name": "vscode-radio",
           "declaration": {
             "name": "VscodeRadio",
-            "module": "src/vscode-radio.ts"
+            "module": "src/vscode-radio/vscode-radio.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-scrollable.ts",
+      "path": "src/vscode-radio-group/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeRadioGroup",
+          "declaration": {
+            "name": "VscodeRadioGroup",
+            "module": "./vscode-radio-group"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-radio-group/vscode-radio-group.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeRadioGroup",
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'horizontal' | 'vertical'"
+              },
+              "default": "'horizontal'",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "inline",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "inline",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radiogroup'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_radios",
+              "type": {
+                "text": "VscodeRadio[]"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_focusedRadio",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "_checkedRadio",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "-1"
+            },
+            {
+              "kind": "method",
+              "name": "_beforeCheck",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_afterCheck",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_checkPrev",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_checkNext",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onKeyDown",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "_onKeyDownBound",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_onChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onSlotChange",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "'horizontal' | 'vertical'"
+              },
+              "default": "'horizontal'",
+              "fieldName": "variant"
+            },
+            {
+              "name": "inline",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "inline"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radiogroup'",
+              "fieldName": "role"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-radio-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeRadioGroup",
+          "declaration": {
+            "name": "VscodeRadioGroup",
+            "module": "src/vscode-radio-group/vscode-radio-group.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-radio-group",
+          "declaration": {
+            "name": "VscodeRadioGroup",
+            "module": "src/vscode-radio-group/vscode-radio-group.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-scrollable/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeScrollable",
+          "declaration": {
+            "name": "VscodeScrollable",
+            "module": "./vscode-scrollable"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-scrollable/vscode-scrollable.ts",
       "declarations": [
         {
           "kind": "class",
@@ -3611,7 +4223,7 @@
           "name": "VscodeScrollable",
           "declaration": {
             "name": "VscodeScrollable",
-            "module": "src/vscode-scrollable.ts"
+            "module": "src/vscode-scrollable/vscode-scrollable.ts"
           }
         },
         {
@@ -3619,14 +4231,29 @@
           "name": "vscode-scrollable",
           "declaration": {
             "name": "VscodeScrollable",
-            "module": "src/vscode-scrollable.ts"
+            "module": "src/vscode-scrollable/vscode-scrollable.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-single-select.ts",
+      "path": "src/vscode-single-select/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeSingleSelect",
+          "declaration": {
+            "name": "VscodeSingleSelect",
+            "module": "./vscode-single-select"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-single-select/vscode-single-select.ts",
       "declarations": [
         {
           "kind": "class",
@@ -3894,7 +4521,7 @@
           "name": "VscodeSingleSelect",
           "declaration": {
             "name": "VscodeSingleSelect",
-            "module": "src/vscode-single-select.ts"
+            "module": "src/vscode-single-select/vscode-single-select.ts"
           }
         },
         {
@@ -3902,14 +4529,29 @@
           "name": "vscode-single-select",
           "declaration": {
             "name": "VscodeSingleSelect",
-            "module": "src/vscode-single-select.ts"
+            "module": "src/vscode-single-select/vscode-single-select.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-split-layout.ts",
+      "path": "src/vscode-split-layout/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeSplitLayout",
+          "declaration": {
+            "name": "VscodeSplitLayout",
+            "module": "./vscode-split-layout"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-split-layout/vscode-split-layout.ts",
       "declarations": [
         {
           "kind": "class",
@@ -4158,7 +4800,7 @@
           "name": "VscodeSplitLayout",
           "declaration": {
             "name": "VscodeSplitLayout",
-            "module": "src/vscode-split-layout.ts"
+            "module": "src/vscode-split-layout/vscode-split-layout.ts"
           }
         },
         {
@@ -4166,14 +4808,29 @@
           "name": "vscode-split-layout",
           "declaration": {
             "name": "VscodeSplitLayout",
-            "module": "src/vscode-split-layout.ts"
+            "module": "src/vscode-split-layout/vscode-split-layout.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-tab-header.ts",
+      "path": "src/vscode-tab-header/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTabHeader",
+          "declaration": {
+            "name": "VscodeTabHeader",
+            "module": "./vscode-tab-header"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-tab-header/vscode-tab-header.ts",
       "declarations": [
         {
           "kind": "class",
@@ -4315,7 +4972,7 @@
           "name": "VscodeTabHeader",
           "declaration": {
             "name": "VscodeTabHeader",
-            "module": "src/vscode-tab-header.ts"
+            "module": "src/vscode-tab-header/vscode-tab-header.ts"
           }
         },
         {
@@ -4323,14 +4980,29 @@
           "name": "vscode-tab-header",
           "declaration": {
             "name": "VscodeTabHeader",
-            "module": "src/vscode-tab-header.ts"
+            "module": "src/vscode-tab-header/vscode-tab-header.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-tab-panel.ts",
+      "path": "src/vscode-tab-panel/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTabPanel",
+          "declaration": {
+            "name": "VscodeTabPanel",
+            "module": "./vscode-tab-panel"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-tab-panel/vscode-tab-panel.ts",
       "declarations": [
         {
           "kind": "class",
@@ -4456,7 +5128,7 @@
           "name": "VscodeTabPanel",
           "declaration": {
             "name": "VscodeTabPanel",
-            "module": "src/vscode-tab-panel.ts"
+            "module": "src/vscode-tab-panel/vscode-tab-panel.ts"
           }
         },
         {
@@ -4464,14 +5136,29 @@
           "name": "vscode-tab-panel",
           "declaration": {
             "name": "VscodeTabPanel",
-            "module": "src/vscode-tab-panel.ts"
+            "module": "src/vscode-tab-panel/vscode-tab-panel.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-table-body.ts",
+      "path": "src/vscode-table-body/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableBody",
+          "declaration": {
+            "name": "VscodeTableBody",
+            "module": "./vscode-table-body"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-body/vscode-table-body.ts",
       "declarations": [
         {
           "kind": "class",
@@ -4520,7 +5207,7 @@
           "name": "VscodeTableBody",
           "declaration": {
             "name": "VscodeTableBody",
-            "module": "src/vscode-table-body.ts"
+            "module": "src/vscode-table-body/vscode-table-body.ts"
           }
         },
         {
@@ -4528,334 +5215,92 @@
           "name": "vscode-table-body",
           "declaration": {
             "name": "VscodeTableBody",
-            "module": "src/vscode-table-body.ts"
+            "module": "src/vscode-table-body/vscode-table-body.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-table-cell.ts",
+      "path": "src/vscode-table/helpers.ts",
       "declarations": [
         {
-          "kind": "class",
-          "description": "",
-          "name": "VscodeTableCell",
-          "cssProperties": [
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--border",
-              "default": "var(--vscode-editorGroup-border)"
-            },
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--foreground",
-              "default": "var(--vscode-foreground)"
-            },
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--font-family",
-              "default": "var(--vscode-font-family)"
-            },
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--font-size",
-              "default": "var(--vscode-font-size)"
+          "kind": "function",
+          "name": "rawValueToPercentage",
+          "return": {
+            "type": {
+              "text": "number | null"
             }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'cell'",
-              "attribute": "role",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "columnLabel",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Cell label in the compact view of the responsive mode. For internal use only.",
-              "attribute": "column-label"
-            },
-            {
-              "kind": "field",
-              "name": "compact",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Enable compact view in the responsive mode. For internal use only.",
-              "attribute": "compact",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'cell'",
-              "fieldName": "role"
-            },
-            {
-              "name": "column-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Cell label in the compact view of the responsive mode. For internal use only.",
-              "fieldName": "columnLabel"
-            },
-            {
-              "name": "compact",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Enable compact view in the responsive mode. For internal use only.",
-              "fieldName": "compact"
-            }
-          ],
-          "superclass": {
-            "name": "VscElement",
-            "module": "/src/includes/VscElement"
           },
-          "tagName": "vscode-table-cell",
-          "customElement": true
+          "parameters": [
+            {
+              "name": "raw",
+              "type": {
+                "text": "string | number"
+              }
+            },
+            {
+              "name": "base",
+              "type": {
+                "text": "number"
+              }
+            }
+          ]
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "VscodeTableCell",
+          "name": "rawValueToPercentage",
           "declaration": {
-            "name": "VscodeTableCell",
-            "module": "src/vscode-table-cell.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-table-cell",
-          "declaration": {
-            "name": "VscodeTableCell",
-            "module": "src/vscode-table-cell.ts"
+            "name": "rawValueToPercentage",
+            "module": "src/vscode-table/helpers.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-table-header-cell.ts",
+      "path": "src/vscode-table/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTable",
+          "declaration": {
+            "name": "VscodeTable",
+            "module": "./vscode-table"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table/vscode-table.styles.ts",
       "declarations": [
         {
-          "kind": "class",
-          "description": "",
-          "name": "VscodeTableHeaderCell",
-          "cssProperties": [
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--foreground",
-              "default": "var(--vscode-foreground)"
-            },
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--font-family",
-              "default": "var(--vscode-font-family)"
-            },
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--font-size",
-              "default": "var(--vscode-font-size)"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'columnheader'",
-              "attribute": "role",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'columnheader'",
-              "fieldName": "role"
-            }
-          ],
-          "superclass": {
-            "name": "VscElement",
-            "module": "/src/includes/VscElement"
+          "kind": "variable",
+          "name": "styles",
+          "type": {
+            "text": "CSSResultGroup"
           },
-          "tagName": "vscode-table-header-cell",
-          "customElement": true
+          "default": "[\n  baseStyles,\n  declareThemeVariables([\n    {\n      componentProp: '--border',\n      vscodeProp: '--vscode-editorGroup-border',\n    },\n    {\n      componentProp: '--foreground',\n      vscodeProp: '--vscode-foreground',\n    },\n    {\n      componentProp: '--resize-hover-border',\n      vscodeProp: '--vscode-sash-hoverBorder',\n    },\n    {\n      componentProp: '--tinted-row-background',\n      vscodeProp: '--vscode-keybindingTable-rowsBackground',\n    },\n    {\n      componentProp: '--header-background',\n      vscodeProp: '--vscode-keybindingTable-headerBackground',\n    },\n    {\n      componentProp: '--font-size',\n      vscodeProp: '--vscode-font-size',\n    },\n    {\n      componentProp: 'font-family',\n      vscodeProp: '--vscode-font-family',\n    },\n  ]),\n  css`\n    :host {\n      display: block;\n    }\n\n    ::slotted(vscode-table-row) {\n      width: 100%;\n    }\n\n    .wrapper {\n      height: 100%;\n      max-width: 100%;\n      overflow: hidden;\n      position: relative;\n      width: 100%;\n    }\n\n    .wrapper.select-disabled {\n      user-select: none;\n    }\n\n    .wrapper.resize-cursor {\n      cursor: ew-resize;\n    }\n\n    .wrapper.compact-view .header-slot-wrapper {\n      height: 0;\n      overflow: hidden;\n    }\n\n    .scrollable {\n      height: 100%;\n    }\n\n    .scrollable:before {\n      background-color: transparent;\n      content: '';\n      display: block;\n      height: 1px;\n      position: absolute;\n      width: 100%;\n    }\n\n    :host(:not([bordered]))\n      .wrapper:not(.compact-view):hover\n      .scrollable:not([scrolled]):before,\n    :host([bordered])\n      .wrapper:not(.compact-view)\n      .scrollable:not([scrolled]):before {\n      background-color: var(--border);\n    }\n\n    :host(:not([bordered])) .sash {\n      visibility: hidden;\n    }\n\n    :host(:not([compact])) .wrapper:hover .sash {\n      visibility: visible;\n    }\n\n    .sash {\n      height: 100%;\n      position: absolute;\n      top: 0;\n      width: 1px;\n    }\n\n    .wrapper.compact-view .sash {\n      display: none;\n    }\n\n    .sash.resizable {\n      cursor: ew-resize;\n    }\n\n    .sash-visible {\n      background-color: var(--border);\n      height: 100%;\n      position: absolute;\n      top: 0;\n      width: 1px;\n    }\n\n    .sash.hover .sash-visible {\n      background-color: var(--resize-hover-border);\n      transition: background-color 50ms linear 300ms;\n    }\n\n    .sash .sash-clickable {\n      background-color: transparent;\n      height: 100%;\n      left: -2px;\n      position: absolute;\n      width: 5px;\n    }\n  `,\n]"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "VscodeTableHeaderCell",
+          "name": "default",
           "declaration": {
-            "name": "VscodeTableHeaderCell",
-            "module": "src/vscode-table-header-cell.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-table-header-cell",
-          "declaration": {
-            "name": "VscodeTableHeaderCell",
-            "module": "src/vscode-table-header-cell.ts"
+            "name": "styles",
+            "module": "src/vscode-table/vscode-table.styles.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-table-header.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "VscodeTableHeader",
-          "cssProperties": [
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--header-background",
-              "default": "var(--vscode-keybindingTable-headerBackground)"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'rowgroup'",
-              "attribute": "role",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'rowgroup'",
-              "fieldName": "role"
-            }
-          ],
-          "superclass": {
-            "name": "VscElement",
-            "module": "/src/includes/VscElement"
-          },
-          "tagName": "vscode-table-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "VscodeTableHeader",
-          "declaration": {
-            "name": "VscodeTableHeader",
-            "module": "src/vscode-table-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-table-header",
-          "declaration": {
-            "name": "VscodeTableHeader",
-            "module": "src/vscode-table-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/vscode-table-row.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "VscodeTableRow",
-          "cssProperties": [
-            {
-              "description": "Inherited from [Table](/components/vscode-table/api/)",
-              "name": "--border",
-              "default": "var(--vscode-editorGroup-border)"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'row'",
-              "attribute": "role",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'row'",
-              "fieldName": "role"
-            }
-          ],
-          "superclass": {
-            "name": "VscElement",
-            "module": "/src/includes/VscElement"
-          },
-          "tagName": "vscode-table-row",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "VscodeTableRow",
-          "declaration": {
-            "name": "VscodeTableRow",
-            "module": "src/vscode-table-row.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "vscode-table-row",
-          "declaration": {
-            "name": "VscodeTableRow",
-            "module": "src/vscode-table-row.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/vscode-table.ts",
+      "path": "src/vscode-table/vscode-table.ts",
       "declarations": [
         {
           "kind": "class",
@@ -5544,7 +5989,7 @@
           "name": "VscodeTable",
           "declaration": {
             "name": "VscodeTable",
-            "module": "src/vscode-table.ts"
+            "module": "src/vscode-table/vscode-table.ts"
           }
         },
         {
@@ -5552,14 +5997,409 @@
           "name": "vscode-table",
           "declaration": {
             "name": "VscodeTable",
-            "module": "src/vscode-table.ts"
+            "module": "src/vscode-table/vscode-table.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-tabs.ts",
+      "path": "src/vscode-table-cell/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableCell",
+          "declaration": {
+            "name": "VscodeTableCell",
+            "module": "./vscode-table-cell"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-cell/vscode-table-cell.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeTableCell",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--border",
+              "default": "var(--vscode-editorGroup-border)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'cell'",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "columnLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Cell label in the compact view of the responsive mode. For internal use only.",
+              "attribute": "column-label"
+            },
+            {
+              "kind": "field",
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Enable compact view in the responsive mode. For internal use only.",
+              "attribute": "compact",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'cell'",
+              "fieldName": "role"
+            },
+            {
+              "name": "column-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Cell label in the compact view of the responsive mode. For internal use only.",
+              "fieldName": "columnLabel"
+            },
+            {
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Enable compact view in the responsive mode. For internal use only.",
+              "fieldName": "compact"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-table-cell",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableCell",
+          "declaration": {
+            "name": "VscodeTableCell",
+            "module": "src/vscode-table-cell/vscode-table-cell.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-table-cell",
+          "declaration": {
+            "name": "VscodeTableCell",
+            "module": "src/vscode-table-cell/vscode-table-cell.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-header/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableHeader",
+          "declaration": {
+            "name": "VscodeTableHeader",
+            "module": "./vscode-table-header"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-header/vscode-table-header.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeTableHeader",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--header-background",
+              "default": "var(--vscode-keybindingTable-headerBackground)"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'rowgroup'",
+              "attribute": "role",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'rowgroup'",
+              "fieldName": "role"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-table-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableHeader",
+          "declaration": {
+            "name": "VscodeTableHeader",
+            "module": "src/vscode-table-header/vscode-table-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-table-header",
+          "declaration": {
+            "name": "VscodeTableHeader",
+            "module": "src/vscode-table-header/vscode-table-header.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-header-cell/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableHeaderCell",
+          "declaration": {
+            "name": "VscodeTableHeaderCell",
+            "module": "./vscode-table-header-cell"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-header-cell/vscode-table-header-cell.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeTableHeaderCell",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--foreground",
+              "default": "var(--vscode-foreground)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-family",
+              "default": "var(--vscode-font-family)"
+            },
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--font-size",
+              "default": "var(--vscode-font-size)"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'columnheader'",
+              "attribute": "role",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'columnheader'",
+              "fieldName": "role"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-table-header-cell",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableHeaderCell",
+          "declaration": {
+            "name": "VscodeTableHeaderCell",
+            "module": "src/vscode-table-header-cell/vscode-table-header-cell.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-table-header-cell",
+          "declaration": {
+            "name": "VscodeTableHeaderCell",
+            "module": "src/vscode-table-header-cell/vscode-table-header-cell.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-row/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableRow",
+          "declaration": {
+            "name": "VscodeTableRow",
+            "module": "./vscode-table-row"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-table-row/vscode-table-row.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VscodeTableRow",
+          "cssProperties": [
+            {
+              "description": "Inherited from [Table](/components/vscode-table/api/)",
+              "name": "--border",
+              "default": "var(--vscode-editorGroup-border)"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'row'",
+              "attribute": "role",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'row'",
+              "fieldName": "role"
+            }
+          ],
+          "superclass": {
+            "name": "VscElement",
+            "module": "/src/includes/VscElement"
+          },
+          "tagName": "vscode-table-row",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTableRow",
+          "declaration": {
+            "name": "VscodeTableRow",
+            "module": "src/vscode-table-row/vscode-table-row.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vscode-table-row",
+          "declaration": {
+            "name": "VscodeTableRow",
+            "module": "src/vscode-table-row/vscode-table-row.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-tabs/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTabs",
+          "declaration": {
+            "name": "VscodeTabs",
+            "module": "./vscode-tabs"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-tabs/vscode-tabs.ts",
       "declarations": [
         {
           "kind": "class",
@@ -5796,7 +6636,7 @@
           "name": "VscodeTabs",
           "declaration": {
             "name": "VscodeTabs",
-            "module": "src/vscode-tabs.ts"
+            "module": "src/vscode-tabs/vscode-tabs.ts"
           }
         },
         {
@@ -5804,14 +6644,29 @@
           "name": "vscode-tabs",
           "declaration": {
             "name": "VscodeTabs",
-            "module": "src/vscode-tabs.ts"
+            "module": "src/vscode-tabs/vscode-tabs.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-textarea.ts",
+      "path": "src/vscode-textarea/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTextarea",
+          "declaration": {
+            "name": "VscodeTextarea",
+            "module": "./vscode-textarea"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-textarea/vscode-textarea.ts",
       "declarations": [
         {
           "kind": "class",
@@ -6126,7 +6981,7 @@
               },
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textarea.ts"
+                "module": "src/vscode-textarea/vscode-textarea.ts"
               },
               "fieldName": "autocomplete"
             },
@@ -6142,7 +6997,7 @@
               "name": "maxlength",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textarea.ts"
+                "module": "src/vscode-textarea/vscode-textarea.ts"
               },
               "fieldName": "maxlength"
             },
@@ -6150,7 +7005,7 @@
               "name": "minlength",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textarea.ts"
+                "module": "src/vscode-textarea/vscode-textarea.ts"
               },
               "fieldName": "minlength"
             },
@@ -6158,7 +7013,7 @@
               "name": "rows",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textarea.ts"
+                "module": "src/vscode-textarea/vscode-textarea.ts"
               },
               "fieldName": "rows"
             },
@@ -6166,7 +7021,7 @@
               "name": "cols",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textarea.ts"
+                "module": "src/vscode-textarea/vscode-textarea.ts"
               },
               "fieldName": "cols"
             },
@@ -6174,7 +7029,7 @@
               "name": "name",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textarea.ts"
+                "module": "src/vscode-textarea/vscode-textarea.ts"
               },
               "fieldName": "name"
             },
@@ -6182,7 +7037,7 @@
               "name": "placeholder",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textarea.ts"
+                "module": "src/vscode-textarea/vscode-textarea.ts"
               },
               "fieldName": "placeholder"
             },
@@ -6249,7 +7104,7 @@
           "name": "VscodeTextarea",
           "declaration": {
             "name": "VscodeTextarea",
-            "module": "src/vscode-textarea.ts"
+            "module": "src/vscode-textarea/vscode-textarea.ts"
           }
         },
         {
@@ -6257,14 +7112,29 @@
           "name": "vscode-textarea",
           "declaration": {
             "name": "VscodeTextarea",
-            "module": "src/vscode-textarea.ts"
+            "module": "src/vscode-textarea/vscode-textarea.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-textfield.ts",
+      "path": "src/vscode-textfield/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTextfield",
+          "declaration": {
+            "name": "VscodeTextfield",
+            "module": "./vscode-textfield"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-textfield/vscode-textfield.ts",
       "declarations": [
         {
           "kind": "class",
@@ -6586,7 +7456,7 @@
               "name": "autocomplete",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "autocomplete"
             },
@@ -6618,7 +7488,7 @@
               "name": "max",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "max"
             },
@@ -6626,7 +7496,7 @@
               "name": "maxlength",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "maxlength"
             },
@@ -6634,7 +7504,7 @@
               "name": "min",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "min"
             },
@@ -6642,7 +7512,7 @@
               "name": "minlength",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "minlength"
             },
@@ -6658,7 +7528,7 @@
               "name": "name",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "name"
             },
@@ -6666,7 +7536,7 @@
               "name": "pattern",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "pattern"
             },
@@ -6674,7 +7544,7 @@
               "name": "placeholder",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "placeholder"
             },
@@ -6698,7 +7568,7 @@
               "name": "step",
               "default": "undefined",
               "resolveInitializer": {
-                "module": "src/vscode-textfield.ts"
+                "module": "src/vscode-textfield/vscode-textfield.ts"
               },
               "fieldName": "step"
             },
@@ -6732,7 +7602,7 @@
           "name": "VscodeTextfield",
           "declaration": {
             "name": "VscodeTextfield",
-            "module": "src/vscode-textfield.ts"
+            "module": "src/vscode-textfield/vscode-textfield.ts"
           }
         },
         {
@@ -6740,14 +7610,29 @@
           "name": "vscode-textfield",
           "declaration": {
             "name": "VscodeTextfield",
-            "module": "src/vscode-textfield.ts"
+            "module": "src/vscode-textfield/vscode-textfield.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/vscode-tree.ts",
+      "path": "src/vscode-tree/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VscodeTree",
+          "declaration": {
+            "name": "VscodeTree",
+            "module": "./vscode-tree"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/vscode-tree/vscode-tree.ts",
       "declarations": [
         {
           "kind": "class",
@@ -7153,7 +8038,7 @@
           "name": "VscodeTree",
           "declaration": {
             "name": "VscodeTree",
-            "module": "src/vscode-tree.ts"
+            "module": "src/vscode-tree/vscode-tree.ts"
           }
         },
         {
@@ -7161,7 +8046,7 @@
           "name": "vscode-tree",
           "declaration": {
             "name": "VscodeTree",
-            "module": "src/vscode-tree.ts"
+            "module": "src/vscode-tree/vscode-tree.ts"
           }
         }
       ]

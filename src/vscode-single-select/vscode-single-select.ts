@@ -3,6 +3,7 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base';
+import styles from './vscode-single-select.styles';
 
 /**
  * ## Types
@@ -40,6 +41,8 @@ import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base';
  */
 @customElement('vscode-single-select')
 export class VscodeSingleSelect extends VscodeSelectBase {
+  static styles = styles;
+
   @property({type: String, attribute: true, reflect: true})
   role = 'listbox';
 
@@ -163,8 +166,6 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     if (!optEl || optEl.matches('.disabled')) {
       return;
     }
-
-
 
     this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
     this._value = this._options[this._selectedIndex].value;

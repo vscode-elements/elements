@@ -1,35 +1,11 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import defaultStyles from '../includes/default.styles';
 import {VscElement} from '../includes/VscElement';
+import styles from './vscode-form-label.styles';
 
 @customElement('vscode-form-label')
 export class VscodeFormLabel extends VscElement {
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      css`
-        :host {
-          color: var(--vscode-foreground);
-          cursor: default;
-          display: block;
-          font-family: var(--vscode-font-family);
-          font-size: var(--vscode-font-size);
-          font-weight: 600;
-          line-height: 1.4;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          user-select: text;
-          white-space: nowrap;
-        }
-
-        ::slotted(b) {
-          font-weight: 600;
-          opacity: 0.9;
-        }
-      `,
-    ];
-  }
+  static styles = styles;
 
   render(): TemplateResult {
     return html` <slot></slot> `;

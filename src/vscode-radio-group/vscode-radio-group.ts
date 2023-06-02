@@ -1,16 +1,18 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
   queryAssignedElements,
   state,
 } from 'lit/decorators.js';
-import defaultStyles from '../includes/default.styles';
 import {VscElement} from '../includes/VscElement';
 import {VscodeRadio} from '../vscode-radio';
+import styles from './vscode-radio-group.styles';
 
 @customElement('vscode-radio-group')
 export class VscodeRadioGroup extends VscElement {
+  static styles = styles;
+
   @property({reflect: true})
   variant: 'horizontal' | 'vertical' = 'horizontal';
 
@@ -130,43 +132,6 @@ export class VscodeRadioGroup extends VscElement {
     this._radios.forEach(
       (r, i) => (r.tabIndex = i === this._focusedRadio ? 0 : -1)
     );
-  }
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      css`
-        :host {
-          display: block;
-        }
-
-        .wrapper {
-          display: flex;
-          flex-wrap: wrap;
-        }
-
-        :host([variant='vertical']) .wrapper {
-          display: block;
-        }
-
-        ::slotted(vscode-radio) {
-          margin-right: 20px;
-        }
-
-        ::slotted(vscode-radio:last-child) {
-          margin-right: 0;
-        }
-
-        :host([variant='vertical']) ::slotted(vscode-radio) {
-          display: block;
-          margin-bottom: 15px;
-        }
-
-        :host([variant='vertical']) ::slotted(vscode-radio:last-child) {
-          margin-bottom: 0;
-        }
-      `,
-    ];
   }
 
   render(): TemplateResult {

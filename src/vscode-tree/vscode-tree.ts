@@ -1,11 +1,10 @@
-import {css, CSSResultGroup, html, nothing, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
 import '../vscode-icon';
-import declareThemeVariables from '../includes/declareThemeVariables';
-import defaultStyles from '../includes/default.styles';
+import styles from './vscode-tree.styles';
 
 enum KeyName {
   ARROW_DOWN = 'ArrowDown',
@@ -90,6 +89,8 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
+  static styles = styles;
+
   @property({type: Array, reflect: false})
   set data(val: TreeItem[]) {
     const oldVal = this._data;
@@ -510,139 +511,6 @@ export class VscodeTree extends VscElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this.onComponentKeyDownBound);
-  }
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--focus-border',
-          vscodeProp: '--vscode-list-focusOutline',
-        },
-        {
-          componentProp: '--font-family',
-          vscodeProp: '--vscode-font-family',
-        },
-        {
-          componentProp: '--font-size',
-          vscodeProp: '--vscode-font-size',
-        },
-        {
-          componentProp: '--font-weight',
-          vscodeProp: '--vscode-font-weight',
-        },
-        {
-          componentProp: '--hover-foreground',
-          vscodeProp: '--vscode-list-hoverForeground',
-        },
-        {
-          componentProp: '--hover-background',
-          vscodeProp: '--vscode-list-hoverBackground',
-        },
-        {
-          componentProp: '--inactive-selection-background',
-          vscodeProp: '--vscode-list-inactiveSelectionBackground',
-        },
-        {
-          componentProp: '--active-selection-background',
-          vscodeProp: '--vscode-list-activeSelectionBackground',
-        },
-        {
-          componentProp: '--active-selection-foreground',
-          vscodeProp: '--vscode-list-activeSelectionForeground',
-        },
-      ]),
-      css`
-        :host {
-          display: block;
-          outline: none;
-          user-select: none;
-        }
-
-        .wrapper {
-          height: 100%;
-        }
-
-        :host(:focus) .wrapper.focused-none {
-          outline: 1px solid var(--focus-border);
-        }
-
-        li {
-          list-style: none;
-        }
-
-        ul,
-        li {
-          margin: 0;
-          padding: 0;
-        }
-
-        .contents {
-          align-items: center;
-          display: flex;
-          font-family: var(--font-family);
-          font-size: var(--font-size);
-          font-weight: var(--font-weight);
-        }
-
-        .multi .contents {
-          align-items: flex-start;
-        }
-
-        .contents:hover {
-          background-color: var(--hover-background);
-          color: var(--hover-foreground);
-          cursor: pointer;
-        }
-
-        .contents.selected {
-          background-color: var(--inactive-selection-background);
-        }
-
-        :host(:focus) .contents.focused {
-          background-color: var(--focus-background);
-          outline: 1px solid var(--focus-border);
-          outline-offset: -1px;
-        }
-
-        :host(:focus) .contents.selected.focused,
-        :host(:focus) .contents.selected {
-          background-color: var(--active-selection-background);
-          color: var(--active-selection-foreground);
-        }
-
-        .icon-arrow {
-          display: block;
-          margin: 3px 2px 3px 0;
-        }
-
-        .label-icon {
-          display: block;
-          margin-right: 6px;
-        }
-
-        :host(:focus) .contents.selected.focused .label-icon,
-        :host(:focus) .contents.selected .label-icon {
-          color: var(--active-selection-foreground);
-        }
-
-        .multi .contents .label-icon {
-          margin-top: 3px;
-        }
-
-        .label {
-          display: block;
-          line-height: 22px;
-        }
-
-        .single .label {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-      `,
-    ];
   }
 
   render(): TemplateResult {

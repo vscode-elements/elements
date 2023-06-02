@@ -1,10 +1,9 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
-import declareThemeVariables from '../includes/declareThemeVariables';
-import defaultStyles from '../includes/default.styles';
+import styles from './vscode-split-layout.styles';
 
 const HANDLE_SIZE = 4;
 
@@ -13,6 +12,8 @@ const HANDLE_SIZE = 4;
  */
 @customElement('vscode-split-layout')
 export class VscodeSplitLayout extends VscElement {
+  static styles = styles;
+
   @property()
   split: 'horizontal' | 'vertical' = 'vertical';
 
@@ -169,86 +170,6 @@ export class VscodeSplitLayout extends VscElement {
     }
 
     this._initPosition();
-  }
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--hover-border',
-          vscodeProp: '--vscode-sash-hoverBorder',
-        },
-      ]),
-      css`
-        :host {
-          display: block;
-          overflow: hidden;
-          position: relative;
-        }
-
-        .start {
-          left: 0;
-          top: 0;
-          overflow: hidden;
-          position: absolute;
-        }
-
-        .end {
-          bottom: 0;
-          overflow: hidden;
-          position: absolute;
-          right: 0;
-        }
-
-        .handle-overlay {
-          display: none;
-          height: 100%;
-          left: 0;
-          position: absolute;
-          top: 0;
-          width: 100%;
-          z-index: 1;
-        }
-
-        .handle-overlay.active {
-          display: block;
-        }
-
-        .handle-overlay.split-vertical {
-          cursor: ew-resize;
-        }
-
-        .handle-overlay.split-horizontal {
-          cursor: ns-resize;
-        }
-
-        .handle {
-          position: absolute;
-          z-index: 2;
-        }
-
-        .handle.hover {
-          background-color: var(--hover-border);
-          transition: background-color 100ms linear 300ms;
-        }
-
-        .handle.hide {
-          background-color: transparent;
-          transition: background-color 100ms linear;
-        }
-
-        .handle.split-vertical {
-          cursor: ew-resize;
-          height: 100%;
-        }
-
-        .handle.split-horizontal {
-          cursor: ns-resize;
-          width: 100%;
-        }
-      `,
-    ];
   }
 
   render(): TemplateResult {

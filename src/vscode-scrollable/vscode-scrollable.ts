@@ -1,4 +1,4 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import { html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -9,8 +9,7 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
-import declareThemeVariables from '../includes/declareThemeVariables';
-import defaultStyles from '../includes/default.styles';
+import styles from './vscode-scrollable.styles';
 
 /**
  * @cssprop [--min-thumb-height=20px]
@@ -21,6 +20,8 @@ import defaultStyles from '../includes/default.styles';
  */
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends VscElement {
+  static styles = styles;
+
   @property({type: Boolean, reflect: true})
   shadow = true;
 
@@ -242,109 +243,6 @@ export class VscodeScrollable extends VscElement {
   }
 
   private _onComponentMouseOutBound = this._onComponentMouseOut.bind(this);
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--scrollbar-shadow',
-          vscodeProp: '--vscode-scrollbar-shadow',
-        },
-        {
-          componentProp: '--scrollbar-slider-background',
-          vscodeProp: '--vscode-scrollbarSlider-background',
-        },
-        {
-          componentProp: '--scrollbar-slider-hover-background',
-          vscodeProp: '--vscode-scrollbarSlider-hoverBackground',
-        },
-        {
-          componentProp: '--scrollbar-slider-active-background',
-          vscodeProp: '--vscode-scrollbarSlider-activeBackground',
-        },
-      ]),
-      css`
-        :host {
-          display: block;
-          position: relative;
-        }
-
-        .scrollable-container {
-          height: 100%;
-          overflow: auto;
-        }
-
-        .scrollable-container::-webkit-scrollbar {
-          cursor: default;
-          width: 0;
-        }
-
-        .shadow {
-          box-shadow: var(--scrollbar-shadow) 0 6px 6px -6px inset;
-          display: none;
-          height: 3px;
-          left: 0;
-          pointer-events: none;
-          position: absolute;
-          top: 0;
-          z-index: 1;
-          width: 100%;
-        }
-
-        .shadow.visible {
-          display: block;
-        }
-
-        .scrollbar-track {
-          height: 100%;
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: 10px;
-          z-index: 100;
-        }
-
-        .scrollbar-track.hidden {
-          display: none;
-        }
-
-        .scrollbar-thumb {
-          background-color: transparent;
-          min-height: var(--min-thumb-height, 20px);
-          opacity: 0;
-          position: absolute;
-          right: 0;
-          width: 10px;
-        }
-
-        .scrollbar-thumb.visible {
-          background-color: var(--scrollbar-slider-background);
-          opacity: 1;
-          transition: opacity 100ms;
-        }
-
-        .scrollbar-thumb.fade {
-          background-color: var(--scrollbar-slider-background);
-          opacity: 0;
-          transition: opacity 800ms;
-        }
-
-        .scrollbar-thumb.visible:hover {
-          background-color: var(--scrollbar-slider-hover-background);
-        }
-
-        .scrollbar-thumb.visible.active,
-        .scrollbar-thumb.visible.active:hover {
-          background-color: var(--scrollbar-slider-active-background);
-        }
-
-        .content {
-          overflow: hidden;
-        }
-      `,
-    ];
-  }
 
   render(): TemplateResult {
     return html`

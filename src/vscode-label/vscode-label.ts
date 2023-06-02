@@ -1,15 +1,13 @@
-import {css, CSSResultGroup, html, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import declareThemeVariables from '../includes/declareThemeVariables';
-import defaultStyles from '../includes/default.styles';
-import {INPUT_LINE_HEIGHT_RATIO} from '../includes/helpers';
 import uniqueId from '../includes/uniqueId';
 import {VscElement} from '../includes/VscElement';
 import {VscodeCheckboxGroup} from '../vscode-checkbox-group';
 import {VscodeRadioGroup} from '../vscode-radio-group';
 import {VscodeTextarea} from '../vscode-textarea';
 import {VscodeTextfield} from '../vscode-textfield';
+import styles from './vscode-label.styles';
 
 interface FocusableElement extends Element {
   focus: () => void;
@@ -22,6 +20,8 @@ interface FocusableElement extends Element {
  */
 @customElement('vscode-label')
 export class VscodeLabel extends VscElement {
+  static styles = styles;
+
   @property({reflect: true, attribute: 'for'})
   set htmlFor(val: string) {
     this._htmlFor = val;
@@ -118,60 +118,6 @@ export class VscodeLabel extends VscElement {
     if (target && 'focus' in target) {
       (target as FocusableElement).focus();
     }
-  }
-
-  static get styles(): CSSResultGroup {
-    return [
-      defaultStyles,
-      declareThemeVariables([
-        {
-          componentProp: '--foreground',
-          vscodeProp: '--vscode-foreground',
-        },
-        {
-          componentProp: '--font-family',
-          vscodeProp: '--vscode-font-family',
-        },
-        {
-          componentProp: '--font-size',
-          vscodeProp: '--vscode-font-size',
-        },
-      ]),
-      css`
-        :host {
-          cursor: default;
-          display: block;
-        }
-
-        .wrapper {
-          color: var(--foreground);
-          display: block;
-          font-family: var(--font-family);
-          font-size: var(--font-size);
-          font-weight: 600;
-          line-height: ${INPUT_LINE_HEIGHT_RATIO};
-          padding: 5px 0;
-        }
-
-        .wrapper.required:after {
-          content: ' *';
-        }
-
-        :host-context(vscode-form-group[variant='settings-group']) .wrapper {
-          line-height: 18px;
-          padding: 0;
-        }
-
-        ::slotted(.normal) {
-          font-weight: normal;
-        }
-
-        ::slotted(.lightened) {
-          color: var(--vscode-foreground);
-          opacity: 0.9;
-        }
-      `,
-    ];
   }
 
   render(): TemplateResult {
