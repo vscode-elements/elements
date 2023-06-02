@@ -175,7 +175,7 @@ export class VscodeCollapsible extends VscElement {
       />
     </svg>`;
 
-    const countMarkup = this.count > 0 ? 
+    const countMarkup = this.count ? 
           html`<div class="collapsible-count">${this.count}</div>` : ''
       
     const subtitleMarkup = this.subtitle ?
