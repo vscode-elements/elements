@@ -640,6 +640,7 @@ export class VscodeTree extends VscElement {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+
       `,
     ];
   }

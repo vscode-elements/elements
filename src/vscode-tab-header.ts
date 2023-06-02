@@ -105,12 +105,16 @@ export class VscodeTabHeader extends VscElement {
 
         .wrapper {
           align-items: center;
-          color: var(--foreground);
+          color: var(--vscode-disabledForeground);
           display: flex;
           min-height: 20px;
           overflow: inherit;
           text-overflow: inherit;
           position: relative;
+        }
+
+        .wrapper.active {
+          color: var(--vscode-editor-foreground);
         }
 
         .wrapper.panel {

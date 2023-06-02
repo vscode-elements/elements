@@ -20,6 +20,13 @@ export class VscodeCollapsible extends VscElement {
   @property({type: String})
   title = '';
 
+  // A number displayed to the right of the collapsible header.
+  @property({type: Number })
+  count = 0
+
+  @property({ type: String })
+  subtitle = ''
+
   @property({type: Boolean})
   open = false;
 
@@ -125,7 +132,26 @@ export class VscodeCollapsible extends VscElement {
         }
 
         .collapsible.open .collapsible-body {
-          display: block;
+          display: flex;
+          flex-direction: row;
+          margin-left: 10px;
+          border-left: 1px solid var(--vscode-activityBar-inactiveForeground);
+          padding-left: 10px;
+          font-family: var(--vscode-editor-font-family) var(--vscode-font-family);
+        }
+
+        .collapsible-count {
+          color: var(--vscode-charts-yellow);
+          margin-left: auto;
+        }
+
+        .dot {
+          padding: 0px 6px;
+        }
+
+        .subtitle {
+          color: var(--vscode-breadcrumb-foreground);
+          font-famiy: var(--vscode-editor-font-family), var(--vscode-font-family);
         }
       `,
     ];
@@ -149,6 +175,15 @@ export class VscodeCollapsible extends VscElement {
       />
     </svg>`;
 
+    const countMarkup = this.count ? 
+          html`<div class="collapsible-count">${this.count}</div>` : ''
+      
+    const subtitleMarkup = this.subtitle ?
+      html`
+        <span class="dot"> • </span>
+        <span class="subtitle"> ${this.subtitle} </span>
+      ` : ''
+
     return html`
       <div class="${classes}">
         <div
@@ -160,10 +195,11 @@ export class VscodeCollapsible extends VscElement {
         >
           ${icon}
           <h3 class="title">${this.title}</h3>
+          ${subtitleMarkup}
           <div class="actions"><slot name="actions"></slot></div>
+          ${countMarkup}
         </div>
         <div class="collapsible-body">
-          <div>
             <slot name="body"></slot>
           </div>
         </div>
