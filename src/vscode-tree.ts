@@ -640,6 +640,14 @@ export class VscodeTree extends VscElement {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+
+        .tree-subtext {
+          color: var(--vscode-activityBar-inactiveForeground);
+        }
+
+        .dot {
+          padding: 0px 0.3em;
+        }
       `,
     ];
   }
