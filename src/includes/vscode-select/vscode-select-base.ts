@@ -1,9 +1,8 @@
-import {CSSResultGroup, html, nothing, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import '../../vscode-button';
 import {VscodeOption} from '../../vscode-option';
-import dropdownStyles from './styles';
 import {InternalOption, Option, SearchMethod} from './types';
 import {filterOptionsByPattern} from './helpers';
 import {VscElement} from '../VscElement';
@@ -534,10 +533,6 @@ export class VscodeSelectBase extends VscElement {
         ${this._renderDescription()}
       </div>
     `;
-  }
-
-  static get styles(): CSSResultGroup {
-    return [super.styles, dropdownStyles];
   }
 
   render(): TemplateResult {
