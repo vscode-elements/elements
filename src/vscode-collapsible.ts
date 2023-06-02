@@ -137,7 +137,7 @@ export class VscodeCollapsible extends VscElement {
           margin-left: 10px;
           border-left: 1px solid var(--vscode-activityBar-inactiveForeground);
           padding-left: 10px;
-          font-family: var(--vscode-editor-font-family) var();
+          font-family: var(--vscode-editor-font-family) var(--vscode-font-family);
         }
 
         .collapsible-count {
@@ -151,7 +151,7 @@ export class VscodeCollapsible extends VscElement {
 
         .subtitle {
           color: var(--vscode-breadcrumb-foreground);
-          font-famiy: var(--vscode-editor-font-family), var(--vscode-fan-family);
+          font-famiy: var(--vscode-editor-font-family), var(--vscode-font-family);
         }
       `,
     ];
@@ -200,7 +200,6 @@ export class VscodeCollapsible extends VscElement {
           ${countMarkup}
         </div>
         <div class="collapsible-body">
-            <div class="vertical-line"></div>
             <slot name="body"></slot>
           </div>
         </div>
