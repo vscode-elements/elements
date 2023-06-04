@@ -71,6 +71,8 @@ type VscodeThemeVariableName =
   | '--vscode-toolbar-activeBackground'
   | '--vscode-toolbar-hoverBackground'
   | '--vscode-toolbar-hoverOutline'
+  | '--vscode-tree-inactiveIndentGuidesStroke'
+  | '--vscode-tree-indentGuidesStroke'
   | '--vscode-quickInputList-focusBackground'
   | '--vscode-quickInputList-focusForeground'
   | '--vscode-widget-shadow';
@@ -149,6 +151,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-activeBackground': 'rgba(99, 102, 103, 0.31)',
     '--vscode-toolbar-hoverBackground': 'rgba(90, 93, 94, 0.31)',
     '--vscode-toolbar-hoverOutline': 'transparent',
+    '--vscode-tree-inactiveIndentGuidesStroke': 'rgba(88, 88, 88, 0.4)',
+    '--vscode-tree-indentGuidesStroke': '#585858',
     '--vscode-quickInputList-focusBackground': '#04395e',
     '--vscode-quickInputList-focusForeground': '#ffffff',
     '--vscode-widget-shadow': 'rgba(0, 0, 0, 0.36)',
@@ -222,6 +226,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-activeBackground': 'rgba(166, 166, 166, 0.31)',
     '--vscode-toolbar-hoverBackground': 'rgba(184, 184, 184, 0.31)',
     '--vscode-toolbar-hoverOutline': 'transparent',
+    '--vscode-tree-inactiveIndentGuidesStroke': 'rgba(169, 169, 169, 0.4)',
+    '--vscode-tree-indentGuidesStroke': '#a9a9a9',
     '--vscode-quickInputList-focusBackground': '#0060c0',
     '--vscode-quickInputList-focusForeground': '#ffffff',
     '--vscode-widget-shadow': 'rgba(0, 0, 0, 0.16)',
@@ -295,6 +301,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-activeBackground': 'transparent',
     '--vscode-toolbar-hoverBackground': 'transparent',
     '--vscode-toolbar-hoverOutline': '#f38518',
+    '--vscode-tree-inactiveIndentGuidesStroke': 'rgba(169, 169, 169, 0.4)',
+    '--vscode-tree-indentGuidesStroke': '#a9a9a9',
     '--vscode-quickInputList-focusBackground': '#000000',
     '--vscode-quickInputList-focusForeground': '#ffffff',
     '--vscode-widget-shadow': 'transparent',
@@ -368,6 +376,8 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-toolbar-activeBackground': 'transparent',
     '--vscode-toolbar-hoverBackground': 'transparent',
     '--vscode-toolbar-hoverOutline': '#006bbd',
+    '--vscode-tree-inactiveIndentGuidesStroke': 'rgba(165, 165, 165, 0.4)',
+    '--vscode-tree-indentGuidesStroke': '#a9a9a9',
     '--vscode-quickInputList-focusBackground': '#ffffff',
     '--vscode-quickInputList-focusForeground': '#292929',
     '--vscode-widget-shadow': 'transparent',

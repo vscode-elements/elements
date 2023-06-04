@@ -41,6 +41,14 @@ const styles: CSSResultGroup = [
       componentProp: '--active-selection-foreground',
       vscodeProp: '--vscode-list-activeSelectionForeground',
     },
+    {
+      componentProp: '--indent-guide',
+      vscodeProp: '--vscode-tree-inactiveIndentGuidesStroke',
+    },
+    {
+      componentProp: '--active-indent-guide',
+      vscodeProp: '--vscode-tree-indentGuidesStroke',
+    },
   ]),
   css`
     :host {
@@ -65,6 +73,24 @@ const styles: CSSResultGroup = [
     li {
       margin: 0;
       padding: 0;
+    }
+
+    ul {
+      position: relative;
+    }
+
+    :host([indent-guides]) ul ul:before {
+      background-color: var(--indent-guide);
+      content: '';
+      display: block;
+      height: 100%;
+      position: absolute;
+      bottom: 0;
+      left: var(--indent-guide-pos);
+      top: 0;
+      pointer-events: none;
+      width: 1px;
+      z-index: 1;
     }
 
     .contents {
@@ -102,6 +128,7 @@ const styles: CSSResultGroup = [
     }
 
     .icon-arrow {
+      color: currentColor;
       display: block;
       margin: 3px 2px 3px 0;
     }

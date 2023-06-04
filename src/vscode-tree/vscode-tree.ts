@@ -106,6 +106,8 @@ export class VscodeTree extends VscElement {
   @property({type: Boolean}) arrows = false;
   @property({type: Boolean}) multiline = false;
   @property({type: Number, reflect: true}) tabindex = 0;
+  @property({type: Boolean, reflect: true, attribute: 'indent-guides'})
+  indentGuides = false;
 
   private _data: TreeItem[] = [];
 
@@ -203,7 +205,7 @@ export class VscodeTree extends VscElement {
       : nothing;
     const subTreeMarkup =
       open && itemType === ItemType.BRANCH
-        ? html`<ul>
+        ? html`<ul style="--indent-guide-pos: ${indentSize + 8 + 4}px">
             ${this.renderTree(subItems, path)}
           </ul>`
         : nothing;
@@ -223,7 +225,7 @@ export class VscodeTree extends VscElement {
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
         <span
           class="${contentsClasses.join(' ')}"
-          style="${styleMap({paddingLeft: `${padLeft}px`})}"
+          style="${styleMap({paddingLeft: `${padLeft + 8}px`})}"
         >
           ${arrowMarkup} ${iconMarkup} ${labelMarkup}
         </span>

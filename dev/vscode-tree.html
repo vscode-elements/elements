@@ -1,271 +1,286 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>&lt;vscode-tree&gt; Demo</title>
+    <link
+      rel="stylesheet"
+      href="../node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <script src="../dev-assets/component-preview.js" type="module"></script>
+    <script type="module" src="../dist/vscode-icon/index.js"></script>
+    <script type="module" src="../dist/vscode-tree/index.js"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>&lt;vscode-tree&gt; Demo</title>
-  <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
-  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../dev-assets/default-dark-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-high-contrast-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/default-light-theme.css" />
-  <link rel="stylesheet" href="../dev-assets/theme-switcher.css" />
-  <script src="../dev-assets/preview-page.js"></script>
-  <script src="../dev-assets/component-preview.js" type="module"></script>
-  <script type="module" src="../dist/vscode-icon.js"></script>
-  <script type="module" src="../dist/vscode-tree.js"></script>
-</head>
+  <body class="vscode-light">
+    <div class="story">
+      <h2 class="story-title">Basic example</h2>
+      <div class="story-content">
+        <component-preview>
+          <vscode-tree
+            id="tree-1"
+            tabindex="0"
+            style="
+              background-color: var(--vscode-sideBar-background);
+              min-height: 400px;
+            "
+            arrows
+            indent="8"
+            indent-guides
+          ></vscode-tree>
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const tree = document.getElementById('tree-1');
+              const icons = {
+                branch: 'folder',
+                leaf: 'file',
+                open: 'folder-opened',
+              };
+              const data = [
+                {
+                  icons,
+                  label: 'item 0',
+                  value: 'item 0 custom value example',
+                  subItems: [
+                    {
+                      icons,
+                      label: 'item 0.0',
+                      subItems: [
+                        {
+                          icons,
+                          label: 'item 0.0.0',
+                        },
+                        {
+                          icons,
+                          label: 'item 0.0.1',
+                        },
+                        {
+                          icons,
+                          label: 'item 0.0.2',
+                        },
+                        {
+                          icons,
+                          label: 'item 0.0.3',
+                        },
+                      ],
+                    },
+                    {
+                      icons,
+                      label: 'item 0.1',
+                      open: true,
+                      subItems: [
+                        {
+                          icons,
+                          label: 'item 0.1.0',
+                        },
+                        {
+                          icons,
+                          label: 'item 0.1.1',
+                        },
+                        {
+                          icons,
+                          label: 'item 0.1.2',
+                          subItems: [
+                            {
+                              icons,
+                              label: 'item 0.1.2.0',
+                            },
+                            {
+                              icons,
+                              label: 'item 0.1.2.1',
+                              subItems: [],
+                            },
+                          ],
+                        },
+                        {
+                          icons,
+                          label: 'item 0.1.3',
+                        },
+                      ],
+                    },
+                    {
+                      icons,
+                      label: 'item 0.2',
+                    },
+                  ],
+                },
+                {
+                  icons,
+                  label: 'item 1',
+                  subItems: [
+                    {
+                      icons,
+                      label: 'item 1.0',
+                    },
+                    {
+                      icons,
+                      label: 'item 1.1',
+                    },
+                  ],
+                },
+                {
+                  icons,
+                  label: 'item 2',
+                },
+                {
+                  icons,
+                  label:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla orci eros, pretium nec fermentum nec, dignissim nec arcu. Proin id tellus eu nunc cursus varius. Cras in rutrum risus. Praesent posuere libero ut sem dapibus imperdiet. Aliquam consequat est vestibulum vulputate convallis. Fusce hendrerit, elit ut iaculis auctor, turpis neque semper magna, in laoreet arcu mi at nibh. Donec vitae ligula blandit, dapibus lacus ac, consectetur libero. Sed ac tortor vel libero hendrerit iaculis. Vestibulum arcu turpis, sodales et viverra at, ornare non turpis.',
+                },
+              ];
 
-<body class="vscode-light">
-  <div class="story">
-    <h2 class="story-title">Basic example</h2>
-    <div class="story-content">
-      <component-preview>
-        <vscode-tree id="tree-1" tabindex="0" style="background-color: var(--vscode-sideBar-background); min-height: 400px;"></vscode-tree>
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const tree = document.getElementById('tree-1');
-            const icons = {
-              branch: 'folder',
-              leaf: 'file',
-              open: 'folder-opened',
-            };
-            const data = [
-              {
-                icons,
-                label: 'item 0',
-                value: 'item 0 custom value example',
-                subItems: [
-                  {
-                    icons,
-                    label: 'item 0.0',
-                    subItems: [
-                      {
-                        icons,
-                        label: 'item 0.0.0',
-                      },
-                      {
-                        icons,
-                        label: 'item 0.0.1',
-                      },
-                      {
-                        icons,
-                        label: 'item 0.0.2',
-                      },
-                      {
-                        icons,
-                        label: 'item 0.0.3',
-                      },
-                    ],
-                  },
-                  {
-                    icons,
-                    label: 'item 0.1',
-                    open: true,
-                    subItems: [
-                      {
-                        icons,
-                        label: 'item 0.1.0',
-                      },
-                      {
-                        icons,
-                        label: 'item 0.1.1',
-                      },
-                      {
-                        icons,
-                        label: 'item 0.1.2',
-                        subItems: [
-                          {
-                            icons,
-                            label: 'item 0.1.2.0'
-                          },
-                          {
-                            icons,
-                            label: 'item 0.1.2.1',
-                            subItems: []
-                          }
-                        ]
-                      },
-                      {
-                        icons,
-                        label: 'item 0.1.3',
-                      },
-                    ],
-                  },
-                  {
-                    icons,
-                    label: 'item 0.2',
-                  },
-                ],
-              },
-              {
-                icons,
-                label: 'item 1',
-                subItems: [
-                  {
-                    icons,
-                    label: 'item 1.0',
-                  },
-                  {
-                    icons,
-                    label: 'item 1.1',
-                  },
-                ],
-              },
-              {
-                icons,
-                label: 'item 2',
-              },
-              {
-                icons,
-                label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla orci eros, pretium nec fermentum nec, dignissim nec arcu. Proin id tellus eu nunc cursus varius. Cras in rutrum risus. Praesent posuere libero ut sem dapibus imperdiet. Aliquam consequat est vestibulum vulputate convallis. Fusce hendrerit, elit ut iaculis auctor, turpis neque semper magna, in laoreet arcu mi at nibh. Donec vitae ligula blandit, dapibus lacus ac, consectetur libero. Sed ac tortor vel libero hendrerit iaculis. Vestibulum arcu turpis, sodales et viverra at, ornare non turpis.'
-              }
-            ];
+              tree.data = data;
 
-            tree.data = data;
-
-            tree.addEventListener('vsc-select', (ev) => {
-              console.log(ev);
+              tree.addEventListener('vsc-select', (ev) => {
+                console.log(ev);
+              });
             });
-          });
-        </script>
-      </component-preview>
+          </script>
+        </component-preview>
+      </div>
     </div>
-  </div>
-  <div class="story">
-    <h2 class="story-title">Flat list</h2>
-    <div class="story-content">
-      <component-preview>
-        <vscode-tree id="tree-2" tabindex="0"></vscode-tree>
-        <script>
-          (function() {
-            const tree = document.getElementById('tree-2');
+    <div class="story">
+      <h2 class="story-title">Flat list</h2>
+      <div class="story-content">
+        <component-preview>
+          <vscode-tree id="tree-2" tabindex="0"></vscode-tree>
+          <script>
+            (function () {
+              const tree = document.getElementById('tree-2');
 
-            data = [
-              {
-                icons: {
-                  leaf: 'git-commit'
+              data = [
+                {
+                  icons: {
+                    leaf: 'git-commit',
+                  },
+                  label: 'bump distro',
+                  value: '986e1248f6d8c1aa2a7f57a3fadbb00f94248c2b',
                 },
-                label: 'bump distro',
-                value: '986e1248f6d8c1aa2a7f57a3fadbb00f94248c2b',
-              },
-              {
-                icons: {
-                  leaf: 'git-commit'
+                {
+                  icons: {
+                    leaf: 'git-commit',
+                  },
+                  label: 'Update milestone',
+                  value: '4ae26a156300729ed3f9d23377e5d2aff9dcd982',
                 },
-                label: 'Update milestone',
-                value: '4ae26a156300729ed3f9d23377e5d2aff9dcd982',
-              },
-              {
-                icons: {
-                  leaf: 'git-commit'
+                {
+                  icons: {
+                    leaf: 'git-commit',
+                  },
+                  label: 'env - tweak shell resolve experience on startup',
+                  value: '52098eaeb028e123b3f8af1d4a3d64df6db528be',
                 },
-                label: 'env - tweak shell resolve experience on startup',
-                value: '52098eaeb028e123b3f8af1d4a3d64df6db528be',
-              },
-              {
-                icons: {
-                  leaf: 'git-commit'
+                {
+                  icons: {
+                    leaf: 'git-commit',
+                  },
+                  label: 'Merge pull request #107126 from Timmmm/atomic_tabs',
+                  value: 'fb80c0e44af034df58e329e0f946a9a722ab297c',
                 },
-                label: 'Merge pull request #107126 from Timmmm/atomic_tabs',
-                value: 'fb80c0e44af034df58e329e0f946a9a722ab297c',
-              },
-              {
-                icons: {
-                  leaf: 'git-commit'
+                {
+                  icons: {
+                    leaf: 'git-commit',
+                  },
+                  label: 'Simplify changes from #108193',
+                  value: '88856f1a1c8f90bcc12171d1af920d74bb59b625',
                 },
-                label: 'Simplify changes from #108193',
-                value: '88856f1a1c8f90bcc12171d1af920d74bb59b625',
-              },
-            ];
+              ];
 
-            tree.data = data;
-          })();
-        </script>
-      </component-preview>
+              tree.data = data;
+            })();
+          </script>
+        </component-preview>
+      </div>
     </div>
-  </div>
-  <div class="story">
-    <h2 class="story-title">Arrows</h2>
-    <div class="story-content">
-      <component-preview>
-        <vscode-tree id="tree-3" tabindex="0" indent="16" arrows style="user-select: none;"></vscode-tree>
-        <script>
-          (function() {
-            const tree = document.getElementById('tree-3');
-            const data = [
-              {
-                label: 'item 0',
-                value: 'item 0 custom value example',
-                subItems: [
-                  {
-                    label: 'item 0.0',
-                    subItems: [
-                      {
-                        label: 'item 0.0.0',
-                      },
-                      {
-                        label: 'item 0.0.1',
-                      },
-                      {
-                        label: 'item 0.0.2',
-                      },
-                      {
-                        label: 'item 0.0.3',
-                      },
-                    ],
-                  },
-                  {
-                    label: 'item 0.1',
-                    open: true,
-                    subItems: [
-                      {
-                        label: 'item 0.1.0',
-                      },
-                      {
-                        label: 'item 0.1.1',
-                      },
-                      {
-                        label: 'item 0.1.2',
-                      },
-                      {
-                        label: 'item 0.1.3',
-                      },
-                    ],
-                  },
-                  {
-                    label: 'item 0.2',
-                  },
-                ],
-              },
-              {
-                label: 'item 1',
-                subItems: [
-                  {
-                    label: 'item 1.0',
-                  },
-                  {
-                    label: 'item 1.1',
-                  },
-                ],
-              },
-              {
-                label: 'item 2',
-                selected: true,
-              },
-              {
-                label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla orci eros, pretium nec fermentum nec, dignissim nec arcu. Proin id tellus eu nunc cursus varius. Cras in rutrum risus. Praesent posuere libero ut sem dapibus imperdiet. Aliquam consequat est vestibulum vulputate convallis. Fusce hendrerit, elit ut iaculis auctor, turpis neque semper magna, in laoreet arcu mi at nibh. Donec vitae ligula blandit, dapibus lacus ac, consectetur libero. Sed ac tortor vel libero hendrerit iaculis. Vestibulum arcu turpis, sodales et viverra at, ornare non turpis.'
-              }
-            ];
+    <div class="story">
+      <h2 class="story-title">Arrows</h2>
+      <div class="story-content">
+        <component-preview>
+          <vscode-tree
+            id="tree-3"
+            tabindex="0"
+            indent="16"
+            arrows
+            style="user-select: none"
+          ></vscode-tree>
+          <script>
+            (function () {
+              const tree = document.getElementById('tree-3');
+              const data = [
+                {
+                  label: 'item 0',
+                  value: 'item 0 custom value example',
+                  subItems: [
+                    {
+                      label: 'item 0.0',
+                      subItems: [
+                        {
+                          label: 'item 0.0.0',
+                        },
+                        {
+                          label: 'item 0.0.1',
+                        },
+                        {
+                          label: 'item 0.0.2',
+                        },
+                        {
+                          label: 'item 0.0.3',
+                        },
+                      ],
+                    },
+                    {
+                      label: 'item 0.1',
+                      open: true,
+                      subItems: [
+                        {
+                          label: 'item 0.1.0',
+                        },
+                        {
+                          label: 'item 0.1.1',
+                        },
+                        {
+                          label: 'item 0.1.2',
+                        },
+                        {
+                          label: 'item 0.1.3',
+                        },
+                      ],
+                    },
+                    {
+                      label: 'item 0.2',
+                    },
+                  ],
+                },
+                {
+                  label: 'item 1',
+                  subItems: [
+                    {
+                      label: 'item 1.0',
+                    },
+                    {
+                      label: 'item 1.1',
+                    },
+                  ],
+                },
+                {
+                  label: 'item 2',
+                  selected: true,
+                },
+                {
+                  label:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla orci eros, pretium nec fermentum nec, dignissim nec arcu. Proin id tellus eu nunc cursus varius. Cras in rutrum risus. Praesent posuere libero ut sem dapibus imperdiet. Aliquam consequat est vestibulum vulputate convallis. Fusce hendrerit, elit ut iaculis auctor, turpis neque semper magna, in laoreet arcu mi at nibh. Donec vitae ligula blandit, dapibus lacus ac, consectetur libero. Sed ac tortor vel libero hendrerit iaculis. Vestibulum arcu turpis, sodales et viverra at, ornare non turpis.',
+                },
+              ];
 
-            tree.data = data;
-          })();
-        </script>
-      </component-preview>
+              tree.data = data;
+            })();
+          </script>
+        </component-preview>
+      </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
