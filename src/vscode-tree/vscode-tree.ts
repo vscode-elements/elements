@@ -355,12 +355,12 @@ export class VscodeTree extends VscElement {
 
     const isBranch = !!item?.subItems?.length;
 
+    if (this._focusedBranch) {
+      this._focusedBranch.hasFocusedItem = false;
+    }
+
     if (!isBranch && item.path?.length && item.path.length > 1) {
       const parentBranch = this.getItemByPath(item.path.slice(0, -1));
-
-      if (this._focusedBranch) {
-        this._focusedBranch.hasFocusedItem = false;
-      }
 
       if (parentBranch) {
         this._focusedBranch = parentBranch;
