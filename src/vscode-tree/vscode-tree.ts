@@ -301,14 +301,6 @@ export class VscodeTree extends VscElement {
     return ret;
   }
 
-  private _toggleSubTreeOpen(item: TreeItem) {
-    if (!item.subItems) {
-      return;
-    }
-
-    item.open = !item.open;
-  }
-
   private _selectItem(item: TreeItem) {
     if (this._selectedItem) {
       this._selectedItem.selected = false;
