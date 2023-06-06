@@ -6,13 +6,7 @@ import {VscElement} from '../includes/VscElement';
 import '../vscode-icon';
 import styles from './vscode-tree.styles';
 
-enum KeyName {
-  ARROW_DOWN = 'ArrowDown',
-  ARROW_UP = 'ArrowUp',
-  ENTER = 'Enter',
-  ESCAPE = 'Escape',
-  SPACE = ' ',
-}
+type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
 interface TreeItemIconConfig {
   branch?: string;
@@ -26,15 +20,14 @@ interface TreeItem {
   open?: boolean;
   selected?: boolean;
   focused?: boolean;
+  hasSelectedItem?: boolean;
+  hasFocusedItem?: boolean;
   icons?: TreeItemIconConfig;
   value?: string;
   path?: number[];
 }
 
-enum ItemType {
-  BRANCH = 'branch',
-  LEAF = 'leaf',
-}
+type ItemType = 'branch' | 'leaf';
 
 interface SelectEventDetail {
   icons: TreeItemIconConfig | undefined;
@@ -102,13 +95,12 @@ export class VscodeTree extends VscElement {
     return this._data;
   }
 
-  /**
-   * @deprecated
-   */
   @property({type: Number}) indent = 8;
   @property({type: Boolean}) arrows = false;
   @property({type: Boolean}) multiline = false;
   @property({type: Number, reflect: true}) tabindex = 0;
+  @property({type: Boolean, reflect: true, attribute: 'indent-guides'})
+  indentGuides = false;
 
   private _data: TreeItem[] = [];
 
@@ -117,6 +109,12 @@ export class VscodeTree extends VscElement {
 
   @state()
   private _focusedItem: TreeItem | null = null;
+
+  @state()
+  private _selectedBranch: TreeItem | null = null;
+
+  @state()
+  private _focusedBranch: TreeItem | null = null;
 
   private getItemByPath(path: number[]): TreeItem | null {
     let current: TreeItem[] = this._data;
@@ -139,10 +137,10 @@ export class VscodeTree extends VscElement {
       Array.isArray(item.subItems) &&
       item.subItems.length > 0
     ) {
-      return ItemType.BRANCH;
+      return 'branch';
     }
 
-    return ItemType.LEAF;
+    return 'leaf';
   }
 
   private getIconName(element: TreeItem): string | undefined {
@@ -154,11 +152,11 @@ export class VscodeTree extends VscElement {
     const itemType = this.getItemType(element);
     const isOpen = element.open || false;
 
-    if (itemType === ItemType.BRANCH && isOpen) {
+    if (itemType === 'branch' && isOpen) {
       return icons.open || undefined;
-    } else if (itemType === ItemType.BRANCH && !isOpen) {
+    } else if (itemType === 'branch' && !isOpen) {
       return icons.branch || undefined;
-    } else if (itemType === ItemType.LEAF) {
+    } else if (itemType === 'leaf') {
       return icons.leaf || undefined;
     } else {
       return undefined;
@@ -174,6 +172,8 @@ export class VscodeTree extends VscElement {
     itemType,
     selected = false,
     focused = false,
+    hasFocusedItem = false,
+    hasSelectedItem = false,
     subItems,
   }: {
     indentLevel: number;
@@ -184,6 +184,8 @@ export class VscodeTree extends VscElement {
     itemType: ItemType;
     selected: boolean;
     focused: boolean;
+    hasFocusedItem: boolean;
+    hasSelectedItem: boolean;
     subItems: TreeItem[];
   }) {
     const arrowIconName = open ? 'chevron-down' : 'chevron-right';
@@ -191,11 +193,11 @@ export class VscodeTree extends VscElement {
     const liClasses = open ? ['open'] : [];
     const indentSize = indentLevel * this.indent;
     const padLeft =
-      this.arrows && itemType === ItemType.LEAF
+      this.arrows && itemType === 'leaf'
         ? ARROW_OUTER_WIDTH + indentSize
         : indentSize;
     const arrowMarkup =
-      this.arrows && itemType === ItemType.BRANCH
+      this.arrows && itemType === 'branch'
         ? html`<vscode-icon
             name="${arrowIconName}"
             class="icon-arrow"
@@ -205,14 +207,19 @@ export class VscodeTree extends VscElement {
       ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
       : nothing;
     const subTreeMarkup =
-      open && itemType === ItemType.BRANCH
-        ? html`<ul>
+      open && itemType === 'branch'
+        ? html`<ul
+            style="--indent-guide-pos: ${indentSize + 8 + 4}px"
+            class=${classMap({
+              'has-active-item': hasFocusedItem || hasSelectedItem,
+            })}
+          >
             ${this.renderTree(subItems, path)}
           </ul>`
         : nothing;
     const labelMarkup = html`<span class="label">${label}</span>`;
 
-    liClasses.push(itemType === ItemType.LEAF ? 'leaf' : 'branch');
+    liClasses.push(itemType);
 
     if (selected) {
       contentsClasses.push('selected');
@@ -226,7 +233,7 @@ export class VscodeTree extends VscElement {
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
         <span
           class="${contentsClasses.join(' ')}"
-          style="${styleMap({paddingLeft: `${padLeft}px`})}"
+          style="${styleMap({paddingLeft: `${padLeft + 8}px`})}"
         >
           ${arrowMarkup} ${iconMarkup} ${labelMarkup}
         </span>
@@ -252,6 +259,8 @@ export class VscodeTree extends VscElement {
         open = false,
         selected = false,
         focused = false,
+        hasFocusedItem = false,
+        hasSelectedItem = false,
         subItems = [],
       } = element;
 
@@ -273,6 +282,8 @@ export class VscodeTree extends VscElement {
           itemType,
           selected,
           focused,
+          hasFocusedItem,
+          hasSelectedItem,
           subItems,
         })
       );
@@ -281,30 +292,72 @@ export class VscodeTree extends VscElement {
     return ret;
   }
 
-  private toggleSubTreeOpen(item: TreeItem) {
-    if (!item.subItems) {
-      return;
-    }
-
-    item.open = !item.open;
-  }
-
-  private selectTreeItem(item: TreeItem) {
+  private _selectItem(item: TreeItem) {
     if (this._selectedItem) {
       this._selectedItem.selected = false;
     }
 
+    if (this._focusedItem) {
+      this._focusedItem.focused = false;
+    }
+
     this._selectedItem = item;
     item.selected = true;
+    this._focusedItem = item;
+    item.focused = true;
+
+    const isBranch = !!item?.subItems?.length;
+
+    if (this._selectedBranch) {
+      this._selectedBranch.hasSelectedItem = false;
+    }
+
+    if (isBranch) {
+      this._selectedBranch = item;
+      item.hasSelectedItem = true;
+      item.open = !item.open;
+    } else {
+      if (item.path?.length && item.path.length > 1) {
+        const parentBranch = this.getItemByPath(item.path.slice(0, -1));
+
+        if (parentBranch) {
+          this._selectedBranch = parentBranch;
+          parentBranch.hasSelectedItem = true;
+        }
+      }
+    }
+
+    // this._toggleSubTreeOpen(this._focusedItem);
+    this.emitSelectEvent(
+      this._selectedItem as TreeItem,
+      this._selectedItem.path!.join('/')
+    );
+
+    this.requestUpdate();
   }
 
-  private focusTreeItem(item: TreeItem) {
+  private _focusItem(item: TreeItem) {
     if (this._focusedItem) {
       this._focusedItem.focused = false;
     }
 
     this._focusedItem = item;
     item.focused = true;
+
+    const isBranch = !!item?.subItems?.length;
+
+    if (this._focusedBranch) {
+      this._focusedBranch.hasFocusedItem = false;
+    }
+
+    if (!isBranch && item.path?.length && item.path.length > 1) {
+      const parentBranch = this.getItemByPath(item.path.slice(0, -1));
+
+      if (parentBranch) {
+        this._focusedBranch = parentBranch;
+        parentBranch.hasFocusedItem = true;
+      }
+    }
   }
 
   private closeSubTreeRecursively(tree: TreeItem[]) {
@@ -335,15 +388,6 @@ export class VscodeTree extends VscElement {
         detail,
       })
     );
-  }
-
-  private _focusItem(item: TreeItem) {
-    if (this._focusedItem) {
-      this._focusedItem.focused = false;
-    }
-
-    this._focusedItem = item;
-    this._focusedItem.focused = true;
   }
 
   private _focusPrevItem() {
@@ -435,11 +479,7 @@ export class VscodeTree extends VscElement {
       const path = pathStr.split('/').map((el) => Number(el));
       const item = this.getItemByPath(path) as TreeItem;
 
-      this.toggleSubTreeOpen(item);
-      this.selectTreeItem(item);
-      this.focusTreeItem(item);
-      this.emitSelectEvent(item, pathStr);
-      this.requestUpdate();
+      this._selectItem(item);
     } else {
       if (this._focusedItem) {
         this._focusedItem.focused = false;
@@ -450,48 +490,35 @@ export class VscodeTree extends VscElement {
   }
 
   private onComponentKeyDown(ev: KeyboardEvent) {
-    const keys = [
-      KeyName.ARROW_DOWN,
-      KeyName.ARROW_UP,
-      KeyName.ENTER,
-      KeyName.ESCAPE,
-      KeyName.SPACE,
+    const keys: ListenedKey[] = [
+      ' ',
+      'ArrowDown',
+      'ArrowUp',
+      'Enter',
+      'Escape',
     ];
+    const key = ev.key as ListenedKey;
 
-    if (keys.includes(ev.key as KeyName)) {
+    if (keys.includes(ev.key as ListenedKey)) {
       ev.stopPropagation();
       ev.preventDefault();
     }
 
-    if (ev.key === KeyName.ESCAPE) {
+    if (key === 'Escape') {
       this._focusedItem = null;
     }
 
-    if (ev.key === KeyName.ARROW_UP) {
+    if (key === 'ArrowUp') {
       this._focusPrevItem();
     }
 
-    if (ev.key === KeyName.ARROW_DOWN) {
+    if (key === 'ArrowDown') {
       this._focusNextItem();
     }
 
-    if (ev.key === KeyName.ENTER || ev.key === KeyName.SPACE) {
-      if (this._selectedItem) {
-        this._selectedItem.selected = false;
-      }
-
+    if (key === 'Enter' || key === ' ') {
       if (this._focusedItem) {
-        this._selectedItem = this._focusedItem;
-      }
-
-      if (this._selectedItem) {
-        this._selectedItem.selected = true;
-        this._selectedItem.open = !this._selectedItem.open;
-        this.emitSelectEvent(
-          this._selectedItem as TreeItem,
-          this._selectedItem.path!.join('/')
-        );
-        this.requestUpdate();
+        this._selectItem(this._focusedItem);
       }
     }
   }
