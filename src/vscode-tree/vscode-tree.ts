@@ -27,10 +27,7 @@ interface TreeItem {
   path?: number[];
 }
 
-enum ItemType {
-  BRANCH = 'branch',
-  LEAF = 'leaf',
-}
+type ItemType = 'branch' | 'leaf';
 
 interface SelectEventDetail {
   icons: TreeItemIconConfig | undefined;
@@ -140,10 +137,10 @@ export class VscodeTree extends VscElement {
       Array.isArray(item.subItems) &&
       item.subItems.length > 0
     ) {
-      return ItemType.BRANCH;
+      return 'branch';
     }
 
-    return ItemType.LEAF;
+    return 'leaf';
   }
 
   private getIconName(element: TreeItem): string | undefined {
@@ -155,11 +152,11 @@ export class VscodeTree extends VscElement {
     const itemType = this.getItemType(element);
     const isOpen = element.open || false;
 
-    if (itemType === ItemType.BRANCH && isOpen) {
+    if (itemType === 'branch' && isOpen) {
       return icons.open || undefined;
-    } else if (itemType === ItemType.BRANCH && !isOpen) {
+    } else if (itemType === 'branch' && !isOpen) {
       return icons.branch || undefined;
-    } else if (itemType === ItemType.LEAF) {
+    } else if (itemType === 'leaf') {
       return icons.leaf || undefined;
     } else {
       return undefined;
@@ -196,11 +193,11 @@ export class VscodeTree extends VscElement {
     const liClasses = open ? ['open'] : [];
     const indentSize = indentLevel * this.indent;
     const padLeft =
-      this.arrows && itemType === ItemType.LEAF
+      this.arrows && itemType === 'leaf'
         ? ARROW_OUTER_WIDTH + indentSize
         : indentSize;
     const arrowMarkup =
-      this.arrows && itemType === ItemType.BRANCH
+      this.arrows && itemType === 'branch'
         ? html`<vscode-icon
             name="${arrowIconName}"
             class="icon-arrow"
@@ -210,7 +207,7 @@ export class VscodeTree extends VscElement {
       ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
       : nothing;
     const subTreeMarkup =
-      open && itemType === ItemType.BRANCH
+      open && itemType === 'branch'
         ? html`<ul
             style="--indent-guide-pos: ${indentSize + 8 + 4}px"
             class=${classMap({
@@ -222,7 +219,7 @@ export class VscodeTree extends VscElement {
         : nothing;
     const labelMarkup = html`<span class="label">${label}</span>`;
 
-    liClasses.push(itemType === ItemType.LEAF ? 'leaf' : 'branch');
+    liClasses.push(itemType);
 
     if (selected) {
       contentsClasses.push('selected');
