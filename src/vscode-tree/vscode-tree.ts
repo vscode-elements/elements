@@ -16,6 +16,7 @@ interface TreeItemIconConfig {
 
 interface TreeItem {
   label: string;
+  description?: string;
   subItems?: TreeItem[];
   open?: boolean;
   selected?: boolean;
@@ -44,10 +45,20 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
   const nextTree: TreeItem[] = [];
 
   tree.forEach((val, index) => {
-    const {label, subItems, open, selected, focused, icons, value} = val;
+    const {
+      label,
+      description,
+      subItems,
+      open,
+      selected,
+      focused,
+      icons,
+      value,
+    } = val;
     const path = [...prevPath, index];
     const nextItem: TreeItem = {
       label,
+      description,
       path,
       open: !!open,
       selected: !!selected,
@@ -166,6 +177,7 @@ export class VscodeTree extends VscElement {
   private renderTreeItem({
     indentLevel,
     label,
+    description,
     path,
     iconName,
     open = false,
@@ -178,6 +190,7 @@ export class VscodeTree extends VscElement {
   }: {
     indentLevel: number;
     label: string;
+    description: string;
     path: number[];
     iconName: string | undefined;
     open: boolean;
@@ -218,6 +231,9 @@ export class VscodeTree extends VscElement {
           </ul>`
         : nothing;
     const labelMarkup = html`<span class="label">${label}</span>`;
+    const descriptionMarkup = description
+      ? html`<span class="description">${description}</span>`
+      : nothing;
 
     liClasses.push(itemType);
 
@@ -234,9 +250,10 @@ export class VscodeTree extends VscElement {
         <span
           class="${contentsClasses.join(' ')}"
           style="${styleMap({paddingLeft: `${padLeft + 8}px`})}"
+          >${arrowMarkup}${iconMarkup}<span class="text-content"
+            >${labelMarkup}${descriptionMarkup}</span
+          ></span
         >
-          ${arrowMarkup} ${iconMarkup} ${labelMarkup}
-        </span>
         ${subTreeMarkup}
       </li>
     `;
@@ -256,6 +273,7 @@ export class VscodeTree extends VscElement {
       const iconName = this.getIconName(element);
       const {
         label,
+        description = '',
         open = false,
         selected = false,
         focused = false,
@@ -263,6 +281,8 @@ export class VscodeTree extends VscElement {
         hasSelectedItem = false,
         subItems = [],
       } = element;
+
+      console.log(element);
 
       if (selected) {
         this._selectedItem = element;
@@ -276,6 +296,7 @@ export class VscodeTree extends VscElement {
         this.renderTreeItem({
           indentLevel,
           label,
+          description,
           path,
           open,
           iconName,

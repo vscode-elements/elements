@@ -151,12 +151,25 @@ const styles: CSSResultGroup = [
       margin-top: 3px;
     }
 
+    .text-content {
+      display: flex;
+    }
+
     .label {
       display: block;
       line-height: 22px;
     }
 
-    .single .label {
+    .description {
+      font-size: 0.9em;
+      line-height: 22px;
+      margin-left: 0.5em;
+      opacity: 0.95;
+      white-space: pre;
+    }
+
+    .single .label,
+    .single .description {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
