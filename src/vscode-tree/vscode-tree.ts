@@ -26,6 +26,8 @@ interface TreeItem {
   open?: boolean;
   selected?: boolean;
   focused?: boolean;
+  hasSelectedItem?: boolean;
+  hasFocusedItem?: boolean;
   icons?: TreeItemIconConfig;
   value?: string;
   path?: number[];
@@ -117,6 +119,12 @@ export class VscodeTree extends VscElement {
   @state()
   private _focusedItem: TreeItem | null = null;
 
+  @state()
+  private _selectedBranch: TreeItem | null = null;
+
+  @state()
+  private _focusedBranch: TreeItem | null = null;
+
   private getItemByPath(path: number[]): TreeItem | null {
     let current: TreeItem[] = this._data;
     let item: TreeItem | null = null;
@@ -173,6 +181,8 @@ export class VscodeTree extends VscElement {
     itemType,
     selected = false,
     focused = false,
+    hasFocusedItem = false,
+    hasSelectedItem = false,
     subItems,
   }: {
     indentLevel: number;
@@ -183,6 +193,8 @@ export class VscodeTree extends VscElement {
     itemType: ItemType;
     selected: boolean;
     focused: boolean;
+    hasFocusedItem: boolean;
+    hasSelectedItem: boolean;
     subItems: TreeItem[];
   }) {
     const arrowIconName = open ? 'chevron-down' : 'chevron-right';
@@ -205,7 +217,12 @@ export class VscodeTree extends VscElement {
       : nothing;
     const subTreeMarkup =
       open && itemType === ItemType.BRANCH
-        ? html`<ul style="--indent-guide-pos: ${indentSize + 8 + 4}px">
+        ? html`<ul
+            style="--indent-guide-pos: ${indentSize + 8 + 4}px"
+            class=${classMap({
+              'has-active-item': hasFocusedItem || hasSelectedItem,
+            })}
+          >
             ${this.renderTree(subItems, path)}
           </ul>`
         : nothing;
@@ -251,6 +268,8 @@ export class VscodeTree extends VscElement {
         open = false,
         selected = false,
         focused = false,
+        hasFocusedItem = false,
+        hasSelectedItem = false,
         subItems = [],
       } = element;
 
@@ -272,6 +291,8 @@ export class VscodeTree extends VscElement {
           itemType,
           selected,
           focused,
+          hasFocusedItem,
+          hasSelectedItem,
           subItems,
         })
       );
@@ -280,7 +301,7 @@ export class VscodeTree extends VscElement {
     return ret;
   }
 
-  private toggleSubTreeOpen(item: TreeItem) {
+  private _toggleSubTreeOpen(item: TreeItem) {
     if (!item.subItems) {
       return;
     }
@@ -288,22 +309,72 @@ export class VscodeTree extends VscElement {
     item.open = !item.open;
   }
 
-  private selectTreeItem(item: TreeItem) {
+  private _selectItem(item: TreeItem) {
     if (this._selectedItem) {
       this._selectedItem.selected = false;
     }
 
+    if (this._focusedItem) {
+      this._focusedItem.focused = false;
+    }
+
     this._selectedItem = item;
     item.selected = true;
+    this._focusedItem = item;
+    item.focused = true;
+
+    const isBranch = !!item?.subItems?.length;
+
+    if (this._selectedBranch) {
+      this._selectedBranch.hasSelectedItem = false;
+    }
+
+    if (isBranch) {
+      this._selectedBranch = item;
+      item.hasSelectedItem = true;
+      item.open = !item.open;
+    } else {
+      if (item.path?.length && item.path.length > 1) {
+        const parentBranch = this.getItemByPath(item.path.slice(0, -1));
+
+        if (parentBranch) {
+          this._selectedBranch = parentBranch;
+          parentBranch.hasSelectedItem = true;
+        }
+      }
+    }
+
+    // this._toggleSubTreeOpen(this._focusedItem);
+    this.emitSelectEvent(
+      this._selectedItem as TreeItem,
+      this._selectedItem.path!.join('/')
+    );
+
+    this.requestUpdate();
   }
 
-  private focusTreeItem(item: TreeItem) {
+  private _focusItem(item: TreeItem) {
     if (this._focusedItem) {
       this._focusedItem.focused = false;
     }
 
     this._focusedItem = item;
     item.focused = true;
+
+    const isBranch = !!item?.subItems?.length;
+
+    if (!isBranch && item.path?.length && item.path.length > 1) {
+      const parentBranch = this.getItemByPath(item.path.slice(0, -1));
+
+      if (this._focusedBranch) {
+        this._focusedBranch.hasFocusedItem = false;
+      }
+
+      if (parentBranch) {
+        this._focusedBranch = parentBranch;
+        parentBranch.hasFocusedItem = true;
+      }
+    }
   }
 
   private closeSubTreeRecursively(tree: TreeItem[]) {
@@ -334,15 +405,6 @@ export class VscodeTree extends VscElement {
         detail,
       })
     );
-  }
-
-  private _focusItem(item: TreeItem) {
-    if (this._focusedItem) {
-      this._focusedItem.focused = false;
-    }
-
-    this._focusedItem = item;
-    this._focusedItem.focused = true;
   }
 
   private _focusPrevItem() {
@@ -434,11 +496,7 @@ export class VscodeTree extends VscElement {
       const path = pathStr.split('/').map((el) => Number(el));
       const item = this.getItemByPath(path) as TreeItem;
 
-      this.toggleSubTreeOpen(item);
-      this.selectTreeItem(item);
-      this.focusTreeItem(item);
-      this.emitSelectEvent(item, pathStr);
-      this.requestUpdate();
+      this._selectItem(item);
     } else {
       if (this._focusedItem) {
         this._focusedItem.focused = false;
@@ -475,8 +533,12 @@ export class VscodeTree extends VscElement {
     }
 
     if (ev.key === KeyName.ENTER || ev.key === KeyName.SPACE) {
-      if (this._selectedItem) {
+      /* if (this._selectedItem) {
         this._selectedItem.selected = false;
+      }
+
+      if (this._selectedBranch) {
+        this._selectedBranch.selected = false;
       }
 
       if (this._focusedItem) {
@@ -491,6 +553,10 @@ export class VscodeTree extends VscElement {
           this._selectedItem.path!.join('/')
         );
         this.requestUpdate();
+      } */
+
+      if (this._focusedItem) {
+        this._selectItem(this._focusedItem);
       }
     }
   }

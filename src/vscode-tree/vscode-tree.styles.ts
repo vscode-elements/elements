@@ -93,6 +93,10 @@ const styles: CSSResultGroup = [
       z-index: 1;
     }
 
+    :host([indent-guides]) ul ul.has-active-item:before {
+      background-color: var(--active-indent-guide);
+    }
+
     .contents {
       align-items: center;
       display: flex;
