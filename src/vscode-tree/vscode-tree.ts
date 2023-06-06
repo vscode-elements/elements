@@ -6,13 +6,7 @@ import {VscElement} from '../includes/VscElement';
 import '../vscode-icon';
 import styles from './vscode-tree.styles';
 
-enum KeyName {
-  ARROW_DOWN = 'ArrowDown',
-  ARROW_UP = 'ArrowUp',
-  ENTER = 'Enter',
-  ESCAPE = 'Escape',
-  SPACE = ' ',
-}
+type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
 interface TreeItemIconConfig {
   branch?: string;
@@ -499,54 +493,33 @@ export class VscodeTree extends VscElement {
   }
 
   private onComponentKeyDown(ev: KeyboardEvent) {
-    const keys = [
-      KeyName.ARROW_DOWN,
-      KeyName.ARROW_UP,
-      KeyName.ENTER,
-      KeyName.ESCAPE,
-      KeyName.SPACE,
+    const keys: ListenedKey[] = [
+      ' ',
+      'ArrowDown',
+      'ArrowUp',
+      'Enter',
+      'Escape',
     ];
+    const key = ev.key as ListenedKey;
 
-    if (keys.includes(ev.key as KeyName)) {
+    if (keys.includes(ev.key as ListenedKey)) {
       ev.stopPropagation();
       ev.preventDefault();
     }
 
-    if (ev.key === KeyName.ESCAPE) {
+    if (key === 'Escape') {
       this._focusedItem = null;
     }
 
-    if (ev.key === KeyName.ARROW_UP) {
+    if (key === 'ArrowUp') {
       this._focusPrevItem();
     }
 
-    if (ev.key === KeyName.ARROW_DOWN) {
+    if (key === 'ArrowDown') {
       this._focusNextItem();
     }
 
-    if (ev.key === KeyName.ENTER || ev.key === KeyName.SPACE) {
-      /* if (this._selectedItem) {
-        this._selectedItem.selected = false;
-      }
-
-      if (this._selectedBranch) {
-        this._selectedBranch.selected = false;
-      }
-
-      if (this._focusedItem) {
-        this._selectedItem = this._focusedItem;
-      }
-
-      if (this._selectedItem) {
-        this._selectedItem.selected = true;
-        this._selectedItem.open = !this._selectedItem.open;
-        this.emitSelectEvent(
-          this._selectedItem as TreeItem,
-          this._selectedItem.path!.join('/')
-        );
-        this.requestUpdate();
-      } */
-
+    if (key === 'Enter' || key === ' ') {
       if (this._focusedItem) {
         this._selectItem(this._focusedItem);
       }
