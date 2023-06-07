@@ -153,11 +153,15 @@ const styles: CSSResultGroup = [
 
     .text-content {
       display: flex;
+      line-height: 22px;
     }
 
-    .label {
+    .single .text-content {
       display: block;
-      line-height: 22px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
     }
 
     .description {
@@ -166,13 +170,6 @@ const styles: CSSResultGroup = [
       margin-left: 0.5em;
       opacity: 0.95;
       white-space: pre;
-    }
-
-    .single .label,
-    .single .description {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   `,
 ];
