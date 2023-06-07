@@ -77,6 +77,18 @@ const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
   return nextTree;
 };
 
+const isBranch = (item: TreeItem) => {
+  if (
+    item.subItems &&
+    Array.isArray(item.subItems) &&
+    item?.subItems?.length > 0
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
 /**
  * @fires vsc-select Dispatched when an item is selected. The event data shape is described in the
  * `SelectEventDetail` interface.
@@ -142,25 +154,13 @@ export class VscodeTree extends VscElement {
     return item;
   }
 
-  private getItemType(item: TreeItem): ItemType {
-    if (
-      item.subItems &&
-      Array.isArray(item.subItems) &&
-      item.subItems.length > 0
-    ) {
-      return 'branch';
-    }
-
-    return 'leaf';
-  }
-
   private getIconName(element: TreeItem): string | undefined {
     if (!element.icons) {
       return undefined;
     }
 
     const {icons} = element;
-    const itemType = this.getItemType(element);
+    const itemType = isBranch(element) ? 'branch' : 'leaf';
     const isOpen = element.open || false;
 
     if (itemType === 'branch' && isOpen) {
@@ -269,7 +269,7 @@ export class VscodeTree extends VscElement {
     tree.forEach((element, index) => {
       const path = [...oldPath, index];
       const indentLevel = path.length - 1;
-      const itemType = this.getItemType(element);
+      const itemType = isBranch(element) ? 'branch' : 'leaf';
       const iconName = this.getIconName(element);
       const {
         label,
@@ -325,16 +325,30 @@ export class VscodeTree extends VscElement {
     this._focusedItem = item;
     item.focused = true;
 
-    const isBranch = !!item?.subItems?.length;
-
     if (this._selectedBranch) {
       this._selectedBranch.hasSelectedItem = false;
     }
 
-    if (isBranch) {
+    let parentBranch: TreeItem | null = null;
+
+    if (item.path?.length && item.path.length > 1) {
+      parentBranch = this.getItemByPath(item.path.slice(0, -1));
+    }
+
+    if (isBranch(item)) {
       this._selectedBranch = item;
       item.hasSelectedItem = true;
       item.open = !item.open;
+
+      if (!item.open) {
+        if (parentBranch) {
+          this._selectedBranch = parentBranch;
+          parentBranch.hasSelectedItem = true;
+        }
+      } else {
+        this._selectedBranch = item;
+        item.hasSelectedItem = true;
+      }
     } else {
       if (item.path?.length && item.path.length > 1) {
         const parentBranch = this.getItemByPath(item.path.slice(0, -1));
@@ -343,10 +357,12 @@ export class VscodeTree extends VscElement {
           this._selectedBranch = parentBranch;
           parentBranch.hasSelectedItem = true;
         }
+      } else {
+        this._selectedBranch = item;
+        item.hasSelectedItem = true;
       }
     }
 
-    // this._toggleSubTreeOpen(this._focusedItem);
     this.emitSelectEvent(
       this._selectedItem as TreeItem,
       this._selectedItem.path!.join('/')
@@ -369,10 +385,22 @@ export class VscodeTree extends VscElement {
       this._focusedBranch.hasFocusedItem = false;
     }
 
-    if (!isBranch && item.path?.length && item.path.length > 1) {
-      const parentBranch = this.getItemByPath(item.path.slice(0, -1));
+    let parentBranch: TreeItem | null = null;
 
+    if (item.path?.length && item.path.length > 1) {
+      parentBranch = this.getItemByPath(item.path.slice(0, -1));
+    }
+
+    if (!isBranch) {
       if (parentBranch) {
+        this._focusedBranch = parentBranch;
+        parentBranch.hasFocusedItem = true;
+      }
+    } else {
+      if (item.open) {
+        this._focusedBranch = item;
+        item.hasFocusedItem = true;
+      } else if(!item.open && parentBranch) {
         this._focusedBranch = parentBranch;
         parentBranch.hasFocusedItem = true;
       }
@@ -393,7 +421,7 @@ export class VscodeTree extends VscElement {
     const {icons, label, open, value} = item;
     const detail = {
       icons,
-      itemType: this.getItemType(item),
+      itemType: isBranch(item) ? 'branch' : ('leaf' as ItemType),
       label,
       open: open || false,
       value: value || label,
