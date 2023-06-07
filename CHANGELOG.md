@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - Added optional indent guides to **Tree**
+- Added `description` property to **Tree** items
 
 ## [0.13.2] - 2023-05-26
 
