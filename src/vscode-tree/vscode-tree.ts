@@ -230,7 +230,6 @@ export class VscodeTree extends VscElement {
             ${this.renderTree(subItems, path)}
           </ul>`
         : nothing;
-    const labelMarkup = html`<span class="label">${label}</span>`;
     const descriptionMarkup = description
       ? html`<span class="description">${description}</span>`
       : nothing;
@@ -247,13 +246,14 @@ export class VscodeTree extends VscElement {
 
     return html`
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
-        <span
+        <div
           class="${contentsClasses.join(' ')}"
           style="${styleMap({paddingLeft: `${padLeft + 8}px`})}"
-          >${arrowMarkup}${iconMarkup}<span class="text-content"
-            >${labelMarkup}${descriptionMarkup}</span
-          ></span
         >
+          ${arrowMarkup}${iconMarkup}<span class="text-content"
+            >${label}${descriptionMarkup}</span
+          >
+        </div>
         ${subTreeMarkup}
       </li>
     `;
