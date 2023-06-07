@@ -282,8 +282,6 @@ export class VscodeTree extends VscElement {
         subItems = [],
       } = element;
 
-      console.log(element);
-
       if (selected) {
         this._selectedItem = element;
       }
