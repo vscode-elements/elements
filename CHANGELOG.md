@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Added optional indent guides to **Tree**
 - Added `description` property to **Tree** items
+- Added `decorators` slot to the **Collapsible** header. Decorators are always visible even if the
+  collapsible is collapsed.
 
 ## [0.13.2] - 2023-05-26
 

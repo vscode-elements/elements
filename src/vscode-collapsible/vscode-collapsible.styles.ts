@@ -53,18 +53,30 @@ const styles: CSSResultGroup = [
       outline-color: var(--focus-border);
     }
 
-    .collapsible-header h3 {
+    .title {
       color: var(--title-foreground);
+      display: block;
       font-family: var(--font-family);
       font-size: 11px;
       font-weight: 700;
       margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
       text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .title .description {
+      font-weight: 400;
+      margin-left: 10px;
+      text-transform: none;
+      opacity: .6;
     }
 
     .header-icon {
       color: var(--icon-foreground);
       display: block;
+      flex-shrink: 0;
       margin: 0 3px;
     }
 
@@ -72,17 +84,29 @@ const styles: CSSResultGroup = [
       transform: rotate(90deg);
     }
 
-    .actions {
-      display: none;
+    .header-slots {
+      align-items: center;
+      display: flex;
+      height: 22px;
       margin-left: auto;
       margin-right: 4px;
+    }
+
+    .actions {
+      display: none;
     }
 
     .collapsible.open .actions {
       display: block;
     }
 
-    slot[name='actions']::slotted(div) {
+    .header-slots slot {
+      display: flex;
+      max-height: 22px;
+      overflow: hidden;
+    }
+
+    .header-slots slot::slotted(div) {
       align-items: center;
       display: flex;
     }

@@ -7,10 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>VSCode Webview Elements demo page</title>
   <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../node_modules/vscode-codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
+  <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
   <script type="module" src="../dev-assets/component-preview.js"></script>
-  <script type="module" src="../dist/vscode-icon.js"></script>
-  <script type="module" src="../dist/vscode-collapsible.js"></script>
+  <script type="module" src="../dist/vscode-icon/index.js"></script>
+  <script type="module" src="../dist/vscode-badge/index.js"></script>
+  <script type="module" src="../dist/vscode-collapsible/index.js"></script>
 </head>
 
 <body class="vscode-light">
@@ -18,20 +19,19 @@
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
       <component-preview>
-        <vscode-collapsible title="Lorem" open>
-          <div slot="actions">
-            <vscode-icon name="account" action-icon title="Account" tabindex="0"></vscode-icon>
-            <vscode-icon name="add" action-icon title="Add" tabindex="0"></vscode-icon>
-            <vscode-icon name="git-compare" action-icon title="Git compare" tabindex="0"></vscode-icon>
-          </div>
+        <vscode-collapsible title="Lorem" description="Ipsum Dolor sit" open>
+          <vscode-icon name="account" action-icon title="Account" tabindex="0" slot="actions"></vscode-icon>
+          <vscode-icon name="git-compare" action-icon title="Git compare" tabindex="0" slot="actions"></vscode-icon>
+          <vscode-icon name="add" action-icon title="Add" tabindex="0" slot="actions"></vscode-icon>
+          <vscode-badge slot="decorators" variant="counter">9</vscode-badge>
           <div slot="body">
             <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
           </div>
         </vscode-collapsible>
         <vscode-collapsible title="Ipsum">
@@ -42,12 +42,12 @@
           </div>
           <div slot="body">
             <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
-              <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
           </div>
         </vscode-collapsible>
       </component-preview>

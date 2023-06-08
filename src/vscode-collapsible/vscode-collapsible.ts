@@ -1,12 +1,13 @@
-import {html, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement';
 import styles from './vscode-collapsible.styles';
 
 /**
- * @slot body - Main content
- * @slot actions - Action icons in the header
+ * @slot body - Main content.
+ * @slot actions - You can place any action icon in this slot in the header, but it's also possible to use any HTML element in it. It's only visible when the component is open.
+ * @slot decorations - The elements placed in the decorations slot are always visible.
  *
  * @cssprop [--background=var(--vscode-sideBar-background)]
  * @cssprop [--focus-border=var(--vscode-focusBorder)]
@@ -19,8 +20,13 @@ import styles from './vscode-collapsible.styles';
 export class VscodeCollapsible extends VscElement {
   static styles = styles;
 
+  /** Component heading text */
   @property({type: String})
   title = '';
+
+  /** Less prominent text than the title in the header */
+  @property()
+  description = '';
 
   @property({type: Boolean})
   open = false;
@@ -53,6 +59,10 @@ export class VscodeCollapsible extends VscElement {
       />
     </svg>`;
 
+    const descriptionMarkup = this.description
+      ? html`<span class="description">${this.description}</span>`
+      : nothing;
+
     return html`
       <div class="${classes}">
         <div
@@ -63,8 +73,11 @@ export class VscodeCollapsible extends VscElement {
           @keydown="${this._onHeaderKeyDown}"
         >
           ${icon}
-          <h3 class="title">${this.title}</h3>
-          <div class="actions"><slot name="actions"></slot></div>
+          <h3 class="title">${this.title}${descriptionMarkup}</h3>
+          <div class="header-slots">
+            <div class="actions"><slot name="actions"></slot></div>
+            <div class="decorations"><slot name="decorations"></slot></div>
+          </div>
         </div>
         <div class="collapsible-body">
           <div>
