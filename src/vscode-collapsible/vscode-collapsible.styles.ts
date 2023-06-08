@@ -53,18 +53,23 @@ const styles: CSSResultGroup = [
       outline-color: var(--focus-border);
     }
 
-    .collapsible-header h3 {
+    .collapsible-header .title {
       color: var(--title-foreground);
+      display: block;
       font-family: var(--font-family);
       font-size: 11px;
       font-weight: 700;
       margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .header-icon {
       color: var(--icon-foreground);
       display: block;
+      flex-shrink: 0;
       margin: 0 3px;
     }
 
