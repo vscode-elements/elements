@@ -97,6 +97,15 @@ const styles: CSSResultGroup = [
       background-color: var(--scrollbar-slider-active-background);
     }
 
+    .prevent-interaction {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      position: absolute;
+      z-index: 99;
+    }
+
     .content {
       overflow: hidden;
     }
