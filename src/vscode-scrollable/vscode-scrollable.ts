@@ -1,4 +1,4 @@
-import { html, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -253,6 +253,9 @@ export class VscodeScrollable extends VscElement {
         })}"
       >
         <div class="${classMap({shadow: true, visible: this.scrolled})}"></div>
+        ${this._isDragging
+          ? html`<div class="prevent-interaction"></div>`
+          : nothing}
         <div
           class="${classMap({
             'scrollbar-track': true,
