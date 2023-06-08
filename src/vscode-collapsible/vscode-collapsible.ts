@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement';
@@ -21,6 +21,9 @@ export class VscodeCollapsible extends VscElement {
 
   @property({type: String})
   title = '';
+
+  @property()
+  description = '';
 
   @property({type: Boolean})
   open = false;
@@ -53,6 +56,10 @@ export class VscodeCollapsible extends VscElement {
       />
     </svg>`;
 
+    const descriptionMarkup = this.description
+      ? html`<span class="description">${this.description}</span>`
+      : nothing;
+
     return html`
       <div class="${classes}">
         <div
@@ -63,7 +70,7 @@ export class VscodeCollapsible extends VscElement {
           @keydown="${this._onHeaderKeyDown}"
         >
           ${icon}
-          <h3 class="title">${this.title}</h3>
+          <h3 class="title">${this.title}${descriptionMarkup}</h3>
           <div class="header-slots">
             <div class="actions"><slot name="actions"></slot></div>
             <div class="decorators"><slot name="decorators"></slot></div>

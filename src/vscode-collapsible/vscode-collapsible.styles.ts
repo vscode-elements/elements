@@ -53,7 +53,7 @@ const styles: CSSResultGroup = [
       outline-color: var(--focus-border);
     }
 
-    .collapsible-header .title {
+    .title {
       color: var(--title-foreground);
       display: block;
       font-family: var(--font-family);
@@ -64,6 +64,13 @@ const styles: CSSResultGroup = [
       text-overflow: ellipsis;
       text-transform: uppercase;
       white-space: nowrap;
+    }
+
+    .title .description {
+      font-weight: 400;
+      margin-left: 10px;
+      text-transform: none;
+      opacity: .6;
     }
 
     .header-icon {
