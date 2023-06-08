@@ -72,17 +72,29 @@ const styles: CSSResultGroup = [
       transform: rotate(90deg);
     }
 
-    .actions {
-      display: none;
+    .header-slots {
+      align-items: center;
+      display: flex;
+      height: 22px;
       margin-left: auto;
       margin-right: 4px;
+    }
+
+    .actions {
+      display: none;
     }
 
     .collapsible.open .actions {
       display: block;
     }
 
-    slot[name='actions']::slotted(div) {
+    .header-slots slot {
+      display: flex;
+      max-height: 22px;
+      overflow: hidden;
+    }
+
+    .header-slots slot::slotted(div) {
       align-items: center;
       display: flex;
     }

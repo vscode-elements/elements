@@ -64,7 +64,10 @@ export class VscodeCollapsible extends VscElement {
         >
           ${icon}
           <h3 class="title">${this.title}</h3>
-          <div class="actions"><slot name="actions"></slot></div>
+          <div class="header-slots">
+            <div class="actions"><slot name="actions"></slot></div>
+            <div class="decorators"><slot name="decorators"></slot></div>
+          </div>
         </div>
         <div class="collapsible-body">
           <div>
