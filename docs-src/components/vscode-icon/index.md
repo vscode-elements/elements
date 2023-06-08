@@ -144,7 +144,9 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="chrome-maximize" title="chrome-maximize"></vscode-icon>
   <vscode-icon name="chrome-minimize" title="chrome-minimize"></vscode-icon>
   <vscode-icon name="chrome-restore" title="chrome-restore"></vscode-icon>
+  <vscode-icon name="circle" title="circle"></vscode-icon>
   <vscode-icon name="circle-filled" title="circle-filled"></vscode-icon>
+  <vscode-icon name="circle-large" title="circle-large"></vscode-icon>
   <vscode-icon name="circle-large-filled" title="circle-large-filled"></vscode-icon>
   <vscode-icon name="circle-large-outline" title="circle-large-outline"></vscode-icon>
   <vscode-icon name="circle-outline" title="circle-outline"></vscode-icon>
@@ -169,6 +171,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="comment" title="comment"></vscode-icon>
   <vscode-icon name="comment-add" title="comment-add"></vscode-icon>
   <vscode-icon name="comment-discussion" title="comment-discussion"></vscode-icon>
+  <vscode-icon name="comment-draft" title="comment-draft"></vscode-icon>
   <vscode-icon name="comment-unresolved" title="comment-unresolved"></vscode-icon>
   <vscode-icon name="compare-changes" title="compare-changes"></vscode-icon>
   <vscode-icon name="compass" title="compass"></vscode-icon>
@@ -317,6 +320,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="inbox" title="inbox"></vscode-icon>
   <vscode-icon name="indent" title="indent"></vscode-icon>
   <vscode-icon name="info" title="info"></vscode-icon>
+  <vscode-icon name="insert" title="insert"></vscode-icon>
   <vscode-icon name="inspect" title="inspect"></vscode-icon>
   <vscode-icon name="issue-closed" title="issue-closed"></vscode-icon>
   <vscode-icon name="issue-draft" title="issue-draft"></vscode-icon>
@@ -475,9 +479,11 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="screen-full" title="screen-full"></vscode-icon>
   <vscode-icon name="screen-normal" title="screen-normal"></vscode-icon>
   <vscode-icon name="search" title="search"></vscode-icon>
+  <vscode-icon name="search-fuzzy" title="search-fuzzy"></vscode-icon>
   <vscode-icon name="search-save" title="search-save"></vscode-icon>
   <vscode-icon name="search-stop" title="search-stop"></vscode-icon>
   <vscode-icon name="selection" title="selection"></vscode-icon>
+  <vscode-icon name="send" title="send"></vscode-icon>
   <vscode-icon name="server" title="server"></vscode-icon>
   <vscode-icon name="server-environment" title="server-environment"></vscode-icon>
   <vscode-icon name="server-process" title="server-process"></vscode-icon>
@@ -489,6 +495,7 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="smiley" title="smiley"></vscode-icon>
   <vscode-icon name="sort-precedence" title="sort-precedence"></vscode-icon>
   <vscode-icon name="source-control" title="source-control"></vscode-icon>
+  <vscode-icon name="sparkle" title="sparkle"></vscode-icon>
   <vscode-icon name="split-horizontal" title="split-horizontal"></vscode-icon>
   <vscode-icon name="split-vertical" title="split-vertical"></vscode-icon>
   <vscode-icon name="squirrel" title="squirrel"></vscode-icon>
@@ -552,6 +559,10 @@ For the searchable list, see the [project page](https://microsoft.github.io/vsco
   <vscode-icon name="terminal-bash" title="terminal-bash"></vscode-icon>
   <vscode-icon name="terminal-cmd" title="terminal-cmd"></vscode-icon>
   <vscode-icon name="terminal-debian" title="terminal-debian"></vscode-icon>
+  <vscode-icon name="terminal-decoration-error" title="terminal-decoration-error"></vscode-icon>
+  <vscode-icon name="terminal-decoration-incomplete" title="terminal-decoration-incomplete"></vscode-icon>
+  <vscode-icon name="terminal-decoration-mark" title="terminal-decoration-mark"></vscode-icon>
+  <vscode-icon name="terminal-decoration-success" title="terminal-decoration-success"></vscode-icon>
   <vscode-icon name="terminal-linux" title="terminal-linux"></vscode-icon>
   <vscode-icon name="terminal-powershell" title="terminal-powershell"></vscode-icon>
   <vscode-icon name="terminal-tmux" title="terminal-tmux"></vscode-icon>

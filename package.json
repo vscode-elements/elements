@@ -194,7 +194,7 @@
     "@types/mocha": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
-    "@vscode/codicons": "^0.0.32",
+    "@vscode/codicons": "^0.0.33",
     "@web/dev-server": "^0.1.35",
     "@web/dev-server-esbuild": "^0.3.3",
     "@web/dev-server-legacy": "^1.0.1",
