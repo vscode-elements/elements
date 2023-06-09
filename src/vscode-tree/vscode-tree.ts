@@ -118,10 +118,18 @@ export class VscodeTree extends VscElement {
     return this._data;
   }
 
-  @property({type: Number}) indent = 8;
-  @property({type: Boolean}) arrows = false;
-  @property({type: Boolean}) multiline = false;
-  @property({type: Number, reflect: true}) tabindex = 0;
+  @property({type: Number})
+  indent = 8;
+
+  @property({type: Boolean})
+  arrows = false;
+
+  @property({type: Boolean})
+  multiline = false;
+
+  @property({type: Number, reflect: true})
+  tabindex = 0;
+  
   @property({type: Boolean, reflect: true, attribute: 'indent-guides'})
   indentGuides = false;
 
