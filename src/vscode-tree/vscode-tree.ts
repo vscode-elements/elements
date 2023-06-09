@@ -118,10 +118,18 @@ export class VscodeTree extends VscElement {
     return this._data;
   }
 
-  @property({type: Number}) indent = 8;
-  @property({type: Boolean}) arrows = false;
-  @property({type: Boolean}) multiline = false;
-  @property({type: Number, reflect: true}) tabindex = 0;
+  @property({type: Number})
+  indent = 8;
+
+  @property({type: Boolean})
+  arrows = false;
+
+  @property({type: Boolean})
+  multiline = false;
+
+  @property({type: Number, reflect: true})
+  tabindex = 0;
+
   @property({type: Boolean, reflect: true, attribute: 'indent-guides'})
   indentGuides = false;
 
@@ -139,7 +147,22 @@ export class VscodeTree extends VscElement {
   @state()
   private _focusedBranch: TreeItem | null = null;
 
-  private getItemByPath(path: number[]): TreeItem | null {
+  public closeAll(): void {
+    this._closeSubTreeRecursively(this.data);
+    this.requestUpdate();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('keydown', this._handleComponentKeyDownBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this._handleComponentKeyDownBound);
+  }
+
+  private _getItemByPath(path: number[]): TreeItem | null {
     let current: TreeItem[] = this._data;
     let item: TreeItem | null = null;
 
@@ -154,7 +177,7 @@ export class VscodeTree extends VscElement {
     return item;
   }
 
-  private getIconName(element: TreeItem): string | undefined {
+  private _getIconName(element: TreeItem): string | undefined {
     if (!element.icons) {
       return undefined;
     }
@@ -174,7 +197,7 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private renderTreeItem({
+  private _renderTreeItem({
     indentLevel,
     label,
     description,
@@ -227,7 +250,7 @@ export class VscodeTree extends VscElement {
               'has-active-item': hasFocusedItem || hasSelectedItem,
             })}
           >
-            ${this.renderTree(subItems, path)}
+            ${this._renderTree(subItems, path)}
           </ul>`
         : nothing;
     const descriptionMarkup = description
@@ -259,7 +282,7 @@ export class VscodeTree extends VscElement {
     `;
   }
 
-  private renderTree(tree: TreeItem[], oldPath: number[] = []) {
+  private _renderTree(tree: TreeItem[], oldPath: number[] = []) {
     const ret: TemplateResult[] = [];
 
     if (!tree) {
@@ -270,7 +293,7 @@ export class VscodeTree extends VscElement {
       const path = [...oldPath, index];
       const indentLevel = path.length - 1;
       const itemType = isBranch(element) ? 'branch' : 'leaf';
-      const iconName = this.getIconName(element);
+      const iconName = this._getIconName(element);
       const {
         label,
         description = '',
@@ -291,7 +314,7 @@ export class VscodeTree extends VscElement {
       }
 
       ret.push(
-        this.renderTreeItem({
+        this._renderTreeItem({
           indentLevel,
           label,
           description,
@@ -332,7 +355,7 @@ export class VscodeTree extends VscElement {
     let parentBranch: TreeItem | null = null;
 
     if (item.path?.length && item.path.length > 1) {
-      parentBranch = this.getItemByPath(item.path.slice(0, -1));
+      parentBranch = this._getItemByPath(item.path.slice(0, -1));
     }
 
     if (isBranch(item)) {
@@ -351,7 +374,7 @@ export class VscodeTree extends VscElement {
       }
     } else {
       if (item.path?.length && item.path.length > 1) {
-        const parentBranch = this.getItemByPath(item.path.slice(0, -1));
+        const parentBranch = this._getItemByPath(item.path.slice(0, -1));
 
         if (parentBranch) {
           this._selectedBranch = parentBranch;
@@ -363,7 +386,7 @@ export class VscodeTree extends VscElement {
       }
     }
 
-    this.emitSelectEvent(
+    this._emitSelectEvent(
       this._selectedItem as TreeItem,
       this._selectedItem.path!.join('/')
     );
@@ -388,7 +411,7 @@ export class VscodeTree extends VscElement {
     let parentBranch: TreeItem | null = null;
 
     if (item.path?.length && item.path.length > 1) {
-      parentBranch = this.getItemByPath(item.path.slice(0, -1));
+      parentBranch = this._getItemByPath(item.path.slice(0, -1));
     }
 
     if (!isBranch) {
@@ -407,17 +430,17 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private closeSubTreeRecursively(tree: TreeItem[]) {
+  private _closeSubTreeRecursively(tree: TreeItem[]) {
     tree.forEach((item) => {
       item.open = false;
 
       if (item.subItems && item.subItems.length > 0) {
-        this.closeSubTreeRecursively(item.subItems);
+        this._closeSubTreeRecursively(item.subItems);
       }
     });
   }
 
-  private emitSelectEvent(item: TreeItem, path: string) {
+  private _emitSelectEvent(item: TreeItem, path: string) {
     const {icons, label, open, value} = item;
     const detail = {
       icons,
@@ -453,7 +476,7 @@ export class VscodeTree extends VscElement {
         const newPath = [...path];
         newPath[newPath.length - 1] = currentItemIndex - 1;
 
-        const prevSibling = this.getItemByPath(newPath) as TreeItem;
+        const prevSibling = this._getItemByPath(newPath) as TreeItem;
         let newFocusedItem = prevSibling;
 
         if (prevSibling?.open && prevSibling.subItems?.length) {
@@ -467,7 +490,7 @@ export class VscodeTree extends VscElement {
           const newPath = [...path];
           newPath.pop();
 
-          this._focusItem(this.getItemByPath(newPath) as TreeItem);
+          this._focusItem(this._getItemByPath(newPath) as TreeItem);
         }
       }
     } else {
@@ -495,7 +518,7 @@ export class VscodeTree extends VscElement {
     const nextPath = [...(path as number[])];
     nextPath[nextPath.length - 1] += 1;
 
-    let nextFocusedItem = this.getItemByPath(nextPath);
+    let nextFocusedItem = this._getItemByPath(nextPath);
 
     if (nextFocusedItem) {
       this._focusItem(nextFocusedItem);
@@ -504,7 +527,7 @@ export class VscodeTree extends VscElement {
 
       if (nextPath.length > 0) {
         nextPath[nextPath.length - 1] += 1;
-        nextFocusedItem = this.getItemByPath(nextPath);
+        nextFocusedItem = this._getItemByPath(nextPath);
 
         if (nextFocusedItem) {
           this._focusItem(nextFocusedItem);
@@ -513,7 +536,7 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private onComponentClick(event: MouseEvent) {
+  private _handleClick(event: MouseEvent) {
     const composedPath = event.composedPath();
     const targetElement = composedPath.find(
       (el: EventTarget) =>
@@ -524,7 +547,7 @@ export class VscodeTree extends VscElement {
     if (targetElement) {
       const pathStr = (targetElement as HTMLLIElement).dataset.path || '';
       const path = pathStr.split('/').map((el) => Number(el));
-      const item = this.getItemByPath(path) as TreeItem;
+      const item = this._getItemByPath(path) as TreeItem;
 
       this._selectItem(item);
     } else {
@@ -536,7 +559,7 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private onComponentKeyDown(ev: KeyboardEvent) {
+  private _handleComponentKeyDown(ev: KeyboardEvent) {
     const keys: ListenedKey[] = [
       ' ',
       'ArrowDown',
@@ -570,22 +593,7 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private onComponentKeyDownBound = this.onComponentKeyDown.bind(this);
-
-  public closeAll(): void {
-    this.closeSubTreeRecursively(this.data);
-    this.requestUpdate();
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('keydown', this.onComponentKeyDownBound);
-  }
-
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener('keydown', this.onComponentKeyDownBound);
-  }
+  private _handleComponentKeyDownBound = this._handleComponentKeyDown.bind(this);
 
   render(): TemplateResult {
     const classes = classMap({
@@ -598,9 +606,9 @@ export class VscodeTree extends VscElement {
     });
 
     return html`
-      <div @click="${this.onComponentClick}" class="${classes}">
+      <div @click="${this._handleClick}" class="${classes}">
         <ul>
-          ${this.renderTree(this._data)}
+          ${this._renderTree(this._data)}
         </ul>
       </div>
     `;
