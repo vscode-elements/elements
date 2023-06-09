@@ -147,6 +147,21 @@ export class VscodeTree extends VscElement {
   @state()
   private _focusedBranch: TreeItem | null = null;
 
+  public closeAll(): void {
+    this._closeSubTreeRecursively(this.data);
+    this.requestUpdate();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('keydown', this._handleComponentKeyDownBound);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this._handleComponentKeyDownBound);
+  }
+
   private _getItemByPath(path: number[]): TreeItem | null {
     let current: TreeItem[] = this._data;
     let item: TreeItem | null = null;
@@ -579,21 +594,6 @@ export class VscodeTree extends VscElement {
   }
 
   private _handleComponentKeyDownBound = this._handleComponentKeyDown.bind(this);
-
-  public closeAll(): void {
-    this._closeSubTreeRecursively(this.data);
-    this.requestUpdate();
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('keydown', this._handleComponentKeyDownBound);
-  }
-
-  disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener('keydown', this._handleComponentKeyDownBound);
-  }
 
   render(): TemplateResult {
     const classes = classMap({
