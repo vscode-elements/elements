@@ -3,7 +3,7 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
-import '../vscode-icon';
+import '../vscode-icon/index.js';
 import styles from './vscode-tree.styles';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
@@ -197,34 +197,46 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private _renderTreeItem({
-    indentLevel,
-    label,
-    description,
-    path,
-    iconName,
-    open = false,
-    itemType,
-    selected = false,
-    focused = false,
-    hasFocusedItem = false,
-    hasSelectedItem = false,
-    subItems,
-  }: {
-    indentLevel: number;
-    label: string;
-    description: string;
-    path: number[];
-    iconName: string | undefined;
-    open: boolean;
-    itemType: ItemType;
-    selected: boolean;
-    focused: boolean;
-    hasFocusedItem: boolean;
-    hasSelectedItem: boolean;
-    subItems: TreeItem[];
-  }) {
+  private _renderArrow(item: TreeItem): TemplateResult {
+    if (!this.arrows || !isBranch(item)) {
+      return html`${nothing}`;
+    }
+
+    const {open = false} = item;
     const arrowIconName = open ? 'chevron-down' : 'chevron-right';
+
+    return html`<vscode-icon
+      name="${arrowIconName}"
+      class="icon-arrow"
+    ></vscode-icon>`;
+  }
+
+  private _renderTreeItem(
+    item: TreeItem,
+    additionalOptions: {
+      path: number[];
+      iconName: string | undefined;
+      itemType: ItemType;
+      hasFocusedItem: boolean;
+      hasSelectedItem: boolean;
+    }
+  ) {
+    const {
+      open = false,
+      label,
+      description = '',
+      selected = false,
+      focused = false,
+      subItems = [],
+    } = item;
+    const {
+      path,
+      iconName,
+      itemType,
+      hasFocusedItem = false,
+      hasSelectedItem = false,
+    } = additionalOptions;
+    const indentLevel = path.length - 1;
     const contentsClasses = ['contents'];
     const liClasses = open ? ['open'] : [];
     const indentSize = indentLevel * this.indent;
@@ -232,13 +244,7 @@ export class VscodeTree extends VscElement {
       this.arrows && itemType === 'leaf'
         ? ARROW_OUTER_WIDTH + indentSize
         : indentSize;
-    const arrowMarkup =
-      this.arrows && itemType === 'branch'
-        ? html`<vscode-icon
-            name="${arrowIconName}"
-            class="icon-arrow"
-          ></vscode-icon>`
-        : nothing;
+    const arrowMarkup = this._renderArrow(item);
     const iconMarkup = iconName
       ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
       : nothing;
@@ -289,44 +295,32 @@ export class VscodeTree extends VscElement {
       return nothing;
     }
 
-    tree.forEach((element, index) => {
+    tree.forEach((item, index) => {
       const path = [...oldPath, index];
-      const indentLevel = path.length - 1;
-      const itemType = isBranch(element) ? 'branch' : 'leaf';
-      const iconName = this._getIconName(element);
+      const itemType = isBranch(item) ? 'branch' : 'leaf';
+      const iconName = this._getIconName(item);
       const {
-        label,
-        description = '',
-        open = false,
         selected = false,
         focused = false,
         hasFocusedItem = false,
         hasSelectedItem = false,
-        subItems = [],
-      } = element;
+      } = item;
 
       if (selected) {
-        this._selectedItem = element;
+        this._selectedItem = item;
       }
 
       if (focused) {
-        this._focusedItem = element;
+        this._focusedItem = item;
       }
 
       ret.push(
-        this._renderTreeItem({
-          indentLevel,
-          label,
-          description,
+        this._renderTreeItem(item, {
           path,
-          open,
           iconName,
           itemType,
-          selected,
-          focused,
           hasFocusedItem,
           hasSelectedItem,
-          subItems,
         })
       );
     });
@@ -423,7 +417,7 @@ export class VscodeTree extends VscElement {
       if (item.open) {
         this._focusedBranch = item;
         item.hasFocusedItem = true;
-      } else if(!item.open && parentBranch) {
+      } else if (!item.open && parentBranch) {
         this._focusedBranch = parentBranch;
         parentBranch.hasFocusedItem = true;
       }
@@ -593,7 +587,8 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private _handleComponentKeyDownBound = this._handleComponentKeyDown.bind(this);
+  private _handleComponentKeyDownBound =
+    this._handleComponentKeyDown.bind(this);
 
   render(): TemplateResult {
     const classes = classMap({
