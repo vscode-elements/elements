@@ -237,7 +237,7 @@ export class VscodeTree extends VscElement {
           type: 'themeicon',
         };
       }
-    } else {
+    } else if (!item.icons) {
       return html`${nothing}`;
     }
 

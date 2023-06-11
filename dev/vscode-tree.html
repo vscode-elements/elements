@@ -270,6 +270,46 @@
     </div>
   </div>
   <div class="story">
+    <h2 class="story-title">Default icons</h2>
+    <div class="story-content">
+      <component-preview>
+        <vscode-tree id="default-icons-example" tabindex="0" indent="16" arrows></vscode-tree>
+        <script type="module">
+          const tree = document.getElementById('default-icons-example');
+
+          const icons = true;
+
+          const dataDefault = [
+            {
+              label: 'vscode-tree',
+              icons,
+              subItems: [
+                {
+                  icons,
+                  label: 'index.ts',
+                },
+                {
+                  icons,
+                  label: 'vscode-tree.styles.ts',
+                },
+                {
+                  icons,
+                  label: 'vscode-tree.test.ts',
+                },
+                {
+                  icons,
+                  label: 'vscode-tree.ts',
+                },
+              ],
+            },
+          ];
+
+          tree.data = dataDefault;
+        </script>
+      </component-preview>
+    </div>
+  </div>
+  <div class="story">
     <h2 class="story-title">Custom icons</h2>
     <div class="story-content">
       <component-preview>
