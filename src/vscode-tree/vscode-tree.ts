@@ -3,10 +3,14 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
-import '../vscode-icon';
+import '../vscode-icon/index.js';
 import styles from './vscode-tree.styles';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
+
+type IconType = 'themeicon' | 'image';
+
+type IconVariant = 'branch' | 'leaf' | 'open';
 
 interface TreeItemIconConfig {
   branch?: string;
@@ -23,7 +27,8 @@ interface TreeItem {
   focused?: boolean;
   hasSelectedItem?: boolean;
   hasFocusedItem?: boolean;
-  icons?: TreeItemIconConfig;
+  icons?: TreeItemIconConfig | boolean;
+  iconUrls?: TreeItemIconConfig;
   value?: string;
   path?: number[];
 }
@@ -31,7 +36,7 @@ interface TreeItem {
 type ItemType = 'branch' | 'leaf';
 
 interface SelectEventDetail {
-  icons: TreeItemIconConfig | undefined;
+  icons: TreeItemIconConfig | undefined | boolean;
   itemType: ItemType;
   label: string;
   open: boolean;
@@ -41,34 +46,18 @@ interface SelectEventDetail {
 
 const ARROW_OUTER_WIDTH = 18;
 
-const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
+const addPath = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
   const nextTree: TreeItem[] = [];
 
-  tree.forEach((val, index) => {
-    const {
-      label,
-      description,
-      subItems,
-      open,
-      selected,
-      focused,
-      icons,
-      value,
-    } = val;
+  tree.forEach((item, index) => {
     const path = [...prevPath, index];
     const nextItem: TreeItem = {
-      label,
-      description,
+      ...item,
       path,
-      open: !!open,
-      selected: !!selected,
-      focused: !!focused,
-      icons: {...icons},
-      value,
     };
 
-    if (subItems) {
-      nextItem.subItems = mapData(subItems, path);
+    if (item.subItems) {
+      nextItem.subItems = addPath(item.subItems, path);
     }
 
     nextTree.push(nextItem);
@@ -111,7 +100,7 @@ export class VscodeTree extends VscElement {
   set data(val: TreeItem[]) {
     const oldVal = this._data;
 
-    this._data = mapData(val);
+    this._data = addPath(val);
     this.requestUpdate('data', oldVal);
   }
   get data(): TreeItem[] {
@@ -177,54 +166,130 @@ export class VscodeTree extends VscElement {
     return item;
   }
 
-  private _getIconName(element: TreeItem): string | undefined {
-    if (!element.icons) {
-      return undefined;
-    }
+  private _renderIconVariant(variant: {value: string; type: IconType}) {
+    const {type, value} = variant;
 
-    const {icons} = element;
-    const itemType = isBranch(element) ? 'branch' : 'leaf';
-    const isOpen = element.open || false;
-
-    if (itemType === 'branch' && isOpen) {
-      return icons.open || undefined;
-    } else if (itemType === 'branch' && !isOpen) {
-      return icons.branch || undefined;
-    } else if (itemType === 'leaf') {
-      return icons.leaf || undefined;
+    if (type === 'themeicon') {
+      return html`<vscode-icon name=${value} class="theme-icon"></vscode-icon>`;
     } else {
-      return undefined;
+      return html`<span
+        class="image-icon"
+        style="background-image: url(${value});"
+      ></span>`;
     }
   }
 
-  private _renderTreeItem({
-    indentLevel,
-    label,
-    description,
-    path,
-    iconName,
-    open = false,
-    itemType,
-    selected = false,
-    focused = false,
-    hasFocusedItem = false,
-    hasSelectedItem = false,
-    subItems,
-  }: {
-    indentLevel: number;
-    label: string;
-    description: string;
-    path: number[];
-    iconName: string | undefined;
-    open: boolean;
-    itemType: ItemType;
-    selected: boolean;
-    focused: boolean;
-    hasFocusedItem: boolean;
-    hasSelectedItem: boolean;
-    subItems: TreeItem[];
-  }) {
+  private _renderIcon(item: TreeItem): TemplateResult {
+    const iconVariants: Record<IconVariant, {value: string; type: IconType}> = {
+      branch: {
+        value: 'folder',
+        type: 'themeicon',
+      },
+      open: {
+        value: 'folder-opened',
+        type: 'themeicon',
+      },
+      leaf: {
+        value: 'file',
+        type: 'themeicon',
+      },
+    };
+
+    if (item.iconUrls) {
+      if (item.iconUrls.branch) {
+        iconVariants.branch = {
+          value: item.iconUrls.branch,
+          type: 'image',
+        };
+      }
+
+      if (item.iconUrls.leaf) {
+        iconVariants.leaf = {
+          value: item.iconUrls.leaf,
+          type: 'image',
+        };
+      }
+
+      if (item.iconUrls.open) {
+        iconVariants.open = {
+          value: item.iconUrls.open,
+          type: 'image',
+        };
+      }
+    } else if (typeof item.icons === 'object') {
+      if (item.icons.branch) {
+        iconVariants.branch = {
+          value: item.icons.branch,
+          type: 'themeicon',
+        };
+      }
+
+      if (item.icons.leaf) {
+        iconVariants.leaf = {
+          value: item.icons.leaf,
+          type: 'themeicon',
+        };
+      }
+
+      if (item.icons.open) {
+        iconVariants.open = {
+          value: item.icons.open,
+          type: 'themeicon',
+        };
+      }
+    } else if (!item.icons) {
+      return html`${nothing}`;
+    }
+
+    if (isBranch(item)) {
+      if (item.open) {
+        return this._renderIconVariant(iconVariants.open);
+      } else {
+        return this._renderIconVariant(iconVariants.branch);
+      }
+    } else {
+      return this._renderIconVariant(iconVariants.leaf);
+    }
+  }
+
+  private _renderArrow(item: TreeItem): TemplateResult {
+    if (!this.arrows || !isBranch(item)) {
+      return html`${nothing}`;
+    }
+
+    const {open = false} = item;
     const arrowIconName = open ? 'chevron-down' : 'chevron-right';
+
+    return html`<vscode-icon
+      name="${arrowIconName}"
+      class="icon-arrow"
+    ></vscode-icon>`;
+  }
+
+  private _renderTreeItem(
+    item: TreeItem,
+    additionalOptions: {
+      path: number[];
+      itemType: ItemType;
+      hasFocusedItem: boolean;
+      hasSelectedItem: boolean;
+    }
+  ) {
+    const {
+      open = false,
+      label,
+      description = '',
+      selected = false,
+      focused = false,
+      subItems = [],
+    } = item;
+    const {
+      path,
+      itemType,
+      hasFocusedItem = false,
+      hasSelectedItem = false,
+    } = additionalOptions;
+    const indentLevel = path.length - 1;
     const contentsClasses = ['contents'];
     const liClasses = open ? ['open'] : [];
     const indentSize = indentLevel * this.indent;
@@ -232,16 +297,8 @@ export class VscodeTree extends VscElement {
       this.arrows && itemType === 'leaf'
         ? ARROW_OUTER_WIDTH + indentSize
         : indentSize;
-    const arrowMarkup =
-      this.arrows && itemType === 'branch'
-        ? html`<vscode-icon
-            name="${arrowIconName}"
-            class="icon-arrow"
-          ></vscode-icon>`
-        : nothing;
-    const iconMarkup = iconName
-      ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
-      : nothing;
+    const arrowMarkup = this._renderArrow(item);
+    const iconMarkup = this._renderIcon(item);
     const subTreeMarkup =
       open && itemType === 'branch'
         ? html`<ul
@@ -289,44 +346,30 @@ export class VscodeTree extends VscElement {
       return nothing;
     }
 
-    tree.forEach((element, index) => {
+    tree.forEach((item, index) => {
       const path = [...oldPath, index];
-      const indentLevel = path.length - 1;
-      const itemType = isBranch(element) ? 'branch' : 'leaf';
-      const iconName = this._getIconName(element);
+      const itemType = isBranch(item) ? 'branch' : 'leaf';
       const {
-        label,
-        description = '',
-        open = false,
         selected = false,
         focused = false,
         hasFocusedItem = false,
         hasSelectedItem = false,
-        subItems = [],
-      } = element;
+      } = item;
 
       if (selected) {
-        this._selectedItem = element;
+        this._selectedItem = item;
       }
 
       if (focused) {
-        this._focusedItem = element;
+        this._focusedItem = item;
       }
 
       ret.push(
-        this._renderTreeItem({
-          indentLevel,
-          label,
-          description,
+        this._renderTreeItem(item, {
           path,
-          open,
-          iconName,
           itemType,
-          selected,
-          focused,
           hasFocusedItem,
           hasSelectedItem,
-          subItems,
         })
       );
     });
@@ -423,7 +466,7 @@ export class VscodeTree extends VscElement {
       if (item.open) {
         this._focusedBranch = item;
         item.hasFocusedItem = true;
-      } else if(!item.open && parentBranch) {
+      } else if (!item.open && parentBranch) {
         this._focusedBranch = parentBranch;
         parentBranch.hasFocusedItem = true;
       }
@@ -593,7 +636,8 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private _handleComponentKeyDownBound = this._handleComponentKeyDown.bind(this);
+  private _handleComponentKeyDownBound =
+    this._handleComponentKeyDown.bind(this);
 
   render(): TemplateResult {
     const classes = classMap({

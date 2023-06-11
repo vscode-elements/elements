@@ -137,17 +137,29 @@ const styles: CSSResultGroup = [
       margin: 3px 2px 3px 0;
     }
 
-    .label-icon {
+    .theme-icon {
       display: block;
+      flex-shrink: 0;
       margin-right: 6px;
     }
 
-    :host(:focus) .contents.selected.focused .label-icon,
-    :host(:focus) .contents.selected .label-icon {
+    .image-icon {
+      background-repeat: no-repeat;
+      background-position: 0 center;
+      background-size: 16px;
+      display: block;
+      flex-shrink: 0;
+      margin-right: 6px;
+      height: 22px;
+      width: 16px;
+    }
+
+    :host(:focus) .contents.selected.focused .theme-icon,
+    :host(:focus) .contents.selected .theme-icon {
       color: var(--active-selection-foreground);
     }
 
-    .multi .contents .label-icon {
+    .multi .contents .theme-icon {
       margin-top: 3px;
     }
 
