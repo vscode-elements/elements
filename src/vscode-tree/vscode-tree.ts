@@ -8,6 +8,10 @@ import styles from './vscode-tree.styles';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
+type IconType = 'themeicon' | 'image';
+
+type IconVariant = 'branch' | 'leaf' | 'open';
+
 interface TreeItemIconConfig {
   branch?: string;
   open?: string;
@@ -23,7 +27,8 @@ interface TreeItem {
   focused?: boolean;
   hasSelectedItem?: boolean;
   hasFocusedItem?: boolean;
-  icons?: TreeItemIconConfig;
+  icons?: TreeItemIconConfig | boolean;
+  iconUrls?: TreeItemIconConfig;
   value?: string;
   path?: number[];
 }
@@ -31,7 +36,7 @@ interface TreeItem {
 type ItemType = 'branch' | 'leaf';
 
 interface SelectEventDetail {
-  icons: TreeItemIconConfig | undefined;
+  icons: TreeItemIconConfig | undefined | boolean;
   itemType: ItemType;
   label: string;
   open: boolean;
@@ -41,34 +46,18 @@ interface SelectEventDetail {
 
 const ARROW_OUTER_WIDTH = 18;
 
-const mapData = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
+const addPath = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
   const nextTree: TreeItem[] = [];
 
-  tree.forEach((val, index) => {
-    const {
-      label,
-      description,
-      subItems,
-      open,
-      selected,
-      focused,
-      icons,
-      value,
-    } = val;
+  tree.forEach((item, index) => {
     const path = [...prevPath, index];
     const nextItem: TreeItem = {
-      label,
-      description,
+      ...item,
       path,
-      open: !!open,
-      selected: !!selected,
-      focused: !!focused,
-      icons: {...icons},
-      value,
     };
 
-    if (subItems) {
-      nextItem.subItems = mapData(subItems, path);
+    if (item.subItems) {
+      nextItem.subItems = addPath(item.subItems, path);
     }
 
     nextTree.push(nextItem);
@@ -111,7 +100,7 @@ export class VscodeTree extends VscElement {
   set data(val: TreeItem[]) {
     const oldVal = this._data;
 
-    this._data = mapData(val);
+    this._data = addPath(val);
     this.requestUpdate('data', oldVal);
   }
   get data(): TreeItem[] {
@@ -177,23 +166,89 @@ export class VscodeTree extends VscElement {
     return item;
   }
 
-  private _getIconName(element: TreeItem): string | undefined {
-    if (!element.icons) {
-      return undefined;
+  private _renderIconVariant(variant: {value: string; type: IconType}) {
+    const {type, value} = variant;
+
+    if (type === 'themeicon') {
+      return html`<vscode-icon name=${value} class="theme-icon"></vscode-icon>`;
+    } else {
+      return html`<span
+        class="image-icon"
+        style="background-image: url(${value});"
+      ></span>`;
+    }
+  }
+
+  private _renderIcon(item: TreeItem): TemplateResult {
+    const iconVariants: Record<IconVariant, {value: string; type: IconType}> = {
+      branch: {
+        value: 'folder',
+        type: 'themeicon',
+      },
+      open: {
+        value: 'folder-opened',
+        type: 'themeicon',
+      },
+      leaf: {
+        value: 'file',
+        type: 'themeicon',
+      },
+    };
+
+    if (item.iconUrls) {
+      if (item.iconUrls.branch) {
+        iconVariants.branch = {
+          value: item.iconUrls.branch,
+          type: 'image',
+        };
+      }
+
+      if (item.iconUrls.leaf) {
+        iconVariants.leaf = {
+          value: item.iconUrls.leaf,
+          type: 'image',
+        };
+      }
+
+      if (item.iconUrls.open) {
+        iconVariants.open = {
+          value: item.iconUrls.open,
+          type: 'image',
+        };
+      }
+    } else if (typeof item.icons === 'object') {
+      if (item.icons.branch) {
+        iconVariants.branch = {
+          value: item.icons.branch,
+          type: 'themeicon',
+        };
+      }
+
+      if (item.icons.leaf) {
+        iconVariants.leaf = {
+          value: item.icons.leaf,
+          type: 'themeicon',
+        };
+      }
+
+      if (item.icons.open) {
+        iconVariants.open = {
+          value: item.icons.open,
+          type: 'themeicon',
+        };
+      }
+    } else {
+      return html`${nothing}`;
     }
 
-    const {icons} = element;
-    const itemType = isBranch(element) ? 'branch' : 'leaf';
-    const isOpen = element.open || false;
-
-    if (itemType === 'branch' && isOpen) {
-      return icons.open || undefined;
-    } else if (itemType === 'branch' && !isOpen) {
-      return icons.branch || undefined;
-    } else if (itemType === 'leaf') {
-      return icons.leaf || undefined;
+    if (isBranch(item)) {
+      if (item.open) {
+        return this._renderIconVariant(iconVariants.open);
+      } else {
+        return this._renderIconVariant(iconVariants.branch);
+      }
     } else {
-      return undefined;
+      return this._renderIconVariant(iconVariants.leaf);
     }
   }
 
@@ -215,7 +270,6 @@ export class VscodeTree extends VscElement {
     item: TreeItem,
     additionalOptions: {
       path: number[];
-      iconName: string | undefined;
       itemType: ItemType;
       hasFocusedItem: boolean;
       hasSelectedItem: boolean;
@@ -231,7 +285,6 @@ export class VscodeTree extends VscElement {
     } = item;
     const {
       path,
-      iconName,
       itemType,
       hasFocusedItem = false,
       hasSelectedItem = false,
@@ -245,9 +298,7 @@ export class VscodeTree extends VscElement {
         ? ARROW_OUTER_WIDTH + indentSize
         : indentSize;
     const arrowMarkup = this._renderArrow(item);
-    const iconMarkup = iconName
-      ? html`<vscode-icon name="${iconName}" class="label-icon"></vscode-icon>`
-      : nothing;
+    const iconMarkup = this._renderIcon(item);
     const subTreeMarkup =
       open && itemType === 'branch'
         ? html`<ul
@@ -298,7 +349,6 @@ export class VscodeTree extends VscElement {
     tree.forEach((item, index) => {
       const path = [...oldPath, index];
       const itemType = isBranch(item) ? 'branch' : 'leaf';
-      const iconName = this._getIconName(item);
       const {
         selected = false,
         focused = false,
@@ -317,7 +367,6 @@ export class VscodeTree extends VscElement {
       ret.push(
         this._renderTreeItem(item, {
           path,
-          iconName,
           itemType,
           hasFocusedItem,
           hasSelectedItem,
