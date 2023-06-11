@@ -168,6 +168,10 @@ export class VscodeTree extends VscElement {
     return item;
   }
 
+  private _handleActionClick(ev: MouseEvent) {
+    ev.stopPropagation();
+  }
+
   private _renderIconVariant(variant: {value: string; type: IconType}) {
     const {type, value} = variant;
 
@@ -339,6 +343,14 @@ export class VscodeTree extends VscElement {
           ${arrowMarkup}${iconMarkup}<span class="text-content"
             >${label}${descriptionMarkup}</span
           >
+          <div class="actions">
+            <vscode-icon
+              name="wrench"
+              action-icon
+              @click=${this._handleActionClick}
+              class="action-icon"
+            ></vscode-icon>
+          </div>
         </div>
         ${subTreeMarkup}
       </li>
