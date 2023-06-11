@@ -44,7 +44,9 @@ interface SelectEventDetail {
   path: string; // ex.: 0/0/1
 }
 
-const ARROW_OUTER_WIDTH = 18;
+const ARROW_OUTER_WIDTH = 30;
+const ARROW_ICON_WIDTH = 16;
+const CONTENT_PADDING = 3;
 
 const addPath = (tree: TreeItem[], prevPath: number[] = []): TreeItem[] => {
   const nextTree: TreeItem[] = [];
@@ -260,10 +262,11 @@ export class VscodeTree extends VscElement {
     const {open = false} = item;
     const arrowIconName = open ? 'chevron-down' : 'chevron-right';
 
-    return html`<vscode-icon
-      name="${arrowIconName}"
-      class="icon-arrow"
-    ></vscode-icon>`;
+    return html`
+      <div class="arrow-container">
+        <vscode-icon name="${arrowIconName}" class="icon-arrow"></vscode-icon>
+      </div>
+    `;
   }
 
   private _renderTreeItem(
@@ -299,10 +302,13 @@ export class VscodeTree extends VscElement {
         : indentSize;
     const arrowMarkup = this._renderArrow(item);
     const iconMarkup = this._renderIcon(item);
+    const indentGuidePos = this.arrows
+      ? indentSize + ARROW_ICON_WIDTH
+      : indentSize + CONTENT_PADDING;
     const subTreeMarkup =
       open && itemType === 'branch'
         ? html`<ul
-            style="--indent-guide-pos: ${indentSize + 8 + 4}px"
+            style="--indent-guide-pos: ${indentGuidePos}px"
             class=${classMap({
               'has-active-item': hasFocusedItem || hasSelectedItem,
             })}
@@ -328,7 +334,7 @@ export class VscodeTree extends VscElement {
       <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
         <div
           class="${contentsClasses.join(' ')}"
-          style="${styleMap({paddingLeft: `${padLeft + 8}px`})}"
+          style="${styleMap({paddingLeft: `${padLeft + CONTENT_PADDING}px`})}"
         >
           ${arrowMarkup}${iconMarkup}<span class="text-content"
             >${label}${descriptionMarkup}</span

@@ -20,7 +20,7 @@
         <vscode-tree id="tree-1" tabindex="0" style="
               background-color: var(--vscode-sideBar-background);
               min-height: 400px;
-            " arrows indent="8" indent-guides></vscode-tree>
+            " indent="8" indent-guides></vscode-tree>
         <script>
           document.addEventListener('DOMContentLoaded', () => {
             const tree = document.getElementById('tree-1');
@@ -193,7 +193,7 @@
     <h2 class="story-title">Arrows</h2>
     <div class="story-content">
       <component-preview>
-        <vscode-tree id="tree-3" tabindex="0" indent="16" arrows></vscode-tree>
+        <vscode-tree id="tree-3" tabindex="0" indent="16" arrows indent-guides></vscode-tree>
         <script>
           (function () {
             const tree = document.getElementById('tree-3');
@@ -269,11 +269,12 @@
       </component-preview>
     </div>
   </div>
+
   <div class="story">
     <h2 class="story-title">Default icons</h2>
     <div class="story-content">
       <component-preview>
-        <vscode-tree id="default-icons-example" tabindex="0" indent="16" arrows></vscode-tree>
+        <vscode-tree id="default-icons-example" tabindex="0" indent="8" arrows></vscode-tree>
         <script type="module">
           const tree = document.getElementById('default-icons-example');
 
@@ -309,11 +310,12 @@
       </component-preview>
     </div>
   </div>
+
   <div class="story">
     <h2 class="story-title">Custom icons</h2>
     <div class="story-content">
       <component-preview>
-        <vscode-tree id="custom-icons-example" tabindex="0" indent="16" arrows></vscode-tree>
+        <vscode-tree id="custom-icons-example" tabindex="0" indent="8" indent-guides></vscode-tree>
         <script type="module">
           const tree = document.getElementById('custom-icons-example');
 
