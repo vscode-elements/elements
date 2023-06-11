@@ -4,7 +4,11 @@
 
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
-		"runem.lit-plugin"
+		"runem.lit-plugin",
+		"editorconfig.editorconfig",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"google.wireit"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [

@@ -3,6 +3,7 @@
 /test/
 .wireit/
 docs/
+.vscode/settings.json
 
 /dist/
 /coverage/
