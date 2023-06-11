@@ -103,6 +103,7 @@ const styles: CSSResultGroup = [
       font-family: var(--font-family);
       font-size: var(--font-size);
       font-weight: var(--font-weight);
+      padding-right: 12px;
     }
 
     .multi .contents {
@@ -131,10 +132,19 @@ const styles: CSSResultGroup = [
       color: var(--active-selection-foreground);
     }
 
+    .arrow-container {
+      align-items: center;
+      display: flex;
+      height: 22px;
+      justify-content: center;
+      padding-left: 8px;
+      padding-right: 6px;
+      width: 16px;
+    }
+
     .icon-arrow {
       color: currentColor;
       display: block;
-      margin: 3px 2px 3px 0;
     }
 
     .theme-icon {
