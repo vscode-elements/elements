@@ -198,8 +198,10 @@ const styles: CSSResultGroup = [
       display: none;
     }
 
+    .contents.selected > .actions,
+    .contents.focused > .actions,
     .contents:hover > .actions {
-      display: block;
+      display: flex;
     }
 
     :host(:focus) .contents.selected.focused .action-icon,

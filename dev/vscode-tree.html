@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
   <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
   <script src="../dev-assets/component-preview.js" type="module"></script>
+  <script type="module" src="../dist/vscode-icon/index.js"></script>
   <script type="module" src="../dist/vscode-tree/index.js"></script>
 </head>
 
@@ -354,6 +355,76 @@
           ];
 
           tree.data = data;
+        </script>
+      </component-preview>
+    </div>
+  </div>
+
+  <div class="story">
+    <h2 class="story-title">Actions</h2>
+    <div class="story-content">
+      <component-preview>
+        <vscode-tree id="actions-example"></vscode-tree>
+        <script type="module">
+          (() => {
+            const tree = document.getElementById('actions-example');
+
+            const icons = true;
+
+            const actions = [
+              {
+                icon: 'edit',
+                command: 'rename',
+                tooltip: 'Rename',
+              },
+              {
+                icon: 'trash',
+                command: 'delete',
+                tooltip: 'Delete',
+              }
+            ];
+
+            const data = [
+              {
+                label: 'vscode-tree',
+                icons,
+                actions,
+                value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree',
+                subItems: [
+                  {
+                    icons,
+                    actions,
+                    label: 'index.ts',
+                    value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
+                  },
+                  {
+                    icons,
+                    actions,
+                    label: 'vscode-tree.styles.ts',
+                    value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.styles.ts',
+                  },
+                  {
+                    icons,
+                    actions,
+                    label: 'vscode-tree.test.ts',
+                    value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.test.ts',
+                  },
+                  {
+                    icons,
+                    actions,
+                    label: 'vscode-tree.ts',
+                    value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.ts',
+                  },
+                ],
+              },
+            ];
+
+            tree.data = data;
+
+            tree.addEventListener('vsc-run-command', (ev) => {
+              console.log(ev.detail);
+            });
+          })()
         </script>
       </component-preview>
     </div>
