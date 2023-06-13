@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - Inactivate interactive elements during scroll in **Scrollable**
+- The color of the selected item focus border has been refined in **Tree**
 
 ## [0.13.2] - 2023-05-26
 
