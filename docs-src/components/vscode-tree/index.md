@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ## Actions
 
 Actions are clickable icons in the tree item. When an action icon is clicked, the `vsc-run-command`
-event will be dispatched. The event data contains the command name, the value of the tree item, and 
+event will be dispatched. The event data contains the command name, the value of the tree item, and
 the tree item itself.
 
 <component-preview>
@@ -360,7 +360,7 @@ const actions = [
     icon: 'trash',
     command: 'delete',
     tooltip: 'Delete',
-  }
+  },
 ];
 
 const data = [
@@ -374,25 +374,29 @@ const data = [
         icons,
         actions,
         label: 'index.ts',
-        value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
+        value:
+          'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
       },
       {
         icons,
         actions,
         label: 'vscode-tree.styles.ts',
-        value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.styles.ts',
+        value:
+          'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.styles.ts',
       },
       {
         icons,
         actions,
         label: 'vscode-tree.test.ts',
-        value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.test.ts',
+        value:
+          'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.test.ts',
       },
       {
         icons,
         actions,
         label: 'vscode-tree.ts',
-        value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.ts',
+        value:
+          'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.ts',
       },
     ],
   },
@@ -404,4 +408,5 @@ tree.addEventListener('vsc-run-command', (ev) => {
   console.log(ev.detail);
 });
 ```
+
 </details>

@@ -47,12 +47,20 @@ interface TreeItem {
 
 type ItemType = 'branch' | 'leaf';
 
+/** Event payload of the `vsc-select` event. */
 interface SelectEventDetail {
+  /** Icon configuration of the clicked item */
   icons: TreeItemIconConfig | undefined | boolean;
+  /** Is item type branch or leaf. */
   itemType: ItemType;
+  /** The visible label of the item. */
   label: string;
-  open: boolean;
+  /** The value associated to the item. */
   value: string;
+  /** Is the item opened if it's a branch. */
+  open: boolean;
+  /** Path represents the item place in the tree. For example 1/2/3 means:
+   * `data[1].subItems[2].subItems[3]` */
   path: string; // ex.: 0/0/1
 }
 
