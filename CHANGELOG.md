@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   collapsible is collapsed.
 - Added `description` property to **Collapsible**.
 - Added `iconUrls` property to the tree item data to set custom icons in the **Tree**.
+- Added **Tree** actions. See the [documentation](https://bendera.github.io/vscode-webview-elements/components/vscode-tree/#actions) for the examples.
 
 ### Changed
 

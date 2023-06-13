@@ -95,6 +95,7 @@ const isBranch = (item: TreeItem) => {
 /**
  * @fires vsc-select Dispatched when an item is selected. The event data shape is described in the
  * `SelectEventDetail` interface.
+ * @fires vsc-run-command Dispatched when an action icon is clicked.
  *
  * @cssprop [--focus-border=var(--vscode-list-focusOutline)]
  * @cssprop [--font-family=var(--vscode-font-family)]
