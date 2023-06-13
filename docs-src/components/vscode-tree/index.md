@@ -6,8 +6,12 @@ component: vscode-tree
 toc:
   - label: Basic example
     path: basic-example
+  - label: Custom icons
+    path: custom-icons
   - label: Flat list
     path: flat-list
+  - label: Actions
+    path: actions
 ---
 
 # Tree
@@ -152,6 +156,52 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 </details>
+
+## Custom icons
+
+<component-preview>
+  <vscode-tree id="custom-icons-example" indent-guides arrows></vscode-tree>
+</component-preview>
+
+<script type="module">
+  const tree = document.getElementById('custom-icons-example');
+
+  const iconUrls = {
+    branch: '/dev-assets/icons/folder.svg',
+    open: '/dev-assets/icons/folder.expanded.svg',
+    leaf: '/dev-assets/icons/typescript.svg',
+  }
+
+  const data = [
+    {
+      label: 'vscode-tree',
+      iconUrls,
+      subItems: [
+        {
+          iconUrls,
+          label: 'index.ts',
+        },
+        {
+          iconUrls,
+          label: 'vscode-tree.styles.ts',
+        },
+        {
+          iconUrls: {
+            ...iconUrls,
+            leaf: '/dev-assets/icons/typescript-test.svg',
+          },
+          label: 'vscode-tree.test.ts',
+        },
+        {
+          iconUrls,
+          label: 'vscode-tree.ts',
+        },
+      ],
+    },
+  ];
+
+  tree.data = data;
+</script>
 
 ## Flat list
 
