@@ -47,6 +47,9 @@ import '@bendera/vscode-webview-elements/dist/vscode-collapsible';
   </vscode-collapsible>
 </component-preview>
 
+<details>
+  <summary>Code</summary>
+
 ### CSS
 
 ```css
@@ -73,6 +76,8 @@ vscode-collapsible p {
   </div>
 </vscode-collapsible>
 ```
+
+</details>
 
 ## Actions
 
@@ -137,6 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+<details>
+  <summary>Code</summary>
 
 ### CSS
 
@@ -205,6 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
+</details>
+
 ## Decorations
 
 Elements in the decorations slot are always visible
@@ -220,6 +230,9 @@ Elements in the decorations slot are always visible
     </div>
   </vscode-collapsible>
 </component-preview>
+
+<details>
+  <summary>Code</summary>
 
 ### HTML
 
@@ -266,6 +279,8 @@ Less prominent text in the header
   </div>
 </vscode-collapsible>
 ```
+
+</details>
 
 ## A complex example using Tree and Scrollable components
 
@@ -322,6 +337,9 @@ Less prominent text in the header
     {icons, label: 'File Saved'},
   ];
 </script>
+
+<details>
+  <summary>Code</summary>
 
 ### HTML
 
@@ -403,3 +421,5 @@ tree.data = [
   {icons, label: 'File Saved'},
 ];
 ```
+
+</details>
