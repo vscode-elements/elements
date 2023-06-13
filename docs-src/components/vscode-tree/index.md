@@ -203,6 +203,59 @@ document.addEventListener('DOMContentLoaded', () => {
   tree.data = data;
 </script>
 
+<details>
+  <summary>Code</summary>
+
+### HTML
+
+```html
+<vscode-tree id="custom-icons-example" indent-guides arrows></vscode-tree>
+```
+
+### JavaScript
+
+```javascript
+const tree = document.getElementById('custom-icons-example');
+
+const iconUrls = {
+  branch: '/dev-assets/icons/folder.svg',
+  open: '/dev-assets/icons/folder.expanded.svg',
+  leaf: '/dev-assets/icons/typescript.svg',
+}
+
+const data = [
+  {
+    label: 'vscode-tree',
+    iconUrls,
+    subItems: [
+      {
+        iconUrls,
+        label: 'index.ts',
+      },
+      {
+        iconUrls,
+        label: 'vscode-tree.styles.ts',
+      },
+      {
+        iconUrls: {
+          ...iconUrls,
+          leaf: '/dev-assets/icons/typescript-test.svg',
+        },
+        label: 'vscode-tree.test.ts',
+      },
+      {
+        iconUrls,
+        label: 'vscode-tree.ts',
+      },
+    ],
+  },
+];
+
+tree.data = data;
+```
+
+</details>
+
 ## Flat list
 
 <script>

@@ -130,6 +130,7 @@ const styles: CSSResultGroup = [
     :host(:focus) .contents.selected {
       background-color: var(--active-selection-background);
       color: var(--active-selection-foreground);
+      outline-color: var(--vscode-list-focusAndSelectionOutline);
     }
 
     .arrow-container {

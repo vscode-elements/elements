@@ -399,7 +399,7 @@ export class VscodeTree extends VscElement {
     const subTreeMarkup =
       open && itemType === 'branch'
         ? html`<ul
-            style="--indent-guide-pos: ${indentGuidePos}px"
+            style=${styleMap({'--indent-guide-pos': `${indentGuidePos}px`})}
             class=${classMap({
               'has-active-item': hasFocusedItem || hasSelectedItem,
             })}

@@ -35,6 +35,7 @@ type VscodeThemeVariableName =
   | '--vscode-list-activeSelectionBackground'
   | '--vscode-list-activeSelectionForeground'
   | '--vscode-list-inactiveSelectionBackground'
+  | '--vscode-list-focusAndSelectionOutline'
   | '--vscode-list-focusOutline'
   | '--vscode-list-hoverBackground'
   | '--vscode-list-hoverForeground'
@@ -115,6 +116,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-list-activeSelectionBackground': '#04395e',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#007fd4',
+    '--vscode-list-focusAndSelectionOutline': '#007fd4',
     '--vscode-list-hoverBackground': '#2a2d2e',
     '--vscode-list-hoverForeground': '#cccccc',
     '--vscode-list-inactiveSelectionBackground': '#37373d',
@@ -190,6 +192,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-list-activeSelectionBackground': '#0060c0',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#0090f1',
+    '--vscode-list-focusAndSelectionOutline': '#90c2f9',
     '--vscode-list-hoverBackground': '#e8e8e8',
     '--vscode-list-hoverForeground': '#616161',
     '--vscode-list-inactiveSelectionBackground': '#e4e6f1',
@@ -265,6 +268,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-list-activeSelectionBackground': '#000000',
     '--vscode-list-activeSelectionForeground': '#ffffff',
     '--vscode-list-focusOutline': '#f38518',
+    '--vscode-list-focusAndSelectionOutline': '#f38518',
     '--vscode-list-hoverBackground': 'rgba(255, 255, 255, 0.1)',
     '--vscode-list-hoverForeground': '#ffffff',
     '--vscode-list-inactiveSelectionBackground': 'transparent',
@@ -328,6 +332,7 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-editor-foreground': '#292929',
     '--vscode-editor-inlineValuesForeground': 'rgba(0, 0, 0, 0.5)',
     '--vscode-focusBorder': '#006bbd',
+    '--vscode-list-focusAndSelectionOutline': '#006bbd',
     '--vscode-font-family': '"Segoe WPC", "Segoe UI", sans-serif',
     '--vscode-font-size': '13px',
     '--vscode-font-weight': 'normal',
