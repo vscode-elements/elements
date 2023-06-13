@@ -193,6 +193,21 @@ const styles: CSSResultGroup = [
       opacity: 0.95;
       white-space: pre;
     }
+
+    .actions {
+      display: none;
+    }
+
+    .contents.selected > .actions,
+    .contents.focused > .actions,
+    .contents:hover > .actions {
+      display: flex;
+    }
+
+    :host(:focus) .contents.selected.focused .action-icon,
+    :host(:focus) .contents.selected .action-icon {
+      color: var(--active-selection-foreground);
+    }
   `,
 ];
 

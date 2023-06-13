@@ -12,12 +12,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Added `description` property to **Tree** items
 - Added `decorators` slot to the **Collapsible** header. Decorators are always visible even if the
   collapsible is collapsed.
+- Added `description` property to **Collapsible**.
 - Added `iconUrls` property to the tree item data to set custom icons in the **Tree**.
+- Added **Tree** actions. See the [documentation](https://bendera.github.io/vscode-webview-elements/components/vscode-tree/#actions) for the examples.
 
 ### Changed
 
 - In the tree item configuration, the `icons` property value can also be a boolean. If it's true,
-  the default theme icons are visible. `file` for the leaf items, `folder` for the branch items, 
+  the default theme icons are visible: `file` for the leaf items, `folder` for the branch items, 
   `folder-opened` for the opened branch items. See the [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html)
   project for the icon references. If it's false, the icons won't be visible at all.
 

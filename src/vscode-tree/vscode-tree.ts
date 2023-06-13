@@ -1,9 +1,11 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
 import '../vscode-icon/index.js';
+import {VscodeIcon} from '../vscode-icon/index.js';
 import styles from './vscode-tree.styles';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
@@ -18,10 +20,21 @@ interface TreeItemIconConfig {
   leaf?: string;
 }
 
+/** Action icon configuration. */
+interface TreeItemAction {
+  /** A unique name that identifies the clicked action item. */
+  actionId: string;
+  /** A Codicon name. */
+  icon: string;
+  /** Text description of the action. */
+  tooltip?: string;
+}
+
 interface TreeItem {
   label: string;
   description?: string;
   subItems?: TreeItem[];
+  actions?: TreeItemAction[];
   open?: boolean;
   selected?: boolean;
   focused?: boolean;
@@ -35,12 +48,20 @@ interface TreeItem {
 
 type ItemType = 'branch' | 'leaf';
 
+/** Event payload of the `vsc-select` event. */
 interface SelectEventDetail {
+  /** Icon configuration of the clicked item */
   icons: TreeItemIconConfig | undefined | boolean;
+  /** Is item type branch or leaf. */
   itemType: ItemType;
+  /** The visible label of the item. */
   label: string;
-  open: boolean;
+  /** The value associated to the item. */
   value: string;
+  /** Is the item opened if it's a branch. */
+  open: boolean;
+  /** Path represents the item place in the tree. For example 1/2/3 means:
+   * `data[1].subItems[2].subItems[3]` */
   path: string; // ex.: 0/0/1
 }
 
@@ -83,6 +104,7 @@ const isBranch = (item: TreeItem) => {
 /**
  * @fires vsc-select Dispatched when an item is selected. The event data shape is described in the
  * `SelectEventDetail` interface.
+ * @fires vsc-run-action Dispatched when an action icon is clicked.
  *
  * @cssprop [--focus-border=var(--vscode-list-focusOutline)]
  * @cssprop [--font-family=var(--vscode-font-family)]
@@ -166,6 +188,47 @@ export class VscodeTree extends VscElement {
     });
 
     return item;
+  }
+
+  private _handleActionClick(ev: MouseEvent) {
+    ev.stopPropagation();
+
+    const el = ev.target as VscodeIcon;
+    const itemPath = el.dataset.itemPath;
+    const actionIndex = el.dataset.index;
+    let item: TreeItem | null = null;
+    let actionId = '';
+    let value = '';
+
+    if (itemPath) {
+      const path = itemPath.split('/').map((p) => Number(p));
+      item = this._getItemByPath(path);
+
+      if (item?.actions) {
+        const index = Number(actionIndex);
+
+        if (item.actions[index]) {
+          actionId = item.actions[index].actionId;
+        }
+      }
+
+      if (item?.value) {
+        value = item.value;
+      }
+    }
+
+    this.dispatchEvent(
+      new CustomEvent<{actionId: string; item: TreeItem | null; value: string}>(
+        'vsc-run-action',
+        {
+          detail: {
+            actionId,
+            item,
+            value,
+          },
+        }
+      )
+    );
   }
 
   private _renderIconVariant(variant: {value: string; type: IconType}) {
@@ -269,6 +332,34 @@ export class VscodeTree extends VscElement {
     `;
   }
 
+  private _renderActions(item: TreeItem): TemplateResult {
+    const actionButtons: TemplateResult[] = [];
+
+    if (item.actions && Array.isArray(item.actions)) {
+      item.actions.forEach((action, index) => {
+        if (action.icon) {
+          const icon = html`<vscode-icon
+            name=${action.icon}
+            action-icon
+            title=${ifDefined(action.tooltip)}
+            data-item-path=${item.path?.join('/')}
+            data-index=${index}
+            class="action-icon"
+            @click=${this._handleActionClick}
+          ></vscode-icon>`;
+
+          actionButtons.push(icon);
+        }
+      });
+    }
+
+    if (actionButtons.length > 0) {
+      return html`<div class="actions">${actionButtons}</div>`;
+    } else {
+      return html`${nothing}`;
+    }
+  }
+
   private _renderTreeItem(
     item: TreeItem,
     additionalOptions: {
@@ -319,6 +410,7 @@ export class VscodeTree extends VscElement {
     const descriptionMarkup = description
       ? html`<span class="description">${description}</span>`
       : nothing;
+    const actionsMarkup = this._renderActions(item);
 
     liClasses.push(itemType);
 
@@ -339,6 +431,7 @@ export class VscodeTree extends VscElement {
           ${arrowMarkup}${iconMarkup}<span class="text-content"
             >${label}${descriptionMarkup}</span
           >
+          ${actionsMarkup}
         </div>
         ${subTreeMarkup}
       </li>

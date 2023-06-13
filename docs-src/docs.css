@@ -518,3 +518,18 @@ body > .content-wrapper {
   display: inline-block;
   padding: 0 3px;
 }
+
+component-preview {
+  margin: 15px 0;
+}
+
+details {
+  background-color: #fff;
+  font-size: 14px;
+  padding: 5px 15px;
+}
+
+details summary {
+  cursor: pointer;
+  user-select: none;
+}
