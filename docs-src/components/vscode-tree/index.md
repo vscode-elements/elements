@@ -264,8 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Actions
 
-Actions are clickable icons in the tree item. When an action icon is clicked, the `vsc-run-command`
-event will be dispatched. The event data contains the command name, the value of the tree item, and
+Actions are clickable icons in the tree item. When an action icon is clicked, the `vsc-run-action`
+event will be dispatched. The event data contains the action name, the value of the tree item, and
 the tree item itself.
 
 <component-preview>
@@ -281,12 +281,12 @@ the tree item itself.
     const actions = [
       {
         icon: 'edit',
-        command: 'rename',
+        actionId: 'rename',
         tooltip: 'Rename',
       },
       {
         icon: 'trash',
-        command: 'delete',
+        actionId: 'delete',
         tooltip: 'Delete',
       }
     ];
@@ -328,7 +328,7 @@ the tree item itself.
 
     tree.data = data;
 
-    tree.addEventListener('vsc-run-command', (ev) => {
+    tree.addEventListener('vsc-run-action', (ev) => {
       console.log(ev.detail);
     });
   })();
@@ -353,12 +353,12 @@ const icons = true;
 const actions = [
   {
     icon: 'edit',
-    command: 'rename',
+    actionId: 'rename',
     tooltip: 'Rename',
   },
   {
     icon: 'trash',
-    command: 'delete',
+    actionId: 'delete',
     tooltip: 'Delete',
   },
 ];
@@ -404,7 +404,7 @@ const data = [
 
 tree.data = data;
 
-tree.addEventListener('vsc-run-command', (ev) => {
+tree.addEventListener('vsc-run-action', (ev) => {
   console.log(ev.detail);
 });
 ```

@@ -20,12 +20,13 @@ interface TreeItemIconConfig {
   leaf?: string;
 }
 
+/** Action icon configuration. */
 interface TreeItemAction {
-  /** A text which identified a command returns in the payload of the action event. */
-  command: string;
+  /** A unique name that identifies the clicked action item. */
+  actionId: string;
   /** A Codicon name. */
   icon: string;
-  /** Text description of the command. */
+  /** Text description of the action. */
   tooltip?: string;
 }
 
@@ -103,7 +104,7 @@ const isBranch = (item: TreeItem) => {
 /**
  * @fires vsc-select Dispatched when an item is selected. The event data shape is described in the
  * `SelectEventDetail` interface.
- * @fires vsc-run-command Dispatched when an action icon is clicked.
+ * @fires vsc-run-action Dispatched when an action icon is clicked.
  *
  * @cssprop [--focus-border=var(--vscode-list-focusOutline)]
  * @cssprop [--font-family=var(--vscode-font-family)]
@@ -196,7 +197,7 @@ export class VscodeTree extends VscElement {
     const itemPath = el.dataset.itemPath;
     const actionIndex = el.dataset.index;
     let item: TreeItem | null = null;
-    let command = '';
+    let actionId = '';
     let value = '';
 
     if (itemPath) {
@@ -207,7 +208,7 @@ export class VscodeTree extends VscElement {
         const index = Number(actionIndex);
 
         if (item.actions[index]) {
-          command = item.actions[index].command;
+          actionId = item.actions[index].actionId;
         }
       }
 
@@ -217,11 +218,11 @@ export class VscodeTree extends VscElement {
     }
 
     this.dispatchEvent(
-      new CustomEvent<{command: string; item: TreeItem | null; value: string}>(
-        'vsc-run-command',
+      new CustomEvent<{actionId: string; item: TreeItem | null; value: string}>(
+        'vsc-run-action',
         {
           detail: {
-            command,
+            actionId,
             item,
             value,
           },
