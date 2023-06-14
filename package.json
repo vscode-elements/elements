@@ -1,5 +1,5 @@
 {
-  "name": "@bendera/vscode-webview-elements",
+  "name": "@deepsourcelabs/vscode-webview-elements",
   "version": "0.13.1",
   "description": "Webcomponents for creating Visual Studio Code extensions",
   "main": "dist/main.js",
@@ -163,19 +163,18 @@
     "lit-element",
     "typescript"
   ],
-  "author": "bendera",
+  "author": "deepsourcelabs",
   "license": "MIT",
   "browserslist": [
     "last 1 chrome versions"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bendera/vscode-webview-elements.git"
+    "url": "git+https://github.com/deepsourcelabs/vscode-webview-elements.git"
   },
   "bugs": {
-    "url": "https://github.com/bendera/vscode-webview-elements/issues"
+    "url": "https://github.com/deepsourcelabs/vscode-webview-elements/issues"
   },
-  "homepage": "https://bendera.github.io/vscode-webview-elements",
   "dependencies": {
     "lit": "^2.4.0"
   },

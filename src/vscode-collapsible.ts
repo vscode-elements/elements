@@ -21,11 +21,11 @@ export class VscodeCollapsible extends VscElement {
   title = '';
 
   // A number displayed to the right of the collapsible header.
-  @property({type: Number })
-  count = 0
+  @property({type: Number})
+  count = 0;
 
-  @property({ type: String })
-  subtitle = ''
+  @property({type: String})
+  subtitle = '';
 
   @property({type: Boolean})
   open = false;
@@ -90,6 +90,7 @@ export class VscodeCollapsible extends VscElement {
           outline-style: solid;
           outline-width: 1px;
           outline-color: var(--focus-border);
+          border-left: 4px solid var(--focus-border);
         }
 
         .collapsible-header h3 {
@@ -137,12 +138,18 @@ export class VscodeCollapsible extends VscElement {
           margin-left: 10px;
           border-left: 1px solid var(--vscode-activityBar-inactiveForeground);
           padding-left: 10px;
-          font-family: var(--vscode-editor-font-family) var(--vscode-font-family);
+          font-family: var(--vscode-editor-font-family)
+            var(--vscode-font-family);
         }
+
+        .collapsible.open .collapsible-body > div {
+          padding-left: 10px;
+        } 
 
         .collapsible-count {
           color: var(--vscode-charts-yellow);
           margin-left: auto;
+          padding-right: 10px;
         }
 
         .dot {
@@ -151,7 +158,13 @@ export class VscodeCollapsible extends VscElement {
 
         .subtitle {
           color: var(--vscode-breadcrumb-foreground);
-          font-famiy: var(--vscode-editor-font-family), var(--vscode-font-family);
+          font-famiy: var(--vscode-editor-font-family),
+            var(--vscode-font-family);
+        }
+
+        @media only screen and (max-width: 400px) {
+          .collapsible-header {
+          }
         }
       `,
     ];
@@ -175,14 +188,17 @@ export class VscodeCollapsible extends VscElement {
       />
     </svg>`;
 
-    const countMarkup = this.count ? 
-          html`<div class="collapsible-count">${this.count}</div>` : ''
-      
-    const subtitleMarkup = this.subtitle ?
-      html`
-        <span class="dot"> • </span>
-        <span class="subtitle"> ${this.subtitle} </span>
-      ` : ''
+    const countMarkup =
+      this.count > 0
+        ? html`<div class="collapsible-count">${this.count}</div>`
+        : '';
+
+    const subtitleMarkup = this.subtitle
+      ? html`
+          <span class="dot"> • </span>
+          <span class="subtitle"> ${this.subtitle} </span>
+        `
+      : '';
 
     return html`
       <div class="${classes}">
