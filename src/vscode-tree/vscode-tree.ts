@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
+import '../vscode-badge/index.js';
 import '../vscode-icon/index.js';
 import {VscodeIcon} from '../vscode-icon/index.js';
 import styles from './vscode-tree.styles';
@@ -30,6 +31,19 @@ interface TreeItemAction {
   tooltip?: string;
 }
 
+export interface TreeItemDecoration {
+  content?: string;
+  appearance?: 'text' | 'counter-badge' | 'filled-circle';
+  /** When decoration is visible?
+   * - `active`: visible when the tree item is focused, selected or hovered
+   * - `normal`: visible when there is not any interaction on the tree item
+   * - `always`: always visible
+   */
+  visibleWhen?: 'active' | 'normal' | 'always';
+  /** A css variable name without "--" prefix that defines a color. */
+  color?: string;
+}
+
 interface TreeItem {
   label: string;
   description?: string;
@@ -44,6 +58,7 @@ interface TreeItem {
   iconUrls?: TreeItemIconConfig;
   value?: string;
   path?: number[];
+  decorations?: TreeItemDecoration[];
 }
 
 type ItemType = 'branch' | 'leaf';
@@ -360,6 +375,64 @@ export class VscodeTree extends VscElement {
     }
   }
 
+  private _renderDecorations(item: TreeItem) {
+    const decorations: TemplateResult[] = [];
+
+    if (item.decorations && Array.isArray(item.decorations)) {
+      item.decorations.forEach((decoration) => {
+        const {
+          appearance = 'text',
+          visibleWhen = 'always',
+          content = '',
+          color = '',
+        } = decoration;
+        const visibleWhenClass = `visible-when-${visibleWhen}`;
+        const colorDeclaration = color
+          ? `var(--${color}, currentColor)`
+          : 'currentColor';
+
+        switch (appearance) {
+          case 'counter-badge':
+            decorations.push(
+              html`<vscode-badge
+                variant="counter"
+                class=${['counter-badge', visibleWhenClass].join(' ')}
+                >${content}</vscode-badge
+              >`
+            );
+            break;
+          case 'filled-circle':
+            decorations.push(
+              html`<vscode-icon
+                name="circle-filled"
+                size="14"
+                class=${['filled-circle', visibleWhenClass].join(' ')}
+                style=${styleMap({color: colorDeclaration})}
+              ></vscode-icon>`
+            );
+            break;
+          case 'text':
+            decorations.push(
+              html`<div
+                class=${['decoration-text', visibleWhenClass].join(' ')}
+                style=${styleMap({color: colorDeclaration})}
+              >
+                ${content}
+              </div>`
+            );
+            break;
+          default:
+        }
+      });
+    }
+
+    if (decorations.length > 0) {
+      return html`<div class="decorations">${decorations}</div>`;
+    } else {
+      return html`${nothing}`;
+    }
+  }
+
   private _renderTreeItem(
     item: TreeItem,
     additionalOptions: {
@@ -411,6 +484,7 @@ export class VscodeTree extends VscElement {
       ? html`<span class="description">${description}</span>`
       : nothing;
     const actionsMarkup = this._renderActions(item);
+    const decorationsMarkup = this._renderDecorations(item);
 
     liClasses.push(itemType);
 
@@ -431,7 +505,7 @@ export class VscodeTree extends VscElement {
           ${arrowMarkup}${iconMarkup}<span class="text-content"
             >${label}${descriptionMarkup}</span
           >
-          ${actionsMarkup}
+          ${actionsMarkup} ${decorationsMarkup}
         </div>
         ${subTreeMarkup}
       </li>

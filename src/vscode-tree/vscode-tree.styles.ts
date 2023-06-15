@@ -209,6 +209,24 @@ const styles: CSSResultGroup = [
     :host(:focus) .contents.selected .action-icon {
       color: var(--active-selection-foreground);
     }
+
+    .decorations {
+      align-items: center;
+      display: flex;
+      height: 22px;
+    }
+
+    .filled-circle {
+      margin-right: 3px;
+      opacity: .4;
+    }
+
+    .decoration-text {
+      font-size: 90%;
+      font-weight: 600;
+      margin-right: 3px;
+      opacity: .75;
+    }
   `,
 ];
 
