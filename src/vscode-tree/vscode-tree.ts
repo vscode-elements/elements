@@ -31,17 +31,33 @@ interface TreeItemAction {
   tooltip?: string;
 }
 
+/**
+ * The decoration is additional content on the right side of the tree item. It can be a short text,
+ * a counter, or a small, filled circle. A color can be defined for the different states. If
+ * multiple states are applied to the item, the color with higher precedence will be used. The color
+ * precedence from higher to lower is selected, focused, hover, normal. Colors will not be applied
+ * to the counter badge.
+ */
 export interface TreeItemDecoration {
+  /** Text content of the decoration. If the appearance is `filled-circle`, it will be ignored. */
   content?: string;
+  /** Appearance of the decoration. */
   appearance?: 'text' | 'counter-badge' | 'filled-circle';
-  /** When decoration is visible?
+  /**
+   * When is decoration visible?
    * - `active`: visible when the tree item is focused, selected or hovered
    * - `normal`: visible when there is not any interaction on the tree item
    * - `always`: always visible
    */
   visibleWhen?: 'active' | 'normal' | 'always';
-  /** A css variable name without "--" prefix that defines a color. */
+  /** A valid CSS property value to define a default color. */
   color?: string;
+  /** A valid CSS property value to define the color for the mouse over state. */
+  hoverColor?: string;
+  /** A valid CSS property value to define the color for the focused state. */
+  focusedColor?: string;
+  /** A valid CSS property value to define the color for the selected state. */
+  selectedColor?: string;
 }
 
 interface TreeItem {
@@ -385,11 +401,28 @@ export class VscodeTree extends VscElement {
           visibleWhen = 'always',
           content = '',
           color = '',
+          focusedColor = '',
+          hoverColor = '',
+          selectedColor = '',
         } = decoration;
         const visibleWhenClass = `visible-when-${visibleWhen}`;
-        const colorDeclaration = color
-          ? `var(--${color}, currentColor)`
-          : 'currentColor';
+        const inlineStyles: {[key: string]: string} = {};
+
+        if (color) {
+          inlineStyles['--color'] = color;
+        }
+
+        if (focusedColor) {
+          inlineStyles['--focused-color'] = focusedColor;
+        }
+
+        if (hoverColor) {
+          inlineStyles['--hover-color'] = hoverColor;
+        }
+
+        if (selectedColor) {
+          inlineStyles['--selected-color'] = selectedColor;
+        }
 
         switch (appearance) {
           case 'counter-badge':
@@ -407,7 +440,7 @@ export class VscodeTree extends VscElement {
                 name="circle-filled"
                 size="14"
                 class=${['filled-circle', visibleWhenClass].join(' ')}
-                style=${styleMap({color: colorDeclaration})}
+                style=${styleMap(inlineStyles)}
               ></vscode-icon>`
             );
             break;
@@ -415,7 +448,7 @@ export class VscodeTree extends VscElement {
             decorations.push(
               html`<div
                 class=${['decoration-text', visibleWhenClass].join(' ')}
-                style=${styleMap({color: colorDeclaration})}
+                style=${styleMap(inlineStyles)}
               >
                 ${content}
               </div>`

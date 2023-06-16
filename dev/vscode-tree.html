@@ -434,11 +434,6 @@
     <h2 class="story-title">Decorations</h2>
     <div class="story-content">
       <component-preview>
-        <style>
-          #decorations-example {
-            --modifiedFile: red;
-          }
-        </style>
         <vscode-tree id="decorations-example"></vscode-tree>
         <script type="module">
             (() => {
@@ -482,6 +477,16 @@
                       icons,
                       label: 'vscode-tree.test.ts',
                       value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.test.ts',
+                      decorations: [
+                        {
+                          content: '-22',
+                          color: '#f00',
+                        },
+                        {
+                          content: '+11',
+                          color: '#0f0',
+                        }
+                      ]
                     },
                     {
                       icons,
@@ -510,9 +515,11 @@
         <style>
           #custom-colors-example {
             /* --vscode-list-activeSelectionIconForeground: #f00; */
+            --active-selection-foreground: #00ffff;
             --active-selection-icon-foreground: #f00;
             /* --inactive-focus-outline: #000; */
             --vscode-list-inactiveFocusOutline: #000;
+            --hover-foreground: #000;
           }
         </style>
         <vscode-tree id="custom-colors-example" arrows></vscode-tree>
@@ -554,7 +561,25 @@
                       decorations: [
                         {
                           content: 'M',
-                          color: 'modifiedFile',
+                          color: 'red',
+                          hoverColor: '#00ffff',
+                          focusedColor: 'orange',
+                          selectedColor: '#0000ff',
+                        }
+                      ]
+                    },
+                    {
+                      icons,
+                      actions,
+                      label: 'index.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
+                      decorations: [
+                        {
+                          appearance: 'filled-circle',
+                          color: 'red',
+                          hoverColor: '#00ffff',
+                          focusedColor: 'orange',
+                          selectedColor: '#0000ff',
                         }
                       ]
                     },

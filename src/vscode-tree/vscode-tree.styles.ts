@@ -220,18 +220,39 @@ const styles: CSSResultGroup = [
       align-items: center;
       display: flex;
       height: 22px;
+      margin-left: 5px;
     }
 
     .filled-circle {
       margin-right: 3px;
-      opacity: .4;
+      opacity: 0.4;
     }
 
     .decoration-text {
       font-size: 90%;
       font-weight: 600;
       margin-right: 3px;
-      opacity: .75;
+      opacity: 0.75;
+    }
+
+    .filled-circle,
+    .decoration-text {
+      color: var(--color, currentColor);
+    }
+
+    .contents:hover .filled-circle,
+    .contents:hover .decoration-text {
+      color: var(--hover-color, var(--color));
+    }
+
+    .contents.focused .filled-circle,
+    .contents.focused .decoration-text {
+      color: var(--focused-color, var(--color));
+    }
+
+    .contents.selected .filled-circle,
+    .contents.selected .decoration-text {
+      color: var(--selected-color, var(--color));
     }
 
     /* Theme colors */
