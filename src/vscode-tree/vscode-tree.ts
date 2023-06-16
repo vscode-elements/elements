@@ -817,7 +817,7 @@ export class VscodeTree extends VscElement {
       multi: this.multiline,
       single: !this.multiline,
       wrapper: true,
-      'focused-none': !this._focusedItem,
+      'has-not-focused-item': !this._focusedItem,
       'selection-none': !this._selectedItem,
       'selection-single': this._selectedItem !== null,
     });
