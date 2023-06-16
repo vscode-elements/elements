@@ -34,11 +34,19 @@ type VscodeThemeVariableName =
   | '--vscode-keybindingTable-rowsBackground'
   | '--vscode-list-activeSelectionBackground'
   | '--vscode-list-activeSelectionForeground'
-  | '--vscode-list-inactiveSelectionBackground'
+  | '--vscode-list-activeSelectionIconForeground'
   | '--vscode-list-focusAndSelectionOutline'
+  | '--vscode-list-focusBackground'
+  | '--vscode-list-focusForeground'
   | '--vscode-list-focusOutline'
+  | '--vscode-list-focusAndSelectionOutline'
   | '--vscode-list-hoverBackground'
   | '--vscode-list-hoverForeground'
+  | '--vscode-list-inactiveFocusBackground'
+  | '--vscode-list-inactiveFocusOutline'
+  | '--vscode-list-inactiveSelectionBackground'
+  | '--vscode-list-inactiveSelectionForeground'
+  | '--vscode-list-inactiveSelectionIconForeground'
   | '--vscode-menu-background'
   | '--vscode-menu-border'
   | '--vscode-menu-foreground'
@@ -115,11 +123,18 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-keybindingTable-rowsBackground': 'rgba(204, 204, 204, 0.04)',
     '--vscode-list-activeSelectionBackground': '#04395e',
     '--vscode-list-activeSelectionForeground': '#ffffff',
-    '--vscode-list-focusOutline': '#007fd4',
+    '--vscode-list-activeSelectionIconForeground': 'TODO',
     '--vscode-list-focusAndSelectionOutline': '#007fd4',
+    '--vscode-list-focusOutline': '#007fd4',
+    '--vscode-list-focusBackground': 'TODO',
+    '--vscode-list-focusForeground': 'TODO',
     '--vscode-list-hoverBackground': '#2a2d2e',
     '--vscode-list-hoverForeground': '#cccccc',
+    '--vscode-list-inactiveFocusBackground': 'TODO',
+    '--vscode-list-inactiveFocusOutline': 'transparent',
     '--vscode-list-inactiveSelectionBackground': '#37373d',
+    '--vscode-list-inactiveSelectionForeground': 'TODO',
+    '--vscode-list-inactiveSelectionIconForeground': 'TODO',
     '--vscode-menu-background': '#252526',
     '--vscode-menu-border': '#454545',
     '--vscode-menu-foreground': '#cccccc',
@@ -191,11 +206,18 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-keybindingTable-rowsBackground': 'rgba(97, 97, 97, 0.04)',
     '--vscode-list-activeSelectionBackground': '#0060c0',
     '--vscode-list-activeSelectionForeground': '#ffffff',
+    '--vscode-list-activeSelectionIconForeground': 'TODO',
     '--vscode-list-focusOutline': '#0090f1',
+    '--vscode-list-focusBackground': 'TODO',
+    '--vscode-list-focusForeground': 'TODO',
     '--vscode-list-focusAndSelectionOutline': '#90c2f9',
     '--vscode-list-hoverBackground': '#e8e8e8',
     '--vscode-list-hoverForeground': '#616161',
+    '--vscode-list-inactiveFocusBackground': 'TODO',
+    '--vscode-list-inactiveFocusOutline': 'transparent',
     '--vscode-list-inactiveSelectionBackground': '#e4e6f1',
+    '--vscode-list-inactiveSelectionForeground': 'TODO',
+    '--vscode-list-inactiveSelectionIconForeground': 'TODO',
     '--vscode-menu-background': '#ffffff',
     '--vscode-menu-border': '#d4d4d4',
     '--vscode-menu-foreground': '#616161',
@@ -267,11 +289,18 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-keybindingTable-rowsBackground': 'transparent',
     '--vscode-list-activeSelectionBackground': '#000000',
     '--vscode-list-activeSelectionForeground': '#ffffff',
+    '--vscode-list-activeSelectionIconForeground': 'TODO',
     '--vscode-list-focusOutline': '#f38518',
     '--vscode-list-focusAndSelectionOutline': '#f38518',
+    '--vscode-list-focusBackground': 'TODO',
+    '--vscode-list-focusForeground': 'TODO',
     '--vscode-list-hoverBackground': 'rgba(255, 255, 255, 0.1)',
     '--vscode-list-hoverForeground': '#ffffff',
+    '--vscode-list-inactiveFocusBackground': 'TODO',
+    '--vscode-list-inactiveFocusOutline': 'transparent',
     '--vscode-list-inactiveSelectionBackground': 'transparent',
+    '--vscode-list-inactiveSelectionForeground': 'TODO',
+    '--vscode-list-inactiveSelectionIconForeground': 'TODO',
     '--vscode-menu-background': '#000000',
     '--vscode-menu-border': '#6fc3df',
     '--vscode-menu-foreground': '#ffffff',
@@ -344,9 +373,16 @@ const defaultStyles: DefaultStyleRegistry = {
     '--vscode-keybindingTable-rowsBackground': 'transparent',
     '--vscode-list-activeSelectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-list-activeSelectionForeground': '#292929',
+    '--vscode-list-activeSelectionIconForeground': 'TODO',
+    '--vscode-list-focusBackground': 'TODO',
+    '--vscode-list-focusForeground': 'TODO',
+    '--vscode-list-inactiveFocusBackground': 'TODO',
+    '--vscode-list-inactiveSelectionForeground': 'TODO',
+    '--vscode-list-inactiveSelectionIconForeground': 'TODO',
     '--vscode-list-focusOutline': '#006bbd',
     '--vscode-list-hoverBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-list-hoverForeground': '#292929',
+    '--vscode-list-inactiveFocusOutline': 'transparent',
     '--vscode-list-inactiveSelectionBackground': 'rgba(15, 74, 133, 0.1)',
     '--vscode-menu-background': '#ffffff',
     '--vscode-menu-border': '#0f4a85',
