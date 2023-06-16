@@ -502,6 +502,76 @@
       </component-preview>
     </div>
   </div>
+
+  <div class="story">
+    <h2 class="story-title">Custom colors</h2>
+    <div class="story-content">
+      <component-preview>
+        <style>
+          #custom-colors-example {
+            /* --vscode-list-activeSelectionIconForeground: #f00; */
+            --active-selection-icon-foreground: #f00;
+            /* --inactive-focus-outline: #000; */
+            --vscode-list-inactiveFocusOutline: #000;
+          }
+        </style>
+        <vscode-tree id="custom-colors-example" arrows></vscode-tree>
+        <script type="module">
+            (() => {
+              const tree = document.getElementById('custom-colors-example');
+
+              const icons = true;
+
+              const actions = [
+                {
+                  icon: 'edit',
+                  actionId: 'rename',
+                  tooltip: 'Rename',
+                },
+                {
+                  icon: 'trash',
+                  actionId: 'delete',
+                  tooltip: 'Delete',
+                }
+              ];
+
+              const data = [
+                {
+                  label: 'vscode-tree',
+                  icons,
+                  actions,
+                  value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree',
+                  decorations: [{
+                    appearance: 'counter-badge',
+                    content: '9',
+                  }],
+                  subItems: [
+                    {
+                      icons,
+                      actions,
+                      label: 'index.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
+                      decorations: [
+                        {
+                          content: 'M',
+                          color: 'modifiedFile',
+                        }
+                      ]
+                    },
+                  ],
+                },
+              ];
+
+              tree.data = data;
+
+              tree.addEventListener('vsc-run-action', (ev) => {
+                console.log(ev.detail);
+              });
+            })()
+        </script>
+      </component-preview>
+    </div>
+  </div>
 </body>
 
 </html>

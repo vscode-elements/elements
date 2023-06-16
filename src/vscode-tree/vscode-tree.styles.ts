@@ -245,7 +245,10 @@ const styles: CSSResultGroup = [
       background-color: var(--active-selection-background);
     }
 
-    /* TODO: apply to all icons: arrows, theme, actions */
+    :host(:focus) .contents.selected .icon-arrow,
+    :host(:focus) .contents.selected.focused .icon-arrow,
+    :host(:focus) .contents.selected .theme-icon,
+    :host(:focus) .contents.selected.focused .theme-icon,
     :host(:focus) .contents.selected .action-icon,
     :host(:focus) .contents.selected.focused .action-icon {
       color: var(--active-selection-icon-foreground);
