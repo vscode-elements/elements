@@ -169,9 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const tree = document.getElementById('custom-icons-example');
 
   const iconUrls = {
-    branch: '/dev-assets/icons/folder.svg',
-    open: '/dev-assets/icons/folder.expanded.svg',
-    leaf: '/dev-assets/icons/typescript.svg',
+    branch: `${window.__PATH_PREFIX__}dev-assets/icons/folder.svg`,
+    open: `${window.__PATH_PREFIX__}dev-assets/icons/folder.expanded.svg`,
+    leaf: `${window.__PATH_PREFIX__}dev-assets/icons/typescript.svg`,
   }
 
   const data = [
@@ -220,9 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
 const tree = document.getElementById('custom-icons-example');
 
 const iconUrls = {
-  branch: '/dev-assets/icons/folder.svg',
-  open: '/dev-assets/icons/folder.expanded.svg',
-  leaf: '/dev-assets/icons/typescript.svg',
+  branch: '/images/icons/folder.svg',
+  open: '/images/icons/folder.expanded.svg',
+  leaf: '/images/icons/typescript.svg',
 }
 
 const data = [
