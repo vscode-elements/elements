@@ -429,6 +429,174 @@
       </component-preview>
     </div>
   </div>
+
+  <div class="story">
+    <h2 class="story-title">Decorations</h2>
+    <div class="story-content">
+      <component-preview>
+        <vscode-tree id="decorations-example"></vscode-tree>
+        <script type="module">
+            (() => {
+              const tree = document.getElementById('decorations-example');
+
+              const icons = true;
+
+              const data = [
+                {
+                  label: 'vscode-tree',
+                  icons,
+                  value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree',
+                  decorations: [{
+                    appearance: 'counter-badge',
+                    content: '9',
+                  }],
+                  subItems: [
+                    {
+                      icons,
+                      label: 'index.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
+                      decorations: [
+                        {
+                          content: 'M',
+                          color: 'modifiedFile',
+                        }
+                      ]
+                    },
+                    {
+                      icons,
+                      label: 'vscode-tree.styles.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.styles.ts',
+                      decorations: [
+                        {
+                          appearance: 'filled-circle',
+                          content: '',
+                        }
+                      ]
+                    },
+                    {
+                      icons,
+                      label: 'vscode-tree.test.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.test.ts',
+                      decorations: [
+                        {
+                          content: '-22',
+                          color: '#f00',
+                        },
+                        {
+                          content: '+11',
+                          color: '#0f0',
+                        }
+                      ]
+                    },
+                    {
+                      icons,
+                      label: 'vscode-tree.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.ts',
+                    },
+                  ],
+                },
+              ];
+
+              tree.data = data;
+
+              tree.addEventListener('vsc-run-action', (ev) => {
+                console.log(ev.detail);
+              });
+            })()
+        </script>
+      </component-preview>
+    </div>
+  </div>
+
+  <div class="story">
+    <h2 class="story-title">Custom colors</h2>
+    <div class="story-content">
+      <component-preview>
+        <style>
+          #custom-colors-example {
+            /* --vscode-list-activeSelectionIconForeground: #f00; */
+            --active-selection-foreground: #00ffff;
+            --active-selection-icon-foreground: #f00;
+            /* --inactive-focus-outline: #000; */
+            --vscode-list-inactiveFocusOutline: #000;
+            --hover-foreground: #000;
+          }
+        </style>
+        <vscode-tree id="custom-colors-example" arrows></vscode-tree>
+        <script type="module">
+            (() => {
+              const tree = document.getElementById('custom-colors-example');
+
+              const icons = true;
+
+              const actions = [
+                {
+                  icon: 'edit',
+                  actionId: 'rename',
+                  tooltip: 'Rename',
+                },
+                {
+                  icon: 'trash',
+                  actionId: 'delete',
+                  tooltip: 'Delete',
+                }
+              ];
+
+              const data = [
+                {
+                  label: 'vscode-tree',
+                  icons,
+                  actions,
+                  value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree',
+                  decorations: [{
+                    appearance: 'counter-badge',
+                    content: '9',
+                  }],
+                  subItems: [
+                    {
+                      icons,
+                      actions,
+                      label: 'index.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
+                      decorations: [
+                        {
+                          content: 'M',
+                          color: 'red',
+                          hoverColor: '#00ffff',
+                          focusedColor: 'orange',
+                          selectedColor: '#0000ff',
+                        }
+                      ]
+                    },
+                    {
+                      icons,
+                      actions,
+                      label: 'index.ts',
+                      value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\index.ts',
+                      decorations: [
+                        {
+                          appearance: 'filled-circle',
+                          color: 'red',
+                          hoverColor: '#00ffff',
+                          focusedColor: 'orange',
+                          selectedColor: '#0000ff',
+                        }
+                      ]
+                    },
+                  ],
+                },
+              ];
+
+              tree.data = data;
+
+              tree.addEventListener('vsc-run-action', (ev) => {
+                console.log(ev.detail);
+              });
+            })()
+        </script>
+      </component-preview>
+    </div>
+  </div>
 </body>
 
 </html>
