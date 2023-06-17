@@ -21,7 +21,7 @@
     "build": "wireit",
     "build:ts": "wireit",
     "build:watch": "wireit",
-    "clean": "rimraf dist",
+    "clean": "rimraf .wireit && rimraf coverage && rimraf dist && rimraf docs && rimraf custom-elements.json && rimraf stats.html",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint src/**/*.ts",
     "lint:lit-analyzer": "lit-analyzer",
