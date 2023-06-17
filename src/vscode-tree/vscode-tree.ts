@@ -15,14 +15,14 @@ type IconType = 'themeicon' | 'image';
 
 type IconVariant = 'branch' | 'leaf' | 'open';
 
-interface TreeItemIconConfig {
+export interface TreeItemIconConfig {
   branch?: string;
   open?: string;
   leaf?: string;
 }
 
 /** Action icon configuration. */
-interface TreeItemAction {
+export interface TreeItemAction {
   /** A unique name that identifies the clicked action item. */
   actionId: string;
   /** A Codicon name. */
@@ -60,7 +60,7 @@ export interface TreeItemDecoration {
   selectedColor?: string;
 }
 
-interface TreeItem {
+export interface TreeItem {
   label: string;
   description?: string;
   subItems?: TreeItem[];

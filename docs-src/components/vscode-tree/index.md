@@ -12,6 +12,8 @@ toc:
     path: flat-list
   - label: Actions
     path: actions
+  - label: Decorations
+    path: decorations
 ---
 
 # Tree
@@ -512,4 +514,139 @@ tree.addEventListener('vsc-run-action', (ev) => {
 });
 ```
 
+</details>
+
+## Decorations
+
+Decoration is additional content on the right edge of the tree item. It can be a short text, a 
+counter, or a small, filled circle.
+
+<component-preview>
+  <vscode-tree id="decorations-example"></vscode-tree>
+</component-preview>
+
+<script type="module">
+  const tree = document.getElementById('decorations-example');
+
+  const icons = true;
+
+  const data = [
+    {
+      label: 'vscode-tree',
+      icons,
+      decorations: [{
+        appearance: 'counter-badge',
+        content: '9',
+      }],
+      subItems: [
+        {
+          icons,
+          label: 'index.ts',
+          decorations: [
+            {
+              content: 'M',
+            }
+          ]
+        },
+        {
+          icons,
+          label: 'vscode-tree.styles.ts',
+          decorations: [
+            {
+              appearance: 'filled-circle',
+            }
+          ]
+        },
+        {
+          icons,
+          label: 'vscode-tree.test.ts',
+          decorations: [
+            {
+              content: '-22',
+              color: '#f00',
+            },
+            {
+              content: '+11',
+              color: '#0f0',
+            }
+          ]
+        },
+        {
+          icons,
+          label: 'vscode-tree.ts',
+        },
+      ],
+    },
+  ];
+
+  tree.data = data;
+</script>
+
+<details>
+  <summary>Code</summary>
+
+### HTML
+
+```html
+<vscode-tree id="decorations-example"></vscode-tree>
+```
+
+### JavaScript
+
+```javascript
+const tree = document.getElementById('decorations-example');
+
+const icons = true;
+
+const data = [
+  {
+    label: 'vscode-tree',
+    icons,
+    decorations: [{
+      appearance: 'counter-badge',
+      content: '9',
+    }],
+    subItems: [
+      {
+        icons,
+        label: 'index.ts',
+        decorations: [
+          {
+            content: 'M',
+          }
+        ]
+      },
+      {
+        icons,
+        label: 'vscode-tree.styles.ts',
+        decorations: [
+          {
+            appearance: 'filled-circle',
+          }
+        ]
+      },
+      {
+        icons,
+        label: 'vscode-tree.test.ts',
+        decorations: [
+          {
+            content: '-22',
+            color: '#f00',
+          },
+          {
+            content: '+11',
+            color: '#0f0',
+          }
+        ]
+      },
+      {
+        icons,
+        label: 'vscode-tree.ts',
+      },
+    ],
+  },
+];
+
+tree.data = data;
+```
 </details>
