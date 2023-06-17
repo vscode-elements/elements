@@ -5,6 +5,7 @@
   "main": "dist/main.js",
   "module": "dist/main.js",
   "type": "module",
+  "types": "dist/main.d.ts",
   "files": [
     "dist",
     "!dist/test"
