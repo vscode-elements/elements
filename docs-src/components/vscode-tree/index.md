@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
           iconUrls: {
             ...iconUrls,
-            leaf: '/dev-assets/icons/typescript-test.svg',
+            leaf: `${window.__PATH_PREFIX__}dev-assets/icons/typescript-test.svg`,
           },
           label: 'vscode-tree.test.ts',
         },
