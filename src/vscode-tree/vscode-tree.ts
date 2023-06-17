@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
+import '../vscode-badge/index.js';
 import '../vscode-icon/index.js';
 import {VscodeIcon} from '../vscode-icon/index.js';
 import styles from './vscode-tree.styles';
@@ -14,14 +15,14 @@ type IconType = 'themeicon' | 'image';
 
 type IconVariant = 'branch' | 'leaf' | 'open';
 
-interface TreeItemIconConfig {
+export interface TreeItemIconConfig {
   branch?: string;
   open?: string;
   leaf?: string;
 }
 
 /** Action icon configuration. */
-interface TreeItemAction {
+export interface TreeItemAction {
   /** A unique name that identifies the clicked action item. */
   actionId: string;
   /** A Codicon name. */
@@ -30,7 +31,36 @@ interface TreeItemAction {
   tooltip?: string;
 }
 
-interface TreeItem {
+/**
+ * The decoration is additional content on the right side of the tree item. It can be a short text,
+ * a counter, or a small, filled circle. A color can be defined for the different states. If
+ * multiple states are applied to the item, the color with higher precedence will be used. The color
+ * precedence from higher to lower is selected, focused, hover, normal. Colors will not be applied
+ * to the counter badge.
+ */
+export interface TreeItemDecoration {
+  /** Text content of the decoration. If the appearance is `filled-circle`, it will be ignored. */
+  content?: string;
+  /** Appearance of the decoration. */
+  appearance?: 'text' | 'counter-badge' | 'filled-circle';
+  /**
+   * When is decoration visible?
+   * - `active`: visible when the tree item is focused, selected or hovered
+   * - `normal`: visible when there is not any interaction on the tree item
+   * - `always`: always visible
+   */
+  visibleWhen?: 'active' | 'normal' | 'always';
+  /** A valid CSS property value to define a default color. */
+  color?: string;
+  /** A valid CSS property value to define the color for the mouse over state. */
+  hoverColor?: string;
+  /** A valid CSS property value to define the color for the focused state. */
+  focusedColor?: string;
+  /** A valid CSS property value to define the color for the selected state. */
+  selectedColor?: string;
+}
+
+export interface TreeItem {
   label: string;
   description?: string;
   subItems?: TreeItem[];
@@ -44,6 +74,7 @@ interface TreeItem {
   iconUrls?: TreeItemIconConfig;
   value?: string;
   path?: number[];
+  decorations?: TreeItemDecoration[];
 }
 
 type ItemType = 'branch' | 'leaf';
@@ -360,6 +391,81 @@ export class VscodeTree extends VscElement {
     }
   }
 
+  private _renderDecorations(item: TreeItem) {
+    const decorations: TemplateResult[] = [];
+
+    if (item.decorations && Array.isArray(item.decorations)) {
+      item.decorations.forEach((decoration) => {
+        const {
+          appearance = 'text',
+          visibleWhen = 'always',
+          content = '',
+          color = '',
+          focusedColor = '',
+          hoverColor = '',
+          selectedColor = '',
+        } = decoration;
+        const visibleWhenClass = `visible-when-${visibleWhen}`;
+        const inlineStyles: {[key: string]: string} = {};
+
+        if (color) {
+          inlineStyles['--color'] = color;
+        }
+
+        if (focusedColor) {
+          inlineStyles['--focused-color'] = focusedColor;
+        }
+
+        if (hoverColor) {
+          inlineStyles['--hover-color'] = hoverColor;
+        }
+
+        if (selectedColor) {
+          inlineStyles['--selected-color'] = selectedColor;
+        }
+
+        switch (appearance) {
+          case 'counter-badge':
+            decorations.push(
+              html`<vscode-badge
+                variant="counter"
+                class=${['counter-badge', visibleWhenClass].join(' ')}
+                >${content}</vscode-badge
+              >`
+            );
+            break;
+          case 'filled-circle':
+            decorations.push(
+              html`<vscode-icon
+                name="circle-filled"
+                size="14"
+                class=${['filled-circle', visibleWhenClass].join(' ')}
+                style=${styleMap(inlineStyles)}
+              ></vscode-icon>`
+            );
+            break;
+          case 'text':
+            decorations.push(
+              html`<div
+                class=${['decoration-text', visibleWhenClass].join(' ')}
+                style=${styleMap(inlineStyles)}
+              >
+                ${content}
+              </div>`
+            );
+            break;
+          default:
+        }
+      });
+    }
+
+    if (decorations.length > 0) {
+      return html`<div class="decorations">${decorations}</div>`;
+    } else {
+      return html`${nothing}`;
+    }
+  }
+
   private _renderTreeItem(
     item: TreeItem,
     additionalOptions: {
@@ -411,6 +517,7 @@ export class VscodeTree extends VscElement {
       ? html`<span class="description">${description}</span>`
       : nothing;
     const actionsMarkup = this._renderActions(item);
+    const decorationsMarkup = this._renderDecorations(item);
 
     liClasses.push(itemType);
 
@@ -431,7 +538,7 @@ export class VscodeTree extends VscElement {
           ${arrowMarkup}${iconMarkup}<span class="text-content"
             >${label}${descriptionMarkup}</span
           >
-          ${actionsMarkup}
+          ${actionsMarkup} ${decorationsMarkup}
         </div>
         ${subTreeMarkup}
       </li>
@@ -743,7 +850,7 @@ export class VscodeTree extends VscElement {
       multi: this.multiline,
       single: !this.multiline,
       wrapper: true,
-      'focused-none': !this._focusedItem,
+      'has-not-focused-item': !this._focusedItem,
       'selection-none': !this._selectedItem,
       'selection-single': this._selectedItem !== null,
     });
