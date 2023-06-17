@@ -241,7 +241,7 @@ const data = [
       {
         iconUrls: {
           ...iconUrls,
-          leaf: '/dev-assets/icons/typescript-test.svg',
+          leaf: '/images/icons/typescript-test.svg',
         },
         label: 'vscode-tree.test.ts',
       },
