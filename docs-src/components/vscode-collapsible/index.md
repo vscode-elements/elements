@@ -248,6 +248,8 @@ Elements in the decorations slot are always visible
 </vscode-collapsible>
 ```
 
+</details>
+
 ## Description
 
 Less prominent text in the header
@@ -262,6 +264,9 @@ Less prominent text in the header
     </div>
   </vscode-collapsible>
 </component-preview>
+
+<details>
+  <summary>Code</summary>
 
 ### HTML
 
