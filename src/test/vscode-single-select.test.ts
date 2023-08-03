@@ -485,7 +485,7 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
 
       const options = el.shadowRoot?.querySelector('.options');
-      expect(options?.scrollTop).to.eq(190);
+      expect(options?.scrollTop).to.eq(220);
     });
   });
 
@@ -728,7 +728,7 @@ describe('vscode-single-select', () => {
       expect(input.value).to.eq('Austria');
       expect(activeOpt).not.null;
       expect((activeOpt as HTMLLIElement).innerText).to.eq('Austria');
-      expect(optionsEl?.scrollTop).to.eq(171);
+      expect(optionsEl?.scrollTop).to.eq(198);
       expect(el.value).to.eq('Austria');
       expect(el.selectedIndex).to.eq(9);
     });
