@@ -29,6 +29,9 @@ export class VscodeSelectBase extends VscElement {
   @property({type: Boolean, reflect: true, attribute: 'data-cloak'})
   dataCloak = false;
 
+  @property({type: Boolean})
+  invalid = false;
+
   /**
    * Filter method
    *
