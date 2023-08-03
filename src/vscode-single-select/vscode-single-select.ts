@@ -18,6 +18,7 @@ import styles from './vscode-single-select.styles';
  *}
  * ```
  * @prop {boolean} invalid
+ * @attr {boolean} invalid
  * @attr name - Name which is used as a variable name in the data of the form-container.
  * @cssprop [--dropdown-z-index=2]
  * @cssprop [--badge-background=var(--vscode-badge-background)]
