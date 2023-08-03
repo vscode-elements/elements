@@ -27,6 +27,9 @@ import '@bendera/vscode-webview-elements/dist/vscode-multiselect';
   });
 </script>
 
+<details>
+  <summary>Code</summary>
+
 ### HTML
 
 ```html
@@ -45,6 +48,8 @@ select.addEventListener('vsc-change', (event) => {
   console.log(event);
 });
 ```
+
+</details>
 
 ## Combobox mode
 
@@ -248,6 +253,9 @@ select.addEventListener('vsc-change', (event) => {
   </vscode-multi-select>
 </component-preview>
 
+<details>
+  <summary>Code</summary>
+
 ### HTML
 
 ```html
@@ -258,3 +266,30 @@ select.addEventListener('vsc-change', (event) => {
   ...
 </vscode-multi-select>
 ```
+
+</details>
+
+## Invalid state
+
+<component-preview>
+  <vscode-multi-select invalid>
+    <vscode-option description="Consectetur adipiscing elit">Lorem</vscode-option>
+    <vscode-option selected description="Donec elit odio">Ipsum</vscode-option>
+    <vscode-option description="Aliquam ac vulputate eros">Dolor</vscode-option>
+  </vscode-multi-select>
+</component-preview>
+
+<details>
+  <summary>Code</summary>
+
+### HTML
+
+```html
+<vscode-multi-select invalid>
+  <vscode-option description="Consectetur adipiscing elit">Lorem</vscode-option>
+  <vscode-option selected description="Donec elit odio">Ipsum</vscode-option>
+  <vscode-option description="Aliquam ac vulputate eros">Dolor</vscode-option>
+</vscode-multi-select>
+```
+
+</details>
