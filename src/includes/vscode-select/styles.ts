@@ -114,6 +114,11 @@ export default [
       width: 100%;
     }
 
+    :host([invalid]) .select-face,
+    :host([invalid]) .combobox-face {
+      border-color: var(--vscode-inputValidation-errorBorder, #be1100);
+    }
+
     .select-face {
       cursor: pointer;
       padding: 3px 4px;
