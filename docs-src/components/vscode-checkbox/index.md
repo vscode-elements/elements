@@ -25,6 +25,18 @@ import '@bendera/vscode-webview-elements/dist/vscode-checkbox';
 <vscode-checkbox label="Checkbox example" value="testvalue1" checked></vscode-checkbox>
 ```
 
+## Indeterminate state
+
+<component-preview>
+  <vscode-checkbox label="Indeterminate example" indeterminate></vscode-checkbox>
+</component-preview>
+
+### HTML
+
+```html
+<vscode-checkbox label="Indeterminate example" indeterminate></vscode-checkbox>
+```
+
 ## Slotted content
 
 <style>
