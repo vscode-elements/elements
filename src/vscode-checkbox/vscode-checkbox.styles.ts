@@ -11,6 +11,13 @@ const styles: CSSResultGroup = [
       border-radius: 3px;
     }
 
+    .indeterminate-icon {
+      background-color: currentColor;
+      position: absolute;
+      height: 1px;
+      width: 12px;
+    }
+
     :host(:focus):host(:not([disabled])) .icon {
       outline: 1px solid var(--focus-border);
       outline-offset: -1px;

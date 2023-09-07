@@ -8,7 +8,7 @@
   <title>VSCode Webview Elements demo page</title>
   <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
   <script type="module" src="../dev-assets/component-preview.js"></script>
-  <script src="../dist/vscode-checkbox.js" type="module"></script>
+  <script src="../dist/vscode-checkbox/index.js" type="module"></script>
 </head>
 
 <body class="vscode-light">
@@ -18,6 +18,14 @@
       <component-preview>
         <vscode-checkbox label="Checkbox example" value="testvalue1" checked></vscode-checkbox>
         <vscode-checkbox label="Checkbox example" value="testvalue1" checked disabled></vscode-checkbox>
+      </component-preview>
+    </div>
+  </div>
+  <div class="story">
+    <h2 class="story-title">Indeterminate state</h2>
+    <div class="story-content">
+      <component-preview>
+        <vscode-checkbox label="Checkbox example" value="testvalue1" indeterminate></vscode-checkbox>
       </component-preview>
     </div>
   </div>
