@@ -28,6 +28,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   @property({type: Boolean})
   set checked(val: boolean) {
     this._checked = val;
+    this._indeterminate = false;
     this.setAttribute('aria-checked', val ? 'true' : 'false');
   }
   get checked(): boolean {
@@ -43,6 +44,14 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   @property({type: Boolean})
   disabled = false;
 
+  @property({type: Boolean, reflect: true})
+  set indeterminate(val: boolean) {
+    this._indeterminate = val;
+  }
+  get indeterminate(): boolean {
+    return this._indeterminate;
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
 
@@ -52,12 +61,16 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   @state()
   private _checked = false;
 
+  @state()
+  private _indeterminate = false;
+
   protected _handleClick(): void {
     if (this.disabled) {
       return;
     }
 
     this._checked = !this._checked;
+    this._indeterminate = false;
     this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
 
     this.dispatchEvent(
@@ -85,6 +98,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
     const iconClasses = classMap({
       icon: true,
       checked: this._checked,
+      indeterminate: this._indeterminate,
     });
     const labelInnerClasses = classMap({
       'label-inner': true,
@@ -103,7 +117,10 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
         d="M14.431 3.323l-8.47 10-.79-.036-3.35-4.77.818-.574 2.978 4.24 8.051-9.506.764.646z"
       />
     </svg>`;
-    const check = this._checked ? icon : nothing;
+    const check = this._checked && !this._indeterminate ? icon : nothing;
+    const indeterminate = this._indeterminate
+      ? html`<span class="indeterminate-icon"></span>`
+      : nothing;
 
     return html`
       <div class="wrapper">
@@ -115,7 +132,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
           value="${this.value}"
           tabindex="-1"
         />
-        <div class="${iconClasses}">${check}</div>
+        <div class="${iconClasses}">${indeterminate}${check}</div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
           <span class="${labelInnerClasses}">
             ${this._renderLabelAttribute()}
