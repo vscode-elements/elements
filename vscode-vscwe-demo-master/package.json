@@ -1,0 +1,54 @@
+{
+	"name": "vscode-vscwe-demo",
+	"displayName": "VscodeVscweDemo",
+	"description": "VSCode Elements Demo",
+	"version": "0.0.1",
+	"preview": true,
+	"publisher": "johndoe",
+	"engines": {
+		"vscode": "^1.82.0"
+	},
+	"repository": {
+		"url": "https://github.com/bendera/vscode-vscwe-demo.git"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:vscode-vscwe-demo.helloWorld"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "vscode-vscwe-demo.helloWorld",
+				"title": "Gears demo"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.82.0",
+		"@types/glob": "^8.1.0",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "^20.6.0",
+		"eslint": "^8.49.0",
+		"@typescript-eslint/eslint-plugin": "^6.6.0",
+		"@typescript-eslint/parser": "^6.6.0",
+		"glob": "^10.3.4",
+		"mocha": "^10.2.0",
+		"typescript": "^5.2.2",
+		"vscode-test": "^1.4.1"
+	},
+	"dependencies": {
+		"@bendera/vscode-webview-elements": "^0.16.0",
+		"vscode-codicons": "0.0.13"
+	}
+}
