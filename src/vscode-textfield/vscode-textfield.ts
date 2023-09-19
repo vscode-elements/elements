@@ -29,6 +29,9 @@ export class VscodeTextfield extends VscElement {
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
 
+  @property({type: Boolean})
+  autofocus = false;
+
   @property({type: Boolean, reflect: true})
   disabled = false;
 
@@ -172,6 +175,7 @@ export class VscodeTextfield extends VscElement {
       <input
         id="input"
         type=${this.type}
+        ?autofocus=${this.autofocus}
         autocomplete=${ifDefined(this.autocomplete)}
         aria-label=${this.label}
         ?disabled=${this.disabled}
