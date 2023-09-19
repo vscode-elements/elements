@@ -27,7 +27,7 @@ export class VscodeTextfield extends VscElement {
   static styles = styles;
 
   @property()
-  autocomplete = undefined;
+  autocomplete: 'on' | 'off' | undefined = undefined;
 
   @property({type: Boolean, reflect: true})
   disabled = false;
@@ -45,29 +45,29 @@ export class VscodeTextfield extends VscElement {
   @property({attribute: false})
   label = '';
 
-  @property()
-  max = undefined;
+  @property({type: Number})
+  max: number | undefined = undefined;
 
-  @property()
-  maxlength = undefined;
+  @property({type: Number})
+  maxlength: number | undefined = undefined;
 
-  @property()
-  min = undefined;
+  @property({type: Number})
+  min: number | undefined = undefined;
 
-  @property()
-  minlength = undefined;
+  @property({type: Number})
+  minlength: number | undefined = undefined;
 
   @property({type: Boolean})
   multiple = false;
 
   @property()
-  name = undefined;
+  name: string | undefined = undefined;
 
   @property()
-  pattern = undefined;
+  pattern: string | undefined = undefined;
 
   @property()
-  placeholder = undefined;
+  placeholder: string | undefined = undefined;
 
   @property({type: Boolean, reflect: true})
   readonly = false;
@@ -75,8 +75,8 @@ export class VscodeTextfield extends VscElement {
   @property({type: Boolean, reflect: true})
   required = false;
 
-  @property()
-  step = undefined;
+  @property({type: Number})
+  step: number | undefined = undefined;
 
   @property()
   type:

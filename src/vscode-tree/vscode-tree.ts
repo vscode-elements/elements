@@ -373,7 +373,7 @@ export class VscodeTree extends VscElement {
             name=${action.icon}
             action-icon
             title=${ifDefined(action.tooltip)}
-            data-item-path=${item.path?.join('/')}
+            data-item-path=${ifDefined(item.path?.join('/'))}
             data-index=${index}
             class="action-icon"
             @click=${this._handleActionClick}
