@@ -35,6 +35,9 @@ export class VscodeTextarea extends VscElement {
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
 
+  @property({type: Boolean})
+  autofocus = false;
+
   @property({type: Boolean, reflect: true})
   disabled = false;
 
@@ -159,6 +162,7 @@ export class VscodeTextarea extends VscElement {
       ></div>
       <textarea
         autocomplete=${ifDefined(this.autocomplete)}
+        ?autofocus=${this.autofocus}
         ?disabled=${this.disabled}
         aria-label=${this.label}
         id="textarea"

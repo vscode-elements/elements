@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Added
+
+- Added `autofocus` attribute to **Textarea** and **Textfield**
+
 ## [0.16.0] - 2023-09-07
 
 ### Added
