@@ -41,23 +41,23 @@ export class VscodeTextarea extends VscElement {
   @property({attribute: false})
   label = '';
 
-  @property()
-  maxlength = undefined;
+  @property({type: Number})
+  maxlength: number | undefined = undefined;
+
+  @property({type: Number})
+  minlength: number | undefined = undefined;
+
+  @property({type: Number})
+  rows: number | undefined = undefined;
+
+  @property({type: Number})
+  cols: number | undefined = undefined;
 
   @property()
-  minlength = undefined;
+  name: string | undefined = undefined;
 
   @property()
-  rows = undefined;
-
-  @property()
-  cols = undefined;
-
-  @property()
-  name = undefined;
-
-  @property()
-  placeholder = undefined;
+  placeholder: string | undefined = undefined;
 
   @property({type: Boolean, reflect: true})
   readonly = false;
@@ -68,7 +68,7 @@ export class VscodeTextarea extends VscElement {
   @property({type: Boolean, reflect: true})
   required = false;
 
-  @property()
+  @property({type: Boolean})
   spellcheck = false;
 
   /**
@@ -158,7 +158,7 @@ export class VscodeTextarea extends VscElement {
         })}
       ></div>
       <textarea
-        autocomplete=${this.autocomplete}
+        autocomplete=${ifDefined(this.autocomplete)}
         ?disabled=${this.disabled}
         aria-label=${this.label}
         id="textarea"
@@ -177,7 +177,7 @@ export class VscodeTextarea extends VscElement {
           resize: this.resize,
         })}
         ?required=${this.required}
-        ?spellcheck=${this.spellcheck}
+        spellcheck=${this.spellcheck}
         @change=${this._handleChange}
         @input=${this._handleInput}
         @mousemove=${this._handleMouseMove}
