@@ -41,7 +41,7 @@ export class VscodeTable extends VscElement {
   @property({reflect: true})
   role = 'table';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   resizable = false;
 
   @property({type: Boolean, reflect: true})
@@ -84,7 +84,7 @@ export class VscodeTable extends VscElement {
   @property({attribute: 'min-column-width'})
   minColumnWidth = '50px';
 
-  @property({type: Boolean, attribute: 'delayed-resizing'})
+  @property({type: Boolean, reflect: true, attribute: 'delayed-resizing'})
   delayedResizing = false;
 
   /**

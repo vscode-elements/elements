@@ -25,7 +25,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
 ) {
   static styles = styles;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   set checked(val: boolean) {
     this._checked = val;
     this._indeterminate = false;
@@ -41,7 +41,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   @property()
   value = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean, reflect: true})

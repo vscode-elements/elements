@@ -40,7 +40,7 @@ export class VscodeIcon extends VscElement {
   /**
    * Enable rotation animation
    */
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   spin = false;
 
   /**
@@ -52,7 +52,7 @@ export class VscodeIcon extends VscElement {
   /**
    * Behaves like a button
    */
-  @property({type: Boolean, attribute: 'action-icon'})
+  @property({type: Boolean, reflect: true, attribute: 'action-icon'})
   actionIcon = false;
 
   private static stylesheetHref: string | undefined = '';

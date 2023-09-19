@@ -67,7 +67,7 @@ export class VscodeInputbox extends VscElement {
   @property()
   label = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   multiline = false;
 
   @property({type: String})
@@ -97,7 +97,7 @@ export class VscodeInputbox extends VscElement {
    * @deprecated
    * @attr panelInput
    */
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   panelInput = false;
 
   /**
@@ -135,10 +135,10 @@ export class VscodeInputbox extends VscElement {
   @property({type: Number})
   maxLength: number | undefined = undefined;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   multiple = false;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   readonly = false;
 
   @property({type: Number})

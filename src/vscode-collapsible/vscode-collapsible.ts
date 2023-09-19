@@ -28,7 +28,7 @@ export class VscodeCollapsible extends VscElement {
   @property()
   description = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   open = false;
 
   private _onHeaderClick() {

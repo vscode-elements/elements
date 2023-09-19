@@ -27,13 +27,13 @@ export class VscodeButton extends VscElement {
   @property({type: Number, reflect: true})
   tabindex = 0;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   secondary = false;
 
   @property({reflect: true})
   role = 'button';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   /**
