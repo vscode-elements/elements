@@ -165,10 +165,10 @@ export class VscodeTree extends VscElement {
   @property({type: Number})
   indent = 8;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   arrows = false;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   multiline = false;
 
   @property({type: Number, reflect: true})

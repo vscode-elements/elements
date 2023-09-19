@@ -17,7 +17,7 @@ export class VscodeSplitLayout extends VscElement {
   @property()
   split: 'horizontal' | 'vertical' = 'vertical';
 
-  @property({type: Boolean, attribute: 'reset-on-dbl-click'})
+  @property({type: Boolean, reflect: true,  attribute: 'reset-on-dbl-click'})
   resetOnDblClick = false;
 
   @property({attribute: 'initial-pos'})

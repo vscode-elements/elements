@@ -60,7 +60,7 @@ export class VscodeTextfield extends VscElement {
   @property({type: Number})
   minlength: number | undefined = undefined;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   multiple = false;
 
   @property()

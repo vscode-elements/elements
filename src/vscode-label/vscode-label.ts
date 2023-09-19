@@ -45,7 +45,7 @@ export class VscodeLabel extends VscElement {
     return this._id;
   }
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   required = false;
 
   attributeChangedCallback(

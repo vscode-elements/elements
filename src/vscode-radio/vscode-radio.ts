@@ -25,7 +25,7 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
 ) {
   static styles = styles;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   set checked(val: boolean) {
     this._checked = val;
     this.setAttribute('aria-checked', val ? 'true' : 'false');
@@ -43,7 +43,7 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
   @property()
   value = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({reflect: true})

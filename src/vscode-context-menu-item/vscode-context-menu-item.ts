@@ -37,7 +37,7 @@ export class VscodeContextMenuItem extends VscElement {
   @property({type: String})
   value = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   separator = false;
 
   @property({type: Number})
