@@ -181,7 +181,6 @@
     "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@custom-elements-manifest/analyzer": "^0.8.4",
-    "@custom-elements-manifest/to-markdown": "^0.1.0",
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@faker-js/faker": "^8.0.2",
     "@gerhobbelt/markdown-it-github-headings": "^2.0.0-2",
