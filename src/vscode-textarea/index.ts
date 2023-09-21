@@ -1,1 +1,1 @@
-export {VscodeTextarea} from './vscode-textarea';
+export {VscodeTextarea} from './vscode-textarea.js';

@@ -1,1 +1,1 @@
-export {VscodeTable} from './vscode-table';
+export {VscodeTable} from './vscode-table.js';

@@ -1,8 +1,8 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-collapsible.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-collapsible.styles.js';
 
 /**
  * @slot body - Main content.

@@ -8,8 +8,8 @@ import {
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-scrollable.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-scrollable.styles.js';
 
 /**
  * @cssprop [--min-thumb-height=20px]

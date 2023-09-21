@@ -1,4 +1,4 @@
-import {VscodeTextarea} from '../vscode-textarea';
+import {VscodeTextarea} from '../vscode-textarea/index.js';
 import '../vscode-textarea';
 import {expect} from '@open-wc/testing';
 

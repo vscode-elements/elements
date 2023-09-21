@@ -1,4 +1,4 @@
-import {VscodeSingleSelect} from '../vscode-single-select';
+import {VscodeSingleSelect} from '../vscode-single-select/index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
 import '../vscode-option';

@@ -1,1 +1,1 @@
-export {VscodeFormLabel} from './vscode-form-label';
+export {VscodeFormLabel} from './vscode-form-label.js';

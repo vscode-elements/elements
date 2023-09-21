@@ -1,4 +1,4 @@
-import {VscodeContextMenu} from '../vscode-context-menu';
+import {VscodeContextMenu} from '../vscode-context-menu/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-context-menu', () => {

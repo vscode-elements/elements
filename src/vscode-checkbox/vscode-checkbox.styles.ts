@@ -1,7 +1,7 @@
 import {css, CSSResultGroup} from 'lit';
-import defaultStyles from '../includes/default.styles';
-import baseStyles from '../includes/form-button-widget/base.styles';
-import formHelperTextStyles from '../includes/formHelperTextStyles';
+import defaultStyles from '../includes/default.styles.js';
+import baseStyles from '../includes/form-button-widget/base.styles.js';
+import formHelperTextStyles from '../includes/formHelperTextStyles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,

@@ -1,4 +1,4 @@
-import {VscodeInputbox} from '../vscode-inputbox';
+import {VscodeInputbox} from '../vscode-inputbox/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-inputbox', () => {

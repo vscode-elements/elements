@@ -5,9 +5,9 @@ import {
   queryAssignedElements,
   state,
 } from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement';
-import {VscodeRadio} from '../vscode-radio';
-import styles from './vscode-radio-group.styles';
+import {VscElement} from '../includes/VscElement.js';
+import {VscodeRadio} from '../vscode-radio/index.js';
+import styles from './vscode-radio-group.styles.js';
 
 @customElement('vscode-radio-group')
 export class VscodeRadioGroup extends VscElement {

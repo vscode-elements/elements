@@ -1,4 +1,4 @@
-import {VscodeCollapsible} from '../vscode-collapsible';
+import {VscodeCollapsible} from '../vscode-collapsible/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-collapsible', () => {

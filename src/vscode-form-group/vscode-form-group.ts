@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-form-group.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-form-group.styles.js';
 
 export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
 

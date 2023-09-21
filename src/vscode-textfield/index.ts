@@ -1,1 +1,1 @@
-export {VscodeTextfield} from './vscode-textfield';
+export {VscodeTextfield} from './vscode-textfield.js';

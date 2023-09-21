@@ -1,13 +1,13 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import uniqueId from '../includes/uniqueId';
-import {VscElement} from '../includes/VscElement';
-import {VscodeCheckboxGroup} from '../vscode-checkbox-group';
-import {VscodeRadioGroup} from '../vscode-radio-group';
-import {VscodeTextarea} from '../vscode-textarea';
-import {VscodeTextfield} from '../vscode-textfield';
-import styles from './vscode-label.styles';
+import uniqueId from '../includes/uniqueId.js';
+import {VscElement} from '../includes/VscElement.js';
+import {VscodeCheckboxGroup} from '../vscode-checkbox-group/index.js';
+import {VscodeRadioGroup} from '../vscode-radio-group/index.js';
+import {VscodeTextarea} from '../vscode-textarea/index.js';
+import {VscodeTextfield} from '../vscode-textfield/index.js';
+import styles from './vscode-label.styles.js';
 
 interface FocusableElement extends Element {
   focus: () => void;

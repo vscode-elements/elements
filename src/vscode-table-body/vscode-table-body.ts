@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-table-body.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-table-body.styles.js';
 
 /**
  * @cssprop [--tinted-row-background=var(--vscode-keybindingTable-rowsBackground)] - Inherited from [Table](/components/vscode-table/api/)

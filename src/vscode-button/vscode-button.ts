@@ -1,9 +1,9 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement';
-import '../vscode-icon';
-import styles from './vscode-button.styles';
+import {VscElement} from '../includes/VscElement.js';
+import '../vscode-icon/index.js';
+import styles from './vscode-button.styles.js';
 
 /**
  * @fires vsc-click Dispatched only when button is not in disabled state.

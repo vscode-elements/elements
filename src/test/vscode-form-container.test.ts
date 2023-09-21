@@ -1,4 +1,4 @@
-import {VscodeFormContainer} from '../vscode-form-container';
+import {VscodeFormContainer} from '../vscode-form-container/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-form-container', () => {

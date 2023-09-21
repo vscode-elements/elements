@@ -3,11 +3,11 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {VscElement} from '../includes/VscElement';
+import {VscElement} from '../includes/VscElement.js';
 import '../vscode-badge/index.js';
 import '../vscode-icon/index.js';
 import {VscodeIcon} from '../vscode-icon/index.js';
-import styles from './vscode-tree.styles';
+import styles from './vscode-tree.styles.js';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 

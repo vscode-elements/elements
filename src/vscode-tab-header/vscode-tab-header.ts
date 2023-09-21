@@ -1,8 +1,8 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-tab-header.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-tab-header.styles.js';
 
 /**
  * @cssprop [--foreground=var(--vscode-foreground)]

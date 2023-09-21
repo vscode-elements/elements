@@ -1,4 +1,4 @@
-import {VscodeTabHeader} from '../vscode-tab-header';
+import {VscodeTabHeader} from '../vscode-tab-header/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-tab-header', () => {

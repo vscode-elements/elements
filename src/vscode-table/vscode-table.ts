@@ -9,15 +9,15 @@ import {
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {VscElement} from '../includes/VscElement';
+import {VscElement} from '../includes/VscElement.js';
 import '../vscode-scrollable';
-import {VscodeScrollable} from '../vscode-scrollable';
-import {VscodeTableBody} from '../vscode-table-body';
-import {VscodeTableCell} from '../vscode-table-cell';
-import {VscodeTableHeader} from '../vscode-table-header';
-import {VscodeTableHeaderCell} from '../vscode-table-header-cell';
-import {rawValueToPercentage} from './helpers';
-import styles from './vscode-table.styles';
+import {VscodeScrollable} from '../vscode-scrollable/index.js';
+import {VscodeTableBody} from '../vscode-table-body/index.js';
+import {VscodeTableCell} from '../vscode-table-cell/index.js';
+import {VscodeTableHeader} from '../vscode-table-header/index.js';
+import {VscodeTableHeaderCell} from '../vscode-table-header-cell/index.js';
+import {rawValueToPercentage} from './helpers.js';
+import styles from './vscode-table.styles.js';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 

@@ -5,16 +5,16 @@ import {
   query,
   queryAssignedNodes,
 } from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement';
-import {VscodeCheckbox} from '../vscode-checkbox';
-import {VscodeCheckboxGroup} from '../vscode-checkbox-group';
-import {VscodeFormGroup, FormGroupVariant} from '../vscode-form-group';
-import {VscodeInputbox} from '../vscode-inputbox';
-import {VscodeMultiSelect} from '../vscode-multi-select';
-import {VscodeRadio} from '../vscode-radio';
-import {VscodeRadioGroup} from '../vscode-radio-group';
-import {VscodeSingleSelect} from '../vscode-single-select';
-import styles from './vscode-form-container.styles';
+import {VscElement} from '../includes/VscElement.js';
+import {VscodeCheckbox} from '../vscode-checkbox/index.js';
+import {VscodeCheckboxGroup} from '../vscode-checkbox-group/index.js';
+import {VscodeFormGroup, FormGroupVariant} from '../vscode-form-group/index.js';
+import {VscodeInputbox} from '../vscode-inputbox/index.js';
+import {VscodeMultiSelect} from '../vscode-multi-select/index.js';
+import {VscodeRadio} from '../vscode-radio/index.js';
+import {VscodeRadioGroup} from '../vscode-radio-group/index.js';
+import {VscodeSingleSelect} from '../vscode-single-select/index.js';
+import styles from './vscode-form-container.styles.js';
 
 enum FormGroupLayout {
   HORIZONTAL = 'horizontal',

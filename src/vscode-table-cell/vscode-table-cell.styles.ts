@@ -1,5 +1,5 @@
 import {css, CSSResultGroup} from 'lit';
-import defaultStyles from '../includes/default.styles';
+import defaultStyles from '../includes/default.styles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,

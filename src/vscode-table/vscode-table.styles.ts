@@ -1,6 +1,6 @@
 import {css, CSSResultGroup} from 'lit';
-import baseStyles from '../includes/default.styles';
-import declareThemeVariables from '../includes/declareThemeVariables';
+import baseStyles from '../includes/default.styles.js';
+import declareThemeVariables from '../includes/declareThemeVariables.js';
 
 const styles: CSSResultGroup = [
   baseStyles,

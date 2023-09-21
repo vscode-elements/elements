@@ -1,1 +1,1 @@
-export {VscodeButton} from './vscode-button';
+export {VscodeButton} from './vscode-button.js';

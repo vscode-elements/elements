@@ -1,4 +1,4 @@
-import {VscodeIcon} from '../vscode-icon';
+import {VscodeIcon} from '../vscode-icon/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-icon', () => {

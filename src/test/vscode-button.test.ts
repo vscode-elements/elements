@@ -1,4 +1,4 @@
-import {VscodeButton} from '../vscode-button';
+import {VscodeButton} from '../vscode-button/index.js';
 import {expect} from '@open-wc/testing';
 import '../vscode-option';
 

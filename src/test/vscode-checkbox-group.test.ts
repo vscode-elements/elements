@@ -1,4 +1,4 @@
-import {VscodeCheckboxGroup} from '../vscode-checkbox-group';
+import {VscodeCheckboxGroup} from '../vscode-checkbox-group/index.js';
 import {expect} from '@open-wc/testing';
 import '../vscode-option';
 

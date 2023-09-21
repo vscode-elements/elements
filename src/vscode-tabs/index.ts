@@ -1,1 +1,1 @@
-export {VscodeTabs} from './vscode-tabs';
+export {VscodeTabs} from './vscode-tabs.js';

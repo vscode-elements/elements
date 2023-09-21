@@ -1,4 +1,4 @@
-import {VscodeRadioGroup} from '../vscode-radio-group';
+import {VscodeRadioGroup} from '../vscode-radio-group/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-radio-group', () => {

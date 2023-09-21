@@ -1,1 +1,1 @@
-export {VscodeSingleSelect} from './vscode-single-select';
+export {VscodeSingleSelect} from './vscode-single-select.js';

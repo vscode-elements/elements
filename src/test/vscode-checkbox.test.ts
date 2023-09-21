@@ -1,4 +1,4 @@
-import {VscodeCheckbox} from '../vscode-checkbox';
+import {VscodeCheckbox} from '../vscode-checkbox/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-checkbox', () => {
