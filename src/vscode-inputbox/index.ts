@@ -1,1 +1,1 @@
-export {VscodeInputbox} from './vscode-inputbox';
+export {VscodeInputbox} from './vscode-inputbox.js';

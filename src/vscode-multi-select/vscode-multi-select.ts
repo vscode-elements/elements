@@ -2,9 +2,9 @@ import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
-import {chevronDownIcon} from '../includes/vscode-select/template-elements';
-import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base';
-import styles from './vscode-multi-select.styles';
+import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
+import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
+import styles from './vscode-multi-select.styles.js';
 
 /**
  * @prop {boolean} invalid

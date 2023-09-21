@@ -4,7 +4,7 @@ import {
   startsWithPerTermMatch,
   startsWithMatch,
   containsMatch,
-} from '../includes/vscode-select/helpers';
+} from '../includes/vscode-select/helpers.js';
 
 describe('helpers', () => {
   it('fuzzyMatch', () => {

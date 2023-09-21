@@ -1,4 +1,4 @@
-import {VscodeLabel} from '../vscode-label';
+import {VscodeLabel} from '../vscode-label/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-label', () => {

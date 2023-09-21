@@ -1,4 +1,4 @@
-import {VscodeMultiSelect} from '../vscode-multi-select';
+import {VscodeMultiSelect} from '../vscode-multi-select/index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import '../vscode-option';
 

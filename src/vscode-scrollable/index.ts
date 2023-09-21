@@ -1,1 +1,1 @@
-export {VscodeScrollable} from './vscode-scrollable';
+export {VscodeScrollable} from './vscode-scrollable.js';

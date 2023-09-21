@@ -1,5 +1,5 @@
 import {css} from 'lit';
-import declareThemeVariables from '../declareThemeVariables';
+import declareThemeVariables from '../declareThemeVariables.js';
 
 const DEFAULT_FONT_SIZE = 13;
 const DEFAULT_LINE_HEIGHT = 18;

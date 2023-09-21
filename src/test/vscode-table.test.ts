@@ -1,4 +1,4 @@
-import {VscodeTable} from '../vscode-table';
+import {VscodeTable} from '../vscode-table/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-table', () => {

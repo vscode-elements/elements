@@ -2,10 +2,10 @@ import {html, nothing, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import '../../vscode-button';
-import {VscodeOption} from '../../vscode-option';
-import {InternalOption, Option, SearchMethod} from './types';
-import {filterOptionsByPattern} from './helpers';
-import {VscElement} from '../VscElement';
+import {VscodeOption} from '../../vscode-option/index.js';
+import type {InternalOption, Option, SearchMethod} from './types.js';
+import {filterOptionsByPattern} from './helpers.js';
+import {VscElement} from '../VscElement.js';
 
 interface OptionListStat {
   selectedIndexes: number[];

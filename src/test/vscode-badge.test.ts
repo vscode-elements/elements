@@ -1,4 +1,4 @@
-import {VscodeBadge} from '../vscode-badge';
+import {VscodeBadge} from '../vscode-badge/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-badge', () => {

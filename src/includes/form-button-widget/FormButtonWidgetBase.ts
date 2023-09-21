@@ -1,6 +1,6 @@
 import {property} from 'lit/decorators.js';
-import {applyForegroundRGBA} from '../themeHelpers';
-import {VscElement} from '../VscElement';
+import {applyForegroundRGBA} from '../themeHelpers.js';
+import {VscElement} from '../VscElement.js';
 
 export class FormButtonWidgetBase extends VscElement {
   @property({type: Number, reflect: true})

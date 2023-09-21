@@ -1,4 +1,4 @@
-import {VscodeTableHeaderCell} from '../vscode-table-header-cell';
+import {VscodeTableHeaderCell} from '../vscode-table-header-cell/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-table-header-cell', () => {

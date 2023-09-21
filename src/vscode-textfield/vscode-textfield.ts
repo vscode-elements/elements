@@ -1,8 +1,8 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-textfield.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-textfield.styles.js';
 
 /**
  * A simple inline textfield

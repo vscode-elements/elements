@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-table-header.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-table-header.styles.js';
 
 /**
  * @cssprop [--header-background=var(--vscode-keybindingTable-headerBackground)] - Inherited from [Table](/components/vscode-table/api/)

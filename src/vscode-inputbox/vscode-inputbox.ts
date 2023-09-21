@@ -3,8 +3,8 @@ import {customElement, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-inputbox.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-inputbox.styles.js';
 
 enum Severity {
   DEFAULT = 'default',

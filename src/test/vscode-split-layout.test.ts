@@ -1,4 +1,4 @@
-import {VscodeSplitLayout} from '../vscode-split-layout';
+import {VscodeSplitLayout} from '../vscode-split-layout/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-split-layout', () => {

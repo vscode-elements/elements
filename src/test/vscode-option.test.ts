@@ -1,4 +1,4 @@
-import {VscodeOption} from '../vscode-option';
+import {VscodeOption} from '../vscode-option/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-option', () => {

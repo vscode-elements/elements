@@ -1,1 +1,1 @@
-export {VscodeFormControl} from './vscode-form-control';
+export {VscodeFormControl} from './vscode-form-control.js';

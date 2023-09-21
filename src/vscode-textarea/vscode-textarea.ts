@@ -3,8 +3,8 @@ import {customElement, property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-textarea.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-textarea.styles.js';
 
 /**
  * Multi-line text input.

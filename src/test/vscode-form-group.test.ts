@@ -1,4 +1,4 @@
-import {VscodeFormGroup} from '../vscode-form-group';
+import {VscodeFormGroup} from '../vscode-form-group/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-form-group', () => {

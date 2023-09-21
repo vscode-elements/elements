@@ -1,4 +1,4 @@
-import {VscodeScrollable} from '../vscode-scrollable';
+import {VscodeScrollable} from '../vscode-scrollable/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-scrollable', () => {

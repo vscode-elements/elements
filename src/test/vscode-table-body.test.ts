@@ -1,4 +1,4 @@
-import {VscodeTableBody} from '../vscode-table-body';
+import {VscodeTableBody} from '../vscode-table-body/index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-table-body', () => {

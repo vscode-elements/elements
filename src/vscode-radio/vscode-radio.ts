@@ -1,9 +1,9 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase';
-import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio';
-import styles from './vscode-radio.styles';
+import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
+import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
+import styles from './vscode-radio.styles.js';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.

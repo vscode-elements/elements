@@ -1,4 +1,4 @@
-import {InternalOption, SearchMethod} from './types';
+import {InternalOption, SearchMethod} from './types.js';
 
 export const startsWithPerTermMatch = (
   subject: string,

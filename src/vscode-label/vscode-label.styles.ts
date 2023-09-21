@@ -1,7 +1,7 @@
 import {css, CSSResultGroup} from 'lit';
-import defaultStyles from '../includes/default.styles';
-import declareThemeVariables from '../includes/declareThemeVariables';
-import {INPUT_LINE_HEIGHT_RATIO} from '../includes/helpers';
+import defaultStyles from '../includes/default.styles.js';
+import declareThemeVariables from '../includes/declareThemeVariables.js';
+import {INPUT_LINE_HEIGHT_RATIO} from '../includes/helpers.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,

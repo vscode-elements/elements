@@ -1,5 +1,5 @@
 import {css} from 'lit';
-import declareThemeVariables from '../declareThemeVariables';
+import declareThemeVariables from '../declareThemeVariables.js';
 
 export default [
   declareThemeVariables([

@@ -1,4 +1,4 @@
-import {VscodeTextfield} from '../vscode-textfield';
+import {VscodeTextfield} from '../vscode-textfield/index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 
 describe('vscode-textfield', () => {

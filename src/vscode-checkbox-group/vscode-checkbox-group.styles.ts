@@ -1,6 +1,6 @@
 import {css, CSSResultGroup} from 'lit';
-import defaultStyles from '../includes/default.styles';
-import formHelperTextStyles from '../includes/formHelperTextStyles';
+import defaultStyles from '../includes/default.styles.js';
+import formHelperTextStyles from '../includes/formHelperTextStyles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
