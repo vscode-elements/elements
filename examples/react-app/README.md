@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Usage example of VSCode Webview Elements
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This demo was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). It displays two vscode-button to demonstrate using the VSCode Webview Elements library with React. The required changes are in the `App.tsx` and the `global.d.ts`.
 
 ## Available Scripts
 

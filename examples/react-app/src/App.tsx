@@ -1,9 +1,11 @@
-import {DOMAttributes} from 'react';
+/**
+ * Import the custom element definition. The custom element will be registered automatically.
+ */
 import '@bendera/vscode-webview-elements/dist/vscode-button/index.js';
-import {VscodeButton} from '@bendera/vscode-webview-elements/dist/vscode-button/vscode-button.js';
 import './App.css';
 
 function App() {
+  // vscode-button is registered as a valid HTML element in the global.d.ts
   return (
     <div className="App">
       <vscode-button>Primary button</vscode-button>
@@ -13,13 +15,3 @@ function App() {
 }
 
 export default App;
-
-type CustomElement<T> = Partial<T & DOMAttributes<T> & {children: any}>;
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      ['vscode-button']: CustomElement<VscodeButton>;
-    }
-  }
-}

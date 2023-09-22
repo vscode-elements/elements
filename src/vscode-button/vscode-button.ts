@@ -27,6 +27,9 @@ export class VscodeButton extends VscElement {
   @property({type: Number, reflect: true})
   tabindex = 0;
 
+  /**
+   * Button has a less prominent style.
+   */
   @property({type: Boolean, reflect: true})
   secondary = false;
 
