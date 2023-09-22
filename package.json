@@ -26,6 +26,7 @@
     "docs:start": "wireit",
     "analyze": "wireit",
     "serve": "wireit",
+    "spellcheck": "wireit",
     "start": "wireit",
     "test": "wireit",
     "test:coverage": "wireit",
@@ -128,6 +129,9 @@
       "command": "wds --watch",
       "service": true
     },
+    "spellcheck": {
+      "command": "cspell \"src/**/*\" \"docs-src/**/*\""
+    },
     "start": {
       "command": "wds --watch",
       "dependencies": [
@@ -180,6 +184,7 @@
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "@cspell/dict-lorem-ipsum": "^4.0.0",
     "@custom-elements-manifest/analyzer": "^0.8.3",
     "@custom-elements-manifest/to-markdown": "^0.1.0",
     "@esm-bundle/chai": "^4.3.4-fix.0",
@@ -208,6 +213,7 @@
     "color": "^4.2.3",
     "concurrently": "^8.2.0",
     "cross-env": "^7.0.3",
+    "cspell": "^7.3.6",
     "deepmerge": "^4.3.1",
     "dotenv": "^16.3.1",
     "eslint": "^8.43.0",
