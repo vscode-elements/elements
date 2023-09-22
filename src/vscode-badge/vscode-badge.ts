@@ -1,6 +1,6 @@
 import {html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement.js';
+import {property} from 'lit/decorators.js';
+import {VscComponentName, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-badge.styles.js';
 
 /**
@@ -10,8 +10,9 @@ import styles from './vscode-badge.styles.js';
  * @cssprop [--activity-bar-badge-background=var(--vscode-activityBarBadge-background)] - activity bar variant background color
  * @cssprop [--activity-bar-badge-foreground=var(--vscode-activityBarBadge-foreground)] - activity bar variant foreground color
  */
-@customElement('vscode-badge')
 export class VscodeBadge extends VscElement {
+  static componentName: VscComponentName = 'Badge';
+
   static styles = styles;
 
   @property()
@@ -19,11 +20,5 @@ export class VscodeBadge extends VscElement {
 
   render(): TemplateResult {
     return html` <slot></slot> `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'vscode-badge': VscodeBadge;
   }
 }

@@ -1,7 +1,7 @@
 import {html, nothing, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement.js';
+import {VscComponentName, VscElement} from '../includes/VscElement.js';
 import '../vscode-icon/index.js';
 import styles from './vscode-button.styles.js';
 
@@ -20,8 +20,9 @@ import styles from './vscode-button.styles.js';
  * @cssprop [--secondary-hover-background=var(--vscode-button-secondaryHoverBackground)]
  * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
-@customElement('vscode-button')
 export class VscodeButton extends VscElement {
+  static componentName: VscComponentName = 'Button';
+
   static styles = styles;
 
   @property({type: Number, reflect: true})
@@ -136,16 +137,17 @@ export class VscodeButton extends VscElement {
       'has-icon-before': hasIcon,
       'has-icon-after': hasIconAfter,
     };
+    const iconTagName = VscElement.tagNameMap.Icon;
 
     const iconElem = hasIcon
-      ? html`<vscode-icon name="${this.icon}" class="icon"></vscode-icon>`
+      ? html`<${iconTagName} name="${this.icon}" class="icon"></${iconTagName}>`
       : nothing;
 
     const iconAfterElem = hasIconAfter
-      ? html`<vscode-icon
+      ? html`<${iconTagName}
           name="${this.iconAfter}"
           class="icon-after"
-        ></vscode-icon>`
+        ></${iconTagName}>`
       : nothing;
 
     return html`
@@ -155,11 +157,5 @@ export class VscodeButton extends VscElement {
         ${iconAfterElem}
       </span>
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'vscode-button': VscodeButton;
   }
 }

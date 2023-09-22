@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {VscElement} from '../includes/VscElement.js';
+import {VscComponentName, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-icon.styles.js';
 
 /**
@@ -16,8 +16,9 @@ import styles from './vscode-icon.styles.js';
  * @cssprop [--active-background=var(--vscode-toolbar-activeBackground)] - Active state background color in `active-icon` mode
  * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
-@customElement('vscode-icon')
 export class VscodeIcon extends VscElement {
+  static componentName: VscComponentName = 'Icon';
+
   static styles = styles;
   /**
    * Set a meaningful label in `action-icon` mode for the screen readers
@@ -128,11 +129,5 @@ export class VscodeIcon extends VscElement {
       />
       ${wrapped}
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'vscode-icon': VscodeIcon;
   }
 }
