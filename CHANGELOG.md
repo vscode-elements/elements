@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
+- Added a [React demo app](examples/react-app) to the repository.
 - Added `autofocus` attribute to **Textarea** and **Textfield**
 - All boolean properties are reflected. Read the [Open Web Components](https://open-wc.org/guides/knowledge/attributes-and-properties/#attribute-and-property-reflection) documentation for more details.
 
