@@ -235,7 +235,11 @@ export class VscodeMultiSelect extends VscodeSelectBase {
         >
           <vscode-icon name="clear-all"></vscode-icon>
         </button>
-        <vscode-button @click="${this._onMultiAcceptClick}">OK</vscode-button>
+        <vscode-button
+          class="button-accept"
+          @click="${this._onMultiAcceptClick}"
+          >OK</vscode-button
+        >
       </div>
     `;
   }
