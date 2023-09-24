@@ -4,6 +4,8 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
+import type {VscTextareaInputEvent} from '../events/textarea-input.js';
+import type {VscTextareaChangeEvent} from '../events/textarea-change.js';
 import styles from './vscode-textarea.styles.js';
 
 /**
@@ -121,6 +123,14 @@ export class VscodeTextarea extends VscElement {
         detail: {data: ev.data, originalEvent: ev},
       })
     );
+
+    const event = new CustomEvent('vsc-textarea-change', {
+      detail: {
+        data: ev.data,
+        originalEvent: ev,
+      },
+    }) as VscTextareaChangeEvent;
+    this.dispatchEvent(event);
   }
 
   private _handleInput(ev: InputEvent) {
@@ -131,6 +141,14 @@ export class VscodeTextarea extends VscElement {
         detail: {data: ev.data, originalEvent: ev},
       })
     );
+
+    const event = new CustomEvent('vsc-textarea-input', {
+      detail: {
+        data: ev.data,
+        originalEvent: ev,
+      },
+    }) as VscTextareaInputEvent;
+    this.dispatchEvent(event);
   }
 
   private _handleMouseMove(ev: MouseEvent) {

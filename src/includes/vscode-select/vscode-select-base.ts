@@ -6,6 +6,8 @@ import {VscodeOption} from '../../vscode-option/index.js';
 import type {InternalOption, Option, SearchMethod} from './types.js';
 import {filterOptionsByPattern} from './helpers.js';
 import {VscElement} from '../VscElement.js';
+import type {VscMultiSelectChangeEvent} from '../../events/multi-select-change';
+import type {VscSingleSelectChangeEvent} from '../../events/single-select-change';
 
 interface OptionListStat {
   selectedIndexes: number[];
@@ -73,13 +75,15 @@ export class VscodeSelectBase extends VscElement {
     this._options = opts.map((op, index) => ({...op, index}));
   }
   get options(): Option[] {
-    return this._options.map(({label, value, description, selected, disabled}) => ({
-      label,
-      value,
-      description,
-      selected,
-      disabled,
-    }));
+    return this._options.map(
+      ({label, value, description, selected, disabled}) => ({
+        label,
+        value,
+        description,
+        selected,
+        disabled,
+      })
+    );
   }
 
   @property({type: Number, attribute: true, reflect: true})
@@ -186,7 +190,7 @@ export class VscodeSelectBase extends VscElement {
         value: elValue,
         description,
         selected,
-        disabled
+        disabled,
       } = el as VscodeOption;
 
       const value = (el as VscodeOption).hasAttribute('value')
@@ -199,7 +203,7 @@ export class VscodeSelectBase extends VscElement {
         description,
         selected,
         index: currentIndex,
-        disabled
+        disabled,
       };
 
       currentIndex = options.push(op);
@@ -248,7 +252,14 @@ export class VscodeSelectBase extends VscElement {
           },
         })
       );
+
+      this.dispatchEvent(
+        new CustomEvent('vsc-single-select-change', {
+          detail: {selectedIndex: this._selectedIndex, value: this._value},
+        }) as VscSingleSelectChangeEvent
+      );
     } else {
+      // keep for backward compatibility
       this.dispatchEvent(
         new CustomEvent('vsc-change', {
           detail: {
@@ -256,6 +267,12 @@ export class VscodeSelectBase extends VscElement {
             value: this._values,
           },
         })
+      );
+
+      this.dispatchEvent(
+        new CustomEvent('vsc-multi-select-change', {
+          detail: {selectedIndexes: this._selectedIndexes, value: this._values},
+        }) as VscMultiSelectChangeEvent
       );
     }
   }

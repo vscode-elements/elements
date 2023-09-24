@@ -3,6 +3,7 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
+import type {VscRadioChangeEvent} from '../events/radio-change.js';
 import styles from './vscode-radio.styles.js';
 
 /**
@@ -70,6 +71,15 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
         }
       )
     );
+
+    const ev = new CustomEvent('vsc-radio-change', {
+      detail: {
+        checked: this.checked,
+        label: this.label,
+        value: this.value,
+      },
+    }) as VscRadioChangeEvent;
+    this.dispatchEvent(ev);
   }
 
   private _checkButton() {

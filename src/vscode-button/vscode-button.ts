@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import '../vscode-icon/index.js';
 import styles from './vscode-button.styles.js';
+import {VscClickEvent} from '../events/click.js';
 
 /**
  * @fires vsc-click Dispatched only when button is not in disabled state.
@@ -90,29 +91,22 @@ export class VscodeButton extends VscElement {
       (event.key === 'Enter' || event.key === ' ') &&
       !this.hasAttribute('disabled')
     ) {
-      this.dispatchEvent(
-        new CustomEvent<{
-          originalEvent: MouseEvent;
-        }>('vsc-click', {
-          detail: {
-            originalEvent: new MouseEvent('click'),
-          },
-        })
-      );
+      const event = new CustomEvent('vsc-click', {
+        detail: {originalEvent: new MouseEvent('click')},
+      }) as VscClickEvent;
+
+      this.dispatchEvent(event);
     }
   }
 
-  private _handleClick(event: MouseEvent) {
+  private _handleClick(ev: MouseEvent) {
     if (!this.hasAttribute('disabled')) {
-      this.dispatchEvent(
-        new CustomEvent<{
-          originalEvent: MouseEvent;
-        }>('vsc-click', {
-          detail: {
-            originalEvent: event,
-          },
-        })
-      );
+
+      const event = new CustomEvent('vsc-click', {
+        detail: {originalEvent: ev},
+      }) as VscClickEvent;
+
+      this.dispatchEvent(event);
     }
   }
 

@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
 import styles from './vscode-checkbox.styles.js';
+import {VscCheckboxChangeEvent} from '../events/checkbox-change.js';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
@@ -73,6 +74,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
     this._indeterminate = false;
     this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
 
+    // keep for backward compatibility
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
         detail: {
@@ -84,6 +86,16 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
         composed: true,
       })
     );
+
+    const ev = new CustomEvent('vsc-checkbox-change', {
+      detail: {
+        checked: this._checked,
+        label: this.label,
+        value: this.value,
+      },
+    }) as VscCheckboxChangeEvent;
+
+    this.dispatchEvent(ev);
   }
 
   protected _handleKeyDown(ev: KeyboardEvent): void {
