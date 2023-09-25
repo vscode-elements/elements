@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Form Demo</title>
+  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+  <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
+  <script type="module" src="../dev-assets/component-preview.js"></script>
+  <script type="module" src="../dist/vscode-tabs/index.js"></script>
+  <script type="module" src="../dist/vscode-form-container/index.js"></script>
+  <script type="module" src="../dist/vscode-form-group/index.js"></script>
+  <script type="module" src="../dist/vscode-single-select/index.js"></script>
+  <script type="module" src="../dist/vscode-multi-select/index.js"></script>
+  <script type="module" src="../dist/vscode-option/index.js"></script>
+  <script type="module" src="../dist/vscode-radio/index.js"></script>
+  <script type="module" src="../dist/vscode-radio-group/index.js"></script>
+  <script type="module" src="../dist/vscode-checkbox/index.js"></script>
+  <script type="module" src="../dist/vscode-checkbox-group/index.js"></script>
+  <script type="module" src="../dist/vscode-form-helper/index.js"></script>
+  <script type="module" src="../dist/vscode-inputbox/index.js"></script>
+  <script type="module" src="../dist/vscode-label/index.js"></script>
+  <script type="module" src="../dist/vscode-textarea/index.js"></script>
+  <script type="module" src="../dist/vscode-textfield/index.js"></script>
+</head>
+
+<body>
+  <div class="story">
+    <h2 class="story-title">Native form</h2>
+    <div class="story-content">
+      <form action="/" enctype="application/x-www-form-urlencoded" method="get">
+        <label for="test">Test</label>
+        <input type="text" name="test" id="test">
+        <select>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <button type="submit" name="submit-button">Submit</button>
+      </form>
+    </div>
+  </div>
+  <div class="story">
+    <h2 class="story-title">VSC Form</h2>
+    <div class="story-content">
+      <component-preview>
+        <form action="/" enctype="application/x-www-form-urlencoded" method="get" id="form-vsc">
+          <vscode-form-group>
+            <vscode-label for="test-vsc">Test</vscode-label>
+            <vscode-textfield name="test-vsc" id="test-vsc"></vscode-textfield>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-button action-type="submit" name="submit-button-vsc"
+              value="Submit Button VSC" role="button">Submit</vscode-button>
+          </vscode-form-group>
+          <button type="submit" name="submit-button">Submit</button>
+        </form>
+        <script type="module">
+          const form = document.getElementById('form-vsc');
+          form.addEventListener('submit', (ev) => {
+            const data = new FormData(form);
+
+            for (const entry of data.entries()) {
+              console.log(`${entry[0]}: ${entry[1]}`);
+            }
+          });
+        </script>
+      </component-preview>
+    </div>
+  </div>
+</body>
+
+</html>

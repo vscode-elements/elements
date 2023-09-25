@@ -23,6 +23,7 @@ import styles from './vscode-button.styles.js';
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {
   static styles = styles;
+  static formAssociated = true;
 
   @property({type: Number, reflect: true})
   tabindex = 0;
@@ -54,12 +55,28 @@ export class VscodeButton extends VscElement {
   @property({type: Boolean, reflect: true})
   focused = false;
 
+  @property({reflect: true, attribute: 'action-type'})
+  type: 'submit' | 'reset' | 'button' = 'button';
+
+  @property()
+  value = '';
+
   private _prevTabindex = 0;
+  private _internals: ElementInternals;
+
+  get form(): HTMLFormElement | null {
+    return this._internals.form;
+  }
+
+  get name() {
+    return this.getAttribute('name');
+  }
 
   constructor() {
     super();
     this.addEventListener('keydown', this._handleKeyDown.bind(this));
     this.addEventListener('click', this._handleClick.bind(this));
+    this._internals = this.attachInternals();
   }
 
   connectedCallback(): void {
@@ -99,6 +116,10 @@ export class VscodeButton extends VscElement {
           },
         })
       );
+
+      if (this._internals.form) {
+        this._internals.form.submit();
+      }
     }
   }
 
@@ -113,6 +134,10 @@ export class VscodeButton extends VscElement {
           },
         })
       );
+
+      if (this._internals.form) {
+        this._internals.form.requestSubmit();
+      }
     }
   }
 
