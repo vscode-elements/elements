@@ -26,6 +26,10 @@ import styles from './vscode-textfield.styles.js';
 export class VscodeTextfield extends VscElement {
   static styles = styles;
 
+  static get formAssociated() {
+    return true;
+  }
+
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
 
@@ -101,14 +105,24 @@ export class VscodeTextfield extends VscElement {
   @property()
   set value(val: string) {
     this._value = val;
+    this._internals.setFormValue(val);
   }
 
   get value(): string {
     return this._value;
   }
 
+  get form(): HTMLFormElement | null {
+    return this._internals.form;
+  }
+
   get wrappedElement(): HTMLInputElement {
     return this._inputEl;
+  }
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
   }
 
   connectedCallback(): void {
@@ -132,6 +146,7 @@ export class VscodeTextfield extends VscElement {
   private _inputEl!: HTMLInputElement;
 
   private _value = '';
+  private _internals: ElementInternals;
 
   private _validate() {
     this.invalid = !this._inputEl.checkValidity();
@@ -143,8 +158,14 @@ export class VscodeTextfield extends VscElement {
     );
   }
 
-  private _onInput(ev: InputEvent) {
+  private _dataChanged() {
     this._value = this._inputEl.value;
+    this._internals.setFormValue(this._inputEl.value);
+    this._internals.setValidity(this._inputEl.validity)
+  }
+
+  private _onInput(ev: InputEvent) {
+    this._dataChanged();
 
     this.dispatchEvent(
       new CustomEvent('vsc-input', {detail: {data: ev.data, originalEvent: ev}})
@@ -152,7 +173,7 @@ export class VscodeTextfield extends VscElement {
   }
 
   private _onChange(ev: InputEvent) {
-    this._value = this._inputEl.value;
+    this._dataChanged();
 
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
