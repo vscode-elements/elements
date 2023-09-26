@@ -24,6 +24,11 @@
   <script type="module" src="../dist/vscode-label/index.js"></script>
   <script type="module" src="../dist/vscode-textarea/index.js"></script>
   <script type="module" src="../dist/vscode-textfield/index.js"></script>
+  <style>
+    input:invalid {
+      border: 1px solid red;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,7 +37,7 @@
     <div class="story-content">
       <form action="/" enctype="application/x-www-form-urlencoded" method="get">
         <label for="test">Test</label>
-        <input type="text" name="test" id="test">
+        <input type="text" name="test" id="test" pattern="[0-9]{3}">
         <select>
           <option value="1">One</option>
           <option value="2">Two</option>
@@ -49,7 +54,7 @@
         <form action="/" enctype="application/x-www-form-urlencoded" method="get" id="form-vsc">
           <vscode-form-group>
             <vscode-label for="test-vsc">Test</vscode-label>
-            <vscode-textfield name="test-vsc" id="test-vsc"></vscode-textfield>
+            <vscode-textfield name="test-vsc" id="test-vsc" pattern="[0-9]{3}" required></vscode-textfield>
           </vscode-form-group>
           <vscode-form-group>
             <vscode-button action-type="submit" name="submit-button-vsc"
@@ -65,6 +70,11 @@
             for (const entry of data.entries()) {
               console.log(`${entry[0]}: ${entry[1]}`);
             }
+          });
+
+          const vscTextfield = document.getElementById('test-vsc');
+          vscTextfield.addEventListener('invalid', (ev) => {
+            console.log(ev);
           });
         </script>
       </component-preview>

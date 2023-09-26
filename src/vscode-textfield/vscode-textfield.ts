@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from '../includes/VscElement.js';
@@ -29,6 +29,11 @@ export class VscodeTextfield extends VscElement {
   static get formAssociated() {
     return true;
   }
+
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
@@ -85,7 +90,7 @@ export class VscodeTextfield extends VscElement {
   @property({type: Number})
   step: number | undefined = undefined;
 
-  @property()
+  @property({reflect: true})
   type:
     | 'color'
     | 'date'
@@ -116,6 +121,28 @@ export class VscodeTextfield extends VscElement {
     return this._internals.form;
   }
 
+  get validity(): ValidityState {
+    return this._internals.validity;
+  }
+
+  get validationMessage() {
+    return this._internals.validationMessage;
+  }
+
+  get willValidate() {
+    return this._internals.willValidate;
+  }
+
+  checkValidity() {
+    this._setValidityFromInput();
+    return this._internals.checkValidity();
+  }
+
+  reportValidity() {
+    this._setValidityFromInput();
+    return this._internals.reportValidity();
+  }
+
   get wrappedElement(): HTMLInputElement {
     return this._inputEl;
   }
@@ -123,23 +150,24 @@ export class VscodeTextfield extends VscElement {
   constructor() {
     super();
     this._internals = this.attachInternals();
+    this.addEventListener('focus', () => {
+      this._inputEl.focus();
+    });
   }
 
   connectedCallback(): void {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      this._validate();
+      // this._validate();
+      this._inputEl.checkValidity();
+      this._setValidityFromInput();
+      this._manageRequired();
     });
   }
 
   focus(): void {
     this._inputEl.focus();
-  }
-
-  checkValidity(): boolean {
-    this._validate();
-    return !this.invalid;
   }
 
   @query('#input')
@@ -161,11 +189,34 @@ export class VscodeTextfield extends VscElement {
   private _dataChanged() {
     this._value = this._inputEl.value;
     this._internals.setFormValue(this._inputEl.value);
-    this._internals.setValidity(this._inputEl.validity)
+  }
+
+  private _setValidityFromInput() {
+    this._internals.setValidity(
+      this._inputEl.validity,
+      this._inputEl.validationMessage
+    );
+  }
+
+  private _manageRequired() {
+    const {value} = this;
+    console.log({value, required: this.required});
+    if (value === '' && this.required) {
+      this._internals.setValidity(
+        {
+          valueMissing: true,
+        },
+        'This field is required',
+        this._inputEl
+      );
+    } else {
+      this._internals.setValidity({});
+    }
   }
 
   private _onInput(ev: InputEvent) {
     this._dataChanged();
+    this._manageRequired();
 
     this.dispatchEvent(
       new CustomEvent('vsc-input', {detail: {data: ev.data, originalEvent: ev}})
@@ -216,7 +267,6 @@ export class VscodeTextfield extends VscElement {
         @change=${this._onChange}
         @focus=${this._onFocus}
         @input=${this._onInput}
-        @invalid=${this._onInvalid}
       />
       <slot name="content-after"></slot>
     `;
