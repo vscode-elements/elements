@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Values from the options was not registered in the **Select** when the component is connected to the DOM.
 
+### Changed
+
+- Reflect `name` property of the **Input** component similar to the native textfield.
+
 ## [0.16.0] - 2023-09-07
 
 ### Added

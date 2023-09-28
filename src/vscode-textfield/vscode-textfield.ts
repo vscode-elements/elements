@@ -72,7 +72,7 @@ export class VscodeTextfield extends VscElement {
   @property({type: Boolean, reflect: true})
   multiple = false;
 
-  @property()
+  @property({reflect: true})
   name: string | undefined = undefined;
 
   @property()
