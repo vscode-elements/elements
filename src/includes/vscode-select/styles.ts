@@ -115,7 +115,9 @@ export default [
     }
 
     :host([invalid]) .select-face,
-    :host([invalid]) .combobox-face {
+    :host(:invalid) .select-face,
+    :host([invalid]) .combobox-face,
+    :host(:invalid) .combobox-face {
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
