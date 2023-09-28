@@ -50,7 +50,9 @@
           <textarea name="required-textarea-test" id="required-textarea-test" required></textarea>
         </div>
         <div>
-          <select>
+          <label for="select-required-test">Required test</label>
+          <select name="select-required-test" id="select-required-test" required>
+            <option value="">---</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
@@ -70,9 +72,18 @@
             <vscode-textfield name="vsc-required-test" id="vsc-required-test" required></vscode-textfield>
           </vscode-form-group>
           <vscode-form-group>
-            <vscode-label for="vsc-required-test">Pattern test</vscode-label>
-            <vscode-textfield name="vsc-required-test" id="vsc-required-test" pattern="[Bb]anana|[Cc]herry" required
+            <vscode-label for="vsc-pattern-test">Pattern test</vscode-label>
+            <vscode-textfield name="vsc-pattern-test" id="vsc-pattern-test" pattern="[Bb]anana|[Cc]herry" required
               placeholder="banana or cherry"></vscode-textfield>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-label for="vsc-required-select-test">Required test</vscode-label>
+            <vscode-single-select id="vsc-required-select-test" name="vsc-required-select-test" required>
+              <vscode-option value="">---</vscode-option>
+              <vscode-option value="1">One</vscode-option>
+              <vscode-option value="2">Two</vscode-option>
+              <vscode-option value="3">Three</vscode-option>
+            </vscode-single-select>
           </vscode-form-group>
           <vscode-form-group>
             <vscode-button action-type="submit" name="submit-button-vsc" value="Submit Button VSC"

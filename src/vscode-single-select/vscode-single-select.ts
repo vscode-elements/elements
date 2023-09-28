@@ -45,8 +45,13 @@ import styles from './vscode-single-select.styles.js';
 export class VscodeSingleSelect extends VscodeSelectBase {
   static styles = styles;
 
+  static formAssociated = true;
+
   @property({type: String, attribute: true, reflect: true})
   role = 'listbox';
+
+  @property({reflect: true})
+  name: string | undefined = undefined;
 
   @property({type: Number, attribute: 'selected-index'})
   set selectedIndex(val: number) {
@@ -81,14 +86,39 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   }
   get value(): string {
     if (this._options[this._selectedIndex]) {
-      return this._options[this._selectedIndex]?.value;
+      return this._options[this._selectedIndex]?.value ?? '';
     }
 
     return '';
   }
 
+  @property({type: Boolean, reflect: true})
+  required = false;
+
+  get validity(): ValidityState {
+    return this._internals.validity;
+  }
+
+  get validationMessage(): string {
+    return this._internals.validationMessage;
+  }
+
+  get willValidate() {
+    return this._internals.willValidate;
+  }
+
+  checkValidity(): boolean {
+    return this._internals.checkValidity();
+  }
+
+  reportValidity(): boolean {
+    return this._internals.reportValidity();
+  }
+
   @state()
   private _labelText = '';
+
+  private _internals: ElementInternals;
 
   private updateInputValue() {
     if (!this.combobox) {
@@ -109,6 +139,23 @@ export class VscodeSingleSelect extends VscodeSelectBase {
   constructor() {
     super();
     this._multiple = false;
+    this._internals = this.attachInternals();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    /* this.updateComplete.then(() => {
+      this._manageRequired();
+    }) */
+    this._manageRequired();
+  }
+
+  get type(): 'select-one' {
+    return 'select-one';
+  }
+
+  get form(): HTMLFormElement | null {
+    return this._internals.form;
   }
 
   protected _onSlotChange(): void {
@@ -131,6 +178,8 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     this._activeIndex = this._selectedIndex;
     this._labelText = this._options[this._selectedIndex].label;
     this._value = this._options[this._selectedIndex].value;
+    this._internals.setFormValue(this._value);
+    this._manageRequired();
     this._dispatchChangeEvent();
   }
 
@@ -146,6 +195,8 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     this._activeIndex = this._selectedIndex;
     this._labelText = this._options[this._selectedIndex].label;
     this._value = this._options[this._selectedIndex].value;
+    this._internals.setFormValue(this._value);
+    this._manageRequired();
     this._dispatchChangeEvent();
   }
 
@@ -157,6 +208,8 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     }
 
     this.updateInputValue();
+    this._internals.setFormValue(this._value);
+    this._manageRequired();
   }
 
   private _onOptionClick(ev: MouseEvent) {
@@ -177,7 +230,23 @@ export class VscodeSingleSelect extends VscodeSelectBase {
     }
 
     this._toggleDropdown(false);
+    this._internals.setFormValue(this._value);
+    this._manageRequired();
     this._dispatchChangeEvent();
+  }
+
+  private _manageRequired() {
+    const {value} = this;
+    if (value === '' && this.required) {
+      this._internals.setValidity(
+        {
+          valueMissing: true,
+        },
+        'Please select an item in the list.'
+      );
+    } else {
+      this._internals.setValidity({});
+    }
   }
 
   private _renderLabel() {
