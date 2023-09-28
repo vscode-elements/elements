@@ -74,7 +74,8 @@ const styles: CSSResultGroup = [
       opacity: 0.5;
     }
 
-    :host([invalid]) {
+    :host([invalid]),
+    :host(:invalid) {
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
