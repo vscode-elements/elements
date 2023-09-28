@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Added `autofocus` attribute to **Textarea** and **Textfield**
 - All boolean properties are reflected. Read the [Open Web Components](https://open-wc.org/guides/knowledge/attributes-and-properties/#attribute-and-property-reflection) documentation for more details.
 
+### Fixed
+
+- Values from the options was not registered in the **Select** when the component is connected to the DOM.
+
 ## [0.16.0] - 2023-09-07
 
 ### Added
