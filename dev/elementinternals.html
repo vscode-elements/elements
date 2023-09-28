@@ -36,13 +36,26 @@
     <h2 class="story-title">Native form</h2>
     <div class="story-content">
       <form action="/" enctype="application/x-www-form-urlencoded" method="get">
-        <label for="test">Test</label>
-        <input type="text" name="test" id="test" pattern="[0-9]{3}">
-        <select>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
+        <div>
+          <label for="required-test">Required test</label>
+          <input type="text" name="required-test" id="required-test" required>
+        </div>
+        <div>
+          <label for="pattern-test">Pattern test</label>
+          <input type="text" name="pattern-test" id="pattern-test" pattern="[Bb]anana|[Cc]herry"
+            placeholder="banana or cherry">
+        </div>
+        <div>
+          <label for="required-textarea-test">Required textarea test</label>
+          <textarea name="required-textarea-test" id="required-textarea-test" required></textarea>
+        </div>
+        <div>
+          <select>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
         <button type="submit" name="submit-button">Submit</button>
       </form>
     </div>
@@ -53,12 +66,17 @@
       <component-preview>
         <form action="/" enctype="application/x-www-form-urlencoded" method="get" id="form-vsc">
           <vscode-form-group>
-            <vscode-label for="test-vsc">Test</vscode-label>
-            <vscode-textfield name="test-vsc" id="test-vsc" pattern="[0-9]{3}" required></vscode-textfield>
+            <vscode-label for="vsc-required-test">Required test</vscode-label>
+            <vscode-textfield name="vsc-required-test" id="vsc-required-test" required></vscode-textfield>
           </vscode-form-group>
           <vscode-form-group>
-            <vscode-button action-type="submit" name="submit-button-vsc"
-              value="Submit Button VSC" role="button">Submit</vscode-button>
+            <vscode-label for="vsc-required-test">Pattern test</vscode-label>
+            <vscode-textfield name="vsc-required-test" id="vsc-required-test" pattern="[Bb]anana|[Cc]herry" required
+              placeholder="banana or cherry"></vscode-textfield>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-button action-type="submit" name="submit-button-vsc" value="Submit Button VSC"
+              role="button">Submit</vscode-button>
           </vscode-form-group>
           <button type="submit" name="submit-button">Submit</button>
         </form>
@@ -72,7 +90,7 @@
             }
           });
 
-          const vscTextfield = document.getElementById('test-vsc');
+          const vscTextfield = document.getElementById('vsc-required-test');
           vscTextfield.addEventListener('invalid', (ev) => {
             console.log(ev);
           });

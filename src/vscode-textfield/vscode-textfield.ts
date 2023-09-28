@@ -159,10 +159,8 @@ export class VscodeTextfield extends VscElement {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      // this._validate();
       this._inputEl.checkValidity();
       this._setValidityFromInput();
-      this._manageRequired();
     });
   }
 
@@ -176,16 +174,6 @@ export class VscodeTextfield extends VscElement {
   private _value = '';
   private _internals: ElementInternals;
 
-  private _validate() {
-    this.invalid = !this._inputEl.checkValidity();
-  }
-
-  private _onInvalid(ev: Event) {
-    this.dispatchEvent(
-      new CustomEvent('vsc-invalid', {detail: {originalEvent: ev}})
-    );
-  }
-
   private _dataChanged() {
     this._value = this._inputEl.value;
     this._internals.setFormValue(this._inputEl.value);
@@ -194,29 +182,15 @@ export class VscodeTextfield extends VscElement {
   private _setValidityFromInput() {
     this._internals.setValidity(
       this._inputEl.validity,
-      this._inputEl.validationMessage
+      this._inputEl.validationMessage,
+      this._inputEl
     );
-  }
-
-  private _manageRequired() {
-    const {value} = this;
-    console.log({value, required: this.required});
-    if (value === '' && this.required) {
-      this._internals.setValidity(
-        {
-          valueMissing: true,
-        },
-        'This field is required',
-        this._inputEl
-      );
-    } else {
-      this._internals.setValidity({});
-    }
+    this.invalid = !this._internals.checkValidity();
   }
 
   private _onInput(ev: InputEvent) {
     this._dataChanged();
-    this._manageRequired();
+    this._setValidityFromInput();
 
     this.dispatchEvent(
       new CustomEvent('vsc-input', {detail: {data: ev.data, originalEvent: ev}})
@@ -225,6 +199,7 @@ export class VscodeTextfield extends VscElement {
 
   private _onChange(ev: InputEvent) {
     this._dataChanged();
+    this._setValidityFromInput();
 
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
