@@ -36,6 +36,14 @@ import styles from './vscode-multi-select.styles.js';
 export class VscodeMultiSelect extends VscodeSelectBase {
   static styles = styles;
 
+  static formAssociated = true;
+
+  @property({type: Boolean, reflect: true})
+  required = false;
+
+  @property({reflect: true})
+  name: string | undefined = undefined;
+
   @property({type: Array, attribute: false})
   set selectedIndexes(val: number[]) {
     this._selectedIndexes = val;
@@ -66,9 +74,41 @@ export class VscodeMultiSelect extends VscodeSelectBase {
     return this._values;
   }
 
+  private _internals: ElementInternals;
+
   constructor() {
     super();
     this._multiple = true;
+    this._internals = this.attachInternals();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this._manageRequired();
+  }
+
+  private _manageRequired() {
+    const {value} = this;
+    if (value.length === 0 && this.required) {
+      this._internals.setValidity(
+        {
+          valueMissing: true,
+        },
+        'Please select an item in the list.'
+      );
+    } else {
+      this._internals.setValidity({});
+    }
+  }
+
+  private _setFormValue() {
+    const fd = new FormData();
+
+    this._values.forEach((v) => {
+      fd.append(this.name ?? '', v);
+    });
+
+    this._internals.setFormValue(fd);
   }
 
   private _onOptionClick(ev: MouseEvent) {
@@ -101,6 +141,8 @@ export class VscodeMultiSelect extends VscodeSelectBase {
       }
     });
 
+    this._setFormValue();
+    this._manageRequired();
     this._dispatchChangeEvent();
   }
 
@@ -112,6 +154,7 @@ export class VscodeMultiSelect extends VscodeSelectBase {
     this._selectedIndexes = [];
     this._values = [];
     this._options = this._options.map((op) => ({...op, selected: false}));
+    this._manageRequired();
     this._dispatchChangeEvent();
   }
 
@@ -124,6 +167,9 @@ export class VscodeMultiSelect extends VscodeSelectBase {
       this._values.push(op.value);
       this._dispatchChangeEvent();
     });
+
+    this._setFormValue();
+    this._manageRequired();
   }
 
   private _renderLabel() {
