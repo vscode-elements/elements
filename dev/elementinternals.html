@@ -35,7 +35,7 @@
   <div class="story">
     <h2 class="story-title">Native form</h2>
     <div class="story-content">
-      <form action="/" enctype="application/x-www-form-urlencoded" method="get">
+      <form action="/" enctype="application/x-www-form-urlencoded" method="get" id="form-native">
         <div>
           <label for="required-test">Required test</label>
           <input type="text" name="required-test" id="required-test" required>
@@ -52,6 +52,15 @@
         <div>
           <label for="select-required-test">Required test</label>
           <select name="select-required-test" id="select-required-test" required>
+            <option value="">---</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+        <div>
+          <label for="select-multiple-required-test">Required test</label>
+          <select name="select-multiple-required-test[]" id="select-multiple-required-test" required multiple>
             <option value="">---</option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -86,15 +95,33 @@
             </vscode-single-select>
           </vscode-form-group>
           <vscode-form-group>
+            <vscode-label for="vsc-select-multiple-required">Required multiple test</vscode-label>
+            <vscode-multi-select id="vsc-select-multiple-required" name="vsc-select-multiple-required[]" required>
+              <vscode-option value="">---</vscode-option>
+              <vscode-option value="1">One</vscode-option>
+              <vscode-option value="2">Two</vscode-option>
+              <vscode-option value="3">Three</vscode-option>
+            </vscode-multi-select>
+          </vscode-form-group>
+          <vscode-form-group>
             <vscode-button action-type="submit" name="submit-button-vsc" value="Submit Button VSC"
               role="button">Submit</vscode-button>
           </vscode-form-group>
           <button type="submit" name="submit-button">Submit</button>
         </form>
         <script type="module">
-          const form = document.getElementById('form-vsc');
-          form.addEventListener('submit', (ev) => {
-            const data = new FormData(form);
+          const nativeForm = document.getElementById('form-native');
+          nativeForm.addEventListener('submit', (ev) => {
+            const data = new FormData(nativeForm);
+
+            for (const entry of data.entries()) {
+              console.log(`${entry[0]}: ${entry[1]}`);
+            }
+          });
+
+          const vscForm = document.getElementById('form-vsc');
+          vscForm.addEventListener('submit', (ev) => {
+            const data = new FormData(vscForm);
 
             for (const entry of data.entries()) {
               console.log(`${entry[0]}: ${entry[1]}`);
