@@ -74,6 +74,34 @@ export class VscodeMultiSelect extends VscodeSelectBase {
     return this._values;
   }
 
+  get form() {
+    return this._internals.form;
+  }
+
+  get type() {
+    return 'select-multiple';
+  }
+
+  get validity(): ValidityState {
+    return this._internals.validity;
+  }
+
+  get validationMessage(): string {
+    return this._internals.validationMessage;
+  }
+
+  get willValidate() {
+    return this._internals.willValidate;
+  }
+
+  checkValidity(): boolean {
+    return this._internals.checkValidity();
+  }
+
+  reportValidity(): boolean {
+    return this._internals.reportValidity();
+  }
+
   private _internals: ElementInternals;
 
   constructor() {
