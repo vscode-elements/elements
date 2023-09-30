@@ -108,6 +108,16 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
 
   private _internals: ElementInternals;
 
+  private _setOfferedFormValue() {
+    let providedValue = '';
+
+    if (this.checked) {
+      providedValue = !this.value ? 'on' : this.value;
+    }
+
+    this._internals.setFormValue(providedValue);
+  }
+
   protected _handleClick(): void {
     if (this.disabled) {
       return;
@@ -129,7 +139,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
       })
     );
 
-    this._internals.setFormValue(this.value ? this.value : 'on');
+    this._setOfferedFormValue();
     this._manageRequired();
   }
 
@@ -140,7 +150,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
       this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
       // TODO: dispatch event
 
-      this._internals.setFormValue(this.value ? this.value : 'on');
+      this._setOfferedFormValue();
       this._manageRequired();
     }
   }
