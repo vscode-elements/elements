@@ -25,6 +25,8 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
 ) {
   static styles = styles;
 
+  static formAssociated = true;
+
   @property({type: Boolean, reflect: true})
   set checked(val: boolean) {
     this._checked = val;
@@ -34,6 +36,9 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   get checked(): boolean {
     return this._checked;
   }
+
+  @property({reflect: true})
+  name: string | undefined = undefined;
 
   @property({reflect: true})
   role = 'checkbox';
@@ -52,10 +57,47 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
     return this._indeterminate;
   }
 
+  @property({type: Boolean, reflect: true})
+  required = false;
+
+  get form(): HTMLFormElement | null {
+    return this._internals.form;
+  }
+
+  get type(): 'checkbox' {
+    return 'checkbox';
+  }
+
+  get validity(): ValidityState {
+    return this._internals.validity;
+  }
+
+  get validationMessage(): string {
+    return this._internals.validationMessage;
+  }
+
+  get willValidate(): boolean {
+    return this._internals.willValidate;
+  }
+
+  checkValidity(): boolean {
+    return this._internals.checkValidity();
+  }
+
+  reportValidity(): boolean {
+    return this._internals.reportValidity();
+  }
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
 
     this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
+    this._manageRequired();
   }
 
   @state()
@@ -63,6 +105,8 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
 
   @state()
   private _indeterminate = false;
+
+  private _internals: ElementInternals;
 
   protected _handleClick(): void {
     if (this.disabled) {
@@ -84,6 +128,9 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
         composed: true,
       })
     );
+
+    this._internals.setFormValue(this.value ? this.value : 'on');
+    this._manageRequired();
   }
 
   protected _handleKeyDown(ev: KeyboardEvent): void {
@@ -91,6 +138,23 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
       ev.preventDefault();
       this._checked = !this._checked;
       this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
+      // TODO: dispatch event
+
+      this._internals.setFormValue(this.value ? this.value : 'on');
+      this._manageRequired();
+    }
+  }
+
+  private _manageRequired() {
+    if (!this.checked && this.required) {
+      this._internals.setValidity(
+        {
+          valueMissing: true,
+        },
+        'Please check this box if you want to proceed.'
+      );
+    } else {
+      this._internals.setValidity({});
     }
   }
 
