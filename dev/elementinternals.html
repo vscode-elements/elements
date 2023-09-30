@@ -26,9 +26,27 @@
   <script type="module" src="../dist/vscode-textfield/index.js"></script>
   <style>
     input:invalid {
-    vscode-checkbox:invalid {
-      border: 1px solid red;
-    }
+      vscode-checkbox:invalid {
+        border: 1px solid red;
+      }
+
+      vscode-label:not(:defined) {
+        display: block;
+        height: 26px;
+        margin-right: 14px;
+        width: 150px;
+      }
+
+      vscode-form-group:not(:defined) {
+        display: block;
+        margin: 15px 0;
+      }
+
+      vscode-textfield:not(:defined),
+      vscode-single-select:not(:defined),
+      vscode-multi-select:not(:defined) {
+        height: 26px;
+      }
   </style>
 </head>
 
@@ -73,8 +91,8 @@
           <label for="checkbox-required">Required checkbox with value</label>
         </div>
         <div>
-          <input type="checkbox" id="checkbox-required-2" name="checkbox-required-2" required>
-          <label for="checkbox-required-2">Required checkbox without value</label>
+          <input type="checkbox" id="checkbox-empty" name="checkbox-empty">
+          <label for="checkbox-empty">Checkbox without value</label>
         </div>
         <button type="submit" name="submit-button">Submit</button>
       </form>
@@ -112,9 +130,10 @@
               <vscode-option value="3">Three</vscode-option>
             </vscode-multi-select>
           </vscode-form-group>
-          <vscode-checkbox-group>
+          <vscode-checkbox-group variant="vertical">
             <vscode-checkbox label="Required checkbox with value" name="vsc-checkbox-required"
-              value="Required checked" required></vscode-checkbox>
+              value="Required checked"></vscode-checkbox>
+            <vscode-checkbox label="Checkbox without value" name="vsc-checkbox-empty"></vscode-checkbox>
           </vscode-checkbox-group>
           <vscode-form-group>
             <vscode-button action-type="submit" name="submit-button-vsc" value="Submit Button VSC"
