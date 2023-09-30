@@ -7,6 +7,11 @@ const styles: CSSResultGroup = [
   defaultStyles,
   baseStyles,
   css`
+    :host(:invalid),
+    :host([invalid]) {
+      border-color: var(--vscode-inputValidation-errorBorder, #be1100);
+    }
+
     .icon {
       border-radius: 3px;
     }

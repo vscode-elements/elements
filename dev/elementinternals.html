@@ -26,6 +26,7 @@
   <script type="module" src="../dist/vscode-textfield/index.js"></script>
   <style>
     input:invalid {
+    vscode-checkbox:invalid {
       border: 1px solid red;
     }
   </style>
@@ -67,6 +68,14 @@
             <option value="3">Three</option>
           </select>
         </div>
+        <div>
+          <input type="checkbox" id="checkbox-required" name="checkbox-required" value="Required example" required>
+          <label for="checkbox-required">Required checkbox with value</label>
+        </div>
+        <div>
+          <input type="checkbox" id="checkbox-required-2" name="checkbox-required-2" required>
+          <label for="checkbox-required-2">Required checkbox without value</label>
+        </div>
         <button type="submit" name="submit-button">Submit</button>
       </form>
     </div>
@@ -103,6 +112,10 @@
               <vscode-option value="3">Three</vscode-option>
             </vscode-multi-select>
           </vscode-form-group>
+          <vscode-checkbox-group>
+            <vscode-checkbox label="Required checkbox with value" name="vsc-checkbox-required"
+              value="Required checked" required></vscode-checkbox>
+          </vscode-checkbox-group>
           <vscode-form-group>
             <vscode-button action-type="submit" name="submit-button-vsc" value="Submit Button VSC"
               role="button">Submit</vscode-button>
@@ -121,6 +134,7 @@
 
           const vscForm = document.getElementById('form-vsc');
           vscForm.addEventListener('submit', (ev) => {
+            ev.preventDefault();
             const data = new FormData(vscForm);
 
             for (const entry of data.entries()) {
