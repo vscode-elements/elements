@@ -152,9 +152,7 @@ export class VscodeSelectBase extends VscElement {
   @query('.options')
   private _listElement!: HTMLUListElement;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   protected _multiple = false;
   private _isHoverForbidden = false;
 
