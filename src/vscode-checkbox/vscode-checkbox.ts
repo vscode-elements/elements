@@ -98,7 +98,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
 
     this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
     this._manageRequired();
-    this._setOfferedFormValue();
+    this._setActualFormValue();
   }
 
   @state()
@@ -109,16 +109,21 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
 
   private _internals: ElementInternals;
 
-  private _setOfferedFormValue() {
-    let providedValue: string | null = '';
+  // Sets the value of the control according to the native checkbox behavior.
+  // - If the checkbox is unchecked, the value will be null, so the control will
+  //   excluded from the form.
+  // - If the control is checked but the value is not set, the value will be "on".
+  // - If the control is checked and value is set, the value won't be changed.
+  private _setActualFormValue() {
+    let actualValue: string | null = '';
 
     if (this.checked) {
-      providedValue = !this.value ? 'on' : this.value;
+      actualValue = !this.value ? 'on' : this.value;
     } else {
-      providedValue = null;
+      actualValue = null;
     }
 
-    this._internals.setFormValue(providedValue);
+    this._internals.setFormValue(actualValue);
   }
 
   protected _handleClick(): void {
@@ -142,7 +147,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
       })
     );
 
-    this._setOfferedFormValue();
+    this._setActualFormValue();
     this._manageRequired();
   }
 
@@ -153,7 +158,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
       this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
       // TODO: dispatch event
 
-      this._setOfferedFormValue();
+      this._setActualFormValue();
       this._manageRequired();
     }
   }
