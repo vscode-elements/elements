@@ -1,5 +1,5 @@
 import {html, TemplateResult} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {customElement, property, state, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
@@ -25,10 +25,16 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
 ) {
   static styles = styles;
 
+  static formAssociated = true;
+
   @property({type: Boolean, reflect: true})
   set checked(val: boolean) {
     this._checked = val;
     this.setAttribute('aria-checked', val ? 'true' : 'false');
+
+    if (!val) {
+      this._internals.setFormValue(null);
+    }
   }
   get checked(): boolean {
     return this._checked;
@@ -46,6 +52,9 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
   @property({type: Boolean, reflect: true})
   disabled = false;
 
+  @property({type: Boolean, reflect: true})
+  required = false;
+
   @property({reflect: true})
   role = 'radio';
 
@@ -54,6 +63,50 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
 
   @state()
   private _slottedText = '';
+
+  @query('.icon')
+  private _inputEl!: HTMLDivElement;
+
+  private _internals: ElementInternals;
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
+    this._handleValueChange();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this._handleValueChange();
+  }
+
+  get form(): HTMLFormElement | null {
+    return this._internals.form;
+  }
+
+  get type() {
+    return 'radio';
+  }
+
+  get validity(): ValidityState {
+    return this._internals.validity;
+  }
+
+  get validationMessage(): string {
+    return this._internals.validationMessage;
+  }
+
+  get willValidate(): boolean {
+    return this._internals.willValidate;
+  }
+
+  checkValidity(): boolean {
+    return this._internals.checkValidity();
+  }
+
+  reportValidity(): boolean {
+    return this._internals.reportValidity();
+  }
 
   private _dispatchCustomEvent() {
     this.dispatchEvent(
@@ -72,16 +125,30 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
     );
   }
 
-  private _checkButton() {
+  private _getRadios(): VscodeRadio[] {
     const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
 
     if (!root) {
-      return;
+      return [];
     }
 
     const radios = root.querySelectorAll(
       `vscode-radio[name="${this.name}"]`
     ) as NodeListOf<VscodeRadio>;
+
+    return Array.from(radios);
+  }
+
+  private _uncheckOthers(radios: VscodeRadio[]) {
+    radios.forEach((r) => {
+      if (r !== this) {
+        r.checked = false;
+      }
+    });
+  }
+
+  private _checkButton() {
+    const radios = this._getRadios();
     this._checked = true;
     this.setAttribute('aria-checked', 'true');
 
@@ -92,12 +159,52 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
     });
   }
 
+  /**
+   * @internal
+   */
+  setComponentValidity(isValid: boolean) {
+    if (isValid) {
+      this._internals.setValidity({});
+    } else {
+      this._internals.setValidity(
+        {
+          valueMissing: true,
+        },
+        'Please select one of these options.',
+        this._inputEl
+      );
+    }
+  }
+
+  private _setGroupValidity(radios: VscodeRadio[], isValid: boolean) {
+    this.updateComplete.then(() => {
+      radios.forEach((r) => {
+        r.setComponentValidity(isValid);
+      });
+    });
+  }
+
+  private _handleValueChange() {
+    const radios = this._getRadios();
+    const anyRequired = radios.some((r) => r.required);
+    const prevChecked = radios.find((r) => r.checked);
+    const isInvalid = anyRequired && !prevChecked;
+
+    this._setGroupValidity(radios, !isInvalid);
+    this._uncheckOthers(radios);
+
+    if (this.checked) {
+      this._internals.setFormValue(this.value);
+    }
+  }
+
   protected _handleClick(): void {
     if (this.disabled) {
       return;
     }
 
     this._checkButton();
+    this._handleValueChange();
     this._dispatchCustomEvent();
   }
 
@@ -106,6 +213,7 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
       event.preventDefault();
       this._checked = true;
       this.setAttribute('aria-checked', 'true');
+      this._handleValueChange();
       this._dispatchCustomEvent();
     }
   }
