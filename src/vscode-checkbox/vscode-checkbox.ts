@@ -1,5 +1,5 @@
 import {html, nothing, TemplateResult} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {customElement, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
@@ -97,8 +97,11 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
     super.connectedCallback();
 
     this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
-    this._manageRequired();
-    this._setActualFormValue();
+
+    this.updateComplete.then(() => {
+      this._manageRequired();
+      this._setActualFormValue();
+    });
   }
 
   @state()
@@ -106,6 +109,9 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
 
   @state()
   private _indeterminate = false;
+
+  @query('.icon')
+  private _iconEl!: HTMLDivElement;
 
   private _internals: ElementInternals;
 
@@ -169,7 +175,8 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
         {
           valueMissing: true,
         },
-        'Please check this box if you want to proceed.'
+        'Please check this box if you want to proceed.',
+        this._iconEl
       );
     } else {
       this._internals.setValidity({});

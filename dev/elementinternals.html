@@ -26,7 +26,9 @@
   <script type="module" src="../dist/vscode-textfield/index.js"></script>
   <style>
     input:invalid {
-      vscode-checkbox:invalid {
+      vscode-checkbox:invalid,
+      vscode-radio:invalid {
+        background-color: rgba(255, 0, 0, 0.5);
         border: 1px solid red;
       }
 
@@ -142,11 +144,20 @@
               <vscode-option value="3">Three</vscode-option>
             </vscode-multi-select>
           </vscode-form-group>
-          <vscode-checkbox-group variant="vertical">
-            <vscode-checkbox label="Required checkbox with value" name="vsc-checkbox-required"
-              value="Required checked"></vscode-checkbox>
-            <vscode-checkbox label="Checkbox without value" name="vsc-checkbox-empty"></vscode-checkbox>
-          </vscode-checkbox-group>
+          <vscode-form-group>
+            <vscode-checkbox-group variant="vertical">
+              <vscode-checkbox label="Required checkbox with value" name="vsc-checkbox-required"
+                value="Required checked" required></vscode-checkbox>
+              <vscode-checkbox label="Checkbox without value" name="vsc-checkbox-empty"></vscode-checkbox>
+            </vscode-checkbox-group>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-radio-group variant="vertical">
+              <vscode-radio name="radio-group-vsc" label="One" value="1"></vscode-radio>
+              <vscode-radio name="radio-group-vsc" label="Two" value="2" required></vscode-radio>
+              <vscode-radio name="radio-group-vsc" label="Three" value="3"></vscode-radio>
+            </vscode-radio-group>
+          </vscode-form-group>
           <vscode-form-group>
             <vscode-button action-type="submit" name="submit-button-vsc" value="Submit Button VSC"
               role="button">Submit</vscode-button>
@@ -156,6 +167,7 @@
         <script type="module">
           const nativeForm = document.getElementById('form-native');
           nativeForm.addEventListener('submit', (ev) => {
+            ev.preventDefault();
             const data = new FormData(nativeForm);
 
             for (const entry of data.entries()) {
@@ -168,9 +180,13 @@
             ev.preventDefault();
             const data = new FormData(vscForm);
 
+            console.group('vsc form');
+
             for (const entry of data.entries()) {
               console.log(`${entry[0]}: ${entry[1]}`);
             }
+
+            console.groupEnd();
           });
 
           const vscTextfield = document.getElementById('vsc-required-test');
