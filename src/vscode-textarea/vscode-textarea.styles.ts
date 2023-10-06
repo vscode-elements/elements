@@ -110,7 +110,7 @@ const styles: CSSResultGroup = [
 
     textarea {
       background-color: var(--background);
-      border-color: var(--border);
+      border-color: var(--vscode-settings-textInputBorder);
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
@@ -130,6 +130,11 @@ const styles: CSSResultGroup = [
 
     :host([rows]) textarea {
       height: auto;
+    }
+
+    :host([invalid]) textarea,
+    :host(:invalid) textarea {
+      border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
     textarea.monospace {
