@@ -115,6 +115,10 @@ export class VscodeTextarea
     return this._internals.form;
   }
 
+  get type(): 'textarea' {
+    return 'textarea';
+  }
+
   get validity(): ValidityState {
     return this._internals.validity;
   }
@@ -136,10 +140,27 @@ export class VscodeTextarea
   connectedCallback(): void {
     super.connectedCallback();
 
+    this._defaultValue = this.value;
+
     this.updateComplete.then(() => {
       this._textareaEl.checkValidity();
       this._setValidityFromInput();
     });
+  }
+
+  formDisabledCallback(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  formResetCallback(): void {
+    this.value = this._defaultValue;
+  }
+
+  formStateRestoreCallback(
+    state: string,
+    _mode: 'restore' | 'autocomplete'
+  ): void {
+    this.value = state;
   }
 
   focus() {
@@ -167,6 +188,7 @@ export class VscodeTextarea
   private _shadow = false;
 
   private _internals: ElementInternals;
+  private _defaultValue = '';
 
   private _setValidityFromInput() {
     this._internals.setValidity(
