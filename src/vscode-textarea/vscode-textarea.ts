@@ -5,6 +5,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-textarea.styles.js';
+import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
  * Multi-line text input.
@@ -29,9 +30,18 @@ import styles from './vscode-textarea.styles.js';
  * @cssprop [--scrollbar-active=var(--vscode-scrollbarSlider-activeBackground)]
  */
 @customElement('vscode-textarea')
-export class VscodeTextarea extends VscElement {
+export class VscodeTextarea
+  extends VscElement
+  implements AssociatedFormControl
+{
   static styles = styles;
 
+  /**
+   * @internal
+   */
+  static formAssociated = true;
+
+  // #region properties, setters/getters
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
 
@@ -40,6 +50,9 @@ export class VscodeTextarea extends VscElement {
 
   @property({type: Boolean, reflect: true})
   disabled = false;
+
+  @property({type: Boolean, reflect: true})
+  invalid = false;
 
   @property({attribute: false})
   label = '';
@@ -84,6 +97,7 @@ export class VscodeTextarea extends VscElement {
   @property()
   set value(val: string) {
     this._value = val;
+    this._internals.setFormValue(val);
   }
 
   get value(): string {
@@ -97,8 +111,47 @@ export class VscodeTextarea extends VscElement {
     return this._textareaEl;
   }
 
+  get form(): HTMLFormElement | null {
+    return this._internals.form;
+  }
+
+  get validity(): ValidityState {
+    return this._internals.validity;
+  }
+
+  get validationMessage() {
+    return this._internals.validationMessage;
+  }
+
+  get willValidate() {
+    return this._internals.willValidate;
+  }
+  // #endregion
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    this.updateComplete.then(() => {
+      this._textareaEl.checkValidity();
+      this._setValidityFromInput();
+    });
+  }
+
   focus() {
     this._textareaEl.focus();
+  }
+
+  checkValidity(): boolean {
+    return this._internals.checkValidity();
+  }
+
+  reportValidity(): boolean {
+    return this._internals.reportValidity();
   }
 
   @query('#textarea')
@@ -113,8 +166,25 @@ export class VscodeTextarea extends VscElement {
   @state()
   private _shadow = false;
 
-  private _handleChange(ev: InputEvent) {
+  private _internals: ElementInternals;
+
+  private _setValidityFromInput() {
+    this._internals.setValidity(
+      this._textareaEl.validity,
+      this._textareaEl.validationMessage,
+      this._textareaEl
+    );
+    this.invalid = !this._internals.checkValidity();
+  }
+
+  private _dataChanged() {
     this._value = this._textareaEl.value;
+    this._internals.setFormValue(this._textareaEl.value);
+  }
+
+  private _handleChange(ev: InputEvent) {
+    this._dataChanged();
+    this._setValidityFromInput();
 
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
@@ -124,7 +194,8 @@ export class VscodeTextarea extends VscElement {
   }
 
   private _handleInput(ev: InputEvent) {
-    this._value = this._textareaEl.value;
+    this._dataChanged();
+    this._setValidityFromInput();
 
     this.dispatchEvent(
       new CustomEvent('vsc-input', {

@@ -25,30 +25,33 @@
   <script type="module" src="../dist/vscode-textarea/index.js"></script>
   <script type="module" src="../dist/vscode-textfield/index.js"></script>
   <style>
-    input:invalid {
-      vscode-checkbox:invalid,
-      vscode-radio:invalid {
-        background-color: rgba(255, 0, 0, 0.5);
-        border: 1px solid red;
-      }
+    input {
+      border-radius: 3px;
+    }
 
-      vscode-label:not(:defined) {
-        display: block;
-        height: 26px;
-        margin-right: 14px;
-        width: 150px;
-      }
+    input:invalid,
+    select:invalid,
+    textarea:invalid {
+      box-shadow: 0 0 2px 1px red;
+    }
 
-      vscode-form-group:not(:defined) {
-        display: block;
-        margin: 15px 0;
-      }
+    vscode-label:not(:defined) {
+      display: block;
+      height: 26px;
+      margin-right: 14px;
+      width: 150px;
+    }
 
-      vscode-textfield:not(:defined),
-      vscode-single-select:not(:defined),
-      vscode-multi-select:not(:defined) {
-        height: 26px;
-      }
+    vscode-form-group:not(:defined) {
+      display: block;
+      margin: 15px 0;
+    }
+
+    vscode-textfield:not(:defined),
+    vscode-single-select:not(:defined),
+    vscode-multi-select:not(:defined) {
+      height: 26px;
+    }
   </style>
 </head>
 
@@ -116,7 +119,7 @@
     <h2 class="story-title">VSC Form</h2>
     <div class="story-content">
       <component-preview>
-        <form action="/" enctype="application/x-www-form-urlencoded" method="get" id="form-vsc">
+        <form action="/" enctype="application/x-www-form-urlencoded" method="get" id="vsc-form">
           <vscode-form-group>
             <vscode-label for="vsc-required-test">Required test</vscode-label>
             <vscode-textfield name="vsc-required-test" id="vsc-required-test" required></vscode-textfield>
@@ -125,6 +128,10 @@
             <vscode-label for="vsc-pattern-test">Pattern test</vscode-label>
             <vscode-textfield name="vsc-pattern-test" id="vsc-pattern-test" pattern="[Bb]anana|[Cc]herry" required
               placeholder="banana or cherry"></vscode-textfield>
+          </vscode-form-group>
+          <vscode-form-group>
+            <vscode-label for="vsc-textarea-test">Required textarea test</vscode-label>
+            <vscode-textarea id="vsc-textarea-test" required></vscode-textarea>
           </vscode-form-group>
           <vscode-form-group>
             <vscode-label for="vsc-required-select-test">Required test</vscode-label>
@@ -175,7 +182,7 @@
             }
           });
 
-          const vscForm = document.getElementById('form-vsc');
+          const vscForm = document.getElementById('vsc-form');
           vscForm.addEventListener('submit', (ev) => {
             ev.preventDefault();
             const data = new FormData(vscForm);
@@ -190,7 +197,7 @@
           });
 
           const vscTextfield = document.getElementById('vsc-required-test');
-          vscTextfield.addEventListener('invalid', (ev) => {
+          vscForm.addEventListener('invalid', (ev) => {
             console.log(ev);
           });
         </script>
