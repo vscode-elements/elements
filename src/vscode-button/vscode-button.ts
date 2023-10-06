@@ -118,7 +118,7 @@ export class VscodeButton extends VscElement {
       );
 
       if (this._internals.form) {
-        this._internals.form.submit();
+        this._internals.form.requestSubmit();
       }
     }
   }
