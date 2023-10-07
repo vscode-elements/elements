@@ -59,7 +59,7 @@
         <fieldset>
           <div>
             <label for="required-test">Required test</label>
-            <input type="text" name="required-test" id="required-test" required>
+            <input type="text" name="required-test" id="required-test" required value="foo">
           </div>
           <div>
             <label for="pattern-test">Pattern test</label>
@@ -68,7 +68,7 @@
           </div>
           <div>
             <label for="required-textarea-test">Required textarea test</label>
-            <textarea name="required-textarea-test" id="required-textarea-test" required></textarea>
+            <textarea name="required-textarea-test" id="required-textarea-test" required>foo</textarea>
           </div>
           <div>
             <label for="select-required-test">Required test</label>
@@ -110,6 +110,7 @@
           </div>
         </fieldset>
         <button type="submit" name="submit-button">Submit</button>
+        <button type="reset" name="reset-button">Reset</button>
       </form>
     </div>
   </div>
@@ -130,7 +131,7 @@
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="vsc-textarea-test">Required textarea test</vscode-label>
-              <vscode-textarea id="vsc-textarea-test" required></vscode-textarea>
+              <vscode-textarea id="vsc-textarea-test" required value="default value" name="vsc-textarea-test"></vscode-textarea>
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="vsc-required-select-test">Required test</vscode-label>
@@ -169,12 +170,13 @@
                 role="button">Submit</vscode-button>
             </vscode-form-group>
             <button type="submit" name="submit-button">Submit</button>
+            <button type="reset">Reset</button>
           </fieldset>
         </form>
         <script type="module">
           const nativeForm = document.getElementById('form-native');
           nativeForm.addEventListener('submit', (ev) => {
-            ev.preventDefault();
+            // ev.preventDefault();
             const data = new FormData(nativeForm);
 
             for (const entry of data.entries()) {
