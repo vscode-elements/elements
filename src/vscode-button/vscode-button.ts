@@ -55,7 +55,7 @@ export class VscodeButton extends VscElement {
   @property({type: Boolean, reflect: true})
   focused = false;
 
-  @property({reflect: true, attribute: 'action-type'})
+  @property({reflect: true})
   type: 'submit' | 'reset' | 'button' = 'button';
 
   @property()
@@ -102,6 +102,16 @@ export class VscodeButton extends VscElement {
     }
   }
 
+  private _executeAction() {
+    if (this.type === 'submit' && this._internals.form) {
+      this._internals.form.requestSubmit();
+    }
+
+    if (this.type === 'reset' && this._internals.form) {
+      this._internals.form.reset();
+    }
+  }
+
   private _handleKeyDown(event: KeyboardEvent) {
     if (
       (event.key === 'Enter' || event.key === ' ') &&
@@ -117,9 +127,7 @@ export class VscodeButton extends VscElement {
         })
       );
 
-      if (this.type === 'submit' && this._internals.form) {
-        this._internals.form.requestSubmit();
-      }
+      this._executeAction();
     }
   }
 
@@ -135,9 +143,7 @@ export class VscodeButton extends VscElement {
         })
       );
 
-      if (this._internals.form) {
-        this._internals.form.requestSubmit();
-      }
+      this._executeAction();
     }
   }
 
