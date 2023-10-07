@@ -216,6 +216,12 @@ export class VscodeTextfield extends VscElement {
     this.focused = false;
   }
 
+  private _onKeyDown(ev: KeyboardEvent) {
+    if (ev.key === 'Enter' && this._internals.form) {
+      this._internals.form?.requestSubmit();
+    }
+  }
+
   render(): TemplateResult {
     return html`
       <slot name="content-before"></slot>
@@ -242,6 +248,7 @@ export class VscodeTextfield extends VscElement {
         @change=${this._onChange}
         @focus=${this._onFocus}
         @input=${this._onInput}
+        @keydown=${this._onKeyDown}
       />
       <slot name="content-after"></slot>
     `;
