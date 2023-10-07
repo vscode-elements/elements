@@ -140,12 +140,30 @@ export class VscodeTextarea
   connectedCallback(): void {
     super.connectedCallback();
 
-    this._defaultValue = this.value;
-
     this.updateComplete.then(() => {
+      const value = this.getAttribute('value');
+
+      if (value) {
+        this._value = value;
+        this._defaultValue = value;
+        this._textareaEl.value = value;
+      }
+
       this._textareaEl.checkValidity();
       this._setValidityFromInput();
     });
+  }
+
+  attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null
+  ): void {
+    super.attributeChangedCallback(name, old, value);
+
+    if (name === 'value' && typeof value === 'string') {
+      this._defaultValue = value;
+    }
   }
 
   formDisabledCallback(disabled: boolean): void {
@@ -160,7 +178,9 @@ export class VscodeTextarea
     state: string,
     _mode: 'restore' | 'autocomplete'
   ): void {
-    this.value = state;
+    this.updateComplete.then(() => {
+      this._value = state;
+    });
   }
 
   focus() {
@@ -173,6 +193,10 @@ export class VscodeTextarea
 
   reportValidity(): boolean {
     return this._internals.reportValidity();
+  }
+
+  setDefaultValue(val: string) {
+    this._defaultValue = val;
   }
 
   @query('#textarea')
@@ -279,9 +303,8 @@ export class VscodeTextarea
         @input=${this._handleInput}
         @mousemove=${this._handleMouseMove}
         @scroll=${this._handleScroll}
-      >
-${this._value}</textarea
-      >
+        .value=${this._value}
+      ></textarea>
     `;
   }
 }
