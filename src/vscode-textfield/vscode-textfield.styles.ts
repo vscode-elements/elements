@@ -69,11 +69,6 @@ const styles: CSSResultGroup = [
       border-color: var(--focus-border);
     }
 
-    :host([disabled]) {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
     :host([invalid]),
     :host(:invalid) {
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
