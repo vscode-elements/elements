@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
 import styles from './vscode-radio.styles.js';
+import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
@@ -20,9 +21,10 @@ import styles from './vscode-radio.styles.js';
  * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
 @customElement('vscode-radio')
-export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
-  FormButtonWidgetBase
-) {
+export class VscodeRadio
+  extends LabelledCheckboxOrRadioMixin(FormButtonWidgetBase)
+  implements AssociatedFormControl
+{
   static styles = styles;
 
   static formAssociated = true;
@@ -35,6 +37,8 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
     if (!val) {
       this._internals.setFormValue(null);
     }
+
+    this._handleValueChange();
   }
   get checked(): boolean {
     return this._checked;
@@ -49,7 +53,7 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
   @property()
   value = '';
 
-  @property({type: Boolean, reflect: true})
+  @property({type: Boolean})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -106,6 +110,31 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
 
   reportValidity(): boolean {
     return this._internals.reportValidity();
+  }
+
+  formDisabledCallback(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  formResetCallback(): void {
+    const radios = this._getRadios();
+
+    radios.forEach((r) => {
+      r.checked = false;
+    });
+
+    this.updateComplete.then(() => {
+      this._handleValueChange();
+    });
+  }
+
+  formStateRestoreCallback(
+    state: string,
+    _mode: 'restore' | 'autocomplete'
+  ): void {
+    if (this.value === state && state !== '') {
+      this.checked = true;
+    }
   }
 
   private _dispatchCustomEvent() {
@@ -187,14 +216,17 @@ export class VscodeRadio extends LabelledCheckboxOrRadioMixin(
   private _handleValueChange() {
     const radios = this._getRadios();
     const anyRequired = radios.some((r) => r.required);
-    const prevChecked = radios.find((r) => r.checked);
-    const isInvalid = anyRequired && !prevChecked;
-
-    this._setGroupValidity(radios, !isInvalid);
-    this._uncheckOthers(radios);
 
     if (this.checked) {
       this._internals.setFormValue(this.value);
+      this._uncheckOthers(radios);
+
+      this._setGroupValidity(radios, true);
+    } else {
+      const anyChecked = radios.find((r) => r.checked);
+      const isInvalid = anyRequired && !anyChecked;
+
+      this._setGroupValidity(radios, !isInvalid);
     }
   }
 
