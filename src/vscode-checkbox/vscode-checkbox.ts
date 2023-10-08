@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
 import styles from './vscode-checkbox.styles.js';
+import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
@@ -20,9 +21,10 @@ import styles from './vscode-checkbox.styles.js';
  * @cssprop [--focus-border=var(--vscode-focusBorder)]
  */
 @customElement('vscode-checkbox')
-export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
-  FormButtonWidgetBase
-) {
+export class VscodeCheckbox
+  extends LabelledCheckboxOrRadioMixin(FormButtonWidgetBase)
+  implements AssociatedFormControl
+{
   static styles = styles;
 
   static formAssociated = true;
@@ -37,6 +39,9 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
     return this._checked;
   }
 
+  @property({type: Boolean, reflect: true, attribute: 'default-checked'})
+  defaultChecked = false;
+
   @property({reflect: true})
   name: string | undefined = undefined;
 
@@ -46,7 +51,7 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   @property()
   value = '';
 
-  @property({type: Boolean, reflect: true})
+  @property({type: Boolean})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -96,12 +101,29 @@ export class VscodeCheckbox extends LabelledCheckboxOrRadioMixin(
   connectedCallback(): void {
     super.connectedCallback();
 
-    this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
-
     this.updateComplete.then(() => {
+      this.checked = this.defaultChecked;
+      this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
       this._manageRequired();
       this._setActualFormValue();
     });
+  }
+
+  formDisabledCallback(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  formResetCallback(): void {
+    this.checked = this.defaultChecked;
+  }
+
+  formStateRestoreCallback(
+    state: string,
+    _mode: 'restore' | 'autocomplete'
+  ): void {
+    if (state) {
+      this.checked = true;
+    }
   }
 
   @state()
