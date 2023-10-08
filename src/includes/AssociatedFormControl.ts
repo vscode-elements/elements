@@ -21,7 +21,7 @@ export interface AssociatedFormControl {
   checkValidity(): boolean;
   reportValidity(): boolean;
 
-  formDisabledCallback(disabled: boolean): void;
+  formDisabledCallback?(disabled: boolean): void;
   formResetCallback(): void;
   formStateRestoreCallback(
     state: string,
