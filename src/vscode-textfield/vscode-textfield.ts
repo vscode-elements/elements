@@ -1,8 +1,9 @@
 import {html, LitElement, TemplateResult} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {customElement, property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-textfield.styles.js';
+import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
  * A simple inline textfield
@@ -23,7 +24,10 @@ import styles from './vscode-textfield.styles.js';
  * @cssprop [--button-hover=var(--vscode-button-hoverBackground)]
  */
 @customElement('vscode-textfield')
-export class VscodeTextfield extends VscElement {
+export class VscodeTextfield
+  extends VscElement
+  implements AssociatedFormControl
+{
   static styles = styles;
 
   static get formAssociated() {
@@ -38,10 +42,13 @@ export class VscodeTextfield extends VscElement {
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   autofocus = false;
 
-  @property({type: Boolean, reflect: true})
+  @property({attribute: 'default-value'})
+  defaultValue = '';
+
+  @property({type: Boolean})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -51,6 +58,7 @@ export class VscodeTextfield extends VscElement {
   invalid = false;
 
   /**
+   * @internal
    * Set `aria-label` for the inner input element. Should not be set,
    * vscode-label will do it automatically.
    */
@@ -112,7 +120,6 @@ export class VscodeTextfield extends VscElement {
     this._value = val;
     this._internals.setFormValue(val);
   }
-
   get value(): string {
     return this._value;
   }
@@ -158,10 +165,28 @@ export class VscodeTextfield extends VscElement {
   connectedCallback(): void {
     super.connectedCallback();
 
+    this.value = this.defaultValue;
+
     this.updateComplete.then(() => {
       this._inputEl.checkValidity();
       this._setValidityFromInput();
     });
+  }
+
+  formDisabledCallback(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  formResetCallback(): void {
+    this.value = this.defaultValue;
+    this.requestUpdate();
+  }
+
+  formStateRestoreCallback(
+    state: string,
+    _mode: 'restore' | 'autocomplete'
+  ): void {
+    this.value = state;
   }
 
   focus(): void {
@@ -171,6 +196,7 @@ export class VscodeTextfield extends VscElement {
   @query('#input')
   private _inputEl!: HTMLInputElement;
 
+  @state()
   private _value = '';
   private _internals: ElementInternals;
 
