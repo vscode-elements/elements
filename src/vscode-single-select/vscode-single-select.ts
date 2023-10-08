@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
+import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
  * ## Types
@@ -42,10 +43,19 @@ import styles from './vscode-single-select.styles.js';
  * @cssprop [--list-hover-background=var(--vscode-list-hoverBackground)]
  */
 @customElement('vscode-single-select')
-export class VscodeSingleSelect extends VscodeSelectBase {
+export class VscodeSingleSelect
+  extends VscodeSelectBase
+  implements AssociatedFormControl
+{
   static styles = styles;
 
   static formAssociated = true;
+
+  @property({attribute: 'default-value'})
+  defaultValue = '';
+
+  @property({type: Boolean})
+  disabled = false;
 
   @property({type: String, attribute: true, reflect: true})
   role = 'listbox';
@@ -144,10 +154,29 @@ export class VscodeSingleSelect extends VscodeSelectBase {
 
   connectedCallback(): void {
     super.connectedCallback();
-    /* this.updateComplete.then(() => {
+
+    this.updateComplete.then(() => {
+      this.value = this.defaultValue;
       this._manageRequired();
-    }) */
-    this._manageRequired();
+    });
+  }
+
+  formDisabledCallback(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  formResetCallback(): void {
+    this.value = this.defaultValue;
+  }
+
+  formStateRestoreCallback(
+    state: string,
+    _mode: 'restore' | 'autocomplete'
+  ): void {
+    console.log(state);
+    this.updateComplete.then(() => {
+      this.value = state;
+    });
   }
 
   get type(): 'select-one' {
