@@ -1,4 +1,5 @@
 import {css} from 'lit';
+import defaultStyles from '../default.styles.js';
 import declareThemeVariables from '../declareThemeVariables.js';
 
 const DEFAULT_FONT_SIZE = 13;
@@ -83,6 +84,7 @@ export default [
       vscodeProp: '--vscode-list-hoverBackground',
     },
   ]),
+  defaultStyles,
   css`
     :host {
       display: inline-block;
