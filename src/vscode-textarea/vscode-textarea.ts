@@ -48,7 +48,10 @@ export class VscodeTextarea
   @property({type: Boolean})
   autofocus = false;
 
-  @property({type: Boolean, reflect: true})
+  @property({attribute: 'default-value'})
+  defaultValue = '';
+
+  @property({type: Boolean})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -141,29 +144,10 @@ export class VscodeTextarea
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      const value = this.getAttribute('value');
-
-      if (value) {
-        this._value = value;
-        this._defaultValue = value;
-        this._textareaEl.value = value;
-      }
-
+      this._textareaEl.value = this.defaultValue;
       this._textareaEl.checkValidity();
       this._setValidityFromInput();
     });
-  }
-
-  attributeChangedCallback(
-    name: string,
-    old: string | null,
-    value: string | null
-  ): void {
-    super.attributeChangedCallback(name, old, value);
-
-    if (name === 'value' && typeof value === 'string') {
-      this._defaultValue = value;
-    }
   }
 
   formDisabledCallback(disabled: boolean): void {
@@ -171,7 +155,7 @@ export class VscodeTextarea
   }
 
   formResetCallback(): void {
-    this.value = this._defaultValue;
+    this.value = this.defaultValue;
   }
 
   formStateRestoreCallback(
@@ -195,10 +179,6 @@ export class VscodeTextarea
     return this._internals.reportValidity();
   }
 
-  setDefaultValue(val: string) {
-    this._defaultValue = val;
-  }
-
   @query('#textarea')
   private _textareaEl!: HTMLTextAreaElement;
 
@@ -212,7 +192,6 @@ export class VscodeTextarea
   private _shadow = false;
 
   private _internals: ElementInternals;
-  private _defaultValue = '';
 
   private _setValidityFromInput() {
     this._internals.setValidity(
