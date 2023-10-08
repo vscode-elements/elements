@@ -5,6 +5,7 @@ import {repeat} from 'lit/directives/repeat.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-multi-select.styles.js';
+import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
  * @prop {boolean} invalid
@@ -33,10 +34,33 @@ import styles from './vscode-multi-select.styles.js';
  * @cssprop [--list-hover-background=var(--vscode-list-hoverBackground)]
  */
 @customElement('vscode-multi-select')
-export class VscodeMultiSelect extends VscodeSelectBase {
+export class VscodeMultiSelect
+  extends VscodeSelectBase
+  implements AssociatedFormControl
+{
   static styles = styles;
 
   static formAssociated = true;
+
+  @property({type: Array, attribute: 'default-value'})
+  defaultValue: string[] = [];
+
+  @property({type: Boolean})
+  set disabled(val: boolean) {
+    this._disabled = val;
+
+    if (!this._internals.form) {
+      if (val) {
+        this.setAttribute('disabled', '');
+      } else {
+        this.removeAttribute('disabled');
+      }
+    }
+  }
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
 
   @property({type: Boolean, reflect: true})
   required = false;
@@ -103,6 +127,7 @@ export class VscodeMultiSelect extends VscodeSelectBase {
   }
 
   private _internals: ElementInternals;
+  private _disabled = false;
 
   constructor() {
     super();
@@ -113,6 +138,22 @@ export class VscodeMultiSelect extends VscodeSelectBase {
   connectedCallback(): void {
     super.connectedCallback();
     this._manageRequired();
+
+    this.updateComplete.then(() => {
+      this._setDefaultValue();
+      this._manageRequired();
+    });
+  }
+
+  formResetCallback(): void {
+    this.value = this.defaultValue;
+  }
+
+  private _setDefaultValue() {
+    if (Array.isArray(this.defaultValue) && this.defaultValue.length > 0) {
+      const val = this.defaultValue.map((v) => String(v));
+      this.value = val;
+    }
   }
 
   private _manageRequired() {
