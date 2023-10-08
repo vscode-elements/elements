@@ -49,6 +49,11 @@
       height: 26px;
     }
   </style>
+  <script>
+    const __DEMO__ = {
+      formSubmitEnabled: false,
+    };
+  </script>
 </head>
 
 <body>
@@ -93,7 +98,7 @@
             <label for="checkbox-required">Required checkbox with value</label>
           </div>
           <div>
-            <input type="checkbox" id="checkbox-empty" name="checkbox-empty">
+            <input type="checkbox" id="checkbox-empty" name="checkbox-empty" checked>
             <label for="checkbox-empty">Checkbox without value</label>
           </div>
           <div>
@@ -122,20 +127,23 @@
           <fieldset>
             <vscode-form-group>
               <vscode-label for="vsc-required-test">Required test</vscode-label>
-              <vscode-textfield name="vsc-required-test" id="vsc-required-test" required></vscode-textfield>
+              <vscode-textfield name="vsc-required-test" id="vsc-required-test" required
+                default-value="Lorem"></vscode-textfield>
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="vsc-pattern-test">Pattern test</vscode-label>
               <vscode-textfield name="vsc-pattern-test" id="vsc-pattern-test" pattern="[Bb]anana|[Cc]herry" required
-                placeholder="banana or cherry"></vscode-textfield>
+                placeholder="banana or cherry" default-value="banana"></vscode-textfield>
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="vsc-textarea-test">Required textarea test</vscode-label>
-              <vscode-textarea id="vsc-textarea-test" required value="default value" name="vsc-textarea-test"></vscode-textarea>
+              <vscode-textarea id="vsc-textarea-test" required default-value="default value"
+                name="vsc-textarea-test"></vscode-textarea>
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="vsc-required-select-test">Required test</vscode-label>
-              <vscode-single-select id="vsc-required-select-test" name="vsc-required-select-test" required>
+              <vscode-single-select id="vsc-required-select-test" name="vsc-required-select-test" required
+                default-value="2">
                 <vscode-option value="">---</vscode-option>
                 <vscode-option value="1">One</vscode-option>
                 <vscode-option value="2">Two</vscode-option>
@@ -144,7 +152,8 @@
             </vscode-form-group>
             <vscode-form-group>
               <vscode-label for="vsc-select-multiple-required">Required multiple test</vscode-label>
-              <vscode-multi-select id="vsc-select-multiple-required" name="vsc-select-multiple-required[]" required>
+              <vscode-multi-select id="vsc-select-multiple-required" name="vsc-select-multiple-required[]"
+                default-value="[&quot;1&quot;,&quot;2&quot;]" required>
                 <vscode-option value="">---</vscode-option>
                 <vscode-option value="1">One</vscode-option>
                 <vscode-option value="2">Two</vscode-option>
@@ -154,7 +163,7 @@
             <vscode-form-group>
               <vscode-checkbox-group variant="vertical">
                 <vscode-checkbox label="Required checkbox with value" name="vsc-checkbox-required"
-                  value="Required checked" required></vscode-checkbox>
+                  value="Required checked" required default-checked></vscode-checkbox>
                 <vscode-checkbox label="Checkbox without value" name="vsc-checkbox-empty"></vscode-checkbox>
               </vscode-checkbox-group>
             </vscode-form-group>
@@ -176,17 +185,27 @@
         <script type="module">
           const nativeForm = document.getElementById('form-native');
           nativeForm.addEventListener('submit', (ev) => {
-            // ev.preventDefault();
+            if (!__DEMO__.formSubmitEnabled) {
+              ev.preventDefault();
+            }
+
             const data = new FormData(nativeForm);
+
+            console.group('native form');
 
             for (const entry of data.entries()) {
               console.log(`${entry[0]}: ${entry[1]}`);
             }
+
+            console.groupEnd();
           });
 
           const vscForm = document.getElementById('vsc-form');
           vscForm.addEventListener('submit', (ev) => {
-            // ev.preventDefault();
+            if (!__DEMO__.formSubmitEnabled) {
+              ev.preventDefault();
+            }
+
             const data = new FormData(vscForm);
 
             console.group('vsc form');
@@ -205,6 +224,31 @@
         </script>
       </component-preview>
     </div>
+  </div>
+  <div style="margin: 30px 0;">
+    <button type="button" id="bt-toggle-disabled">Disable</button>
+    <button type="button" id="bt-toggle-form-submit">Submit: disabled</button>
+    <script type="module">
+      const btToggleDisabled = document.getElementById('bt-toggle-disabled');
+      const btToggleFormSubmit = document.getElementById('bt-toggle-form-submit');
+      let disabled = false;
+
+      btToggleDisabled.addEventListener('click', () => {
+        disabled = !disabled;
+
+        btToggleDisabled.innerText = disabled ? 'Enable' : 'Disable';
+
+        document.querySelectorAll('fieldset').forEach((f) => {
+          f.disabled = disabled;
+        });
+      });
+
+      btToggleFormSubmit.addEventListener('click', () => {
+        __DEMO__.formSubmitEnabled = !__DEMO__.formSubmitEnabled;
+
+        btToggleFormSubmit.innerText = __DEMO__.formSubmitEnabled ? 'Submit: enabled' : 'Submit: disabled';
+      });
+    </script>
   </div>
 </body>
 
