@@ -53,7 +53,7 @@ export class VscodeRadio
   @property()
   value = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -110,10 +110,6 @@ export class VscodeRadio
 
   reportValidity(): boolean {
     return this._internals.reportValidity();
-  }
-
-  formDisabledCallback(disabled: boolean): void {
-    this.disabled = disabled;
   }
 
   formResetCallback(): void {

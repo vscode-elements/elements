@@ -54,7 +54,7 @@ export class VscodeSingleSelect
   @property({attribute: 'default-value'})
   defaultValue = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: String, attribute: true, reflect: true})
@@ -159,10 +159,6 @@ export class VscodeSingleSelect
       this.value = this.defaultValue;
       this._manageRequired();
     });
-  }
-
-  formDisabledCallback(disabled: boolean): void {
-    this.disabled = disabled;
   }
 
   formResetCallback(): void {
