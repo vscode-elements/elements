@@ -73,13 +73,15 @@ export class VscodeSelectBase extends VscElement {
     this._options = opts.map((op, index) => ({...op, index}));
   }
   get options(): Option[] {
-    return this._options.map(({label, value, description, selected, disabled}) => ({
-      label,
-      value,
-      description,
-      selected,
-      disabled,
-    }));
+    return this._options.map(
+      ({label, value, description, selected, disabled}) => ({
+        label,
+        value,
+        description,
+        selected,
+        disabled,
+      })
+    );
   }
 
   @property({type: Number, attribute: true, reflect: true})
@@ -154,6 +156,14 @@ export class VscodeSelectBase extends VscElement {
 
   /** @internal */
   protected _multiple = false;
+
+  /**
+   * @internal
+   * Quick-searchable map for searching a value in the options list.
+   * Keys are the options values, values are the option indexes.
+   */
+  protected _valueOptionIndexMap: {[key: string]: number} = {};
+
   private _isHoverForbidden = false;
 
   protected get _currentOptions(): InternalOption[] {
@@ -168,6 +178,7 @@ export class VscodeSelectBase extends VscElement {
       selectedIndexes: [],
       values: [],
     };
+    this._valueOptionIndexMap = {};
 
     nodes.forEach((el: Node) => {
       if (
@@ -179,15 +190,10 @@ export class VscodeSelectBase extends VscElement {
         return;
       }
 
-      const {
-        innerText,
-        description,
-        selected,
-        disabled
-      } = el as VscodeOption;
+      const {innerText, description, selected, disabled} = el as VscodeOption;
 
       const value = (el as VscodeOption).hasAttribute('value')
-        ? (el as VscodeOption).getAttribute('value') as string
+        ? ((el as VscodeOption).getAttribute('value') as string)
         : innerText.trim();
 
       const op: InternalOption = {
@@ -196,7 +202,7 @@ export class VscodeSelectBase extends VscElement {
         description,
         selected,
         index: currentIndex,
-        disabled
+        disabled,
       };
 
       currentIndex = options.push(op);
@@ -205,6 +211,8 @@ export class VscodeSelectBase extends VscElement {
         optionsListStat.selectedIndexes.push(options.length - 1);
         optionsListStat.values.push(value);
       }
+
+      this._valueOptionIndexMap[op.value] = op.index;
     });
 
     this._options = options;

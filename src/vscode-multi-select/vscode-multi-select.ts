@@ -78,21 +78,24 @@ export class VscodeMultiSelect
 
   @property({type: Array})
   set value(val: string[]) {
-    this._values = val;
+    const sanitizedVal = val.map((v) => String(v));
+    this._values = sanitizedVal;
 
-    const valMap: {[key: string]: number} = {};
-
-    this._options.forEach(({value}, index) => {
-      valMap[value] = index;
+    this._selectedIndexes.forEach((i) => {
+      this._options[i].selected = false;
     });
 
     this._selectedIndexes = [];
 
-    val.forEach((v) => {
-      if (valMap[v]) {
-        this._selectedIndexes.push(valMap[v]);
+    sanitizedVal.forEach((v) => {
+      if (this._valueOptionIndexMap[v]) {
+        this._selectedIndexes.push(this._valueOptionIndexMap[v]);
+        this._options[this._valueOptionIndexMap[v]].selected = true;
       }
     });
+
+    this._setFormValue();
+    this._manageRequired();
   }
   get value(): string[] {
     return this._values;
@@ -146,7 +149,9 @@ export class VscodeMultiSelect
   }
 
   formResetCallback(): void {
-    this.value = this.defaultValue;
+    this.updateComplete.then(() => {
+      this.value = this.defaultValue;
+    });
   }
 
   private _setDefaultValue() {
