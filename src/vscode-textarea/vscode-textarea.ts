@@ -51,7 +51,7 @@ export class VscodeTextarea
   @property({attribute: 'default-value'})
   defaultValue = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -148,10 +148,6 @@ export class VscodeTextarea
       this._textareaEl.checkValidity();
       this._setValidityFromInput();
     });
-  }
-
-  formDisabledCallback(disabled: boolean): void {
-    this.disabled = disabled;
   }
 
   formResetCallback(): void {

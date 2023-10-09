@@ -1,3 +1,3 @@
-import styles from '../includes/vscode-select/styles.js'
+import styles from '../includes/vscode-select/styles.js';
 
 export default styles;
