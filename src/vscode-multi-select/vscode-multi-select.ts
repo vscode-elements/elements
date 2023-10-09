@@ -154,6 +154,17 @@ export class VscodeMultiSelect
     });
   }
 
+  formStateRestoreCallback(
+    state: FormData,
+    _mode: 'restore' | 'autocomplete'
+  ): void {
+    const entries = Array.from(state.entries()).map((e) => String(e[1]));
+
+    this.updateComplete.then(() => {
+      this.value = entries;
+    });
+  }
+
   private _setDefaultValue() {
     if (Array.isArray(this.defaultValue) && this.defaultValue.length > 0) {
       const val = this.defaultValue.map((v) => String(v));

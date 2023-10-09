@@ -24,7 +24,7 @@ export interface AssociatedFormControl {
   formDisabledCallback?(disabled: boolean): void;
   formResetCallback(): void;
   formStateRestoreCallback(
-    state: string,
+    state: string | FormData | File,
     mode: 'restore' | 'autocomplete'
   ): void;
 }
