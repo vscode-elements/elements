@@ -45,22 +45,8 @@ export class VscodeMultiSelect
   @property({type: Array, attribute: 'default-value'})
   defaultValue: string[] = [];
 
-  @property({type: Boolean})
-  set disabled(val: boolean) {
-    this._disabled = val;
-
-    if (!this._internals.form) {
-      if (val) {
-        this.setAttribute('disabled', '');
-      } else {
-        this.removeAttribute('disabled');
-      }
-    }
-  }
-
-  get disabled(): boolean {
-    return this._disabled;
-  }
+  @property({type: Boolean, reflect: true})
+  disabled = false;
 
   @property({type: Boolean, reflect: true})
   required = false;
@@ -130,7 +116,6 @@ export class VscodeMultiSelect
   }
 
   private _internals: ElementInternals;
-  private _disabled = false;
 
   constructor() {
     super();

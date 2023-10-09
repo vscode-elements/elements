@@ -51,7 +51,7 @@ export class VscodeCheckbox
   @property()
   value = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -107,10 +107,6 @@ export class VscodeCheckbox
       this._manageRequired();
       this._setActualFormValue();
     });
-  }
-
-  formDisabledCallback(disabled: boolean): void {
-    this.disabled = disabled;
   }
 
   formResetCallback(): void {

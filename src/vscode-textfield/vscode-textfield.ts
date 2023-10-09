@@ -48,7 +48,7 @@ export class VscodeTextfield
   @property({attribute: 'default-value'})
   defaultValue = '';
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   @property({type: Boolean, reflect: true})
@@ -171,10 +171,6 @@ export class VscodeTextfield
       this._inputEl.checkValidity();
       this._setValidityFromInput();
     });
-  }
-
-  formDisabledCallback(disabled: boolean): void {
-    this.disabled = disabled;
   }
 
   formResetCallback(): void {
