@@ -5,6 +5,22 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-textfield.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
+type InputType =
+  | 'color'
+  | 'date'
+  | 'datetime-local'
+  | 'email'
+  | 'file'
+  | 'month'
+  | 'number'
+  | 'password'
+  | 'search'
+  | 'tel'
+  | 'text'
+  | 'time'
+  | 'url'
+  | 'week';
+
 /**
  * A simple inline textfield
  *
@@ -99,26 +115,38 @@ export class VscodeTextfield
   step: number | undefined = undefined;
 
   @property({reflect: true})
-  type:
-    | 'color'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'file'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'search'
-    | 'tel'
-    | 'text'
-    | 'time'
-    | 'url'
-    | 'week' = 'text';
+  set type(val: InputType) {
+    const validTypes: InputType[] = [
+      'color',
+      'date',
+      'datetime-local',
+      'email',
+      'file',
+      'month',
+      'number',
+      'password',
+      'search',
+      'tel',
+      'text',
+      'time',
+      'url',
+      'week',
+    ];
+
+    this._type = (
+      validTypes.includes(val as InputType) ? val : 'text'
+    ) as InputType;
+  }
+  get type(): InputType {
+    return this._type;
+  }
 
   @property()
   set value(val: string) {
-    this._value = val;
-    this._internals.setFormValue(val);
+    if (this.type !== 'file') {
+      this._value = val;
+      this._internals.setFormValue(val);
+    }
   }
   get value(): string {
     return this._value;
@@ -194,11 +222,22 @@ export class VscodeTextfield
 
   @state()
   private _value = '';
+
+  @state()
+  private _type: InputType = 'text';
+
   private _internals: ElementInternals;
 
   private _dataChanged() {
     this._value = this._inputEl.value;
-    this._internals.setFormValue(this._inputEl.value);
+
+    if (this.type === 'file' && this._inputEl.files) {
+      for (const f of this._inputEl.files) {
+        this._internals.setFormValue(f);
+      }
+    } else {
+      this._internals.setFormValue(this._inputEl.value);
+    }
   }
 
   private _setValidityFromInput() {
@@ -265,7 +304,7 @@ export class VscodeTextfield
         ?readonly=${this.readonly}
         ?required=${this.required}
         step=${ifDefined(this.step)}
-        .value=${this._value}
+        .value=${ifDefined(this.type !== 'file' ? this._value : undefined)}
         @blur=${this._onBlur}
         @change=${this._onChange}
         @focus=${this._onFocus}
