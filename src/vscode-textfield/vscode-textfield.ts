@@ -46,6 +46,7 @@ export class VscodeTextfield
 {
   static styles = styles;
 
+  /** @internal */
   static get formAssociated() {
     return true;
   }
@@ -119,6 +120,10 @@ export class VscodeTextfield
   @property({type: Number, reflect: true})
   tabindex = 0;
 
+  /**
+   * Same as the `type` of the native `<input>` element but only a subset of types are supported.
+   * The supported ones are: `color`,`date`,`datetime-local`,`email`,`file`,`month`,`number`,`password`,`search`,`tel`,`text`,`time`,`url`,`week`
+   */
   @property({reflect: true})
   set type(val: InputType) {
     const validTypes: InputType[] = [
@@ -206,11 +211,13 @@ export class VscodeTextfield
     });
   }
 
+  /** @internal */
   formResetCallback(): void {
     this.value = this.defaultValue;
     this.requestUpdate();
   }
 
+  /** @internal */
   formStateRestoreCallback(
     state: string,
     _mode: 'restore' | 'autocomplete'

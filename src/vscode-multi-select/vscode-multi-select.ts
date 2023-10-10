@@ -91,6 +91,7 @@ export class VscodeMultiSelect
     return this._internals.form;
   }
 
+  /** @internal */
   get type() {
     return 'select-multiple';
   }
