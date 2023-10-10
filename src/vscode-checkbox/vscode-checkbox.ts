@@ -69,6 +69,7 @@ export class VscodeCheckbox
     return this._internals.form;
   }
 
+  /** @internal */
   get type(): 'checkbox' {
     return 'checkbox';
   }

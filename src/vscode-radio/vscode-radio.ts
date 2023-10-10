@@ -88,6 +88,7 @@ export class VscodeRadio
     return this._internals.form;
   }
 
+  /** @internal */
   get type() {
     return 'radio';
   }

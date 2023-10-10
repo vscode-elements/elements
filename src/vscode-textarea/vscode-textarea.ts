@@ -118,6 +118,7 @@ export class VscodeTextarea
     return this._internals.form;
   }
 
+  /** @internal */
   get type(): 'textarea' {
     return 'textarea';
   }

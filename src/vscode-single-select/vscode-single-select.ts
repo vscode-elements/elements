@@ -175,6 +175,7 @@ export class VscodeSingleSelect
     });
   }
 
+  /** @internal */
   get type(): 'select-one' {
     return 'select-one';
   }
