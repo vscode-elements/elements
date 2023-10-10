@@ -50,6 +50,7 @@ export class VscodeTextfield
     return true;
   }
 
+  /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -113,6 +114,10 @@ export class VscodeTextfield
 
   @property({type: Number})
   step: number | undefined = undefined;
+
+  /** @internal */
+  @property({type: Number, reflect: true})
+  tabindex = 0;
 
   @property({reflect: true})
   set type(val: InputType) {
@@ -211,10 +216,6 @@ export class VscodeTextfield
     _mode: 'restore' | 'autocomplete'
   ): void {
     this.value = state;
-  }
-
-  focus(): void {
-    this._inputEl.focus();
   }
 
   @query('#input')
