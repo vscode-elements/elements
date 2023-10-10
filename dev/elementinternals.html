@@ -63,6 +63,10 @@
       <form action="/" enctype="application/x-www-form-urlencoded" method="get" id="form-native">
         <fieldset>
           <div>
+            <label for="range-test">Range test</label>
+            <input type="range" name="range-test" id="range-test" required>
+          </div>
+          <div>
             <label for="required-test">Required test</label>
             <input type="text" name="required-test" id="required-test" required value="foo">
           </div>
@@ -116,6 +120,11 @@
         </fieldset>
         <button type="submit" name="submit-button">Submit</button>
         <button type="reset" name="reset-button">Reset</button>
+      </form>
+      <form action="/" enctype="multipart/form-data" method="post">
+        <label for="native-file-input">File input</label>
+        <input type="file" id="native-file-input" name="native-file-input" multiple>
+        <button type="submit">Submit</button>
       </form>
     </div>
   </div>
@@ -222,6 +231,13 @@
             console.log(ev);
           });
         </script>
+        <form action="/" enctype="multipart/form-data" method="post">
+          <vscode-form-group>
+            <vscode-label for="vsc-file-input-test">File input test</vscode-label>
+            <vscode-textfield id="vsc-file-input-test" name="vsc-file-input-test" type="file"></vscode-textfield>
+          </vscode-form-group>
+          <vscode-button type="submit">Submit</vscode-button>
+        </form>
       </component-preview>
     </div>
   </div>
