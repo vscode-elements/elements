@@ -95,15 +95,15 @@ jobs:
           npm pack
 
       - name: Publish to Npmjs.com (Pre)
-        run: npm publish --tag=next vsc-elements-elements-${{ env.RELEASE_VERSION }}.tgz
+        run: npm publish --access=public --tag=next vsc-elements-elements-${{ env.RELEASE_VERSION }}.tgz
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
         if: ${{ github.event.inputs.releaseChannel == 'pre' }}
 
       - name: Publish to Npmjs.com (Stable)
-        run: npm publish vsc-elements-elements-${{ env.RELEASE_VERSION }}.tgz
+        run: npm publish --access=public vsc-elements-elements-${{ env.RELEASE_VERSION }}.tgz
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
 
       - name: Github Release (Pre)
