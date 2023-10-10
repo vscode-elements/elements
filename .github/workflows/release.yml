@@ -47,6 +47,7 @@ jobs:
       - name: Setup Node version
         uses: actions/setup-node@v3
         with:
+          scope: "@vsc-elements"
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
