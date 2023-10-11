@@ -156,7 +156,6 @@ export class VscodeSingleSelect
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      this.value = this.defaultValue;
       this._manageRequired();
     });
   }
