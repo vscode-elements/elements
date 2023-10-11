@@ -26,9 +26,6 @@ export class VscodeSelectBase extends VscElement {
   @property({type: Boolean, reflect: true})
   combobox = false;
 
-  @property({type: Boolean, reflect: true, attribute: 'data-cloak'})
-  dataCloak = false;
-
   @property({type: Boolean, reflect: true})
   invalid = false;
 
@@ -89,7 +86,6 @@ export class VscodeSelectBase extends VscElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.dataCloak = false;
     this.addEventListener('keydown', this._onComponentKeyDown);
     this.addEventListener('focus', this._onComponentFocus);
     this.addEventListener('blur', this._onComponentBlur);
