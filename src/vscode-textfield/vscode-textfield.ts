@@ -27,6 +27,9 @@ type InputType =
  * @slot content-before
  * @slot content-after
  *
+ * @fires {InputEvent} input
+ * @fires {InputEvent} change
+ *
  * @cssprop [--background=var(--vscode-settings-textInputBackground)]
  * @cssprop [--border=var(--vscode-settings-textInputBorder)]
  * @cssprop [--foreground=var(--vscode-settings-textInputForeground)]
@@ -252,24 +255,15 @@ export class VscodeTextfield
     this.invalid = !this._internals.checkValidity();
   }
 
-  private _onInput(ev: InputEvent) {
+  private _onInput() {
     this._dataChanged();
     this._setValidityFromInput();
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-input', {detail: {data: ev.data, originalEvent: ev}})
-    );
   }
 
   private _onChange(ev: InputEvent) {
     this._dataChanged();
     this._setValidityFromInput();
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {data: ev.data, originalEvent: ev},
-      })
-    );
+    this.dispatchEvent(new InputEvent('change', {data: ev.data}));
   }
 
   private _onFocus() {
