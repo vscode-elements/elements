@@ -209,6 +209,30 @@ export class VscodeTextfield
     });
   }
 
+  attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null
+  ): void {
+    super.attributeChangedCallback(name, old, value);
+
+    const validationRelatedAttributes = [
+      'max',
+      'maxlength',
+      'min',
+      'minlength',
+      'pattern',
+      'required',
+      'step'
+    ];
+
+    if (validationRelatedAttributes.includes(name)) {
+      this.updateComplete.then(() => {
+        this._setValidityFromInput();
+      });
+    }
+  }
+
   /** @internal */
   formResetCallback(): void {
     this.value = this.defaultValue;
@@ -252,7 +276,6 @@ export class VscodeTextfield
       this._inputEl.validationMessage,
       this._inputEl
     );
-    this.invalid = !this._internals.checkValidity();
   }
 
   private _onInput() {
