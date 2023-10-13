@@ -200,8 +200,6 @@ export class VscodeTextfield
   connectedCallback(): void {
     super.connectedCallback();
 
-    this.value = this.defaultValue;
-
     this.updateComplete.then(() => {
       this._inputEl.checkValidity();
       this._setValidityFromInput();
