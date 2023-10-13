@@ -1,76 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;vscode-textfield&gt; Demo</title>
-    <link
-      rel="stylesheet"
-      href="../node_modules/@vscode/codicons/dist/codicon.css"
-      id="vscode-codicon-stylesheet"
-    />
-    <script type="module" src="../dev-assets/component-preview.js"></script>
-    <script type="module" src="../dist/vscode-icon/index.js"></script>
-    <script type="module" src="../dist/vscode-label/index.js"></script>
-    <script type="module" src="../dist/vscode-textfield/index.js"></script>
-  </head>
 
-  <body class="vscode-light">
-    <main>
-      <div class="story">
-        <h2 class="story-title">Basic example</h2>
-        <div class="story-content">
-          <component-preview>
-            <vscode-label for="field-1">Lorem ipsum</vscode-label>
-            <vscode-textfield
-              id="field-1"
-              autocomplete
-              autofocus
-              placeholder="Placeholder..."
-              required
-              invalid
-            >
-              <vscode-icon name="calendar" slot="content-before"></vscode-icon>
-              <vscode-icon
-                id="search-icon"
-                name="search"
-                slot="content-after"
-                action-icon
-                label="Search"
-              ></vscode-icon>
-            </vscode-textfield>
-            <script type="module">
-              const el = document.getElementById('field-1');
-              const icon = document.getElementById('search-icon');
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;vscode-textfield&gt; Demo</title>
+  <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
+  <script type="module" src="../dev-assets/component-preview.js"></script>
+  <script type="module" src="../dist/vscode-icon/index.js"></script>
+  <script type="module" src="../dist/vscode-label/index.js"></script>
+  <script type="module" src="../dist/vscode-textfield/index.js"></script>
+  <style>
+    vscode-textfield:focus {
+      outline: 3px solid #0f0;
+      ;
+    }
+  </style>
+</head>
 
-              el.addEventListener('vsc-invalid', (ev) => {
-                console.log(ev);
-              });
-              el.addEventListener('vsc-input', (ev) => {
-                console.log(ev);
-              });
-              icon.addEventListener('vsc-click', (ev) => {
-                console.log(ev);
-              });
-            </script>
-          </component-preview>
-        </div>
+<body class="vscode-light">
+  <main>
+    <div class="story">
+      <h2 class="story-title">Basic example</h2>
+      <div class="story-content">
+        <component-preview>
+          <vscode-label for="field-1">Lorem ipsum</vscode-label>
+          <vscode-textfield id="field-1" autocomplete placeholder="Placeholder...">
+            <vscode-icon name="calendar" slot="content-before"></vscode-icon>
+            <vscode-icon id="search-icon" name="search" slot="content-after" action-icon label="Search"></vscode-icon>
+          </vscode-textfield>
+          <button type="button" id="bt-focus">focus</button>
+          <script type="module">
+            const el = document.getElementById('field-1');
+            const icon = document.getElementById('search-icon');
+
+            el.addEventListener('invalid', (ev) => {
+              console.log(ev);
+            });
+            el.addEventListener('input', (ev) => {
+              console.log(ev);
+            });
+            el.addEventListener('change', (ev) => {
+              console.log(ev);
+            });
+            icon.addEventListener('click', (ev) => {
+              console.log(ev);
+            });
+            document.getElementById('bt-focus').addEventListener('click', () => {
+              document.getElementById('field-1').focus();
+            })
+          </script>
+        </component-preview>
       </div>
-      <div class="story">
-        <h2 class="story-title">File input</h2>
-        <div class="story-content">
-          <component-preview>
-            <vscode-label for="field-2">Lorem ipsum</vscode-label>
-            <vscode-textfield
-              id="field-2"
-              autocomplete
-              placeholder="Placeholder..."
-              type="file"
-            >
-            </vscode-textfield>
-          </component-preview>
-        </div>
+    </div>
+    <div class="story">
+      <h2 class="story-title">File input</h2>
+      <div class="story-content">
+        <component-preview>
+          <vscode-label for="field-2">Lorem ipsum</vscode-label>
+          <vscode-textfield id="field-2" autocomplete placeholder="Placeholder..." type="file">
+          </vscode-textfield>
+        </component-preview>
       </div>
-    </main>
-  </body>
+    </div>
+  </main>
+</body>
+
 </html>

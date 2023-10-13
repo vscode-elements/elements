@@ -229,6 +229,11 @@
           vscForm.addEventListener('invalid', (ev) => {
             console.log(ev);
           });
+
+          const tf = document.getElementById('vsc-required-test');
+          tf.addEventListener('input', (ev) => {
+            console.log(ev);
+          });
         </script>
         <form action="/" enctype="multipart/form-data" method="post">
           <vscode-form-group>
