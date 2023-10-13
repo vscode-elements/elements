@@ -58,6 +58,7 @@ const styles: CSSResultGroup = [
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
+      box-sizing: border-box;
       color: var(--foreground);
       display: inline-flex;
       max-width: 100%;
