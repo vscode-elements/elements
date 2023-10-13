@@ -1,3 +1,4 @@
+import sinon from 'sinon';
 import {VscodeTextfield} from '../vscode-textfield/index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 
@@ -83,5 +84,81 @@ describe('vscode-textfield', () => {
 
     expect(el.validationMessage).to.not.empty;
     expect(el.validationMessage).to.eq(nativeInput.validationMessage);
+  });
+
+  it('should willValidate property be true if the element is candidate for constraint validation', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield></vscode-textfield>'
+    );
+
+    expect(el.willValidate).to.be.true;
+  });
+
+  it('should willValidate property be false if the element is not candidate for constraint validation', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield disabled></vscode-textfield>'
+    );
+
+    expect(el.willValidate).to.be.false;
+  });
+
+  it('should check validity when checkValidity is called', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield required></vscode-textfield>'
+    );
+    const fn = sinon.spy();
+    el.addEventListener('invalid', fn);
+
+    const result = el.checkValidity();
+
+    expect(result).to.be.false;
+    expect(fn.called).to.be.true;
+  });
+
+  it('reportValidity should be called', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield required></vscode-textfield>'
+    );
+    const fn = sinon.spy();
+    el.addEventListener('invalid', fn);
+
+    const result = el.reportValidity();
+
+    expect(result).to.be.false;
+    expect(fn.called).to.be.true;
+  });
+
+  it('wrappedElement property should point to inner native input', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield></vscode-textfield>'
+    );
+
+    expect(el.wrappedElement).to.instanceOf(HTMLInputElement);
+  });
+
+  it('reset callback should restore the default value', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield value="Test value" default-value="Default value"></vscode-textfield>'
+    );
+    const initialValue = el.value;
+
+    el.formResetCallback();
+    await el.updateComplete;
+
+    expect(initialValue).to.eq('Test value');
+    expect(el.value).to.eq('Default value');
+  });
+
+  it('restore callback should restore the previous state', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield value="Test value"></vscode-textfield>'
+    );
+    const initialValue = el.value;
+
+    el.formStateRestoreCallback('Restored value', 'restore');
+    await el.updateComplete;
+
+    expect(initialValue).to.eq('Test value');
+    expect(el.value).to.eq('Restored value');
   });
 });
