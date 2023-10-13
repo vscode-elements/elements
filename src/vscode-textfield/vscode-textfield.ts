@@ -195,9 +195,6 @@ export class VscodeTextfield
   constructor() {
     super();
     this._internals = this.attachInternals();
-    this.addEventListener('focus', () => {
-      this._inputEl.focus();
-    });
   }
 
   connectedCallback(): void {
