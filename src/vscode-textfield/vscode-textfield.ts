@@ -119,10 +119,6 @@ export class VscodeTextfield
   @property({type: Number})
   step: number | undefined = undefined;
 
-  /** @internal */
-  @property({type: Number, reflect: true})
-  tabindex = 0;
-
   /**
    * Same as the `type` of the native `<input>` element but only a subset of types are supported.
    * The supported ones are: `color`,`date`,`datetime-local`,`email`,`file`,`month`,`number`,`password`,`search`,`tel`,`text`,`time`,`url`,`week`
