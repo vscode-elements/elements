@@ -10,6 +10,9 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 /**
  * Multi-line text input.
  *
+ * @fires {InputEvent} input
+ * @fires {Event} change
+ *
  * @cssprop [--scrollbar-shadow=var(--vscode-scrollbar-shadow)]
  * @cssprop [--background=var(--vscode-settings-textInputBackground)]
  * @cssprop [--border=var(--vscode-settings-textInputBorder)]
@@ -206,26 +209,15 @@ export class VscodeTextarea
     this._internals.setFormValue(this._textareaEl.value);
   }
 
-  private _handleChange(ev: InputEvent) {
+  private _handleChange() {
     this._dataChanged();
     this._setValidityFromInput();
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {data: ev.data, originalEvent: ev},
-      })
-    );
+    this.dispatchEvent(new Event('change'));
   }
 
-  private _handleInput(ev: InputEvent) {
+  private _handleInput() {
     this._dataChanged();
     this._setValidityFromInput();
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-input', {
-        detail: {data: ev.data, originalEvent: ev},
-      })
-    );
   }
 
   private _handleMouseMove(ev: MouseEvent) {
