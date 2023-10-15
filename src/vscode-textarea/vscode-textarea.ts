@@ -41,6 +41,12 @@ export class VscodeTextarea
    */
   static formAssociated = true;
 
+  /** @internal */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
   // #region properties, setters/getters
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
@@ -162,10 +168,6 @@ export class VscodeTextarea
     this.updateComplete.then(() => {
       this._value = state;
     });
-  }
-
-  focus() {
-    this._textareaEl.focus();
   }
 
   checkValidity(): boolean {
