@@ -10,8 +10,8 @@ export interface AssociatedFormControl {
   max?: number | string;
   step?: number;
   required?: boolean;
-  minlength?: number;
-  maxlength?: number;
+  minLength?: number;
+  maxLength?: number;
 
   readonly form: HTMLFormElement | null;
   readonly validationMessage: string;
