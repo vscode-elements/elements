@@ -1,6 +1,7 @@
 import sinon from 'sinon';
 import {VscodeTextfield} from '../vscode-textfield/index.js';
 import {expect, fixture, html} from '@open-wc/testing';
+import {sendKeys, sendMouse} from '@web/test-runner-commands';
 
 describe('vscode-textfield', () => {
   it('is defined', () => {
@@ -160,5 +161,71 @@ describe('vscode-textfield', () => {
 
     expect(initialValue).to.eq('Test value');
     expect(el.value).to.eq('Restored value');
+  });
+
+  it('should be revalidated when a validation related attribute is changed', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield></vscode-textfield>'
+    );
+    const initialValidity = el.checkValidity();
+
+    el.required = true;
+    await el.updateComplete;
+
+    expect(initialValidity).to.be.true;
+    expect(el.checkValidity()).to.be.false;
+  });
+
+  it('should submit the associated form when the "Enter" button is pressed', async () => {
+    const form = document.createElement('form');
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield></vscode-textfield>',
+      {
+        parentNode: form,
+      }
+    );
+    const spy = sinon.spy((ev: SubmitEvent) => {
+      ev.preventDefault();
+    });
+    form.addEventListener('submit', spy);
+
+    el.focus();
+    await sendKeys({
+      press: 'Enter',
+    });
+
+    expect(spy.called).to.be.true;
+  });
+
+  it('"input" event should be dispatched when a text typed', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield></vscode-textfield>'
+    );
+    const spy = sinon.spy();
+    el.addEventListener('input', spy);
+
+    el.focus();
+    await sendKeys({
+      press: 'a',
+    });
+
+    expect(spy.called).to.be.true;
+    expect(spy.calledWithMatch({data: 'a'})).to.be.true;
+  });
+
+  it('"change" event should be dispatched when a text typed and the focus is lost', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield></vscode-textfield>'
+    );
+    const spy = sinon.spy();
+    el.addEventListener('change', spy);
+
+    el.focus();
+    await sendKeys({
+      press: 'a',
+    });
+    await sendMouse({type: 'click', position: [1000, 1000]});
+
+    expect(spy.called).to.be.true;
   });
 });

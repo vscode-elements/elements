@@ -201,6 +201,7 @@
     "@web/dev-server-legacy": "^2.0.0",
     "@web/dev-server-rollup": "^0.5.1",
     "@web/test-runner": "^0.16.1",
+    "@web/test-runner-commands": "^0.8.1",
     "@web/test-runner-mocha": "^0.8.1",
     "@web/test-runner-playwright": "^0.10.1",
     "@webcomponents/webcomponentsjs": "^2.8.0",
