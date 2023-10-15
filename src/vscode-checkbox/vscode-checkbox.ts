@@ -9,7 +9,7 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
  * @attr label - Attribute pair of the `label` property.
- * @prop label - Label text. It is only applied if componnet's innerHTML doesn't contain any text.
+ * @prop label - Label text. It is only applied if component's innerHTML doesn't contain any text.
  *
  * @cssprop [--font-family=var(--vscode-font-family)]
  * @cssprop [--font-size=var(--vscode-font-size)]
