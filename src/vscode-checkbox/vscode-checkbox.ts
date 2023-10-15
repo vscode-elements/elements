@@ -27,6 +27,7 @@ export class VscodeCheckbox
 {
   static styles = styles;
 
+  /** @internal */
   static formAssociated = true;
 
   /** @internal */
@@ -54,9 +55,17 @@ export class VscodeCheckbox
   @property({reflect: true})
   name: string | undefined = undefined;
 
+  /** @internal */
   @property({reflect: true})
   role = 'checkbox';
 
+  /**
+   * Associate a value to the checkbox. According to the native checkbox [specification](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value_2), If the component participates in a form:
+   *
+   * - If it is unchecked, the value will not be submitted.
+   * - If it is checked but the value is not set, `on` will be submitted.
+   * - If it is checked and value is set, the value will be submitted.
+   */
   @property()
   value = '';
 
@@ -119,10 +128,12 @@ export class VscodeCheckbox
     });
   }
 
+  /** @internal */
   formResetCallback(): void {
     this.checked = this.defaultChecked;
   }
 
+  /** @internal */
   formStateRestoreCallback(
     state: string,
     _mode: 'restore' | 'autocomplete'
