@@ -54,7 +54,7 @@ export class VscodeTextarea
   @property()
   autocomplete: 'on' | 'off' | undefined = undefined;
 
-  @property({type: Boolean})
+  @property({type: Boolean, reflect: true})
   autofocus = false;
 
   @property({attribute: 'default-value'})
