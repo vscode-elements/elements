@@ -34,16 +34,28 @@
             const el = document.getElementById('field-1');
             const icon = document.getElementById('search-icon');
 
-            el.addEventListener('invalid', (ev) => {
+            document.addEventListener('invalid', (ev) => {
               console.log(ev);
             });
-            el.addEventListener('input', (ev) => {
+            document.addEventListener('input', (ev) => {
               console.log(ev);
             });
             el.addEventListener('change', (ev) => {
               console.log(ev);
             });
+            el.addEventListener('select', (ev) => {
+              console.log(ev);
+            });
+            el.addEventListener('invalid', (ev) => {
+              console.log(ev);
+            });
             icon.addEventListener('click', (ev) => {
+              console.log(ev);
+            });
+            el.addEventListener('focus', (ev) => {
+              console.log(ev);
+            });
+            el.addEventListener('blur', (ev) => {
               console.log(ev);
             });
             document.getElementById('bt-focus').addEventListener('click', () => {
