@@ -159,6 +159,21 @@ export class VscodeTextarea
     });
   }
 
+  updated(
+    changedProperties: PropertyValues<unknown> | Map<PropertyKey, unknown>
+  ): void {
+    const validationRelatedProps = ['maxLength', 'minLength', 'required'];
+
+    for (const key of changedProperties.keys()) {
+      if (validationRelatedProps.includes(String(key))) {
+        this.updateComplete.then(() => {
+          this._setValidityFromInput();
+        });
+        break;
+      }
+    }
+  }
+
   formResetCallback(): void {
     this.value = this.defaultValue;
   }
