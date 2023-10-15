@@ -90,13 +90,13 @@ export class VscodeTextfield
   max: number | undefined = undefined;
 
   @property({type: Number})
-  maxlength: number | undefined = undefined;
+  maxLength: number | undefined = undefined;
 
   @property({type: Number})
   min: number | undefined = undefined;
 
   @property({type: Number})
-  minlength: number | undefined = undefined;
+  minLength: number | undefined = undefined;
 
   @property({type: Boolean, reflect: true})
   multiple = false;
@@ -314,9 +314,9 @@ export class VscodeTextfield
         aria-label=${this.label}
         ?disabled=${this.disabled}
         max=${ifDefined(this.max)}
-        maxlength=${ifDefined(this.maxlength)}
+        maxlength=${ifDefined(this.maxLength)}
         min=${ifDefined(this.min)}
-        minlength=${ifDefined(this.minlength)}
+        minlength=${ifDefined(this.minLength)}
         ?multiple=${this.multiple}
         name=${ifDefined(this.name)}
         pattern=${ifDefined(this.pattern)}

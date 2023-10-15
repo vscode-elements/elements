@@ -67,10 +67,10 @@ export class VscodeTextarea
   label = '';
 
   @property({type: Number})
-  maxlength: number | undefined = undefined;
+  maxLength: number | undefined = undefined;
 
   @property({type: Number})
-  minlength: number | undefined = undefined;
+  minLength: number | undefined = undefined;
 
   @property({type: Number})
   rows: number | undefined = undefined;
@@ -265,8 +265,8 @@ export class VscodeTextarea
           monospace: this.monospace,
           'cursor-pointer': this._textareaPointerCursor,
         })}
-        maxlength=${ifDefined(this.maxlength)}
-        minlength=${ifDefined(this.minlength)}
+        maxlength=${ifDefined(this.maxLength)}
+        minlength=${ifDefined(this.minLength)}
         rows=${ifDefined(this.rows)}
         cols=${ifDefined(this.cols)}
         name=${ifDefined(this.name)}
