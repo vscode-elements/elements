@@ -248,7 +248,6 @@ export class VscodeCheckbox
           type="checkbox"
           ?checked="${this._checked}"
           value="${this.value}"
-          tabindex="-1"
         />
         <div class="${iconClasses}">${indeterminate}${check}</div>
         <label for="${this._uid}" class="label" @click="${this._handleClick}">
