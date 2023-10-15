@@ -4,13 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [0.17.0] - 2023-10-15
-
-### Added
-
-- Added a [React demo app](examples/react-app) to the repository.
-- Added `autofocus` attribute to **Textarea** and **Textfield**
-- All boolean properties are reflected. Read the [Open Web Components](https://open-wc.org/guides/knowledge/attributes-and-properties/#attribute-and-property-reflection) documentation for more details.
+## [Unreleased]
 
 ### Fixed
 
@@ -19,6 +13,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 
 - Reflect `name` property of the **Input** component similar to the native textfield.
+- **Textarea**, **Textfield**: `minlength` and `maxlength` property is renamed to `minLength` and `maxLength`. This 
+  change adheres to the naming convention of the native `<textarea>` element. The attribute names
+  are not changed.
+- **Textarea**, **Textfield**: dispatching native `input` and `change` events instead of the custom
+  `vsc-input` and `vsc-change`.
+
+## [0.17.0] - 2023-10-15
+
+### Added
+
+- Added a [React demo app](examples/react-app) to the repository.
+- Added `autofocus` attribute to **Textarea** and **Textfield**
+- All boolean properties are reflected. Read the [Open Web Components](https://open-wc.org/guides/knowledge/attributes-and-properties/#attribute-and-property-reflection) documentation for more details.
 
 ## [0.16.0] - 2023-09-07
 
