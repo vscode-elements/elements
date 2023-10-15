@@ -119,7 +119,7 @@ const styles: CSSResultGroup = [
     }
 
     input[type='file'] {
-      line-height: 26px;
+      line-height: 24px;
       padding-bottom: 0;
       padding-left: 2px;
       padding-top: 0;
@@ -135,7 +135,7 @@ const styles: CSSResultGroup = [
       font-size: var(--font-size);
       font-weight: var(--font-weight);
       line-height: 20px;
-      padding: 1px 14px;
+      padding: 0 14px;
     }
 
     input[type='file']::file-selector-button:hover {
