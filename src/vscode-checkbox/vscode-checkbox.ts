@@ -121,7 +121,6 @@ export class VscodeCheckbox
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      this.checked = this.defaultChecked;
       this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
       this._manageRequired();
       this._setActualFormValue();
