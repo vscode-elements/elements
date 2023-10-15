@@ -50,9 +50,7 @@ export class VscodeTextfield
   static styles = styles;
 
   /** @internal */
-  static get formAssociated() {
-    return true;
-  }
+  static formAssociated = true;
 
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
