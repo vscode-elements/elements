@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
@@ -28,6 +28,15 @@ export class VscodeCheckbox
   static styles = styles;
 
   static formAssociated = true;
+
+  /** @internal */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
+  @property({type: Boolean, reflect: true})
+  autofocus = false;
 
   @property({type: Boolean, reflect: true})
   set checked(val: boolean) {
@@ -233,6 +242,7 @@ export class VscodeCheckbox
     return html`
       <div class="wrapper">
         <input
+          ?autofocus=${this.autofocus}
           id="${this._uid}"
           class="checkbox"
           type="checkbox"
