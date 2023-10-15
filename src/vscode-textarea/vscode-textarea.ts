@@ -154,7 +154,6 @@ export class VscodeTextarea
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      this._textareaEl.value = this.defaultValue;
       this._textareaEl.checkValidity();
       this._setValidityFromInput();
     });
