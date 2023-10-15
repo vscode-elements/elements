@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, LitElement, TemplateResult, PropertyValues} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
@@ -215,7 +215,6 @@ export class VscodeTextarea
       this._textareaEl.validationMessage,
       this._textareaEl
     );
-    this.invalid = !this._internals.checkValidity();
   }
 
   private _dataChanged() {
