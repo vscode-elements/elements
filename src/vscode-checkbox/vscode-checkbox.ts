@@ -42,7 +42,6 @@ export class VscodeCheckbox
   @property({type: Boolean, reflect: true})
   set checked(val: boolean) {
     this._checked = val;
-    this._indeterminate = false;
     this.setAttribute('aria-checked', val ? 'true' : 'false');
   }
   get checked(): boolean {
@@ -200,6 +199,7 @@ export class VscodeCheckbox
       ev.preventDefault();
       this._checked = !this._checked;
       this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
+      this._indeterminate = false;
       // TODO: dispatch event
 
       this._setActualFormValue();
@@ -237,6 +237,7 @@ export class VscodeCheckbox
       viewBox="0 0 16 16"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
+      class="check-icon"
     >
       <path
         fill-rule="evenodd"
