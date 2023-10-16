@@ -138,12 +138,16 @@ describe('vscode-textfield', () => {
   });
 
   it('reset callback should restore the default value', async () => {
+    const form = document.createElement('form');
     const el = await fixture<VscodeTextfield>(
-      '<vscode-textfield value="Test value" default-value="Default value"></vscode-textfield>'
+      '<vscode-textfield value="Test value" default-value="Default value"></vscode-textfield>',
+      {
+        parentNode: form,
+      }
     );
     const initialValue = el.value;
 
-    el.formResetCallback();
+    form.reset();
     await el.updateComplete;
 
     expect(initialValue).to.eq('Test value');
