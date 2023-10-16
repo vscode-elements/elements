@@ -72,12 +72,7 @@ export class VscodeCheckbox
   disabled = false;
 
   @property({type: Boolean, reflect: true})
-  set indeterminate(val: boolean) {
-    this._indeterminate = val;
-  }
-  get indeterminate(): boolean {
-    return this._indeterminate;
-  }
+  indeterminate = false;
 
   @property({type: Boolean, reflect: true})
   required = false;
@@ -144,9 +139,6 @@ export class VscodeCheckbox
   @state()
   private _checked = false;
 
-  @state()
-  private _indeterminate = false;
-
   @query('.icon')
   private _iconEl!: HTMLDivElement;
 
@@ -175,7 +167,7 @@ export class VscodeCheckbox
     }
 
     this._checked = !this._checked;
-    this._indeterminate = false;
+    this.indeterminate = false;
     this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
 
     this.dispatchEvent(
@@ -199,7 +191,7 @@ export class VscodeCheckbox
       ev.preventDefault();
       this._checked = !this._checked;
       this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
-      this._indeterminate = false;
+      this.indeterminate = false;
       // TODO: dispatch event
 
       this._setActualFormValue();
@@ -225,7 +217,7 @@ export class VscodeCheckbox
     const iconClasses = classMap({
       icon: true,
       checked: this._checked,
-      indeterminate: this._indeterminate,
+      indeterminate: this.indeterminate,
     });
     const labelInnerClasses = classMap({
       'label-inner': true,
@@ -245,8 +237,8 @@ export class VscodeCheckbox
         d="M14.431 3.323l-8.47 10-.79-.036-3.35-4.77.818-.574 2.978 4.24 8.051-9.506.764.646z"
       />
     </svg>`;
-    const check = this._checked && !this._indeterminate ? icon : nothing;
-    const indeterminate = this._indeterminate
+    const check = this._checked && !this.indeterminate ? icon : nothing;
+    const indeterminate = this.indeterminate
       ? html`<span class="indeterminate-icon"></span>`
       : nothing;
 
