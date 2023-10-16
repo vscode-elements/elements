@@ -260,7 +260,7 @@ export class VscodeRadio
     return html`
       <div class="wrapper">
         <input
-          id="${this._uid}"
+          id="input"
           class="radio"
           type="checkbox"
           ?checked="${this._checked}"
@@ -268,7 +268,7 @@ export class VscodeRadio
           tabindex="-1"
         />
         <div class="${iconClasses}"></div>
-        <label for="${this._uid}" class="label" @click="${this._handleClick}">
+        <label for="input" class="label" @click="${this._handleClick}">
           <span class="${labelInnerClasses}">
             ${this._renderLabelAttribute()}
             <slot @slotchange="${this._handleSlotChange}"></slot>

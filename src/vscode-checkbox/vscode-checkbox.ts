@@ -246,14 +246,14 @@ export class VscodeCheckbox
       <div class="wrapper">
         <input
           ?autofocus=${this.autofocus}
-          id="${this._uid}"
+          id="input"
           class="checkbox"
           type="checkbox"
           ?checked="${this._checked}"
           value="${this.value}"
         />
         <div class="${iconClasses}">${indeterminate}${check}</div>
-        <label for="${this._uid}" class="label" @click="${this._handleClick}">
+        <label for="input" class="label" @click="${this._handleClick}">
           <span class="${labelInnerClasses}">
             ${this._renderLabelAttribute()}
             <slot @slotchange="${this._handleSlotChange}"></slot>

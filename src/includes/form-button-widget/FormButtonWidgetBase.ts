@@ -40,10 +40,6 @@ export class FormButtonWidgetBase extends VscElement {
 
   private _prevTabindex = 0;
 
-  protected _uid = `id_${new Date().valueOf()}_${Math.floor(
-    Math.random() * 9999
-  )}`;
-
   protected _handleClick(): void {
     throw new Error('Not implemented');
   }
