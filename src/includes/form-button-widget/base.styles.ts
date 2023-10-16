@@ -43,7 +43,7 @@ export default [
       font-family: var(--font-family);
       font-size: var(--font-size);
       font-weight: var(--font-weight);
-      line-height: 1.4;
+      line-height: 18px;
     }
 
     :host(:focus) {
