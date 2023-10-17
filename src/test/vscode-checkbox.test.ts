@@ -211,4 +211,16 @@ describe('vscode-checkbox', () => {
 
     expect(el.ariaLabel).to.eq('Test Label');
   });
+
+  it('should toggle checked state when clicked', async () => {
+    const el = await fixture<VscodeCheckbox>(
+      html`<vscode-checkbox>Checkbox test</vscode-checkbox>`
+    );
+
+    const label = el.shadowRoot?.querySelector('label');
+    label?.click();
+    await el.updateComplete;
+
+    expect(el.checked).to.be.true;
+  });
 });
