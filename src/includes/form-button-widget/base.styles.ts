@@ -72,6 +72,9 @@ export default [
     input {
       position: absolute;
       height: 1px;
+      left: 9px;
+      margin: 0;
+      top: 17px;
       width: 1px;
       overflow: hidden;
       clip: rect(1px, 1px, 1px, 1px);
