@@ -3,6 +3,7 @@ import {applyForegroundRGBA} from '../themeHelpers.js';
 import {VscElement} from '../VscElement.js';
 
 export class FormButtonWidgetBase extends VscElement {
+  /** @internal */
   @property({type: Number, reflect: true})
   tabindex = 0;
 
@@ -17,14 +18,14 @@ export class FormButtonWidgetBase extends VscElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('focus', this._handleFocusBound);
-    this.addEventListener('blur', this._handleBlurBound);
+    this.addEventListener('focus', this._handleFocus);
+    this.addEventListener('blur', this._handleBlur);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.removeEventListener('focus', this._handleFocusBound);
-    this.removeEventListener('blur', this._handleBlurBound);
+    this.removeEventListener('focus', this._handleFocus);
+    this.removeEventListener('blur', this._handleBlur);
   }
 
   attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
@@ -48,15 +49,11 @@ export class FormButtonWidgetBase extends VscElement {
     throw new Error('Not implemented');
   }
 
-  private _handleFocus(): void {
+  private _handleFocus = (): void => {
     this.focused = true;
   }
 
-  private _handleFocusBound = this._handleFocus.bind(this);
-
-  private _handleBlur(): void {
+  private _handleBlur = (): void => {
     this.focused = false;
   }
-
-  private _handleBlurBound = this._handleBlur.bind(this);
 }
