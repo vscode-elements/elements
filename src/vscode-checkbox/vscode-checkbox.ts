@@ -1,5 +1,5 @@
-import {html, LitElement, nothing, TemplateResult} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+import {html, LitElement, nothing, PropertyValueMap, TemplateResult} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
@@ -40,13 +40,7 @@ export class VscodeCheckbox
   autofocus = false;
 
   @property({type: Boolean, reflect: true})
-  set checked(val: boolean) {
-    this._checked = val;
-    this.setAttribute('aria-checked', val ? 'true' : 'false');
-  }
-  get checked(): boolean {
-    return this._checked;
-  }
+  checked = false;
 
   @property({type: Boolean, reflect: true, attribute: 'default-checked'})
   defaultChecked = false;
@@ -115,10 +109,20 @@ export class VscodeCheckbox
     super.connectedCallback();
 
     this.updateComplete.then(() => {
-      this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
       this._manageRequired();
       this._setActualFormValue();
     });
+  }
+
+  protected update(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has('checked')) {
+      this.ariaChecked = this.checked ? 'true' : 'false';
+    }
   }
 
   /** @internal */
@@ -136,11 +140,8 @@ export class VscodeCheckbox
     }
   }
 
-  @state()
-  private _checked = false;
-
-  @query('.icon')
-  private _iconEl!: HTMLDivElement;
+  @query('#input')
+  private _inputEl!: HTMLInputElement;
 
   private _internals: ElementInternals;
 
@@ -166,14 +167,13 @@ export class VscodeCheckbox
       return;
     }
 
-    this._checked = !this._checked;
+    this.checked = !this.checked;
     this.indeterminate = false;
-    this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
 
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
         detail: {
-          checked: this._checked,
+          checked: this.checked,
           label: this.label,
           value: this.value,
         },
@@ -189,13 +189,18 @@ export class VscodeCheckbox
   protected _handleKeyDown(ev: KeyboardEvent): void {
     if (!this.disabled && (ev.key === 'Enter' || ev.key === ' ')) {
       ev.preventDefault();
-      this._checked = !this._checked;
-      this.setAttribute('aria-checked', this._checked ? 'true' : 'false');
-      this.indeterminate = false;
-      // TODO: dispatch event
 
-      this._setActualFormValue();
-      this._manageRequired();
+      if (ev.key === ' ') {
+        this.checked = !this.checked;
+        this.indeterminate = false;
+        this._setActualFormValue();
+        this._manageRequired();
+        this.dispatchEvent(new Event('change'));
+      }
+
+      if (ev.key === 'Enter') {
+        this._internals.form?.requestSubmit();
+      }
     }
   }
 
@@ -206,7 +211,7 @@ export class VscodeCheckbox
           valueMissing: true,
         },
         'Please check this box if you want to proceed.',
-        this._iconEl
+        this._inputEl
       );
     } else {
       this._internals.setValidity({});
@@ -216,7 +221,7 @@ export class VscodeCheckbox
   render(): TemplateResult {
     const iconClasses = classMap({
       icon: true,
-      checked: this._checked,
+      checked: this.checked,
       indeterminate: this.indeterminate,
     });
     const labelInnerClasses = classMap({
@@ -237,7 +242,7 @@ export class VscodeCheckbox
         d="M14.431 3.323l-8.47 10-.79-.036-3.35-4.77.818-.574 2.978 4.24 8.051-9.506.764.646z"
       />
     </svg>`;
-    const check = this._checked && !this.indeterminate ? icon : nothing;
+    const check = this.checked && !this.indeterminate ? icon : nothing;
     const indeterminate = this.indeterminate
       ? html`<span class="indeterminate-icon"></span>`
       : nothing;
@@ -249,7 +254,7 @@ export class VscodeCheckbox
           id="input"
           class="checkbox"
           type="checkbox"
-          ?checked="${this._checked}"
+          ?checked="${this.checked}"
           value="${this.value}"
         />
         <div class="${iconClasses}">${indeterminate}${check}</div>
