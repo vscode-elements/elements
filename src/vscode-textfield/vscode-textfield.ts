@@ -159,6 +159,28 @@ export class VscodeTextfield
     return this._value;
   }
 
+  /**
+   * Lowercase alias to minLength
+   */
+  set minlength(val: number) {
+    this.minLength = val;
+  }
+
+  get minlength(): number | undefined {
+    return this.minLength;
+  }
+
+  /**
+   * Lowercase alias to maxLength
+   */
+  set maxlength(val: number) {
+    this.maxLength = val;
+  }
+
+  get maxlength(): number | undefined {
+    return this.maxLength;
+  }
+
   get form(): HTMLFormElement | null {
     return this._internals.form;
   }
