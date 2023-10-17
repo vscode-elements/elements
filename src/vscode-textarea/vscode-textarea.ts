@@ -143,6 +143,28 @@ export class VscodeTextarea
   get willValidate() {
     return this._internals.willValidate;
   }
+
+  /**
+   * Lowercase alias to minLength
+   */
+  set minlength(val: number) {
+    this.minLength = val;
+  }
+
+  get minlength(): number | undefined {
+    return this.minLength;
+  }
+
+  /**
+   * Lowercase alias to maxLength
+   */
+  set maxlength(val: number) {
+    this.maxLength = val;
+  }
+
+  get maxlength(): number | undefined {
+    return this.maxLength;
+  }
   // #endregion
 
   constructor() {

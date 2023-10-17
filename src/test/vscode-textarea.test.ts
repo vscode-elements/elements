@@ -422,4 +422,18 @@ describe('vscode-textarea', () => {
 
     expect(spy.called).to.be.true;
   });
+
+  it('minlength alias should point to minLength property', () => {
+    const el = document.createElement('vscode-textarea');
+    el.minlength = 100;
+
+    expect(el.minLength).to.eq(100);
+  });
+
+  it('maxlength alias should point to maxLength property', () => {
+    const el = document.createElement('vscode-textarea');
+    el.maxlength = 100;
+
+    expect(el.maxLength).to.eq(100);
+  });
 });
