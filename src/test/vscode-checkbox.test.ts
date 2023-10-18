@@ -225,6 +225,18 @@ describe('vscode-checkbox', () => {
     expect(el.checked).to.be.true;
   });
 
+  it('should not toggle checked state when clicked but it is disabled', async () => {
+    const el = await fixture<VscodeCheckbox>(
+      html`<vscode-checkbox disabled>Checkbox test</vscode-checkbox>`
+    );
+
+    const label = el.shadowRoot?.querySelector('label');
+    label?.click();
+    await el.updateComplete;
+
+    expect(el.checked).to.be.false;
+  });
+
   it('should toggle checked state when the space key is pressed', async () => {
     const el = await fixture<VscodeCheckbox>(
       html`<vscode-checkbox>Checkbox test</vscode-checkbox>`
