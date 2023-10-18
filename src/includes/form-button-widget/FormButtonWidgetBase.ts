@@ -13,7 +13,6 @@ export class FormButtonWidgetBase extends VscElement {
   constructor() {
     super();
     applyForegroundRGBA();
-    this.addEventListener('keydown', this._handleKeyDown.bind(this));
   }
 
   connectedCallback(): void {
@@ -40,14 +39,6 @@ export class FormButtonWidgetBase extends VscElement {
   }
 
   private _prevTabindex = 0;
-
-  protected _handleClick(): void {
-    throw new Error('Not implemented');
-  }
-
-  protected _handleKeyDown(_event: KeyboardEvent): void {
-    throw new Error('Not implemented');
-  }
 
   private _handleFocus = (): void => {
     this.focused = true;
