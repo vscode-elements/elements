@@ -1,5 +1,6 @@
 import {VscodeCheckbox} from '../vscode-checkbox/index.js';
 import {expect, fixture, html} from '@open-wc/testing';
+import {sendKeys} from '@web/test-runner-commands';
 import sinon from 'sinon';
 
 describe('vscode-checkbox', () => {
@@ -222,5 +223,73 @@ describe('vscode-checkbox', () => {
     await el.updateComplete;
 
     expect(el.checked).to.be.true;
+  });
+
+  it('should toggle checked state when the space key is pressed', async () => {
+    const el = await fixture<VscodeCheckbox>(
+      html`<vscode-checkbox>Checkbox test</vscode-checkbox>`
+    );
+
+    el.focus();
+    await sendKeys({
+      down: ' ',
+    });
+
+    expect(el.checked).to.be.true;
+  });
+
+  it('should not toggle checked state when the space key is pressed but it is disabled', async () => {
+    const el = await fixture<VscodeCheckbox>(
+      html`<vscode-checkbox disabled>Checkbox test</vscode-checkbox>`
+    );
+
+    el.focus();
+    await sendKeys({
+      down: ' ',
+    });
+
+    expect(el.checked).to.be.false;
+  });
+
+  it('should submit the associated form when the "Enter" button is pressed', async () => {
+    const form = document.createElement('form');
+    const el = await fixture<VscodeCheckbox>(
+      '<vscode-checkbox></vscode-checkbox>',
+      {
+        parentNode: form,
+      }
+    );
+    const spy = sinon.spy((ev: SubmitEvent) => {
+      ev.preventDefault();
+    });
+    form.addEventListener('submit', spy);
+
+    el.focus();
+    await sendKeys({
+      down: 'Enter',
+    });
+
+    expect(spy.called).to.be.true;
+  });
+
+  it('should not submit the associated form when the "Enter" button is pressed but it is disabled', async () => {
+    const form = document.createElement('form');
+    const el = await fixture<VscodeCheckbox>(
+      '<vscode-checkbox disabled></vscode-checkbox>',
+      {
+        parentNode: form,
+      }
+    );
+    const spy = sinon.spy((ev: SubmitEvent) => {
+      ev.preventDefault();
+    });
+    form.addEventListener('submit', spy);
+
+    el.focus();
+    await sendKeys({
+      down: 'Enter',
+    });
+
+    expect(spy.called).to.be.false;
   });
 });
