@@ -81,7 +81,18 @@ export class VscodeRadio
 
   connectedCallback(): void {
     super.connectedCallback();
+
+    this.addEventListener('keydown', this._handleKeyDown);
+    this.addEventListener('click', this._handleClick);
+
     this._handleValueChange();
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener('keydown', this._handleKeyDown);
+    this.removeEventListener('click', this._handleClick);
   }
 
   get form(): HTMLFormElement | null {
@@ -227,7 +238,7 @@ export class VscodeRadio
     }
   }
 
-  protected _handleClick(): void {
+  private _handleClick = (): void => {
     if (this.disabled) {
       return;
     }
@@ -237,7 +248,7 @@ export class VscodeRadio
     this._dispatchCustomEvent();
   }
 
-  protected _handleKeyDown(event: KeyboardEvent): void {
+  protected _handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
       this._checked = true;

@@ -108,10 +108,18 @@ export class VscodeCheckbox
   connectedCallback(): void {
     super.connectedCallback();
 
+    this.addEventListener('keydown', this._handleKeyDown);
+    this.addEventListener('click', this._handleClick);
+
     this.updateComplete.then(() => {
       this._manageRequired();
       this._setActualFormValue();
     });
+  }
+
+  disconnectedCallback(): void {
+    this.removeEventListener('keydown', this._handleKeyDown);
+    this.removeEventListener('click', this._handleClick);
   }
 
   protected update(
@@ -162,40 +170,28 @@ export class VscodeCheckbox
     this._internals.setFormValue(actualValue);
   }
 
-  protected _handleClick(): void {
+  private _toggleState() {
+    this.checked = !this.checked;
+    this.indeterminate = false;
+    this._setActualFormValue();
+    this._manageRequired();
+    this.dispatchEvent(new Event('change'));
+  }
+
+  private _handleClick = (): void => {
     if (this.disabled) {
       return;
     }
 
-    this.checked = !this.checked;
-    this.indeterminate = false;
-
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {
-          checked: this.checked,
-          label: this.label,
-          value: this.value,
-        },
-        bubbles: true,
-        composed: true,
-      })
-    );
-
-    this._setActualFormValue();
-    this._manageRequired();
+    this._toggleState();
   }
 
-  protected _handleKeyDown(ev: KeyboardEvent): void {
+  private _handleKeyDown = (ev: KeyboardEvent): void => {
     if (!this.disabled && (ev.key === 'Enter' || ev.key === ' ')) {
       ev.preventDefault();
 
       if (ev.key === ' ') {
-        this.checked = !this.checked;
-        this.indeterminate = false;
-        this._setActualFormValue();
-        this._manageRequired();
-        this.dispatchEvent(new Event('change'));
+        this._toggleState();
       }
 
       if (ev.key === 'Enter') {
