@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, PropertyValueMap, TemplateResult} from 'lit';
 import {customElement, property, state, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
@@ -30,19 +30,10 @@ export class VscodeRadio
   static formAssociated = true;
 
   @property({type: Boolean, reflect: true})
-  set checked(val: boolean) {
-    this._checked = val;
-    this.setAttribute('aria-checked', val ? 'true' : 'false');
+  checked = false;
 
-    if (!val) {
-      this._internals.setFormValue(null);
-    }
-
-    this._handleValueChange();
-  }
-  get checked(): boolean {
-    return this._checked;
-  }
+  @property({type: Boolean, reflect: true, attribute: 'default-checked'})
+  defaultChecked = false;
 
   /**
    * Name which is used as a variable name in the data of the form-container.
@@ -59,11 +50,9 @@ export class VscodeRadio
   @property({type: Boolean, reflect: true})
   required = false;
 
+  /** @internal */
   @property({reflect: true})
   role = 'radio';
-
-  @state()
-  private _checked = false;
 
   @state()
   private _slottedText = '';
@@ -76,7 +65,6 @@ export class VscodeRadio
   constructor() {
     super();
     this._internals = this.attachInternals();
-    this._handleValueChange();
   }
 
   connectedCallback(): void {
@@ -93,6 +81,21 @@ export class VscodeRadio
 
     this.removeEventListener('keydown', this._handleKeyDown);
     this.removeEventListener('click', this._handleClick);
+  }
+
+  update(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has('checked')) {
+      this._handleValueChange();
+    }
+
+    if (changedProperties.has('required')) {
+      this._handleValueChange();
+    }
   }
 
   get form(): HTMLFormElement | null {
@@ -128,7 +131,7 @@ export class VscodeRadio
     const radios = this._getRadios();
 
     radios.forEach((r) => {
-      r.checked = false;
+      r.checked = r.defaultChecked;
     });
 
     this.updateComplete.then(() => {
@@ -186,8 +189,7 @@ export class VscodeRadio
 
   private _checkButton() {
     const radios = this._getRadios();
-    this._checked = true;
-    this.setAttribute('aria-checked', 'true');
+    this.checked = true;
 
     radios.forEach((r) => {
       if (r !== this) {
@@ -221,17 +223,31 @@ export class VscodeRadio
     });
   }
 
-  private _handleValueChange() {
-    const radios = this._getRadios();
-    const anyRequired = radios.some((r) => r.required);
+  private _setActualFormValue() {
+    let actualValue: string | null = '';
 
     if (this.checked) {
-      this._internals.setFormValue(this.value);
-      this._uncheckOthers(radios);
+      actualValue = !this.value ? 'on' : this.value;
+    } else {
+      actualValue = null;
+    }
 
+    this._internals.setFormValue(actualValue);
+  }
+
+  private _handleValueChange() {
+    const radios = this._getRadios();
+    const anyRequired = radios.some((r) => {
+      return r.required;
+    });
+
+    this._setActualFormValue();
+
+    if (this.checked) {
+      this._uncheckOthers(radios);
       this._setGroupValidity(radios, true);
     } else {
-      const anyChecked = radios.find((r) => r.checked);
+      const anyChecked = !!radios.find((r) => r.checked);
       const isInvalid = anyRequired && !anyChecked;
 
       this._setGroupValidity(radios, !isInvalid);
@@ -243,25 +259,33 @@ export class VscodeRadio
       return;
     }
 
-    this._checkButton();
-    this._handleValueChange();
-    this._dispatchCustomEvent();
-  }
-
-  protected _handleKeyDown = (event: KeyboardEvent): void => {
-    if (!this.disabled && (event.key === 'Enter' || event.key === ' ')) {
-      event.preventDefault();
-      this._checked = true;
-      this.setAttribute('aria-checked', 'true');
+    if (!this.checked) {
+      this._checkButton();
       this._handleValueChange();
       this._dispatchCustomEvent();
     }
-  }
+  };
+
+  protected _handleKeyDown = (ev: KeyboardEvent): void => {
+    if (!this.disabled && (ev.key === 'Enter' || ev.key === ' ')) {
+      ev.preventDefault();
+
+      if (ev.key === ' ' && !this.checked) {
+        this.checked = true;
+        this._handleValueChange();
+        this._dispatchCustomEvent();
+      }
+
+      if (ev.key === 'Enter') {
+        this._internals.form?.requestSubmit();
+      }
+    }
+  };
 
   render(): TemplateResult {
     const iconClasses = classMap({
       icon: true,
-      checked: this._checked,
+      checked: this.checked,
     });
     const labelInnerClasses = classMap({
       'label-inner': true,
@@ -274,7 +298,7 @@ export class VscodeRadio
           id="input"
           class="radio"
           type="checkbox"
-          ?checked="${this._checked}"
+          ?checked="${this.checked}"
           value="${this.value}"
           tabindex="-1"
         />
