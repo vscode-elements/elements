@@ -67,7 +67,7 @@ export class VscodeRadioGroup extends VscElement {
     this._beforeCheck();
 
     if (this._checkedRadio === -1) {
-      this._checkedRadio = 0;
+      this._checkedRadio = this._radios.length - 1;
     } else if (this._checkedRadio - 1 >= 0) {
       this._checkedRadio -= 1;
     } else {
