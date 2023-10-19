@@ -263,6 +263,7 @@ export class VscodeRadio
       this._checkButton();
       this._handleValueChange();
       this._dispatchCustomEvent();
+      this.dispatchEvent(new Event('change', {bubbles: true}));
     }
   };
 
@@ -274,6 +275,7 @@ export class VscodeRadio
         this.checked = true;
         this._handleValueChange();
         this._dispatchCustomEvent();
+        this.dispatchEvent(new Event('change', {bubbles: true}));
       }
 
       if (ev.key === 'Enter') {
