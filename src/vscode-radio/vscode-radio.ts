@@ -1,4 +1,4 @@
-import {html, PropertyValueMap, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValueMap, TemplateResult} from 'lit';
 import {customElement, property, state, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
@@ -27,7 +27,17 @@ export class VscodeRadio
 {
   static styles = styles;
 
+  /** @internal */
   static formAssociated = true;
+
+  /** @internal */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
+  @property({type: Boolean, reflect: true})
+  autofocus = false;
 
   @property({type: Boolean, reflect: true})
   checked = false;
@@ -297,12 +307,13 @@ export class VscodeRadio
     return html`
       <div class="wrapper">
         <input
+          autofocus=${this.autofocus}
           id="input"
           class="radio"
           type="checkbox"
           ?checked="${this.checked}"
           value="${this.value}"
-          tabindex="-1"
+          tabindex=${this.tabIndex}
         />
         <div class="${iconClasses}"></div>
         <label for="input" class="label" @click="${this._handleClick}">

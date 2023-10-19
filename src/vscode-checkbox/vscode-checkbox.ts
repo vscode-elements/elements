@@ -122,7 +122,7 @@ export class VscodeCheckbox
     this.removeEventListener('click', this._handleClick);
   }
 
-  protected update(
+  update(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
