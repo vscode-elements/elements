@@ -47,7 +47,7 @@ export class VscodeRadio
   /**
    * Name which is used as a variable name in the data of the form-container.
    */
-  @property()
+  @property({reflect: true})
   name = '';
 
   @property()
