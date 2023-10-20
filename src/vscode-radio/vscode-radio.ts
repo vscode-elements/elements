@@ -67,8 +67,8 @@ export class VscodeRadio
   @state()
   private _slottedText = '';
 
-  @query('.icon')
-  private _inputEl!: HTMLDivElement;
+  @query('#input')
+  private _inputEl!: HTMLInputElement;
 
   private _internals: ElementInternals;
 
