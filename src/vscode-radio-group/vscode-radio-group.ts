@@ -38,15 +38,14 @@ export class VscodeRadioGroup extends VscElement {
   private _radios!: VscodeRadio[];
 
   @state()
-  private _focusedRadio = 0;
+  private _focusedRadio = -1;
 
   @state()
   private _checkedRadio = -1;
 
-  private _beforeCheck() {
-    const prevChecked = this._checkedRadio;
-    const prevFocused = this._focusedRadio;
+  private _firstContentLoaded = false;
 
+  private _uncheckPreviousChecked(prevChecked: number, prevFocused: number) {
     if (prevChecked !== -1) {
       this._radios[prevChecked].checked = false;
     }
@@ -64,12 +63,16 @@ export class VscodeRadioGroup extends VscElement {
   }
 
   private _checkPrev() {
-    this._beforeCheck();
+    const prevChecked = this._checkedRadio;
+    const prevFocused = this._focusedRadio;
+    const startPos = prevFocused !== -1 ? prevFocused : prevChecked;
 
-    if (this._checkedRadio === -1) {
+    this._uncheckPreviousChecked(prevChecked, prevFocused);
+
+    if (startPos === -1) {
       this._checkedRadio = this._radios.length - 1;
-    } else if (this._checkedRadio - 1 >= 0) {
-      this._checkedRadio -= 1;
+    } else if (startPos - 1 >= 0) {
+      this._checkedRadio = startPos - 1;
     } else {
       this._checkedRadio = this._radios.length - 1;
     }
@@ -78,12 +81,16 @@ export class VscodeRadioGroup extends VscElement {
   }
 
   private _checkNext() {
-    this._beforeCheck();
+    const prevChecked = this._checkedRadio;
+    const prevFocused = this._focusedRadio;
+    const startPos = prevFocused !== -1 ? prevFocused : prevChecked;
 
-    if (this._checkedRadio === -1) {
+    this._uncheckPreviousChecked(prevChecked, prevFocused);
+
+    if (startPos === -1) {
       this._checkedRadio = 0;
-    } else if (this._checkedRadio + 1 < this._radios.length) {
-      this._checkedRadio += 1;
+    } else if (startPos + 1 < this._radios.length) {
+      this._checkedRadio = startPos + 1;
     } else {
       this._checkedRadio = 0;
     }
@@ -129,6 +136,16 @@ export class VscodeRadioGroup extends VscElement {
   }
 
   private _onSlotChange() {
+    if (!this._firstContentLoaded) {
+      const autoFocusedRadio = this._radios.findIndex((r) => r.autofocus);
+
+      if (autoFocusedRadio > -1) {
+        this._focusedRadio = autoFocusedRadio;
+      }
+
+      this._firstContentLoaded = true;
+    }
+
     this._radios.forEach(
       (r, i) => (r.tabIndex = i === this._focusedRadio ? 0 : -1)
     );
