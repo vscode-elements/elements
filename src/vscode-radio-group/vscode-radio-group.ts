@@ -63,8 +63,8 @@ export class VscodeRadioGroup extends VscElement {
   }
 
   private _checkPrev() {
-    const prevChecked = this._checkedRadio;
-    const prevFocused = this._focusedRadio;
+    const prevChecked = this._radios.findIndex((r) => r.checked);
+    const prevFocused = this._radios.findIndex((r) => r.focused);
     const startPos = prevFocused !== -1 ? prevFocused : prevChecked;
 
     this._uncheckPreviousChecked(prevChecked, prevFocused);
@@ -81,8 +81,8 @@ export class VscodeRadioGroup extends VscElement {
   }
 
   private _checkNext() {
-    const prevChecked = this._checkedRadio;
-    const prevFocused = this._focusedRadio;
+    const prevChecked = this._radios.findIndex((r) => r.checked);
+    const prevFocused = this._radios.findIndex((r) => r.focused);
     const startPos = prevFocused !== -1 ? prevFocused : prevChecked;
 
     this._uncheckPreviousChecked(prevChecked, prevFocused);

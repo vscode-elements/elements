@@ -115,17 +115,11 @@ describe('vscode-radio', () => {
     expect(rb1.checked).to.be.false;
 
     rb1.focus();
-    await rb1.updateComplete;
+    await aTimeout(0);
 
     await sendKeys({down: 'ArrowDown'});
-    expect(rb1.checked).to.be.true;
-    expect(rb2.checked).to.be.false;
-    expect(rb3.checked).to.be.false;
-    expect(rb1.tabIndex).to.eq(0);
-    expect(rb2.tabIndex).to.eq(-1);
-    expect(rb3.tabIndex).to.eq(-1);
+    await aTimeout(0);
 
-    await sendKeys({down: 'ArrowDown'});
     expect(rb1.checked).to.be.false;
     expect(rb2.checked).to.be.true;
     expect(rb3.checked).to.be.false;
@@ -134,6 +128,8 @@ describe('vscode-radio', () => {
     expect(rb3.tabIndex).to.eq(-1);
 
     await sendKeys({down: 'ArrowDown'});
+    await aTimeout(0);
+
     expect(rb1.checked).to.be.false;
     expect(rb2.checked).to.be.false;
     expect(rb3.checked).to.be.true;
@@ -195,6 +191,48 @@ describe('vscode-radio', () => {
     expect(rb2.tabIndex).to.eq(-1);
     expect(rb3.tabIndex).to.eq(0);
 
+    form.remove();
+  });
+
+  it('should checked the radio before the focused one when the arrow up key pressed', async () => {
+    const {form, rb1, rb2} = createSampleForm();
+    document.body.appendChild(form);
+
+    await aTimeout(1);
+
+    rb1.tabIndex = -1;
+    rb2.tabIndex = 0;
+    rb2.focus();
+
+    await rb2.updateComplete;
+
+    await sendKeys({
+      down: 'ArrowUp',
+    });
+    await aTimeout(0);
+
+    expect(rb1.checked).to.be.true;
+    form.remove();
+  });
+
+  it('should checked the radio after the focused one when the arrow down key pressed', async () => {
+    const {form, rb1, rb2, rb3} = createSampleForm();
+
+    document.body.appendChild(form);
+    await aTimeout(0);
+
+    rb1.tabIndex = -1;
+    rb3.tabIndex = -1;
+    rb2.tabIndex = 0;
+    rb2.focus();
+    await aTimeout(0);
+
+    await sendKeys({
+      down: 'ArrowDown',
+    });
+    await aTimeout(0);
+
+    expect(rb3.checked).to.be.true;
     form.remove();
   });
 });
