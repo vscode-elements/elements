@@ -307,7 +307,7 @@ export class VscodeRadio
     return html`
       <div class="wrapper">
         <input
-          autofocus=${this.autofocus}
+          ?autofocus=${this.autofocus}
           id="input"
           class="radio"
           type="checkbox"
