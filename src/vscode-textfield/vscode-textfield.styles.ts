@@ -109,7 +109,7 @@ const styles: CSSResultGroup = [
       width: 100%;
     }
 
-    input:read-only {
+    input:read-only:not([type="file"]) {
       cursor: not-allowed;
     }
 
