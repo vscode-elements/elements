@@ -239,7 +239,7 @@ export class VscodeTextfield
       'minlength',
       'pattern',
       'required',
-      'step'
+      'step',
     ];
 
     if (validationRelatedAttributes.includes(name)) {
