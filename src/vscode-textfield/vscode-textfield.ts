@@ -24,8 +24,8 @@ type InputType =
 /**
  * A simple inline textfield
  *
- * @slot content-before
- * @slot content-after
+ * @slot content-before - A slot before the editable area but inside of the component. It is used to place icons.
+ * @slot content-after - A slot after the editable area but inside of the component. It is used to place icons.
  *
  * @fires {InputEvent} input
  * @fires {Event} change
