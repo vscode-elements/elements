@@ -158,6 +158,7 @@ export class VscodeRadio
     }
   }
 
+  /** @deprecated */
   private _dispatchCustomEvent() {
     this.dispatchEvent(
       new CustomEvent<{checked: boolean; label: string; value: string}>(

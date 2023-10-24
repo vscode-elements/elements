@@ -294,15 +294,27 @@ export class VscodeTextfield
     );
   }
 
-  private _onInput() {
+  private _onInput(ev: InputEvent) {
     this._dataChanged();
     this._setValidityFromInput();
+
+    // native input event dispatched automatically
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-input', {detail: {data: ev.data, originalEvent: ev}})
+    );
   }
 
-  private _onChange() {
+  private _onChange(ev: Event) {
     this._dataChanged();
     this._setValidityFromInput();
     this.dispatchEvent(new Event('change'));
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent<{data: string; originalEvent: Event}>('vsc-change', {
+        detail: {data: this.value, originalEvent: ev},
+      })
+    );
   }
 
   private _onFocus() {

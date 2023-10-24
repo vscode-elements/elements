@@ -244,15 +244,27 @@ export class VscodeTextarea
     this._internals.setFormValue(this._textareaEl.value);
   }
 
-  private _handleChange() {
+  private _handleChange(ev: Event) {
     this._dataChanged();
     this._setValidityFromInput();
     this.dispatchEvent(new Event('change'));
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {data: this.value, originalEvent: ev},
+      })
+    );
   }
 
-  private _handleInput() {
+  private _handleInput(ev: InputEvent) {
     this._dataChanged();
     this._setValidityFromInput();
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-input', {
+        detail: {data: ev.data, originalEvent: ev},
+      })
+    );
   }
 
   private _handleMouseMove(ev: MouseEvent) {
