@@ -341,6 +341,7 @@ export class VscodeMultiSelect
           @click="${this._onMultiSelectAllClick}"
           title="Select all"
           class="action-icon"
+          id="select-all"
         >
           <vscode-icon name="checklist"></vscode-icon>
         </button>
@@ -349,6 +350,7 @@ export class VscodeMultiSelect
           @click="${this._onMultiDeselectAllClick}"
           title="Deselect all"
           class="action-icon"
+          id="select-none"
         >
           <vscode-icon name="clear-all"></vscode-icon>
         </button>

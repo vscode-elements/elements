@@ -153,4 +153,51 @@ describe('vscode-multi-select', () => {
     expect(dropdownVisibleBefore).to.eq(true);
     expect(dropdownVisibleAfter).to.eq(false);
   });
+
+  it('should apply combobox mode', async () => {
+    const el = await fixture(html`<vscode-multi-select combobox>
+      <vscode-option value="1">One</vscode-option>
+      <vscode-option value="2">Two</vscode-option>
+      <vscode-option value="3">Three</vscode-option>
+    </vscode-multi-select>`);
+
+    const comboboxFace = el.shadowRoot?.querySelector('.combobox-face');
+
+    expect(comboboxFace).to.be.ok;
+  });
+
+  it('should "select all" and "deselect all" work properly', async () => {
+    const el = await fixture<VscodeMultiSelect>(html`<vscode-multi-select>
+      <vscode-option value="1">One</vscode-option>
+      <vscode-option value="2">Two</vscode-option>
+      <vscode-option value="3">Three</vscode-option>
+    </vscode-multi-select>`);
+
+    el.shadowRoot?.querySelector<HTMLDivElement>('.select-face')!.click();
+    await el.updateComplete;
+
+    const btSelectAll =
+      el.shadowRoot?.querySelector<HTMLButtonElement>('#select-all');
+    const btSelectNone =
+      el.shadowRoot?.querySelector<HTMLButtonElement>('#select-none');
+    btSelectAll!.click();
+    await el.updateComplete;
+
+    let caption =
+      el.shadowRoot?.querySelector<HTMLDivElement>(
+        '.select-face-badge'
+      )!.innerText;
+
+    expect(caption).to.eq('3 ITEMS SELECTED');
+
+    btSelectNone!.click();
+    await el.updateComplete;
+
+    caption =
+      el.shadowRoot?.querySelector<HTMLDivElement>(
+        '.select-face-badge'
+      )!.innerText;
+
+    expect(caption).to.eq('NO ITEMS SELECTED');
+  });
 });
