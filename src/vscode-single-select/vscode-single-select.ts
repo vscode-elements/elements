@@ -168,7 +168,6 @@ export class VscodeSingleSelect
     state: string,
     _mode: 'restore' | 'autocomplete'
   ): void {
-    console.log(state);
     this.updateComplete.then(() => {
       this.value = state;
     });
