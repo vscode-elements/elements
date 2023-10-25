@@ -243,6 +243,7 @@ export class VscodeSelectBase extends VscElement {
 
   protected _dispatchChangeEvent(): void {
     if (!this._multiple) {
+      /** @deprecated */
       this.dispatchEvent(
         new CustomEvent('vsc-change', {
           detail: {
@@ -252,6 +253,7 @@ export class VscodeSelectBase extends VscElement {
         })
       );
     } else {
+      /** @deprecated */
       this.dispatchEvent(
         new CustomEvent('vsc-change', {
           detail: {
@@ -261,6 +263,7 @@ export class VscodeSelectBase extends VscElement {
         })
       );
     }
+    this.dispatchEvent(new Event('change'));
   }
 
   protected _onFaceClick(): void {
