@@ -16,8 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **Textarea**, **Textfield**: `minlength` and `maxlength` property is renamed to `minLength` and `maxLength`. This 
   change adheres to the naming convention of the native `<textarea>` element. The attribute names
   are not changed.
-- **Textarea**, **Textfield**: dispatching native `input` and `change` events instead of the custom
-  `vsc-input` and `vsc-change`.
+- **Textarea**, **Textfield**: dispatching native `input` and `change` events.
+- **Radio**, **Checkbox**, **SingleSelect**, **MultiSelect**: dispatching native `change` event
 
 ## [0.17.0] - 2023-10-15
 
