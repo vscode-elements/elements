@@ -1,5 +1,5 @@
 import {VscodeSingleSelect} from '../vscode-single-select/index.js';
-import {expect, fixture, html} from '@open-wc/testing';
+import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
 import '../vscode-option';
 
@@ -31,6 +31,26 @@ describe('vscode-single-select', () => {
       `);
       expect(el.selectedIndex).to.eq(1);
       expect(el.value).to.eq('Ipsum');
+    });
+
+    it('should return the validity object', () => {
+      const el = document.createElement(
+        'vscode-single-select'
+      ) as VscodeSingleSelect;
+
+      expect(el.validity).to.instanceOf(ValidityState);
+    });
+
+    it('should return the validation message', async () => {
+      const el = document.createElement(
+        'vscode-single-select'
+      ) as VscodeSingleSelect;
+      el.required = true;
+      document.body.appendChild(el);
+
+      await aTimeout(0);
+
+      expect(el.validationMessage).to.eql('Please select an item in the list.');
     });
 
     it('should display selected value when value prop is changed', async () => {
@@ -146,7 +166,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      const spy = sinon.spy(el, 'dispatchEvent');
+      const spy = sinon.spy();
+      el.addEventListener('change', spy)
 
       const face = el.shadowRoot?.querySelector(
         '.select-face'
@@ -170,14 +191,7 @@ describe('vscode-single-select', () => {
       `);
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
-
-      const dispatchedEvent = spy.args[0][0] as CustomEvent;
-
-      expect(dispatchedEvent.type).to.eq('vsc-change');
-      expect(dispatchedEvent.detail).to.eql({
-        selectedIndex: 1,
-        value: 'Ipsum',
-      });
+      expect(spy).to.be.called;
     });
 
     it('no item selected', async () => {
@@ -400,8 +414,7 @@ describe('vscode-single-select', () => {
       `);
       expect(el.value).to.eq('Dolor');
       expect(el.selectedIndex).to.eq(2);
-      expect(changeEvent.type).to.eq('vsc-change');
-      expect(changeEvent.detail).to.eql({selectedIndex: 2, value: 'Dolor'});
+      expect(changeEvent.type).to.eq('change');
     });
 
     it('dropdown should be closed when ESC key pressed', async () => {
@@ -760,8 +773,7 @@ describe('vscode-single-select', () => {
 
       expect(el.value).to.eq('Dolor');
       expect(el.selectedIndex).to.eq(2);
-      expect(changeEvent.type).to.eq('vsc-change');
-      expect(changeEvent.detail).to.eql({selectedIndex: 2, value: 'Dolor'});
+      expect(changeEvent.type).to.eq('change');
       expect(input.value).to.eq('Dolor');
     });
   });

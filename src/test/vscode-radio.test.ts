@@ -8,6 +8,7 @@ import sinon from 'sinon';
 
 const createSampleForm = () => {
   const form = document.createElement('form');
+  form.id = 'sample-form';
   const group = document.createElement(
     'vscode-radio-group'
   ) as VscodeRadioGroup;
@@ -33,6 +34,14 @@ const createSampleForm = () => {
 };
 
 describe('vscode-radio', () => {
+  afterEach(() => {
+    const form = document.getElementById('sample-form');
+
+    if (form) {
+      form.remove();
+    }
+  });
+
   it('is defined', () => {
     const el = document.createElement('vscode-radio');
     expect(el).to.instanceOf(VscodeRadio);
@@ -154,6 +163,7 @@ describe('vscode-radio', () => {
   // FIXME
   xit('focused property should be true when it is focused', async () => {
     const el = document.createElement('vscode-radio') as VscodeRadio;
+    el.tabIndex = 0;
 
     document.body.appendChild(el);
     await aTimeout(0);
