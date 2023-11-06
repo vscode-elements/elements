@@ -58,6 +58,9 @@ export class VscodeButton extends VscElement {
   @property({type: Boolean, reflect: true})
   focused = false;
 
+  @property({type: String, reflect: true})
+  name: string | undefined = undefined;
+
   @property({reflect: true})
   type: 'submit' | 'reset' | 'button' = 'button';
 
@@ -69,10 +72,6 @@ export class VscodeButton extends VscElement {
 
   get form(): HTMLFormElement | null {
     return this._internals.form;
-  }
-
-  get name() {
-    return this.getAttribute('name');
   }
 
   constructor() {
