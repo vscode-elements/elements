@@ -23,8 +23,11 @@ import styles from './vscode-button.styles.js';
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {
   static styles = styles;
+
+  /** @internal */
   static formAssociated = true;
 
+  /** @internal */
   @property({type: Number, reflect: true})
   tabindex = 0;
 
