@@ -93,6 +93,7 @@ jobs:
       - name: Build package
         run: |
           npm run build
+          npm run analyze
           npm pack
 
       - name: Publish to Npmjs.com (Pre)
