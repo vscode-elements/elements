@@ -72,6 +72,7 @@ const styles: CSSResultGroup = [
       overflow: hidden;
       padding: 1px 13px;
       user-select: none;
+      white-space: nowrap;
     }
 
     :host([secondary]) {
