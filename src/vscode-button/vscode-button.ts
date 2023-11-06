@@ -29,7 +29,7 @@ export class VscodeButton extends VscElement {
 
   /** @internal */
   @property({type: Number, reflect: true})
-  tabindex = 0;
+  tabIndex = 0;
 
   /**
    * Button has a less prominent style.
@@ -98,10 +98,10 @@ export class VscodeButton extends VscElement {
     super.attributeChangedCallback(name, oldVal, newVal);
 
     if (name === 'disabled' && this.hasAttribute('disabled')) {
-      this._prevTabindex = this.tabindex;
-      this.tabindex = -1;
+      this._prevTabindex = this.tabIndex;
+      this.tabIndex = -1;
     } else if (name === 'disabled' && !this.hasAttribute('disabled')) {
-      this.tabindex = this._prevTabindex;
+      this.tabIndex = this._prevTabindex;
     }
   }
 
