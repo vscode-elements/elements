@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import {html, nothing, PropertyValueMap, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement.js';
@@ -37,6 +37,7 @@ export class VscodeButton extends VscElement {
   @property({type: Boolean, reflect: true})
   secondary = false;
 
+  /** @internal */
   @property({reflect: true})
   role = 'button';
 
@@ -93,17 +94,6 @@ export class VscodeButton extends VscElement {
     this.removeEventListener('blur', this._handleBlurBound);
   }
 
-  attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
-    super.attributeChangedCallback(name, oldVal, newVal);
-
-    if (name === 'disabled' && this.hasAttribute('disabled')) {
-      this._prevTabindex = this.tabIndex;
-      this.tabIndex = -1;
-    } else if (name === 'disabled' && !this.hasAttribute('disabled')) {
-      this.tabIndex = this._prevTabindex;
-    }
-  }
-
   update(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
@@ -112,6 +102,15 @@ export class VscodeButton extends VscElement {
 
     if (changedProperties.has('value')) {
       this._internals.setFormValue(this.value);
+    }
+
+    if (changedProperties.has('disabled')) {
+      if (this.disabled) {
+        this._prevTabindex = this.tabIndex;
+        this.tabIndex = -1;
+      } else {
+        this.tabIndex = this._prevTabindex;
+      }
     }
   }
 
