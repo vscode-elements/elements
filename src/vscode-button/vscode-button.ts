@@ -104,6 +104,17 @@ export class VscodeButton extends VscElement {
     }
   }
 
+  update(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has('value')) {
+      this._internals.setFormValue(this.value);
+    }
+  }
+
   private _executeAction() {
     if (this.type === 'submit' && this._internals.form) {
       this._internals.form.requestSubmit();
