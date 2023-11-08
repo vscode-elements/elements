@@ -48,6 +48,7 @@
     "build": {
       "command": "rollup -c --file dist/bundled.js",
       "dependencies": [
+        "analyze",
         "build:ts"
       ],
       "files": [
