@@ -20,6 +20,7 @@ const LIST_HEIGHT = VISIBLE_OPTS + OPT_HEIGHT + 2;
  * @cssprop --dropdown-z-index - workaround for dropdown z-index issues
  */
 export class VscodeSelectBase extends VscElement {
+  /** @internal */
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
   ariaExpanded = 'false';
 
@@ -81,8 +82,9 @@ export class VscodeSelectBase extends VscElement {
     );
   }
 
+  /** @internal */
   @property({type: Number, attribute: true, reflect: true})
-  tabindex = 0;
+  tabIndex = 0;
 
   connectedCallback(): void {
     super.connectedCallback();

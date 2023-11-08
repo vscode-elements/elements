@@ -57,6 +57,7 @@ export class VscodeSingleSelect
   @property({type: Boolean, reflect: true})
   disabled = false;
 
+  /** @internal */
   @property({type: String, attribute: true, reflect: true})
   role = 'listbox';
 
@@ -148,6 +149,7 @@ export class VscodeSingleSelect
 
   constructor() {
     super();
+    /** @internal */
     this._multiple = false;
     this._internals = this.attachInternals();
   }
@@ -160,10 +162,12 @@ export class VscodeSingleSelect
     });
   }
 
+  /** @internal */
   formResetCallback(): void {
     this.value = this.defaultValue;
   }
 
+  /** @internal */
   formStateRestoreCallback(
     state: string,
     _mode: 'restore' | 'autocomplete'

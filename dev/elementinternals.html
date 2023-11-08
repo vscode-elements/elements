@@ -51,7 +51,7 @@
   </style>
   <script>
     const __DEMO__ = {
-      formSubmitEnabled: false,
+      formSubmitEnabled: true,
     };
   </script>
 </head>
@@ -118,8 +118,8 @@
             <label for="radio-group-1-button-3">Three</label>
           </div>
         </fieldset>
-        <button type="submit" name="submit-button">Submit</button>
-        <button type="reset" name="reset-button">Reset</button>
+        <button type="submit" name="submit-button" value="Submit button">Submit</button>
+        <button type="reset" name="reset-button" value="Reset Button">Reset</button>
       </form>
       <form action="/" enctype="multipart/form-data" method="post">
         <label for="native-file-input">File input</label>
@@ -184,9 +184,9 @@
             </vscode-form-group>
             <vscode-form-group>
               <vscode-button type="submit" name="submit-button-vsc" value="Submit Button VSC">Submit</vscode-button>
-              <vscode-button secondary type="reset">Reset</vscode-button>
+              <vscode-button type="reset" name="reset-button-vsc" value="Reset Button VSC" secondary>Reset</vscode-button>
             </vscode-form-group>
-            <button type="submit" name="submit-button">Submit</button>
+            <button type="submit">Submit</button>
             <button type="reset">Reset</button>
           </fieldset>
         </form>
