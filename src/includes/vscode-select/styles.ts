@@ -110,7 +110,7 @@ export default [
       font-family: var(--font-family);
       font-size: var(--font-size);
       font-weight: var(--font-weight);
-      line-height: ${DEFAULT_LINE_HEIGHT / DEFAULT_FONT_SIZE};
+      line-height: 18px;
       position: relative;
       user-select: none;
       width: 100%;
@@ -176,7 +176,7 @@ export default [
       display: block;
       font-family: var(--font-family);
       font-size: var(--font-size);
-      line-height: 1.3;
+      line-height: 16px;
       padding: 4px;
       width: 100%;
     }
