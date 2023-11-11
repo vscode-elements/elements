@@ -9,6 +9,7 @@ const styles: CSSResultGroup = [
   css`
     :host(:invalid) .icon,
     :host([invalid]) .icon {
+      background-color: var(--vscode-inputValidation-errorBackground);
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 

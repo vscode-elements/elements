@@ -134,6 +134,7 @@ const styles: CSSResultGroup = [
 
     :host([invalid]) textarea,
     :host(:invalid) textarea {
+      background-color: var(--vscode-inputValidation-errorBackground);
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 

@@ -75,6 +75,11 @@ const styles: CSSResultGroup = [
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
+    :host([invalid]) input,
+    :host(:invalid) input {
+      background-color: var(--vscode-inputValidation-errorBackground);
+    }
+
     ::slotted([slot='content-before']) {
       display: block;
       margin-left: 2px;

@@ -2,9 +2,6 @@ import {css} from 'lit';
 import defaultStyles from '../default.styles.js';
 import declareThemeVariables from '../declareThemeVariables.js';
 
-const DEFAULT_FONT_SIZE = 13;
-const DEFAULT_LINE_HEIGHT = 18;
-
 export default [
   declareThemeVariables([
     {
@@ -120,6 +117,7 @@ export default [
     :host(:invalid) .select-face,
     :host([invalid]) .combobox-face,
     :host(:invalid) .combobox-face {
+      background-color: var(--vscode-inputValidation-errorBackground);
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
