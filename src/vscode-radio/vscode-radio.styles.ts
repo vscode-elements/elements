@@ -30,7 +30,7 @@ const styles: CSSResultGroup = [
     }
 
     :host(:focus):host(:not([disabled])) .icon {
-      outline: 1px solid var(--focus-border);
+      outline: 1px solid var(--vscode-focusBorder);
       outline-offset: -1px;
     }
   `,

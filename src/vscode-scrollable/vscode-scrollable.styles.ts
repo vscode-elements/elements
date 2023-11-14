@@ -1,27 +1,8 @@
 import {css, CSSResultGroup} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--scrollbar-shadow',
-      vscodeProp: '--vscode-scrollbar-shadow',
-    },
-    {
-      componentProp: '--scrollbar-slider-background',
-      vscodeProp: '--vscode-scrollbarSlider-background',
-    },
-    {
-      componentProp: '--scrollbar-slider-hover-background',
-      vscodeProp: '--vscode-scrollbarSlider-hoverBackground',
-    },
-    {
-      componentProp: '--scrollbar-slider-active-background',
-      vscodeProp: '--vscode-scrollbarSlider-activeBackground',
-    },
-  ]),
   css`
     :host {
       display: block;
@@ -38,8 +19,12 @@ const styles: CSSResultGroup = [
       width: 0;
     }
 
+    .scrollable-container {
+      scrollbar-width: none;
+    }
+
     .shadow {
-      box-shadow: var(--scrollbar-shadow) 0 6px 6px -6px inset;
+      box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
       display: none;
       height: 3px;
       left: 0;
@@ -77,24 +62,24 @@ const styles: CSSResultGroup = [
     }
 
     .scrollbar-thumb.visible {
-      background-color: var(--scrollbar-slider-background);
+      background-color: var(--vscode-scrollbarSlider-background);
       opacity: 1;
       transition: opacity 100ms;
     }
 
     .scrollbar-thumb.fade {
-      background-color: var(--scrollbar-slider-background);
+      background-color: var(--vscode-scrollbarSlider-background);
       opacity: 0;
       transition: opacity 800ms;
     }
 
     .scrollbar-thumb.visible:hover {
-      background-color: var(--scrollbar-slider-hover-background);
+      background-color: var(--vscode-scrollbarSlider-hoverBackground);
     }
 
     .scrollbar-thumb.visible.active,
     .scrollbar-thumb.visible.active:hover {
-      background-color: var(--scrollbar-slider-active-background);
+      background-color: var(--vscode-scrollbarSlider-activeBackground);
     }
 
     .prevent-interaction {

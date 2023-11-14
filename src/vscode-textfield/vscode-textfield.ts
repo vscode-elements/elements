@@ -30,17 +30,17 @@ type InputType =
  * @fires {InputEvent} input
  * @fires {Event} change
  *
- * @cssprop [--background=var(--vscode-settings-textInputBackground)]
- * @cssprop [--border=var(--vscode-settings-textInputBorder)]
- * @cssprop [--foreground=var(--vscode-settings-textInputForeground)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--placeholder=var(--vscode-input-placeholderForeground)]
- * @cssprop [--button-background=var(--vscode-button-background)]
- * @cssprop [--button-foreground=var(--vscode-button-foreground)]
- * @cssprop [--button-hover=var(--vscode-button-hoverBackground)]
+ * @cssprop --vscode-settings-textInputBackground
+ * @cssprop --vscode-settings-textInputBorder
+ * @cssprop --vscode-settings-textInputForeground
+ * @cssprop --vscode-focusBorder
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-input-placeholderForeground
+ * @cssprop --vscode-button-background
+ * @cssprop --vscode-button-foreground
+ * @cssprop --vscode-button-hoverBackground
  */
 @customElement('vscode-textfield')
 export class VscodeTextfield

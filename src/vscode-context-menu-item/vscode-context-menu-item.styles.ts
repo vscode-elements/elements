@@ -1,68 +1,29 @@
 import {css, CSSResultGroup} from 'lit';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 import defaultStyles from '../includes/default.styles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-    {
-      componentProp: '--font-size',
-      vscodeProp: '--vscode-font-size',
-    },
-    {
-      componentProp: '--font-weight',
-      vscodeProp: '--vscode-font-weight',
-    },
-    {
-      componentProp: '--background',
-      vscodeProp: '--vscode-menu-background',
-    },
-    {
-      componentProp: '--border',
-      vscodeProp: '--vscode-menu-selectionBorder',
-    },
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vscode-menu-foreground',
-    },
-    {
-      componentProp: '--selection-background',
-      vscodeProp: '--vscode-menu-selectionBackground',
-    },
-    {
-      componentProp: '--selection-foreground',
-      vscodeProp: '--vscode-menu-selectionForeground',
-    },
-    {
-      componentProp: '--separator-background',
-      vscodeProp: '--vscode-menu-separatorBackground',
-    },
-  ]),
   css`
     :host {
       display: block;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
-      font-weight: var(--font-weight);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
+      font-weight: var(--vscode-font-weight);
       line-height: 1.4em;
       outline: none;
       position: relative;
     }
 
     .context-menu-item {
-      background-color: var(--menu-background);
-      color: var(--menu-foreground);
+      background-color: var(--vscode-menu-background);
+      color: var(--vscode-menu-foreground);
       display: flex;
       user-select: none;
       white-space: nowrap;
     }
 
     .ruler {
-      border-bottom: 1px solid var(--separator-background);
+      border-bottom: 1px solid var(--vscode-menu-separatorBackground);
       display: block;
       margin: 0 0 4px;
       padding-top: 4px;
@@ -76,7 +37,7 @@ const styles: CSSResultGroup = [
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
-      color: var(--foreground);
+      color: var(--vscode-menu-foreground);
       cursor: default;
       display: flex;
       flex: 1 1 auto;
@@ -88,10 +49,10 @@ const styles: CSSResultGroup = [
       text-decoration: inherit;
     }
 
-    :host-context([selected]) .context-menu-item a {
-      background-color: var(--selection-background);
-      border-color: var(--border);
-      color: var(--selection-foreground);
+    :host([selected]) .context-menu-item a {
+      background-color: var(--vscode-menu-selectionBackground);
+      border-color: var(--vscode-menu-selectionBorder, var(--vscode-menu-selectionBackground));
+      color: var(--vscode-menu-selectionForeground);
     }
 
     .label {

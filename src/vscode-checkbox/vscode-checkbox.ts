@@ -11,14 +11,14 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
  * @attr label - Attribute pair of the `label` property.
  * @prop label - Label text. It is only applied if component's innerHTML doesn't contain any text.
  *
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--foreground=var(--vsc-foreground-translucent)] - Label font color. 90% transparency version of `--vscode-foreground` by default.
- * @cssprop [--icon-background=var(--vscode-settings-checkboxBackground)]
- * @cssprop [--icon-border=var(--vscode-settings-checkboxBorder)]
- * @cssprop [--icon-foreground=var(--vscode-settings-checkboxForeground)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vsc-foreground-translucent - Label font color. 90% transparency version of `--vscode-foreground` by default.
+ * @cssprop --vscode-settings-checkboxBackground
+ * @cssprop --vscode-settings-checkboxBorder
+ * @cssprop --vscode-settings-checkboxForeground
+ * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-checkbox')
 export class VscodeCheckbox

@@ -5,16 +5,11 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      display: table-row;
+      border-top-color: var(--vscode-editorGroup-border);
+      border-top-style: solid;
+      border-top-width: var(--vsc-row-border-top-width);
+      display: var(--vsc-row-display);
       width: 100%;
-    }
-
-    :host-context(vscode-table[compact]) {
-      display: block;
-    }
-
-    :host-context(vscode-table[compact][bordered]) {
-      border-top: 1px solid var(--border);
     }
   `,
 ];

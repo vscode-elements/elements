@@ -14,15 +14,15 @@ export interface VscClickEventDetail {
 /**
  * Child component of [ContextMenu](https://bendera.github.io/vscode-webview-elements/components/vscode-context-menu/).
  *
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--background=var(--vscode-menu-background)]
- * @cssprop [--border=var(--vscode-menu-selectionBorder)]
- * @cssprop [--foreground=var(--vscode-menu-foreground)]
- * @cssprop [--selection-background=var(--vscode-menu-selectionBackground)]
- * @cssprop [--selection-foreground=var(--vscode-menu-selectionForeground)]
- * @cssprop [--separator-background=var(--vscode-menu-separatorBackground)]
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-menu-background
+ * @cssprop [--vscode-menu-selectionBorder=var(--vscode-menu-selectionBackground)]
+ * @cssprop --vscode-menu-foreground
+ * @cssprop --vscode-menu-selectionBackground
+ * @cssprop --vscode-menu-selectionForeground
+ * @cssprop --vscode-menu-separatorBackground
  */
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends VscElement {

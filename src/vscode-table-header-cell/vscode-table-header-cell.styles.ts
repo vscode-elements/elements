@@ -6,10 +6,10 @@ const styles: CSSResultGroup = [
   css`
     :host {
       box-sizing: border-box;
-      color: var(--foreground);
+      color: var(--vscode-foreground);
       display: table-cell;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
       font-weight: bold;
       line-height: 20px;
       overflow: hidden;

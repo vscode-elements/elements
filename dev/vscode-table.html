@@ -8,14 +8,14 @@
   <title>&lt;vscode-table&gt; Demo</title>
   <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
   <script type="module" src="../dev-assets/component-preview.js"></script>
-  <script type="module" src="../dist/vscode-split-layout.js"></script>
-  <script type="module" src="../dist/vscode-scrollable.js"></script>
-  <script type="module" src="../dist/vscode-table.js"></script>
-  <script type="module" src="../dist/vscode-table-header.js"></script>
-  <script type="module" src="../dist/vscode-table-header-cell.js"></script>
-  <script type="module" src="../dist/vscode-table-cell.js"></script>
-  <script type="module" src="../dist/vscode-table-row.js"></script>
-  <script type="module" src="../dist/vscode-table-body.js"></script>
+  <script type="module" src="../dist/vscode-split-layout/index.js"></script>
+  <script type="module" src="../dist/vscode-scrollable/index.js"></script>
+  <script type="module" src="../dist/vscode-table/index.js"></script>
+  <script type="module" src="../dist/vscode-table-header/index.js"></script>
+  <script type="module" src="../dist/vscode-table-header-cell/index.js"></script>
+  <script type="module" src="../dist/vscode-table-cell/index.js"></script>
+  <script type="module" src="../dist/vscode-table-row/index.js"></script>
+  <script type="module" src="../dist/vscode-table-body/index.js"></script>
 </head>
 
 <body class="vscode-light">
@@ -286,7 +286,7 @@
       </style>
       <input type="checkbox" id="toggle-delayed-resizing"><label for="toggle-delayed-resizing">Delayed resizing</label>
       <component-preview>
-        <vscode-table class="large-table-example" columns='["100px", "200px"]' bordered min-column-width="5" vsc-cloak>
+        <vscode-table class="large-table-example" columns='["100px", "200px"]' bordered min-column-width="5" resizable>
           <vscode-table-header slot="header">
             <vscode-table-header-cell>id</vscode-table-header-cell>
             <vscode-table-header-cell>firstname</vscode-table-header-cell>
@@ -3842,7 +3842,7 @@
       </style>
       <input type="checkbox" id="toggle-delayed-resizing-2"><label for="toggle-delayed-resizing-2">Delayed resizing</label>
       <component-preview>
-        <vscode-table class="large-table-example-2" columns='["100px", "200px"]' bordered min-column-width="5" vsc-cloak>
+        <vscode-table class="large-table-example-2" columns='["100px", "200px"]' bordered min-column-width="5" resizable>
           <vscode-table-header slot="header">
             <vscode-table-header-cell>Profile <picture></picture></vscode-table-header-cell>
             <vscode-table-header-cell>First name</vscode-table-header-cell>

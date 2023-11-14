@@ -1,42 +1,37 @@
 import {css, CSSResultGroup} from 'lit';
 import baseStyles from '../includes/default.styles.js';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 
 const styles: CSSResultGroup = [
   baseStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--border',
-      vscodeProp: '--vscode-editorGroup-border',
-    },
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vscode-foreground',
-    },
-    {
-      componentProp: '--resize-hover-border',
-      vscodeProp: '--vscode-sash-hoverBorder',
-    },
-    {
-      componentProp: '--tinted-row-background',
-      vscodeProp: '--vscode-keybindingTable-rowsBackground',
-    },
-    {
-      componentProp: '--header-background',
-      vscodeProp: '--vscode-keybindingTable-headerBackground',
-    },
-    {
-      componentProp: '--font-size',
-      vscodeProp: '--vscode-font-size',
-    },
-    {
-      componentProp: 'font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-  ]),
   css`
     :host {
       display: block;
+      --vsc-row-even-background: transparent;
+      --vsc-row-odd-background: transparent;
+      --vsc-row-border-bottom-width: 0;
+      --vsc-row-border-top-width: 0;
+      --vsc-row-display: table-row;
+    }
+
+    :host([bordered]) {
+      --vsc-row-border-bottom-width: 1px;
+    }
+
+    :host([compact]) {
+      --vsc-row-display: block;
+    }
+
+    :host([bordered][compact]) {
+      --vsc-row-border-bottom-width: 0;
+      --vsc-row-border-top-width: 1px;
+    }
+
+    :host([zebra]) {
+      --vsc-row-even-background: var(--vscode-keybindingTable-rowsBackground);
+    }
+
+    :host([zebra-odd]) {
+      --vsc-row-odd-background: var(--vscode-keybindingTable-rowsBackground);
     }
 
     ::slotted(vscode-table-row) {
@@ -83,7 +78,7 @@ const styles: CSSResultGroup = [
     :host([bordered])
       .wrapper:not(.compact-view)
       .scrollable:not([scrolled]):before {
-      background-color: var(--border);
+      background-color: var(--vscode-editorGroup-border);
     }
 
     :host(:not([bordered])) .sash {
@@ -110,7 +105,7 @@ const styles: CSSResultGroup = [
     }
 
     .sash-visible {
-      background-color: var(--border);
+      background-color: var(--vscode-editorGroup-border);
       height: 100%;
       position: absolute;
       top: 0;
@@ -118,7 +113,7 @@ const styles: CSSResultGroup = [
     }
 
     .sash.hover .sash-visible {
-      background-color: var(--resize-hover-border);
+      background-color: var(--vscode-sash-hoverBorder);
       transition: background-color 50ms linear 300ms;
     }
 

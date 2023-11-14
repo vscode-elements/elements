@@ -1,30 +1,11 @@
 import {css, CSSResultGroup} from 'lit';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 import defaultStyles from '../includes/default.styles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vscode-icon-foreground',
-    },
-    {
-      componentProp: '--hover-background',
-      vscodeProp: '--vscode-toolbar-hoverBackground',
-    },
-    {
-      componentProp: '--active-background',
-      vscodeProp: '--vscode-toolbar-activeBackground',
-    },
-    {
-      componentProp: '--focus-border',
-      vscodeProp: '--vscode-focusBorder',
-    },
-  ]),
   css`
     :host {
-      color: var(--foreground);
+      color: var(--vscode-icon-foreground);
       display: inline-block;
     }
 

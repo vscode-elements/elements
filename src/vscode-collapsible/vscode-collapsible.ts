@@ -9,12 +9,12 @@ import styles from './vscode-collapsible.styles.js';
  * @slot actions - You can place any action icon in this slot in the header, but it's also possible to use any HTML element in it. It's only visible when the component is open.
  * @slot decorations - The elements placed in the decorations slot are always visible.
  *
- * @cssprop [--background=var(--vscode-sideBar-background)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--header-background=var(--vscode-sideBarSectionHeader-background)]
- * @cssprop [--icon-foreground=var(--vscode-icon-foreground)]
- * @cssprop [--title-foreground=var(--vscode-sideBarTitle-foreground)]
+ * @cssprop --vscode-sideBar-background - Background color
+ * @cssprop --vscode-focusBorder - Focus border color
+ * @cssprop --vscode-font-family - Header font family
+ * @cssprop --vscode-sideBarSectionHeader-background - Header background
+ * @cssprop --vscode-icon-foreground - Arrow icon color
+ * @cssprop --vscode-sideBarTitle-foreground - Header font color
  */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends VscElement {
