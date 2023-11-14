@@ -4,10 +4,10 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-table-cell.styles.js';
 
 /**
- * @cssprop [--border=var(--vscode-editorGroup-border)] - Inherited from [Table](/components/vscode-table/api/)
- * @cssprop [--foreground=var(--vscode-foreground)] - Inherited from [Table](/components/vscode-table/api/)
- * @cssprop [--font-family=var(--vscode-font-family)] - Inherited from [Table](/components/vscode-table/api/)
- * @cssprop [--font-size=var(--vscode-font-size)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop --vscode-editorGroup-border
+ * @cssprop --vscode-foreground
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
  */
 @customElement('vscode-table-cell')
 export class VscodeTableCell extends VscElement {

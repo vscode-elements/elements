@@ -5,12 +5,12 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-tab-header.styles.js';
 
 /**
- * @cssprop [--foreground=var(--vscode-foreground)]
- * @cssprop [--panel-inactive-foreground=var(--vscode-panelTitle-inactiveForeground)]
- * @cssprop [--panel-active-foreground=var(--vscode-panelTitle-activeForeground)]
- * @cssprop [--panel-active-border=var(--vscode-panelTitle-activeBorder)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
- * @cssprop [--active-foreground=var(--vscode-settings-headerForeground)]
+ * @cssprop --vscode-foreground
+ * @cssprop --vscode-panelTitle-inactiveForeground
+ * @cssprop --vscode-panelTitle-activeForeground
+ * @cssprop --vscode-panelTitle-activeBorder
+ * @cssprop --vscode-focusBorder
+ * @cssprop --vscode-settings-headerForeground
  */
 @customElement('vscode-tab-header')
 export class VscodeTabHeader extends VscElement {

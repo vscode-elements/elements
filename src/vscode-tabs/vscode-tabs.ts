@@ -16,11 +16,11 @@ import styles from './vscode-tabs.styles.js';
  * @slot header - Slot for tab headers.
  * @slot addons - Right aligned area in the header.
  *
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--header-border=var(--vscode-settings-headerBorder)]
- * @cssprop [--panel-background=var(--vscode-panel-background)]
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-settings-headerBorder
+ * @cssprop --vscode-panel-background
  */
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {

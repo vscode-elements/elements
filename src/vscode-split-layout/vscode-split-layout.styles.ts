@@ -1,15 +1,8 @@
 import {css, CSSResultGroup} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--hover-border',
-      vscodeProp: '--vscode-sash-hoverBorder',
-    },
-  ]),
   css`
     :host {
       display: block;
@@ -59,7 +52,7 @@ const styles: CSSResultGroup = [
     }
 
     .handle.hover {
-      background-color: var(--hover-border);
+      background-color: var(--vscode-sash-hoverBorder);
       transition: background-color 100ms linear 300ms;
     }
 

@@ -1,35 +1,8 @@
 import {css, CSSResultGroup} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vscode-foreground',
-    },
-    {
-      componentProp: '--panel-inactive-foreground',
-      vscodeProp: '--vscode-panelTitle-inactiveForeground',
-    },
-    {
-      componentProp: '--panel-active-foreground',
-      vscodeProp: '--vscode-panelTitle-activeForeground',
-    },
-    {
-      componentProp: '--panel-active-border',
-      vscodeProp: '--vscode-panelTitle-activeBorder',
-    },
-    {
-      componentProp: '--focus-border',
-      vscodeProp: '--vscode-focusBorder',
-    },
-    {
-      componentProp: '--active-foreground',
-      vscodeProp: '--vscode-settings-headerForeground',
-    },
-  ]),
   css`
     :host {
       border-bottom: 1px solid transparent;
@@ -44,8 +17,8 @@ const styles: CSSResultGroup = [
     }
 
     :host([active]) {
-      border-bottom-color: var(--active-foreground);
-      color: var(--active-foreground);
+      border-bottom-color: var(--vscode-panelTitle-activeForeground);
+      color: var(--vscode-panelTitle-activeForeground);
     }
 
     :host([panel]) {
@@ -60,7 +33,7 @@ const styles: CSSResultGroup = [
 
     .wrapper {
       align-items: center;
-      color: var(--foreground);
+      color: var(--vscode-foreground);
       display: flex;
       min-height: 20px;
       overflow: inherit;
@@ -69,12 +42,12 @@ const styles: CSSResultGroup = [
     }
 
     .wrapper.panel {
-      color: var(--panel-inactive-foreground);
+      color: var(--vscode-panelTitle-inactiveForeground);
     }
 
     .wrapper.panel.active,
     .wrapper.panel:hover {
-      color: var(--panel-active-foreground);
+      color: var(--vscode-panelTitle-inactiveForeground);
     }
 
     :host([panel]) .wrapper {
@@ -95,7 +68,7 @@ const styles: CSSResultGroup = [
     }
 
     .active-indicator.panel.active {
-      border-top: 1px solid var(--panel-active-border);
+      border-top: 1px solid var(--vscode-panelTitle-activeBorder);
       bottom: 4px;
       display: block;
       left: 8px;
@@ -105,7 +78,7 @@ const styles: CSSResultGroup = [
     }
 
     :host(:focus-visible) .wrapper {
-      outline-color: var(--focus-border);
+      outline-color: var(--vscode-focusBorder);
       outline-offset: 3px;
       outline-style: solid;
       outline-width: 1px;

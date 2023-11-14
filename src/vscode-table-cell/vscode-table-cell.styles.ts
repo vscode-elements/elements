@@ -5,11 +5,14 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
+      border-bottom-color: var(--vscode-editorGroup-border);
+      border-bottom-style: solid;
+      border-bottom-width: var(--vsc-row-border-bottom-width);
       box-sizing: border-box;
-      color: var(--foreground);
+      color: var(--vscode-foreground);
       display: table-cell;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
       height: 24px;
       overflow: hidden;
       padding-left: 10px;
@@ -29,16 +32,8 @@ const styles: CSSResultGroup = [
       padding-top: 10px;
     }
 
-    :host-context(vscode-table[bordered][compact]) {
-      border: 0;
-    }
-
     :host([compact]:last-child) {
       padding-bottom: 10px;
-    }
-
-    :host-context(vscode-table[bordered]) {
-      border-bottom: 1px solid var(--border);
     }
 
     .wrapper {

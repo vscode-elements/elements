@@ -1,48 +1,13 @@
 import {css} from 'lit';
-import declareThemeVariables from '../declareThemeVariables.js';
 
 export default [
-  declareThemeVariables([
-    {
-      componentProp: '--focus-border',
-      vscodeProp: '--vscode-focusBorder',
-    },
-    {
-      componentProp: '--font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-    {
-      componentProp: '--font-size',
-      vscodeProp: '--vscode-font-size',
-    },
-    {
-      componentProp: '--font-weight',
-      vscodeProp: '--vscode-font-weight',
-    },
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vsc-foreground-translucent',
-    },
-    {
-      componentProp: '--icon-background',
-      vscodeProp: '--vscode-settings-checkboxBackground',
-    },
-    {
-      componentProp: '--icon-border',
-      vscodeProp: '--vscode-settings-checkboxBorder',
-    },
-    {
-      componentProp: '--icon-foreground',
-      vscodeProp: '--vscode-settings-checkboxForeground',
-    },
-  ]),
   css`
     :host {
-      color: var(--foreground);
+      color: var(--vsc-foreground-translucent);
       display: inline-block;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
-      font-weight: var(--font-weight);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
+      font-weight: var(--vscode-font-weight);
       line-height: 18px;
     }
 
@@ -57,7 +22,7 @@ export default [
     .wrapper {
       cursor: pointer;
       display: block;
-      font-size: var(--font-size);
+      font-size: var(--vscode-font-size);
       margin-bottom: 4px;
       margin-top: 4px;
       min-height: 18px;
@@ -83,11 +48,11 @@ export default [
 
     .icon {
       align-items: center;
-      background-color: var(--icon-background);
+      background-color: var(--vscode-settings-checkboxBackground);
       background-size: 16px;
-      border: 1px solid var(--icon-border);
+      border: 1px solid var(--vscode-settings-checkboxBorder);
       box-sizing: border-box;
-      color: var(--icon-foreground);
+      color: var(--vscode-settings-checkboxForeground);
       display: flex;
       height: 18px;
       justify-content: center;

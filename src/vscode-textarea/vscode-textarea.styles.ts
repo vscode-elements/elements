@@ -1,83 +1,8 @@
 import {css, CSSResultGroup} from 'lit';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 import defaultStyles from '../includes/default.styles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--scrollbar-shadow',
-      vscodeProp: '--vscode-scrollbar-shadow',
-    },
-    {
-      componentProp: '--background',
-      vscodeProp: '--vscode-settings-textInputBackground',
-    },
-    {
-      componentProp: '--border',
-      vscodeProp: '--vscode-settings-textInputBorder',
-    },
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vscode-settings-textInputForeground',
-    },
-    {
-      componentProp: '--placeholder',
-      vscodeProp: '--vscode-input-placeholderForeground',
-    },
-    {
-      componentProp: '--font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-    {
-      componentProp: '--font-size',
-      vscodeProp: '--vscode-font-size',
-    },
-    {
-      componentProp: '--font-weight',
-      vscodeProp: '--vscode-font-weight',
-    },
-    {
-      componentProp: '--monospace-background',
-      vscodeProp: '--vscode-editor-background',
-    },
-    {
-      componentProp: '--monospace-foreground',
-      vscodeProp: '--vscode-editor-foreground',
-    },
-    {
-      componentProp: '--monospace-font-family',
-      vscodeProp: '--vscode-editor-font-family',
-    },
-    {
-      componentProp: '--monospace-font-size',
-      vscodeProp: '--vscode-editor-font-size',
-    },
-    {
-      componentProp: '--monospace-font-weight',
-      vscodeProp: '--vscode-editor-font-weight',
-    },
-    {
-      componentProp: '--monospace-placeholder',
-      vscodeProp: '--vscode-editor-inlineValuesForeground',
-    },
-    {
-      componentProp: '--focus-border',
-      vscodeProp: '--vscode-focusBorder',
-    },
-    {
-      componentProp: '--scrollbar-background',
-      vscodeProp: '--vscode-scrollbarSlider-background',
-    },
-    {
-      componentProp: '--scrollbar-hover',
-      vscodeProp: '--vscode-scrollbarSlider-hoverBackground',
-    },
-    {
-      componentProp: '--scrollbar-active',
-      vscodeProp: '--vscode-scrollbarSlider-activeBackground',
-    },
-  ]),
   css`
     :host {
       display: inline-block;
@@ -95,7 +20,7 @@ const styles: CSSResultGroup = [
     }
 
     .shadow {
-      box-shadow: var(--scrollbar-shadow) 0 6px 6px -6px inset;
+      box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
       display: none;
       inset: 0 0 auto 0;
       height: 6px;
@@ -109,17 +34,17 @@ const styles: CSSResultGroup = [
     }
 
     textarea {
-      background-color: var(--background);
-      border-color: var(--vscode-settings-textInputBorder);
+      background-color: var(--vscode-settings-textInputBackground);
+      border-color: var(--vscode-settings-textInputBorder, var(--vscode-settings-textInputBackground));
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
-      color: var(--foreground);
+      color: var(--vscode-settings-textInputForeground);
       display: block;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
-      font-weight: var(--font-weight);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
+      font-weight: var(--vscode-font-weight);
       height: 100%;
       width: 100%;
     }
@@ -139,15 +64,15 @@ const styles: CSSResultGroup = [
     }
 
     textarea.monospace {
-      background-color: var(--monospace-background);
-      color: var(--monospace-foreground);
-      font-family: var(--monospace-font-family);
-      font-size: var(--monospace-font-size);
-      font-weight: var(--monospace-font-weight);
+      background-color: var(--vscode-editor-background);
+      color: var(--vscode-editor-foreground);
+      font-family: var(---vscode-editor-font-family);
+      font-size: var(--vscode-editor-font-size);
+      font-weight: var(--vscode-editor-font-weight);
     }
 
-    .textarea.moospace::placeholder {
-      color: var(--monospace-placeholder);
+    .textarea.monospace::placeholder {
+      color: var(--vscode-editor-inlineValuesForeground);
     }
 
     textarea.cursor-pointer {
@@ -155,12 +80,12 @@ const styles: CSSResultGroup = [
     }
 
     textarea:focus {
-      border-color: var(--focus-border);
+      border-color: var(--vscode-focusBorder);
       outline: none;
     }
 
     textarea::placeholder {
-      color: var(--placeholder);
+      color: var(--vscode-input-placeholderForeground);
       opacity: 1;
     }
 
@@ -177,15 +102,15 @@ const styles: CSSResultGroup = [
     }
 
     textarea:hover::-webkit-scrollbar-thumb {
-      background-color: var(--scrollbar-background);
+      background-color: var(--vscode-scrollbarSlider-background);
     }
 
     textarea::-webkit-scrollbar-thumb:hover {
-      background-color: var(--scrollbar-hover);
+      background-color: var(--vscode-scrollbarSlider-hoverBackground);
     }
 
     textarea::-webkit-scrollbar-thumb:active {
-      background-color: var(--scrollbar-active);
+      background-color: var(--vscode-scrollbarSlider-activeBackground);
     }
 
     textarea::-webkit-scrollbar-corner {

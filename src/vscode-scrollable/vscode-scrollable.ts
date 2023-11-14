@@ -12,11 +12,11 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-scrollable.styles.js';
 
 /**
- * @cssprop [--min-thumb-height=20px]
- * @cssprop [--scrollbar-shadow=var(--vscode-scrollbar-shadow)]
- * @cssprop [--scrollbar-slider-background=var(--vscode-scrollbarSlider-background)]
- * @cssprop [--scrollbar-slider-hover-background=var(--vscode-scrollbarSlider-hoverBackground)]
- * @cssprop [--scrollbar-slider-active-background=var(--vscode-scrollbarSlider-activeBackground')]
+ * @cssprop [--min-thumb-height=20px] - Scrollbar thumb minimum height
+ * @cssprop --vscode-scrollbar-shadow
+ * @cssprop --vscode-scrollbarSlider-background
+ * @cssprop --vscode-scrollbarSlider-hoverBackground
+ * @cssprop --vscode-scrollbarSlider-activeBackground
  */
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends VscElement {

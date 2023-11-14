@@ -1,0 +1,9 @@
+body[data-vscode-theme-kind="vscode-high-contrast"] vscode-tree,
+body[data-vscode-theme-kind="vscode-high-contrast-light"] vscode-tree {
+  --hover-outline-color: var(--vscode-focusBorder);
+  --hover-outline-style: dashed;
+  --hover-outline-width: 1px;
+  --selected-outline-color: var(--vscode-focusBorder);
+  --selected-outline-style: dotted;
+  --selected-outline-width: 1px;
+}
