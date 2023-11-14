@@ -4,7 +4,7 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-table-header.styles.js';
 
 /**
- * @cssprop [--header-background=var(--vscode-keybindingTable-headerBackground)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop --vscode-keybindingTable-headerBackground - Table header background
  */
 @customElement('vscode-table-header')
 export class VscodeTableHeader extends VscElement {

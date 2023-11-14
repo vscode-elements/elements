@@ -1,64 +1,18 @@
 import {css, CSSResultGroup} from 'lit';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 import defaultStyles from '../includes/default.styles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--background',
-      vscodeProp: '--vscode-settings-textInputBackground',
-    },
-    {
-      componentProp: '--border',
-      vscodeProp: '--vscode-settings-textInputBorder',
-    },
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vscode-settings-textInputForeground',
-    },
-    {
-      componentProp: '--focus-border',
-      vscodeProp: '--vscode-focusBorder',
-    },
-    {
-      componentProp: '--font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-    {
-      componentProp: '--font-size',
-      vscodeProp: '--vscode-font-size',
-    },
-    {
-      componentProp: '--font-weight',
-      vscodeProp: '--vscode-font-weight',
-    },
-    {
-      componentProp: '--placeholder',
-      vscodeProp: '--vscode-input-placeholderForeground',
-    },
-    {
-      componentProp: '--button-background',
-      vscodeProp: '--vscode-button-background',
-    },
-    {
-      componentProp: '--button-foreground',
-      vscodeProp: '--vscode-button-foreground',
-    },
-    {
-      componentProp: '--button-hover',
-      vscodeProp: '--vscode-button-hoverBackground',
-    },
-  ]),
   css`
     :host {
       align-items: center;
-      background-color: var(--background);
-      border-color: var(--border);
+      background-color: var(--vscode-settings-textInputBackground);
+      border-color: var(--vscode-settings-textInputBorder, var(--vscode-settings-textInputBackground));
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
-      color: var(--foreground);
+      box-sizing: border-box;
+      color: var(--vscode-settings-textInputForeground);
       display: inline-flex;
       max-width: 100%;
       position: relative;
@@ -66,7 +20,7 @@ const styles: CSSResultGroup = [
     }
 
     :host([focused]) {
-      border-color: var(--focus-border);
+      border-color: var(--vscode-focusBorder);
     }
 
     :host([disabled]) {
@@ -95,14 +49,14 @@ const styles: CSSResultGroup = [
     }
 
     input {
-      background-color: var(--background);
+      background-color: var(--vscode-settings-textInputBackground);
       border: 0;
       box-sizing: border-box;
-      color: var(--foreground);
+      color: var(--vscode-settings-textInputForeground);
       display: block;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
-      font-weight: var(--font-weight);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
+      font-weight: var(--vscode-font-weight);
       line-height: 18px;
       outline: none;
       padding-bottom: 3px;
@@ -117,7 +71,7 @@ const styles: CSSResultGroup = [
     }
 
     input::placeholder {
-      color: var(--placeholder);
+      color: var(--vscode-input-placeholderForeground);
       opacity: 1;
     }
 
@@ -129,20 +83,20 @@ const styles: CSSResultGroup = [
     }
 
     input[type='file']::file-selector-button {
-      background-color: var(--button-background);
+      background-color: var(--vscode-button-background);
       border: 0;
       border-radius: 2px;
-      color: var(--button-foreground);
+      color: var(--vscode-button-foreground);
       cursor: pointer;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
-      font-weight: var(--font-weight);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
+      font-weight: var(--vscode-font-weight);
       line-height: 20px;
       padding: 1px 14px;
     }
 
     input[type='file']::file-selector-button:hover {
-      background-color: var(--button-hover);
+      background-color: var(--vscode-button-hoverBackground);
     }
   `,
 ];

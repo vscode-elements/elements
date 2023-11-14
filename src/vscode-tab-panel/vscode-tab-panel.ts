@@ -4,8 +4,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-tab-panel.styles.js';
 
 /**
- * @cssprop [--background=var(--vscode-panel--background)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop --vscode-panel--background
+ * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-tab-panel')
 export class VscodeTabPanel extends VscElement {

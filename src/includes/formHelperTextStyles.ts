@@ -27,17 +27,4 @@ export default css`
   ::slotted(.error) {
     color: var(--vscode-errorForeground);
   }
-
-  :host-context(body.win32) ::slotted(code) {
-    font-family: Consolas, Inconsolata, 'Courier New', monospace;
-  }
-
-  :host-context(body.linux) ::slotted(code) {
-    font-family: 'Droid Sans Mono', Inconsolata, 'Courier New', monospace,
-      'Droid Sans Fallback';
-  }
-
-  :host-context(body.darwin) ::slotted(code) {
-    font-family: 'SF Mono', Monaco, Menlo, Inconsolata, 'Courier New', monospace;
-  }
 `;
