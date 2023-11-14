@@ -9,12 +9,12 @@ import {VscElement} from '../includes/VscElement.js';
 import {VscodeCheckbox} from '../vscode-checkbox/index.js';
 import {VscodeCheckboxGroup} from '../vscode-checkbox-group/index.js';
 import {VscodeFormGroup, FormGroupVariant} from '../vscode-form-group/index.js';
-import {VscodeInputbox} from '../vscode-inputbox/index.js';
 import {VscodeMultiSelect} from '../vscode-multi-select/index.js';
 import {VscodeRadio} from '../vscode-radio/index.js';
 import {VscodeRadioGroup} from '../vscode-radio-group/index.js';
 import {VscodeSingleSelect} from '../vscode-single-select/index.js';
 import styles from './vscode-form-container.styles.js';
+import {VscodeTextarea, VscodeTextfield} from '../main.js';
 
 enum FormGroupLayout {
   HORIZONTAL = 'horizontal',
@@ -24,7 +24,6 @@ enum FormGroupLayout {
 type CheckboxOrRadioGroup = VscodeRadioGroup | VscodeCheckboxGroup;
 
 type VscFormWidget =
-  | VscodeInputbox
   | VscodeSingleSelect
   | VscodeMultiSelect
   | VscodeCheckbox
@@ -34,8 +33,8 @@ interface FormData {
   [key: string]: string | string[];
 }
 
-const isTextInput = (el: Element): el is VscodeInputbox => {
-  return ['vscode-inputbox', 'vscode-textfield', 'vscode-textarea'].includes(
+const isTextInput = (el: Element): el is VscodeTextarea | VscodeTextfield => {
+  return ['vscode-textfield', 'vscode-textarea'].includes(
     el.tagName.toLocaleLowerCase()
   );
 };
@@ -100,7 +99,6 @@ export class VscodeFormContainer extends VscElement {
 
   private _collectFormData() {
     const query = [
-      'vscode-inputbox',
       'vscode-textfield',
       'vscode-textarea',
       'vscode-single-select',
