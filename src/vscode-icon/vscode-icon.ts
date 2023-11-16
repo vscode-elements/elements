@@ -11,10 +11,10 @@ import styles from './vscode-icon.styles.js';
  * In "action-icon" mode it behaves like a button. In this case, it is
  * recommended that a meaningful label is specified with the `label` property.
  *
- * @cssprop [--foreground=var(--vscode-icon-foreground)]
- * @cssprop [--hover-background=var(--vscode-toolbar-hoverBackground)] - Hover state background color in `active-icon` mode
- * @cssprop [--active-background=var(--vscode-toolbar-activeBackground)] - Active state background color in `active-icon` mode
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop --vscode-icon-foreground
+ * @cssprop --vscode-toolbar-hoverBackground - Hover state background color in `active-icon` mode
+ * @cssprop --vscode-toolbar-activeBackground - Active state background color in `active-icon` mode
+ * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-icon')
 export class VscodeIcon extends VscElement {

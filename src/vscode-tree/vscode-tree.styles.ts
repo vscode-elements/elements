@@ -1,93 +1,17 @@
 import {css, CSSResultGroup} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--focus-border',
-      vscodeProp: '--vscode-focusBorder',
-    },
-    {
-      componentProp: '--focus-outline',
-      vscodeProp: '--vscode-list-focusOutline',
-    },
-    {
-      componentProp: '--inactive-focus-outline',
-      vscodeProp: '--vscode-list-inactiveFocusOutline',
-    },
-    {
-      componentProp: '--focus-and-selection-outline',
-      vscodeProp: '--vscode-list-focusAndSelectionOutline',
-    },
-    {
-      componentProp: '--focus-background',
-      vscodeProp: '--vscode-list-focusBackground',
-    },
-    {
-      componentProp: '--focus-foreground',
-      vscodeProp: '--vscode-list-focusForeground',
-    },
-    {
-      componentProp: '--font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-    {
-      componentProp: '--font-size',
-      vscodeProp: '--vscode-font-size',
-    },
-    {
-      componentProp: '--font-weight',
-      vscodeProp: '--vscode-font-weight',
-    },
-    {
-      componentProp: '--inactive-focus-background',
-      vscodeProp: '--vscode-list-inactiveFocusBackground',
-    },
-    {
-      componentProp: '--hover-foreground',
-      vscodeProp: '--vscode-list-hoverForeground',
-    },
-    {
-      componentProp: '--hover-background',
-      vscodeProp: '--vscode-list-hoverBackground',
-    },
-    {
-      componentProp: '--inactive-selection-background',
-      vscodeProp: '--vscode-list-inactiveSelectionBackground',
-    },
-    {
-      componentProp: '--inactive-selection-foreground',
-      vscodeProp: '--vscode-list-inactiveSelectionForeground',
-    },
-    {
-      componentProp: '--inactive-selection-icon-foreground',
-      vscodeProp: '--vscode-list-inactiveSelectionIconForeground',
-    },
-    {
-      componentProp: '--active-selection-background',
-      vscodeProp: '--vscode-list-activeSelectionBackground',
-    },
-    {
-      componentProp: '--active-selection-foreground',
-      vscodeProp: '--vscode-list-activeSelectionForeground',
-    },
-    {
-      componentProp: '--active-selection-icon-foreground',
-      vscodeProp: '--vscode-list-activeSelectionIconForeground',
-    },
-    {
-      componentProp: '--indent-guide',
-      vscodeProp: '--vscode-tree-inactiveIndentGuidesStroke',
-    },
-    {
-      componentProp: '--active-indent-guide',
-      vscodeProp: '--vscode-tree-indentGuidesStroke',
-    },
-  ]),
   css`
     :host {
+      --hover-outline-color: transparent;
+      --hover-outline-style: solid;
+      --hover-outline-width: 0;
+      --selected-outline-color: transparent;
+      --selected-outline-style: solid;
+      --selected-outline-width: 0;
+
       display: block;
       outline: none;
       user-select: none;
@@ -127,9 +51,10 @@ const styles: CSSResultGroup = [
     .contents {
       align-items: center;
       display: flex;
-      font-family: var(--font-family);
-      font-size: var(--font-size);
-      font-weight: var(--font-weight);
+      font-family: var(--vscode-font-family);
+      font-size: var(--vscode-font-size);
+      font-weight: var(--vscode-font-weight);
+      outline-offset: -1px;
       padding-right: 12px;
     }
 
@@ -139,14 +64,6 @@ const styles: CSSResultGroup = [
 
     .contents:hover {
       cursor: pointer;
-    }
-
-    .contents.focused {
-      outline-offset: -1px;
-    }
-
-    :host(:focus) .contents.focused {
-      outline-offset: -1px;
     }
 
     .arrow-container {
@@ -257,13 +174,13 @@ const styles: CSSResultGroup = [
 
     /* Theme colors */
     :host(:focus) .wrapper.has-not-focused-item {
-      outline: 1px solid var(--focus-border);
+      outline: 1px solid var(--vscode-focusBorder);
     }
 
     :host(:focus) .contents.selected,
     :host(:focus) .contents.focused.selected {
-      color: var(--active-selection-foreground);
-      background-color: var(--active-selection-background);
+      color: var(--vscode-list-activeSelectionForeground);
+      background-color: var(--vscode-list-activeSelectionBackground);
     }
 
     :host(:focus) .contents.selected .icon-arrow,
@@ -272,68 +189,62 @@ const styles: CSSResultGroup = [
     :host(:focus) .contents.selected.focused .theme-icon,
     :host(:focus) .contents.selected .action-icon,
     :host(:focus) .contents.selected.focused .action-icon {
-      color: var(--active-selection-icon-foreground);
+      color: var(--vscode-list-activeSelectionIconForeground);
     }
 
     :host(:focus) .contents.focused {
-      color: var(--focus-foreground);
-      background-color: var(--focus-background);
+      color: var(--vscode-list-focusForeground);
+      background-color: var(--vscode-list-focusBackground);
     }
 
     :host(:focus) .contents.selected.focused {
-      outline-color: var(--focus-and-selection-outline);
+      outline-color: var(--vscode-list-focusAndSelectionOutline, var(--vscode-list-focusOutline));
     }
 
     .contents:hover {
-      background-color: var(--hover-background);
-      color: var(--hover-foreground);
+      background-color: var(--vscode-list-hoverBackground);
+      color: var(--vscode-list-hoverForeground);
     }
 
-    :host-context(body.vscode-high-contrast) .contents:hover,
-    :host-context(body.vscode-high-contrast) .contents.selected:hover,
-    :host-context(body.vscode-high-contrast-light) .contents:hover,
-    :host-context(body.vscode-high-contrast-light) .contents.selected:hover {
-      outline-color: var(--focus-border);
-      outline-offset: -1px;
-      outline-style: dashed;
-      outline-width: 1px;
+    .contents:hover,
+    .contents.selected:hover {
+      outline-color: var(--hover-outline-color);
+      outline-style: var(--hover-outline-style);
+      outline-width: var(--hover-outline-width);
     }
 
     .contents.selected,
     .contents.selected.focused {
-      background-color: var(--inactive-selection-background);
-      color: var(--inactive-selection-foreground);
+      background-color: var(--vscode-list-inactiveSelectionBackground);
+      color: var(--vscode-list-inactiveSelectionForeground);
     }
 
-    :host-context(body.vscode-high-contrast) .contents.selected,
-    :host-context(body.vscode-high-contrast) .contents.selected.focused,
-    :host-context(body.vscode-high-contrast-light) .contents.selected,
-    :host-context(body.vscode-high-contrast-light) .contents.selected.focused {
-      outline-color: var(--focus-border);
-      outline-offset: -1px;
-      outline-style: dotted;
-      outline-width: 1px;
+    .contents.selected,
+    .contents.selected.focused {
+      outline-color: var(--selected-outline-color);
+      outline-style: var(--selected-outline-style);
+      outline-width: var(--selected-outline-width);
     }
 
     .contents.selected .theme-icon {
-      color: var(--inactive-selection-icon-foreground);
+      color: var(--vscode-list-inactiveSelectionIconForeground);
     }
 
     .contents.focused {
-      background-color: var(--inactive-focus-background);
-      outline: 1px dotted var(--inactive-focus-outline);
+      background-color: var(--vscode-list-inactiveFocusBackground);
+      outline: 1px dotted var(--vscode-list-inactiveFocusOutline);
     }
 
     :host(:focus) .contents.focused {
-      outline: 1px solid var(--focus-outline);
+      outline: 1px solid var(--vscode-list-focusOutline);
     }
 
     :host([indent-guides]) ul ul:before {
-      background-color: var(--indent-guide);
+      background-color: var(--vscode-tree-inactiveIndentGuidesStroke);
     }
 
     :host([indent-guides]) ul ul.has-active-item:before {
-      background-color: var(--active-indent-guide);
+      background-color: var(--vscode-tree-indentGuidesStroke);
     }
   `,
 ];

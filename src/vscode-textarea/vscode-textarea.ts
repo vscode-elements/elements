@@ -9,24 +9,24 @@ import styles from './vscode-textarea.styles.js';
 /**
  * Multi-line text input.
  *
- * @cssprop [--scrollbar-shadow=var(--vscode-scrollbar-shadow)]
- * @cssprop [--background=var(--vscode-settings-textInputBackground)]
- * @cssprop [--border=var(--vscode-settings-textInputBorder)]
- * @cssprop [--foreground=var(--vscode-settings-textInputForeground)]
- * @cssprop [--placeholder=var(--vscode-input-placeholderForeground)]
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--monospace-background=var(--vscode-editor-background)]
- * @cssprop [--monospace-foreground=var(--vscode-editor-foreground)]
- * @cssprop [--monospace-font-family=var(--vscode-editor-font-family)]
- * @cssprop [--monospace-font-size=var(--vscode-editor-font-size)]
- * @cssprop [--monospace-font-weight=var(--vscode-editor-font-weight)]
- * @cssprop [--monospace-placeholder=var(--vscode-editor-inlineValuesForeground)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
- * @cssprop [--scrollbar-background=var(--vscode-scrollbarSlider-background)]
- * @cssprop [--scrollbar-hover=var(--vscode-scrollbarSlider-hoverBackground)]
- * @cssprop [--scrollbar-active=var(--vscode-scrollbarSlider-activeBackground)]
+ * @cssprop --vscode-scrollbar-shadow
+ * @cssprop --vscode-settings-textInputBackground
+ * @cssprop --vscode-settings-textInputBorder
+ * @cssprop --vscode-settings-textInputForeground
+ * @cssprop --vscode-input-placeholderForeground
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-editor-background
+ * @cssprop --vscode-editor-foreground
+ * @cssprop --vscode-editor-font-family
+ * @cssprop --vscode-editor-font-size
+ * @cssprop --vscode-editor-font-weight
+ * @cssprop --vscode-editor-inlineValuesForeground
+ * @cssprop --vscode-focusBorder
+ * @cssprop --vscode-scrollbarSlider-background
+ * @cssprop --vscode-scrollbarSlider-hoverBackground
+ * @cssprop --vscode-scrollbarSlider-activeBackground
  */
 @customElement('vscode-textarea')
 export class VscodeTextarea extends VscElement {

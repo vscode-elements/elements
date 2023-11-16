@@ -4,9 +4,9 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-table-header-cell.styles.js';
 
 /**
- * @cssprop [--foreground=var(--vscode-foreground)] - Inherited from [Table](/components/vscode-table/api/)
- * @cssprop [--font-family=var(--vscode-font-family)] - Inherited from [Table](/components/vscode-table/api/)
- * @cssprop [--font-size=var(--vscode-font-size)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop --vscode-foreground
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
  */
 @customElement('vscode-table-header-cell')
 export class VscodeTableHeaderCell extends VscElement {

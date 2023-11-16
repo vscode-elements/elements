@@ -137,15 +137,22 @@ const isBranch = (item: TreeItem) => {
  * `SelectEventDetail` interface.
  * @fires vsc-run-action Dispatched when an action icon is clicked.
  *
- * @cssprop [--focus-border=var(--vscode-list-focusOutline)]
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--hover-foreground=var(--vscode-list-hoverForeground)]
- * @cssprop [--hover-background=var(--vscode-list-hoverBackground)]
- * @cssprop [--inactive-selection-background=var(--vscode-list-inactiveSelectionBackground)]
- * @cssprop [--active-selection-background=var(--vscode-list-activeSelectionBackground)]
- * @cssprop [--active-selection-foreground=var(--vscode-list-activeSelectionForeground)]
+ * @cssprop --vscode-focusBorder
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-list-hoverForeground
+ * @cssprop --vscode-list-hoverBackground
+ * @cssprop --vscode-list-inactiveSelectionBackground
+ * @cssprop --vscode-list-inactiveSelectionForeground
+ * @cssprop --vscode-list-activeSelectionBackground
+ * @cssprop --vscode-list-activeSelectionForeground
+ * @cssprop --vscode-list-inactiveSelectionIconForeground
+ * @cssprop --vscode-list-inactiveFocusBackground
+ * @cssprop --vscode-list-inactiveFocusOutline
+ * @cssprop --vscode-list-focusOutline
+ * @cssprop --vscode-tree-inactiveIndentGuidesStroke
+ * @cssprop --vscode-tree-indentGuidesStroke
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {

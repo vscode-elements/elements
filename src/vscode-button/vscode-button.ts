@@ -8,17 +8,17 @@ import styles from './vscode-button.styles.js';
 /**
  * @fires vsc-click Dispatched only when button is not in disabled state.
  *
- * @cssprop [--background=var(--vscode-button-background)]
- * @cssprop [--foreground=var(--vscode-button-foreground)]
- * @cssprop [--icon-foreground=var(--vscode-button-foreground)]
- * @cssprop [--hover-background=var(--vscode-button-hoverBackground)]
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--secondary-foreground=var(--vscode-button-secondaryForeground)]
- * @cssprop [--secondary-background=var(--vscode-button-secondaryBackground)]
- * @cssprop [--secondary-hover-background=var(--vscode-button-secondaryHoverBackground)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
+ * @cssprop --vscode-button-background
+ * @cssprop --vscode-button-foreground
+ * @cssprop [--vscode-button-border=var(--vscode-button-background)]
+ * @cssprop --vscode-button-hoverBackground
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-button-secondaryForeground
+ * @cssprop --vscode-button-secondaryBackground
+ * @cssprop --vscode-button-secondaryHoverBackground
+ * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {

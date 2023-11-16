@@ -44,6 +44,7 @@ const styles: CSSResultGroup = [
       line-height: 18px;
       margin-bottom: 4px;
       margin-right: 0;
+      padding: 0;
     }
 
     ::slotted(vscode-form-helper) {

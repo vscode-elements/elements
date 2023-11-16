@@ -1,43 +1,16 @@
 import {css, CSSResultGroup} from 'lit';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 import defaultStyles from '../includes/default.styles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--background',
-      vscodeProp: '--vscode-sideBar-background',
-    },
-    {
-      componentProp: '--focus-border',
-      vscodeProp: '--vscode-focusBorder',
-    },
-    {
-      componentProp: '--font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-    {
-      componentProp: '--header-background',
-      vscodeProp: '--vscode-sideBarSectionHeader-background',
-    },
-    {
-      componentProp: '--icon-foreground',
-      vscodeProp: '--vscode-icon-foreground',
-    },
-    {
-      componentProp: '--title-foreground',
-      vscodeProp: '--vscode-sideBarTitle-foreground',
-    },
-  ]),
   css`
     .collapsible {
-      background-color: var(--background);
+      background-color: var(--vscode-sideBar-background);
     }
 
     .collapsible-header {
       align-items: center;
-      background-color: var(--header-background);
+      background-color: var(--vscode-sideBarSectionHeader-background);
       cursor: pointer;
       display: flex;
       height: 22px;
@@ -50,13 +23,13 @@ const styles: CSSResultGroup = [
       outline-offset: -1px;
       outline-style: solid;
       outline-width: 1px;
-      outline-color: var(--focus-border);
+      outline-color: var(--vscode-focusBorder);
     }
 
     .title {
-      color: var(--title-foreground);
+      color: var(--vscode-sideBarTitle-foreground);
       display: block;
-      font-family: var(--font-family);
+      font-family: var(--vscode-font-family);
       font-size: 11px;
       font-weight: 700;
       margin: 0;
@@ -74,7 +47,7 @@ const styles: CSSResultGroup = [
     }
 
     .header-icon {
-      color: var(--icon-foreground);
+      color: var(--vscode-icon-foreground);
       display: block;
       flex-shrink: 0;
       margin: 0 3px;

@@ -14,13 +14,13 @@ interface MenuItemData {
 }
 
 /**
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--background=var(--vscode-menu-background)]
- * @cssprop [--border=var(--vscode-menu-border)]
- * @cssprop [--foreground=var(--vscode-menu-foreground)]
- * @cssprop [--shadow=var(--vscode-widget-shadow)]
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-menu-background
+ * @cssprop --vscode-menu-border
+ * @cssprop --vscode-menu-foreground
+ * @cssprop --vscode-widget-shadow
  */
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends VscElement {

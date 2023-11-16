@@ -4,7 +4,7 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-table-body.styles.js';
 
 /**
- * @cssprop [--tinted-row-background=var(--vscode-keybindingTable-rowsBackground)] - Inherited from [Table](/components/vscode-table/api/)
+ * @cssprop --vscode-keybindingTable-rowsBackground
  */
 @customElement('vscode-table-body')
 export class VscodeTableBody extends VscElement {

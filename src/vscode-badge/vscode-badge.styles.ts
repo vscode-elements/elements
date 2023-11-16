@@ -1,38 +1,17 @@
 import {css, CSSResultGroup} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
-import declareThemeVariables from '../includes/declareThemeVariables.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
-  declareThemeVariables([
-    {
-      componentProp: '--foreground',
-      vscodeProp: '--vscode-badge-foreground',
-    },
-    {
-      componentProp: '--font-family',
-      vscodeProp: '--vscode-font-family',
-    },
-    {
-      componentProp: '--background',
-      vscodeProp: '--vscode-badge-background',
-    },
-    {
-      componentProp: '--activity-bar-badge-background',
-      vscodeProp: '--vscode-activityBarBadge-background',
-    },
-    {
-      componentProp: '--activity-bar-badge-foreground',
-      vscodeProp: '--vscode-activityBarBadge-foreground',
-    },
-  ]),
   css`
     :host {
-      background-color: var(--background);
+      background-color: var(--vscode-badge-background);
+      border: 1px solid var(--vscode-contrastBorder, transparent);
       border-radius: 2px;
-      color: var(--foreground);
+      box-sizing: border-box;
+      color: var(--vscode-badge-foreground);
       display: inline-block;
-      font-family: var(--font-family);
+      font-family: var(--vscode-font-family);
       font-size: 11px;
       font-weight: 400;
       line-height: 14px;
@@ -51,13 +30,12 @@ const styles: CSSResultGroup = [
     }
 
     :host([variant='activity-bar-counter']) {
-      background-color: var(--activity-bar-badge-background);
+      background-color: var(--vscode-activityBarBadge-background);
       border-radius: 20px;
-      color: var(--activity-bar-badge-foreground);
+      color: var(--vscode-activityBarBadge-foreground);
       font-size: 9px;
       font-weight: 600;
       line-height: 16px;
-      min-width: 8px;
       padding: 0 4px;
     }
   `,

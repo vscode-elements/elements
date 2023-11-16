@@ -21,25 +21,24 @@ import styles from './vscode-single-select.styles.js';
  * @attr {boolean} invalid
  * @attr name - Name which is used as a variable name in the data of the form-container.
  * @cssprop [--dropdown-z-index=2]
- * @cssprop [--badge-background=var(--vscode-badge-background)]
- * @cssprop [--badge-foreground=var(--vscode-badge-foreground)]
- * @cssprop [--border=var(--vscode-settings-dropdownBorder)]
- * @cssprop [--checkbox-background=var(--vscode-settings-checkboxBackground)]
- * @cssprop [--dropdown-background=var(--vscode-settings-dropdownBackground)]
- * @cssprop [--dropdown-border=var(--vscode-settings-dropdownListBorder)]
- * @cssprop [--focus-border=var(--vscode-focusBorder)]
- * @cssprop [--foreground=var(--vscode-foreground)]
- * @cssprop [--font-family=var(--vscode-font-family)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-weight=var(--vscode-font-weight)]
- * @cssprop [--list-active-selection-background=var(--vscode-list-activeSelectionBackground)]
- * @cssprop [--list-active-selection-foreground=var(--vscode-list-activeSelectionForeground)]
- * @cssprop [--list-focus-outline=var(--vscode-list-focusOutline)]
- * @cssprop [--list-hover-background=var(--vscode-list-hoverBackground)]
- * @cssprop [--list-hover-foreground=var(--vscode-list-hoverForeground)]
- * @cssprop [--selected-background=var(--vscode-list-hoverBackground)]
- * @cssprop [--input-background=var(--vscode-settings-textInputBackground)]
- * @cssprop [--list-hover-background=var(--vscode-list-hoverBackground)]
+ * @cssprop --vscode-badge-background
+ * @cssprop --vscode-badge-foreground
+ * @cssprop --vscode-settings-dropdownBorder
+ * @cssprop --vscode-settings-checkboxBackground
+ * @cssprop --vscode-settings-dropdownBackground
+ * @cssprop --vscode-settings-dropdownListBorder
+ * @cssprop --vscode-focusBorder
+ * @cssprop --vscode-foreground
+ * @cssprop --vscode-font-family
+ * @cssprop --vscode-font-size
+ * @cssprop --vscode-font-weight
+ * @cssprop --vscode-list-activeSelectionBackground
+ * @cssprop --vscode-list-activeSelectionForeground
+ * @cssprop --vscode-list-focusOutline
+ * @cssprop --vscode-list-hoverBackground
+ * @cssprop --vscode-list-hoverForeground
+ * @cssprop --vscode-list-hoverBackground
+ * @cssprop --vscode-settings-textInputBackground
  */
 @customElement('vscode-single-select')
 export class VscodeSingleSelect extends VscodeSelectBase {
