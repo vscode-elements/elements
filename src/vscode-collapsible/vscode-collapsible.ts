@@ -5,7 +5,7 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-collapsible.styles.js';
 
 /**
- * @slot body - Main content.
+ * @slot - Main content.
  * @slot actions - You can place any action icon in this slot in the header, but it's also possible to use any HTML element in it. It's only visible when the component is open.
  * @slot decorations - The elements placed in the decorations slot are always visible.
  *
@@ -81,6 +81,7 @@ export class VscodeCollapsible extends VscElement {
         </div>
         <div class="collapsible-body">
           <div>
+            <slot></slot>
             <slot name="body"></slot>
           </div>
         </div>

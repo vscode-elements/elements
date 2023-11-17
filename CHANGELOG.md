@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   are not changed.
 - **Textarea**, **Textfield**: dispatching native `input` and `change` events.
 - **Radio**, **Checkbox**, **SingleSelect**, **MultiSelect**: dispatching native `change` event
+- **Collapsible**: Displaying the main content using the default slot instead of the named `body` slot.
 
 ## [0.17.0] - 2023-10-15
 
