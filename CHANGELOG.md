@@ -13,12 +13,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 
 - Reflect `name` property of the **Input** component similar to the native textfield.
-- **Textarea**, **Textfield**: `minlength` and `maxlength` property is renamed to `minLength` and `maxLength`. This 
+- **Textarea**, **Textfield**: `minlength` and `maxlength` property is renamed to `minLength` and `maxLength`. This
   change adheres to the naming convention of the native `<textarea>` element. The attribute names
   are not changed.
 - **Textarea**, **Textfield**: dispatching native `input` and `change` events.
 - **Radio**, **Checkbox**, **SingleSelect**, **MultiSelect**: dispatching native `change` event
 - **Collapsible**: Displaying the main content using the default slot instead of the named `body` slot.
+- Deprecated components were removed. The affected components are: **Inputbox**, **FormContainer**, **FormControl**, 
+  **FormDescription**, **FormItem**, **FormLabel**
 
 ## [0.17.0] - 2023-10-15
 
@@ -56,7 +58,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 
 - In the **Tree** item configuration, the `icons` property value can also be a boolean. If it's true,
-  the default theme icons are visible: `file` for the leaf items, `folder` for the branch items, 
+  the default theme icons are visible: `file` for the leaf items, `folder` for the branch items,
   `folder-opened` for the opened branch items. See the [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html)
   project for the icon references. If it's false, the icons won't be visible at all.
 - **Tree** The colors have been refined to closely align with the style of VSCode.
@@ -95,9 +97,9 @@ The components will look "good" even if no theme variables are available.
 
 ### Changed
 
-- **Textarea**: The default display is `inline-block`, the default size is 320 x 40. It is 
+- **Textarea**: The default display is `inline-block`, the default size is 320 x 40. It is
   automatically resized when `rows` or `cols` attributes are set.
-- **Textarea**: Follow the source control input box styles of VSCode more closely: 
+- **Textarea**: Follow the source control input box styles of VSCode more closely:
   - Change the cursor to hand when it is above the scrollbar.
   - Add an unobtrusive drop shadow when the text is scrolled.
   - Add active state to the scrollbar.
@@ -246,11 +248,11 @@ The components will look "good" even if no theme variables are available.
 
 ### Added
 
-- Icon: 
+- Icon:
   - added proper theme variables
   - added action icon pressed style
   - added focus border style
-- Collapsible: 
+- Collapsible:
   - keyboard support
   - icon visibility mimics the VSCode behavior: it is visible when the panel is open
 - Table: added responsive mode
@@ -316,13 +318,13 @@ The components will look "good" even if no theme variables are available.
 ### Added
 
 - Combobox mode has been added to the SingleSelect and MultiSelect components.
-- New attributes for InputBox: min, minlength, max, maxlength, multiple, 
+- New attributes for InputBox: min, minlength, max, maxlength, multiple,
   readonly, step.
 - Changelog was introduced.
 
 ### Changed
 
-- Select component has been split into two different component: SingleSelect and 
+- Select component has been split into two different component: SingleSelect and
   MultiSelect.
 
 ### Fixed
