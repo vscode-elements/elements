@@ -67,8 +67,9 @@ export class VscodeContextMenu extends VscElement {
     return this._show;
   }
 
+  /** @internal */
   @property({type: Number, reflect: true})
-  tabindex = 0;
+  tabIndex = 0;
 
   constructor() {
     super();

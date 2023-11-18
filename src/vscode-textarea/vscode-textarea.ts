@@ -196,10 +196,12 @@ export class VscodeTextarea
     }
   }
 
+  /** @internal */
   formResetCallback(): void {
     this.value = this.defaultValue;
   }
 
+  /** @internal */
   formStateRestoreCallback(
     state: string,
     _mode: 'restore' | 'autocomplete'

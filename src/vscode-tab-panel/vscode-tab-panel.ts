@@ -14,6 +14,7 @@ export class VscodeTabPanel extends VscElement {
   @property({type: Boolean, reflect: true})
   hidden = false;
 
+  /** @internal */
   @property({reflect: true, attribute: 'aria-labelledby'})
   ariaLabelledby = '';
 
@@ -23,11 +24,13 @@ export class VscodeTabPanel extends VscElement {
   @property({type: Boolean, reflect: true})
   panel = false;
 
+  /** @internal */
   @property({reflect: true})
   role = 'tabpanel';
 
+  /** @internal */
   @property({type: Number, reflect: true})
-  tabindex = 0;
+  tabIndex = 0;
 
   render(): TemplateResult {
     return html` <slot></slot> `;

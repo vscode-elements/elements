@@ -10,6 +10,7 @@ import styles from './vscode-table-header.styles.js';
 export class VscodeTableHeader extends VscElement {
   static styles = styles;
 
+  /** @internal */
   @property({reflect: true})
   role = 'rowgroup';
 

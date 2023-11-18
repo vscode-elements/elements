@@ -7,6 +7,7 @@ import styles from './vscode-checkbox-group.styles.js';
 export class VscodeCheckboxGroup extends VscElement {
   static styles = styles;
 
+  /** @internal */
   @property({reflect: true})
   role = 'group';
 

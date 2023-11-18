@@ -38,6 +38,7 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
 export class VscodeTable extends VscElement {
   static styles = styles;
 
+  /** @internal */
   @property({reflect: true})
   role = 'table';
 

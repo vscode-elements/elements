@@ -10,6 +10,7 @@ import styles from './vscode-table-row.styles.js';
 export class VscodeTableRow extends VscElement {
   static styles = styles;
 
+  /** @internal */
   @property({reflect: true})
   role = 'row';
 

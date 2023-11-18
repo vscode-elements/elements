@@ -48,6 +48,7 @@ export class VscodeSingleSelect
 {
   static styles = styles;
 
+  /** @internal */
   static formAssociated = true;
 
   @property({attribute: 'default-value'})

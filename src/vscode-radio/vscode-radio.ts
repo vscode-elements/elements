@@ -137,6 +137,7 @@ export class VscodeRadio
     return this._internals.reportValidity();
   }
 
+  /** @internal */
   formResetCallback(): void {
     const radios = this._getRadios();
 
@@ -149,6 +150,7 @@ export class VscodeRadio
     });
   }
 
+  /** @internal */
   formStateRestoreCallback(
     state: string,
     _mode: 'restore' | 'autocomplete'

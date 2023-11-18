@@ -19,6 +19,7 @@ export class VscodeTabHeader extends VscElement {
   @property({type: Boolean, reflect: true})
   active = false;
 
+  /** @internal */
   @property({reflect: true, attribute: 'aria-controls'})
   ariaControls = '';
 
@@ -28,9 +29,11 @@ export class VscodeTabHeader extends VscElement {
   @property({type: Boolean, reflect: true})
   panel = false;
 
+  /** @internal */
   @property({reflect: true})
   role = 'tab';
 
+  /** @internal */
   @property({type: Number, reflect: true, attribute: 'tab-id'})
   tabId = -1;
 

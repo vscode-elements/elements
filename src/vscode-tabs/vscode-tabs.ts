@@ -31,6 +31,7 @@ export class VscodeTabs extends VscElement {
   @property({type: Boolean, reflect: true})
   panel = false;
 
+  /** @internal */
   @property({reflect: true})
   role = 'tablist';
 

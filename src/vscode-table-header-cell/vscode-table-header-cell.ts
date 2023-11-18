@@ -12,6 +12,7 @@ import styles from './vscode-table-header-cell.styles.js';
 export class VscodeTableHeaderCell extends VscElement {
   static styles = styles;
 
+  /** @internal */
   @property({reflect: true})
   role = 'columnheader';
 

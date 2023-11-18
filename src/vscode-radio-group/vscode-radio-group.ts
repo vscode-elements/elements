@@ -16,9 +16,7 @@ export class VscodeRadioGroup extends VscElement {
   @property({reflect: true})
   variant: 'horizontal' | 'vertical' = 'horizontal';
 
-  @property({type: Boolean, reflect: true})
-  inline = false;
-
+  /** @internal */
   @property({reflect: true})
   role = 'radiogroup';
 

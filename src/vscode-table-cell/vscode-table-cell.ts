@@ -13,6 +13,7 @@ import styles from './vscode-table-cell.styles.js';
 export class VscodeTableCell extends VscElement {
   static styles = styles;
 
+  /** @internal */
   @property({reflect: true})
   role = 'cell';
 
