@@ -145,7 +145,14 @@ export class VscodeRadioGroup extends VscElement {
     }
 
     this._radios.forEach(
-      (r, i) => (r.tabIndex = i === this._focusedRadio ? 0 : -1)
+      (r, i) => {
+        // if _focusedRadio is not set, the first radio should be focusable
+        if (this._focusedRadio > -1) {
+          r.tabIndex = i === this._focusedRadio ? 0 : -1
+        } else {
+          r.tabIndex = i === 0 ? 0 : -1;
+        }
+      }
     );
   }
 

@@ -64,6 +64,10 @@ export class VscodeRadio
   @property({reflect: true})
   role = 'radio';
 
+  /** @internal */
+  @property({type: Number, reflect: true})
+  tabIndex = 0;
+
   @state()
   private _slottedText = '';
 
