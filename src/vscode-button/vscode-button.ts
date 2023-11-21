@@ -129,7 +129,10 @@ export class VscodeButton extends VscElement {
       (event.key === 'Enter' || event.key === ' ') &&
       !this.hasAttribute('disabled')
     ) {
-      /** @deprecated */
+      /**
+       * @deprecated
+       * Please use the standard `click` event.
+       */
       this.dispatchEvent(
         new CustomEvent<{
           originalEvent: MouseEvent;
