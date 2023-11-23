@@ -5,8 +5,6 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 
-const HANDLE_SIZE = 4;
-
 /**
  * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]
  */
@@ -19,6 +17,12 @@ export class VscodeSplitLayout extends VscElement {
 
   @property({type: Boolean, reflect: true, attribute: 'reset-on-dbl-click'})
   resetOnDblClick = false;
+
+  /**
+   * Controls the draggable area size in pixels. it is recommended to use the value of `workbench.sash.size`.
+   */
+  @property({type: Number, reflect: true, attribute: 'handle-size'})
+  handleSize = 4;
 
   @property({attribute: 'initial-position'})
   initialPosition = '50%';
@@ -132,7 +136,7 @@ export class VscodeSplitLayout extends VscElement {
     this._isDragActive = false;
     window.removeEventListener('mouseup', this._handleMouseUp);
     window.removeEventListener('mousemove', this._handleMouseMove);
-  }
+  };
 
   private _handleMouseMove = (event: MouseEvent) => {
     const {clientX, clientY} = event;
@@ -169,7 +173,7 @@ export class VscodeSplitLayout extends VscElement {
       this._startPaneBottom = startPaneBottomPercentage;
       this._endPaneTop = this._handleTop;
     }
-  }
+  };
 
   private _handleDblClick() {
     if (!this.resetOnDblClick) {
@@ -196,13 +200,13 @@ export class VscodeSplitLayout extends VscElement {
     };
 
     if (this.split === 'vertical') {
-      handleStylesPropObj.marginLeft = `${0 - HANDLE_SIZE / 2}px`;
-      handleStylesPropObj.width = `${HANDLE_SIZE}px`;
+      handleStylesPropObj.marginLeft = `${0 - this.handleSize / 2}px`;
+      handleStylesPropObj.width = `${this.handleSize}px`;
     }
 
     if (this.split === 'horizontal') {
-      handleStylesPropObj.height = `${HANDLE_SIZE}px`;
-      handleStylesPropObj.marginTop = `${0 - HANDLE_SIZE / 2}px`;
+      handleStylesPropObj.height = `${this.handleSize}px`;
+      handleStylesPropObj.marginTop = `${0 - this.handleSize / 2}px`;
     }
 
     const handleStyles = styleMap(handleStylesPropObj);
