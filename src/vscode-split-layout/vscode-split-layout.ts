@@ -17,7 +17,7 @@ export class VscodeSplitLayout extends VscElement {
   @property()
   split: 'horizontal' | 'vertical' = 'vertical';
 
-  @property({type: Boolean, reflect: true,  attribute: 'reset-on-dbl-click'})
+  @property({type: Boolean, reflect: true, attribute: 'reset-on-dbl-click'})
   resetOnDblClick = false;
 
   @property({attribute: 'initial-pos'})
@@ -81,9 +81,9 @@ export class VscodeSplitLayout extends VscElement {
     }
 
     if (this.split === 'vertical') {
-      this._startPaneRight = maxPos - pos;
-      this._endPaneLeft = pos;
-      this._handleLeft = pos;
+      this._startPaneRight = ((maxPos - pos) / width) * 100;
+      this._endPaneLeft = (pos / width) * 100;
+      this._handleLeft = (pos / width) * 100;
     }
 
     if (this.split === 'horizontal') {
@@ -108,9 +108,10 @@ export class VscodeSplitLayout extends VscElement {
   private _handleMouseDown(event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
+    const {left, top, width, height} = this._boundRect;
 
-    const mouseXLocal = event.clientX - this._boundRect.left;
-    const mouseYLocal = event.clientY - this._boundRect.top;
+    const mouseXLocal = ((event.clientX - left) / width) * 100;
+    const mouseYLocal = event.clientY - top;
 
     if (this.split === 'vertical') {
       this._handleOffset = mouseXLocal - this._handleLeft;
@@ -141,12 +142,17 @@ export class VscodeSplitLayout extends VscElement {
 
     if (this.split === 'vertical') {
       const mouseXLocal = clientX - left;
-
-      this._handleLeft = Math.max(
+      const handleLeftPx = Math.max(
         0,
         Math.min(mouseXLocal - this._handleOffset, width)
       );
-      this._startPaneRight = Math.max(0, width - this._handleLeft);
+      const startPaneRightPx = Math.max(0, width - handleLeftPx);
+
+      const handleLeftPercentage = (handleLeftPx / width) * 100;
+      const startPaneRightPercentage = (startPaneRightPx / width) * 100;
+
+      this._handleLeft = handleLeftPercentage;
+      this._startPaneRight = startPaneRightPercentage;
       this._endPaneLeft = this._handleLeft;
     }
 
@@ -175,16 +181,16 @@ export class VscodeSplitLayout extends VscElement {
   render(): TemplateResult {
     const startPaneStyles = styleMap({
       bottom: `${this._startPaneBottom}px`,
-      right: `${this._startPaneRight}px`,
+      right: `${this._startPaneRight}%`,
     });
 
     const endPaneStyles = styleMap({
-      left: `${this._endPaneLeft}px`,
+      left: `${this._endPaneLeft}%`,
       top: `${this._endPaneTop}px`,
     });
 
     const handleStylesPropObj: {[prop: string]: string} = {
-      left: `${this._handleLeft}px`,
+      left: `${this._handleLeft}%`,
       top: `${this._handleTop}px`,
     };
 
