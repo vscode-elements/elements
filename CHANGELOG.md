@@ -19,10 +19,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **Textarea**, **Textfield**: dispatching native `input` and `change` events.
 - **Radio**, **Checkbox**, **SingleSelect**, **MultiSelect**: dispatching native `change` event
 - **Collapsible**: Displaying the main content using the default slot instead of the named `body` slot.
+- **Split Layout**: Renamed `initial-pos` to `initial-position`.
 
 ### Removed
 
-- Deprecated components were removed. The affected components are: **Inputbox**, **FormContainer**, **FormControl**, 
+- Deprecated components were removed. The affected components are: **Inputbox**, **FormContainer**, **FormControl**,
   **FormDescription**, **FormItem**, **FormLabel**
 
 ## [0.17.0] - 2023-10-15
