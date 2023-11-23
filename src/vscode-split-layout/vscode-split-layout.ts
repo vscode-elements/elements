@@ -87,9 +87,9 @@ export class VscodeSplitLayout extends VscElement {
     }
 
     if (this.split === 'horizontal') {
-      this._startPaneBottom = maxPos - pos;
-      this._endPaneTop = pos;
-      this._handleTop = pos;
+      this._startPaneBottom = ((maxPos - pos) / height) * 100;
+      this._endPaneTop = (pos / height) * 100;
+      this._handleTop = (pos / height) * 100;
     }
   }
 
@@ -111,7 +111,7 @@ export class VscodeSplitLayout extends VscElement {
     const {left, top, width, height} = this._boundRect;
 
     const mouseXLocal = ((event.clientX - left) / width) * 100;
-    const mouseYLocal = event.clientY - top;
+    const mouseYLocal = ((event.clientY - top) / height) * 100;
 
     if (this.split === 'vertical') {
       this._handleOffset = mouseXLocal - this._handleLeft;
@@ -158,12 +158,17 @@ export class VscodeSplitLayout extends VscElement {
 
     if (this.split === 'horizontal') {
       const mouseYLocal = clientY - top;
-
-      this._handleTop = Math.max(
+      const handleTopPx = Math.max(
         0,
         Math.min(mouseYLocal - this._handleOffset, height)
       );
-      this._startPaneBottom = Math.max(0, height - this._handleTop);
+      const startPaneBottomPx = Math.max(0, height - handleTopPx);
+
+      const handleTopPercentage = (handleTopPx / height) * 100;
+      const startPaneBottomPercentage = (startPaneBottomPx / height) * 100;
+
+      this._handleTop = handleTopPercentage;
+      this._startPaneBottom = startPaneBottomPercentage;
       this._endPaneTop = this._handleTop;
     }
   }
@@ -180,18 +185,18 @@ export class VscodeSplitLayout extends VscElement {
 
   render(): TemplateResult {
     const startPaneStyles = styleMap({
-      bottom: `${this._startPaneBottom}px`,
+      bottom: `${this._startPaneBottom}%`,
       right: `${this._startPaneRight}%`,
     });
 
     const endPaneStyles = styleMap({
       left: `${this._endPaneLeft}%`,
-      top: `${this._endPaneTop}px`,
+      top: `${this._endPaneTop}%`,
     });
 
     const handleStylesPropObj: {[prop: string]: string} = {
       left: `${this._handleLeft}%`,
-      top: `${this._handleTop}px`,
+      top: `${this._handleTop}%`,
     };
 
     if (this.split === 'vertical') {
