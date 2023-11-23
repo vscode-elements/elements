@@ -124,19 +124,17 @@ export class VscodeSplitLayout extends VscElement {
     this._boundRect = this.getBoundingClientRect();
     this._isDragActive = true;
 
-    window.addEventListener('mouseup', this._handleMouseUpBound);
-    window.addEventListener('mousemove', this._handleMouseMoveBound);
+    window.addEventListener('mouseup', this._handleMouseUp);
+    window.addEventListener('mousemove', this._handleMouseMove);
   }
 
-  private _handleMouseUp() {
+  private _handleMouseUp = () => {
     this._isDragActive = false;
-    window.removeEventListener('mouseup', this._handleMouseUpBound);
-    window.removeEventListener('mousemove', this._handleMouseMoveBound);
+    window.removeEventListener('mouseup', this._handleMouseUp);
+    window.removeEventListener('mousemove', this._handleMouseMove);
   }
 
-  private _handleMouseUpBound = this._handleMouseUp.bind(this);
-
-  private _handleMouseMove(event: MouseEvent) {
+  private _handleMouseMove = (event: MouseEvent) => {
     const {clientX, clientY} = event;
     const {left, top, height, width} = this._boundRect;
 
@@ -172,8 +170,6 @@ export class VscodeSplitLayout extends VscElement {
       this._endPaneTop = this._handleTop;
     }
   }
-
-  private _handleMouseMoveBound = this._handleMouseMove.bind(this);
 
   private _handleDblClick() {
     if (!this.resetOnDblClick) {
