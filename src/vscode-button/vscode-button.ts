@@ -27,6 +27,9 @@ export class VscodeButton extends VscElement {
   /** @internal */
   static formAssociated = true;
 
+  @property({type: Boolean, reflect: true})
+  autofocus = false;
+
   /** @internal */
   @property({type: Number, reflect: true})
   tabIndex = 0;
@@ -84,14 +87,26 @@ export class VscodeButton extends VscElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('focus', this._handleFocusBound);
-    this.addEventListener('blur', this._handleBlurBound);
+
+    if (this.autofocus) {
+      if (this.tabIndex < 0) {
+        this.tabIndex = 0;
+      }
+
+      this.updateComplete.then(() => {
+        this.focus();
+        this.requestUpdate();
+      });
+    }
+
+    this.addEventListener('focus', this._handleFocus);
+    this.addEventListener('blur', this._handleBlur);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.removeEventListener('focus', this._handleFocusBound);
-    this.removeEventListener('blur', this._handleBlurBound);
+    this.removeEventListener('focus', this._handleFocus);
+    this.removeEventListener('blur', this._handleBlur);
   }
 
   update(
@@ -163,17 +178,13 @@ export class VscodeButton extends VscElement {
     }
   }
 
-  private _handleFocus() {
+  private _handleFocus = () => {
     this.focused = true;
-  }
+  };
 
-  private _handleFocusBound = this._handleFocus.bind(this);
-
-  private _handleBlur() {
+  private _handleBlur = () => {
     this.focused = false;
-  }
-
-  private _handleBlurBound = this._handleBlur.bind(this);
+  };
 
   render(): TemplateResult {
     const hasIcon = this.icon !== '';
