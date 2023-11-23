@@ -20,8 +20,8 @@ export class VscodeSplitLayout extends VscElement {
   @property({type: Boolean, reflect: true, attribute: 'reset-on-dbl-click'})
   resetOnDblClick = false;
 
-  @property({attribute: 'initial-pos'})
-  initialPos = '50%';
+  @property({attribute: 'initial-position'})
+  initialPosition = '50%';
 
   @state()
   private _startPaneRight = 0;
@@ -64,7 +64,7 @@ export class VscodeSplitLayout extends VscElement {
   private _initPosition() {
     const {height, width} = this._boundRect;
     const maxPos = this.split === 'vertical' ? width : height;
-    const matches = /(^[0-9.]+)(%{0,1})$/.exec(this.initialPos);
+    const matches = /(^[0-9.]+)(%{0,1})$/.exec(this.initialPosition);
     let pos = 0;
     let numericVal = 0;
 
