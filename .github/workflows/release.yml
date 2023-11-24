@@ -75,6 +75,9 @@ jobs:
         run: node scripts/update-changelog.mjs
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
 
+      - name: Update version number in the base class
+        run: node scripts/update-version-number.mjs
+
       - name: Tagging
         run: |
           git add .
