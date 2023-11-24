@@ -1,5 +1,10 @@
 import {html, TemplateResult} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
@@ -12,7 +17,7 @@ import styles from './vscode-split-layout.styles.js';
 export class VscodeSplitLayout extends VscElement {
   static styles = styles;
 
-  @property()
+  @property({reflect: true})
   split: 'horizontal' | 'vertical' = 'vertical';
 
   @property({type: Boolean, reflect: true, attribute: 'reset-on-dbl-click'})
@@ -24,7 +29,7 @@ export class VscodeSplitLayout extends VscElement {
   @property({type: Number, reflect: true, attribute: 'handle-size'})
   handleSize = 4;
 
-  @property({attribute: 'initial-position'})
+  @property({reflect: true, attribute: 'initial-position'})
   initialPosition = '50%';
 
   @state()
@@ -54,18 +59,28 @@ export class VscodeSplitLayout extends VscElement {
   @state()
   private _hide = false;
 
+  @queryAssignedElements({slot: 'start', selector: 'vscode-split-layout'})
+  private _nestedLayoutsAtStart!: HTMLElement[];
+
+  @queryAssignedElements({slot: 'end', selector: 'vscode-split-layout'})
+  private _nestedLayoutsAtEnd!: HTMLElement[];
+
   private _boundRect: DOMRect = new DOMRect();
   private _handleOffset = 0;
 
   connectedCallback(): void {
     super.connectedCallback();
 
-    this._boundRect = this.getBoundingClientRect();
+    this._initPosition();
+  }
 
+  /** @internal */
+  initializeResizeHandler() {
     this._initPosition();
   }
 
   private _initPosition() {
+    this._boundRect = this.getBoundingClientRect();
     const {height, width} = this._boundRect;
     const maxPos = this.split === 'vertical' ? width : height;
     const matches = /(^[0-9.]+)(%{0,1})$/.exec(this.initialPosition);
@@ -112,6 +127,8 @@ export class VscodeSplitLayout extends VscElement {
   private _handleMouseDown(event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
+
+    this._boundRect = this.getBoundingClientRect();
     const {left, top, width, height} = this._boundRect;
 
     const mouseXLocal = ((event.clientX - left) / width) * 100;
@@ -183,6 +200,19 @@ export class VscodeSplitLayout extends VscElement {
     this._initPosition();
   }
 
+  private _handleSlotChange() {
+    const nestedLayouts = [
+      ...this._nestedLayoutsAtStart,
+      ...this._nestedLayoutsAtEnd,
+    ];
+
+    nestedLayouts.forEach((e) => {
+      if (e instanceof VscodeSplitLayout) {
+        e.initializeResizeHandler();
+      }
+    });
+  }
+
   render(): TemplateResult {
     const startPaneStyles = styleMap({
       bottom: `${this._startPaneBottom}%`,
@@ -228,10 +258,10 @@ export class VscodeSplitLayout extends VscElement {
 
     return html`
       <div class="start" style="${startPaneStyles}">
-        <slot name="start"></slot>
+        <slot name="start" @slotchange=${this._handleSlotChange}></slot>
       </div>
       <div class="end" style="${endPaneStyles}">
-        <slot name="end"></slot>
+        <slot name="end" @slotchange=${this._handleSlotChange}></slot>
       </div>
       <div class="${handleOverlayClasses}"></div>
       <div
