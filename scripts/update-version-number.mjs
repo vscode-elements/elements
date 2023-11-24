@@ -2,6 +2,7 @@ import fs from 'fs';
 import util from 'util';
 import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';
+import process from 'node:process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,11 +24,18 @@ async function main() {
   const {version} = pkg;
 
   const fc = await readFile(BASE_CLASS_PATH, 'utf-8');
-  const newContent = fc.replace(/readonly version = '[a-z0-9-]+';/g, `readonly version = '${version}';`);
+  const re = /public readonly version = '[0-9a-z-.]+';/g
+
+  if (!fc.match(re)) {
+    console.log('VscElement.ts version number is not found');
+    process.exit(1);
+  }
+
+  const newContent = fc.replace(re, `public readonly version = '${version}';`);
 
   await writeFile(BASE_CLASS_PATH, newContent);
 
-  console.log('VscElement.ts updated successfully');
+  console.log(`VscElement.ts version number updated successfully to ${version}`);
 }
 
 main();
