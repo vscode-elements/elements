@@ -12,28 +12,8 @@
   <script type="module" src="../dist/vscode-scrollable/index.js"></script>
   <style>
     .split-layout-example {
-      border: 1px solid var(--vscode-editorWidget-border);
       height: 250px;
       width: 500px;
-    }
-
-    .split-layout-content {
-      height: 100%;
-      /* overflow-y: auto; */
-    }
-
-    .split-layout-content.start {
-      border-bottom: 1px solid var(--vscode-editorWidget-border);
-      box-sizing: border-box;
-    }
-
-    .split-layout-nested-example {
-      height: 100%;
-      width: 100%;
-    }
-
-    .split-layout-nested-content {
-      height: 100%;
     }
   </style>
 </head>
@@ -43,10 +23,19 @@
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
       <component-preview>
-        <vscode-split-layout class="split-layout-example" initial-position="25%" split="horizontal">
+        <vscode-split-layout class="split-layout-example" initial-position="25%" split="horizontal" handle-size="10">
           <div slot="start" class="split-layout-content start">
             <vscode-scrollable style="width: 100%; height: 100%;">
               Praesent ultrices mauris lectus, eu molestie erat lacinia vitae. Phasellus
+              vestibulum pellentesque ligula malesuada sollicitudin. Vivamus vitae erat
+              eget nulla laoreet porttitor. Nullam sit amet leo et velit molestie maximus.
+              Vestibulum arcu leo, tempor nec pretium id, vehicula id odio. Etiam
+              ultricies ligula dolor, in tincidunt nunc maximus at. Curabitur tincidunt
+              nulla in magna pharetra commodo. Donec vestibulum mollis quam, ut consequat
+              dolor finibus ac. Nulla suscipit ac sem non fringilla. Nullam eros ante,
+              suscipit hendrerit molestie a, tempor nec turpis. Morbi eget erat suscipit,
+              blandit nibh nec, molestie augue. Aenean consectetur dapibus mauris, eget
+              ultricies sapien porttitor nec. Praesent ultrices mauris lectus, eu molestie erat lacinia vitae. Phasellus
               vestibulum pellentesque ligula malesuada sollicitudin. Vivamus vitae erat
               eget nulla laoreet porttitor. Nullam sit amet leo et velit molestie maximus.
               Vestibulum arcu leo, tempor nec pretium id, vehicula id odio. Etiam
@@ -61,6 +50,15 @@
           <div slot="end" class="split-layout-content">
             <vscode-scrollable style="width: 100%; height: 100%;">
               Praesent ultrices mauris lectus, eu molestie erat lacinia vitae. Phasellus
+              vestibulum pellentesque ligula malesuada sollicitudin. Vivamus vitae erat
+              eget nulla laoreet porttitor. Nullam sit amet leo et velit molestie maximus.
+              Vestibulum arcu leo, tempor nec pretium id, vehicula id odio. Etiam
+              ultricies ligula dolor, in tincidunt nunc maximus at. Curabitur tincidunt
+              nulla in magna pharetra commodo. Donec vestibulum mollis quam, ut consequat
+              dolor finibus ac. Nulla suscipit ac sem non fringilla. Nullam eros ante,
+              suscipit hendrerit molestie a, tempor nec turpis. Morbi eget erat suscipit,
+              blandit nibh nec, molestie augue. Aenean consectetur dapibus mauris, eget
+              ultricies sapien porttitor nec. Praesent ultrices mauris lectus, eu molestie erat lacinia vitae. Phasellus
               vestibulum pellentesque ligula malesuada sollicitudin. Vivamus vitae erat
               eget nulla laoreet porttitor. Nullam sit amet leo et velit molestie maximus.
               Vestibulum arcu leo, tempor nec pretium id, vehicula id odio. Etiam
@@ -82,7 +80,7 @@
     <div class="story-content">
       <component-preview>
         <vscode-split-layout class="split-layout-example">
-          <div slot="start" class="split-layout-content start">
+          <div slot="start">
             Praesent ultrices mauris lectus, eu molestie erat lacinia vitae. Phasellus
             vestibulum pellentesque ligula malesuada sollicitudin. Vivamus vitae erat
             eget nulla laoreet porttitor. Nullam sit amet leo et velit molestie maximus.
@@ -94,34 +92,32 @@
             blandit nibh nec, molestie augue. Aenean consectetur dapibus mauris, eget
             ultricies sapien porttitor nec.
           </div>
-          <div slot="end" class="split-layout-content">
-            <vscode-split-layout split="horizontal" class="split-layout-nested-example">
-              <div slot="start" class="split-layout-nested-content start">
-                Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
-                Phasellus vestibulum pellentesque ligula malesuada sollicitudin. Vivamus
-                vitae erat eget nulla laoreet porttitor. Nullam sit amet leo et velit
-                molestie maximus. Vestibulum arcu leo, tempor nec pretium id, vehicula
-                id odio. Etiam ultricies ligula dolor, in tincidunt nunc maximus at.
-                Curabitur tincidunt nulla in magna pharetra commodo. Donec vestibulum
-                mollis quam, ut consequat dolor finibus ac. Nulla suscipit ac sem non
-                fringilla. Nullam eros ante, suscipit hendrerit molestie a, tempor nec
-                turpis. Morbi eget erat suscipit, blandit nibh nec, molestie augue.
-                Aenean consectetur dapibus mauris, eget ultricies sapien porttitor nec.
-              </div>
-              <div slot="end" class="split-layout-nested-content">
-                Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
-                Phasellus vestibulum pellentesque ligula malesuada sollicitudin. Vivamus
-                vitae erat eget nulla laoreet porttitor. Nullam sit amet leo et velit
-                molestie maximus. Vestibulum arcu leo, tempor nec pretium id, vehicula
-                id odio. Etiam ultricies ligula dolor, in tincidunt nunc maximus at.
-                Curabitur tincidunt nulla in magna pharetra commodo. Donec vestibulum
-                mollis quam, ut consequat dolor finibus ac. Nulla suscipit ac sem non
-                fringilla. Nullam eros ante, suscipit hendrerit molestie a, tempor nec
-                turpis. Morbi eget erat suscipit, blandit nibh nec, molestie augue.
-                Aenean consectetur dapibus mauris, eget ultricies sapien porttitor nec.
-              </div>
-            </vscode-split-layout>
-          </div>
+          <vscode-split-layout style="height: 100%;" split="horizontal" slot="end">
+            <div slot="start">
+              Praesent ultrices mauris lectus, eu molestie erat lacinia vitae. Phasellus
+              vestibulum pellentesque ligula malesuada sollicitudin. Vivamus vitae erat
+              eget nulla laoreet porttitor. Nullam sit amet leo et velit molestie maximus.
+              Vestibulum arcu leo, tempor nec pretium id, vehicula id odio. Etiam
+              ultricies ligula dolor, in tincidunt nunc maximus at. Curabitur tincidunt
+              nulla in magna pharetra commodo. Donec vestibulum mollis quam, ut consequat
+              dolor finibus ac. Nulla suscipit ac sem non fringilla. Nullam eros ante,
+              suscipit hendrerit molestie a, tempor nec turpis. Morbi eget erat suscipit,
+              blandit nibh nec, molestie augue. Aenean consectetur dapibus mauris, eget
+              ultricies sapien porttitor nec.
+            </div>
+            <div slot="end">
+              Praesent ultrices mauris lectus, eu molestie erat lacinia vitae. Phasellus
+              vestibulum pellentesque ligula malesuada sollicitudin. Vivamus vitae erat
+              eget nulla laoreet porttitor. Nullam sit amet leo et velit molestie maximus.
+              Vestibulum arcu leo, tempor nec pretium id, vehicula id odio. Etiam
+              ultricies ligula dolor, in tincidunt nunc maximus at. Curabitur tincidunt
+              nulla in magna pharetra commodo. Donec vestibulum mollis quam, ut consequat
+              dolor finibus ac. Nulla suscipit ac sem non fringilla. Nullam eros ante,
+              suscipit hendrerit molestie a, tempor nec turpis. Morbi eget erat suscipit,
+              blandit nibh nec, molestie augue. Aenean consectetur dapibus mauris, eget
+              ultricies sapien porttitor nec.
+            </div>
+          </vscode-split-layout>
         </vscode-split-layout>
       </component-preview>
     </div>

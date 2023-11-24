@@ -5,20 +5,42 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
+      --separator-border: var(--vscode-editorWidget-border, transparent);
+
+      border: 1px solid var(--vscode-editorWidget-border);
       display: block;
       overflow: hidden;
       position: relative;
     }
 
+    ::slotted(*) {
+      height: 100%;
+      width: 100%;
+    }
+
+    ::slotted(vscode-split-layout) {
+      border: 0;
+    }
+
     .start {
+      box-sizing: border-box;
       left: 0;
       top: 0;
       overflow: hidden;
       position: absolute;
     }
 
+    :host([split='vertical']) .start {
+      border-right: 1px solid var(--separator-border);
+    }
+
+    :host([split='horizontal']) .start {
+      border-bottom: 1px solid var(--separator-border);
+    }
+
     .end {
       bottom: 0;
+      box-sizing: border-box;
       overflow: hidden;
       position: absolute;
       right: 0;
