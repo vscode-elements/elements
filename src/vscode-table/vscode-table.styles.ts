@@ -72,20 +72,20 @@ const styles: CSSResultGroup = [
       width: 100%;
     }
 
-    :host(:not([bordered]))
-      .wrapper:not(.compact-view):hover
-      .scrollable:not([scrolled]):before,
-    :host([bordered])
-      .wrapper:not(.compact-view)
-      .scrollable:not([scrolled]):before {
+    .wrapper:not(.compact-view) .scrollable:not([scrolled]):before {
       background-color: var(--vscode-editorGroup-border);
     }
 
-    :host(:not([bordered])) .sash {
+    .sash {
       visibility: hidden;
     }
 
-    :host(:not([compact])) .wrapper:hover .sash {
+    :host([bordered-columns]) .sash,
+    :host([bordered]) .sash {
+      visibility: visible;
+    }
+
+    :host([resizable]) .wrapper:hover .sash {
       visibility: visible;
     }
 
@@ -108,7 +108,7 @@ const styles: CSSResultGroup = [
       background-color: var(--vscode-editorGroup-border);
       height: 100%;
       position: absolute;
-      top: 0;
+      top: 30px;
       width: 1px;
     }
 
