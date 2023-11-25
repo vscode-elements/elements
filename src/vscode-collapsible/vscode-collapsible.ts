@@ -82,7 +82,6 @@ export class VscodeCollapsible extends VscElement {
         <div class="collapsible-body">
           <div>
             <slot></slot>
-            <slot name="body"></slot>
           </div>
         </div>
       </div>
