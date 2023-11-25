@@ -1,6 +1,10 @@
 import {LitElement} from 'lit';
 
 export class VscElement extends LitElement {
+  private _version = '1.0.0-pre.7';
+
   /** VSC Element version */
-  public readonly version = '1.0.0-pre.7';
+  get version() {
+    return this._version;
+  }
 }

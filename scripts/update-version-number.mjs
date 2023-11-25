@@ -24,14 +24,14 @@ async function main() {
   const {version} = pkg;
 
   const fc = await readFile(BASE_CLASS_PATH, 'utf-8');
-  const re = /public readonly version = '[0-9a-z-.]+';/g
+  const re = /private _version = '[0-9a-z-.]+';/g
 
   if (!fc.match(re)) {
     console.log('VscElement.ts version number is not found');
     process.exit(1);
   }
 
-  const newContent = fc.replace(re, `public readonly version = '${version}';`);
+  const newContent = fc.replace(re, `private _version = '${version}';`);
 
   await writeFile(BASE_CLASS_PATH, newContent);
 
