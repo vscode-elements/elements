@@ -232,34 +232,28 @@ export class VscodeTable extends VscElement {
 
   private _initResizeObserver() {
     this._componentResizeObserver = new ResizeObserver(
-      this._componentResizeObserverCallbackBound
+      this._componentResizeObserverCallback
     );
     this._componentResizeObserver.observe(this);
 
     this._headerResizeObserver = new ResizeObserver(
-      this._headerResizeObserverCallbackBound
+      this._headerResizeObserverCallback
     );
     this._headerResizeObserver.observe(this._headerElement);
   }
 
-  private _componentResizeObserverCallback() {
+  private _componentResizeObserverCallback = () => {
     this._memoizeComponentDimensions();
     this._updateScrollpaneSize();
 
     if (this.responsive) {
       this._toggleCompactView();
     }
-  }
+  };
 
-  private _componentResizeObserverCallbackBound =
-    this._componentResizeObserverCallback.bind(this);
-
-  private _headerResizeObserverCallback() {
+  private _headerResizeObserverCallback = () => {
     this._updateScrollpaneSize();
   }
-
-  private _headerResizeObserverCallbackBound =
-    this._headerResizeObserverCallback.bind(this);
 
   private _calcColWidthPercentages(): number[] {
     const numCols = this._getHeaderCells().length;
@@ -456,8 +450,8 @@ export class VscodeTable extends VscElement {
       this._cellsToResize.push(cells[index + 1]);
     }
 
-    document.addEventListener('mousemove', this._onResizingMouseMoveBound);
-    document.addEventListener('mouseup', this._onResizingMouseUpBound);
+    document.addEventListener('mousemove', this._onResizingMouseMove);
+    document.addEventListener('mouseup', this._onResizingMouseUp);
   }
 
   private _updateActiveSashPosition(mouseX: number) {
@@ -528,7 +522,7 @@ export class VscodeTable extends VscElement {
     }
   }
 
-  private _onResizingMouseMove(event: MouseEvent) {
+  private _onResizingMouseMove = (event: MouseEvent) => {
     event.stopPropagation();
     this._updateActiveSashPosition(event.pageX);
 
@@ -539,20 +533,16 @@ export class VscodeTable extends VscElement {
     }
   }
 
-  private _onResizingMouseMoveBound = this._onResizingMouseMove.bind(this);
-
-  private _onResizingMouseUp(event: MouseEvent) {
+  private _onResizingMouseUp = (event: MouseEvent) => {
     this._resizeColumns(true);
     this._updateActiveSashPosition(event.pageX);
     this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
     this._activeSashElementIndex = -1;
 
-    document.removeEventListener('mousemove', this._onResizingMouseMoveBound);
-    document.removeEventListener('mouseup', this._onResizingMouseUpBound);
+    document.removeEventListener('mousemove', this._onResizingMouseMove);
+    document.removeEventListener('mouseup', this._onResizingMouseUp);
   }
-
-  private _onResizingMouseUpBound = this._onResizingMouseUp.bind(this);
 
   render(): TemplateResult {
     const sashes = this._sashPositions.map((val, index) => {
