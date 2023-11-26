@@ -66,7 +66,7 @@ const styles: CSSResultGroup = [
     textarea.monospace {
       background-color: var(--vscode-editor-background);
       color: var(--vscode-editor-foreground);
-      font-family: var(---vscode-editor-font-family);
+      font-family: var(--vscode-editor-font-family);
       font-size: var(--vscode-editor-font-size);
       font-weight: var(--vscode-editor-font-weight);
     }
