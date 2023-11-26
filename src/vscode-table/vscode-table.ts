@@ -24,7 +24,9 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
 /**
  * @attr {Boolean} zebra - Zebra stripes, even rows are tinted.
  * @attr {Boolean} zebra-odd - Zebra stripes, odd rows are tinted.
- * @attr {Boolean} bordered
+ * @attr {Boolean} bordered-rows - Rows are separated by borders
+ * @attr {Boolean} bordered-columns - Columns are separated by borders
+ * @attr {Boolean} bordered - Rows and columns are separated by borders
  *
  * @cssprop [--border=var(--vscode-editorGroup-border)]
  * @cssprop [--foreground=var(--vscode-foreground)]

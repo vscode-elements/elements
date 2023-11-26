@@ -13,7 +13,8 @@ const styles: CSSResultGroup = [
       --vsc-row-display: table-row;
     }
 
-    :host([bordered]) {
+    :host([bordered]),
+    :host([bordered-rows]) {
       --vsc-row-border-bottom-width: 1px;
     }
 
@@ -21,7 +22,8 @@ const styles: CSSResultGroup = [
       --vsc-row-display: block;
     }
 
-    :host([bordered][compact]) {
+    :host([bordered][compact]),
+    :host([bordered-rows][compact]) {
       --vsc-row-border-bottom-width: 0;
       --vsc-row-border-top-width: 1px;
     }
