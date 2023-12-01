@@ -9,7 +9,7 @@
   "files": [
     "dist",
     "custom-elements.json",
-    "!dist/test"
+    "!dist/**/*.test.*"
   ],
   "customElements": "custom-elements.json",
   "scripts": {
