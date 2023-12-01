@@ -1,5 +1,5 @@
 export default {
-  files: ['./dist/test/**/*.test.js'],
+  files: ['./dist/**/*.test.js'],
   nodeResolve: true,
   preserveSymlinks: true,
 };
