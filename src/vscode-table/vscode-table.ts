@@ -4,7 +4,7 @@ import {
   property,
   query,
   queryAll,
-  queryAssignedNodes,
+  queryAssignedElements,
   state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
@@ -108,11 +108,18 @@ export class VscodeTable extends VscElement {
   @queryAll('.sash-visible')
   private _sashVisibleElements!: HTMLDivElement[];
 
-  // TODO: replace deprecated decorators
-  @queryAssignedNodes('header', true, 'vscode-table-header')
+  @queryAssignedElements({
+    slot: 'header',
+    flatten: true,
+    selector: 'vscode-table-header',
+  })
   private _assignedHeaderElements!: NodeListOf<VscodeTableHeader>;
 
-  @queryAssignedNodes('body', true, 'vscode-table-body')
+  @queryAssignedElements({
+    slot: 'body',
+    flatten: true,
+    selector: 'vscode-table-body',
+  })
   private _assignedBodyElements!: NodeListOf<VscodeTableBody>;
 
   /**
@@ -253,7 +260,7 @@ export class VscodeTable extends VscElement {
 
   private _headerResizeObserverCallback = () => {
     this._updateScrollpaneSize();
-  }
+  };
 
   private _calcColWidthPercentages(): number[] {
     const numCols = this._getHeaderCells().length;
@@ -531,7 +538,7 @@ export class VscodeTable extends VscElement {
     } else {
       this._resizeColumns(false);
     }
-  }
+  };
 
   private _onResizingMouseUp = (event: MouseEvent) => {
     this._resizeColumns(true);
@@ -542,7 +549,7 @@ export class VscodeTable extends VscElement {
 
     document.removeEventListener('mousemove', this._onResizingMouseMove);
     document.removeEventListener('mouseup', this._onResizingMouseUp);
-  }
+  };
 
   render(): TemplateResult {
     const sashes = this._sashPositions.map((val, index) => {
