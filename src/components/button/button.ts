@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../../includes/VscElement.js';
 import '../icon/index.js';
-import styles from './vscode-button.styles.js';
+import styles from './button.styles.js';
 
 /**
  * @fires vsc-click Dispatched only when button is not in disabled state.

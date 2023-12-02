@@ -13,7 +13,7 @@ import {VscodeMultiSelect} from '../multi-select/index.js';
 import {VscodeRadio} from '../radio/index.js';
 import {VscodeRadioGroup} from '../radio-group/index.js';
 import {VscodeSingleSelect} from '../single-select/index.js';
-import styles from './vscode-form-container.styles.js';
+import styles from './form-container.styles.js';
 import {VscodeTextarea, VscodeTextfield} from '../../main.js';
 
 enum FormGroupLayout {

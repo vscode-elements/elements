@@ -7,7 +7,7 @@ import {
 } from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
 import {VscodeRadio} from '../radio/index.js';
-import styles from './vscode-radio-group.styles.js';
+import styles from './radio-group.styles.js';
 
 @customElement('vscode-radio-group')
 export class VscodeRadioGroup extends VscElement {

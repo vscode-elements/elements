@@ -7,7 +7,7 @@ import {VscodeCheckboxGroup} from '../checkbox-group/index.js';
 import {VscodeRadioGroup} from '../radio-group/index.js';
 import {VscodeTextarea} from '../textarea/index.js';
 import {VscodeTextfield} from '../textfield/index.js';
-import styles from './vscode-label.styles.js';
+import styles from './label.styles.js';
 
 interface FocusableElement extends Element {
   focus: () => void;

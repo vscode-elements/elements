@@ -4,7 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-icon.styles.js';
+import styles from './icon.styles.js';
 
 /**
  * Display a [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html).

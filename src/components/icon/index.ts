@@ -1,1 +1,1 @@
-export {VscodeIcon} from './vscode-icon.js';
+export {VscodeIcon} from './icon.js';

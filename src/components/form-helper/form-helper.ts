@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {applyForegroundRGBA} from '../../includes/themeHelpers.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-form-helper.styles.js';
+import styles from './form-helper.styles.js';
 
 /**
  * Adds more detailed description to a [FromGroup](https://bendera.github.io/vscode-webview-elements/components/vscode-form-group/)

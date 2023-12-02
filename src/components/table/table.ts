@@ -17,7 +17,7 @@ import {VscodeTableCell} from '../table-cell/index.js';
 import {VscodeTableHeader} from '../table-header/index.js';
 import {VscodeTableHeaderCell} from '../table-header-cell/index.js';
 import {rawValueToPercentage} from './helpers.js';
-import styles from './vscode-table.styles.js';
+import styles from './table.styles.js';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 

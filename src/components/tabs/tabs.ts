@@ -9,7 +9,7 @@ import uniqueId from '../../includes/uniqueId.js';
 import {VscElement} from '../../includes/VscElement.js';
 import {VscodeTabHeader} from '../tab-header/index.js';
 import {VscodeTabPanel} from '../tab-panel/index.js';
-import styles from './vscode-tabs.styles.js';
+import styles from './tabs.styles.js';
 
 /**
  * @slot - Default slot. It is used for tab panels.

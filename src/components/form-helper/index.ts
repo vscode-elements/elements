@@ -1,1 +1,1 @@
-export {VscodeFormHelper} from './vscode-form-helper.js';
+export {VscodeFormHelper} from './form-helper.js';

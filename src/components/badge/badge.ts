@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-badge.styles.js';
+import styles from './badge.styles.js';
 
 /**
  * @cssprop --vscode-font-family

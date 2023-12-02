@@ -1,7 +1,7 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-context-menu-item.styles.js';
+import styles from './context-menu-item.styles.js';
 
 export interface VscClickEventDetail {
   label: string;

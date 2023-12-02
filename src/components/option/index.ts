@@ -1,1 +1,1 @@
-export {VscodeOption} from './vscode-option.js';
+export {VscodeOption} from './option.js';

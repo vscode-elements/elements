@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-tab-panel.styles.js';
+import styles from './tab-panel.styles.js';
 
 /**
  * @cssprop --vscode-panel--background

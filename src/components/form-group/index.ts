@@ -1,1 +1,1 @@
-export {VscodeFormGroup, FormGroupVariant} from './vscode-form-group.js';
+export {VscodeFormGroup, FormGroupVariant} from './form-group.js';

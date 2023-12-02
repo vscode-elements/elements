@@ -1,1 +1,1 @@
-export {VscodeContextMenu} from './vscode-context-menu.js';
+export {VscodeContextMenu} from './context-menu.js';

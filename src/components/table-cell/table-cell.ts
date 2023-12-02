@@ -1,7 +1,7 @@
 import {html, TemplateResult, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-table-cell.styles.js';
+import styles from './table-cell.styles.js';
 
 /**
  * @cssprop --vscode-editorGroup-border

@@ -2,7 +2,7 @@ import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-collapsible.styles.js';
+import styles from './collapsible.styles.js';
 
 /**
  * @slot - Main content.

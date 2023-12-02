@@ -9,7 +9,7 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-scrollable.styles.js';
+import styles from './scrollable.styles.js';
 
 /**
  * @cssprop [--min-thumb-height=20px] - Scrollbar thumb minimum height

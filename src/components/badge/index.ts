@@ -1,1 +1,1 @@
-export {VscodeBadge} from './vscode-badge.js';
+export {VscodeBadge} from './badge.js';

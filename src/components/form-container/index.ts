@@ -1,1 +1,1 @@
-export {VscodeFormContainer} from './vscode-form-container.js';
+export {VscodeFormContainer} from './form-container.js';

@@ -4,7 +4,7 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-textarea.styles.js';
+import styles from './textarea.styles.js';
 import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
 
 /**

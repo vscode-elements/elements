@@ -3,7 +3,7 @@ import {customElement, property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {FormButtonWidgetBase} from '../../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../../includes/form-button-widget/LabelledCheckboxOrRadio.js';
-import styles from './vscode-checkbox.styles.js';
+import styles from './checkbox.styles.js';
 import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
 
 /**

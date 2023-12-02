@@ -1,7 +1,7 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-table-header-cell.styles.js';
+import styles from './table-header-cell.styles.js';
 
 /**
  * @cssprop --vscode-foreground

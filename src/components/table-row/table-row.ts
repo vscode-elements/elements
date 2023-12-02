@@ -1,18 +1,18 @@
 import {html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-table-body.styles.js';
+import styles from './table-row.styles.js';
 
 /**
- * @cssprop --vscode-keybindingTable-rowsBackground
+ * @cssprop --vscode-editorGroup-border
  */
-@customElement('vscode-table-body')
-export class VscodeTableBody extends VscElement {
+@customElement('vscode-table-row')
+export class VscodeTableRow extends VscElement {
   static styles = styles;
 
   /** @internal */
   @property({reflect: true})
-  role = 'rowgroup';
+  role = 'row';
 
   render(): TemplateResult {
     return html` <slot></slot> `;
@@ -21,6 +21,6 @@ export class VscodeTableBody extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-body': VscodeTableBody;
+    'vscode-table-row': VscodeTableRow;
   }
 }

@@ -8,7 +8,7 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../../includes/VscElement.js';
-import styles from './vscode-split-layout.styles.js';
+import styles from './split-layout.styles.js';
 
 /**
  * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]

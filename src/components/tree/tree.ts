@@ -7,7 +7,7 @@ import {VscElement} from '../../includes/VscElement.js';
 import '../badge/index.js';
 import '../icon/index.js';
 import {VscodeIcon} from '../icon/index.js';
-import styles from './vscode-tree.styles.js';
+import styles from './tree.styles.js';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 

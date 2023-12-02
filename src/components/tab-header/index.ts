@@ -1,1 +1,1 @@
-export {VscodeTabHeader} from './vscode-tab-header.js';
+export {VscodeTabHeader} from './tab-header.js';

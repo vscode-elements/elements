@@ -1,9 +1,9 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import {VscClickEventDetail} from '../context-menu-item/vscode-context-menu-item.js';
+import {VscClickEventDetail} from '../context-menu-item/context-menu-item.js';
 import '../context-menu-item/index.js';
-import styles from './vscode-context-menu.styles.js';
+import styles from './context-menu.styles.js';
 
 interface MenuItemData {
   label: string;
