@@ -273,7 +273,7 @@ export class VscTree extends VscElement {
     const {type, value} = variant;
 
     if (type === 'themeicon') {
-      return html`<vscode-icon name=${value} class="theme-icon"></vscode-icon>`;
+      return html`<vsc-icon name=${value} class="theme-icon"></vsc-icon>`;
     } else {
       return html`<span
         class="image-icon"
@@ -365,7 +365,7 @@ export class VscTree extends VscElement {
 
     return html`
       <div class="arrow-container">
-        <vscode-icon name="${arrowIconName}" class="icon-arrow"></vscode-icon>
+        <vsc-icon name="${arrowIconName}" class="icon-arrow"></vsc-icon>
       </div>
     `;
   }
@@ -376,7 +376,7 @@ export class VscTree extends VscElement {
     if (item.actions && Array.isArray(item.actions)) {
       item.actions.forEach((action, index) => {
         if (action.icon) {
-          const icon = html`<vscode-icon
+          const icon = html`<vsc-icon
             name=${action.icon}
             action-icon
             title=${ifDefined(action.tooltip)}
@@ -384,7 +384,7 @@ export class VscTree extends VscElement {
             data-index=${index}
             class="action-icon"
             @click=${this._handleActionClick}
-          ></vscode-icon>`;
+          ></vsc-icon>`;
 
           actionButtons.push(icon);
         }
@@ -434,21 +434,21 @@ export class VscTree extends VscElement {
         switch (appearance) {
           case 'counter-badge':
             decorations.push(
-              html`<vscode-badge
+              html`<vsc-badge
                 variant="counter"
                 class=${['counter-badge', visibleWhenClass].join(' ')}
-                >${content}</vscode-badge
+                >${content}</vsc-badge
               >`
             );
             break;
           case 'filled-circle':
             decorations.push(
-              html`<vscode-icon
+              html`<vsc-icon
                 name="circle-filled"
                 size="14"
                 class=${['filled-circle', visibleWhenClass].join(' ')}
                 style=${styleMap(inlineStyles)}
-              ></vscode-icon>`
+              ></vsc-icon>`
             );
             break;
           case 'text':

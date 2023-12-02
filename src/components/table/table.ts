@@ -111,14 +111,14 @@ export class VscTable extends VscElement {
   @queryAssignedElements({
     slot: 'header',
     flatten: true,
-    selector: 'vscode-table-header',
+    selector: 'vsc-table-header',
   })
   private _assignedHeaderElements!: NodeListOf<VscTableHeader>;
 
   @queryAssignedElements({
     slot: 'body',
     flatten: true,
-    selector: 'vscode-table-body',
+    selector: 'vsc-table-body',
   })
   private _assignedBodyElements!: NodeListOf<VscTableBody>;
 
@@ -221,7 +221,7 @@ export class VscTable extends VscElement {
 
     return Array.from(
       assignedBodyElements[0].querySelectorAll<VscTableCell>(
-        'vsc-table-row:first-child vscode-table-cell'
+        'vsc-table-row:first-child vsc-table-cell'
       )
     );
   }
@@ -357,10 +357,10 @@ export class VscTable extends VscElement {
   private _applyCompactViewColumnLabels() {
     const headerCells = this._getHeaderCells();
     const labels = headerCells.map((c) => c.innerText);
-    const rows = this.querySelectorAll('vscode-table-row');
+    const rows = this.querySelectorAll('vsc-table-row');
 
     rows.forEach((r) => {
-      const cells = r.querySelectorAll('vscode-table-cell');
+      const cells = r.querySelectorAll('vsc-table-cell');
 
       cells.forEach((c, i) => {
         c.columnLabel = labels[i];
@@ -370,7 +370,7 @@ export class VscTable extends VscElement {
   }
 
   private _clearCompactViewColumnLabels() {
-    this.querySelectorAll('vscode-table-cell').forEach((c) => {
+    this.querySelectorAll('vsc-table-cell').forEach((c) => {
       c.columnLabel = '';
       c.compact = false;
     });
@@ -448,7 +448,7 @@ export class VscTable extends VscElement {
 
     const tbody = this._bodySlot.assignedElements()[0];
     const cells = tbody.querySelectorAll<VscTableCell>(
-      'vsc-table-row:first-child > vscode-table-cell'
+      'vsc-table-row:first-child > vsc-table-cell'
     );
     this._cellsToResize = [];
     this._cellsToResize.push(cells[index]);
@@ -599,11 +599,11 @@ export class VscTable extends VscElement {
             <slot name="header"></slot>
           </div>
         </div>
-        <vscode-scrollable class="scrollable">
+        <vsc-scrollable class="scrollable">
           <div>
             <slot name="body" @slotchange="${this._onBodySlotChange}"></slot>
           </div>
-        </vscode-scrollable>
+        </vsc-scrollable>
         ${sashes}
       </div>
     `;

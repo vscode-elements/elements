@@ -1,9 +1,9 @@
 import {VscTableHeaderCell} from './index.js';
 import {expect} from '@open-wc/testing';
 
-describe('vscode-table-header-cell', () => {
+describe('vsc-table-header-cell', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-table-header-cell');
+    const el = document.createElement('vsc-table-header-cell');
     expect(el).to.instanceOf(VscTableHeaderCell);
   });
 });

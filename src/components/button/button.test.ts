@@ -1,9 +1,9 @@
 import {VscButton} from './index.js';
 import {expect} from '@open-wc/testing';
 
-describe('vscode-button', () => {
+describe('vsc-button', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-button');
+    const el = document.createElement('vsc-button');
     expect(el).to.instanceOf(VscButton);
   });
 });

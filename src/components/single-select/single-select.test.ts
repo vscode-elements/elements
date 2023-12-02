@@ -3,20 +3,20 @@ import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
 import '../option/index.js';
 
-describe('vscode-single-select', () => {
+describe('vsc-single-select', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-single-select');
+    const el = document.createElement('vsc-single-select');
     expect(el).to.instanceOf(VscSingleSelect);
   });
 
   describe('select mode', () => {
     it('should display selected value', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option selected>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option selected>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       expect(el).shadowDom.to.equal(`
@@ -55,11 +55,11 @@ describe('vscode-single-select', () => {
 
     it('should display selected value when value prop is changed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       el.value = 'Ipsum';
@@ -81,11 +81,11 @@ describe('vscode-single-select', () => {
 
     it('select face should be empty when the value is invalid', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       el.value = 'trololo';
@@ -107,11 +107,11 @@ describe('vscode-single-select', () => {
 
     it('should display selected value when selectedIndex prop is changed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       el.selectedIndex = 1;
@@ -133,11 +133,11 @@ describe('vscode-single-select', () => {
 
     it('select face should be empty when the selectedIndex prop is invalid', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       el.selectedIndex = 999;
@@ -159,11 +159,11 @@ describe('vscode-single-select', () => {
 
     it('should display selected value when an option is clicked', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       const spy = sinon.spy();
@@ -196,11 +196,11 @@ describe('vscode-single-select', () => {
 
     it('no item selected', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       expect(el).shadowDom.to.equal(`
@@ -219,11 +219,11 @@ describe('vscode-single-select', () => {
 
     it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option selected>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option selected>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');
@@ -255,11 +255,11 @@ describe('vscode-single-select', () => {
 
     it('the value should be changed when the arrow up key pressed while the dropdown is closed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option selected>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option selected>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');
@@ -313,9 +313,9 @@ describe('vscode-single-select', () => {
       `;
 
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
@@ -333,9 +333,9 @@ describe('vscode-single-select', () => {
 
     it('dropdown should be opened when "Enter" key pressed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
@@ -383,11 +383,11 @@ describe('vscode-single-select', () => {
 
     it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');
@@ -419,9 +419,9 @@ describe('vscode-single-select', () => {
 
     it('dropdown should be closed when ESC key pressed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Lorem</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
@@ -468,28 +468,28 @@ describe('vscode-single-select', () => {
 
     it('dropdown should be scrolled to the selected option', async () => {
       const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Afghanistan</vscode-option>
-          <vscode-option>Albania</vscode-option>
-          <vscode-option>Algeria</vscode-option>
-          <vscode-option>Andorra</vscode-option>
-          <vscode-option>Angola</vscode-option>
-          <vscode-option>Antigua and Barbuda</vscode-option>
-          <vscode-option>Argentina</vscode-option>
-          <vscode-option>Armenia</vscode-option>
-          <vscode-option>Australia</vscode-option>
-          <vscode-option>Austria</vscode-option>
-          <vscode-option selected>Azerbaijan</vscode-option>
-          <vscode-option>Bahamas</vscode-option>
-          <vscode-option>Bahrain</vscode-option>
-          <vscode-option>Bangladesh</vscode-option>
-          <vscode-option>Barbados</vscode-option>
-          <vscode-option>Belarus</vscode-option>
-          <vscode-option>Belgium</vscode-option>
-          <vscode-option>Belize</vscode-option>
-          <vscode-option>Benin</vscode-option>
-          <vscode-option>Bhutan</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select>
+          <vsc-option>Afghanistan</vsc-option>
+          <vsc-option>Albania</vsc-option>
+          <vsc-option>Algeria</vsc-option>
+          <vsc-option>Andorra</vsc-option>
+          <vsc-option>Angola</vsc-option>
+          <vsc-option>Antigua and Barbuda</vsc-option>
+          <vsc-option>Argentina</vsc-option>
+          <vsc-option>Armenia</vsc-option>
+          <vsc-option>Australia</vsc-option>
+          <vsc-option>Austria</vsc-option>
+          <vsc-option selected>Azerbaijan</vsc-option>
+          <vsc-option>Bahamas</vsc-option>
+          <vsc-option>Bahrain</vsc-option>
+          <vsc-option>Bangladesh</vsc-option>
+          <vsc-option>Barbados</vsc-option>
+          <vsc-option>Belarus</vsc-option>
+          <vsc-option>Belgium</vsc-option>
+          <vsc-option>Belize</vsc-option>
+          <vsc-option>Benin</vsc-option>
+          <vsc-option>Bhutan</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
       await el.updateComplete;
 
@@ -505,7 +505,7 @@ describe('vscode-single-select', () => {
   describe('combobox mode', () => {
     it('default state', async () => {
       const el = (await fixture(html`
-        <vscode-single-select combobox></vscode-single-select>
+        <vsc-single-select combobox></vsc-single-select>
       `)) as VscSingleSelect;
 
       expect(el).shadowDom.to.eq(`
@@ -530,13 +530,13 @@ describe('vscode-single-select', () => {
 
     it('filtered list', async () => {
       const el = (await fixture(html`
-        <vscode-single-select combobox>
-          <vscode-option>Antigua and Barbuda</vscode-option>
-          <vscode-option>Argentina</vscode-option>
-          <vscode-option>Armenia</vscode-option>
-          <vscode-option>Australia</vscode-option>
-          <vscode-option>Austria</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select combobox>
+          <vsc-option>Antigua and Barbuda</vsc-option>
+          <vsc-option>Argentina</vsc-option>
+          <vsc-option>Armenia</vsc-option>
+          <vsc-option>Australia</vsc-option>
+          <vsc-option>Austria</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
       await el.updateComplete;
 
@@ -594,13 +594,13 @@ describe('vscode-single-select', () => {
 
     it('highlight element when the arrow down key pressed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select combobox>
-          <vscode-option>Antigua and Barbuda</vscode-option>
-          <vscode-option>Argentina</vscode-option>
-          <vscode-option>Armenia</vscode-option>
-          <vscode-option>Australia</vscode-option>
-          <vscode-option>Austria</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select combobox>
+          <vsc-option>Antigua and Barbuda</vsc-option>
+          <vsc-option>Argentina</vsc-option>
+          <vsc-option>Armenia</vsc-option>
+          <vsc-option>Australia</vsc-option>
+          <vsc-option>Austria</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
       await el.updateComplete;
 
@@ -644,13 +644,13 @@ describe('vscode-single-select', () => {
 
     it('highlight element when the arrow down key pressed, then select it', async () => {
       const el = (await fixture(html`
-        <vscode-single-select combobox>
-          <vscode-option>Antigua and Barbuda</vscode-option>
-          <vscode-option>Argentina</vscode-option>
-          <vscode-option>Armenia</vscode-option>
-          <vscode-option>Australia</vscode-option>
-          <vscode-option>Austria</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select combobox>
+          <vsc-option>Antigua and Barbuda</vsc-option>
+          <vsc-option>Argentina</vsc-option>
+          <vsc-option>Armenia</vsc-option>
+          <vsc-option>Australia</vsc-option>
+          <vsc-option>Austria</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
       await el.updateComplete;
 
@@ -681,28 +681,28 @@ describe('vscode-single-select', () => {
 
     it('select an option with the arrow down key, opens the dropdown with the enter key, scroll to the selected option', async () => {
       const el = (await fixture(html`
-        <vscode-single-select combobox>
-          <vscode-option>Afghanistan</vscode-option>
-          <vscode-option>Albania</vscode-option>
-          <vscode-option>Algeria</vscode-option>
-          <vscode-option>Andorra</vscode-option>
-          <vscode-option>Angola</vscode-option>
-          <vscode-option>Antigua and Barbuda</vscode-option>
-          <vscode-option>Argentina</vscode-option>
-          <vscode-option>Armenia</vscode-option>
-          <vscode-option>Australia</vscode-option>
-          <vscode-option>Austria</vscode-option>
-          <vscode-option>Azerbaijan</vscode-option>
-          <vscode-option>Bahamas</vscode-option>
-          <vscode-option>Bahrain</vscode-option>
-          <vscode-option>Bangladesh</vscode-option>
-          <vscode-option>Barbados</vscode-option>
-          <vscode-option>Belarus</vscode-option>
-          <vscode-option>Belgium</vscode-option>
-          <vscode-option>Belize</vscode-option>
-          <vscode-option>Benin</vscode-option>
-          <vscode-option>Bhutan</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select combobox>
+          <vsc-option>Afghanistan</vsc-option>
+          <vsc-option>Albania</vsc-option>
+          <vsc-option>Algeria</vsc-option>
+          <vsc-option>Andorra</vsc-option>
+          <vsc-option>Angola</vsc-option>
+          <vsc-option>Antigua and Barbuda</vsc-option>
+          <vsc-option>Argentina</vsc-option>
+          <vsc-option>Armenia</vsc-option>
+          <vsc-option>Australia</vsc-option>
+          <vsc-option>Austria</vsc-option>
+          <vsc-option>Azerbaijan</vsc-option>
+          <vsc-option>Bahamas</vsc-option>
+          <vsc-option>Bahrain</vsc-option>
+          <vsc-option>Bangladesh</vsc-option>
+          <vsc-option>Barbados</vsc-option>
+          <vsc-option>Belarus</vsc-option>
+          <vsc-option>Belgium</vsc-option>
+          <vsc-option>Belize</vsc-option>
+          <vsc-option>Benin</vsc-option>
+          <vsc-option>Bhutan</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
       await el.updateComplete;
 
@@ -748,11 +748,11 @@ describe('vscode-single-select', () => {
 
     it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
       const el = (await fixture(html`
-        <vscode-single-select combobox>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        <vsc-single-select combobox>
+          <vsc-option>Lorem</vsc-option>
+          <vsc-option>Ipsum</vsc-option>
+          <vsc-option>Dolor</vsc-option>
+        </vsc-single-select>
       `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');

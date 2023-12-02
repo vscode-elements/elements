@@ -242,7 +242,7 @@ export class VscContextMenu extends VscElement {
                 },
                 index
               ) => html`
-                <vscode-context-menu-item
+                <vsc-context-menu-item
                   label="${label}"
                   keybinding="${keybinding}"
                   value="${value}"
@@ -253,7 +253,7 @@ export class VscContextMenu extends VscElement {
                   @mouseover=${this._onItemMouseOver}
                   @mouseout=${this._onItemMouseOut}
                   data-index=${index}
-                ></vscode-context-menu-item>
+                ></vsc-context-menu-item>
               `
             )
           : html`<slot></slot>`}

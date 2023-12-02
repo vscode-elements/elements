@@ -1,9 +1,9 @@
 import {VscFormContainer} from './index.js';
 import {expect} from '@open-wc/testing';
 
-describe('vscode-form-container', () => {
+describe('vsc-form-container', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-form-container');
+    const el = document.createElement('vsc-form-container');
     expect(el).to.instanceOf(VscFormContainer);
   });
 });

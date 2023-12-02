@@ -1,9 +1,9 @@
 import {VscLabel} from './index.js';
 import {expect} from '@open-wc/testing';
 
-describe('vscode-label', () => {
+describe('vsc-label', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-label');
+    const el = document.createElement('vsc-label');
     expect(el).to.instanceOf(VscLabel);
   });
 });

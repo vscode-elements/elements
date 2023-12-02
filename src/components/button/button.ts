@@ -196,14 +196,14 @@ export class VscButton extends VscElement {
     };
 
     const iconElem = hasIcon
-      ? html`<vscode-icon name="${this.icon}" class="icon"></vscode-icon>`
+      ? html`<vsc-icon name="${this.icon}" class="icon"></vsc-icon>`
       : nothing;
 
     const iconAfterElem = hasIconAfter
-      ? html`<vscode-icon
+      ? html`<vsc-icon
           name="${this.iconAfter}"
           class="icon-after"
-        ></vscode-icon>`
+        ></vsc-icon>`
       : nothing;
 
     return html`

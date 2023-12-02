@@ -3,15 +3,15 @@ import {VscTextfield} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import {sendKeys, sendMouse} from '@web/test-runner-commands';
 
-describe('vscode-textfield', () => {
+describe('vsc-textfield', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-textfield');
+    const el = document.createElement('vsc-textfield');
     expect(el).to.instanceOf(VscTextfield);
   });
 
   it('renders with default values', async () => {
     const el = await fixture<VscTextfield>(
-      html`<vscode-textfield></vscode-textfield>`
+      html`<vsc-textfield></vsc-textfield>`
     );
     expect(el).shadowDom.to.equal(
       `
@@ -24,7 +24,7 @@ describe('vscode-textfield', () => {
 
   it('when the type attribute is unknown, it should be set to text', async () => {
     const el = await fixture<VscTextfield>(
-      html`<vscode-textfield></vscode-textfield>`
+      html`<vsc-textfield></vsc-textfield>`
     );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -36,10 +36,10 @@ describe('vscode-textfield', () => {
   it('should be participated in the form', async () => {
     const form = document.createElement('form');
     await fixture(
-      html`<vscode-textfield
+      html`<vsc-textfield
         name="test"
         value="Test value"
-      ></vscode-textfield>`,
+      ></vsc-textfield>`,
       {parentNode: form}
     );
 
@@ -51,7 +51,7 @@ describe('vscode-textfield', () => {
 
   it('should return the initial value', async () => {
     const el = await fixture<VscTextfield>(
-      html`<vscode-textfield name="test" value="Test value"></vscode-textfield>`
+      html`<vsc-textfield name="test" value="Test value"></vsc-textfield>`
     );
 
     expect(el.value).to.eq('Test value');
@@ -59,14 +59,14 @@ describe('vscode-textfield', () => {
 
   it('should return the form in which participated', () => {
     const form = document.createElement('form');
-    const el = document.createElement('vscode-textfield');
+    const el = document.createElement('vsc-textfield');
     form.appendChild(el);
 
     expect(el.form).to.instanceOf(HTMLFormElement);
   });
 
   it('should return the validity object', () => {
-    const el = document.createElement('vscode-textfield') as VscTextfield;
+    const el = document.createElement('vsc-textfield') as VscTextfield;
 
     expect(el.validity).to.instanceOf(ValidityState);
   });
@@ -76,7 +76,7 @@ describe('vscode-textfield', () => {
     nativeInput.setAttribute('required', '');
 
     const form = document.createElement('form');
-    const el = document.createElement('vscode-textfield');
+    const el = document.createElement('vsc-textfield');
     el.setAttribute('required', '');
     form.appendChild(el);
     document.body.appendChild(form);
@@ -89,7 +89,7 @@ describe('vscode-textfield', () => {
 
   it('should willValidate property be true if the element is candidate for constraint validation', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield></vscode-textfield>'
+      '<vsc-textfield></vsc-textfield>'
     );
 
     expect(el.willValidate).to.be.true;
@@ -97,7 +97,7 @@ describe('vscode-textfield', () => {
 
   it('should willValidate property be false if the element is not candidate for constraint validation', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield disabled></vscode-textfield>'
+      '<vsc-textfield disabled></vsc-textfield>'
     );
 
     expect(el.willValidate).to.be.false;
@@ -105,7 +105,7 @@ describe('vscode-textfield', () => {
 
   it('should check validity when checkValidity is called', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield required></vscode-textfield>'
+      '<vsc-textfield required></vsc-textfield>'
     );
     const fn = sinon.spy();
     el.addEventListener('invalid', fn);
@@ -118,7 +118,7 @@ describe('vscode-textfield', () => {
 
   it('reportValidity should be called', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield required></vscode-textfield>'
+      '<vsc-textfield required></vsc-textfield>'
     );
     const fn = sinon.spy();
     el.addEventListener('invalid', fn);
@@ -131,7 +131,7 @@ describe('vscode-textfield', () => {
 
   it('wrappedElement property should point to inner native input', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield></vscode-textfield>'
+      '<vsc-textfield></vsc-textfield>'
     );
 
     expect(el.wrappedElement).to.instanceOf(HTMLInputElement);
@@ -140,7 +140,7 @@ describe('vscode-textfield', () => {
   it('reset callback should restore the default value', async () => {
     const form = document.createElement('form');
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield value="Test value" default-value="Default value"></vscode-textfield>',
+      '<vsc-textfield value="Test value" default-value="Default value"></vsc-textfield>',
       {
         parentNode: form,
       }
@@ -156,7 +156,7 @@ describe('vscode-textfield', () => {
 
   it('restore callback should restore the previous state', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield value="Test value"></vscode-textfield>'
+      '<vsc-textfield value="Test value"></vsc-textfield>'
     );
     const initialValue = el.value;
 
@@ -169,7 +169,7 @@ describe('vscode-textfield', () => {
 
   it('should be revalidated when a validation related attribute is changed', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield></vscode-textfield>'
+      '<vsc-textfield></vsc-textfield>'
     );
     const initialValidity = el.checkValidity();
 
@@ -183,7 +183,7 @@ describe('vscode-textfield', () => {
   it('should submit the associated form when the "Enter" button is pressed', async () => {
     const form = document.createElement('form');
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield></vscode-textfield>',
+      '<vsc-textfield></vsc-textfield>',
       {
         parentNode: form,
       }
@@ -203,7 +203,7 @@ describe('vscode-textfield', () => {
 
   it('"input" event should be dispatched when a text typed', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield></vscode-textfield>'
+      '<vsc-textfield></vsc-textfield>'
     );
     const spy = sinon.spy();
     el.addEventListener('input', spy);
@@ -219,7 +219,7 @@ describe('vscode-textfield', () => {
 
   it('"change" event should be dispatched when a text typed and the focus is lost', async () => {
     const el = await fixture<VscTextfield>(
-      '<vscode-textfield></vscode-textfield>'
+      '<vsc-textfield></vsc-textfield>'
     );
     const spy = sinon.spy();
     el.addEventListener('change', spy);
@@ -234,14 +234,14 @@ describe('vscode-textfield', () => {
   });
 
   it('minlength alias should point to minLength property', () => {
-    const el = document.createElement('vscode-textfield');
+    const el = document.createElement('vsc-textfield');
     el.minlength = 100;
 
     expect(el.minLength).to.eq(100);
   });
 
   it('maxlength alias should point to maxLength property', () => {
-    const el = document.createElement('vscode-textfield');
+    const el = document.createElement('vsc-textfield');
     el.maxlength = 100;
 
     expect(el.maxLength).to.eq(100);

@@ -1,9 +1,9 @@
 import {VscFormGroup} from './index.js';
 import {expect} from '@open-wc/testing';
 
-describe('vscode-form-group', () => {
+describe('vsc-form-group', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-form-group');
+    const el = document.createElement('vsc-form-group');
     expect(el).to.instanceOf(VscFormGroup);
   });
 });

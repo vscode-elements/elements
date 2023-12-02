@@ -1,9 +1,9 @@
 import {VscSplitLayout} from './index.js';
 import {expect} from '@open-wc/testing';
 
-describe('vscode-split-layout', () => {
+describe('vsc-split-layout', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-split-layout');
+    const el = document.createElement('vsc-split-layout');
     expect(el).to.instanceOf(VscSplitLayout);
   });
 });

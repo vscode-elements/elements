@@ -1,7 +1,7 @@
 import {expect} from '@open-wc/testing';
 import {rawValueToPercentage} from './helpers.js';
 
-describe('vscode-table helpers', () => {
+describe('vsc-table helpers', () => {
   it('input type is number', () => {
     expect(rawValueToPercentage(50, 200)).to.eq(25);
     expect(rawValueToPercentage(10.5, 200)).to.eq(5.25);

@@ -346,7 +346,7 @@ export class VscMultiSelect
           class="action-icon"
           id="select-all"
         >
-          <vscode-icon name="checklist"></vscode-icon>
+          <vsc-icon name="checklist"></vsc-icon>
         </button>
         <button
           type="button"
@@ -355,12 +355,12 @@ export class VscMultiSelect
           class="action-icon"
           id="select-none"
         >
-          <vscode-icon name="clear-all"></vscode-icon>
+          <vsc-icon name="clear-all"></vsc-icon>
         </button>
-        <vscode-button
+        <vsc-button
           class="button-accept"
           @click="${this._onMultiAcceptClick}"
-          >OK</vscode-button
+          >OK</vsc-button
         >
       </div>
     `;

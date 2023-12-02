@@ -4,14 +4,14 @@ import './index.js';
 import {sendKeys, sendMouse} from '@web/test-runner-commands';
 import {expect, fixture, html, aTimeout} from '@open-wc/testing';
 
-describe('vscode-textarea', () => {
+describe('vsc-textarea', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-textarea');
+    const el = document.createElement('vsc-textarea');
     expect(el).to.instanceOf(VscTextarea);
   });
 
   it('renders with default values', async () => {
-    const el = await fixture(html`<vscode-textarea></vscode-textarea>`);
+    const el = await fixture(html`<vsc-textarea></vsc-textarea>`);
 
     expect(el).shadowDom.to.equal(`
       <div class="shadow"></div>
@@ -26,7 +26,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "autocomplete" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea autocomplete="on"></vscode-textarea>`
+      html`<vsc-textarea autocomplete="on"></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -43,7 +43,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "autofocus" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea autofocus></vscode-textarea>`
+      html`<vsc-textarea autofocus></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -60,7 +60,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "disabled" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea disabled></vscode-textarea>`
+      html`<vsc-textarea disabled></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -77,7 +77,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "maxlength" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea maxlength="100"></vscode-textarea>`
+      html`<vsc-textarea maxlength="100"></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -94,7 +94,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "minlength" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea minlength="100"></vscode-textarea>`
+      html`<vsc-textarea minlength="100"></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -111,7 +111,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "rows" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea rows="10"></vscode-textarea>`
+      html`<vsc-textarea rows="10"></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -128,7 +128,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "cols" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea cols="80"></vscode-textarea>`
+      html`<vsc-textarea cols="80"></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -145,7 +145,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "placeholder" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea placeholder="test"></vscode-textarea>`
+      html`<vsc-textarea placeholder="test"></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -162,7 +162,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "readonly" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea readonly></vscode-textarea>`
+      html`<vsc-textarea readonly></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -179,7 +179,7 @@ describe('vscode-textarea', () => {
 
   it('should apply "resize" style to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea resize="both"></vscode-textarea>`
+      html`<vsc-textarea resize="both"></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -196,7 +196,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "required" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea required></vscode-textarea>`
+      html`<vsc-textarea required></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -213,7 +213,7 @@ describe('vscode-textarea', () => {
 
   it('should forward "spellcheck" attribute to the inner textarea', async () => {
     const el = await fixture(
-      html`<vscode-textarea spellcheck></vscode-textarea>`
+      html`<vsc-textarea spellcheck></vsc-textarea>`
     );
 
     expect(el).shadowDom.to.equal(`
@@ -229,7 +229,7 @@ describe('vscode-textarea', () => {
   });
 
   it('type property should be "textarea"', () => {
-    const el = document.createElement('vscode-textarea');
+    const el = document.createElement('vsc-textarea');
 
     expect(el.type).to.eq('textarea');
   });
@@ -237,7 +237,7 @@ describe('vscode-textarea', () => {
   it('should be participated in the form', async () => {
     const form = document.createElement('form');
     await fixture(
-      html`<vscode-textarea name="test" value="Test value"></vscode-textarea>`,
+      html`<vsc-textarea name="test" value="Test value"></vsc-textarea>`,
       {parentNode: form}
     );
 
@@ -249,7 +249,7 @@ describe('vscode-textarea', () => {
 
   it('should return the initial value', async () => {
     const el = await fixture<VscTextarea>(
-      html`<vscode-textarea name="test" value="Test value"></vscode-textarea>`
+      html`<vsc-textarea name="test" value="Test value"></vsc-textarea>`
     );
 
     expect(el.value).to.eq('Test value');
@@ -257,14 +257,14 @@ describe('vscode-textarea', () => {
 
   it('should return the form in which participated', () => {
     const form = document.createElement('form');
-    const el = document.createElement('vscode-textarea');
+    const el = document.createElement('vsc-textarea');
     form.appendChild(el);
 
     expect(el.form).to.instanceOf(HTMLFormElement);
   });
 
   it('should return the validity object', () => {
-    const el = document.createElement('vscode-textarea') as VscTextarea;
+    const el = document.createElement('vsc-textarea') as VscTextarea;
 
     expect(el.validity).to.instanceOf(ValidityState);
   });
@@ -274,7 +274,7 @@ describe('vscode-textarea', () => {
     nativeTextarea.setAttribute('required', '');
 
     const form = document.createElement('form');
-    const el = document.createElement('vscode-textarea');
+    const el = document.createElement('vsc-textarea');
     el.setAttribute('required', '');
     form.appendChild(el);
     document.body.appendChild(form);
@@ -287,7 +287,7 @@ describe('vscode-textarea', () => {
 
   it('should willValidate property be true if the element is candidate for constraint validation', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea></vscode-textarea>'
+      '<vsc-textarea></vsc-textarea>'
     );
 
     expect(el.willValidate).to.be.true;
@@ -295,7 +295,7 @@ describe('vscode-textarea', () => {
 
   it('should willValidate property be false if the element is not candidate for constraint validation', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea disabled></vscode-textarea>'
+      '<vsc-textarea disabled></vsc-textarea>'
     );
 
     expect(el.willValidate).to.be.false;
@@ -303,7 +303,7 @@ describe('vscode-textarea', () => {
 
   it('should check validity when checkValidity is called', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea required></vscode-textarea>'
+      '<vsc-textarea required></vsc-textarea>'
     );
     const fn = sinon.spy();
     el.addEventListener('invalid', fn);
@@ -316,7 +316,7 @@ describe('vscode-textarea', () => {
 
   it('reportValidity should be called', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea required></vscode-textarea>'
+      '<vsc-textarea required></vsc-textarea>'
     );
     const fn = sinon.spy();
     el.addEventListener('invalid', fn);
@@ -329,7 +329,7 @@ describe('vscode-textarea', () => {
 
   it('wrappedElement property should point to inner native textarea', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea></vscode-textarea>'
+      '<vsc-textarea></vsc-textarea>'
     );
 
     expect(el.wrappedElement).to.instanceOf(HTMLTextAreaElement);
@@ -337,7 +337,7 @@ describe('vscode-textarea', () => {
 
   it('reset callback should restore the default value', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea value="Test value" default-value="Default value"></vscode-textfield>'
+      '<vsc-textarea value="Test value" default-value="Default value"></vsc-textfield>'
     );
     const initialValue = el.value;
 
@@ -350,7 +350,7 @@ describe('vscode-textarea', () => {
 
   it('restore callback should restore the previous state', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea value="Test value"></vscode-textarea>'
+      '<vsc-textarea value="Test value"></vsc-textarea>'
     );
     const initialValue = el.value;
 
@@ -363,7 +363,7 @@ describe('vscode-textarea', () => {
 
   it('should be revalidated when "required" attribute is changed', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea value=""></vscode-textarea>'
+      '<vsc-textarea value=""></vsc-textarea>'
     );
     const initialValidity = el.checkValidity();
 
@@ -376,7 +376,7 @@ describe('vscode-textarea', () => {
 
   it('should be revalidated when "minlength" attribute is changed', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea></vscode-textarea>'
+      '<vsc-textarea></vsc-textarea>'
     );
     const initialValidity = el.checkValidity();
 
@@ -393,7 +393,7 @@ describe('vscode-textarea', () => {
 
   it('"input" event should be dispatched when a text typed', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea></vscode-textarea>'
+      '<vsc-textarea></vsc-textarea>'
     );
     const spy = sinon.spy();
     el.addEventListener('input', spy);
@@ -409,7 +409,7 @@ describe('vscode-textarea', () => {
 
   it('"change" event should be dispatched when a text typed and the focus is lost', async () => {
     const el = await fixture<VscTextarea>(
-      '<vscode-textarea></vscode-textarea>'
+      '<vsc-textarea></vsc-textarea>'
     );
     const spy = sinon.spy();
     el.addEventListener('change', spy);
@@ -424,14 +424,14 @@ describe('vscode-textarea', () => {
   });
 
   it('minlength alias should point to minLength property', () => {
-    const el = document.createElement('vscode-textarea');
+    const el = document.createElement('vsc-textarea');
     el.minlength = 100;
 
     expect(el.minLength).to.eq(100);
   });
 
   it('maxlength alias should point to maxLength property', () => {
-    const el = document.createElement('vscode-textarea');
+    const el = document.createElement('vsc-textarea');
     el.maxlength = 100;
 
     expect(el.maxLength).to.eq(100);
