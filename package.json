@@ -176,7 +176,7 @@
   },
   "homepage": "https://bendera.github.io/vscode-webview-elements",
   "dependencies": {
-    "lit": "^2.7.5"
+    "lit": "^3.1.0"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",

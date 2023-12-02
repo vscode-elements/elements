@@ -3,7 +3,7 @@ import {
   customElement,
   property,
   query,
-  queryAssignedNodes,
+  queryAssignedElements,
 } from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement.js';
 import {VscodeCheckbox} from '../vscode-checkbox/index.js';
@@ -88,8 +88,8 @@ export class VscodeFormContainer extends VscElement {
   @query('.wrapper')
   private _wrapperElement!: Element;
 
-  @queryAssignedNodes()
-  private _assignedNodes!: VscodeFormGroup[];
+  @queryAssignedElements({selector: 'vscode-form-group'})
+  private _assignedFormGroups!: VscodeFormGroup[];
 
   private _responsive = false;
 
@@ -145,11 +145,7 @@ export class VscodeFormContainer extends VscElement {
   }
 
   private _toggleCompactLayout(layout: FormGroupLayout) {
-    const formGroups = this._assignedNodes.filter(
-      (el) => el.matches && el.matches('vscode-form-group')
-    );
-
-    formGroups.forEach((group) => {
+    this._assignedFormGroups.forEach((group) => {
       if (!group.dataset.originalVariant) {
         group.dataset.originalVariant = group.variant;
       }

@@ -3,7 +3,7 @@ import {
   customElement,
   property,
   query,
-  queryAssignedNodes,
+  queryAssignedElements,
   state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
@@ -68,8 +68,8 @@ export class VscodeScrollable extends VscElement {
   @query('.scrollable-container')
   private _scrollableContainer!: HTMLDivElement;
 
-  @queryAssignedNodes()
-  private _assignedNodes!: NodeList;
+  @queryAssignedElements()
+  private _assignedElements!: NodeList;
 
   private _resizeObserver!: ResizeObserver;
   private _scrollThumbStartY = 0;
@@ -132,7 +132,7 @@ export class VscodeScrollable extends VscElement {
   private _zIndexFix() {
     let highestZ = 0;
 
-    this._assignedNodes.forEach((n) => {
+    this._assignedElements.forEach((n) => {
       if ('style' in n) {
         const computedZIndex = window.getComputedStyle(n as HTMLElement).zIndex;
         const isNumber = /([0-9-])+/g.test(computedZIndex);

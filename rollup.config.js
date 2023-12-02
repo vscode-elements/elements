@@ -29,7 +29,7 @@ export default {
     }),
     resolve(),
     terser({
-      ecma: 2017,
+      ecma: 2021,
       module: true,
       warnings: true,
       mangle: {
