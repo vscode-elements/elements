@@ -1,1 +1,1 @@
-export {VscodeTree} from './tree.js';
+export {VscTree} from './tree.js';

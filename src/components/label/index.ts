@@ -1,1 +1,1 @@
-export {VscodeLabel} from './label.js';
+export {VscLabel} from './label.js';

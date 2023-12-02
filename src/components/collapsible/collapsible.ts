@@ -17,7 +17,7 @@ import styles from './collapsible.styles.js';
  * @cssprop --vscode-sideBarTitle-foreground - Header font color
  */
 @customElement('vscode-collapsible')
-export class VscodeCollapsible extends VscElement {
+export class VscCollapsible extends VscElement {
   static styles = styles;
 
   /** Component heading text */
@@ -91,6 +91,6 @@ export class VscodeCollapsible extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-collapsible': VscodeCollapsible;
+    'vscode-collapsible': VscCollapsible;
   }
 }

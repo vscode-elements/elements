@@ -1,1 +1,1 @@
-export {VscodeRadio} from './radio.js';
+export {VscRadio} from './radio.js';

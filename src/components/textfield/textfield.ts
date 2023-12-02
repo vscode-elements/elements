@@ -43,7 +43,7 @@ type InputType =
  * @cssprop --vscode-button-hoverBackground
  */
 @customElement('vscode-textfield')
-export class VscodeTextfield
+export class VscTextfield
   extends VscElement
   implements AssociatedFormControl
 {
@@ -366,6 +366,6 @@ export class VscodeTextfield
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-textfield': VscodeTextfield;
+    'vscode-textfield': VscTextfield;
   }
 }

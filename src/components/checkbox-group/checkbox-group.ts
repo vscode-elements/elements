@@ -4,7 +4,7 @@ import {VscElement} from '../../includes/VscElement.js';
 import styles from './checkbox-group.styles.js';
 
 @customElement('vscode-checkbox-group')
-export class VscodeCheckboxGroup extends VscElement {
+export class VscCheckboxGroup extends VscElement {
   static styles = styles;
 
   /** @internal */
@@ -25,6 +25,6 @@ export class VscodeCheckboxGroup extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-checkbox-group': VscodeCheckboxGroup;
+    'vscode-checkbox-group': VscCheckboxGroup;
   }
 }

@@ -14,7 +14,7 @@ import styles from './split-layout.styles.js';
  * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]
  */
 @customElement('vscode-split-layout')
-export class VscodeSplitLayout extends VscElement {
+export class VscSplitLayout extends VscElement {
   static styles = styles;
 
   @property({reflect: true})
@@ -207,7 +207,7 @@ export class VscodeSplitLayout extends VscElement {
     ];
 
     nestedLayouts.forEach((e) => {
-      if (e instanceof VscodeSplitLayout) {
+      if (e instanceof VscSplitLayout) {
         e.initializeResizeHandler();
       }
     });
@@ -278,6 +278,6 @@ export class VscodeSplitLayout extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-split-layout': VscodeSplitLayout;
+    'vscode-split-layout': VscSplitLayout;
   }
 }

@@ -1,1 +1,1 @@
-export {VscodeSplitLayout} from './split-layout.js';
+export {VscSplitLayout} from './split-layout.js';

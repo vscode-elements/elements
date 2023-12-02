@@ -3,10 +3,10 @@ import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import uniqueId from '../../includes/uniqueId.js';
 import {VscElement} from '../../includes/VscElement.js';
-import {VscodeCheckboxGroup} from '../checkbox-group/index.js';
-import {VscodeRadioGroup} from '../radio-group/index.js';
-import {VscodeTextarea} from '../textarea/index.js';
-import {VscodeTextfield} from '../textfield/index.js';
+import {VscCheckboxGroup} from '../checkbox-group/index.js';
+import {VscRadioGroup} from '../radio-group/index.js';
+import {VscTextarea} from '../textarea/index.js';
+import {VscTextfield} from '../textfield/index.js';
 import styles from './label.styles.js';
 
 interface FocusableElement extends Element {
@@ -19,7 +19,7 @@ interface FocusableElement extends Element {
  * @cssprop --vscode-foreground
  */
 @customElement('vscode-label')
-export class VscodeLabel extends VscElement {
+export class VscLabel extends VscElement {
   static styles = styles;
 
   @property({reflect: true, attribute: 'for'})
@@ -95,8 +95,8 @@ export class VscodeLabel extends VscElement {
     const target = this._getTarget();
 
     if (
-      target instanceof VscodeRadioGroup ||
-      target instanceof VscodeCheckboxGroup
+      target instanceof VscRadioGroup ||
+      target instanceof VscCheckboxGroup
     ) {
       target.setAttribute('aria-labelledby', this._id);
     }
@@ -107,7 +107,7 @@ export class VscodeLabel extends VscElement {
       label = this.textContent.trim();
     }
 
-    if (target instanceof VscodeTextfield || target instanceof VscodeTextarea) {
+    if (target instanceof VscTextfield || target instanceof VscTextarea) {
       target.label = label;
     }
   }
@@ -133,6 +133,6 @@ export class VscodeLabel extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-label': VscodeLabel;
+    'vscode-label': VscLabel;
   }
 }

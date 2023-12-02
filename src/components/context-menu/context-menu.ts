@@ -23,7 +23,7 @@ interface MenuItemData {
  * @cssprop --vscode-widget-shadow
  */
 @customElement('vscode-context-menu')
-export class VscodeContextMenu extends VscElement {
+export class VscContextMenu extends VscElement {
   static styles = styles;
 
   @property({type: Array, attribute: false})
@@ -264,6 +264,6 @@ export class VscodeContextMenu extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-context-menu': VscodeContextMenu;
+    'vscode-context-menu': VscContextMenu;
   }
 }

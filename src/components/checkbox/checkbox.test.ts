@@ -1,4 +1,4 @@
-import {VscodeCheckbox} from './index.js';
+import {VscCheckbox} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import {sendKeys} from '@web/test-runner-commands';
 import sinon from 'sinon';
@@ -6,7 +6,7 @@ import sinon from 'sinon';
 describe('vscode-checkbox', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-checkbox');
-    expect(el).to.instanceOf(VscodeCheckbox);
+    expect(el).to.instanceOf(VscCheckbox);
   });
 
   it('should type attribute return "checkbox"', () => {
@@ -61,14 +61,14 @@ describe('vscode-checkbox', () => {
 
   it('should return the form in which participated', () => {
     const form = document.createElement('form');
-    const el = document.createElement('vscode-checkbox') as VscodeCheckbox;
+    const el = document.createElement('vscode-checkbox') as VscCheckbox;
     form.appendChild(el);
 
     expect(el.form).to.instanceOf(HTMLFormElement);
   });
 
   it('should return the validity object', () => {
-    const el = document.createElement('vscode-checkbox') as VscodeCheckbox;
+    const el = document.createElement('vscode-checkbox') as VscCheckbox;
 
     expect(el.validity).to.instanceOf(ValidityState);
   });
@@ -89,7 +89,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should willValidate property be true if the element is candidate for constraint validation', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       '<vscode-checkbox></vscode-checkbox>'
     );
 
@@ -97,7 +97,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should willValidate property be false if the element is not candidate for constraint validation', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       '<vscode-checkbox disabled></vscode-checkbox>'
     );
 
@@ -105,7 +105,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should check validity when checkValidity is called', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       '<vscode-checkbox required></vscode-checkbox>'
     );
     const fn = sinon.spy();
@@ -118,7 +118,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('reportValidity should be called', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       '<vscode-checkbox required></vscode-checkbox>'
     );
     const fn = sinon.spy();
@@ -131,7 +131,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('the autofocus attribute should be passed', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox name="test" autofocus></vscode-checkbox>`
     );
 
@@ -142,7 +142,7 @@ describe('vscode-checkbox', () => {
 
   it('defaultChecked should be applied when the reset function of the parent form is called', async () => {
     const form = document.createElement('form');
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox name="test" default-checked></vscode-checkbox>`,
       {
         parentNode: form,
@@ -158,7 +158,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('restore callback should restore the previous state', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       '<vscode-checkbox value="test"></vscode-checkbox>'
     );
     const initialChecked = el.checked;
@@ -171,7 +171,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('checked state should be applied', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox checked></vscode-checkbox>`
     );
 
@@ -182,7 +182,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('indeterminate state should be applied', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox indeterminate></vscode-checkbox>`
     );
 
@@ -192,7 +192,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should show only the indeterminate icon when indeterminate and checked at the same time', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox indeterminate checked></vscode-checkbox>`
     );
 
@@ -206,7 +206,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should set label through slotted content', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox><b>Test</b> <i>Label</i></vscode-checkbox>`
     );
 
@@ -214,7 +214,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should toggle checked state when clicked', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox>Checkbox test</vscode-checkbox>`
     );
 
@@ -226,7 +226,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should not toggle checked state when clicked but it is disabled', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox disabled>Checkbox test</vscode-checkbox>`
     );
 
@@ -238,7 +238,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should toggle checked state when the space key is pressed', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox>Checkbox test</vscode-checkbox>`
     );
 
@@ -251,7 +251,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('should not toggle checked state when the space key is pressed but it is disabled', async () => {
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       html`<vscode-checkbox disabled>Checkbox test</vscode-checkbox>`
     );
 
@@ -265,7 +265,7 @@ describe('vscode-checkbox', () => {
 
   it('should submit the associated form when the "Enter" button is pressed', async () => {
     const form = document.createElement('form');
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       '<vscode-checkbox></vscode-checkbox>',
       {
         parentNode: form,
@@ -286,7 +286,7 @@ describe('vscode-checkbox', () => {
 
   it('should not submit the associated form when the "Enter" button is pressed but it is disabled', async () => {
     const form = document.createElement('form');
-    const el = await fixture<VscodeCheckbox>(
+    const el = await fixture<VscCheckbox>(
       '<vscode-checkbox disabled></vscode-checkbox>',
       {
         parentNode: form,

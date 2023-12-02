@@ -8,7 +8,7 @@ import styles from './tab-panel.styles.js';
  * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-tab-panel')
-export class VscodeTabPanel extends VscElement {
+export class VscTabPanel extends VscElement {
   static styles = styles;
 
   @property({type: Boolean, reflect: true})
@@ -39,6 +39,6 @@ export class VscodeTabPanel extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-tab-panel': VscodeTabPanel;
+    'vscode-tab-panel': VscTabPanel;
   }
 }

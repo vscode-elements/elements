@@ -1,4 +1,4 @@
-import {VscodeMultiSelect} from './index.js';
+import {VscMultiSelect} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
 import '../option/index.js';
@@ -6,7 +6,7 @@ import '../option/index.js';
 describe('vscode-multi-select', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-multi-select');
-    expect(el).to.instanceOf(VscodeMultiSelect);
+    expect(el).to.instanceOf(VscMultiSelect);
   });
 
   it('should display selected value', async () => {
@@ -16,7 +16,7 @@ describe('vscode-multi-select', () => {
         <vscode-option selected>Ipsum</vscode-option>
         <vscode-option>Dolor</vscode-option>
       </vscode-multi-select>
-    `)) as VscodeMultiSelect;
+    `)) as VscMultiSelect;
 
     expect(el).shadowDom.to.equal(`
       <slot class="main-slot"></slot>
@@ -39,7 +39,7 @@ describe('vscode-multi-select', () => {
         <vscode-option>Ipsum</vscode-option>
         <vscode-option>Dolor</vscode-option>
       </vscode-multi-select>
-    `)) as VscodeMultiSelect;
+    `)) as VscMultiSelect;
 
     el.selectedIndexes = [0, 1];
 
@@ -53,7 +53,7 @@ describe('vscode-multi-select', () => {
         <vscode-option value="2">Two</vscode-option>
         <vscode-option value="3">Three</vscode-option>
       </vscode-multi-select>
-    `)) as VscodeMultiSelect;
+    `)) as VscMultiSelect;
 
     el.value = ['2', '3'];
 
@@ -79,7 +79,7 @@ describe('vscode-multi-select', () => {
         <vscode-option value="2">Two</vscode-option>
         <vscode-option value="3">Three</vscode-option>
       </vscode-multi-select>
-    `)) as VscodeMultiSelect;
+    `)) as VscMultiSelect;
 
     const selectFace =
       el.shadowRoot?.querySelector<HTMLDivElement>('.select-face');
@@ -102,7 +102,7 @@ describe('vscode-multi-select', () => {
         <vscode-option value="2">Two</vscode-option>
         <vscode-option value="3">Three</vscode-option>
       </vscode-multi-select>
-    `)) as VscodeMultiSelect;
+    `)) as VscMultiSelect;
     const changeHandler = sinon.spy();
     el.addEventListener('vsc-change', changeHandler);
 
@@ -132,7 +132,7 @@ describe('vscode-multi-select', () => {
         <vscode-option value="2">Two</vscode-option>
         <vscode-option value="3">Three</vscode-option>
       </vscode-multi-select>
-    `)) as VscodeMultiSelect;
+    `)) as VscMultiSelect;
 
     const selectFace =
       el.shadowRoot?.querySelector<HTMLDivElement>('.select-face');
@@ -167,7 +167,7 @@ describe('vscode-multi-select', () => {
   });
 
   it('should "select all" and "deselect all" work properly', async () => {
-    const el = await fixture<VscodeMultiSelect>(html`<vscode-multi-select>
+    const el = await fixture<VscMultiSelect>(html`<vscode-multi-select>
       <vscode-option value="1">One</vscode-option>
       <vscode-option value="2">Two</vscode-option>
       <vscode-option value="3">Three</vscode-option>

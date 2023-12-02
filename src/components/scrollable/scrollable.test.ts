@@ -1,9 +1,9 @@
-import {VscodeScrollable} from './index.js';
+import {VscScrollable} from './index.js';
 import {expect} from '@open-wc/testing';
 
 describe('vscode-scrollable', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-scrollable');
-    expect(el).to.instanceOf(VscodeScrollable);
+    expect(el).to.instanceOf(VscScrollable);
   });
 });

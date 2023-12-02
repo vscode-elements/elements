@@ -4,7 +4,7 @@ import {VscElement} from '../../includes/VscElement.js';
 import styles from './option.styles.js';
 
 @customElement('vscode-option')
-export class VscodeOption extends VscElement {
+export class VscOption extends VscElement {
   static styles = styles;
 
   @property({type: String}) value = '';
@@ -19,6 +19,6 @@ export class VscodeOption extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-option': VscodeOption;
+    'vscode-option': VscOption;
   }
 }

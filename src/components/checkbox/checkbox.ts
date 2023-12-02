@@ -21,7 +21,7 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-checkbox')
-export class VscodeCheckbox
+export class VscCheckbox
   extends LabelledCheckboxOrRadioMixin(FormButtonWidgetBase)
   implements AssociatedFormControl
 {
@@ -279,6 +279,6 @@ export class VscodeCheckbox
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-checkbox': VscodeCheckbox;
+    'vscode-checkbox': VscCheckbox;
   }
 }

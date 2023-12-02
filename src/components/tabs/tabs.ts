@@ -7,8 +7,8 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 import uniqueId from '../../includes/uniqueId.js';
 import {VscElement} from '../../includes/VscElement.js';
-import {VscodeTabHeader} from '../tab-header/index.js';
-import {VscodeTabPanel} from '../tab-panel/index.js';
+import {VscTabHeader} from '../tab-header/index.js';
+import {VscTabPanel} from '../tab-panel/index.js';
 import styles from './tabs.styles.js';
 
 /**
@@ -23,7 +23,7 @@ import styles from './tabs.styles.js';
  * @cssprop --vscode-panel-background
  */
 @customElement('vscode-tabs')
-export class VscodeTabs extends VscElement {
+export class VscTabs extends VscElement {
   static styles = styles;
   /**
    * Panel-like look
@@ -66,9 +66,9 @@ export class VscodeTabs extends VscElement {
   @queryAssignedElements()
   private _mainSlotElements!: Element[];
 
-  private _tabHeaders: VscodeTabHeader[] = [];
+  private _tabHeaders: VscTabHeader[] = [];
 
-  private _tabPanels: VscodeTabPanel[] = [];
+  private _tabPanels: VscTabPanel[] = [];
 
   private _componentId = '';
 
@@ -92,7 +92,7 @@ export class VscodeTabs extends VscElement {
       el.hidden = i !== this.selectedIndex;
     });
 
-    this._tabHeaders.forEach((el: VscodeTabHeader, i) => {
+    this._tabHeaders.forEach((el: VscTabHeader, i) => {
       el.active = i === this.selectedIndex;
     });
   }
@@ -137,8 +137,8 @@ export class VscodeTabs extends VscElement {
 
   private _moveHeadersToHeaderSlot() {
     const headers = this._mainSlotElements.filter(
-      (el) => el instanceof VscodeTabHeader
-    ) as VscodeTabHeader[];
+      (el) => el instanceof VscTabHeader
+    ) as VscTabHeader[];
 
     if (headers.length > 0) {
       headers.forEach((h) => h.setAttribute('slot', 'header'));
@@ -149,8 +149,8 @@ export class VscodeTabs extends VscElement {
     this._moveHeadersToHeaderSlot();
 
     this._tabPanels = this._mainSlotElements.filter(
-      (el) => el instanceof VscodeTabPanel
-    ) as VscodeTabPanel[];
+      (el) => el instanceof VscTabPanel
+    ) as VscTabPanel[];
     this._tabPanels.forEach((el, i) => {
       el.ariaLabelledby = `t${this._componentId}-h${i}`;
       el.id = `t${this._componentId}-p${i}`;
@@ -162,8 +162,8 @@ export class VscodeTabs extends VscElement {
 
   private _onHeaderSlotChange() {
     this._tabHeaders = this._headerSlotElements.filter(
-      (el) => el instanceof VscodeTabHeader
-    ) as VscodeTabHeader[];
+      (el) => el instanceof VscTabHeader
+    ) as VscTabHeader[];
     this._tabHeaders.forEach((el, i) => {
       el.tabId = i;
       el.id = `t${this._componentId}-h${i}`;
@@ -176,11 +176,11 @@ export class VscodeTabs extends VscElement {
   private _onHeaderClick(event: MouseEvent) {
     const path = event.composedPath();
     const headerEl = path.find(
-      (et) => (et as VscodeTabHeader) instanceof VscodeTabHeader
+      (et) => (et as VscTabHeader) instanceof VscTabHeader
     );
 
     if (headerEl) {
-      this.selectedIndex = (headerEl as VscodeTabHeader).tabId;
+      this.selectedIndex = (headerEl as VscTabHeader).tabId;
       this._setActiveTab();
       this._dispatchSelectEvent();
     }
@@ -203,6 +203,6 @@ export class VscodeTabs extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-tabs': VscodeTabs;
+    'vscode-tabs': VscTabs;
   }
 }

@@ -21,7 +21,7 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-radio')
-export class VscodeRadio
+export class VscRadio
   extends LabelledCheckboxOrRadioMixin(FormButtonWidgetBase)
   implements AssociatedFormControl
 {
@@ -182,7 +182,7 @@ export class VscodeRadio
     );
   }
 
-  private _getRadios(): VscodeRadio[] {
+  private _getRadios(): VscRadio[] {
     const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
 
     if (!root) {
@@ -191,12 +191,12 @@ export class VscodeRadio
 
     const radios = root.querySelectorAll(
       `vscode-radio[name="${this.name}"]`
-    ) as NodeListOf<VscodeRadio>;
+    ) as NodeListOf<VscRadio>;
 
     return Array.from(radios);
   }
 
-  private _uncheckOthers(radios: VscodeRadio[]) {
+  private _uncheckOthers(radios: VscRadio[]) {
     radios.forEach((r) => {
       if (r !== this) {
         r.checked = false;
@@ -232,7 +232,7 @@ export class VscodeRadio
     }
   }
 
-  private _setGroupValidity(radios: VscodeRadio[], isValid: boolean) {
+  private _setGroupValidity(radios: VscRadio[], isValid: boolean) {
     this.updateComplete.then(() => {
       radios.forEach((r) => {
         r.setComponentValidity(isValid);
@@ -336,6 +336,6 @@ export class VscodeRadio
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-radio': VscodeRadio;
+    'vscode-radio': VscRadio;
   }
 }

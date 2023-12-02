@@ -7,7 +7,7 @@ import styles from './table-row.styles.js';
  * @cssprop --vscode-editorGroup-border
  */
 @customElement('vscode-table-row')
-export class VscodeTableRow extends VscElement {
+export class VscTableRow extends VscElement {
   static styles = styles;
 
   /** @internal */
@@ -21,6 +21,6 @@ export class VscodeTableRow extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-row': VscodeTableRow;
+    'vscode-table-row': VscTableRow;
   }
 }

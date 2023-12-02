@@ -1,7 +1,7 @@
 import './index.js';
-import {VscodeRadio} from './index.js';
+import {VscRadio} from './index.js';
 import '../radio-group/index.js';
-import {VscodeRadioGroup} from '../radio-group/index.js';
+import {VscRadioGroup} from '../radio-group/index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import {sendKeys} from '@web/test-runner-commands';
 import sinon from 'sinon';
@@ -11,16 +11,16 @@ const createSampleForm = () => {
   form.id = 'sample-form';
   const group = document.createElement(
     'vscode-radio-group'
-  ) as VscodeRadioGroup;
-  const rb1 = document.createElement('vscode-radio') as VscodeRadio;
+  ) as VscRadioGroup;
+  const rb1 = document.createElement('vscode-radio') as VscRadio;
   rb1.name = 'test';
   rb1.value = '1';
   rb1.label = 'One';
-  const rb2 = document.createElement('vscode-radio') as VscodeRadio;
+  const rb2 = document.createElement('vscode-radio') as VscRadio;
   rb2.name = 'test';
   rb2.value = '2';
   rb2.label = 'Two';
-  const rb3 = document.createElement('vscode-radio') as VscodeRadio;
+  const rb3 = document.createElement('vscode-radio') as VscRadio;
   rb3.name = 'test';
   rb3.value = '3';
   rb3.label = 'Three';
@@ -44,7 +44,7 @@ describe('vscode-radio', () => {
 
   it('is defined', () => {
     const el = document.createElement('vscode-radio');
-    expect(el).to.instanceOf(VscodeRadio);
+    expect(el).to.instanceOf(VscRadio);
   });
 
   it('form property should point to the associated form', () => {
@@ -83,13 +83,13 @@ describe('vscode-radio', () => {
   });
 
   it('should willValidate property be true if the element is candidate for constraint validation', async () => {
-    const el = await fixture<VscodeRadio>('<vscode-radio></vscode-radio>');
+    const el = await fixture<VscRadio>('<vscode-radio></vscode-radio>');
 
     expect(el.willValidate).to.be.true;
   });
 
   it('should willValidate property be false if the element is not candidate for constraint validation', async () => {
-    const el = await fixture<VscodeRadio>(
+    const el = await fixture<VscRadio>(
       '<vscode-radio disabled></vscode-radio>'
     );
 
@@ -97,7 +97,7 @@ describe('vscode-radio', () => {
   });
 
   it('reportValidity should be called', async () => {
-    const el = await fixture<VscodeRadio>(
+    const el = await fixture<VscRadio>(
       '<vscode-radio required></vscode-radio>'
     );
     const fn = sinon.spy();
@@ -111,7 +111,7 @@ describe('vscode-radio', () => {
 
   it('defaultChecked should be applied when the reset function of the parent form is called', async () => {
     const form = document.createElement('form');
-    const el = await fixture<VscodeRadio>(
+    const el = await fixture<VscRadio>(
       html`<vscode-radio name="test" default-checked></vscode-radio>`,
       {
         parentNode: form,
@@ -127,7 +127,7 @@ describe('vscode-radio', () => {
   });
 
   it('restore callback should restore the previous state', async () => {
-    const el = await fixture<VscodeRadio>(
+    const el = await fixture<VscRadio>(
       '<vscode-radio value="test"></vscode-radio>'
     );
     const initialChecked = el.checked;
@@ -153,7 +153,7 @@ describe('vscode-radio', () => {
   });
 
   it('should show check icon when it is checked', async () => {
-    const el = await fixture<VscodeRadio>(
+    const el = await fixture<VscRadio>(
       html`<vscode-radio checked></vscode-radio>`
     );
 
@@ -162,7 +162,7 @@ describe('vscode-radio', () => {
 
   // FIXME
   xit('focused property should be true when it is focused', async () => {
-    const el = document.createElement('vscode-radio') as VscodeRadio;
+    const el = document.createElement('vscode-radio') as VscRadio;
     el.tabIndex = 0;
 
     document.body.appendChild(el);
@@ -176,7 +176,7 @@ describe('vscode-radio', () => {
   });
 
   it('should not be focusable when it is disabled', async () => {
-    const el = await fixture<VscodeRadio>(
+    const el = await fixture<VscRadio>(
       html`<vscode-radio disabled></vscode-radio>`
     );
 

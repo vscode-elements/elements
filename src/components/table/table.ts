@@ -11,11 +11,11 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../../includes/VscElement.js';
 import '../scrollable/index.js';
-import {VscodeScrollable} from '../scrollable/index.js';
-import {VscodeTableBody} from '../table-body/index.js';
-import {VscodeTableCell} from '../table-cell/index.js';
-import {VscodeTableHeader} from '../table-header/index.js';
-import {VscodeTableHeaderCell} from '../table-header-cell/index.js';
+import {VscScrollable} from '../scrollable/index.js';
+import {VscTableBody} from '../table-body/index.js';
+import {VscTableCell} from '../table-cell/index.js';
+import {VscTableHeader} from '../table-header/index.js';
+import {VscTableHeaderCell} from '../table-header-cell/index.js';
 import {rawValueToPercentage} from './helpers.js';
 import styles from './table.styles.js';
 
@@ -37,7 +37,7 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
  * @cssprop [--font-family=var(--vscode-font-family)]
  */
 @customElement('vscode-table')
-export class VscodeTable extends VscElement {
+export class VscTable extends VscElement {
   static styles = styles;
 
   /** @internal */
@@ -103,7 +103,7 @@ export class VscodeTable extends VscElement {
   private _headerElement!: HTMLDivElement;
 
   @query('.scrollable')
-  private _scrollableElement!: VscodeScrollable;
+  private _scrollableElement!: VscScrollable;
 
   @queryAll('.sash-visible')
   private _sashVisibleElements!: HTMLDivElement[];
@@ -113,14 +113,14 @@ export class VscodeTable extends VscElement {
     flatten: true,
     selector: 'vscode-table-header',
   })
-  private _assignedHeaderElements!: NodeListOf<VscodeTableHeader>;
+  private _assignedHeaderElements!: NodeListOf<VscTableHeader>;
 
   @queryAssignedElements({
     slot: 'body',
     flatten: true,
     selector: 'vscode-table-body',
   })
-  private _assignedBodyElements!: NodeListOf<VscodeTableBody>;
+  private _assignedBodyElements!: NodeListOf<VscTableBody>;
 
   /**
    * Sash positions in percentage
@@ -147,14 +147,14 @@ export class VscodeTable extends VscElement {
    * Cached querySelectorAll result. Updated when the header slot changes.
    * It shouldn't be used directly, check the "_getHeaderCells" function.
    */
-  private _headerCells: VscodeTableHeaderCell[] = [];
+  private _headerCells: VscTableHeaderCell[] = [];
   /**
    * Cached querySelectorAll result. Updated when the body slot changes.
    * It shouldn't be used directly, check the "_getCellsOfFirstRow" function.
    */
-  private _cellsOfFirstRow: VscodeTableCell[] = [];
-  private _cellsToResize!: VscodeTableCell[];
-  private _headerCellsToResize!: VscodeTableHeaderCell[];
+  private _cellsOfFirstRow: VscTableCell[] = [];
+  private _cellsToResize!: VscTableCell[];
+  private _headerCellsToResize!: VscTableHeaderCell[];
   private _prevHeaderHeight = 0;
   private _prevComponentHeight = 0;
 
@@ -195,7 +195,7 @@ export class VscodeTable extends VscElement {
     }
 
     return Array.from(
-      headers[0].querySelectorAll<VscodeTableHeaderCell>(
+      headers[0].querySelectorAll<VscTableHeaderCell>(
         'vscode-table-header-cell'
       )
     );
@@ -220,7 +220,7 @@ export class VscodeTable extends VscElement {
     }
 
     return Array.from(
-      assignedBodyElements[0].querySelectorAll<VscodeTableCell>(
+      assignedBodyElements[0].querySelectorAll<VscTableCell>(
         'vscode-table-row:first-child vscode-table-cell'
       )
     );
@@ -447,7 +447,7 @@ export class VscodeTable extends VscElement {
     }
 
     const tbody = this._bodySlot.assignedElements()[0];
-    const cells = tbody.querySelectorAll<VscodeTableCell>(
+    const cells = tbody.querySelectorAll<VscTableCell>(
       'vscode-table-row:first-child > vscode-table-cell'
     );
     this._cellsToResize = [];
@@ -612,6 +612,6 @@ export class VscodeTable extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table': VscodeTable;
+    'vscode-table': VscTable;
   }
 }

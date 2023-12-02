@@ -1,1 +1,1 @@
-export {VscodeTableHeader} from './table-header.js';
+export {VscTableHeader} from './table-header.js';

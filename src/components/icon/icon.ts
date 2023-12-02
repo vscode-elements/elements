@@ -17,7 +17,7 @@ import styles from './icon.styles.js';
  * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-icon')
-export class VscodeIcon extends VscElement {
+export class VscIcon extends VscElement {
   static styles = styles;
   /**
    * Set a meaningful label in `action-icon` mode for the screen readers
@@ -64,8 +64,8 @@ export class VscodeIcon extends VscElement {
 
     const {href, nonce} = this._getStylesheetConfig();
 
-    VscodeIcon.stylesheetHref = href;
-    VscodeIcon.nonce = nonce;
+    VscIcon.stylesheetHref = href;
+    VscIcon.nonce = nonce;
   }
 
   /**
@@ -92,7 +92,7 @@ export class VscodeIcon extends VscElement {
   };
 
   render(): TemplateResult {
-    const {stylesheetHref, nonce} = VscodeIcon;
+    const {stylesheetHref, nonce} = VscIcon;
 
     const content = html`<span
       class="${classMap({
@@ -133,6 +133,6 @@ export class VscodeIcon extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-icon': VscodeIcon;
+    'vscode-icon': VscIcon;
   }
 }

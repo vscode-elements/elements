@@ -6,57 +6,57 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import {VscodeCheckbox} from '../checkbox/index.js';
-import {VscodeCheckboxGroup} from '../checkbox-group/index.js';
-import {VscodeFormGroup, FormGroupVariant} from '../form-group/index.js';
-import {VscodeMultiSelect} from '../multi-select/index.js';
-import {VscodeRadio} from '../radio/index.js';
-import {VscodeRadioGroup} from '../radio-group/index.js';
-import {VscodeSingleSelect} from '../single-select/index.js';
+import {VscCheckbox} from '../checkbox/index.js';
+import {VscCheckboxGroup} from '../checkbox-group/index.js';
+import {VscFormGroup, FormGroupVariant} from '../form-group/index.js';
+import {VscMultiSelect} from '../multi-select/index.js';
+import {VscRadio} from '../radio/index.js';
+import {VscRadioGroup} from '../radio-group/index.js';
+import {VscSingleSelect} from '../single-select/index.js';
 import styles from './form-container.styles.js';
-import {VscodeTextarea, VscodeTextfield} from '../../main.js';
+import {VscTextarea, VscTextfield} from '../../main.js';
 
 enum FormGroupLayout {
   HORIZONTAL = 'horizontal',
   VERTICAL = 'vertical',
 }
 
-type CheckboxOrRadioGroup = VscodeRadioGroup | VscodeCheckboxGroup;
+type CheckboxOrRadioGroup = VscRadioGroup | VscCheckboxGroup;
 
 type VscFormWidget =
-  | VscodeSingleSelect
-  | VscodeMultiSelect
-  | VscodeCheckbox
-  | VscodeRadio;
+  | VscSingleSelect
+  | VscMultiSelect
+  | VscCheckbox
+  | VscRadio;
 
 interface FormData {
   [key: string]: string | string[];
 }
 
-const isTextInput = (el: Element): el is VscodeTextarea | VscodeTextfield => {
+const isTextInput = (el: Element): el is VscTextarea | VscTextfield => {
   return ['vscode-textfield', 'vscode-textarea'].includes(
     el.tagName.toLocaleLowerCase()
   );
 };
 
-const isSingleSelect = (el: Element): el is VscodeSingleSelect => {
+const isSingleSelect = (el: Element): el is VscSingleSelect => {
   return el.tagName.toLocaleLowerCase() === 'vscode-single-select';
 };
 
-const isMultiSelect = (el: Element): el is VscodeMultiSelect => {
+const isMultiSelect = (el: Element): el is VscMultiSelect => {
   return el.tagName.toLocaleLowerCase() === 'vscode-multi-select';
 };
 
-const isCheckbox = (el: Element): el is VscodeCheckbox => {
+const isCheckbox = (el: Element): el is VscCheckbox => {
   return el.tagName.toLocaleLowerCase() === 'vscode-checkbox';
 };
 
-const isRadio = (el: Element): el is VscodeRadio => {
+const isRadio = (el: Element): el is VscRadio => {
   return el.tagName.toLocaleLowerCase() === 'vscode-radio';
 };
 
 @customElement('vscode-form-container')
-export class VscodeFormContainer extends VscElement {
+export class VscFormContainer extends VscElement {
   static styles = styles;
 
   @property({type: Boolean, reflect: true})
@@ -89,7 +89,7 @@ export class VscodeFormContainer extends VscElement {
   private _wrapperElement!: Element;
 
   @queryAssignedElements({selector: 'vscode-form-group'})
-  private _assignedFormGroups!: VscodeFormGroup[];
+  private _assignedFormGroups!: VscFormGroup[];
 
   private _responsive = false;
 
@@ -233,6 +233,6 @@ export class VscodeFormContainer extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-form-container': VscodeFormContainer;
+    'vscode-form-container': VscFormContainer;
   }
 }

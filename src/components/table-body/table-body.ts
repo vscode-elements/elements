@@ -7,7 +7,7 @@ import styles from './table-body.styles.js';
  * @cssprop --vscode-keybindingTable-rowsBackground
  */
 @customElement('vscode-table-body')
-export class VscodeTableBody extends VscElement {
+export class VscTableBody extends VscElement {
   static styles = styles;
 
   /** @internal */
@@ -21,6 +21,6 @@ export class VscodeTableBody extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-body': VscodeTableBody;
+    'vscode-table-body': VscTableBody;
   }
 }

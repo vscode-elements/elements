@@ -1,1 +1,1 @@
-export {VscodeRadioGroup} from './radio-group.js';
+export {VscRadioGroup} from './radio-group.js';

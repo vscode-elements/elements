@@ -21,7 +21,7 @@ import styles from './button.styles.js';
  * @cssprop --vscode-focusBorder
  */
 @customElement('vscode-button')
-export class VscodeButton extends VscElement {
+export class VscButton extends VscElement {
   static styles = styles;
 
   /** @internal */
@@ -218,6 +218,6 @@ export class VscodeButton extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-button': VscodeButton;
+    'vscode-button': VscButton;
   }
 }

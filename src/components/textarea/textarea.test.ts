@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import {VscodeTextarea} from './index.js';
+import {VscTextarea} from './index.js';
 import './index.js';
 import {sendKeys, sendMouse} from '@web/test-runner-commands';
 import {expect, fixture, html, aTimeout} from '@open-wc/testing';
@@ -7,7 +7,7 @@ import {expect, fixture, html, aTimeout} from '@open-wc/testing';
 describe('vscode-textarea', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-textarea');
-    expect(el).to.instanceOf(VscodeTextarea);
+    expect(el).to.instanceOf(VscTextarea);
   });
 
   it('renders with default values', async () => {
@@ -248,7 +248,7 @@ describe('vscode-textarea', () => {
   });
 
   it('should return the initial value', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       html`<vscode-textarea name="test" value="Test value"></vscode-textarea>`
     );
 
@@ -264,7 +264,7 @@ describe('vscode-textarea', () => {
   });
 
   it('should return the validity object', () => {
-    const el = document.createElement('vscode-textarea') as VscodeTextarea;
+    const el = document.createElement('vscode-textarea') as VscTextarea;
 
     expect(el.validity).to.instanceOf(ValidityState);
   });
@@ -286,7 +286,7 @@ describe('vscode-textarea', () => {
   });
 
   it('should willValidate property be true if the element is candidate for constraint validation', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea></vscode-textarea>'
     );
 
@@ -294,7 +294,7 @@ describe('vscode-textarea', () => {
   });
 
   it('should willValidate property be false if the element is not candidate for constraint validation', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea disabled></vscode-textarea>'
     );
 
@@ -302,7 +302,7 @@ describe('vscode-textarea', () => {
   });
 
   it('should check validity when checkValidity is called', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea required></vscode-textarea>'
     );
     const fn = sinon.spy();
@@ -315,7 +315,7 @@ describe('vscode-textarea', () => {
   });
 
   it('reportValidity should be called', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea required></vscode-textarea>'
     );
     const fn = sinon.spy();
@@ -328,7 +328,7 @@ describe('vscode-textarea', () => {
   });
 
   it('wrappedElement property should point to inner native textarea', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea></vscode-textarea>'
     );
 
@@ -336,7 +336,7 @@ describe('vscode-textarea', () => {
   });
 
   it('reset callback should restore the default value', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea value="Test value" default-value="Default value"></vscode-textfield>'
     );
     const initialValue = el.value;
@@ -349,7 +349,7 @@ describe('vscode-textarea', () => {
   });
 
   it('restore callback should restore the previous state', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea value="Test value"></vscode-textarea>'
     );
     const initialValue = el.value;
@@ -362,7 +362,7 @@ describe('vscode-textarea', () => {
   });
 
   it('should be revalidated when "required" attribute is changed', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea value=""></vscode-textarea>'
     );
     const initialValidity = el.checkValidity();
@@ -375,7 +375,7 @@ describe('vscode-textarea', () => {
   });
 
   it('should be revalidated when "minlength" attribute is changed', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea></vscode-textarea>'
     );
     const initialValidity = el.checkValidity();
@@ -392,7 +392,7 @@ describe('vscode-textarea', () => {
   });
 
   it('"input" event should be dispatched when a text typed', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea></vscode-textarea>'
     );
     const spy = sinon.spy();
@@ -408,7 +408,7 @@ describe('vscode-textarea', () => {
   });
 
   it('"change" event should be dispatched when a text typed and the focus is lost', async () => {
-    const el = await fixture<VscodeTextarea>(
+    const el = await fixture<VscTextarea>(
       '<vscode-textarea></vscode-textarea>'
     );
     const spy = sinon.spy();

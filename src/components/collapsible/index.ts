@@ -1,1 +1,1 @@
-export {VscodeCollapsible} from './collapsible.js';
+export {VscCollapsible} from './collapsible.js';

@@ -11,7 +11,7 @@ import styles from './badge.styles.js';
  * @cssprop --vscode-activityBarBadge-foreground - activity bar variant foreground color
  */
 @customElement('vscode-badge')
-export class VscodeBadge extends VscElement {
+export class VscBadge extends VscElement {
   static styles = styles;
 
   @property()
@@ -24,6 +24,6 @@ export class VscodeBadge extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-badge': VscodeBadge;
+    'vscode-badge': VscBadge;
   }
 }

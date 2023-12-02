@@ -1,1 +1,1 @@
-export {VscodeCheckboxGroup} from './checkbox-group.js';
+export {VscCheckboxGroup} from './checkbox-group.js';

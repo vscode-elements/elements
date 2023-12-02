@@ -10,7 +10,7 @@ export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
  * @cssprop [--label-right-margin=14px] - The right margin of the label in horizontal mode
  */
 @customElement('vscode-form-group')
-export class VscodeFormGroup extends VscElement {
+export class VscFormGroup extends VscElement {
   static styles = styles;
 
   @property({reflect: true})
@@ -27,6 +27,6 @@ export class VscodeFormGroup extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-form-group': VscodeFormGroup;
+    'vscode-form-group': VscFormGroup;
   }
 }

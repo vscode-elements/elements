@@ -6,11 +6,11 @@ import {
   state,
 } from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
-import {VscodeRadio} from '../radio/index.js';
+import {VscRadio} from '../radio/index.js';
 import styles from './radio-group.styles.js';
 
 @customElement('vscode-radio-group')
-export class VscodeRadioGroup extends VscElement {
+export class VscRadioGroup extends VscElement {
   static styles = styles;
 
   @property({reflect: true})
@@ -33,7 +33,7 @@ export class VscodeRadioGroup extends VscElement {
   }
 
   @queryAssignedElements({selector: 'vscode-radio'})
-  private _radios!: VscodeRadio[];
+  private _radios!: VscRadio[];
 
   @state()
   private _focusedRadio = -1;
@@ -170,6 +170,6 @@ export class VscodeRadioGroup extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-radio-group': VscodeRadioGroup;
+    'vscode-radio-group': VscRadioGroup;
   }
 }

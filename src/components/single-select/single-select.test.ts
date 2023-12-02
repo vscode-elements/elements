@@ -1,4 +1,4 @@
-import {VscodeSingleSelect} from './index.js';
+import {VscSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
 import '../option/index.js';
@@ -6,7 +6,7 @@ import '../option/index.js';
 describe('vscode-single-select', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-single-select');
-    expect(el).to.instanceOf(VscodeSingleSelect);
+    expect(el).to.instanceOf(VscSingleSelect);
   });
 
   describe('select mode', () => {
@@ -17,7 +17,7 @@ describe('vscode-single-select', () => {
           <vscode-option selected>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       expect(el).shadowDom.to.equal(`
         <slot class="main-slot"></slot>
@@ -36,7 +36,7 @@ describe('vscode-single-select', () => {
     it('should return the validity object', () => {
       const el = document.createElement(
         'vscode-single-select'
-      ) as VscodeSingleSelect;
+      ) as VscSingleSelect;
 
       expect(el.validity).to.instanceOf(ValidityState);
     });
@@ -44,7 +44,7 @@ describe('vscode-single-select', () => {
     it('should return the validation message', async () => {
       const el = document.createElement(
         'vscode-single-select'
-      ) as VscodeSingleSelect;
+      ) as VscSingleSelect;
       el.required = true;
       document.body.appendChild(el);
 
@@ -60,7 +60,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       el.value = 'Ipsum';
       await el.updateComplete;
@@ -86,7 +86,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       el.value = 'trololo';
       await el.updateComplete;
@@ -112,7 +112,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       el.selectedIndex = 1;
       await el.updateComplete;
@@ -138,7 +138,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       el.selectedIndex = 999;
       await el.updateComplete;
@@ -164,7 +164,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       const spy = sinon.spy();
       el.addEventListener('change', spy)
@@ -201,7 +201,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       expect(el).shadowDom.to.equal(`
         <slot class="main-slot"></slot>
@@ -224,7 +224,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');
 
@@ -260,7 +260,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option selected>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');
 
@@ -316,7 +316,7 @@ describe('vscode-single-select', () => {
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
       await el.updateComplete;
@@ -336,7 +336,7 @@ describe('vscode-single-select', () => {
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
       await el.updateComplete;
@@ -388,7 +388,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');
 
@@ -422,7 +422,7 @@ describe('vscode-single-select', () => {
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
       await el.updateComplete;
@@ -490,7 +490,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Benin</vscode-option>
           <vscode-option>Bhutan</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
       await el.updateComplete;
 
       const face = el.shadowRoot?.querySelector('.select-face');
@@ -506,7 +506,7 @@ describe('vscode-single-select', () => {
     it('default state', async () => {
       const el = (await fixture(html`
         <vscode-single-select combobox></vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       expect(el).shadowDom.to.eq(`
         <slot class="main-slot">
@@ -537,7 +537,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Australia</vscode-option>
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
       await el.updateComplete;
 
       const input = el.shadowRoot?.querySelector(
@@ -601,7 +601,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Australia</vscode-option>
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
       await el.updateComplete;
 
       const input = el.shadowRoot?.querySelector(
@@ -651,7 +651,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Australia</vscode-option>
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
       await el.updateComplete;
 
       const spy = sinon.spy(el, 'dispatchEvent');
@@ -703,7 +703,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Benin</vscode-option>
           <vscode-option>Bhutan</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
       await el.updateComplete;
 
       const input = el.shadowRoot?.querySelector(
@@ -753,7 +753,7 @@ describe('vscode-single-select', () => {
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `)) as VscSingleSelect;
 
       const spy = sinon.spy(el, 'dispatchEvent');
 

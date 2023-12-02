@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {chevronDownIcon} from '../../includes/vscode-select/template-elements.js';
-import {VscodeSelectBase} from '../../includes/vscode-select/vscode-select-base.js';
+import {VscSelectBase} from '../../includes/vscode-select/vscode-select-base.js';
 import styles from './multi-select.styles.js';
 import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
 
@@ -34,8 +34,8 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-list-hoverBackground
  */
 @customElement('vscode-multi-select')
-export class VscodeMultiSelect
-  extends VscodeSelectBase
+export class VscMultiSelect
+  extends VscSelectBase
   implements AssociatedFormControl
 {
   static styles = styles;
@@ -369,6 +369,6 @@ export class VscodeMultiSelect
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-multi-select': VscodeMultiSelect;
+    'vscode-multi-select': VscMultiSelect;
   }
 }

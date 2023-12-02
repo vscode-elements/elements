@@ -1,4 +1,4 @@
 export {
-  VscodeContextMenuItem,
+  VscContextMenuItem,
   VscClickEventDetail,
 } from './context-menu-item.js';

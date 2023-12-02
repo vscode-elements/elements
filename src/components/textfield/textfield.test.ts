@@ -1,16 +1,16 @@
 import sinon from 'sinon';
-import {VscodeTextfield} from './index.js';
+import {VscTextfield} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import {sendKeys, sendMouse} from '@web/test-runner-commands';
 
 describe('vscode-textfield', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-textfield');
-    expect(el).to.instanceOf(VscodeTextfield);
+    expect(el).to.instanceOf(VscTextfield);
   });
 
   it('renders with default values', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       html`<vscode-textfield></vscode-textfield>`
     );
     expect(el).shadowDom.to.equal(
@@ -23,7 +23,7 @@ describe('vscode-textfield', () => {
   });
 
   it('when the type attribute is unknown, it should be set to text', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       html`<vscode-textfield></vscode-textfield>`
     );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -50,7 +50,7 @@ describe('vscode-textfield', () => {
   });
 
   it('should return the initial value', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       html`<vscode-textfield name="test" value="Test value"></vscode-textfield>`
     );
 
@@ -66,7 +66,7 @@ describe('vscode-textfield', () => {
   });
 
   it('should return the validity object', () => {
-    const el = document.createElement('vscode-textfield') as VscodeTextfield;
+    const el = document.createElement('vscode-textfield') as VscTextfield;
 
     expect(el.validity).to.instanceOf(ValidityState);
   });
@@ -88,7 +88,7 @@ describe('vscode-textfield', () => {
   });
 
   it('should willValidate property be true if the element is candidate for constraint validation', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield></vscode-textfield>'
     );
 
@@ -96,7 +96,7 @@ describe('vscode-textfield', () => {
   });
 
   it('should willValidate property be false if the element is not candidate for constraint validation', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield disabled></vscode-textfield>'
     );
 
@@ -104,7 +104,7 @@ describe('vscode-textfield', () => {
   });
 
   it('should check validity when checkValidity is called', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield required></vscode-textfield>'
     );
     const fn = sinon.spy();
@@ -117,7 +117,7 @@ describe('vscode-textfield', () => {
   });
 
   it('reportValidity should be called', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield required></vscode-textfield>'
     );
     const fn = sinon.spy();
@@ -130,7 +130,7 @@ describe('vscode-textfield', () => {
   });
 
   it('wrappedElement property should point to inner native input', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield></vscode-textfield>'
     );
 
@@ -139,7 +139,7 @@ describe('vscode-textfield', () => {
 
   it('reset callback should restore the default value', async () => {
     const form = document.createElement('form');
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield value="Test value" default-value="Default value"></vscode-textfield>',
       {
         parentNode: form,
@@ -155,7 +155,7 @@ describe('vscode-textfield', () => {
   });
 
   it('restore callback should restore the previous state', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield value="Test value"></vscode-textfield>'
     );
     const initialValue = el.value;
@@ -168,7 +168,7 @@ describe('vscode-textfield', () => {
   });
 
   it('should be revalidated when a validation related attribute is changed', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield></vscode-textfield>'
     );
     const initialValidity = el.checkValidity();
@@ -182,7 +182,7 @@ describe('vscode-textfield', () => {
 
   it('should submit the associated form when the "Enter" button is pressed', async () => {
     const form = document.createElement('form');
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield></vscode-textfield>',
       {
         parentNode: form,
@@ -202,7 +202,7 @@ describe('vscode-textfield', () => {
   });
 
   it('"input" event should be dispatched when a text typed', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield></vscode-textfield>'
     );
     const spy = sinon.spy();
@@ -218,7 +218,7 @@ describe('vscode-textfield', () => {
   });
 
   it('"change" event should be dispatched when a text typed and the focus is lost', async () => {
-    const el = await fixture<VscodeTextfield>(
+    const el = await fixture<VscTextfield>(
       '<vscode-textfield></vscode-textfield>'
     );
     const spy = sinon.spy();

@@ -10,7 +10,7 @@ import styles from './table-cell.styles.js';
  * @cssprop --vscode-font-size
  */
 @customElement('vscode-table-cell')
-export class VscodeTableCell extends VscElement {
+export class VscTableCell extends VscElement {
   static styles = styles;
 
   /** @internal */
@@ -47,6 +47,6 @@ export class VscodeTableCell extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-cell': VscodeTableCell;
+    'vscode-table-cell': VscTableCell;
   }
 }

@@ -2,7 +2,7 @@ import {html, nothing, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import '../../components/button';
-import {VscodeOption} from '../../components/option/index.js';
+import {VscOption} from '../../components/option/index.js';
 import type {InternalOption, Option, SearchMethod} from './types.js';
 import {filterOptionsByPattern} from './helpers.js';
 import {VscElement} from '../VscElement.js';
@@ -19,7 +19,7 @@ const LIST_HEIGHT = VISIBLE_OPTS + OPT_HEIGHT + 2;
 /**
  * @cssprop --dropdown-z-index - workaround for dropdown z-index issues
  */
-export class VscodeSelectBase extends VscElement {
+export class VscSelectBase extends VscElement {
   /** @internal */
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
   ariaExpanded = 'false';
@@ -188,13 +188,13 @@ export class VscodeSelectBase extends VscElement {
         return;
       }
 
-      const {innerText, description, disabled} = el as VscodeOption;
+      const {innerText, description, disabled} = el as VscOption;
 
-      const value = (el as VscodeOption).hasAttribute('value')
-      ? ((el as VscodeOption).getAttribute('value') as string)
+      const value = (el as VscOption).hasAttribute('value')
+      ? ((el as VscOption).getAttribute('value') as string)
       : innerText.trim();
 
-      const selected = (el as VscodeOption).hasAttribute('selected');
+      const selected = (el as VscOption).hasAttribute('selected');
 
       const op: InternalOption = {
         label: innerText.trim(),

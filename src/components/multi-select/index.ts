@@ -1,1 +1,1 @@
-export {VscodeMultiSelect} from './multi-select.js';
+export {VscMultiSelect} from './multi-select.js';

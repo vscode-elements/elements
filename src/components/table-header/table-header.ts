@@ -7,7 +7,7 @@ import styles from './table-header.styles.js';
  * @cssprop --vscode-keybindingTable-headerBackground - Table header background
  */
 @customElement('vscode-table-header')
-export class VscodeTableHeader extends VscElement {
+export class VscTableHeader extends VscElement {
   static styles = styles;
 
   /** @internal */
@@ -21,6 +21,6 @@ export class VscodeTableHeader extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-header': VscodeTableHeader;
+    'vscode-table-header': VscTableHeader;
   }
 }

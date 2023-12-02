@@ -6,7 +6,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../../includes/VscElement.js';
 import '../badge/index.js';
 import '../icon/index.js';
-import {VscodeIcon} from '../icon/index.js';
+import {VscIcon} from '../icon/index.js';
 import styles from './tree.styles.js';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
@@ -155,7 +155,7 @@ const isBranch = (item: TreeItem) => {
  * @cssprop --vscode-tree-indentGuidesStroke
  */
 @customElement('vscode-tree')
-export class VscodeTree extends VscElement {
+export class VscTree extends VscElement {
   static styles = styles;
 
   @property({type: Array, reflect: false})
@@ -231,7 +231,7 @@ export class VscodeTree extends VscElement {
   private _handleActionClick(ev: MouseEvent) {
     ev.stopPropagation();
 
-    const el = ev.target as VscodeIcon;
+    const el = ev.target as VscIcon;
     const itemPath = el.dataset.itemPath;
     const actionIndex = el.dataset.index;
     let item: TreeItem | null = null;
@@ -874,6 +874,6 @@ export class VscodeTree extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-tree': VscodeTree;
+    'vscode-tree': VscTree;
   }
 }

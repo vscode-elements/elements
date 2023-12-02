@@ -1,1 +1,1 @@
-export {VscodeTableBody} from './table-body.js';
+export {VscTableBody} from './table-body.js';

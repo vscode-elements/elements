@@ -10,7 +10,7 @@ import styles from './form-helper.styles.js';
  * @cssprop --vsc-foreground-translucent - Default text color. 90% transparency version of `--vscode-foreground` by default.
  */
 @customElement('vscode-form-helper')
-export class VscodeFormHelper extends VscElement {
+export class VscFormHelper extends VscElement {
   static styles = styles;
 
   constructor() {
@@ -25,6 +25,6 @@ export class VscodeFormHelper extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-form-helper': VscodeFormHelper;
+    'vscode-form-helper': VscFormHelper;
   }
 }

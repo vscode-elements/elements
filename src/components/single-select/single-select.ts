@@ -2,7 +2,7 @@ import {html, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {chevronDownIcon} from '../../includes/vscode-select/template-elements.js';
-import {VscodeSelectBase} from '../../includes/vscode-select/vscode-select-base.js';
+import {VscSelectBase} from '../../includes/vscode-select/vscode-select-base.js';
 import styles from './single-select.styles.js';
 import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
 
@@ -42,8 +42,8 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-settings-textInputBackground
  */
 @customElement('vscode-single-select')
-export class VscodeSingleSelect
-  extends VscodeSelectBase
+export class VscSingleSelect
+  extends VscSelectBase
   implements AssociatedFormControl
 {
   static styles = styles;
@@ -352,6 +352,6 @@ export class VscodeSingleSelect
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-single-select': VscodeSingleSelect;
+    'vscode-single-select': VscSingleSelect;
   }
 }
