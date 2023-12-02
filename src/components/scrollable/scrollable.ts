@@ -18,7 +18,7 @@ import styles from './scrollable.styles.js';
  * @cssprop --vscode-scrollbarSlider-hoverBackground
  * @cssprop --vscode-scrollbarSlider-activeBackground
  */
-@customElement('vscode-scrollable')
+@customElement('vsc-scrollable')
 export class VscScrollable extends VscElement {
   static styles = styles;
 
@@ -289,6 +289,6 @@ export class VscScrollable extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-scrollable': VscScrollable;
+    'vsc-scrollable': VscScrollable;
   }
 }

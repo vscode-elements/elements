@@ -13,7 +13,7 @@ import styles from './split-layout.styles.js';
 /**
  * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]
  */
-@customElement('vscode-split-layout')
+@customElement('vsc-split-layout')
 export class VscSplitLayout extends VscElement {
   static styles = styles;
 
@@ -278,6 +278,6 @@ export class VscSplitLayout extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-split-layout': VscSplitLayout;
+    'vsc-split-layout': VscSplitLayout;
   }
 }

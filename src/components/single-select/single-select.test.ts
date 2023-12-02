@@ -35,7 +35,7 @@ describe('vscode-single-select', () => {
 
     it('should return the validity object', () => {
       const el = document.createElement(
-        'vscode-single-select'
+        'vsc-single-select'
       ) as VscSingleSelect;
 
       expect(el.validity).to.instanceOf(ValidityState);
@@ -43,7 +43,7 @@ describe('vscode-single-select', () => {
 
     it('should return the validation message', async () => {
       const el = document.createElement(
-        'vscode-single-select'
+        'vsc-single-select'
       ) as VscSingleSelect;
       el.required = true;
       document.body.appendChild(el);

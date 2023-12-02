@@ -41,7 +41,7 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-list-hoverBackground
  * @cssprop --vscode-settings-textInputBackground
  */
-@customElement('vscode-single-select')
+@customElement('vsc-single-select')
 export class VscSingleSelect
   extends VscSelectBase
   implements AssociatedFormControl
@@ -352,6 +352,6 @@ export class VscSingleSelect
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-single-select': VscSingleSelect;
+    'vsc-single-select': VscSingleSelect;
   }
 }

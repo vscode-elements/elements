@@ -16,7 +16,7 @@ import styles from './collapsible.styles.js';
  * @cssprop --vscode-icon-foreground - Arrow icon color
  * @cssprop --vscode-sideBarTitle-foreground - Header font color
  */
-@customElement('vscode-collapsible')
+@customElement('vsc-collapsible')
 export class VscCollapsible extends VscElement {
   static styles = styles;
 
@@ -91,6 +91,6 @@ export class VscCollapsible extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-collapsible': VscCollapsible;
+    'vsc-collapsible': VscCollapsible;
   }
 }

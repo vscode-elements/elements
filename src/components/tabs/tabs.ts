@@ -22,7 +22,7 @@ import styles from './tabs.styles.js';
  * @cssprop --vscode-settings-headerBorder
  * @cssprop --vscode-panel-background
  */
-@customElement('vscode-tabs')
+@customElement('vsc-tabs')
 export class VscTabs extends VscElement {
   static styles = styles;
   /**
@@ -203,6 +203,6 @@ export class VscTabs extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-tabs': VscTabs;
+    'vsc-tabs': VscTabs;
   }
 }

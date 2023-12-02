@@ -18,7 +18,7 @@ interface FocusableElement extends Element {
  * @cssprop --vscode-font-size
  * @cssprop --vscode-foreground
  */
-@customElement('vscode-label')
+@customElement('vsc-label')
 export class VscLabel extends VscElement {
   static styles = styles;
 
@@ -133,6 +133,6 @@ export class VscLabel extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-label': VscLabel;
+    'vsc-label': VscLabel;
   }
 }

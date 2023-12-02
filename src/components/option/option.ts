@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
 import styles from './option.styles.js';
 
-@customElement('vscode-option')
+@customElement('vsc-option')
 export class VscOption extends VscElement {
   static styles = styles;
 
@@ -19,6 +19,6 @@ export class VscOption extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-option': VscOption;
+    'vsc-option': VscOption;
   }
 }

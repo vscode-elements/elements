@@ -20,7 +20,7 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-settings-checkboxForeground
  * @cssprop --vscode-focusBorder
  */
-@customElement('vscode-radio')
+@customElement('vsc-radio')
 export class VscRadio
   extends LabelledCheckboxOrRadioMixin(FormButtonWidgetBase)
   implements AssociatedFormControl
@@ -336,6 +336,6 @@ export class VscRadio
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-radio': VscRadio;
+    'vsc-radio': VscRadio;
   }
 }

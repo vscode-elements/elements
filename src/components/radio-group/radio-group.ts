@@ -9,7 +9,7 @@ import {VscElement} from '../../includes/VscElement.js';
 import {VscRadio} from '../radio/index.js';
 import styles from './radio-group.styles.js';
 
-@customElement('vscode-radio-group')
+@customElement('vsc-radio-group')
 export class VscRadioGroup extends VscElement {
   static styles = styles;
 
@@ -170,6 +170,6 @@ export class VscRadioGroup extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-radio-group': VscRadioGroup;
+    'vsc-radio-group': VscRadioGroup;
   }
 }

@@ -24,7 +24,7 @@ export interface VscClickEventDetail {
  * @cssprop --vscode-menu-selectionForeground
  * @cssprop --vscode-menu-separatorBackground
  */
-@customElement('vscode-context-menu-item')
+@customElement('vsc-context-menu-item')
 export class VscContextMenuItem extends VscElement {
   static styles = styles;
 
@@ -85,6 +85,6 @@ export class VscContextMenuItem extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-context-menu-item': VscContextMenuItem;
+    'vsc-context-menu-item': VscContextMenuItem;
   }
 }

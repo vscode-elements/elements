@@ -10,7 +10,7 @@ const createSampleForm = () => {
   const form = document.createElement('form');
   form.id = 'sample-form';
   const group = document.createElement(
-    'vscode-radio-group'
+    'vsc-radio-group'
   ) as VscRadioGroup;
   const rb1 = document.createElement('vscode-radio') as VscRadio;
   rb1.name = 'test';

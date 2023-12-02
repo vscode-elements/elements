@@ -8,7 +8,7 @@ import styles from './table-header-cell.styles.js';
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
  */
-@customElement('vscode-table-header-cell')
+@customElement('vsc-table-header-cell')
 export class VscTableHeaderCell extends VscElement {
   static styles = styles;
 
@@ -27,6 +27,6 @@ export class VscTableHeaderCell extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table-header-cell': VscTableHeaderCell;
+    'vsc-table-header-cell': VscTableHeaderCell;
   }
 }

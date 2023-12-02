@@ -32,7 +32,7 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-scrollbarSlider-hoverBackground
  * @cssprop --vscode-scrollbarSlider-activeBackground
  */
-@customElement('vscode-textarea')
+@customElement('vsc-textarea')
 export class VscTextarea
   extends VscElement
   implements AssociatedFormControl
@@ -330,6 +330,6 @@ export class VscTextarea
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-textarea': VscTextarea;
+    'vsc-textarea': VscTextarea;
   }
 }

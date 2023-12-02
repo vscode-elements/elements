@@ -33,7 +33,7 @@ import {AssociatedFormControl} from '../../includes/AssociatedFormControl.js';
  * @cssprop --vscode-settings-textInputBackground
  * @cssprop --vscode-list-hoverBackground
  */
-@customElement('vscode-multi-select')
+@customElement('vsc-multi-select')
 export class VscMultiSelect
   extends VscSelectBase
   implements AssociatedFormControl
@@ -369,6 +369,6 @@ export class VscMultiSelect
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-multi-select': VscMultiSelect;
+    'vsc-multi-select': VscMultiSelect;
   }
 }

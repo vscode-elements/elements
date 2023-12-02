@@ -22,7 +22,7 @@ interface MenuItemData {
  * @cssprop --vscode-menu-foreground
  * @cssprop --vscode-widget-shadow
  */
-@customElement('vscode-context-menu')
+@customElement('vsc-context-menu')
 export class VscContextMenu extends VscElement {
   static styles = styles;
 
@@ -168,7 +168,7 @@ export class VscContextMenu extends VscElement {
     const realItemIndex =
       this._clickableItemIndexes[this._selectedClickableItemIndex];
     const options = this._wrapperEl.querySelectorAll(
-      'vscode-context-menu-item'
+      'vsc-context-menu-item'
     );
     const selectedOption = options[realItemIndex];
     const {keybinding, label, value, separator, tabindex} = selectedOption;
@@ -264,6 +264,6 @@ export class VscContextMenu extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-context-menu': VscContextMenu;
+    'vsc-context-menu': VscContextMenu;
   }
 }

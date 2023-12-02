@@ -55,7 +55,7 @@ const isRadio = (el: Element): el is VscRadio => {
   return el.tagName.toLocaleLowerCase() === 'vscode-radio';
 };
 
-@customElement('vscode-form-container')
+@customElement('vsc-form-container')
 export class VscFormContainer extends VscElement {
   static styles = styles;
 
@@ -99,12 +99,12 @@ export class VscFormContainer extends VscElement {
 
   private _collectFormData() {
     const query = [
-      'vscode-textfield',
-      'vscode-textarea',
-      'vscode-single-select',
-      'vscode-multi-select',
-      'vscode-checkbox',
-      'vscode-radio',
+      'vsc-textfield',
+      'vsc-textarea',
+      'vsc-single-select',
+      'vsc-multi-select',
+      'vsc-checkbox',
+      'vsc-radio',
     ].join(',');
     const vscFormWidgets = this.querySelectorAll(
       query
@@ -159,7 +159,7 @@ export class VscFormContainer extends VscElement {
       }
 
       const checkboxOrRadioGroup = group.querySelectorAll(
-        'vscode-checkbox-group, vscode-radio-group'
+        'vsc-checkbox-group, vscode-radio-group'
       ) as NodeListOf<CheckboxOrRadioGroup>;
 
       checkboxOrRadioGroup.forEach((widgetGroup) => {
@@ -233,6 +233,6 @@ export class VscFormContainer extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-form-container': VscFormContainer;
+    'vsc-form-container': VscFormContainer;
   }
 }

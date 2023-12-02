@@ -16,7 +16,7 @@ import styles from './icon.styles.js';
  * @cssprop --vscode-toolbar-activeBackground - Active state background color in `active-icon` mode
  * @cssprop --vscode-focusBorder
  */
-@customElement('vscode-icon')
+@customElement('vsc-icon')
 export class VscIcon extends VscElement {
   static styles = styles;
   /**
@@ -133,6 +133,6 @@ export class VscIcon extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-icon': VscIcon;
+    'vsc-icon': VscIcon;
   }
 }

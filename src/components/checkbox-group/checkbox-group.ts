@@ -3,7 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../../includes/VscElement.js';
 import styles from './checkbox-group.styles.js';
 
-@customElement('vscode-checkbox-group')
+@customElement('vsc-checkbox-group')
 export class VscCheckboxGroup extends VscElement {
   static styles = styles;
 
@@ -25,6 +25,6 @@ export class VscCheckboxGroup extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-checkbox-group': VscCheckboxGroup;
+    'vsc-checkbox-group': VscCheckboxGroup;
   }
 }

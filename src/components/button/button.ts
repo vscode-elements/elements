@@ -20,7 +20,7 @@ import styles from './button.styles.js';
  * @cssprop --vscode-button-secondaryHoverBackground
  * @cssprop --vscode-focusBorder
  */
-@customElement('vscode-button')
+@customElement('vsc-button')
 export class VscButton extends VscElement {
   static styles = styles;
 
@@ -218,6 +218,6 @@ export class VscButton extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-button': VscButton;
+    'vsc-button': VscButton;
   }
 }

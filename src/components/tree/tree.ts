@@ -154,7 +154,7 @@ const isBranch = (item: TreeItem) => {
  * @cssprop --vscode-tree-inactiveIndentGuidesStroke
  * @cssprop --vscode-tree-indentGuidesStroke
  */
-@customElement('vscode-tree')
+@customElement('vsc-tree')
 export class VscTree extends VscElement {
   static styles = styles;
 
@@ -874,6 +874,6 @@ export class VscTree extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-tree': VscTree;
+    'vsc-tree': VscTree;
   }
 }

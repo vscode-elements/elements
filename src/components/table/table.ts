@@ -36,7 +36,7 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
  * @cssprop [--font-size=var(--vscode-font-size)]
  * @cssprop [--font-family=var(--vscode-font-family)]
  */
-@customElement('vscode-table')
+@customElement('vsc-table')
 export class VscTable extends VscElement {
   static styles = styles;
 
@@ -196,7 +196,7 @@ export class VscTable extends VscElement {
 
     return Array.from(
       headers[0].querySelectorAll<VscTableHeaderCell>(
-        'vscode-table-header-cell'
+        'vsc-table-header-cell'
       )
     );
   }
@@ -221,7 +221,7 @@ export class VscTable extends VscElement {
 
     return Array.from(
       assignedBodyElements[0].querySelectorAll<VscTableCell>(
-        'vscode-table-row:first-child vscode-table-cell'
+        'vsc-table-row:first-child vscode-table-cell'
       )
     );
   }
@@ -448,7 +448,7 @@ export class VscTable extends VscElement {
 
     const tbody = this._bodySlot.assignedElements()[0];
     const cells = tbody.querySelectorAll<VscTableCell>(
-      'vscode-table-row:first-child > vscode-table-cell'
+      'vsc-table-row:first-child > vscode-table-cell'
     );
     this._cellsToResize = [];
     this._cellsToResize.push(cells[index]);
@@ -612,6 +612,6 @@ export class VscTable extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-table': VscTable;
+    'vsc-table': VscTable;
   }
 }

@@ -12,7 +12,7 @@ import styles from './tab-header.styles.js';
  * @cssprop --vscode-focusBorder
  * @cssprop --vscode-settings-headerForeground
  */
-@customElement('vscode-tab-header')
+@customElement('vsc-tab-header')
 export class VscTabHeader extends VscElement {
   static styles = styles;
 
@@ -77,6 +77,6 @@ export class VscTabHeader extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-tab-header': VscTabHeader;
+    'vsc-tab-header': VscTabHeader;
   }
 }
