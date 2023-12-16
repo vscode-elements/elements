@@ -1,9 +1,13 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement.js';
-import {VscClickEventDetail} from '../vscode-context-menu-item/vscode-context-menu-item.js';
+import type {
+  VscClickEventDetail,
+  VscodeContextMenuItem,
+} from '../vscode-context-menu-item/vscode-context-menu-item.js';
 import '../vscode-context-menu-item';
 import styles from './vscode-context-menu.styles.js';
+import {VscMenuSelectEvent} from '../events/MenuSelect.js';
 
 interface MenuItemData {
   label: string;
@@ -14,6 +18,8 @@ interface MenuItemData {
 }
 
 /**
+ * @fires {CustomEvent} vsc-menu-select - Emitted when a menu item is clicked
+ *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
  * @cssprop --vscode-font-weight
@@ -160,6 +166,42 @@ export class VscodeContextMenu extends VscElement {
     document.removeEventListener('click', this._onClickOutsideBound);
   }
 
+  private _dispatchSelectEvent(selectedOption: VscodeContextMenuItem) {
+    const {keybinding, label, value, separator, tabindex} = selectedOption;
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-menu-select', {
+        detail: {
+          keybinding,
+          label,
+          separator,
+          tabindex,
+          value,
+        },
+      }) as VscMenuSelectEvent
+    );
+  }
+
+  private _dispatchLegacySelectEvent(selectedOption: VscodeContextMenuItem) {
+    const {keybinding, label, value, separator, tabindex} = selectedOption;
+    const detail: VscClickEventDetail = {
+      keybinding,
+      label,
+      value,
+      separator,
+      tabindex,
+    };
+
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-select', {
+        detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   private _handleEnter() {
     if (this._selectedClickableItemIndex === -1) {
       return;
@@ -171,37 +213,19 @@ export class VscodeContextMenu extends VscElement {
       'vscode-context-menu-item'
     );
     const selectedOption = options[realItemIndex];
-    const {keybinding, label, value, separator, tabindex} = selectedOption;
-    const detail: VscClickEventDetail = {
-      keybinding,
-      label,
-      value,
-      separator,
-      tabindex,
-    };
 
-    this.dispatchEvent(
-      new CustomEvent('vsc-select', {
-        detail,
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this._dispatchLegacySelectEvent(selectedOption);
+    this._dispatchSelectEvent(selectedOption);
     this._show = false;
     document.removeEventListener('click', this._onClickOutsideBound);
   }
 
   private _onItemClick(event: CustomEvent) {
-    const {detail} = event;
-    this._show = false;
+    const et = event.currentTarget as VscodeContextMenuItem;
 
-    this.dispatchEvent(
-      new CustomEvent('vsc-select', {
-        detail,
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this._dispatchLegacySelectEvent(et);
+    this._dispatchSelectEvent(et);
+    this._show = false;
   }
 
   private _onItemMouseOver(event: MouseEvent) {
