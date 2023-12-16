@@ -12,7 +12,7 @@ export interface VscClickEventDetail {
 }
 
 /**
- * Child component of [ContextMenu](https://bendera.github.io/vscode-webview-elements/components/vscode-context-menu/).
+ * Child component of [ContextMenu](/components/context-menu/).
  *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
@@ -44,6 +44,7 @@ export class VscodeContextMenuItem extends VscElement {
   tabindex = 0;
 
   private onItemClick() {
+    /** @internal */
     this.dispatchEvent(
       new CustomEvent<VscClickEventDetail>('vsc-click', {
         detail: {

@@ -75,8 +75,18 @@ export class VscodeTabs extends VscElement {
   private _tabFocus = 0;
 
   private _dispatchSelectEvent() {
+    /** @deprecated */
     this.dispatchEvent(
       new CustomEvent('vsc-select', {
+        detail: {
+          selectedIndex: this.selectedIndex,
+        },
+        composed: true,
+      })
+    );
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-tabs-select', {
         detail: {
           selectedIndex: this.selectedIndex,
         },
