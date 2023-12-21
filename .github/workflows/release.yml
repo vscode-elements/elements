@@ -47,7 +47,7 @@ jobs:
       - name: Setup Node version
         uses: actions/setup-node@v3
         with:
-          scope: "@vsc-elements"
+          scope: "@vscode-elements"
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
@@ -100,13 +100,13 @@ jobs:
           npm pack
 
       - name: Publish to Npmjs.com (Pre)
-        run: npm publish --access=public --tag=next vsc-elements-elements-${{ env.RELEASE_VERSION }}.tgz
+        run: npm publish --access=public --tag=next vscode-elements-elements-${{ env.RELEASE_VERSION }}.tgz
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
         if: ${{ github.event.inputs.releaseChannel == 'pre' }}
 
       - name: Publish to Npmjs.com (Stable)
-        run: npm publish --access=public vsc-elements-elements-${{ env.RELEASE_VERSION }}.tgz
+        run: npm publish --access=public vscode-elements-elements-${{ env.RELEASE_VERSION }}.tgz
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
@@ -115,7 +115,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'pre' }}
         with:
-          artifacts: './vsc-elements-elements-*'
+          artifacts: './vscode-elements-elements-*'
           prerelease: true
           draft: true
           tag: ${{ env.GIT_TAG }}
@@ -125,7 +125,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
         with:
-          artifacts: './vsc-elements-elements-*'
+          artifacts: './vscode-elements-elements-*'
           prerelease: false
           draft: true
           tag: ${{ env.GIT_TAG }}
