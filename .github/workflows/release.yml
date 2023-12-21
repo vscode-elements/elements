@@ -16,7 +16,7 @@ on:
         description: 'Release Channel'
         required: true
         type: choice
-        default: stable
+        default: pre
         options:
           - stable
           - pre
