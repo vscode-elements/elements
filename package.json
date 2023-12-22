@@ -16,14 +16,11 @@
     "build": "wireit",
     "build:ts": "wireit",
     "build:watch": "wireit",
-    "clean": "rimraf .wireit && rimraf coverage && rimraf dist && rimraf docs && rimraf custom-elements.json && rimraf stats.html",
+    "clean": "rimraf .wireit && rimraf coverage && rimraf dist && rimraf custom-elements.json && rimraf stats.html",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint src/**/*.ts",
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/**/* --write",
-    "docs": "wireit",
-    "docs:dev": "wireit",
-    "docs:start": "wireit",
     "analyze": "wireit",
     "serve": "wireit",
     "start": "wireit",
@@ -71,58 +68,6 @@
     },
     "build:watch": {
       "command": "tsc --watch",
-      "service": true
-    },
-    "docs": {
-      "command": "eleventy --config=.eleventy.cjs",
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "dependencies": [
-        "build",
-        "analyze"
-      ],
-      "files": [
-        ".env",
-        "docs-src/**/*",
-        ".eleventy.cjs",
-        "custom-elements.json"
-      ],
-      "output": [
-        "docs/**/*"
-      ]
-    },
-    "docs:dev": {
-      "command": "eleventy --config=.eleventy.cjs",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "dependencies": [
-        "build",
-        "analyze"
-      ],
-      "files": [
-        ".env",
-        "docs-src/**/*",
-        ".eleventy.cjs",
-        "custom-elements.json"
-      ],
-      "service": true
-    },
-    "docs:start": {
-      "command": "eleventy --config=.eleventy.cjs --serve --port=8081",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "dependencies": [
-        "build",
-        "analyze"
-      ],
-      "files": [
-        ".env",
-        ".eleventy.cjs",
-        "src/**/*.ts"
-      ],
       "service": true
     },
     "serve": {
@@ -182,10 +127,7 @@
     "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@custom-elements-manifest/analyzer": "^0.9.0",
-    "@custom-elements-manifest/to-markdown": "^0.1.0",
     "@esm-bundle/chai": "^4.3.4-fix.0",
-    "@faker-js/faker": "^8.3.1",
-    "@gerhobbelt/markdown-it-github-headings": "^2.0.0-2",
     "@open-wc/testing": "^4.0.0",
     "@open-wc/testing-karma": "^4.0.9",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -206,20 +148,14 @@
     "@web/test-runner-mocha": "^0.9.0",
     "@web/test-runner-playwright": "^0.11.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
-    "api-viewer-element": "^1.0.0-pre.8",
-    "color": "^4.2.3",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "deepmerge": "^4.3.1",
     "dotenv": "^16.3.1",
     "eslint": "^8.55.0",
     "lit-analyzer": "^2.0.1",
-    "markdown-it": "^13.0.2",
-    "markdown-it-anchor": "^8.6.7",
     "mocha": "^10.2.0",
     "prettier": "^3.1.0",
-    "randomcolor": "^0.6.2",
-    "recursive-readdir": "^2.2.3",
     "rimraf": "^5.0.5",
     "rollup": "^4.6.1",
     "rollup-plugin-filesize": "^10.0.0",
