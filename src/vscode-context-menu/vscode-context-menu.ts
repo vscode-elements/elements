@@ -7,7 +7,6 @@ import type {
 } from '../vscode-context-menu-item/vscode-context-menu-item.js';
 import '../vscode-context-menu-item';
 import styles from './vscode-context-menu.styles.js';
-import {VscMenuSelectEvent} from '../events/MenuSelect.js';
 
 interface MenuItemData {
   label: string;
@@ -16,6 +15,14 @@ interface MenuItemData {
   separator?: boolean;
   tabindex?: number;
 }
+
+export type VscMenuSelectEvent = CustomEvent<{
+  keybinding: string;
+  label: string;
+  value: string;
+  separator: boolean;
+  tabindex: number;
+}>;
 
 /**
  * @fires {CustomEvent} vsc-menu-select - Emitted when a menu item is clicked
@@ -289,5 +296,9 @@ export class VscodeContextMenu extends VscElement {
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-context-menu': VscodeContextMenu;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-menu-select': VscMenuSelectEvent;
   }
 }

@@ -9,6 +9,12 @@ import '../vscode-icon/index.js';
 import {VscodeIcon} from '../vscode-icon/index.js';
 import styles from './vscode-tree.styles.js';
 
+export type VscTreeActionEvent = CustomEvent<{
+  actionId: string;
+  item: TreeItem | null;
+  value: string;
+}>;
+
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
 type IconType = 'themeicon' | 'image';
@@ -133,9 +139,10 @@ const isBranch = (item: TreeItem) => {
 };
 
 /**
- * @fires vsc-select Dispatched when an item is selected. The event data shape is described in the
- * `SelectEventDetail` interface.
+ * @fires vsc-select Dispatched when an item is selected.
+ * @fires {CustomEvent} vsc-tree-select Dispatched when an item is selected.
  * @fires vsc-run-action Dispatched when an action icon is clicked.
+ * @fires {VscTreeActionEvent} vsc-tree-action Dispatched when an action icon is clicked.
  *
  * @cssprop --vscode-focusBorder
  * @cssprop --vscode-font-family
@@ -255,6 +262,7 @@ export class VscodeTree extends VscElement {
       }
     }
 
+    /** @deprecated Renamed to `vsc-tree-action` */
     this.dispatchEvent(
       new CustomEvent<{actionId: string; item: TreeItem | null; value: string}>(
         'vsc-run-action',
@@ -266,6 +274,22 @@ export class VscodeTree extends VscElement {
           },
         }
       )
+    );
+
+    /**
+     * Dispatched when an action icon is clicked.
+     */
+    this.dispatchEvent(
+      new CustomEvent<{actionId: string; item: TreeItem | null; value: string}>(
+        'vsc-tree-action',
+        {
+          detail: {
+            actionId,
+            item,
+            value,
+          },
+        }
+      ) as VscTreeActionEvent
     );
   }
 
@@ -707,6 +731,7 @@ export class VscodeTree extends VscElement {
       path,
     };
 
+    /** @deprecated Renamed to `vsc-tree-select` */
     this.dispatchEvent(
       new CustomEvent<SelectEventDetail>('vsc-select', {
         bubbles: true,
@@ -714,6 +739,8 @@ export class VscodeTree extends VscElement {
         detail,
       })
     );
+
+    this.dispatchEvent(new CustomEvent('vsc-tree-select'));
   }
 
   private _focusPrevItem() {
@@ -875,5 +902,10 @@ export class VscodeTree extends VscElement {
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-tree': VscodeTree;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-tree-select': CustomEvent;
+    'vsc-tree-action': VscTreeActionEvent;
   }
 }
