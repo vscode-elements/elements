@@ -150,6 +150,7 @@
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
+    "custom-element-vs-code-integration": "^1.2.1",
     "deepmerge": "^4.3.1",
     "dotenv": "^16.3.1",
     "eslint": "^8.56.0",
