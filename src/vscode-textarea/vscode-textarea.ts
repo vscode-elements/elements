@@ -178,6 +178,7 @@ export class VscodeTextarea
     this.updateComplete.then(() => {
       this._textareaEl.checkValidity();
       this._setValidityFromInput();
+      this._internals.setFormValue(this._textareaEl.value);
     });
   }
 
