@@ -222,6 +222,7 @@ export class VscodeTextfield
     this.updateComplete.then(() => {
       this._inputEl.checkValidity();
       this._setValidityFromInput();
+      this._internals.setFormValue(this._inputEl.value);
     });
   }
 
