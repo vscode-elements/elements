@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Fixed
+
+- Added missing `custom-elements.json` file to the npm package.
+
 ## [0.17.1] - 2023-11-16
 
 ### Fixed
