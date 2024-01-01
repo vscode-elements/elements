@@ -29,8 +29,8 @@ export class VscodeSplitLayout extends VscElement {
   @property({type: Number, reflect: true, attribute: 'handle-size'})
   handleSize = 4;
 
-  @property({reflect: true, attribute: 'initial-position'})
-  initialPosition = '50%';
+  @property({reflect: true, attribute: 'initial-handle-position'})
+  initialHandlePosition = '50%';
 
   @state()
   private _startPaneRight = 0;
@@ -83,7 +83,7 @@ export class VscodeSplitLayout extends VscElement {
     this._boundRect = this.getBoundingClientRect();
     const {height, width} = this._boundRect;
     const maxPos = this.split === 'vertical' ? width : height;
-    const matches = /(^[0-9.]+)(%{0,1})$/.exec(this.initialPosition);
+    const matches = /(^[0-9.]+)(%{0,1})$/.exec(this.initialHandlePosition);
     let pos = 0;
     let numericVal = 0;
 
