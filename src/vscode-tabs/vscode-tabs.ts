@@ -18,6 +18,8 @@ export type VscTabsSelectEvent = CustomEvent<{selectedIndex: number}>;
  * @slot header - Slot for tab headers.
  * @slot addons - Right aligned area in the header.
  *
+ * @fires {VscTabSelectEvent} vsc-tabs-select - Dispatched when the active tab is changed
+ *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
  * @cssprop --vscode-font-weight
