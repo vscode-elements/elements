@@ -9,6 +9,7 @@
   "files": [
     "dist",
     "custom-elements.json",
+    "vscode.*-custom-data.json",
     "!dist/**/*.test.*"
   ],
   "customElements": "custom-elements.json",
@@ -16,7 +17,7 @@
     "build": "wireit",
     "build:ts": "wireit",
     "build:watch": "wireit",
-    "clean": "rimraf .wireit && rimraf coverage && rimraf dist && rimraf custom-elements.json && rimraf stats.html",
+    "clean": "rimraf -g .wireit coverage dist custom-elements.json stats.html vscode.*-custom-data.json",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint src/**/*.ts",
     "lint:lit-analyzer": "lit-analyzer",
@@ -29,7 +30,8 @@
     "test:watch": "wtr --watch",
     "checksize": "npm run build && cat dist/bundled.js | gzip -9 | wc -c",
     "generate": "node scripts/generateComponent.js",
-    "icons": "node scripts/generateIconList.js"
+    "icons": "node scripts/generateIconList.js",
+    "vscode-data": "wireit"
   },
   "wireit": {
     "analyze": {
@@ -46,6 +48,7 @@
       "command": "rollup -c --file dist/bundled.js",
       "dependencies": [
         "analyze",
+        "vscode-data",
         "build:ts"
       ],
       "files": [
@@ -100,6 +103,19 @@
         "src/**/*.ts"
       ],
       "output": []
+    },
+    "vscode-data": {
+      "command": "node scripts/generate-custom-data.mjs",
+      "dependencies": [
+        "analyze"
+      ],
+      "files": [
+        "custom-elements.json"
+      ],
+      "output": [
+        "vscode.html-custom-data.json",
+        "vscode.css-custom-data.json"
+      ]
     }
   },
   "keywords": [
