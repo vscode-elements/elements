@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - The form controls fully participate in the standard HTML forms. The affected components are the following:
   **Button**, **Single Select**, **Multi Select**, **Textfield**, **Textarea**, **Radio**, **Checkbox**.
+- Custom events are exported as TypeScript types. Check the [react-example](https://github.com/vscode-elements/react-example/blob/c481f9fcdecdb5377ca1955b28f506bff70d1f8b/src/Demo.tsx#L11) repository for examples.
+- **SplitLayout**: Added handle size property.
 
 ### Fixed
 
@@ -21,10 +23,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **Textarea**, **Textfield**: `minlength` and `maxlength` property is renamed to `minLength` and `maxLength`. This
   change adheres to the naming convention of the native `<textarea>` element. The attribute names
   are not changed.
-- **Textarea**, **Textfield**: dispatching native `input` and `change` events.
-- **Radio**, **Checkbox**, **SingleSelect**, **MultiSelect**: dispatching native `change` event
+- **Textarea**, **Textfield**: Dispatching native `input` and `change` events.
+- **Radio**, **Checkbox**, **SingleSelect**, **MultiSelect**: Dispatching native `change` event
 - **Collapsible**: Displaying the main content using the default slot instead of the named `body` slot.
-- **Split Layout**: Renamed `initial-pos` to `initial-handle-position`.
+- **Split Layout**: `initial-pos` is renamed to `initial-handle-position`.
+- **ContextMenu**: `vsc-select` event is renamed to `vsc-context-menu-select`.
+- **Tabs**: `vsc-select` event is renamed to `vsc-tabs-select`.
+- **Tree**: `vsc-run-action` event is renamed to `vsc-tree-action`.
+- **Tree**: `vsc-select` event is renamed to `vsc-tree-select`.
+- Lit updated to 3.x
+
+### Deprecated
+
+- **Textarea**, **Textfield**: `vsc-input` and `vsc-change` events are deprecated.
+- **Button**: `vsc-click` event is deprecated.
+- **Checkbox**: `vsc-change` event is deprecated.
+- **ContextMenu**: `vsc-select` is deprecated.
+- **FormContainer**: `data` property is deprecated.
+- **MultiSelect**, **SingleSelect**: `vsc-change` event is deprecated.
 
 ### Removed
 
