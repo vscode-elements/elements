@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- The form controls fully participate in the standard HTML forms. The affected components are the following:
+  **Button**, **Single Select**, **Multi Select**, **Textfield**, **Textarea**, **Radio**, **Checkbox**.
+
 ### Fixed
 
 - Values from the options was not registered in the **Select** when the component is connected to the DOM.
