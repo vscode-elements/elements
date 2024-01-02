@@ -29,10 +29,6 @@ type VscFormWidget =
   | VscodeCheckbox
   | VscodeRadio;
 
-interface FormData {
-  [key: string]: string | string[];
-}
-
 const isTextInput = (el: Element): el is VscodeTextarea | VscodeTextfield => {
   return ['vscode-textfield', 'vscode-textarea'].includes(
     el.tagName.toLocaleLowerCase()
@@ -78,8 +74,9 @@ export class VscodeFormContainer extends VscElement {
   @property({type: Number})
   breakpoint = 490;
 
+  /** @deprecated - Use the native `<form>` element instead. */
   @property({type: Object})
-  get data(): FormData {
+  get data(): {[key: string]: string | string[]} {
     return this._collectFormData();
   }
 
@@ -109,7 +106,7 @@ export class VscodeFormContainer extends VscElement {
     const vscFormWidgets = this.querySelectorAll(
       query
     ) as NodeListOf<VscFormWidget>;
-    const data: FormData = {};
+    const data: {[key: string]: string | string[]} = {};
 
     vscFormWidgets.forEach((widget) => {
       if (!widget.hasAttribute('name')) {
