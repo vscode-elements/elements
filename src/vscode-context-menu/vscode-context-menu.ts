@@ -16,7 +16,7 @@ interface MenuItemData {
   tabindex?: number;
 }
 
-export type VscMenuSelectEvent = CustomEvent<{
+export type VscContextMenuSelectEvent = CustomEvent<{
   keybinding: string;
   label: string;
   value: string;
@@ -177,7 +177,7 @@ export class VscodeContextMenu extends VscElement {
     const {keybinding, label, value, separator, tabindex} = selectedOption;
 
     this.dispatchEvent(
-      new CustomEvent('vsc-menu-select', {
+      new CustomEvent('vsc-context-menu-select', {
         detail: {
           keybinding,
           label,
@@ -185,7 +185,7 @@ export class VscodeContextMenu extends VscElement {
           tabindex,
           value,
         },
-      }) as VscMenuSelectEvent
+      }) as VscContextMenuSelectEvent
     );
   }
 
@@ -199,7 +199,7 @@ export class VscodeContextMenu extends VscElement {
       tabindex,
     };
 
-    /** @deprecated */
+    /** @deprecated - Renamed to `vsc-context-menu-select` */
     this.dispatchEvent(
       new CustomEvent('vsc-select', {
         detail,
@@ -299,6 +299,6 @@ declare global {
   }
 
   interface GlobalEventHandlersEventMap {
-    'vsc-menu-select': VscMenuSelectEvent;
+    'vsc-context-menu-select': VscContextMenuSelectEvent;
   }
 }
