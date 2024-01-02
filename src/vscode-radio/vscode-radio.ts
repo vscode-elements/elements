@@ -9,7 +9,10 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 /**
  * @attr name - Name which is used as a variable name in the data of the form-container.
  * @attr label - Attribute pair of the `label` property.
+ *
  * @prop label - Label text. It is only applied if component's innerHTML doesn't contain any text.
+ *
+ * @fires {Event} change - Dispatched when checked state is changed.
  *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
@@ -164,8 +167,8 @@ export class VscodeRadio
     }
   }
 
-  /** @deprecated */
   private _dispatchCustomEvent() {
+    /** @deprecated - Use the native `change` event instead. */
     this.dispatchEvent(
       new CustomEvent<{checked: boolean; label: string; value: string}>(
         'vsc-change',
