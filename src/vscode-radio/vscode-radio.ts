@@ -7,6 +7,9 @@ import styles from './vscode-radio.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
+ * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
+ * can be applied through the `invalid` property.
+ *
  * @attr name - Name which is used as a variable name in the data of the form-container.
  * @attr label - Attribute pair of the `label` property.
  *
@@ -47,6 +50,9 @@ export class VscodeRadio
 
   @property({type: Boolean, reflect: true, attribute: 'default-checked'})
   defaultChecked = false;
+
+  @property({type: Boolean, reflect: true})
+  invalid = false;
 
   /**
    * Name which is used as a variable name in the data of the form-container.

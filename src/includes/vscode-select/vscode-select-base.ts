@@ -27,6 +27,9 @@ export class VscodeSelectBase extends VscElement {
   @property({type: Boolean, reflect: true})
   combobox = false;
 
+  /**
+   * Sets the invalid state manually.
+   */
   @property({type: Boolean, reflect: true})
   invalid = false;
 

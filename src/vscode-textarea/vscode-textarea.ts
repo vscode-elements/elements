@@ -10,6 +10,9 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 /**
  * Multi-line text input.
  *
+ * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
+ * can be applied through the `invalid` property.
+ *
  * @fires {InputEvent} input
  * @fires {Event} change
  *

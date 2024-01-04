@@ -8,6 +8,11 @@ import styles from './vscode-multi-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
+ * Allows to select multiple items from a list of options.
+ *
+ * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
+ * can be applied through the `invalid` property.
+ *
  * @prop {boolean} invalid
  * @attr {boolean} invalid
  * @attr name - Name which is used as a variable name in the data of the form-container.

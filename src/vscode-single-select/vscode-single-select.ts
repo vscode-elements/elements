@@ -7,6 +7,11 @@ import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
+ * Allows to select an item from multiple options.
+ *
+ * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
+ * can be applied through the `invalid` property.
+ *
  * ## Types
  *
  * ```typescript
