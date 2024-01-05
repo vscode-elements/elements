@@ -15,6 +15,19 @@ export type VscTreeActionEvent = CustomEvent<{
   value: string;
 }>;
 
+export type VscTreeSelectEvent = CustomEvent<{
+  icons: {
+    branch?: string;
+    open?: string;
+    leaf?: string;
+  };
+  itemType: 'branch' | 'leaf';
+  label: string;
+  open: boolean;
+  value: string;
+  path: string;
+}>;
+
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
 type IconType = 'themeicon' | 'image';
@@ -740,7 +753,11 @@ export class VscodeTree extends VscElement {
       })
     );
 
-    this.dispatchEvent(new CustomEvent('vsc-tree-select'));
+    this.dispatchEvent(
+      new CustomEvent('vsc-tree-select', {
+        detail,
+      }) as VscTreeSelectEvent
+    );
   }
 
   private _focusPrevItem() {
@@ -905,7 +922,7 @@ declare global {
   }
 
   interface GlobalEventHandlersEventMap {
-    'vsc-tree-select': CustomEvent;
+    'vsc-tree-select': VscTreeSelectEvent;
     'vsc-tree-action': VscTreeActionEvent;
   }
 }
