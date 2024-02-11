@@ -218,9 +218,29 @@ export class VscodeTree extends VscElement {
   @state()
   private _focusedBranch: TreeItem | null = null;
 
+  /**
+   * Closes all opened tree items recursively.
+   */
   public closeAll(): void {
     this._closeSubTreeRecursively(this.data);
     this.requestUpdate();
+  }
+
+  /**
+   * Deselects all selected items.
+   */
+  public deselectAll() {
+    this._deselectItemsRecursively(this.data);
+    this.requestUpdate();
+  }
+
+  /**
+   * Returns a reference to a TreeItem object by path.
+   * @param path
+   * @returns
+   */
+  public getItemByPath(path: number[]): TreeItem | null {
+    return this._getItemByPath(path);
   }
 
   connectedCallback(): void {
@@ -729,6 +749,18 @@ export class VscodeTree extends VscElement {
 
       if (item.subItems && item.subItems.length > 0) {
         this._closeSubTreeRecursively(item.subItems);
+      }
+    });
+  }
+
+  private _deselectItemsRecursively(tree: TreeItem[]) {
+    tree.forEach((item) => {
+      if (item.selected) {
+        item.selected = false;
+      }
+
+      if (item.subItems && item.subItems.length > 0) {
+        this._deselectItemsRecursively(item.subItems);
       }
     });
   }
