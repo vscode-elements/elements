@@ -524,6 +524,22 @@
   <div class="story">
     <h2 class="story-title">Decorations</h2>
     <div class="story-content">
+      <style>
+        #decorations-example::part(text-content) {
+          outline: 1px solid #00f;
+          outline-offset: -1px;
+        }
+
+        #decorations-example::part(description) {
+          outline: 1px solid #0f0;
+          outline-offset: -1px;
+        }
+
+        #decorations-example::part(decoration-counter-badge) {
+          outline: 1px solid #f00;
+          outline-offset: -1px;
+        }
+      </style>
       <component-preview>
         <vscode-tree id="decorations-example"></vscode-tree>
         <script type="module">
@@ -582,6 +598,7 @@
                     {
                       icons,
                       label: 'vscode-tree.ts',
+                      description: 'lorem ipsum',
                       value: 'C:\\workspace\\vscode-webview-elements\\src\\vscode-tree\\vscode-tree.ts',
                     },
                   ],

@@ -494,6 +494,7 @@ export class VscodeTree extends VscElement {
               html`<vscode-badge
                 variant="counter"
                 class=${['counter-badge', visibleWhenClass].join(' ')}
+                part="counter-badge-decoration"
                 >${content}</vscode-badge
               >`
             );
@@ -504,6 +505,7 @@ export class VscodeTree extends VscElement {
                 name="circle-filled"
                 size="14"
                 class=${['filled-circle', visibleWhenClass].join(' ')}
+                part="filled-circle-decoration"
                 style=${styleMap(inlineStyles)}
               ></vscode-icon>`
             );
@@ -512,6 +514,7 @@ export class VscodeTree extends VscElement {
             decorations.push(
               html`<div
                 class=${['decoration-text', visibleWhenClass].join(' ')}
+                part="caption-decoration"
                 style=${styleMap(inlineStyles)}
               >
                 ${content}
@@ -524,7 +527,9 @@ export class VscodeTree extends VscElement {
     }
 
     if (decorations.length > 0) {
-      return html`<div class="decorations">${decorations}</div>`;
+      return html`<div class="decorations" part="decorations">
+        ${decorations}
+      </div>`;
     } else {
       return html`${nothing}`;
     }
@@ -578,7 +583,7 @@ export class VscodeTree extends VscElement {
           </ul>`
         : nothing;
     const descriptionMarkup = description
-      ? html`<span class="description">${description}</span>`
+      ? html`<span class="description" part="description">${description}</span>`
       : nothing;
     const actionsMarkup = this._renderActions(item);
     const decorationsMarkup = this._renderDecorations(item);
@@ -599,7 +604,9 @@ export class VscodeTree extends VscElement {
           class="${contentsClasses.join(' ')}"
           style="${styleMap({paddingLeft: `${padLeft + CONTENT_PADDING}px`})}"
         >
-          ${arrowMarkup}${iconMarkup}<span class="text-content"
+          ${arrowMarkup}${iconMarkup}<span
+            class="text-content"
+            part="text-content"
             >${label}${descriptionMarkup}</span
           >
           ${actionsMarkup} ${decorationsMarkup}

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Added
+
+- **Tree**: Added customizable [CSS part](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) regions
+
 ## [1.1.0] - 2024-02-11
 
 ### Added
