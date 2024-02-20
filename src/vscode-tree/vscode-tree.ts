@@ -173,6 +173,13 @@ const isBranch = (item: TreeItem) => {
  * @cssprop --vscode-list-focusOutline
  * @cssprop --vscode-tree-inactiveIndentGuidesStroke
  * @cssprop --vscode-tree-indentGuidesStroke
+ *
+ * @csspart text-content
+ * @csspart description
+ * @csspart counter-badge-decoration
+ * @csspart filled-circle-decoration
+ * @csspart caption-decoration
+ * @csspart decorations Container of decorations
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
