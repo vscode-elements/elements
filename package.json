@@ -132,7 +132,8 @@
   },
   "homepage": "https://vscode-elements.github.io",
   "dependencies": {
-    "lit": "^3.2.1"
+    "lit": "^3.2.1",
+    "@lit/context": "^1.1.0"
   },
   "devDependencies": {
     "@awmottaz/prettier-plugin-void-html": "^1.8.0",
