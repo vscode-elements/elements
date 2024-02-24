@@ -1,4 +1,5 @@
-import {PropertyValueMap, PropertyValues, TemplateResult, html} from 'lit';
+import {PropertyValues, TemplateResult, html} from 'lit';
+import {provide} from '@lit/context';
 import {
   customElement,
   property,
@@ -7,7 +8,7 @@ import {
 import {VscElement} from '../includes/VscElement';
 import type {VscodeListItem} from '../vscode-list-item';
 import styles from './vscode-list.styles';
-import {updateChildrenProps} from '../vscode-list-item/helpers';
+import {listContext, type ListContext} from './list-context';
 
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
@@ -18,6 +19,12 @@ export class VscodeList extends VscElement {
 
   @property({type: Number})
   indent = 8;
+
+  @provide({context: listContext})
+  private listData: ListContext = {
+    arrows: false,
+    indent: 8,
+  };
 
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _assignedListItems!: VscodeListItem[];
@@ -33,19 +40,18 @@ export class VscodeList extends VscElement {
   }
 
   private _handleSlotChange = () => {
-    updateChildrenProps(this._assignedListItems, {
-      parentLevel: -1,
-      parentIndent: this.indent,
-      arrow: this.arrows,
-    });
+    this._assignedListItems.forEach((li) => (li.level = 0));
   };
 
   protected willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('arrows') || changedProperties.has('indent')) {
-      this._assignedListItems.forEach((li) => {
-        li.arrow = this.arrows;
-        li.indent = this.indent;
-      });
+    const {arrows, indent} = this;
+
+    if (changedProperties.has('arrows')) {
+      this.listData = {...this.listData, arrows};
+    }
+
+    if (changedProperties.has('indent')) {
+      this.listData = {...this.listData, indent};
     }
   }
 
