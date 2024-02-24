@@ -5,7 +5,7 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement';
-import {VscodeListItem} from '../vscode-list-item';
+import type {VscodeListItem} from '../vscode-list-item';
 import styles from './vscode-list.styles';
 import {updateChildrenProps} from '../vscode-list-item/helpers';
 
@@ -21,6 +21,16 @@ export class VscodeList extends VscElement {
 
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _assignedListItems!: VscodeListItem[];
+
+  private _selectedItems: VscodeListItem[] = [];
+
+  public addSelectedItem(item: VscodeListItem) {
+    this._selectedItems.push(item);
+  }
+
+  public removeSelectedItem(item: VscodeListItem) {
+    this._selectedItems = this._selectedItems.filter((i) => i !== item);
+  }
 
   private _handleSlotChange = () => {
     updateChildrenProps(this._assignedListItems, {
