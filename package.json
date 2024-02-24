@@ -137,7 +137,8 @@
   },
   "homepage": "https://bendera.github.io/vscode-webview-elements",
   "dependencies": {
-    "lit": "^3.2.0"
+    "@lit/context": "^1.1.0",
+    "lit": "^3.1.2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",
