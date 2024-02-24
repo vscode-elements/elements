@@ -5,6 +5,13 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
+      --hover-outline-color: transparent;
+      --hover-outline-style: solid;
+      --hover-outline-width: 0;
+      --selected-outline-color: transparent;
+      --selected-outline-style: solid;
+      --selected-outline-width: 0;
+
       cursor: pointer;
       display: block;
       user-select: none;
@@ -24,6 +31,18 @@ const styles: CSSResultGroup = [
       padding-right: 12px;
     }
 
+    .content:hover {
+      background-color: var(--vscode-list-hoverBackground);
+      color: var(--vscode-list-hoverForeground);
+    }
+
+    .content:hover,
+    :host([selected]) .content:hover {
+      outline-color: var(--hover-outline-color);
+      outline-style: var(--hover-outline-style);
+      outline-width: var(--hover-outline-width);
+    }
+
     .arrow-container {
       align-items: center;
       display: var(--vsc-list-item-arrow-display);
@@ -36,7 +55,7 @@ const styles: CSSResultGroup = [
 
     .arrow-container svg {
       display: block;
-      fill: currentColor;
+      fill: var(--vscode-icon-foreground);
     }
 
     .arrow-container.icon-rotated svg {
