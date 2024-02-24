@@ -30,7 +30,8 @@ const arrowIcon = html`<svg
 export class VscodeListItem extends VscElement {
   static styles = styles;
 
-  @property({type: Boolean, reflect: true})
+  /** @internal */
+  @property({type: Boolean})
   arrow = false;
 
   @property({type: Boolean, reflect: true})
@@ -39,7 +40,8 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean, reflect: true})
   closed = false;
 
-  @property({type: Number, reflect: true})
+  /** @internal */
+  @property({type: Number})
   indent = 8;
 
   @property({type: Number, reflect: true})
