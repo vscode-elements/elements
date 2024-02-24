@@ -1,14 +1,16 @@
-import {PropertyValues, TemplateResult, html, nothing} from 'lit';
+import {TemplateResult, html, nothing} from 'lit';
+import {consume} from '@lit/context';
 import {
   customElement,
   property,
   queryAssignedElements,
+  state,
 } from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
-import {updateChildrenProps} from './helpers';
 import {classMap} from 'lit/directives/class-map.js';
+import {listContext, type ListContext} from '../vscode-list/list-context';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -30,19 +32,15 @@ const arrowIcon = html`<svg
 export class VscodeListItem extends VscElement {
   static styles = styles;
 
-  /** @internal */
-  @property({type: Boolean})
-  arrow = false;
+  @consume({context: listContext, subscribe: true})
+  @state()
+  private listData: ListContext = {arrows: false, indent: 8};
 
   @property({type: Boolean, reflect: true})
   branch = false;
 
   @property({type: Boolean, reflect: true})
   closed = false;
-
-  /** @internal */
-  @property({type: Number})
-  indent = 8;
 
   @property({type: Number, reflect: true})
   level = 0;
@@ -60,13 +58,8 @@ export class VscodeListItem extends VscElement {
   }
 
   private _childrenSlotChange() {
-    updateChildrenProps(this._childrenListItems, {
-      parentIndent: this.indent,
-      parentLevel: this.level,
-      arrow: this.arrow,
-    });
-
     this.branch = this._childrenListItems.length > 0;
+    this._childrenListItems.forEach((li) => (li.level = this.level + 1));
   }
 
   private _handleMainSlotChange = () => {
@@ -83,19 +76,11 @@ export class VscodeListItem extends VscElement {
     this._mainSlotChange();
   }
 
-  protected willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('arrow') || changedProperties.has('indent')) {
-      this._childrenListItems.forEach((li) => {
-        li.arrow = this.arrow;
-        li.indent = this.indent;
-      });
-    }
-  }
-
   render(): TemplateResult {
-    let indentation = BASE_INDENT + this.level * this.indent;
+    const {arrows, indent} = this.listData;
+    let indentation = BASE_INDENT + this.level * indent;
 
-    if (!this.branch && this.arrow) {
+    if (!this.branch && arrows) {
       indentation += ARROW_CONTAINER_WIDTH;
     }
 
@@ -105,7 +90,7 @@ export class VscodeListItem extends VscElement {
         @click=${this._onContentClick}
         style=${styleMap({paddingLeft: `${indentation}px`})}
       >
-        ${this.branch
+        ${this.branch && arrows
           ? html`<div
               class=${classMap({
                 'arrow-container': true,
