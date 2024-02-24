@@ -1,0 +1,142 @@
+import {PropertyValues, TemplateResult, html, nothing} from 'lit';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+} from 'lit/decorators.js';
+import {styleMap} from 'lit/directives/style-map.js';
+import {VscElement} from '../includes/VscElement';
+import styles from './vscode-list-item.styles';
+import {updateChildrenProps} from './helpers';
+import {classMap} from 'lit/directives/class-map.js';
+
+const BASE_INDENT = 3;
+const ARROW_CONTAINER_WIDTH = 30;
+
+const arrowIcon = html`<svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M10.072 8.024L5.715 3.667l.618-.62L11 7.716v.618L6.333 13l-.618-.619 4.357-4.357z"
+  />
+</svg>`;
+
+@customElement('vscode-list-item')
+export class VscodeListItem extends VscElement {
+  static styles = styles;
+
+  @property({type: Boolean, reflect: true})
+  arrow = false;
+
+  @property({type: Boolean, reflect: true})
+  branch = false;
+
+  @property({type: Boolean, reflect: true})
+  closed = false;
+
+  @property({type: Number, reflect: true})
+  indent = 8;
+
+  @property({type: Number, reflect: true})
+  level = 0;
+
+  @queryAssignedElements({selector: 'vscode-list-item'})
+  _initiallyAssignedListItems!: VscodeListItem[];
+
+  @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
+  _childrenListItems!: VscodeListItem[];
+
+  private _mainSlotChange() {
+    this._initiallyAssignedListItems.forEach((li) => {
+      li.setAttribute('slot', 'children');
+    });
+  }
+
+  private _childrenSlotChange() {
+    updateChildrenProps(this._childrenListItems, {
+      parentIndent: this.indent,
+      parentLevel: this.level,
+      arrow: this.arrow,
+    });
+
+    this.branch = this._childrenListItems.length > 0;
+  }
+
+  private _handleMainSlotChange = () => {
+    this._mainSlotChange();
+  };
+
+  private _onContentClick = (ev: MouseEvent) => {
+    ev.stopPropagation();
+    this.closed = !this.branch ? false : !this.closed;
+  };
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this._mainSlotChange();
+  }
+
+  protected willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('arrow') || changedProperties.has('indent')) {
+      this._childrenListItems.forEach((li) => {
+        li.arrow = this.arrow;
+        li.indent = this.indent;
+      });
+    }
+  }
+
+  render(): TemplateResult {
+    let indentation = BASE_INDENT + this.level * this.indent;
+
+    if (!this.branch && this.arrow) {
+      indentation += ARROW_CONTAINER_WIDTH;
+    }
+
+    return html` <div class="wrapper">
+      <div
+        class="content"
+        @click=${this._onContentClick}
+        style=${styleMap({paddingLeft: `${indentation}px`})}
+      >
+        ${this.branch
+          ? html`<div
+              class=${classMap({
+                'arrow-container': true,
+                'icon-rotated': !this.closed,
+              })}
+            >
+              ${arrowIcon}
+            </div>`
+          : nothing}
+        <div class="icon-container">
+          <slot name="icon"></slot>
+          ${this.branch && this.closed
+            ? html`<slot name="icon-branch"></slot>`
+            : nothing}
+          ${this.branch && !this.closed
+            ? html`<slot name="icon-branch-opened"></slot>`
+            : nothing}
+          ${!this.branch ? html`<slot name="icon-leaf"></slot>` : nothing}
+        </div>
+        <div class="text-content">
+          <slot @slotchange=${this._handleMainSlotChange}></slot>
+        </div>
+        <div class="decorations"><slot name="decorations"></slot></div>
+      </div>
+      <div class="children">
+        <slot name="children" @slotchange=${this._childrenSlotChange}></slot>
+      </div>
+    </div>`;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'vscode-list-item': VscodeListItem;
+  }
+}
