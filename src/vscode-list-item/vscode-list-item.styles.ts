@@ -48,6 +48,10 @@ const styles: CSSResultGroup = [
       background-color: var(--vscode-list-activeSelectionBackground);
     }
 
+    :host([selected]) ::slotted(vscode-icon) {
+      color: var(--vscode-list-activeSelectionForeground);
+    }
+
     .arrow-container {
       align-items: center;
       display: var(--vsc-list-item-arrow-display);
@@ -65,6 +69,10 @@ const styles: CSSResultGroup = [
 
     .arrow-container.icon-rotated svg {
       transform: rotate(90deg);
+    }
+
+    :host([selected]) .arrow-container svg {
+      fill: var(--vscode-list-activeSelectionForeground);
     }
 
     .icon-container {
