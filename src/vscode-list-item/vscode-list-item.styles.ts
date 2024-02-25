@@ -95,6 +95,37 @@ const styles: CSSResultGroup = [
       opacity: 0.95;
     }
 
+    .additional-content {
+      display: flex;
+      margin-left: auto;
+    }
+
+    .decorations {
+      align-items: center;
+      display: flex;
+      height: 22px;
+    }
+
+    .actions {
+      align-items: center;
+      display: none;
+      height: 22px;
+    }
+
+    .content:hover .actions {
+      display: flex;
+    }
+
+    .actions ::slotted(vscode-icon),
+    .actions ::slotted(vscode-badge) {
+      margin-left: 4px;
+    }
+
+    .decorations ::slotted(vscode-icon),
+    .decorations ::slotted(vscode-badge) {
+      margin-left: 4px;
+    }
+
     :host([closed]) ::slotted(vscode-list-item) {
       display: none;
     }
