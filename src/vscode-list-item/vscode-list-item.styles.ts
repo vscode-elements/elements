@@ -84,6 +84,15 @@ const styles: CSSResultGroup = [
 
     .text-content {
       line-height: 22px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .description {
+      font-size: 0.9em;
+      margin-left: 0.5em;
+      opacity: 0.95;
     }
 
     :host([closed]) ::slotted(vscode-list-item) {
