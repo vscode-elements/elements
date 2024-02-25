@@ -45,11 +45,12 @@ export class VscodeListItem extends VscElement {
   selected = false;
 
   @consume({context: listContext, subscribe: true})
-  @state()
-  private _listData: ListContext = {
+  listData: ListContext = {
     arrows: false,
     indent: 8,
     selectedItems: new Set(),
+    hasBranchItem: false,
+    rootElement: null,
   };
 
   @queryAssignedElements({selector: 'vscode-list-item'})
@@ -59,7 +60,7 @@ export class VscodeListItem extends VscElement {
   private _childrenListItems!: VscodeListItem[];
 
   private _selectItem(isCtrlDown: boolean) {
-    const {selectedItems} = this._listData;
+    const {selectedItems} = this.listData;
 
     if (isCtrlDown) {
       if (this.selected) {
@@ -86,6 +87,10 @@ export class VscodeListItem extends VscElement {
   private _handleChildrenSlotChange() {
     this.branch = this._childrenListItems.length > 0;
     this._childrenListItems.forEach((li) => (li.level = this.level + 1));
+
+    if (this.listData.rootElement) {
+      this.listData.rootElement.updateHasBranchItemFlag();
+    }
   }
 
   private _handleMainSlotChange = () => {
@@ -115,10 +120,10 @@ export class VscodeListItem extends VscElement {
   }
 
   render(): TemplateResult {
-    const {arrows, indent} = this._listData;
+    const {arrows, indent, hasBranchItem} = this.listData;
     let indentation = BASE_INDENT + this.level * indent;
 
-    if (!this.branch && arrows) {
+    if (!this.branch && arrows && hasBranchItem) {
       indentation += ARROW_CONTAINER_WIDTH;
     }
 
@@ -159,7 +164,10 @@ export class VscodeListItem extends VscElement {
         <div class="decorations"><slot name="decorations"></slot></div>
       </div>
       <div class="children">
-        <slot name="children" @slotchange=${this._handleChildrenSlotChange}></slot>
+        <slot
+          name="children"
+          @slotchange=${this._handleChildrenSlotChange}
+        ></slot>
       </div>
     </div>`;
   }
