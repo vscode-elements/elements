@@ -148,8 +148,13 @@ export class VscodeListItem extends VscElement {
             : nothing}
           ${!this.branch ? html`<slot name="icon-leaf"></slot>` : nothing}
         </div>
-        <div class="text-content">
-          <slot @slotchange=${this._handleMainSlotChange}></slot>
+        <div class="text-content" part="text-content">
+          <span class="label" part="label"
+            ><slot @slotchange=${this._handleMainSlotChange}></slot
+          ></span>
+          <span class="description" part="description"
+            ><slot name="description"></slot
+          ></span>
         </div>
         <div class="decorations"><slot name="decorations"></slot></div>
       </div>
