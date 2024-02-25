@@ -161,7 +161,10 @@ export class VscodeListItem extends VscElement {
             ><slot name="description"></slot
           ></span>
         </div>
-        <div class="decorations"><slot name="decorations"></slot></div>
+        <div class="additional-content" part="additional-content">
+          <div class="decorations" part="decorations"><slot name="decorations"></slot></div>
+          <div class="actions" part="actions"><slot name="actions"></slot></div>
+        </div>
       </div>
       <div class="children">
         <slot
