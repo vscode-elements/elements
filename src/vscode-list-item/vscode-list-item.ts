@@ -83,7 +83,7 @@ export class VscodeListItem extends VscElement {
     });
   }
 
-  private _childrenSlotChange() {
+  private _handleChildrenSlotChange() {
     this.branch = this._childrenListItems.length > 0;
     this._childrenListItems.forEach((li) => (li.level = this.level + 1));
   }
@@ -159,7 +159,7 @@ export class VscodeListItem extends VscElement {
         <div class="decorations"><slot name="decorations"></slot></div>
       </div>
       <div class="children">
-        <slot name="children" @slotchange=${this._childrenSlotChange}></slot>
+        <slot name="children" @slotchange=${this._handleChildrenSlotChange}></slot>
       </div>
     </div>`;
   }
