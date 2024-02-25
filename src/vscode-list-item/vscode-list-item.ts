@@ -109,8 +109,8 @@ export class VscodeListItem extends VscElement {
   }
 
   willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('selected')) {
-      this._listData.selectedItems.add(this);
+    if (changedProperties.has('selected') && this.selected) {
+      this.listData.selectedItems.add(this);
     }
   }
 
