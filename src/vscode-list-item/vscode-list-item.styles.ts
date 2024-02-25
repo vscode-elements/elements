@@ -43,6 +43,11 @@ const styles: CSSResultGroup = [
       outline-width: var(--hover-outline-width);
     }
 
+    :host([selected]) .content {
+      color: var(--vscode-list-activeSelectionForeground);
+      background-color: var(--vscode-list-activeSelectionBackground);
+    }
+
     .arrow-container {
       align-items: center;
       display: var(--vsc-list-item-arrow-display);

@@ -24,6 +24,7 @@ export class VscodeList extends VscElement {
   private listData: ListContext = {
     arrows: false,
     indent: 8,
+    selectedItems: new Set(),
   };
 
   @queryAssignedElements({selector: 'vscode-list-item'})

@@ -11,6 +11,7 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {listContext, type ListContext} from '../vscode-list/list-context';
+import uniqueId from '../includes/uniqueId';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -34,7 +35,11 @@ export class VscodeListItem extends VscElement {
 
   @consume({context: listContext, subscribe: true})
   @state()
-  private listData: ListContext = {arrows: false, indent: 8};
+  private listData: ListContext = {
+    arrows: false,
+    indent: 8,
+    selectedItems: new Set(),
+  };
 
   @property({type: Boolean, reflect: true})
   branch = false;
@@ -45,11 +50,35 @@ export class VscodeListItem extends VscElement {
   @property({type: Number, reflect: true})
   level = 0;
 
+  @property({type: Boolean, reflect: true})
+  selected = false;
+
+  private _componentId: string;
+
   @queryAssignedElements({selector: 'vscode-list-item'})
   _initiallyAssignedListItems!: VscodeListItem[];
 
   @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
   _childrenListItems!: VscodeListItem[];
+
+  private _selectItem(isCtrlDown: boolean) {
+    const {selectedItems} = this.listData;
+
+    if (isCtrlDown) {
+      if (this.selected) {
+        this.selected = false;
+        selectedItems.delete(this);
+      } else {
+        this.selected = true;
+        selectedItems.add(this);
+      }
+    } else {
+      selectedItems.forEach((li) => (li.selected = false));
+      selectedItems.clear();
+      this.selected = true;
+      selectedItems.add(this);
+    }
+  }
 
   private _mainSlotChange() {
     this._initiallyAssignedListItems.forEach((li) => {
@@ -66,10 +95,21 @@ export class VscodeListItem extends VscElement {
     this._mainSlotChange();
   };
 
-  private _onContentClick = (ev: MouseEvent) => {
+  private _handleContentClick = (ev: MouseEvent) => {
     ev.stopPropagation();
-    this.closed = !this.branch ? false : !this.closed;
+
+    const isCtrlDown = ev.ctrlKey;
+    this._selectItem(isCtrlDown);
+
+    if (this.branch && !isCtrlDown) {
+      this.closed = !this.closed;
+    }
   };
+
+  constructor() {
+    super();
+    this._componentId = uniqueId('list-item-');
+  }
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -87,7 +127,7 @@ export class VscodeListItem extends VscElement {
     return html` <div class="wrapper">
       <div
         class="content"
-        @click=${this._onContentClick}
+        @click=${this._handleContentClick}
         style=${styleMap({paddingLeft: `${indentation}px`})}
       >
         ${this.branch && arrows
