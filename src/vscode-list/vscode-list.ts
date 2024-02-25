@@ -17,7 +17,7 @@ export class VscodeList extends VscElement {
   @property({type: Boolean, reflect: true})
   arrows = false;
 
-  @property({type: Number})
+  @property({type: Number, reflect: true})
   indent = 8;
 
   @provide({context: listContext})
