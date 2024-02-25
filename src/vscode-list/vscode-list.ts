@@ -21,7 +21,7 @@ export class VscodeList extends VscElement {
   indent = 8;
 
   @provide({context: listContext})
-  private listData: ListContext = {
+  private _listData: ListContext = {
     arrows: false,
     indent: 8,
     selectedItems: new Set(),
@@ -38,11 +38,11 @@ export class VscodeList extends VscElement {
     const {arrows, indent} = this;
 
     if (changedProperties.has('arrows')) {
-      this.listData = {...this.listData, arrows};
+      this._listData = {...this._listData, arrows};
     }
 
     if (changedProperties.has('indent')) {
-      this.listData = {...this.listData, indent};
+      this._listData = {...this._listData, indent};
     }
   }
 

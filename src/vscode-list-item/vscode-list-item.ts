@@ -32,14 +32,6 @@ const arrowIcon = html`<svg
 export class VscodeListItem extends VscElement {
   static styles = styles;
 
-  @consume({context: listContext, subscribe: true})
-  @state()
-  private listData: ListContext = {
-    arrows: false,
-    indent: 8,
-    selectedItems: new Set(),
-  };
-
   @property({type: Boolean, reflect: true})
   branch = false;
 
@@ -52,14 +44,22 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean, reflect: true})
   selected = false;
 
+  @consume({context: listContext, subscribe: true})
+  @state()
+  private _listData: ListContext = {
+    arrows: false,
+    indent: 8,
+    selectedItems: new Set(),
+  };
+
   @queryAssignedElements({selector: 'vscode-list-item'})
-  _initiallyAssignedListItems!: VscodeListItem[];
+  private _initiallyAssignedListItems!: VscodeListItem[];
 
   @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
-  _childrenListItems!: VscodeListItem[];
+  private _childrenListItems!: VscodeListItem[];
 
   private _selectItem(isCtrlDown: boolean) {
-    const {selectedItems} = this.listData;
+    const {selectedItems} = this._listData;
 
     if (isCtrlDown) {
       if (this.selected) {
@@ -110,12 +110,12 @@ export class VscodeListItem extends VscElement {
 
   willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('selected')) {
-      this.listData.selectedItems.add(this);
+      this._listData.selectedItems.add(this);
     }
   }
 
   render(): TemplateResult {
-    const {arrows, indent} = this.listData;
+    const {arrows, indent} = this._listData;
     let indentation = BASE_INDENT + this.level * indent;
 
     if (!this.branch && arrows) {
