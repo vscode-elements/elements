@@ -30,16 +30,6 @@ export class VscodeList extends VscElement {
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _assignedListItems!: VscodeListItem[];
 
-  private _selectedItems: VscodeListItem[] = [];
-
-  public addSelectedItem(item: VscodeListItem) {
-    this._selectedItems.push(item);
-  }
-
-  public removeSelectedItem(item: VscodeListItem) {
-    this._selectedItems = this._selectedItems.filter((i) => i !== item);
-  }
-
   private _handleSlotChange = () => {
     this._assignedListItems.forEach((li) => (li.level = 0));
   };
