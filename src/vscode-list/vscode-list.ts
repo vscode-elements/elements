@@ -4,6 +4,7 @@ import {
   customElement,
   property,
   queryAssignedElements,
+  state,
 } from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement';
 import type {VscodeListItem} from '../vscode-list-item';
@@ -21,11 +22,24 @@ export class VscodeList extends VscElement {
   indent = 8;
 
   @provide({context: listContext})
-  private _listData: ListContext = {
+  @property({attribute: false})
+  listData: ListContext = {
     arrows: false,
     indent: 8,
     selectedItems: new Set(),
+    hasBranchItem: false,
+    rootElement: this,
   };
+
+  /**
+   * @internal
+   * Updates `hasBranchItem` property in the context state in order to removing
+   * extra padding before the leaf elements, if it is required.
+   */
+  updateHasBranchItemFlag() {
+    const hasBranchItem = this._assignedListItems.some((li) => li.branch);
+    this.listData = {...this.listData, hasBranchItem};
+  }
 
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _assignedListItems!: VscodeListItem[];
@@ -38,11 +52,11 @@ export class VscodeList extends VscElement {
     const {arrows, indent} = this;
 
     if (changedProperties.has('arrows')) {
-      this._listData = {...this._listData, arrows};
+      this.listData = {...this.listData, arrows};
     }
 
     if (changedProperties.has('indent')) {
-      this._listData = {...this._listData, indent};
+      this.listData = {...this.listData, indent};
     }
   }
 
