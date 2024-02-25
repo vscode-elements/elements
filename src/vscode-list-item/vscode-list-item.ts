@@ -45,7 +45,7 @@ export class VscodeListItem extends VscElement {
   selected = false;
 
   @consume({context: listContext, subscribe: true})
-  listData: ListContext = {
+  private _listContextState: ListContext = {
     arrows: false,
     indent: 8,
     selectedItems: new Set(),
@@ -60,7 +60,7 @@ export class VscodeListItem extends VscElement {
   private _childrenListItems!: VscodeListItem[];
 
   private _selectItem(isCtrlDown: boolean) {
-    const {selectedItems} = this.listData;
+    const {selectedItems} = this._listContextState;
 
     if (isCtrlDown) {
       if (this.selected) {
@@ -88,8 +88,8 @@ export class VscodeListItem extends VscElement {
     this.branch = this._childrenListItems.length > 0;
     this._childrenListItems.forEach((li) => (li.level = this.level + 1));
 
-    if (this.listData.rootElement) {
-      this.listData.rootElement.updateHasBranchItemFlag();
+    if (this._listContextState.rootElement) {
+      this._listContextState.rootElement.updateHasBranchItemFlag();
     }
   }
 
@@ -115,12 +115,12 @@ export class VscodeListItem extends VscElement {
 
   willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('selected') && this.selected) {
-      this.listData.selectedItems.add(this);
+      this._listContextState.selectedItems.add(this);
     }
   }
 
   render(): TemplateResult {
-    const {arrows, indent, hasBranchItem} = this.listData;
+    const {arrows, indent, hasBranchItem} = this._listContextState;
     let indentation = BASE_INDENT + this.level * indent;
 
     if (!this.branch && arrows && hasBranchItem) {
