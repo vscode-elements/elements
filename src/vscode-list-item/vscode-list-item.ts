@@ -116,6 +116,12 @@ export class VscodeListItem extends VscElement {
     this._mainSlotChange();
   }
 
+  willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('selected')) {
+      this.listData.selectedItems.add(this);
+    }
+  }
+
   render(): TemplateResult {
     const {arrows, indent} = this.listData;
     let indentation = BASE_INDENT + this.level * indent;
