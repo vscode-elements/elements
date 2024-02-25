@@ -1,4 +1,4 @@
-import {TemplateResult, html, nothing} from 'lit';
+import {PropertyValues, TemplateResult, html, nothing} from 'lit';
 import {consume} from '@lit/context';
 import {
   customElement,
@@ -11,7 +11,6 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {listContext, type ListContext} from '../vscode-list/list-context';
-import uniqueId from '../includes/uniqueId';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -52,8 +51,6 @@ export class VscodeListItem extends VscElement {
 
   @property({type: Boolean, reflect: true})
   selected = false;
-
-  private _componentId: string;
 
   @queryAssignedElements({selector: 'vscode-list-item'})
   _initiallyAssignedListItems!: VscodeListItem[];
@@ -105,11 +102,6 @@ export class VscodeListItem extends VscElement {
       this.closed = !this.closed;
     }
   };
-
-  constructor() {
-    super();
-    this._componentId = uniqueId('list-item-');
-  }
 
   connectedCallback(): void {
     super.connectedCallback();
