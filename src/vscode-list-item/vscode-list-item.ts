@@ -38,17 +38,27 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean, reflect: true})
   closed = false;
 
+  @property({type: Boolean, reflect: true})
+  focused = false;
+
   @property({type: Number, reflect: true})
   level = 0;
 
   @property({type: Boolean, reflect: true})
   selected = false;
 
+  @property({type: Number, reflect: true})
+  tabIndex = -1;
+
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
     arrows: false,
     indent: 8,
     selectedItems: new Set(),
+    focusedItem: null,
+    focusItem: () => {
+      return;
+    },
     hasBranchItem: false,
     rootElement: null,
   };
@@ -58,6 +68,14 @@ export class VscodeListItem extends VscElement {
 
   @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
   private _childrenListItems!: VscodeListItem[];
+
+  private _handleComponentBlur = () => {
+    this.tabIndex = -1;
+
+    if (this._listContextState.rootElement) {
+      this._listContextState.rootElement.setOriginalTabIndex();
+    }
+  }
 
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems} = this._listContextState;
@@ -106,11 +124,28 @@ export class VscodeListItem extends VscElement {
     if (this.branch && !isCtrlDown) {
       this.closed = !this.closed;
     }
+
+    if (this._listContextState.focusedItem) {
+      this._listContextState.focusedItem.focused = false;
+    }
+
+    this._listContextState.focusedItem = this;
+    this.focused = true;
+    this.tabIndex = 0;
+    this.focus();
   };
 
   connectedCallback(): void {
     super.connectedCallback();
     this._mainSlotChange();
+
+    this.addEventListener('blur', this._handleComponentBlur);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener('blur', this._handleComponentBlur);
   }
 
   willUpdate(changedProperties: PropertyValues<this>): void {
@@ -162,7 +197,9 @@ export class VscodeListItem extends VscElement {
           ></span>
         </div>
         <div class="additional-content" part="additional-content">
-          <div class="decorations" part="decorations"><slot name="decorations"></slot></div>
+          <div class="decorations" part="decorations">
+            <slot name="decorations"></slot>
+          </div>
           <div class="actions" part="actions"><slot name="actions"></slot></div>
         </div>
       </div>
