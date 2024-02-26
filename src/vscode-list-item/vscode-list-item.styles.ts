@@ -52,6 +52,10 @@ const styles: CSSResultGroup = [
       color: var(--vscode-list-activeSelectionForeground);
     }
 
+    :host([focused]) {
+
+    }
+
     .arrow-container {
       align-items: center;
       display: var(--vsc-list-item-arrow-display);

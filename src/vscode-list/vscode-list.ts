@@ -11,6 +11,16 @@ import type {VscodeListItem} from '../vscode-list-item';
 import styles from './vscode-list.styles';
 import {listContext, type ListContext} from './list-context';
 
+type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
+
+const listenedKeys: ListenedKey[] = [
+  ' ',
+  'ArrowDown',
+  'ArrowUp',
+  'Enter',
+  'Escape',
+];
+
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
   static styles = styles;
@@ -21,13 +31,18 @@ export class VscodeList extends VscElement {
   @property({type: Number, reflect: true})
   indent = 8;
 
+  @property({type: Number, reflect: true})
+  tabIndex = 0;
+
   @provide({context: listContext})
   private _listContextState: ListContext = {
     arrows: false,
     indent: 8,
     selectedItems: new Set(),
+    focusedItem: null,
     hasBranchItem: false,
     rootElement: this,
+    focusItem: this._focusItem,
   };
 
   /**
@@ -40,8 +55,56 @@ export class VscodeList extends VscElement {
     this._listContextState = {...this._listContextState, hasBranchItem};
   }
 
+  private _originalTabIndex = 0;
+
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _assignedListItems!: VscodeListItem[];
+
+  private _focusPrevItem() {
+
+  }
+
+  private _focusNextItem() {
+
+  }
+
+  private _focusItem(item: VscodeListItem) {
+    const {focusedItem} = this._listContextState;
+
+    if(focusedItem) {
+      focusedItem.focused = false;
+      this._listContextState.focusedItem = null;
+    }
+  }
+
+  private _handleComponentFocus = () => {
+    this._originalTabIndex = this.tabIndex;
+
+    if (this._listContextState.focusedItem) {
+      this.tabIndex = -1;
+      this._listContextState.focusedItem.tabIndex = 0;
+      this._listContextState.focusedItem.focus();
+    }
+  }
+
+  private _handleComponentBlur = () => {
+
+  }
+
+  private _handleComponentKeyDown = (ev: KeyboardEvent) => {
+    const key = ev.key as ListenedKey;
+
+    if (listenedKeys.includes(key)) {
+      ev.stopPropagation();
+      ev.preventDefault();
+    }
+
+    if (this._listContextState.focusedItem) {
+
+    } else {
+
+    }
+  };
 
   private _handleSlotChange = () => {
     this._assignedListItems.forEach((li) => (li.level = 0));
@@ -57,6 +120,28 @@ export class VscodeList extends VscElement {
     if (changedProperties.has('indent')) {
       this._listContextState = {...this._listContextState, indent};
     }
+  }
+
+  setOriginalTabIndex() {
+    this.tabIndex = this._originalTabIndex;
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    this._originalTabIndex = this.tabIndex;
+
+    this.addEventListener('focus', this._handleComponentFocus);
+    this.addEventListener('blur', this._handleComponentBlur);
+    this.addEventListener('keydown', this._handleComponentKeyDown);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener('focus', this._handleComponentFocus);
+    this.removeEventListener('blur', this._handleComponentBlur);
+    this.removeEventListener('keydown', this._handleComponentKeyDown);
   }
 
   render(): TemplateResult {
