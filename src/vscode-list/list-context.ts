@@ -6,6 +6,8 @@ export interface ListContext {
   indent: number;
   arrows: boolean;
   selectedItems: Set<VscodeListItem>;
+  focusedItem: VscodeListItem | null;
+  focusItem: (item: VscodeListItem) => void;
   /** If arrows are visible and `List` component has not any branch item, the
    * extra padding should be removed in the leaf elements before the content
    */
