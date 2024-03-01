@@ -21,6 +21,73 @@ const listenedKeys: ListenedKey[] = [
   'Escape',
 ];
 
+const findLastChildItem = (item: VscodeListItem): VscodeListItem => {
+  const children = item.querySelectorAll<VscodeListItem>('vscode-list-item');
+
+  if (children.length < 1) {
+    return item;
+  }
+
+  const lastItem = children[children.length - 1];
+
+  if (lastItem.branch && !lastItem.closed) {
+    return findLastChildItem(lastItem);
+  } else {
+    return lastItem;
+  }
+};
+
+const findNextItem = (item: VscodeListItem) => {
+  if (item.branch && !item.closed) {
+    return item.querySelector<VscodeListItem>('vscode-list-item');
+  }
+
+  const {level, parentElement, dataset} = item;
+  const index = parseInt(dataset.index ?? '-1', 10);
+
+  if (!parentElement) {
+    return null;
+  }
+
+  const numSiblings = parentElement.dataset.children
+    ? parseInt(parentElement.dataset.children, 10)
+    : 1;
+
+
+
+
+  const nextElementIndex = Math.min(numSiblings - 1, index + 1);
+
+  return parentElement.querySelector<VscodeListItem>(
+    `vscode-list-item[level="${level}"][data-index="${nextElementIndex}"]`
+  );
+};
+
+const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
+  const {parentElement, dataset} = item;
+  const index = parseInt(dataset.index ?? '-1', 10);
+
+  if (!parentElement) {
+    return null;
+  }
+
+  const prevSibling = parentElement.querySelector<VscodeListItem>(
+    `vscode-list-item[data-index="${index - 1}"]`
+  );
+
+  if (!prevSibling) {
+    if (parentElement.tagName.toUpperCase() === 'VSCODE-LIST-ITEM') {
+      return parentElement as VscodeListItem;
+    }
+  }
+
+  if (prevSibling && prevSibling.branch && !prevSibling.closed) {
+    return findLastChildItem(prevSibling);
+  }
+
+  return prevSibling;
+};
+
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
   static styles = styles;
@@ -30,6 +97,10 @@ export class VscodeList extends VscElement {
 
   @property({type: Number, reflect: true})
   indent = 8;
+
+  /** @internal */
+  @property({type: String, reflect: true})
+  role = 'tree';
 
   @property({type: Number, reflect: true})
   tabIndex = 0;
@@ -61,20 +132,45 @@ export class VscodeList extends VscElement {
   private _assignedListItems!: VscodeListItem[];
 
   private _focusPrevItem() {
+    if (this._listContextState.focusedItem) {
+      const item = findPrevItem(this._listContextState.focusedItem);
 
+      if (item) {
+        this._listContextState.focusedItem.focused = false;
+        this._listContextState.focusedItem = item;
+        item.focused = true;
+        item.focus();
+      }
+    }
   }
 
   private _focusNextItem() {
+    const {closed, branch} = this._listContextState
+      .focusedItem as VscodeListItem;
 
+    if (this._listContextState.focusedItem) {
+      const item = findNextItem(this._listContextState.focusedItem);
+
+      if (item) {
+        this._listContextState.focusedItem.focused = false;
+        this._listContextState.focusedItem = item;
+        item.focused = true;
+        item.focus();
+      }
+    }
   }
 
   private _focusItem(item: VscodeListItem) {
     const {focusedItem} = this._listContextState;
 
-    if(focusedItem) {
+    if (focusedItem) {
       focusedItem.focused = false;
       this._listContextState.focusedItem = null;
     }
+
+    item.focused = true;
+    item.focus();
+    this._listContextState.focusedItem = item;
   }
 
   private _handleComponentFocus = () => {
@@ -85,11 +181,9 @@ export class VscodeList extends VscElement {
       this._listContextState.focusedItem.tabIndex = 0;
       this._listContextState.focusedItem.focus();
     }
-  }
+  };
 
-  private _handleComponentBlur = () => {
-
-  }
+  private _handleComponentBlur = () => {};
 
   private _handleComponentKeyDown = (ev: KeyboardEvent) => {
     const key = ev.key as ListenedKey;
@@ -99,15 +193,27 @@ export class VscodeList extends VscElement {
       ev.preventDefault();
     }
 
-    if (this._listContextState.focusedItem) {
+    if (key === 'ArrowDown' || key === 'ArrowUp') {
+      if (this._listContextState.focusedItem) {
+        if (key === 'ArrowDown') {
+          this._focusNextItem();
+        }
 
-    } else {
-
+        if (key === 'ArrowUp') {
+          this._focusPrevItem();
+        }
+      } else {
+        this._focusItem(this._assignedListItems[0]);
+      }
     }
   };
 
   private _handleSlotChange = () => {
-    this._assignedListItems.forEach((li) => (li.level = 0));
+    this.dataset.children = this._assignedListItems.length.toString();
+    this._assignedListItems.forEach((li, i) => {
+      li.level = 0;
+      li.dataset.index = String(i);
+    });
   };
 
   protected willUpdate(changedProperties: PropertyValues<this>): void {

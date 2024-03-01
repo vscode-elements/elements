@@ -8,6 +8,7 @@ const styles: CSSResultGroup = [
       --hover-outline-color: transparent;
       --hover-outline-style: solid;
       --hover-outline-width: 0;
+
       --selected-outline-color: transparent;
       --selected-outline-style: solid;
       --selected-outline-width: 0;
@@ -36,13 +37,6 @@ const styles: CSSResultGroup = [
       color: var(--vscode-list-hoverForeground);
     }
 
-    .content:hover,
-    :host([selected]) .content:hover {
-      outline-color: var(--hover-outline-color);
-      outline-style: var(--hover-outline-style);
-      outline-width: var(--hover-outline-width);
-    }
-
     :host([selected]) .content {
       color: var(--vscode-list-activeSelectionForeground);
       background-color: var(--vscode-list-activeSelectionBackground);
@@ -53,7 +47,13 @@ const styles: CSSResultGroup = [
     }
 
     :host([focused]) {
+      outline: none;
+    }
 
+    :host([focused]) .content {
+      outline-color: var(--vscode-list-focusAndSelectionOutline, var(--vscode-list-focusOutline));
+      outline-style: solid;
+      outline-width: 1px;
     }
 
     .arrow-container {
