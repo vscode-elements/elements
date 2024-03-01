@@ -4,7 +4,6 @@ import {
   customElement,
   property,
   queryAssignedElements,
-  state,
 } from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
@@ -41,6 +40,7 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean, reflect: true})
   focused = false;
 
+  // TODO: use dataset instead (or attribute: false?)
   @property({type: Number, reflect: true})
   level = 0;
 
@@ -75,7 +75,7 @@ export class VscodeListItem extends VscElement {
     if (this._listContextState.rootElement) {
       this._listContextState.rootElement.setOriginalTabIndex();
     }
-  }
+  };
 
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems} = this._listContextState;
@@ -104,7 +104,11 @@ export class VscodeListItem extends VscElement {
 
   private _handleChildrenSlotChange() {
     this.branch = this._childrenListItems.length > 0;
-    this._childrenListItems.forEach((li) => (li.level = this.level + 1));
+    this.dataset.children = this._childrenListItems.length.toString();
+    this._childrenListItems.forEach((li, i) => {
+      li.level = this.level + 1;
+      li.dataset.index = String(i);
+    });
 
     if (this._listContextState.rootElement) {
       this._listContextState.rootElement.updateHasBranchItemFlag();
