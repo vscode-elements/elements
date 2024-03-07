@@ -10,6 +10,7 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {listContext, type ListContext} from '../vscode-list/list-context';
+import { initPathTrackerProps } from '../vscode-list/helpers';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -40,7 +41,6 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean, reflect: true})
   focused = false;
 
-  // TODO: use dataset instead (or attribute: false?)
   @property({type: Number, reflect: true})
   level = 0;
 
@@ -103,12 +103,7 @@ export class VscodeListItem extends VscElement {
   }
 
   private _handleChildrenSlotChange() {
-    this.branch = this._childrenListItems.length > 0;
-    this.dataset.children = this._childrenListItems.length.toString();
-    this._childrenListItems.forEach((li, i) => {
-      li.level = this.level + 1;
-      li.dataset.index = String(i);
-    });
+    initPathTrackerProps(this, this._childrenListItems);
 
     if (this._listContextState.rootElement) {
       this._listContextState.rootElement.updateHasBranchItemFlag();
