@@ -4,12 +4,12 @@ import {
   customElement,
   property,
   queryAssignedElements,
-  state,
 } from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement';
 import type {VscodeListItem} from '../vscode-list-item';
 import styles from './vscode-list.styles';
 import {listContext, type ListContext} from './list-context';
+import {findNextItem, findPrevItem, initPathTrackerProps} from './helpers';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
@@ -20,73 +20,6 @@ const listenedKeys: ListenedKey[] = [
   'Enter',
   'Escape',
 ];
-
-const findLastChildItem = (item: VscodeListItem): VscodeListItem => {
-  const children = item.querySelectorAll<VscodeListItem>('vscode-list-item');
-
-  if (children.length < 1) {
-    return item;
-  }
-
-  const lastItem = children[children.length - 1];
-
-  if (lastItem.branch && !lastItem.closed) {
-    return findLastChildItem(lastItem);
-  } else {
-    return lastItem;
-  }
-};
-
-const findNextItem = (item: VscodeListItem) => {
-  if (item.branch && !item.closed) {
-    return item.querySelector<VscodeListItem>('vscode-list-item');
-  }
-
-  const {level, parentElement, dataset} = item;
-  const index = parseInt(dataset.index ?? '-1', 10);
-
-  if (!parentElement) {
-    return null;
-  }
-
-  const numSiblings = parentElement.dataset.children
-    ? parseInt(parentElement.dataset.children, 10)
-    : 1;
-
-
-
-
-  const nextElementIndex = Math.min(numSiblings - 1, index + 1);
-
-  return parentElement.querySelector<VscodeListItem>(
-    `vscode-list-item[level="${level}"][data-index="${nextElementIndex}"]`
-  );
-};
-
-const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
-  const {parentElement, dataset} = item;
-  const index = parseInt(dataset.index ?? '-1', 10);
-
-  if (!parentElement) {
-    return null;
-  }
-
-  const prevSibling = parentElement.querySelector<VscodeListItem>(
-    `vscode-list-item[data-index="${index - 1}"]`
-  );
-
-  if (!prevSibling) {
-    if (parentElement.tagName.toUpperCase() === 'VSCODE-LIST-ITEM') {
-      return parentElement as VscodeListItem;
-    }
-  }
-
-  if (prevSibling && prevSibling.branch && !prevSibling.closed) {
-    return findLastChildItem(prevSibling);
-  }
-
-  return prevSibling;
-};
 
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
@@ -101,6 +34,9 @@ export class VscodeList extends VscElement {
   /** @internal */
   @property({type: String, reflect: true})
   role = 'tree';
+
+  @property({type: Number, reflect: true})
+  numChildren = 0;
 
   @property({type: Number, reflect: true})
   tabIndex = 0;
@@ -145,9 +81,6 @@ export class VscodeList extends VscElement {
   }
 
   private _focusNextItem() {
-    const {closed, branch} = this._listContextState
-      .focusedItem as VscodeListItem;
-
     if (this._listContextState.focusedItem) {
       const item = findNextItem(this._listContextState.focusedItem);
 
@@ -209,11 +142,7 @@ export class VscodeList extends VscElement {
   };
 
   private _handleSlotChange = () => {
-    this.dataset.children = this._assignedListItems.length.toString();
-    this._assignedListItems.forEach((li, i) => {
-      li.level = 0;
-      li.dataset.index = String(i);
-    });
+    initPathTrackerProps(this, this._assignedListItems);
   };
 
   protected willUpdate(changedProperties: PropertyValues<this>): void {
