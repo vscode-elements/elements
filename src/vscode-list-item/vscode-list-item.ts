@@ -48,7 +48,7 @@ export class VscodeListItem extends VscElement {
   selected = false;
 
   @property({type: Number, reflect: true})
-  tabIndex = -1;
+  tabIndex = 0;
 
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
@@ -68,14 +68,6 @@ export class VscodeListItem extends VscElement {
 
   @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
   private _childrenListItems!: VscodeListItem[];
-
-  private _handleComponentBlur = () => {
-    this.tabIndex = -1;
-
-    if (this._listContextState.rootElement) {
-      this._listContextState.rootElement.setOriginalTabIndex();
-    }
-  };
 
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems} = this._listContextState;
@@ -114,6 +106,18 @@ export class VscodeListItem extends VscElement {
     this._mainSlotChange();
   };
 
+  private _handleComponentBlur = () => {
+    this.tabIndex = -1;
+
+    if (this._listContextState.rootElement) {
+      this._listContextState.rootElement.setOriginalTabIndex();
+    }
+  };
+
+  private _handleComponentFocusIn = () => {
+    this.focused = true;
+  }
+
   private _handleContentClick = (ev: MouseEvent) => {
     ev.stopPropagation();
 
@@ -129,7 +133,7 @@ export class VscodeListItem extends VscElement {
     }
 
     this._listContextState.focusedItem = this;
-    this.focused = true;
+    // this.focused = true;
     this.tabIndex = 0;
     this.focus();
   };
@@ -138,13 +142,15 @@ export class VscodeListItem extends VscElement {
     super.connectedCallback();
     this._mainSlotChange();
 
-    this.addEventListener('blur', this._handleComponentBlur);
+    this.addEventListener('focusin', this._handleComponentFocusIn);
+    this.addEventListener('focusout', this._handleComponentBlur);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    this.removeEventListener('blur', this._handleComponentBlur);
+    this.removeEventListener('focusin', this._handleComponentFocusIn);
+    this.removeEventListener('focusout', this._handleComponentBlur);
   }
 
   willUpdate(changedProperties: PropertyValues<this>): void {
