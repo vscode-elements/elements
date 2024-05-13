@@ -82,6 +82,7 @@ export interface TreeItemDecoration {
 export interface TreeItem {
   label: string;
   description?: string;
+  tooltip?: string;
   subItems?: TreeItem[];
   actions?: TreeItemAction[];
   open?: boolean;
@@ -555,6 +556,7 @@ export class VscodeTree extends VscElement {
       open = false,
       label,
       description = '',
+      tooltip,
       selected = false,
       focused = false,
       subItems = [],
@@ -614,6 +616,7 @@ export class VscodeTree extends VscElement {
           ${arrowMarkup}${iconMarkup}<span
             class="text-content"
             part="text-content"
+            title="${ifDefined(tooltip)}"
             >${label}${descriptionMarkup}</span
           >
           ${actionsMarkup} ${decorationsMarkup}
