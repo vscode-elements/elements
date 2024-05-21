@@ -1,7 +1,6 @@
-# VSCode Webview Elements 
+# VSCode Elements 
 
-For the end-user documentation, [click here](https://bendera.github.io/vscode-webview-elements/).
-This project made with [LitElement](https://lit-element.polymer-project.org/) and based on a modified version of the [LitElement TypeScript starter](https://github.com/PolymerLabs/lit-element-starter-ts).
+For the end-user documentation, [click here](https://vscode-elements.github.io).
 
 ## Setup
 
