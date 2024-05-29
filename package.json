@@ -152,7 +152,7 @@
     "@types/node": "^20.11.17",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "@vscode/codicons": "^0.0.35",
+    "@vscode/codicons": "^0.0.36",
     "@web/dev-server": "^0.4.2",
     "@web/dev-server-esbuild": "^1.0.2",
     "@web/dev-server-legacy": "^2.1.0",
