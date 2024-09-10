@@ -8,7 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- **SingleSelect**, **MultiSelect**: Show dropdown on input click
+- **SingleSelect**, **MultiSelect**: Show dropdown on input click.
+- **SingleSelect**, **MultiSelect**: The focus is delegated to the inner input in the combobox mode.
+
+### Fixed
+
+- **SingleSelect**, **MultiSelect**: components were be selectable in disabled mode.
 
 ## [1.3.1] - 2024-09-01
 
