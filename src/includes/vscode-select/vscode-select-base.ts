@@ -510,6 +510,10 @@ export class VscodeSelectBase extends VscElement {
     this._toggleDropdown(true);
   }
 
+  protected _onComboboxInputClick(): void {
+    this._toggleDropdown(true);
+  }
+
   protected _renderOptions(): TemplateResult | TemplateResult[] {
     return [];
   }

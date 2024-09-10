@@ -310,6 +310,7 @@ export class VscodeSingleSelect
           .value="${inputVal}"
           @focus="${this._onComboboxInputFocus}"
           @input="${this._onComboboxInputInput}"
+          @click=${this._onComboboxInputClick}
         />
         <button
           class="combobox-button"
