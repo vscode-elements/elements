@@ -65,9 +65,6 @@ export class VscodeSingleSelect
   @property({attribute: 'default-value'})
   defaultValue = '';
 
-  @property({type: Boolean, reflect: true})
-  disabled = false;
-
   /** @internal */
   @property({type: String, attribute: true, reflect: true})
   role = 'listbox';

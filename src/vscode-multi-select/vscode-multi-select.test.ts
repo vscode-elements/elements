@@ -155,11 +155,13 @@ describe('vscode-multi-select', () => {
   });
 
   it('should apply combobox mode', async () => {
-    const el = await fixture(html`<vscode-multi-select combobox>
-      <vscode-option value="1">One</vscode-option>
-      <vscode-option value="2">Two</vscode-option>
-      <vscode-option value="3">Three</vscode-option>
-    </vscode-multi-select>`);
+    const el = await fixture(
+      html`<vscode-multi-select combobox>
+        <vscode-option value="1">One</vscode-option>
+        <vscode-option value="2">Two</vscode-option>
+        <vscode-option value="3">Three</vscode-option>
+      </vscode-multi-select>`
+    );
 
     const comboboxFace = el.shadowRoot?.querySelector('.combobox-face');
 
@@ -167,11 +169,13 @@ describe('vscode-multi-select', () => {
   });
 
   it('should "select all" and "deselect all" work properly', async () => {
-    const el = await fixture<VscodeMultiSelect>(html`<vscode-multi-select>
-      <vscode-option value="1">One</vscode-option>
-      <vscode-option value="2">Two</vscode-option>
-      <vscode-option value="3">Three</vscode-option>
-    </vscode-multi-select>`);
+    const el = await fixture<VscodeMultiSelect>(
+      html`<vscode-multi-select>
+        <vscode-option value="1">One</vscode-option>
+        <vscode-option value="2">Two</vscode-option>
+        <vscode-option value="3">Three</vscode-option>
+      </vscode-multi-select>`
+    );
 
     el.shadowRoot?.querySelector<HTMLDivElement>('.select-face')!.click();
     await el.updateComplete;
@@ -199,5 +203,32 @@ describe('vscode-multi-select', () => {
       )!.innerText;
 
     expect(caption).to.eq('NO ITEMS SELECTED');
+  });
+
+  it('should be unfocusable when it is disabled', () => {
+    const el = document.createElement('vscode-multi-select');
+    el.tabIndex = 2;
+    el.disabled = true;
+
+    expect(el.tabIndex).to.eq(-1);
+  });
+
+  it('should aria-disabled attribute applied when it is disabled', () => {
+    const el = document.createElement('vscode-multi-select');
+    el.disabled = true;
+
+    expect(el.getAttribute("aria-disabled")).to.eq("true");
+  });
+
+  it('should original tabindex restored when enabled again', () => {
+    const el = document.createElement('vscode-multi-select');
+    el.tabIndex = 2;
+    el.disabled = true;
+
+    expect(el.tabIndex).to.eq(-1);
+
+    el.disabled = false;
+
+    expect(el.tabIndex).to.eq(2);
   });
 });

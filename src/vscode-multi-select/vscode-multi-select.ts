@@ -51,9 +51,6 @@ export class VscodeMultiSelect
   defaultValue: string[] = [];
 
   @property({type: Boolean, reflect: true})
-  disabled = false;
-
-  @property({type: Boolean, reflect: true})
   required = false;
 
   @property({reflect: true})

@@ -19,7 +19,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      expect(el).shadowDom.to.equal(`
+      expect(el).shadowDom.to.equal(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -28,7 +29,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.selectedIndex).to.eq(1);
       expect(el.value).to.eq('Ipsum');
     });
@@ -65,7 +68,8 @@ describe('vscode-single-select', () => {
       el.value = 'Ipsum';
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(`
+      expect(el).shadowDom.to.equal(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -74,7 +78,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
     });
@@ -91,7 +97,8 @@ describe('vscode-single-select', () => {
       el.value = 'trololo';
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(`
+      expect(el).shadowDom.to.equal(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -100,7 +107,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('');
       expect(el.selectedIndex).to.eq(-1);
     });
@@ -117,7 +126,8 @@ describe('vscode-single-select', () => {
       el.selectedIndex = 1;
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(`
+      expect(el).shadowDom.to.equal(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -126,7 +136,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
     });
@@ -143,7 +155,8 @@ describe('vscode-single-select', () => {
       el.selectedIndex = 999;
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(`
+      expect(el).shadowDom.to.equal(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -152,7 +165,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('');
       expect(el.selectedIndex).to.eq(999);
     });
@@ -167,7 +182,7 @@ describe('vscode-single-select', () => {
       `)) as VscodeSingleSelect;
 
       const spy = sinon.spy();
-      el.addEventListener('change', spy)
+      el.addEventListener('change', spy);
 
       const face = el.shadowRoot?.querySelector(
         '.select-face'
@@ -203,7 +218,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      expect(el).shadowDom.to.equal(`
+      expect(el).shadowDom.to.equal(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -212,7 +228,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('Lorem');
       expect(el.selectedIndex).to.eq(0);
     });
@@ -231,7 +249,8 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -240,7 +259,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
 
@@ -267,7 +288,8 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowUp'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -276,7 +298,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
 
@@ -321,13 +345,13 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(markupOpen);
+      expect(el).shadowDom.to.eq(markupOpen, {ignoreAttributes: ['tabindex']});
       expect(el.getAttribute('aria-expanded')).to.eq('true');
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(markupOpen);
+      expect(el).shadowDom.to.eq(markupOpen, {ignoreAttributes: ['tabindex']});
       expect(el.getAttribute('aria-expanded')).to.eq('true');
     });
 
@@ -341,7 +365,8 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -361,13 +386,16 @@ describe('vscode-single-select', () => {
             </li>
           </ul>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.getAttribute('aria-expanded')).to.eq('true');
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot">
         </slot>
         <div class="select-face">
@@ -377,7 +405,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.getAttribute('aria-expanded')).to.eq('false');
     });
 
@@ -401,7 +431,8 @@ describe('vscode-single-select', () => {
 
       const changeEvent = spy.lastCall.args[0] as CustomEvent;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot">
         </slot>
         <div class="select-face">
@@ -411,7 +442,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.value).to.eq('Dolor');
       expect(el.selectedIndex).to.eq(2);
       expect(changeEvent.type).to.eq('change');
@@ -427,7 +460,8 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -447,13 +481,16 @@ describe('vscode-single-select', () => {
             </li>
           </ul>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.getAttribute('aria-expanded')).to.eq('true');
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot"></slot>
         <div class="select-face">
           <span class="text">
@@ -462,7 +499,9 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-      `);
+      `,
+        {ignoreAttributes: ['tabindex']}
+      );
       expect(el.getAttribute('aria-expanded')).be.eq('false');
     });
 
@@ -776,5 +815,32 @@ describe('vscode-single-select', () => {
       expect(changeEvent.type).to.eq('change');
       expect(input.value).to.eq('Dolor');
     });
+  });
+
+  it('should be unfocusable when it is disabled', () => {
+    const el = document.createElement('vscode-single-select');
+    el.tabIndex = 2;
+    el.disabled = true;
+
+    expect(el.tabIndex).to.eq(-1);
+  });
+
+  it('should aria-disabled attribute applied when it is disabled', () => {
+    const el = document.createElement('vscode-single-select');
+    el.disabled = true;
+
+    expect(el.getAttribute("aria-disabled")).to.eq("true");
+  });
+
+  it('should original tabindex restored when enabled again', () => {
+    const el = document.createElement('vscode-single-select');
+    el.tabIndex = 2;
+    el.disabled = true;
+
+    expect(el.tabIndex).to.eq(-1);
+
+    el.disabled = false;
+
+    expect(el.tabIndex).to.eq(2);
   });
 });
