@@ -15,3 +15,7 @@ stats.html
 bendera-vscode-webview-elements-*.tgz
 custom-elements.json
 vscode.*-custom-data.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
