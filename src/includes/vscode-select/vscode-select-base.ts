@@ -27,6 +27,26 @@ export class VscodeSelectBase extends VscElement {
   @property({type: Boolean, reflect: true})
   combobox = false;
 
+  @property({type: Boolean, reflect: true})
+  set disabled(newState: boolean) {
+    this._disabled = newState;
+    this.ariaDisabled = newState ? 'true' : 'false';
+
+    if (newState === true) {
+      this._originalTabIndex = this.tabIndex;
+      this.tabIndex = -1;
+    } else {
+      this.tabIndex = this._originalTabIndex ?? 0;
+      this._originalTabIndex = undefined;
+    }
+
+    this.requestUpdate();
+  }
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
   /**
    * Sets the invalid state manually.
    */
@@ -166,6 +186,8 @@ export class VscodeSelectBase extends VscElement {
   protected _valueOptionIndexMap: {[key: string]: number} = {};
 
   private _isHoverForbidden = false;
+  private _disabled = false;
+  private _originalTabIndex: number | undefined = undefined;
 
   protected get _currentOptions(): InternalOption[] {
     return this.combobox ? this._filteredOptions : this._options;
