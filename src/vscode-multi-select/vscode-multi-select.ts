@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
@@ -44,6 +44,12 @@ export class VscodeMultiSelect
   implements AssociatedFormControl
 {
   static styles = styles;
+
+  /** @internal */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   static formAssociated = true;
 
@@ -265,7 +271,11 @@ export class VscodeMultiSelect
 
   protected _renderSelectFace(): TemplateResult {
     return html`
-      <div class="select-face multiselect" @click="${this._onFaceClick}">
+      <div
+        class="select-face multiselect"
+        @click="${this._onFaceClick}"
+        tabindex="${this.tabIndex > -1 ? 0 : -1}"
+      >
         ${this._renderLabel()} ${chevronDownIcon}
       </div>
     `;
