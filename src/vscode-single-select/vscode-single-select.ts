@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
@@ -52,6 +52,12 @@ export class VscodeSingleSelect
   implements AssociatedFormControl
 {
   static styles = styles;
+
+  /** @internal */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** @internal */
   static formAssociated = true;
@@ -291,7 +297,11 @@ export class VscodeSingleSelect
 
   protected _renderSelectFace(): TemplateResult {
     return html`
-      <div class="select-face" @click="${this._onFaceClick}">
+      <div
+        class="select-face"
+        @click="${this._onFaceClick}"
+        tabindex="${this.tabIndex > -1 ? 0 : -1}"
+      >
         ${this._renderLabel()} ${chevronDownIcon}
       </div>
     `;
