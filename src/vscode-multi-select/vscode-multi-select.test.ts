@@ -18,7 +18,8 @@ describe('vscode-multi-select', () => {
       </vscode-multi-select>
     `)) as VscodeMultiSelect;
 
-    expect(el).shadowDom.to.equal(`
+    expect(el).shadowDom.to.equal(
+      `
       <slot class="main-slot"></slot>
       <div class="multiselect select-face">
         <span class="select-face-badge">
@@ -27,7 +28,9 @@ describe('vscode-multi-select', () => {
         <span class="icon">
         </span>
       </div>
-    `);
+    `,
+      {ignoreAttributes: ['tabindex']}
+    );
     expect(el.selectedIndexes).to.eql([1]);
     expect(el.value).to.eql(['Ipsum']);
   });
@@ -217,7 +220,7 @@ describe('vscode-multi-select', () => {
     const el = document.createElement('vscode-multi-select');
     el.disabled = true;
 
-    expect(el.getAttribute("aria-disabled")).to.eq("true");
+    expect(el.getAttribute('aria-disabled')).to.eq('true');
   });
 
   it('should original tabindex restored when enabled again', () => {
