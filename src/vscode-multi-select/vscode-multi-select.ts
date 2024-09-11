@@ -6,6 +6,7 @@ import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-multi-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
+import {highlightRanges} from '../includes/vscode-select/helpers.js';
 
 /**
  * Allows to select multiple items from a list of options.
@@ -340,7 +341,11 @@ export class VscodeMultiSelect
                 data-filtered-index="${index}"
               >
                 <span class="${checkboxClasses}"></span>
-                <span class="option-label">${op.label}</span>
+                <span class="option-label"
+                  >${op.ranges?.length ?? 0 > 0
+                    ? highlightRanges(op.label, op.ranges ?? [])
+                    : op.label}</span
+                >
               </li>
             `;
           }

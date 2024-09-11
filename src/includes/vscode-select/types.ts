@@ -8,6 +8,7 @@ export interface Option {
 
 export interface InternalOption extends Option {
   index: number;
+  ranges?: [number, number][];
 }
 
 export type SearchMethod =

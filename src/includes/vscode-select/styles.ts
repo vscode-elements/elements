@@ -193,6 +193,14 @@ export default [
       border-color: transparent;
     }
 
+    .option b {
+      color: var(--vscode-list-highlightForeground);
+    }
+
+    .option.active b {
+      color: var(--vscode-list-focusHighlightForeground);
+    }
+
     .option:hover {
       background-color: var(--vscode-list-hoverBackground);
       color: var(--vscode-list-hoverForeground);
