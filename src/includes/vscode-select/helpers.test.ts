@@ -4,6 +4,7 @@ import {
   startsWithPerTermMatch,
   startsWithMatch,
   containsMatch,
+  startsWithPerTermSearch,
 } from './helpers.js';
 
 describe('helpers', () => {
@@ -17,6 +18,29 @@ describe('helpers', () => {
     expect(startsWithPerTermMatch('Lorem ipsum', 'lo')).to.eq(true);
     expect(startsWithPerTermMatch('Lorem ipsum', 'ip')).to.eq(true);
     expect(startsWithPerTermMatch('Lorem ipsum', 'or')).to.eq(false);
+  });
+
+  it('startsWithPerTermSearch', () => {
+    const result = startsWithPerTermSearch(
+      "I think Ruth's dog is cuter than your dog!",
+      'dog'
+    );
+
+    expect(result.match).to.eq(true);
+    expect(result.ranges).to.eql([
+      [15, 18],
+      [38, 41],
+    ]);
+  });
+
+  it('startsWithPerTermSearch 2', () => {
+    const result = startsWithPerTermSearch(
+      "I think Ruth's dog is cuter than your dog!",
+      'uth'
+    );
+
+    expect(result.match).to.eq(false);
+    expect(result.ranges).to.eql([]);
   });
 
   it('startsWithPerTermMatch', () => {

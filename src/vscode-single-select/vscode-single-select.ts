@@ -1,10 +1,12 @@
 import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js'
 import {classMap} from 'lit/directives/class-map.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
+import {highlightRanges} from '../includes/vscode-select/helpers.js';
 
 /**
  * Allows to select an item from multiple options.
@@ -346,7 +348,9 @@ export class VscodeSingleSelect
           data-index="${op.index}"
           data-filtered-index="${index}"
         >
-          ${op.label}
+          ${op.ranges?.length ?? 0 > 0
+            ? highlightRanges(op.label, op.ranges ?? [])
+            : op.label}
         </li>
       `;
     });

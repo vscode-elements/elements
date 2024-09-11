@@ -216,8 +216,8 @@ export class VscodeSelectBase extends VscElement {
       const {innerText, description, disabled} = el as VscodeOption;
 
       const value = (el as VscodeOption).hasAttribute('value')
-      ? ((el as VscodeOption).getAttribute('value') as string)
-      : innerText.trim();
+        ? ((el as VscodeOption).getAttribute('value') as string)
+        : innerText.trim();
 
       const selected = (el as VscodeOption).hasAttribute('selected');
 

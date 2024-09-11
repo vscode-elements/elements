@@ -1,23 +1,89 @@
+import {html, TemplateResult} from 'lit';
 import {InternalOption, SearchMethod} from './types.js';
 
-export const startsWithPerTermMatch = (
+export type SearchResult = {
+  match: boolean;
+  ranges: [number, number][];
+};
+
+export const startsWithPerTermSearch = (
   subject: string,
   pattern: string
-): boolean => {
+): SearchResult => {
+  const result: SearchResult = {
+    match: false,
+    ranges: [],
+  };
   const lcSubject = subject.toLowerCase();
   const lcPattern = pattern.toLowerCase();
   const terms = lcSubject.split(' ');
+  let offset = 0;
 
-  return terms.some((t) => t.indexOf(lcPattern) === 0);
+  terms.forEach((t, i) => {
+    if (i > 0) {
+      offset += terms[i - 1].length + 1;
+    }
+
+    if (result.match) {
+      return;
+    }
+
+    const foundIndex = t.indexOf(lcPattern);
+    const patternLength = lcPattern.length;
+
+    if (foundIndex === 0) {
+      result.match = true;
+      result.ranges.push([
+        offset + foundIndex,
+        Math.min(offset + foundIndex + patternLength, subject.length),
+      ]);
+    }
+  });
+
+  return result;
 };
 
-export const startsWithMatch = (subject: string, pattern: string): boolean =>
-  subject.toLowerCase().indexOf(pattern.toLowerCase()) === 0;
+export const startsWithSearch = (
+  subject: string,
+  pattern: string
+): SearchResult => {
+  const result: SearchResult = {
+    match: false,
+    ranges: [],
+  };
+  const foundIndex = subject.toLowerCase().indexOf(pattern.toLowerCase());
 
-export const containsMatch = (subject: string, pattern: string): boolean =>
-  subject.toLowerCase().indexOf(pattern.toLowerCase()) > -1;
+  if (foundIndex === 0) {
+    result.match = true;
+    result.ranges = [[0, pattern.length]];
+  }
 
-export const fuzzyMatch = (subject: string, pattern: string): boolean => {
+  return result;
+};
+
+export const containsSearch = (
+  subject: string,
+  pattern: string
+): SearchResult => {
+  const result: SearchResult = {
+    match: false,
+    ranges: [],
+  };
+  const foundIndex = subject.toLowerCase().indexOf(pattern.toLowerCase());
+
+  if (foundIndex > -1) {
+    result.match = true;
+    result.ranges = [[foundIndex, foundIndex + pattern.length]];
+  }
+
+  return result;
+};
+
+export const fuzzySearch = (subject: string, pattern: string): SearchResult => {
+  const result: SearchResult = {
+    match: false,
+    ranges: [],
+  };
   let iFrom = 0;
   let iFound = 0;
   const iMax = pattern.length - 1;
@@ -28,13 +94,19 @@ export const fuzzyMatch = (subject: string, pattern: string): boolean => {
     iFound = lcSubject.indexOf(lcPattern[i], iFrom);
 
     if (iFound === -1) {
-      return false;
+      return {
+        match: false,
+        ranges: [],
+      };
     }
+
+    result.match = true;
+    result.ranges.push([iFound, iFound + 1]);
 
     iFrom = iFound + 1;
   }
 
-  return true;
+  return result;
 };
 
 export const filterOptionsByPattern = (
@@ -42,16 +114,85 @@ export const filterOptionsByPattern = (
   pattern: string,
   method: SearchMethod
 ): InternalOption[] => {
-  return list.filter(({label}) => {
+  const filtered: InternalOption[] = [];
+
+  list.forEach((op) => {
+    let result: SearchResult;
+
     switch (method) {
       case 'startsWithPerTerm':
-        return startsWithPerTermMatch(label, pattern);
+        result = startsWithPerTermSearch(op.label, pattern);
+        break;
       case 'startsWith':
-        return startsWithMatch(label, pattern);
+        result = startsWithSearch(op.label, pattern);
+        break;
       case 'contains':
-        return containsMatch(label, pattern);
+        result = containsSearch(op.label, pattern);
+        break;
       default:
-        return fuzzyMatch(label, pattern);
+        result = fuzzySearch(op.label, pattern);
+    }
+
+    if (result.match) {
+      filtered.push({...op, ranges: result.ranges});
     }
   });
+
+  return filtered;
+};
+
+const preventSpaces = (text: string): TemplateResult[] => {
+  const res: TemplateResult[] = [];
+
+  if (text === ' ') {
+    res.push(html`&nbsp;`);
+
+    return res;
+  }
+
+  if (text.indexOf(' ') === 0) {
+    res.push(html`&nbsp;`);
+  }
+
+  res.push(html`${text.trimStart().trimEnd()}`);
+
+  if (text.lastIndexOf(' ') === text.length - 1) {
+    res.push(html`&nbsp;`);
+  }
+
+  return res;
+};
+
+export const highlightRanges = (
+  text: string,
+  ranges: [number, number][]
+): TemplateResult | TemplateResult[] => {
+  const res: TemplateResult[] = [];
+  const rl = ranges.length;
+
+  if (rl < 1) {
+    return html`${text}`;
+  }
+
+  ranges.forEach((r, i) => {
+    const match = text.substring(r[0], r[1]);
+
+    if (i === 0) {
+      if (r[0] !== 0) {
+        res.push(...preventSpaces(text.substring(0, ranges[0][0])));
+      }
+    } else if (i > 0 && i < rl) {
+      if (r[0] - ranges[i - 1][1] !== 0) {
+        res.push(...preventSpaces(text.substring(ranges[i - 1][1], r[0])));
+      }
+    }
+
+    res.push(html`<b>${preventSpaces(match)}</b>`);
+
+    if (i === rl - 1 && r[1] < text.length) {
+      res.push(...preventSpaces(text.substring(r[1], text.length)));
+    }
+  });
+
+  return res;
 };
