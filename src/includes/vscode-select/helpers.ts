@@ -84,16 +84,16 @@ export const fuzzySearch = (subject: string, pattern: string): SearchResult => {
     match: false,
     ranges: [],
   };
-  let iFrom = 0;
-  let iFound = 0;
+  let fromIndex = 0;
+  let foundIndex = 0;
   const iMax = pattern.length - 1;
   const lcSubject = subject.toLowerCase();
   const lcPattern = pattern.toLowerCase();
 
   for (let i = 0; i <= iMax; i++) {
-    iFound = lcSubject.indexOf(lcPattern[i], iFrom);
+    foundIndex = lcSubject.indexOf(lcPattern[i], fromIndex);
 
-    if (iFound === -1) {
+    if (foundIndex === -1) {
       return {
         match: false,
         ranges: [],
@@ -101,9 +101,9 @@ export const fuzzySearch = (subject: string, pattern: string): SearchResult => {
     }
 
     result.match = true;
-    result.ranges.push([iFound, iFound + 1]);
+    result.ranges.push([foundIndex, foundIndex + 1]);
 
-    iFrom = iFound + 1;
+    fromIndex = foundIndex + 1;
   }
 
   return result;
@@ -177,19 +177,20 @@ export const highlightRanges = (
   ranges.forEach((r, i) => {
     const match = text.substring(r[0], r[1]);
 
-    if (i === 0) {
-      if (r[0] !== 0) {
-        res.push(...preventSpaces(text.substring(0, ranges[0][0])));
-      }
-    } else if (i > 0 && i < rl) {
-      if (r[0] - ranges[i - 1][1] !== 0) {
-        res.push(...preventSpaces(text.substring(ranges[i - 1][1], r[0])));
-      }
+    if (i === 0 && r[0] !== 0) {
+      // text before the first range
+      res.push(...preventSpaces(text.substring(0, ranges[0][0])));
+    }
+
+    if (i > 0 && i < rl && r[0] - ranges[i - 1][1] !== 0) {
+      // text before the current range
+      res.push(...preventSpaces(text.substring(ranges[i - 1][1], r[0])));
     }
 
     res.push(html`<b>${preventSpaces(match)}</b>`);
 
     if (i === rl - 1 && r[1] < text.length) {
+      // text after the last range
       res.push(...preventSpaces(text.substring(r[1], text.length)));
     }
   });
