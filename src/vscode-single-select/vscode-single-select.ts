@@ -42,6 +42,8 @@ import {highlightRanges} from '../includes/vscode-select/helpers.js';
  * @cssprop --vscode-list-activeSelectionBackground
  * @cssprop --vscode-list-activeSelectionForeground
  * @cssprop --vscode-list-focusOutline
+ * @cssprop --vscode-list-highlightForeground
+ * @cssprop --vscode-list-focusHighlightForeground
  * @cssprop --vscode-list-hoverBackground
  * @cssprop --vscode-list-hoverForeground
  * @cssprop --vscode-list-hoverBackground

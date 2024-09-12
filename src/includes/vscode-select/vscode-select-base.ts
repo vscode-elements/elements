@@ -54,13 +54,17 @@ export class VscodeSelectBase extends VscElement {
   invalid = false;
 
   /**
-   * Filter method
+   * Search method in the filtered list within the combobox mode.
    *
-   * @attr [filter=fuzzy]
-   * @type {"fuzzy"|"contains"|"startsWith"|"startsWithPerTerm"}
+   * - contains - The list item includes the searched pattern at any position.
+   * - fuzzy - The list item contains the letters of the search pattern in the same order, but at any position.
+   * - startsWith - The search pattern matches the beginning of the searched text.
+   * - startsWithPerTerm - The search pattern matches the beginning of any word in the searched text.
+   *
+   * @default 'fuzzy'
    */
-  @property({type: String})
-  set filter(val: string) {
+  @property()
+  set filter(val: 'contains' | 'fuzzy' | 'startsWith' | 'startsWithPerTerm') {
     const validValues: SearchMethod[] = [
       'contains',
       'fuzzy',
@@ -78,7 +82,7 @@ export class VscodeSelectBase extends VscElement {
       );
     }
   }
-  get filter(): string {
+  get filter(): 'contains' | 'fuzzy' | 'startsWith' | 'startsWithPerTerm' {
     return this._filter;
   }
 
