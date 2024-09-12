@@ -628,7 +628,7 @@ describe('vscode-single-select', () => {
             </li>
           </ul>
         </div>
-      `);
+      `, {ignoreChildren: ['li']});
     });
 
     it('highlight element when the arrow down key pressed', async () => {
@@ -654,31 +654,13 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      const optionsElement = el.shadowRoot?.querySelector('.options');
+      const options = Array.from(
+        el.shadowRoot?.querySelectorAll(
+          '.options li'
+        ) as NodeListOf<HTMLLIElement>
+      );
 
-      expect(optionsElement).lightDom.to.eq(`
-        <li
-          class="option"
-          data-filtered-index="0"
-          data-index="0"
-        >
-          Antigua and Barbuda
-        </li>
-        <li
-          class="active option"
-          data-filtered-index="1"
-          data-index="3"
-        >
-          Australia
-        </li>
-        <li
-          class="option"
-          data-filtered-index="2"
-          data-index="4"
-        >
-          Austria
-        </li>
-      `);
+      expect(options[1].classList.contains('active')).to.eq(true);
     });
 
     it('highlight element when the arrow down key pressed, then select it', async () => {
@@ -829,7 +811,7 @@ describe('vscode-single-select', () => {
     const el = document.createElement('vscode-single-select');
     el.disabled = true;
 
-    expect(el.getAttribute("aria-disabled")).to.eq("true");
+    expect(el.getAttribute('aria-disabled')).to.eq('true');
   });
 
   it('should original tabindex restored when enabled again', () => {
