@@ -38,9 +38,6 @@ export class VscodeList extends VscElement {
   @property({type: Number, reflect: true})
   numChildren = 0;
 
-  @property({type: Number, reflect: true})
-  tabIndex = 0;
-
   @provide({context: listContext})
   private _listContextState: ListContext = {
     arrows: false,
@@ -72,10 +69,11 @@ export class VscodeList extends VscElement {
       const item = findPrevItem(this._listContextState.focusedItem);
 
       if (item) {
-        this._listContextState.focusedItem.focused = false;
-        this._listContextState.focusedItem = item;
-        item.focused = true;
-        item.focus();
+        // this._listContextState.focusedItem.focused = false;
+        // this._listContextState.focusedItem = item;
+        // item.focused = true;
+        // item.focus();
+        this._focusItem(item);
       }
     }
   }
@@ -85,10 +83,11 @@ export class VscodeList extends VscElement {
       const item = findNextItem(this._listContextState.focusedItem);
 
       if (item) {
-        this._listContextState.focusedItem.focused = false;
-        this._listContextState.focusedItem = item;
-        item.focused = true;
-        item.focus();
+        // this._listContextState.focusedItem.focused = false;
+        // this._listContextState.focusedItem = item;
+        // item.focused = true;
+        // item.focus();
+        this._focusItem(item);
       }
     }
   }
@@ -97,26 +96,12 @@ export class VscodeList extends VscElement {
     const {focusedItem} = this._listContextState;
 
     if (focusedItem) {
-      focusedItem.focused = false;
       this._listContextState.focusedItem = null;
     }
 
-    item.focused = true;
     item.focus();
     this._listContextState.focusedItem = item;
   }
-
-  private _handleComponentFocus = () => {
-    this._originalTabIndex = this.tabIndex;
-
-    if (this._listContextState.focusedItem) {
-      this.tabIndex = -1;
-      this._listContextState.focusedItem.tabIndex = 0;
-      this._listContextState.focusedItem.focus();
-    }
-  };
-
-  private _handleComponentBlur = () => {};
 
   private _handleComponentKeyDown = (ev: KeyboardEvent) => {
     const key = ev.key as ListenedKey;
@@ -143,6 +128,12 @@ export class VscodeList extends VscElement {
 
   private _handleSlotChange = () => {
     initPathTrackerProps(this, this._assignedListItems);
+
+    const firstChild = this.querySelector('vscode-list-item');
+
+    if (firstChild) {
+      firstChild.tabIndex = 0;
+    }
   };
 
   protected willUpdate(changedProperties: PropertyValues<this>): void {
@@ -165,17 +156,12 @@ export class VscodeList extends VscElement {
     super.connectedCallback();
 
     this._originalTabIndex = this.tabIndex;
-
-    this.addEventListener('focus', this._handleComponentFocus);
-    this.addEventListener('blur', this._handleComponentBlur);
     this.addEventListener('keydown', this._handleComponentKeyDown);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    this.removeEventListener('focus', this._handleComponentFocus);
-    this.removeEventListener('blur', this._handleComponentBlur);
     this.removeEventListener('keydown', this._handleComponentKeyDown);
   }
 
