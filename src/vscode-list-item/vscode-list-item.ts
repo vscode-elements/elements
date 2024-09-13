@@ -10,7 +10,7 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {listContext, type ListContext} from '../vscode-list/list-context';
-import { initPathTrackerProps } from '../vscode-list/helpers';
+import {initPathTrackerProps} from '../vscode-list/helpers';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -38,9 +38,6 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean, reflect: true})
   closed = false;
 
-  @property({type: Boolean, reflect: true})
-  focused = false;
-
   @property({type: Number, reflect: true})
   level = 0;
 
@@ -48,7 +45,7 @@ export class VscodeListItem extends VscElement {
   selected = false;
 
   @property({type: Number, reflect: true})
-  tabIndex = 0;
+  tabIndex = -1;
 
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
@@ -68,6 +65,17 @@ export class VscodeListItem extends VscElement {
 
   @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
   private _childrenListItems!: VscodeListItem[];
+
+  private _focusItem(item: VscodeListItem) {
+    const {focusedItem} = this._listContextState;
+
+    if (focusedItem) {
+      this._listContextState.focusedItem = null;
+    }
+
+    item.focus();
+    this._listContextState.focusedItem = item;
+  }
 
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems} = this._listContextState;
@@ -106,17 +114,17 @@ export class VscodeListItem extends VscElement {
     this._mainSlotChange();
   };
 
-  private _handleComponentBlur = () => {
-    this.tabIndex = -1;
-
-    if (this._listContextState.rootElement) {
-      this._listContextState.rootElement.setOriginalTabIndex();
+  private _handleComponentFocus = () => {
+    if (
+      this._listContextState.focusedItem &&
+      this._listContextState.focusedItem !== this
+    ) {
+      this._listContextState.focusedItem.tabIndex = -1;
+      this._listContextState.focusedItem = null;
     }
-  };
 
-  private _handleComponentFocusIn = () => {
-    this.focused = true;
-  }
+    this._listContextState.focusedItem = this;
+  };
 
   private _handleContentClick = (ev: MouseEvent) => {
     ev.stopPropagation();
@@ -128,29 +136,20 @@ export class VscodeListItem extends VscElement {
       this.closed = !this.closed;
     }
 
-    if (this._listContextState.focusedItem) {
-      this._listContextState.focusedItem.focused = false;
-    }
-
-    this._listContextState.focusedItem = this;
-    // this.focused = true;
-    this.tabIndex = 0;
-    this.focus();
+    this._focusItem(this);
   };
 
   connectedCallback(): void {
     super.connectedCallback();
     this._mainSlotChange();
 
-    this.addEventListener('focusin', this._handleComponentFocusIn);
-    this.addEventListener('focusout', this._handleComponentBlur);
+    this.addEventListener('focus', this._handleComponentFocus);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    this.removeEventListener('focusin', this._handleComponentFocusIn);
-    this.removeEventListener('focusout', this._handleComponentBlur);
+    this.removeEventListener('focus', this._handleComponentFocus);
   }
 
   willUpdate(changedProperties: PropertyValues<this>): void {

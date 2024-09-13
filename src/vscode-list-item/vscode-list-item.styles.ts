@@ -46,11 +46,11 @@ const styles: CSSResultGroup = [
       color: var(--vscode-list-activeSelectionForeground);
     }
 
-    :host([focused]) {
+    :host(:focus) {
       outline: none;
     }
 
-    :host([focused]) .content {
+    :host(:focus) .content {
       outline-color: var(--vscode-list-focusAndSelectionOutline, var(--vscode-list-focusOutline));
       outline-style: solid;
       outline-width: 1px;
