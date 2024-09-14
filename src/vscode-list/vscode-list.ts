@@ -31,6 +31,9 @@ export class VscodeList extends VscElement {
   @property({type: Number, reflect: true})
   indent = 8;
 
+  @property({type: Boolean, reflect: true})
+  multiselect = false;
+
   /** @internal */
   @property({type: String, reflect: true})
   role = 'tree';
@@ -125,7 +128,7 @@ export class VscodeList extends VscElement {
       }
     }
 
-    if (key === 'Enter') {
+    if (key === 'Enter' || key === ' ') {
       const {focusedItem} = this._listContextState;
 
       if (focusedItem) {
