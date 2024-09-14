@@ -124,6 +124,23 @@ export class VscodeList extends VscElement {
         this._focusItem(this._assignedListItems[0]);
       }
     }
+
+    if (key === 'Enter') {
+      const {focusedItem} = this._listContextState;
+
+      if (focusedItem) {
+        this._listContextState.selectedItems.forEach(
+          (li) => (li.selected = false)
+        );
+
+        focusedItem.selected = true;
+        this._listContextState.selectedItems.add(focusedItem);
+
+        if (focusedItem.branch) {
+          focusedItem.closed = !focusedItem.closed;
+        }
+      }
+    }
   };
 
   private _handleSlotChange = () => {
