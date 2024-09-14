@@ -31,8 +31,15 @@ export class VscodeList extends VscElement {
   @property({type: Number, reflect: true})
   indent = 8;
 
-  @property({type: Boolean, reflect: true})
-  multiselect = false;
+  @property({type: Boolean, reflect: true, attribute: 'multi-select'})
+  set multiSelect(val: boolean) {
+    this._multiSelect = val;
+    this._listContextState.multiSelect = val;
+  }
+  get multiSelect(): boolean {
+    return this._multiSelect;
+  }
+  private _multiSelect = false;
 
   /** @internal */
   @property({type: String, reflect: true})
@@ -45,6 +52,7 @@ export class VscodeList extends VscElement {
   private _listContextState: ListContext = {
     arrows: false,
     indent: 8,
+    multiSelect: false,
     selectedItems: new Set(),
     focusedItem: null,
     hasBranchItem: false,

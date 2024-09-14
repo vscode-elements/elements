@@ -5,6 +5,7 @@ import type {VscodeList} from './vscode-list';
 export interface ListContext {
   indent: number;
   arrows: boolean;
+  multiSelect: boolean;
   selectedItems: Set<VscodeListItem>;
   focusedItem: VscodeListItem | null;
   focusItem: (item: VscodeListItem) => void;

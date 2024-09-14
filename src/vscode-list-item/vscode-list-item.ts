@@ -78,9 +78,9 @@ export class VscodeListItem extends VscElement {
   }
 
   private _selectItem(isCtrlDown: boolean) {
-    const {selectedItems} = this._listContextState;
+    const {selectedItems, multiSelect} = this._listContextState;
 
-    if (isCtrlDown) {
+    if (multiSelect && isCtrlDown) {
       if (this.selected) {
         this.selected = false;
         selectedItems.delete(this);
@@ -132,7 +132,7 @@ export class VscodeListItem extends VscElement {
     const isCtrlDown = ev.ctrlKey;
     this._selectItem(isCtrlDown);
 
-    if (this.branch && !isCtrlDown) {
+    if (this.branch && !(this._listContextState.multiSelect && isCtrlDown)) {
       this.closed = !this.closed;
     }
 
