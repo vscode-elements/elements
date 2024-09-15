@@ -55,6 +55,7 @@ export class VscodeList extends VscElement {
     multiSelect: false,
     selectedItems: new Set(),
     focusedItem: null,
+    prevFocusedItem: null,
     hasBranchItem: false,
     rootElement: this,
     focusItem: this._focusItem,
@@ -145,10 +146,9 @@ export class VscodeList extends VscElement {
         );
 
         focusedItem.selected = true;
-        this._listContextState.selectedItems.add(focusedItem);
 
         if (focusedItem.branch) {
-          focusedItem.closed = !focusedItem.closed;
+          focusedItem.open = !focusedItem.open;
         }
       }
     }

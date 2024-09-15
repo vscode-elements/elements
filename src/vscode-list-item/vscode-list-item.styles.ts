@@ -130,8 +130,12 @@ const styles: CSSResultGroup = [
       margin-left: 4px;
     }
 
-    :host([closed]) ::slotted(vscode-list-item) {
+    :host([branch]) ::slotted(vscode-list-item) {
       display: none;
+    }
+
+    :host([branch][open]) ::slotted(vscode-list-item) {
+      display: block;
     }
   `,
 ];

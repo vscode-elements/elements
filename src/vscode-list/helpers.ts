@@ -24,6 +24,7 @@ export const initPathTrackerProps = (
 
   items.forEach((item, i) => {
     item.level = parentElementLevel + 1;
+    item.dataset.level = (parentElementLevel + 1).toString();
     item.dataset.index = i.toString();
     item.dataset.last = i === numChildren - 1 ? 'true' : 'false';
   });
@@ -38,7 +39,7 @@ export const findLastChildItem = (item: VscodeListItem): VscodeListItem => {
 
   const lastItem = children[children.length - 1];
 
-  if (lastItem.branch && !lastItem.closed) {
+  if (lastItem.branch && lastItem.open) {
     return findLastChildItem(lastItem);
   } else {
     return lastItem;
@@ -66,7 +67,7 @@ export const findClosestParentHasNextSibling = (
 };
 
 export const findNextItem = (item: VscodeListItem): VscodeListItem | null => {
-  if (item.branch && !item.closed) {
+  if (item.branch && item.open) {
     return item.querySelector<VscodeListItem>('vscode-list-item');
   }
 
@@ -127,9 +128,47 @@ export const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
     }
   }
 
-  if (prevSibling && prevSibling.branch && !prevSibling.closed) {
+  if (prevSibling && prevSibling.branch && prevSibling.open) {
     return findLastChildItem(prevSibling);
   }
 
   return prevSibling;
+};
+
+export const findAncestorOnSpecificLevel = (
+  item: VscodeListItem,
+  level: number
+): VscodeListItem | null => {
+  console.log(level);
+  if (
+    !item.parentElement ||
+    item.parentElement.tagName.toUpperCase() !== 'VSCODE-LIST-ITEM'
+  ) {
+    return null;
+  }
+
+  const parent = item.parentElement as VscodeListItem;
+  const itemLevel = +(item.dataset.level ?? '');
+
+  if (itemLevel > level) {
+    return findAncestorOnSpecificLevel(parent, level);
+  }
+
+  if (itemLevel === level) {
+    return item;
+  }
+
+  return null;
+};
+
+export const selectItemAndAllVisibleDescendants = (item: VscodeListItem) => {
+  item.selected = true;
+
+  if (item.branch && item.open) {
+    const children = item.querySelectorAll<VscodeListItem>(':scope > vscode-list-item');
+
+    children.forEach((c) => {
+      selectItemAndAllVisibleDescendants(c);
+    });
+  }
 };
