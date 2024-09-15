@@ -10,7 +10,11 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {listContext, type ListContext} from '../vscode-list/list-context';
-import {initPathTrackerProps} from '../vscode-list/helpers';
+import {
+  findAncestorOnSpecificLevel,
+  initPathTrackerProps,
+  selectItemAndAllVisibleDescendants,
+} from '../vscode-list/helpers';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -36,13 +40,20 @@ export class VscodeListItem extends VscElement {
   branch = false;
 
   @property({type: Boolean, reflect: true})
-  closed = false;
+  open = false;
 
   @property({type: Number, reflect: true})
   level = 0;
 
   @property({type: Boolean, reflect: true})
-  selected = false;
+  set selected(val: boolean) {
+    this._selected = val;
+    this._listContextState.selectedItems.add(this);
+  }
+  get selected(): boolean {
+    return this._selected;
+  }
+  private _selected = false;
 
   @property({type: Number, reflect: true})
   tabIndex = -1;
@@ -51,8 +62,10 @@ export class VscodeListItem extends VscElement {
   private _listContextState: ListContext = {
     arrows: false,
     indent: 8,
+    multiSelect: false,
     selectedItems: new Set(),
     focusedItem: null,
+    prevFocusedItem: null,
     focusItem: () => {
       return;
     },
@@ -96,6 +109,37 @@ export class VscodeListItem extends VscElement {
     }
   }
 
+  private _selectRange() {
+    const prevFocused = this._listContextState.prevFocusedItem;
+
+    if (!prevFocused || prevFocused === this) {
+      return;
+    }
+
+    const prevFocusedLevel = +(prevFocused.dataset.level ?? '');
+    const focusedLevel = +(this.dataset.level ?? '');
+
+    let closestAncestor: VscodeListItem | null;
+
+    if (focusedLevel > prevFocusedLevel) {
+      closestAncestor = findAncestorOnSpecificLevel(this, prevFocusedLevel);
+    } else if (focusedLevel < prevFocusedLevel) {
+      closestAncestor = findAncestorOnSpecificLevel(prevFocused, focusedLevel);
+    } else {
+      closestAncestor = prevFocused;
+    }
+
+    const from = +(closestAncestor?.dataset.index ?? '');
+    const to = +(this.dataset.index ?? '');
+
+    for (let i = from; i <= to; i++) {
+      const li = this.parentElement?.querySelector(
+        `:scope > [data-index="${i}"]`
+      ) as VscodeListItem;
+      selectItemAndAllVisibleDescendants(li);
+    }
+  }
+
   private _mainSlotChange() {
     this._initiallyAssignedListItems.forEach((li) => {
       li.setAttribute('slot', 'children');
@@ -120,6 +164,8 @@ export class VscodeListItem extends VscElement {
       this._listContextState.focusedItem !== this
     ) {
       this._listContextState.focusedItem.tabIndex = -1;
+      this._listContextState.prevFocusedItem =
+        this._listContextState.focusedItem;
       this._listContextState.focusedItem = null;
     }
 
@@ -130,10 +176,17 @@ export class VscodeListItem extends VscElement {
     ev.stopPropagation();
 
     const isCtrlDown = ev.ctrlKey;
+    const isShiftDown = ev.shiftKey;
+
+    if (isShiftDown) {
+      this._selectRange();
+      return;
+    }
+
     this._selectItem(isCtrlDown);
 
     if (this.branch && !(this._listContextState.multiSelect && isCtrlDown)) {
-      this.closed = !this.closed;
+      this.open = !this.open;
     }
 
     this._focusItem(this);
@@ -150,12 +203,6 @@ export class VscodeListItem extends VscElement {
     super.disconnectedCallback();
 
     this.removeEventListener('focus', this._handleComponentFocus);
-  }
-
-  willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('selected') && this.selected) {
-      this._listContextState.selectedItems.add(this);
-    }
   }
 
   render(): TemplateResult {
@@ -176,7 +223,7 @@ export class VscodeListItem extends VscElement {
           ? html`<div
               class=${classMap({
                 'arrow-container': true,
-                'icon-rotated': !this.closed,
+                'icon-rotated': this.open,
               })}
             >
               ${arrowIcon}
@@ -184,10 +231,10 @@ export class VscodeListItem extends VscElement {
           : nothing}
         <div class="icon-container">
           <slot name="icon"></slot>
-          ${this.branch && this.closed
+          ${this.branch && !this.open
             ? html`<slot name="icon-branch"></slot>`
             : nothing}
-          ${this.branch && !this.closed
+          ${this.branch && this.open
             ? html`<slot name="icon-branch-opened"></slot>`
             : nothing}
           ${!this.branch ? html`<slot name="icon-leaf"></slot>` : nothing}
