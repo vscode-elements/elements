@@ -1,4 +1,4 @@
-import type {VscodeListItem} from '../vscode-list-item';
+import {VscodeListItem} from '../vscode-list-item';
 import type {VscodeList} from './vscode-list';
 
 const isListItem = (item: HTMLElement): item is VscodeListItem =>
@@ -11,6 +11,7 @@ export const initPathTrackerProps = (
   parentElement: VscodeList | VscodeListItem,
   items: VscodeListItem[]
 ): void => {
+  console.log('initTrackerProps');
   const numChildren = items.length;
   const parentElementLevel = isListRoot(parentElement)
     ? -1
@@ -162,10 +163,16 @@ export const findAncestorOnSpecificLevel = (
 };
 
 export const selectItemAndAllVisibleDescendants = (item: VscodeListItem) => {
+  if (!item) {
+    return;
+  }
+
   item.selected = true;
 
   if (item.branch && item.open) {
-    const children = item.querySelectorAll<VscodeListItem>(':scope > vscode-list-item');
+    const children = item.querySelectorAll<VscodeListItem>(
+      ':scope > vscode-list-item'
+    );
 
     children.forEach((c) => {
       selectItemAndAllVisibleDescendants(c);
