@@ -64,6 +64,8 @@ export class VscodeListItem extends VscElement {
     indent: 8,
     multiSelect: false,
     selectedItems: new Set(),
+    allItems: null,
+    itemListUpToDate: false,
     focusedItem: null,
     prevFocusedItem: null,
     focusItem: () => {
@@ -116,28 +118,59 @@ export class VscodeListItem extends VscElement {
       return;
     }
 
-    const prevFocusedLevel = +(prevFocused.dataset.level ?? '');
-    const focusedLevel = +(this.dataset.level ?? '');
+    if (!this._listContextState.itemListUpToDate) {
+      this._listContextState.allItems =
+        this._listContextState.rootElement!.querySelectorAll(
+          'vscode-list-item'
+        );
 
-    let closestAncestor: VscodeListItem | null;
+      if (this._listContextState.allItems) {
+        this._listContextState.allItems.forEach((li, i) => {
+          li.dataset.score = i.toString();
+        });
+      }
 
-    if (focusedLevel > prevFocusedLevel) {
-      closestAncestor = findAncestorOnSpecificLevel(this, prevFocusedLevel);
-    } else if (focusedLevel < prevFocusedLevel) {
-      closestAncestor = findAncestorOnSpecificLevel(prevFocused, focusedLevel);
-    } else {
-      closestAncestor = prevFocused;
+      this._listContextState.itemListUpToDate = true;
     }
 
-    const from = +(closestAncestor?.dataset.index ?? '');
-    const to = +(this.dataset.index ?? '');
+    let from = +(prevFocused.dataset.score ?? -1);
+    let to = +(this.dataset.score ?? -1);
 
-    for (let i = from; i <= to; i++) {
-      const li = this.parentElement?.querySelector(
-        `:scope > [data-index="${i}"]`
-      ) as VscodeListItem;
-      selectItemAndAllVisibleDescendants(li);
+    if (from > to) {
+      [from, to] = [to, from];
     }
+
+    this._listContextState.selectedItems.forEach((li) => (li.selected = false));
+    this._listContextState.selectedItems.clear();
+
+    this._selectItemsAndAllVisibleDescendants(from, to);
+    // console.log(from, to);
+  }
+
+  private _selectItemsAndAllVisibleDescendants(from: number, to: number) {
+    let i = from;
+
+    while (i <= to) {
+      if (this._listContextState.allItems) {
+        const item = this._listContextState.allItems[i];
+
+        if (item.branch && !item.open) {
+          item.selected = true;
+          const numChildren = item.querySelectorAll('vscode-list-item').length;
+          i += numChildren;
+        } else if (item.branch && item.open) {
+          item.selected = true;
+          i += this._selectItemsAndAllVisibleDescendants(i + 1, to);
+        } else {
+          item.selected = true;
+          i += 1;
+        }
+      }
+    }
+
+    console.log(i);
+
+    return i;
   }
 
   private _mainSlotChange() {
@@ -156,6 +189,7 @@ export class VscodeListItem extends VscElement {
 
   private _handleMainSlotChange = () => {
     this._mainSlotChange();
+    this._listContextState.itemListUpToDate = false;
   };
 
   private _handleComponentFocus = () => {
@@ -180,16 +214,19 @@ export class VscodeListItem extends VscElement {
 
     if (isShiftDown) {
       this._selectRange();
-      return;
-    }
+    } else {
+      this._selectItem(isCtrlDown);
 
-    this._selectItem(isCtrlDown);
-
-    if (this.branch && !(this._listContextState.multiSelect && isCtrlDown)) {
-      this.open = !this.open;
+      if (this.branch && !(this._listContextState.multiSelect && isCtrlDown)) {
+        this.open = !this.open;
+      }
     }
 
     this._focusItem(this);
+
+    if (!isShiftDown) {
+      this._listContextState.prevFocusedItem = this;
+    }
   };
 
   connectedCallback(): void {

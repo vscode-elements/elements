@@ -54,6 +54,8 @@ export class VscodeList extends VscElement {
     indent: 8,
     multiSelect: false,
     selectedItems: new Set(),
+    allItems: null,
+    itemListUpToDate: false,
     focusedItem: null,
     prevFocusedItem: null,
     hasBranchItem: false,
@@ -155,6 +157,7 @@ export class VscodeList extends VscElement {
   };
 
   private _handleSlotChange = () => {
+    this._listContextState.itemListUpToDate = false;
     initPathTrackerProps(this, this._assignedListItems);
 
     const firstChild = this.querySelector('vscode-list-item');
