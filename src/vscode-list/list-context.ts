@@ -7,6 +7,8 @@ export interface ListContext {
   arrows: boolean;
   multiSelect: boolean;
   selectedItems: Set<VscodeListItem>;
+  allItems: NodeListOf<VscodeListItem> | null;
+  itemListUpToDate: boolean;
   focusedItem: VscodeListItem | null;
   prevFocusedItem: VscodeListItem | null;
   focusItem: (item: VscodeListItem) => void;
