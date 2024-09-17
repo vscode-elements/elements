@@ -154,13 +154,12 @@ tmpl.innerHTML = `
   </style>
   <div class="theme-selector-wrapper">
     <div id="theme-selector" class="theme-selector">
-      <button type="button" value="light" data-theme-kind="light" class="theme-button active"><span>Light</span></button>
-      <button type="button" value="light-v2" data-theme-kind="light" class="theme-button"><span>Light V2</span></button>
-      <button type="button" value="dark" data-theme-kind="dark" class="theme-button"><span>Dark</span></button>
-      <button type="button" value="dark-v2" data-theme-kind="dark" class="theme-button"><span>Dark V2</span></button>
+      <button type="button" value="light-v2" data-theme-kind="light" class="theme-button active"><span>Light Modern</span></button>
+      <button type="button" value="light" data-theme-kind="light" class="theme-button"><span>Light+</span></button>
+      <button type="button" value="dark-v2" data-theme-kind="dark" class="theme-button"><span>Dark Modern</span></button>
+      <button type="button" value="dark" data-theme-kind="dark" class="theme-button"><span>Dark+</span></button>
       <button type="button" value="hc-light" data-theme-kind="high-contrast-light" class="theme-button"><span>HC Light</span></button>
       <button type="button" value="hc-dark" data-theme-kind="high-contrast" class="theme-button"><span>HC Dark</span></button>
-      <button type="button" value="fallback" data-theme-kind="light" class="theme-button"><span>Unstyled</span></button>
       <button type="button" class="toggle-fullscreen-button" id="toggle-fullscreen" title="toggle fullscreen">
         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="full">
           <path d="M3 12h10V4H3v8zm2-6h6v4H5V6zM2 6H1V2.5l.5-.5H5v1H2v3zm13-3.5V6h-1V3h-3V2h3.5l.5.5zM14 10h1v3.5l-.5.5H11v-1h3v-3zM2 13h3v1H1.5l-.5-.5V10h1v3z"/>
@@ -208,7 +207,7 @@ class ComponentPreview extends HTMLElement {
       this._onToggleFullscreenButtonClickBound
     );
 
-    this._applyTheme('light', 'light');
+    this._applyTheme('light-v2', 'light');
   }
 
   _onThemeSelectorButtonClick(ev) {
