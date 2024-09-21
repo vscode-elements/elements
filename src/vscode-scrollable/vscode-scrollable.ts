@@ -79,7 +79,8 @@ export class VscodeScrollable extends VscElement {
   @queryAssignedElements()
   private _assignedElements!: NodeList;
 
-  private _resizeObserver!: ResizeObserver;
+  private _hostResizeObserver!: ResizeObserver;
+  private _contentResizeObserver!: ResizeObserver;
   private _scrollThumbStartY = 0;
   private _mouseStartY = 0;
   private _scrollbarVisible = true;
@@ -88,8 +89,11 @@ export class VscodeScrollable extends VscElement {
   connectedCallback(): void {
     super.connectedCallback();
 
-    this._resizeObserver = new ResizeObserver(
-      this._resizeObserverCallbackBound
+    this._hostResizeObserver = new ResizeObserver(
+      this._resizeObserverCallback
+    );
+    this._contentResizeObserver = new ResizeObserver(
+      this._resizeObserverCallback
     );
 
     this.requestUpdate();
@@ -99,7 +103,8 @@ export class VscodeScrollable extends VscElement {
         'scroll',
         this._onScrollableContainerScroll.bind(this)
       );
-      this._resizeObserver.observe(this._contentElement);
+      this._hostResizeObserver.observe(this);
+      this._contentResizeObserver.observe(this._contentElement);
     });
 
     this.addEventListener('mouseover', this._onComponentMouseOverBound);
@@ -109,19 +114,18 @@ export class VscodeScrollable extends VscElement {
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    this._resizeObserver.unobserve(this);
-    this._resizeObserver.disconnect();
+    this._hostResizeObserver.unobserve(this);
+    this._hostResizeObserver.disconnect();
+    this._contentResizeObserver.unobserve(this._contentElement);
+    this._contentResizeObserver.disconnect();
 
     this.removeEventListener('mouseover', this._onComponentMouseOverBound);
     this.removeEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
-  private _resizeObserverCallback() {
+  private _resizeObserverCallback = () => {
     this._updateScrollbar();
-  }
-
-  private _resizeObserverCallbackBound =
-    this._resizeObserverCallback.bind(this);
+  };
 
   private _updateScrollbar() {
     const compCr = this.getBoundingClientRect();
@@ -159,7 +163,6 @@ export class VscodeScrollable extends VscElement {
   }
 
   private _onSlotChange() {
-    this._updateScrollbar();
     this._zIndexFix();
   }
 
