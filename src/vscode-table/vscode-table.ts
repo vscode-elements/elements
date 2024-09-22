@@ -335,6 +335,7 @@ export class VscodeTable extends VscElement {
 
   private _updateScrollpaneSize() {
     const headerCr = this._headerElement.getBoundingClientRect();
+    const componentCr = this.getBoundingClientRect();
 
     if (
       headerCr.height === this._prevHeaderHeight &&
@@ -345,13 +346,28 @@ export class VscodeTable extends VscElement {
 
     this._prevHeaderHeight = headerCr.height;
     this._prevComponentHeight = this._componentH;
-    const scrollableH = this._componentH - headerCr.height;
-    this._scrollableElement.style.height = `${scrollableH}px`;
 
-    this._sashVisibleElements.forEach((el) => {
-      el.style.height = `${scrollableH}px`;
-      el.style.top = `${headerCr.height}px`;
-    });
+    if (componentCr.height - headerCr.height > 0) {
+      const scrollableH = componentCr.height - headerCr.height;
+      this._scrollableElement.style.height = `${scrollableH}px`;
+
+      this._sashVisibleElements.forEach((el) => {
+        el.style.height = `${scrollableH}px`;
+        el.style.top = `${headerCr.height}px`;
+      });
+    } else {
+      if (
+        this._assignedBodyElements.length === 0 ||
+        !this._assignedBodyElements[0].querySelector('vscode-table-row')
+      ) {
+        this._scrollableElement.style.height = '0px';
+
+        this._sashVisibleElements.forEach((el) => {
+          el.style.height = '0px';
+          el.style.top = `${headerCr.height}px`;
+        });
+      }
+    }
   }
 
   private _applyCompactViewColumnLabels() {
@@ -398,6 +414,7 @@ export class VscodeTable extends VscElement {
   private _onBodySlotChange() {
     this._initDefaultColumnSizes();
     this._initResizeObserver();
+    this._updateScrollpaneSize();
   }
 
   private _onSashMouseOver(event: MouseEvent) {
