@@ -138,6 +138,7 @@ export class VscodeTable extends VscElement {
   private _columns: string[] = [];
   private _componentResizeObserver!: ResizeObserver;
   private _headerResizeObserver!: ResizeObserver;
+  private _bodyResizeObserver?: ResizeObserver;
   private _activeSashElementIndex = -1;
   private _activeSashCursorOffset = 0;
   private _componentX = 0;
@@ -169,6 +170,7 @@ export class VscodeTable extends VscElement {
     super.disconnectedCallback();
     this._componentResizeObserver.unobserve(this);
     this._componentResizeObserver.disconnect();
+    this._bodyResizeObserver?.disconnect();
   }
 
   private _px2Percent(px: number) {
@@ -251,7 +253,7 @@ export class VscodeTable extends VscElement {
 
   private _componentResizeObserverCallback = () => {
     this._memoizeComponentDimensions();
-    this._updateScrollpaneSize();
+    this._updateResizeHandlersSize();
 
     if (this.responsive) {
       this._toggleCompactView();
@@ -259,7 +261,28 @@ export class VscodeTable extends VscElement {
   };
 
   private _headerResizeObserverCallback = () => {
-    this._updateScrollpaneSize();
+    this._updateResizeHandlersSize();
+  };
+
+  private _bodyResizeObserverCallback = () => {
+    let headerHeight = 0;
+    let tbodyHeight = 0;
+    const tableHeight = this.getBoundingClientRect().height;
+
+    if (this._assignedHeaderElements && this._assignedHeaderElements.length) {
+      headerHeight =
+        this._assignedHeaderElements[0].getBoundingClientRect().height;
+    }
+
+    if (this._assignedBodyElements && this._assignedBodyElements.length) {
+      tbodyHeight =
+        this._assignedBodyElements[0].getBoundingClientRect().height;
+    }
+
+    const overflownContentHeight = tbodyHeight - headerHeight - tableHeight;
+
+    this._scrollableElement.style.height =
+      overflownContentHeight > 0 ? `${tableHeight - headerHeight}px` : 'auto';
   };
 
   private _calcColWidthPercentages(): number[] {
@@ -333,9 +356,8 @@ export class VscodeTable extends VscElement {
     this._initSashes(colWidths);
   }
 
-  private _updateScrollpaneSize() {
+  private _updateResizeHandlersSize() {
     const headerCr = this._headerElement.getBoundingClientRect();
-    const componentCr = this.getBoundingClientRect();
 
     if (
       headerCr.height === this._prevHeaderHeight &&
@@ -347,27 +369,12 @@ export class VscodeTable extends VscElement {
     this._prevHeaderHeight = headerCr.height;
     this._prevComponentHeight = this._componentH;
 
-    if (componentCr.height - headerCr.height > 0) {
-      const scrollableH = componentCr.height - headerCr.height;
-      this._scrollableElement.style.height = `${scrollableH}px`;
+    const bodyHeight = this._componentH - headerCr.height;
 
-      this._sashVisibleElements.forEach((el) => {
-        el.style.height = `${scrollableH}px`;
-        el.style.top = `${headerCr.height}px`;
-      });
-    } else {
-      if (
-        this._assignedBodyElements.length === 0 ||
-        !this._assignedBodyElements[0].querySelector('vscode-table-row')
-      ) {
-        this._scrollableElement.style.height = '0px';
-
-        this._sashVisibleElements.forEach((el) => {
-          el.style.height = '0px';
-          el.style.top = `${headerCr.height}px`;
-        });
-      }
-    }
+    this._sashVisibleElements.forEach((el) => {
+      el.style.height = `${bodyHeight}px`;
+      el.style.top = `${headerCr.height}px`;
+    });
   }
 
   private _applyCompactViewColumnLabels() {
@@ -414,7 +421,18 @@ export class VscodeTable extends VscElement {
   private _onBodySlotChange() {
     this._initDefaultColumnSizes();
     this._initResizeObserver();
-    this._updateScrollpaneSize();
+    this._updateResizeHandlersSize();
+
+    if (!this._bodyResizeObserver) {
+      const tbody = this._assignedBodyElements[0] ?? null;
+
+      if (tbody) {
+        this._bodyResizeObserver = new ResizeObserver(
+          this._bodyResizeObserverCallback
+        );
+        this._bodyResizeObserver.observe(tbody);
+      }
+    }
   }
 
   private _onSashMouseOver(event: MouseEvent) {

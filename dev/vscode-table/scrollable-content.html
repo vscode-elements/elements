@@ -19,6 +19,11 @@
   <script type="module" src="/dist/vscode-table-row/index.js"></script>
   <script type="module" src="/dist/vscode-table-body/index.js"></script>
   <script type="module" src="/dist/vscode-collapsible/index.js"></script>
+  <style>
+    vscode-table {
+      max-height: 500px;
+    }
+  </style>
 </head>
 
 <body class="vscode-light">
@@ -27,7 +32,7 @@
     <vscode-collapsible title="Table">
       <div style="margin: 10px;">
         <div style="background-color: var(--vscode-editor-background);">
-          <vscode-table columns='["100px", "200px"]' zebra min-column-width="5" style="max-height: 500px;">
+          <vscode-table columns='["100px", "200px"]' zebra min-column-width="5">
             <vscode-table-header slot="header">
               <vscode-table-header-cell>id</vscode-table-header-cell>
               <vscode-table-header-cell>firstname</vscode-table-header-cell>
