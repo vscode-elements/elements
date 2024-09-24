@@ -825,4 +825,15 @@ describe('vscode-single-select', () => {
 
     expect(el.tabIndex).to.eq(2);
   });
+
+  it('should not throw error when selectedIndex points to a non-existent option', () => {
+    const el = document.createElement('vscode-single-select');
+    el.selectedIndex = 2;
+    document.body.appendChild(el);
+
+    expect(() => {
+      // trigger a slot change event
+      el.innerHTML = '   ';
+    }).not.throw();
+  });
 });

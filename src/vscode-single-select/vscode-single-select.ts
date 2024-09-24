@@ -201,7 +201,7 @@ export class VscodeSingleSelect
     super._onSlotChange();
 
     if (this._selectedIndex > -1) {
-      this._labelText = this._options[this._selectedIndex].label;
+      this._labelText = this._options[this._selectedIndex]?.label ?? '';
     }
   }
 
