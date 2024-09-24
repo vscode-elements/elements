@@ -8,7 +8,6 @@ import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import {visualizer} from 'rollup-plugin-visualizer';
-import minifyHTML from 'rollup-plugin-minify-html-literals-v3';
 
 export default {
   input: 'dist/main.js',
@@ -22,7 +21,6 @@ export default {
     }
   },
   plugins: [
-    minifyHTML(),
     replace({
       preventAssignment: true,
       values: {'Reflect.decorate': 'undefined'},
