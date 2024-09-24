@@ -11,6 +11,7 @@ docs/
 .env
 debug.log
 stats.html
+tsconfig.tsbuildinfo
 
 bendera-vscode-webview-elements-*.tgz
 custom-elements.json
