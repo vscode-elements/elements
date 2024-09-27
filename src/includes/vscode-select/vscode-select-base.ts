@@ -1,5 +1,5 @@
 import {html, nothing, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import '../../vscode-button';
 import {VscodeOption} from '../../vscode-option/index.js';
@@ -113,6 +113,12 @@ export class VscodeSelectBase extends VscElement {
   @property({type: Number, attribute: true, reflect: true})
   tabIndex = 0;
 
+  @queryAssignedElements({
+    flatten: true,
+    selector: 'vscode-option',
+  })
+  private _assignedOptions!: VscodeOption[];
+
   connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this._onComponentKeyDown);
@@ -173,9 +179,6 @@ export class VscodeSelectBase extends VscElement {
   @state()
   protected _listScrollTop = 0;
 
-  @query('.main-slot')
-  protected _mainSlot!: HTMLSlotElement;
-
   @query('.options')
   private _listElement!: HTMLUListElement;
 
@@ -199,43 +202,28 @@ export class VscodeSelectBase extends VscElement {
 
   protected _addOptionsFromSlottedElements(): OptionListStat {
     const options: InternalOption[] = [];
-    let currentIndex = 0;
-    const nodes = this._mainSlot.assignedNodes();
+    let nextIndex = 0;
+    const optionElements = this._assignedOptions ?? [];
     const optionsListStat: OptionListStat = {
       selectedIndexes: [],
       values: [],
     };
     this._valueOptionIndexMap = {};
 
-    nodes.forEach((el: Node) => {
-      if (
-        !(
-          el.nodeType === Node.ELEMENT_NODE &&
-          (el as Element).matches('vscode-option')
-        )
-      ) {
-        return;
-      }
-
-      const {innerText, description, disabled} = el as VscodeOption;
-
-      const value =
-        ((el as VscodeOption).value ?? '')
-          ? ((el as VscodeOption).value)
-          : innerText.trim();
-
-      const selected = (el as VscodeOption).hasAttribute('selected');
-
+    optionElements.forEach((el) => {
+      const {innerText, description, disabled} = el;
+      const value = (el.value ?? '') ? el.value : innerText.trim();
+      const selected = el.selected ?? false;
       const op: InternalOption = {
         label: innerText.trim(),
         value,
         description,
         selected,
-        index: currentIndex,
+        index: nextIndex,
         disabled,
       };
 
-      currentIndex = options.push(op);
+      nextIndex = options.push(op);
 
       if (selected) {
         optionsListStat.selectedIndexes.push(options.length - 1);
@@ -525,6 +513,8 @@ export class VscodeSelectBase extends VscElement {
     ) {
       this._selectedIndex = 0;
     }
+
+    this.requestUpdate();
   }
 
   protected _onComboboxInputFocus(ev: FocusEvent): void {
