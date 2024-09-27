@@ -225,7 +225,7 @@ export class VscodeSingleSelect
   protected _onArrowDownKeyDown(): void {
     super._onArrowDownKeyDown();
 
-    if (this._showDropdown || this._selectedIndex >= this._options.length) {
+    if (this._showDropdown || this._selectedIndex >= this._options.length - 1) {
       return;
     }
 
