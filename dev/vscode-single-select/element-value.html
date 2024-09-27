@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>&lt;vscode-single-select&gt; Demo</title>
+  <style id="_defaultStyles">
+    html {
+      scrollbar-color: var(--vscode-scrollbarSlider-background) var(--vscode-editor-background);
+    }
+
+    body {
+      overscroll-behavior-x: none;
+      background-color: transparent;
+      color: var(--vscode-editor-foreground);
+      font-family: var(--vscode-font-family);
+      font-weight: var(--vscode-font-weight);
+      font-size: var(--vscode-font-size);
+      margin: 0;
+      padding: 0 20px;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    a,
+    a code {
+      color: var(--vscode-textLink-foreground);
+    }
+
+    p>a {
+      text-decoration: var(--text-link-decoration);
+    }
+
+    a:hover {
+      color: var(--vscode-textLink-activeForeground);
+    }
+
+    a:focus,
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 1px solid -webkit-focus-ring-color;
+      outline-offset: -1px;
+    }
+
+    code {
+      font-family: var(--monaco-monospace-font);
+      color: var(--vscode-textPreformat-foreground);
+      background-color: var(--vscode-textPreformat-background);
+      padding: 1px 3px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      padding: 0;
+    }
+
+    blockquote {
+      background: var(--vscode-textBlockQuote-background);
+      border-color: var(--vscode-textBlockQuote-border);
+    }
+
+    kbd {
+      background-color: var(--vscode-keybindingLabel-background);
+      color: var(--vscode-keybindingLabel-foreground);
+      border-style: solid;
+      border-width: 1px;
+      border-radius: 3px;
+      border-color: var(--vscode-keybindingLabel-border);
+      border-bottom-color: var(--vscode-keybindingLabel-bottomBorder);
+      box-shadow: inset 0 -1px 0 var(--vscode-widget-shadow);
+      vertical-align: middle;
+      padding: 1px 3px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background-color: var(--vscode-editor-background);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: var(--vscode-scrollbarSlider-background);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: var(--vscode-scrollbarSlider-hoverBackground);
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+      background-color: var(--vscode-scrollbarSlider-activeBackground);
+    }
+
+    ::highlight(find-highlight) {
+      background-color: var(--vscode-editor-findMatchHighlightBackground);
+    }
+
+    ::highlight(current-find-highlight) {
+      background-color: var(--vscode-editor-findMatchBackground);
+    }
+  </style>
+  <script type="module" src="/dev-assets/component-preview.js"></script>
+  <script type="module" src="/dist/vscode-single-select/index.js"></script>
+  <script type="module" src="/dist/vscode-option/index.js"></script>
+</head>
+
+<body class="vscode-light">
+  <component-preview>
+    <vscode-single-select id="select">
+      <vscode-option value="3f7382c7-d4cb-49a5-a1d3-4e9df19ed432">Lorem</vscode-option>
+      <vscode-option value="fb2d78db-6b69-4148-a534-99f26c2411e6">Ipsum</vscode-option>
+      <vscode-option value="250ec3a2-0b2b-45d5-a053-b8f71ed5e15e">Dolor</vscode-option>
+    </vscode-single-select>
+  </component-preview>
+  <div id="out"></div>
+  <script type="module">
+    const sl = document.getElementById('select');
+    const out = document.getElementById('out');
+
+    sl.addEventListener('change', (ev) => {
+      console.log(ev.target.value);
+      out.innerHTML = ev.target.value;
+    });
+  </script>
+</body>
+
+</html>
