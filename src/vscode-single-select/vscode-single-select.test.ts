@@ -505,6 +505,29 @@ describe('vscode-single-select', () => {
       expect(el.getAttribute('aria-expanded')).be.eq('false');
     });
 
+    it('should not be allowed to select an element by down arrow key other than the existing ones', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.value = 'Lorem';
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      // Last option
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      expect(async() => {
+        el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+        await el.updateComplete;
+      }).not.throw();
+      expect(el.value).to.eq('Ipsum');
+    });
+
     it('dropdown should be scrolled to the selected option', async () => {
       const el = (await fixture(html`
         <vscode-single-select>
