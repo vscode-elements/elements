@@ -859,4 +859,7 @@ describe('vscode-single-select', () => {
       el.innerHTML = '   ';
     }).not.throw();
   });
+
+  // todo: option selected prop fix
+  // todo: option value prop fix
 });
