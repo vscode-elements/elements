@@ -6,109 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>&lt;vscode-tree&gt; Demo</title>
-  <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
-  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <link rel="stylesheet" href="../dev-assets/additional-styles.css" />
-  <script src="../dev-assets/component-preview.js" type="module"></script>
-  <script type="module" src="../dist/vscode-icon/index.js"></script>
-  <script type="module" src="../dist/vscode-tree/index.js"></script>
-  <style id="_defaultStyles">
-    html {
-      scrollbar-color: var(--vscode-scrollbarSlider-background) var(--vscode-editor-background);
-    }
-
-    body {
-      overscroll-behavior-x: none;
-      background-color: transparent;
-      color: var(--vscode-editor-foreground);
-      font-family: var(--vscode-font-family);
-      font-weight: var(--vscode-font-weight);
-      font-size: var(--vscode-font-size);
-      margin: 0;
-      padding: 0 20px;
-    }
-
-    img,
-    video {
-      max-width: 100%;
-      max-height: 100%;
-    }
-
-    a,
-    a code {
-      color: var(--vscode-textLink-foreground);
-    }
-
-    a:hover {
-      color: var(--vscode-textLink-activeForeground);
-    }
-
-    a:focus,
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: 1px solid -webkit-focus-ring-color;
-      outline-offset: -1px;
-    }
-
-    code {
-      color: var(--vscode-textPreformat-foreground);
-    }
-
-    blockquote {
-      background: var(--vscode-textBlockQuote-background);
-      border-color: var(--vscode-textBlockQuote-border);
-    }
-
-    kbd {
-      background-color: var(--vscode-keybindingLabel-background);
-      color: var(--vscode-keybindingLabel-foreground);
-      border-style: solid;
-      border-width: 1px;
-      border-radius: 3px;
-      border-color: var(--vscode-keybindingLabel-border);
-      border-bottom-color: var(--vscode-keybindingLabel-bottomBorder);
-      box-shadow: inset 0 -1px 0 var(--vscode-widget-shadow);
-      vertical-align: middle;
-      padding: 1px 3px;
-    }
-
-    ::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-    }
-
-    ::-webkit-scrollbar-corner {
-      background-color: var(--vscode-editor-background);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background-color: var(--vscode-scrollbarSlider-background);
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background-color: var(--vscode-scrollbarSlider-hoverBackground);
-    }
-
-    ::-webkit-scrollbar-thumb:active {
-      background-color: var(--vscode-scrollbarSlider-activeBackground);
-    }
-
-    ::highlight(find-highlight) {
-      background-color: var(--vscode-editor-findMatchHighlightBackground);
-    }
-
-    ::highlight(current-find-highlight) {
-      background-color: var(--vscode-editor-findMatchBackground);
-    }
-  </style>
+  <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
+  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
+  <script type="module" src="/dist/vscode-icon/index.js"></script>
+  <script type="module" src="/dist/vscode-tree/index.js"></script>
 </head>
 
 <body class="vscode-light">
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
-      <component-preview>
+      <vscode-demo>
         <vscode-tree id="tree-1" tabindex="0" style="
               background-color: var(--vscode-sideBar-background);
               min-height: 400px;
@@ -228,13 +136,13 @@
             });
           });
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
   <div class="story">
     <h2 class="story-title">Flat list</h2>
     <div class="story-content">
-      <component-preview>
+      <vscode-demo>
         <vscode-tree id="tree-2" tabindex="0"></vscode-tree>
         <script>
           (function () {
@@ -281,13 +189,13 @@
             tree.data = data;
           })();
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
   <div class="story">
     <h2 class="story-title">Arrows</h2>
     <div class="story-content">
-      <component-preview>
+      <vscode-demo>
         <vscode-tree id="tree-3" tabindex="0" indent="16" arrows indent-guides></vscode-tree>
         <script>
           (function () {
@@ -361,14 +269,14 @@
             tree.data = data;
           })();
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
 
   <div class="story">
     <h2 class="story-title">Default icons</h2>
     <div class="story-content">
-      <component-preview>
+      <vscode-demo>
         <vscode-tree id="default-icons-example" tabindex="0" indent="8" arrows></vscode-tree>
         <script type="module">
           const tree = document.getElementById('default-icons-example');
@@ -402,14 +310,14 @@
 
           tree.data = dataDefault;
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
 
   <div class="story">
     <h2 class="story-title">Custom icons</h2>
     <div class="story-content">
-      <component-preview>
+      <vscode-demo>
         <vscode-tree id="custom-icons-example" tabindex="0" indent="8" indent-guides></vscode-tree>
         <script type="module">
           const tree = document.getElementById('custom-icons-example');
@@ -450,14 +358,14 @@
 
           tree.data = data;
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
 
   <div class="story">
     <h2 class="story-title">Actions</h2>
     <div class="story-content">
-      <component-preview>
+      <vscode-demo>
         <vscode-tree id="actions-example"></vscode-tree>
         <script type="module">
           (() => {
@@ -520,7 +428,7 @@
             });
           })()
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
 
@@ -543,7 +451,7 @@
           outline-offset: -1px;
         }
       </style>
-      <component-preview>
+      <vscode-demo>
         <vscode-tree id="decorations-example"></vscode-tree>
         <script type="module">
             (() => {
@@ -615,14 +523,14 @@
               });
             })()
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
 
   <div class="story">
     <h2 class="story-title">Custom colors</h2>
     <div class="story-content">
-      <component-preview>
+      <vscode-demo>
         <style>
           #custom-colors-example {
             /* --vscode-list-activeSelectionIconForeground: #f00; */
@@ -705,7 +613,7 @@
               });
             })()
         </script>
-      </component-preview>
+      </vscode-demo>
     </div>
   </div>
 </body>
