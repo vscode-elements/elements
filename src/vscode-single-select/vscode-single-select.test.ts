@@ -878,6 +878,24 @@ describe('vscode-single-select', () => {
     expect(fd.get('test')).to.eq('lorem');
   });
 
+  it('should set the initial selected value', async () => {
+    const el = await fixture(html`
+      <form id="fr">
+        <vscode-single-select name="test">
+          <vscode-option value="lorem">Lorem</vscode-option>
+          <vscode-option value="ipsum" selected>Ipsum</vscode-option>
+        </vscode-single-select>
+      </form>
+    `);
+
+    const fd = new FormData(el as HTMLFormElement);
+    const sl = el.querySelector('vscode-single-select');
+    const text = sl?.shadowRoot?.querySelector('span.text') as HTMLSpanElement;
+
+    expect(fd.get('test')).to.eq('ipsum');
+    expect(text.innerText).to.eq('Ipsum');
+  });
+
   // todo: option selected prop fix
   // todo: option value prop fix
 });
