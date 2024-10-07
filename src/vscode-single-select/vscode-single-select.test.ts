@@ -521,7 +521,7 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      expect(async() => {
+      expect(async () => {
         el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
         await el.updateComplete;
       }).not.throw();
@@ -609,7 +609,8 @@ describe('vscode-single-select', () => {
       input.dispatchEvent(new InputEvent('input'));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(`
+      expect(el).shadowDom.to.eq(
+        `
         <slot class="main-slot">
         </slot>
         <div class="combobox-face">
@@ -651,7 +652,9 @@ describe('vscode-single-select', () => {
             </li>
           </ul>
         </div>
-      `, {ignoreChildren: ['li']});
+      `,
+        {ignoreChildren: ['li']}
+      );
     });
 
     it('highlight element when the arrow down key pressed', async () => {
@@ -858,6 +861,21 @@ describe('vscode-single-select', () => {
       // trigger a slot change event
       el.innerHTML = '   ';
     }).not.throw();
+  });
+
+  it('should set the initial form value', async () => {
+    const el = await fixture(html`
+      <form id="fr">
+        <vscode-single-select name="test">
+          <vscode-option value="lorem">Lorem</vscode-option>
+          <vscode-option value="ipsum">Ipsum</vscode-option>
+        </vscode-single-select>
+      </form>
+    `);
+
+    const fd = new FormData(el as HTMLFormElement);
+
+    expect(fd.get('test')).to.eq('lorem');
   });
 
   // todo: option selected prop fix

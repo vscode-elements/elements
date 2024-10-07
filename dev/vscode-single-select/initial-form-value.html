@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>&lt;vscode-single-select&gt; Demo</title>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-single-select/index.js"></script>
+    <script type="module" src="/dist/vscode-option/index.js"></script>
+  </head>
+
+  <body>
+    <vscode-demo>
+      <form action="#" id="fr">
+        <vscode-single-select id="select" name="test">
+          <vscode-option value="lorem">Lorem</vscode-option>
+          <vscode-option value="ipsum">Ipsum</vscode-option>
+          <vscode-option value="dolor">Dolor</vscode-option>
+        </vscode-single-select>
+        <select name="test2" id="select2">
+          <option value="lorem">Lorem</option>
+          <option value="ipsum">Ipsum</option>
+          <option value="dolor">Dolor</option>
+        </select>
+        <button type="submit" id="bt">Get Value</button>
+      </form>
+    </vscode-demo>
+    <pre id="out"></pre>
+    <script type="module">
+      const sl = document.getElementById('select');
+      const output = document.getElementById('out');
+      const fr = document.getElementById('fr');
+
+      fr.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+
+        const fd = new FormData(fr);
+        let out = '';
+
+        for (let [name, value] of fd) {
+          out += `${name}: ${value}\n`;
+        }
+
+        output.innerHTML = out;
+      });
+    </script>
+  </body>
+</html>
