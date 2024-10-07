@@ -896,6 +896,30 @@ describe('vscode-single-select', () => {
     expect(text.innerText).to.eq('Ipsum');
   });
 
-  // todo: option selected prop fix
-  // todo: option value prop fix
+  it('should set the initial selected value', async () => {
+    const el = await fixture(html`
+      <form id="fr">
+        <vscode-single-select name="test"></vscode-single-select>
+      </form>
+    `);
+
+    const sl = el.querySelector('vscode-single-select');
+
+    const op1 = document.createElement('vscode-option');
+    op1.value = 'lorem';
+    op1.innerHTML = 'Lorem';
+    const op2 = document.createElement('vscode-option');
+    op2.value = 'ipsum';
+    op2.innerHTML = 'Ipsum';
+    op2.selected = true;
+
+    sl?.appendChild(op1);
+    sl?.appendChild(op2);
+
+    await sl?.updateComplete;
+
+    const fd = new FormData(el as HTMLFormElement);
+
+    expect(fd.get('test')).to.eq('ipsum');
+  });
 });
