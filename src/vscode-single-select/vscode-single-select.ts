@@ -170,6 +170,12 @@ export class VscodeSingleSelect
 
     this.updateComplete.then(() => {
       this._manageRequired();
+
+      if (this._selectedIndex > -1 && this._options.length > 0) {
+        this._internals.setFormValue(this._options[this._selectedIndex].value);
+      } else {
+        this._internals.setFormValue(null);
+      }
     });
   }
 
@@ -349,7 +355,7 @@ export class VscodeSingleSelect
           data-index="${op.index}"
           data-filtered-index="${index}"
         >
-          ${op.ranges?.length ?? 0 > 0
+          ${(op.ranges?.length ?? 0 > 0)
             ? highlightRanges(op.label, op.ranges ?? [])
             : op.label}
         </li>
