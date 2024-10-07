@@ -8,8 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 
-- **SingleSelect**: Fix error throwing when non-existent option is selected
-- **SingleSelect**: Set initial form value before the first user interaction
+- **SingleSelect**: Fix error throwing when non-existent option is selected.
+- **SingleSelect**: Set initial form value before the first user interaction.
+- **SingleSelect**: The option value was not registered when it was set as a property.
+- **SingleSelect**: The option selected state was not registered when it was set as a property.
 
 ## [1.6.1] - 2024-09-22
 
