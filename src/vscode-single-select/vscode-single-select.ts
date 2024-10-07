@@ -170,12 +170,6 @@ export class VscodeSingleSelect
 
     this.updateComplete.then(() => {
       this._manageRequired();
-
-      if (this._selectedIndex > -1 && this._options.length > 0) {
-        this._internals.setFormValue(this._options[this._selectedIndex].value);
-      } else {
-        this._internals.setFormValue(null);
-      }
     });
   }
 
@@ -208,6 +202,12 @@ export class VscodeSingleSelect
 
     if (this._selectedIndex > -1) {
       this._labelText = this._options[this._selectedIndex]?.label ?? '';
+    }
+
+    if (this._selectedIndex > -1 && this._options.length > 0) {
+      this._internals.setFormValue(this._options[this._selectedIndex].value);
+    } else {
+      this._internals.setFormValue(null);
     }
   }
 
