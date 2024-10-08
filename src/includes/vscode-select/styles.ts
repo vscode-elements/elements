@@ -161,6 +161,14 @@ export default [
       z-index: var(--dropdown-z-index, 2);
     }
 
+    :host([position="above"]) .dropdown {
+      border-radius: 3px 3px 0 0;
+      bottom: 26px;
+      padding-bottom: 0;
+      padding-top: 2px;
+      top: auto;
+    }
+
     :host(:focus) .dropdown,
     :host([focused]) .dropdown {
       border-color: var(--vscode-focusBorder);
@@ -330,6 +338,10 @@ export default [
       line-height: 1.3;
       padding: 6px 4px;
       word-wrap:break-word;
+    }
+
+    :host([position="above"]) .description {
+      border-width: 0 0 1px;
     }
   `,
 ];

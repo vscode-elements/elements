@@ -5,36 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>&lt;vscode-single-select&gt; Demo</title>
-    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
     <link
       rel="stylesheet"
       href="../node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
     />
-    <script type="module" src="../dev-assets/component-preview.js"></script>
+    <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
     <script type="module" src="../dist/vscode-icon/index.js"></script>
     <script type="module" src="../dist/vscode-option/index.js"></script>
     <script type="module" src="../dist/vscode-single-select/index.js"></script>
     <script type="module" src="../dist/vscode-multi-select/index.js"></script>
-    <style>
-      [data-cloak] vscode-option {
-        display: none;
-      }
-    </style>
   </head>
 
   <body>
     <h1>vscode-single-select</h1>
 
     <h2>Basic example</h2>
-    <component-preview>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <vscode-demo>
       <vscode-single-select
         value="lorem"
         data-cloak
         id="sl-1"
         style="--dropdown-z-index: 10"
+        position="above"
       >
-        <vscode-option>Afghanistan</vscode-option>
+        <vscode-option description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus elementum mauris, eget porttitor libero varius nec.">Afghanistan</vscode-option>
         <vscode-option description="Test ">Albania</vscode-option>
         <vscode-option>Algeria</vscode-option>
         <vscode-option>Andorra</vscode-option>
@@ -230,7 +231,7 @@
         <vscode-option>Zambia</vscode-option>
         <vscode-option>Zimbabwe</vscode-option>
       </vscode-single-select>
-    </component-preview>
+    </vscode-demo>
     <script type="module">
       const sl = document.querySelector('#sl-1');
 
@@ -247,39 +248,39 @@
     </script>
 
     <h2>Very basic example</h2>
-    <component-preview>
-      <vscode-single-select>
+    <vscode-demo>
+      <vscode-single-select position="above">
         <vscode-option>Lorem</vscode-option>
         <vscode-option description="C:\workspace\vscodewebviewelements\src\vscodesingleselect.ts">Ipsum</vscode-option>
       </vscode-single-select>
-    </component-preview>
+    </vscode-demo>
 
     <h2>Invalid state</h2>
-    <component-preview>
+    <vscode-demo>
       <vscode-single-select invalid>
         <vscode-option>Lorem</vscode-option>
         <vscode-option>Ipsum</vscode-option>
       </vscode-single-select>
-    </component-preview>
+    </vscode-demo>
 
     <h2>Disabled option example</h2>
-    <component-preview>
+    <vscode-demo>
       <vscode-single-select>
         <vscode-option disabled>Lorem</vscode-option>
         <vscode-option>Ipsum</vscode-option>
       </vscode-single-select>
-    </component-preview>
+    </vscode-demo>
 
     <h2>Disabled component example</h2>
-    <component-preview>
+    <vscode-demo>
       <vscode-single-select disabled>
         <vscode-option>Lorem</vscode-option>
         <vscode-option>Ipsum</vscode-option>
       </vscode-single-select>
-    </component-preview>
+    </vscode-demo>
 
     <h2>Combo box example</h2>
-    <component-preview>
+    <vscode-demo>
       <vscode-single-select
         value="lorem"
         data-cloak
@@ -485,7 +486,7 @@
         <vscode-option>Zambia</vscode-option>
         <vscode-option>Zimbabwe</vscode-option>
       </vscode-single-select>
-    </component-preview>
+    </vscode-demo>
     <script type="module">
       const sl = document.querySelector('#sl-2');
 
@@ -495,7 +496,7 @@
     </script>
 
     <h2>Gitmoji example</h2>
-    <component-preview>
+    <vscode-demo>
       <vscode-single-select data-cloak combobox id="sl-gitmoji">
         <vscode-option
           description="Improve structure / format of the code."
@@ -726,7 +727,7 @@
           >⚰️ coffin</vscode-option
         >
       </vscode-single-select>
-    </component-preview>
+    </vscode-demo>
     <script type="module">
       const sl = document.querySelector('#sl-gitmoji');
 
@@ -743,7 +744,7 @@
     </script>
 
     <h2>Multi select example</h2>
-    <component-preview>
+    <vscode-demo>
       <vscode-multi-select value='["lorem", "ipsum"]' data-cloak id="sl-3">
         <vscode-option value="">---</vscode-option>
         <vscode-option>lorem</vscode-option>
@@ -752,7 +753,7 @@
         >
         <vscode-option selected>dolor</vscode-option>
       </vscode-multi-select>
-    </component-preview>
+    </vscode-demo>
     <script type="module">
       const sl = document.querySelector('#sl-3');
 
@@ -769,8 +770,8 @@
     </script>
 
     <h2>Multi combo box example</h2>
-    <component-preview>
-      <vscode-multi-select data-cloak id="sl-4" combobox filter="fuzzy">
+    <vscode-demo>
+      <vscode-multi-select data-cloak id="sl-4" combobox filter="fuzzy" position="above">
         <vscode-option>Afghanistan</vscode-option>
         <vscode-option description="Test ">Albania</vscode-option>
         <vscode-option>Algeria</vscode-option>
@@ -967,7 +968,7 @@
         <vscode-option>Zambia</vscode-option>
         <vscode-option>Zimbabwe</vscode-option>
       </vscode-multi-select>
-    </component-preview>
+    </vscode-demo>
     <script type="module">
       const sl = document.querySelector('#sl-4');
 
