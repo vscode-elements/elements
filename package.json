@@ -153,7 +153,7 @@
     "@types/node": "^22.6.1",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
-    "@vscode-elements/webview-playground": "^1.1.1",
+    "@vscode-elements/webview-playground": "^1.1.2",
     "@vscode/codicons": "^0.0.36",
     "@web/dev-server": "^0.4.6",
     "@web/dev-server-esbuild": "^1.0.2",
