@@ -4,6 +4,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import '../vscode-icon/index.js';
 import styles from './vscode-button.styles.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 /**
  * @fires vsc-click Dispatched only when button is not in disabled state.
@@ -54,10 +55,38 @@ export class VscodeButton extends VscElement {
   icon = '';
 
   /**
+   * Spin property for the icon
+   */
+  @property({type: Boolean, reflect: true, attribute: 'icon-spin'})
+  iconSpin? = false;
+
+  /**
+   * Duration property for the icon
+   */
+  @property({type: Number, reflect: true, attribute: 'icon-spin-duration'})
+  iconSpinDuration?: number;
+
+  /**
    * A [Codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) after the label
    */
   @property({attribute: 'icon-after'})
   iconAfter = '';
+
+  /**
+   * Spin property for the after icon
+   */
+  @property({type: Boolean, reflect: true, attribute: 'icon-after-spin'})
+  iconAfterSpin = false;
+
+  /**
+   * Duration property for the after icon
+   */
+  @property({
+    type: Number,
+    reflect: true,
+    attribute: 'icon-after-spin-duration',
+  })
+  iconAfterSpinDuration?: number;
 
   @property({type: Boolean, reflect: true})
   focused = false;
@@ -196,12 +225,19 @@ export class VscodeButton extends VscElement {
     };
 
     const iconElem = hasIcon
-      ? html`<vscode-icon name="${this.icon}" class="icon"></vscode-icon>`
+      ? html`<vscode-icon
+          name="${this.icon}"
+          ?spin="${this.iconSpin}"
+          spin-duration="${ifDefined(this.iconSpinDuration)}"
+          class="icon"
+        ></vscode-icon>`
       : nothing;
 
     const iconAfterElem = hasIconAfter
       ? html`<vscode-icon
           name="${this.iconAfter}"
+          ?spin="${this.iconAfterSpin}"
+          spin-duration="${ifDefined(this.iconAfterSpinDuration)}"
           class="icon-after"
         ></vscode-icon>`
       : nothing;

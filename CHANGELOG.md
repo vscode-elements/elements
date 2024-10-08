@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Added
+
+- **Button**: Add the ability to modify the icon animation parameters.
+- **Button**: Align and arrange any content added through the main slot.
+
 ## [1.6.2] - 2024-10-07
 
 ### Fixed

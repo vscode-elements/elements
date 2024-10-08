@@ -5,43 +5,81 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>&lt;vscode-button&gt; Demo</title>
-  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
   <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
-  <script type="module" src="../dev-assets/component-preview.js"></script>
+  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
   <script type="module" src="../dist/vscode-button/index.js"></script>
 </head>
 
 <body class="vscode-light">
   <main>
-    <div class="story">
-      <h2 class="story-title">Basic example</h2>
-      <div class="story-content">
-        <component-preview>
-          <vscode-button id="button-1" autofocus>Enabled</vscode-button>
-          <vscode-button secondary id="button-2" vsc-cloak>Hello World</vscode-button>
-          <vscode-button id="button-4" disabled vsc-cloak>Disabled</vscode-button>
-          <vscode-button id="button-5" disabled secondary vsc-cloak>Disabled</vscode-button>
-          <vscode-button icon="account" iconafter="chevron-right" vsc-cloak>Icons</vscode-button>
-          <vscode-button id="button-1" vsc-cloak icon="check" style="width: 300px">Commit</vscode-button>
-        </component-preview>
-        <button id="bt-focus" type="button">Focus first button</button>
-        <script>
-          const bt1 = document.querySelector('#button-1');
-          const bt4 = document.querySelector('#button-4');
-          const btFocus = document.querySelector('#bt-focus');
+    <h2>Basic example</h2>
 
-          const listener = (event) => {
-            console.log(event);
-          };
+    <vscode-demo>
+      <vscode-button id="button-1" autofocus>Enabled</vscode-button>
+      <vscode-button secondary id="button-2" vsc-cloak>Hello World</vscode-button>
+      <vscode-button id="button-4" disabled vsc-cloak>Disabled</vscode-button>
+      <vscode-button id="button-5" disabled secondary vsc-cloak>Disabled</vscode-button>
+      <vscode-button icon="account" iconafter="chevron-right" vsc-cloak>Icons</vscode-button>
+      <vscode-button id="button-1" vsc-cloak icon="check" style="width: 300px">Commit</vscode-button>
+      <button id="bt-focus" type="button">Focus first button</button>
+      <script>
+        const bt1 = document.querySelector('#button-1');
+        const bt4 = document.querySelector('#button-4');
+        const btFocus = document.querySelector('#bt-focus');
 
-          bt1.addEventListener('vsc-click', listener);
-          bt4.addEventListener('vsc-click', listener);
-          btFocus.addEventListener('click', () => {
-            bt1.focus();
-          });
-        </script>
-      </div>
-    </div>
+        const listener = (event) => {
+          console.log(event);
+        };
+
+        bt1.addEventListener('vsc-click', listener);
+        bt4.addEventListener('vsc-click', listener);
+        btFocus.addEventListener('click', () => {
+          bt1.focus();
+        });
+      </script>
+    </vscode-demo>
+
+    <h2>Rich content</h2>
+    <vscode-demo>
+      <style>
+        vscode-button .red,
+        vscode-button .green,
+        vscode-button .blue {
+          background-color: red;
+          border-radius: 100%;
+          display: inline-block;
+          height: 12px;
+          width: 12px;
+        }
+
+        vscode-button .red {
+          background-color: red;
+        }
+
+        vscode-button .green {
+          background-color: green;
+        }
+
+        vscode-button .blue {
+          background-color: blue;
+        }
+      </style>
+      <vscode-button secondary>
+        <span class="red"></span>Red
+      </vscode-button>
+      <vscode-button secondary>
+        <span class="green"></span>Green
+      </vscode-button>
+      <vscode-button secondary>
+        <span class="blue"></span>Blue
+      </vscode-button>
+      <vscode-button>
+        <vscode-icon spin spin-duration="1" name="sync" aria-hidden="true"></vscode-icon>
+        Loading
+      </vscode-button>
+      <vscode-button icon="sync" icon-spin icon-spin-duration="2">Sync</vscode-button>
+    </vscode-demo>
+
   </main>
 </body>
 
