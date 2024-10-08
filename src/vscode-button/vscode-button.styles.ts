@@ -5,7 +5,6 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      align-items: center;
       background-color: var(--vscode-button-background);
       border-color: var(--vscode-button-border, var(--vscode-button-background));
       border-style: solid;
@@ -76,6 +75,20 @@ const styles: CSSResultGroup = [
       background-color: var(--vscode-button-secondaryBackground);
     }
 
+    ::slotted(*) {
+      display: inline-block;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    ::slotted(*:first-child) {
+      margin-left: 0;
+    }
+
+    ::slotted(vscode-icon) {
+      color: inherit;
+    }
+
     .wrapper {
       align-items: center;
       box-sizing: border-box;
@@ -86,7 +99,9 @@ const styles: CSSResultGroup = [
     }
 
     slot {
-      display: block;
+      align-items: center;
+      display: flex;
+      height: 100%;
     }
 
     .icon {
