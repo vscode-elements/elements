@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **Button**: Add the ability to modify the icon animation parameters.
 - **Button**: Align and arrange any content added through the main slot.
+- **SingleSelect**, **MultiSelect**: Add the ability to control the position of the select dropdown.
 
 ## [1.6.2] - 2024-10-07
 

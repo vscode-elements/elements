@@ -109,6 +109,12 @@ export class VscodeSelectBase extends VscElement {
     );
   }
 
+  /**
+   * Position of the options list when visible.
+   */
+  @property({reflect: true})
+  position: 'above' | 'below' = 'below';
+
   /** @internal */
   @property({type: Number, attribute: true, reflect: true})
   tabIndex = 0;
@@ -567,8 +573,9 @@ export class VscodeSelectBase extends VscElement {
 
     return html`
       <div class="${classes}">
+        ${this.position === "above" ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
-        ${this._renderDescription()}
+        ${this.position === "below" ? this._renderDescription() : nothing}
       </div>
     `;
   }
