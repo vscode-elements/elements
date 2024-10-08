@@ -15,6 +15,8 @@ import styles from './vscode-collapsible.styles.js';
  * @cssprop --vscode-sideBarSectionHeader-background - Header background
  * @cssprop --vscode-icon-foreground - Arrow icon color
  * @cssprop --vscode-sideBarTitle-foreground - Header font color
+ *
+ * @csspart body - Container for the toggleable content of the component. The container's overflow content is hidden by default. This can serve as an escape hatch to modify this feature.
  */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends VscElement {
@@ -79,10 +81,8 @@ export class VscodeCollapsible extends VscElement {
             <div class="decorations"><slot name="decorations"></slot></div>
           </div>
         </div>
-        <div class="collapsible-body">
-          <div>
-            <slot></slot>
-          </div>
+        <div class="collapsible-body" part="body">
+          <slot></slot>
         </div>
       </div>
     `;

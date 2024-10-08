@@ -6,20 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>VSCode Webview Elements demo page</title>
-  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
   <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
-  <script type="module" src="../dev-assets/component-preview.js"></script>
+  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
   <script type="module" src="../dist/vscode-icon/index.js"></script>
   <script type="module" src="../dist/vscode-badge/index.js"></script>
   <script type="module" src="../dist/vscode-collapsible/index.js"></script>
+  <script type="module" src="../dist/vscode-single-select/index.js"></script>
+  <script type="module" src="../dist/vscode-option/index.js"></script>
 </head>
 
 <body class="vscode-light">
   <div class="story">
     <h2 class="story-title">Basic example</h2>
     <div class="story-content">
-      <component-preview>
-        <vscode-collapsible title="Lorem" description="Ipsum Dolor sit" open>
+      <style>
+        .collapsible1::part(body) {
+          overflow: visible;
+        }
+      </style>
+      <vscode-demo>
+        <vscode-collapsible title="Lorem" description="Ipsum Dolor sit" open class="collapsible1">
           <vscode-icon name="account" action-icon title="Account" tabindex="0" slot="actions"></vscode-icon>
           <vscode-icon name="git-compare" action-icon title="Git compare" tabindex="0" slot="actions"></vscode-icon>
           <vscode-icon name="add" action-icon title="Add" tabindex="0" slot="actions"></vscode-icon>
@@ -30,6 +36,26 @@
           <p>lorem ipsum dolor sit</p>
           <p>lorem ipsum dolor sit</p>
           <p>lorem ipsum dolor sit</p>
+          <p>lorem ipsum dolor sit</p>
+          <vscode-single-select position="above">
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+            <vscode-option>Lorem Ipsum</vscode-option>
+          </vscode-single-select>
           <p>lorem ipsum dolor sit</p>
         </vscode-collapsible>
         <vscode-collapsible title="Ipsum">
@@ -46,7 +72,8 @@
           <p>lorem ipsum dolor sit</p>
           <p>lorem ipsum dolor sit</p>
         </vscode-collapsible>
-      </component-preview>
+        <vscode-collapsible title="Dolor"></vscode-collapsible>
+      </vscode-demo>
       <script type="module">
         const icons = document.querySelectorAll('vscode-icon[action-icon]');
 
