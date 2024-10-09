@@ -304,4 +304,29 @@ describe('vscode-checkbox', () => {
 
     expect(spy.called).to.be.false;
   });
+
+  it('should update validity state when checked state is changed', () => {
+    const el = document.createElement('vscode-checkbox');
+    el.required = true;
+    el.checked = false;
+    document.body.appendChild(el);
+
+    expect(el.checkValidity()).to.eq(false);
+
+    el.checked = true;
+
+    expect(el.checkValidity()).to.eq(true);
+  });
+
+  it('should update validity state when required property is changed', () => {
+    const el = document.createElement('vscode-checkbox');
+    el.checked = false;
+    document.body.appendChild(el);
+
+    expect(el.checkValidity()).to.eq(true);
+
+    el.required = true;
+
+    expect(el.checkValidity()).to.eq(false);
+  });
 });
