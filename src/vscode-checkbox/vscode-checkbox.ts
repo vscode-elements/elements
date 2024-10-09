@@ -43,7 +43,16 @@ export class VscodeCheckbox
   autofocus = false;
 
   @property({type: Boolean, reflect: true})
-  checked = false;
+  set checked(newVal: boolean) {
+    this._checked = newVal;
+    this._manageRequired();
+    this.requestUpdate();
+  }
+  get checked():boolean {
+    return this._checked;
+  }
+
+  private _checked = false;
 
   @property({type: Boolean, reflect: true, attribute: 'default-checked'})
   defaultChecked = false;
@@ -75,7 +84,15 @@ export class VscodeCheckbox
   indeterminate = false;
 
   @property({type: Boolean, reflect: true})
-  required = false;
+  set required(newVal: boolean) {
+    this._required = newVal;
+    this._manageRequired();
+    this.requestUpdate();
+  }
+  get required() {
+    return this._required;
+  }
+  private _required = false;
 
   get form(): HTMLFormElement | null {
     return this._internals.form;
@@ -225,7 +242,7 @@ export class VscodeCheckbox
           valueMissing: true,
         },
         'Please check this box if you want to proceed.',
-        this._inputEl
+        this._inputEl ?? undefined
       );
     } else {
       this._internals.setValidity({});
