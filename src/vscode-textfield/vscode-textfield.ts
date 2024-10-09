@@ -157,6 +157,10 @@ export class VscodeTextfield
       this._value = val;
       this._internals.setFormValue(val);
     }
+
+    this.updateComplete.then(() => {
+      this._setValidityFromInput();
+    });
   }
   get value(): string {
     return this._value;
@@ -291,11 +295,13 @@ export class VscodeTextfield
   }
 
   private _setValidityFromInput() {
-    this._internals.setValidity(
-      this._inputEl.validity,
-      this._inputEl.validationMessage,
-      this._inputEl
-    );
+    if (this._inputEl) {
+      this._internals.setValidity(
+        this._inputEl.validity,
+        this._inputEl.validationMessage,
+        this._inputEl
+      );
+    }
   }
 
   private _onInput(ev: InputEvent) {

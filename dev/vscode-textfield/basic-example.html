@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;vscode-textfield&gt; Demo</title>
+  <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
+  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
+  <script type="module" src="/dist/vscode-icon/index.js"></script>
+  <script type="module" src="/dist/vscode-label/index.js"></script>
+  <script type="module" src="/dist/vscode-textfield/index.js"></script>
+  <style>
+    vscode-textfield:focus {
+      outline: 3px solid #0f0;
+      ;
+    }
+  </style>
+</head>
+
+<body class="vscode-light">
+  <main>
+    <h1>Textfield</h1>
+    <h2>Basic example</h2>
+    <vscode-demo>
+      <vscode-label for="field-1">Lorem ipsum</vscode-label>
+      <vscode-textfield id="field-1" autocomplete placeholder="Placeholder...">
+        <vscode-icon name="calendar" slot="content-before"></vscode-icon>
+        <vscode-icon id="search-icon" name="search" slot="content-after" action-icon label="Search"></vscode-icon>
+      </vscode-textfield>
+      <button type="button" id="bt-focus">focus</button>
+      <script type="module">
+        const el = document.getElementById('field-1');
+        const icon = document.getElementById('search-icon');
+
+        document.addEventListener('invalid', (ev) => {
+          console.log(ev);
+        });
+        document.addEventListener('input', (ev) => {
+          console.log(ev);
+        });
+        el.addEventListener('change', (ev) => {
+          console.log(ev);
+        });
+        el.addEventListener('select', (ev) => {
+          console.log(ev);
+        });
+        el.addEventListener('invalid', (ev) => {
+          console.log(ev);
+        });
+        icon.addEventListener('click', (ev) => {
+          console.log(ev);
+        });
+        el.addEventListener('focus', (ev) => {
+          console.log(ev);
+        });
+        el.addEventListener('blur', (ev) => {
+          console.log(ev);
+        });
+        document.getElementById('bt-focus').addEventListener('click', () => {
+          document.getElementById('field-1').focus();
+        })
+      </script>
+    </vscode-demo>
+  </main>
+</body>
+
+</html>
