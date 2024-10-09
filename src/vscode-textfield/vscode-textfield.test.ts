@@ -246,4 +246,18 @@ describe('vscode-textfield', () => {
 
     expect(el.maxLength).to.eq(100);
   });
+
+  it('should update validity state when value is changed programmatically', async () => {
+    const el = document.createElement('vscode-textfield');
+    el.pattern = '^(/.*)?$';
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    expect(el.checkValidity()).to.eq(true);
+
+    el.value = 'a';
+    await el.updateComplete;
+
+    expect(el.checkValidity()).to.eq(false);
+  });
 });

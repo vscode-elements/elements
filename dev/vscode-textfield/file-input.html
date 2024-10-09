@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;vscode-textfield&gt; Demo</title>
+  <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet" />
+  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
+  <script type="module" src="/dist/vscode-icon/index.js"></script>
+  <script type="module" src="/dist/vscode-label/index.js"></script>
+  <script type="module" src="/dist/vscode-textfield/index.js"></script>
+</head>
+
+<body class="vscode-light">
+  <main>
+    <h1>Textfield</h1>
+    <h2>File input</h2>
+    <vscode-demo>
+      <vscode-label for="field-2">Lorem ipsum</vscode-label>
+      <vscode-textfield id="field-2" autocomplete placeholder="Placeholder..." type="file">
+      </vscode-textfield>
+    </vscode-demo>
+  </main>
+</body>
+
+</html>
