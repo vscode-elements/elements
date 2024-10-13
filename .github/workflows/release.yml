@@ -29,7 +29,7 @@ jobs:
         run: echo "${{ toJSON(github.event.inputs) }}"
 
       - name: Clone Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -45,7 +45,7 @@ jobs:
           echo $CURRENT_VERSION
 
       - name: Setup Node version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           scope: "@vscode-elements"
           node-version: 20
