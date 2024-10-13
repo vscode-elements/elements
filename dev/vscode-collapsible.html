@@ -77,24 +77,25 @@
       <script type="module">
         const icons = document.querySelectorAll('vscode-icon[action-icon]');
 
-        icons.forEach((i) => {
-          i.addEventListener('click', (event) => {
-            event.stopPropagation();
+      icons.forEach((i) => {
+        i.addEventListener('click', (event) => {
+          event.stopPropagation();
 
-            console.log(event);
-          });
-
-          i.addEventListener('keydown', (event) => {
-            event.stopPropagation();
-
-            if (event.key === 'Enter') {
-              console.log(event);
-            }
-          });
+          console.log(event);
         });
-      </script>
-    </div>
-  </div>
+
+        i.addEventListener('keydown', (event) => {
+          event.stopPropagation();
+
+          if (event.key === 'Enter') {
+            console.log(event);
+          }
+        });
+      });
+
+      collapsible.addEventListener('vsc-collapsible-toggle', (e) => { console.log(e.detail) });
+    </script>
+  </main>
 </body>
 
 </html>
