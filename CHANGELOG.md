@@ -14,6 +14,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **Collapsible**: Add `body` css part.
 - **Collapsible**: Dispatch a toggle event when opening or closing.
 
+## Fixed
+
+- **Textfield**: Revalidate the element when the value is changed.
+- **Checkbox**: Revalidate the element when `required` or `checked` properties are changed.
+
 ## [1.6.2] - 2024-10-07
 
 ### Fixed
