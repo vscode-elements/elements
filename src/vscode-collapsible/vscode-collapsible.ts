@@ -4,6 +4,8 @@ import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-collapsible.styles.js';
 
+export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
+
 /**
  * @slot - Main content.
  * @slot actions - You can place any action icon in this slot in the header, but it's also possible to use any HTML element in it. It's only visible when the component is open.
@@ -33,13 +35,23 @@ export class VscodeCollapsible extends VscElement {
   @property({type: Boolean, reflect: true})
   open = false;
 
+  private _emitToggleEvent() {
+    this.dispatchEvent(
+      new CustomEvent('vsc-collapsible-toggle', {
+        detail: {open: this.open},
+      }) as VscCollapsibleToggleEvent
+    );
+  }
+
   private _onHeaderClick() {
     this.open = !this.open;
+    this._emitToggleEvent();
   }
 
   private _onHeaderKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.open = !this.open;
+      this._emitToggleEvent();
     }
   }
 
@@ -92,5 +104,9 @@ export class VscodeCollapsible extends VscElement {
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-collapsible': VscodeCollapsible;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-collapsible-toggle': VscCollapsibleToggleEvent;
   }
 }
