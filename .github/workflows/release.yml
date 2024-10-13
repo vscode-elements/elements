@@ -48,7 +48,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           scope: "@vscode-elements"
-          node-version: 18
+          node-version: 20
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
           cache-dependency-path: |
