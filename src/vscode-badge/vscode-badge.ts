@@ -14,7 +14,7 @@ import styles from './vscode-badge.styles.js';
 export class VscodeBadge extends VscElement {
   static styles = styles;
 
-  @property()
+  @property({reflect: true})
   variant: 'default' | 'counter' | 'activity-bar-counter' = 'default';
 
   render(): TemplateResult {

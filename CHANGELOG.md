@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **Textfield**: Revalidate the element when the value is changed.
 - **Checkbox**: Revalidate the element when `required` or `checked` properties are changed.
+- **Badge**: Reflect `variant` property.
 
 ## [1.6.2] - 2024-10-07
 
