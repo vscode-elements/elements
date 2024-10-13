@@ -11,6 +11,8 @@ export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
  * @slot actions - You can place any action icon in this slot in the header, but it's also possible to use any HTML element in it. It's only visible when the component is open.
  * @slot decorations - The elements placed in the decorations slot are always visible.
  *
+ * @fires {VscCollapsibleToggleEvent} vsc-collapsible-toggle - Dispatched when the content visibility is changed.
+ *
  * @cssprop --vscode-sideBar-background - Background color
  * @cssprop --vscode-focusBorder - Focus border color
  * @cssprop --vscode-font-family - Header font family

@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **Button**: Align and arrange any content added through the main slot.
 - **SingleSelect**, **MultiSelect**: Add the ability to control the position of the select dropdown.
 - **Collapsible**: Add `body` css part.
+- **Collapsible**: Dispatch a toggle event when opening or closing.
 
 ## [1.6.2] - 2024-10-07
 
