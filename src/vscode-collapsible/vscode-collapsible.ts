@@ -20,7 +20,7 @@ export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
  * @cssprop --vscode-icon-foreground - Arrow icon color
  * @cssprop --vscode-sideBarTitle-foreground - Header font color
  *
- * @csspart body - Container for the toggleable content of the component. The container's overflow content is hidden by default. This can serve as an escape hatch to modify this feature.
+ * @csspart body - Container for the toggleable content of the component. The container's overflow content is hidden by default. This CSS part can serve as an escape hatch to modify this behavior.
  */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends VscElement {
