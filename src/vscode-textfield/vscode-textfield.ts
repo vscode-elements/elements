@@ -76,6 +76,10 @@ export class VscodeTextfield
   @property({type: Boolean, reflect: true})
   focused = false;
 
+  /**
+   * Set error styles on the component. This is only intended to apply styles when custom error
+   * validation is implemented. To check whether the component is valid, use the checkValidity method.
+   */
   @property({type: Boolean, reflect: true})
   invalid = false;
 
@@ -105,6 +109,10 @@ export class VscodeTextfield
   @property({reflect: true})
   name: string | undefined = undefined;
 
+  /**
+   * Specifies a regular expression the form control's value should match.
+   * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern)
+   */
   @property()
   pattern: string | undefined = undefined;
 
@@ -204,7 +212,14 @@ export class VscodeTextfield
     return this._internals.willValidate;
   }
 
-  checkValidity() {
+  /**
+   * Check the component's validity state when built-in validation is used.
+   * Built-in validation is triggered when any validation-related attribute is set. Validation-related
+   * attributes are: `max, maxlength, min, minlength, pattern, required, step`.
+   * See this [the MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity) for more details.
+   * @returns {boolean}
+   */
+  checkValidity(): boolean {
     this._setValidityFromInput();
     return this._internals.checkValidity();
   }
