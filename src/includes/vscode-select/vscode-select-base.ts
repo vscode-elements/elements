@@ -262,9 +262,9 @@ export class VscodeSelectBase extends VscElement {
     }
 
     if (visible) {
-      window.addEventListener('click', this._onClickOutsideBound);
+      window.addEventListener('click', this._onClickOutside);
     } else {
-      window.removeEventListener('click', this._onClickOutsideBound);
+      window.removeEventListener('click', this._onClickOutside);
     }
   }
 
@@ -301,24 +301,20 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
-  protected _onClickOutside(event: MouseEvent): void {
+  private _onClickOutside = (event: MouseEvent): void => {
     const path = event.composedPath();
     const found = path.findIndex((et) => et === this);
 
     if (found === -1) {
       this._toggleDropdown(false);
-      window.removeEventListener('click', this._onClickOutsideBound);
+      window.removeEventListener('click', this._onClickOutside);
     }
   }
 
-  protected _onClickOutsideBound = this._onClickOutside.bind(this);
-
-  private _onMouseMove() {
+  private _onMouseMove = () => {
     this._isHoverForbidden = false;
-    window.removeEventListener('mousemove', this._onMouseMoveBound);
+    window.removeEventListener('mousemove', this._onMouseMove);
   }
-
-  private _onMouseMoveBound = this._onMouseMove.bind(this);
 
   private _toggleComboboxDropdown() {
     this._filterPattern = '';
@@ -423,7 +419,7 @@ export class VscodeSelectBase extends VscElement {
     }
 
     this._isHoverForbidden = true;
-    window.addEventListener('mousemove', this._onMouseMoveBound);
+    window.addEventListener('mousemove', this._onMouseMove);
 
     if (!this._listElement) {
       await this.updateComplete;
