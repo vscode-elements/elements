@@ -100,12 +100,14 @@ export class VscodeSelectBase extends VscElement {
   }
   get options(): Option[] {
     return this._options.map(
-      ({label, value, description, selected, disabled}) => ({
+      ({label, value, description, selected, disabled, icon, iconUrl}) => ({
         label,
         value,
         description,
         selected,
         disabled,
+        icon,
+        iconUrl,
       })
     );
   }
@@ -218,7 +220,7 @@ export class VscodeSelectBase extends VscElement {
     this._valueOptionIndexMap = {};
 
     optionElements.forEach((el) => {
-      const {innerText, description, disabled} = el;
+      const {innerText, description, disabled, icon, iconUrl} = el;
       const value = (el.value ?? '') ? el.value : innerText.trim();
       const selected = el.selected ?? false;
       const op: InternalOption = {
@@ -228,6 +230,8 @@ export class VscodeSelectBase extends VscElement {
         selected,
         index: nextIndex,
         disabled,
+        icon,
+        iconUrl,
       };
 
       nextIndex = options.push(op);
@@ -574,9 +578,9 @@ export class VscodeSelectBase extends VscElement {
 
     return html`
       <div class="${classes}">
-        ${this.position === "above" ? this._renderDescription() : nothing}
+        ${this.position === 'above' ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
-        ${this.position === "below" ? this._renderDescription() : nothing}
+        ${this.position === 'below' ? this._renderDescription() : nothing}
       </div>
     `;
   }

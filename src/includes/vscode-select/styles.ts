@@ -125,7 +125,7 @@ export default [
       outline: 0;
     }
 
-    .icon {
+    .chevron-icon {
       color: var(--vscode-foreground);
       display: block;
       height: 14px;
@@ -136,7 +136,7 @@ export default [
       width: 14px;
     }
 
-    .icon svg {
+    .chevron-icon svg {
       color: var(--vscode-foreground);
       height: 100%;
       width: 100%;
@@ -199,6 +199,23 @@ export default [
       border-width: 1px;
       border-style: solid;
       border-color: transparent;
+    }
+
+    .option .icon {
+      display: block;
+      height: 16px;
+      width: 16px;
+    }
+
+    .option .icon img {
+      display: block;
+      height: 16px;
+      width: 16px;
+    }
+
+    .option .label {
+      display: block;
+      width: 100%;
     }
 
     .option b {

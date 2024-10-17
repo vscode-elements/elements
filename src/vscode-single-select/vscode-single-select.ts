@@ -1,4 +1,4 @@
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
@@ -6,6 +6,7 @@ import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js'
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 import {highlightRanges} from '../includes/vscode-select/helpers.js';
+import {repeat} from 'lit/directives/repeat.js';
 
 /**
  * Allows to select an item from multiple options.
@@ -342,25 +343,42 @@ export class VscodeSingleSelect
 
   protected _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
-    const options = list.map((op, index) => {
-      const classes = classMap({
-        option: true,
-        active: index === this._activeIndex && !op.disabled,
-        disabled: op.disabled,
-      });
 
-      return html`
-        <li
-          class="${classes}"
-          data-index="${op.index}"
-          data-filtered-index="${index}"
-        >
-          ${(op.ranges?.length ?? 0 > 0)
-            ? highlightRanges(op.label, op.ranges ?? [])
-            : op.label}
-        </li>
-      `;
-    });
+    const options = repeat(
+      list,
+      (op) => op.index,
+      (op, index) => {
+        const classes = classMap({
+          option: true,
+          active: index === this._activeIndex && !op.disabled,
+          disabled: op.disabled,
+        });
+
+        return html`
+          <li
+            class="${classes}"
+            data-index="${op.index}"
+            data-filtered-index="${index}"
+          >
+            ${op.icon && !op.iconUrl
+              ? html`<span class="icon"
+                  ><vscode-icon name=${op.icon}></vscode-icon
+                ></span>`
+              : nothing}
+            ${op.iconUrl
+              ? html`<span class="icon"
+                  ><img src=${op.iconUrl} width="16" height="16" alt="icon"
+                /></span>`
+              : nothing}
+            <span class="label"
+              >${(op.ranges?.length ?? 0 > 0)
+                ? highlightRanges(op.label, op.ranges ?? [])
+                : op.label}</span
+            >
+          </li>
+        `;
+      }
+    );
 
     return html`
       <ul

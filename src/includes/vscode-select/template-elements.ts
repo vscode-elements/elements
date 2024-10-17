@@ -1,7 +1,7 @@
 import {html} from 'lit';
 
 export const chevronDownIcon = html`
-  <span class="icon">
+  <span class="chevron-icon">
     <svg
       width="16"
       height="16"

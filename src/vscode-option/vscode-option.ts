@@ -9,6 +9,8 @@ export class VscodeOption extends VscElement {
 
   @property({type: String}) value = '';
   @property({type: String}) description = '';
+  @property({type: String}) icon = '';
+  @property({type: String, attribute: 'icon-url'}) iconUrl = '';
   @property({type: Boolean, reflect: true}) selected = false;
   @property({type: Boolean, reflect: true}) disabled = false;
 

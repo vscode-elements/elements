@@ -4,6 +4,8 @@ export interface Option {
   description: string;
   selected: boolean;
   disabled: boolean;
+  icon: string;
+  iconUrl: string;
 }
 
 export interface InternalOption extends Option {
