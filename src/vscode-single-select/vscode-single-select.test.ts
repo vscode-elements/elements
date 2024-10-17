@@ -1,7 +1,6 @@
 import {VscodeSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
-import '../vscode-option/index.js';
 
 describe('vscode-single-select', () => {
   it('is defined', () => {
