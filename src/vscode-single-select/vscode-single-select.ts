@@ -7,6 +7,7 @@ import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 import {highlightRanges} from '../includes/vscode-select/helpers.js';
 import {styleMap} from 'lit/directives/style-map.js';
+import { VscodeOption } from '../main.js';
 
 /**
  * Allows to select an item from multiple options.
@@ -259,16 +260,13 @@ export class VscodeSingleSelect
   }
 
   private _onOptionClick(ev: MouseEvent) {
-    const composedPath = ev.composedPath();
-    const optEl = composedPath.find((et) =>
-      (et as HTMLElement)?.matches('li.option')
-    ) as HTMLElement | undefined;
+    const el = ev.target;
 
-    if (!optEl || optEl.matches('.disabled')) {
+    if (!(el instanceof VscodeOption) || el.disabled) {
       return;
     }
 
-    this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
+    this._selectedIndex = Number(el.dataset.index);
     this._value = this._options[this._selectedIndex].value;
 
     if (this._selectedIndex > -1) {
@@ -383,7 +381,7 @@ export class VscodeSingleSelect
           display: this._showDropdown ? 'block' : 'none',
         })}
       >
-        <div class="options">
+        <div class="options" @click=${this._onOptionClick}>
           <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
         </div>
       </div>
