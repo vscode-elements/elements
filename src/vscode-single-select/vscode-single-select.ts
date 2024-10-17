@@ -6,6 +6,7 @@ import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js'
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 import {highlightRanges} from '../includes/vscode-select/helpers.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
 /**
  * Allows to select an item from multiple options.
@@ -370,6 +371,22 @@ export class VscodeSingleSelect
       >
         ${options}
       </ul>
+    `;
+  }
+
+  render(): TemplateResult {
+    return html`
+      ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+      <div
+        class="dropdown"
+        style=${styleMap({
+          display: this._showDropdown ? 'block' : 'none',
+        })}
+      >
+        <div class="options">
+          <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
+        </div>
+      </div>
     `;
   }
 }

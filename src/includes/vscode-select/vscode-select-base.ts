@@ -216,7 +216,8 @@ export class VscodeSelectBase extends VscElement {
     };
     this._valueOptionIndexMap = {};
 
-    optionElements.forEach((el) => {
+    optionElements.forEach((el, i) => {
+      el.dataset.index = i.toString();
       const {innerText, description, disabled} = el;
       const value = (el.value ?? '') ? el.value : innerText.trim();
       const selected = el.selected ?? false;
