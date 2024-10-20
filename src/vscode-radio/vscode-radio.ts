@@ -16,6 +16,9 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
  * @prop label - Label text. It is only applied if component's innerHTML doesn't contain any text.
  *
  * @fires {Event} change - Dispatched when checked state is changed.
+ * @fires {Event} invalid - Dispatched when the element is invalid and `checkValidity()` has been called or the form containing this element is submitted.
+ *
+ * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event)
  *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
