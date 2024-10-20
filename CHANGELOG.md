@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## Changed
+
+- **Checkbox**: Bubbling change event as the native checkbox.
+
 ### Fixed
 
 - **SingleSelect**, **MultiSelect**: The option description was not always visible on mouseover.
