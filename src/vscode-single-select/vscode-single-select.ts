@@ -1,5 +1,5 @@
 import {html, LitElement, TemplateResult} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {customElement, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
@@ -139,6 +139,9 @@ export class VscodeSingleSelect
 
   @state()
   private _labelText = '';
+
+  @query('.face')
+  private _face!: HTMLDivElement;
 
   private _internals: ElementInternals;
 
@@ -287,7 +290,8 @@ export class VscodeSingleSelect
         {
           valueMissing: true,
         },
-        'Please select an item in the list.'
+        'Please select an item in the list.',
+        this._face
       );
     } else {
       this._internals.setValidity({});
@@ -304,7 +308,7 @@ export class VscodeSingleSelect
   protected _renderSelectFace(): TemplateResult {
     return html`
       <div
-        class="select-face"
+        class="select-face face"
         @click="${this._onFaceClick}"
         tabindex="${this.tabIndex > -1 ? 0 : -1}"
       >
@@ -318,7 +322,7 @@ export class VscodeSingleSelect
       this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
 
     return html`
-      <div class="combobox-face">
+      <div class="combobox-face face">
         <input
           class="combobox-input"
           spellcheck="false"
