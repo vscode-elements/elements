@@ -53,7 +53,7 @@ export class VscodeCheckbox
     this._manageRequired();
     this.requestUpdate();
   }
-  get checked():boolean {
+  get checked(): boolean {
     return this._checked;
   }
 
@@ -224,7 +224,7 @@ export class VscodeCheckbox
     }
 
     this._toggleState();
-  }
+  };
 
   private _handleKeyDown = (ev: KeyboardEvent): void => {
     if (!this.disabled && (ev.key === 'Enter' || ev.key === ' ')) {
@@ -238,7 +238,7 @@ export class VscodeCheckbox
         this._internals.form?.requestSubmit();
       }
     }
-  }
+  };
 
   private _manageRequired() {
     if (!this.checked && this.required) {
