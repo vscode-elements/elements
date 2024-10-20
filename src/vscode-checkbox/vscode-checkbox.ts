@@ -132,7 +132,6 @@ export class VscodeCheckbox
     super.connectedCallback();
 
     this.addEventListener('keydown', this._handleKeyDown);
-    this.addEventListener('click', this._handleClick);
 
     this.updateComplete.then(() => {
       this._manageRequired();
@@ -142,7 +141,6 @@ export class VscodeCheckbox
 
   disconnectedCallback(): void {
     this.removeEventListener('keydown', this._handleKeyDown);
-    this.removeEventListener('click', this._handleClick);
   }
 
   update(
@@ -213,7 +211,9 @@ export class VscodeCheckbox
     );
   }
 
-  private _handleClick = (): void => {
+  private _handleClick = (ev: MouseEvent): void => {
+    ev.preventDefault();
+
     if (this.disabled) {
       return;
     }
