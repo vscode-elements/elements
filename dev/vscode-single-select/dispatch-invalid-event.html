@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single Select</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-single-select/index.js"></script>
+    <script type="module" src="/dist/vscode-option/index.js"></script>
+  </head>
+
+  <body>
+    <h1>Single Select</h1>
+    <h2>Dispatch "invalid" event</h2>
+    <vscode-demo>
+      <form action="#">
+        <p>
+          <vscode-single-select required name="select-1">
+            <vscode-option></vscode-option>
+            <vscode-option>Lorem</vscode-option>
+            <vscode-option>Ipsum</vscode-option>
+            <vscode-option>Dolor</vscode-option>
+          </vscode-single-select>
+        </p>
+        <button type="submit">Submit</button>
+      </form>
+      <script type="module">
+        const s = document.querySelector('#select-1');
+
+        s.addEventListener('invalid', (ev) => {
+          console.log(ev);
+        });
+      </script>
+    </vscode-demo>
+  </body>
+</html>
