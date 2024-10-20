@@ -14,6 +14,11 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
  * @attr label - Attribute pair of the `label` property.
  * @prop label - Label text. It is only applied if component's innerHTML doesn't contain any text.
  *
+ * @fires {Event} change - Dispatched when checked state is changed. The event is bubbled, so it can be listened on a parent element like the `CheckboxGroup`.
+ * @fires {Event} invalid - Dispatched when the element is invalid and `checkValidity()` has been called or the form containing this element is submitted.
+ *
+ * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event)
+ *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
  * @cssprop --vscode-font-weight
@@ -196,7 +201,7 @@ export class VscodeCheckbox
     this.indeterminate = false;
     this._setActualFormValue();
     this._manageRequired();
-    this.dispatchEvent(new Event('change'));
+    this.dispatchEvent(new Event('change', {bubbles: true}));
     /** @deprecated */
     this.dispatchEvent(
       new CustomEvent('vsc-change', {

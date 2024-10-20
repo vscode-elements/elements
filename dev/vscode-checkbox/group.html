@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkbox</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-checkbox-group/index.js"></script>
+    <script type="module" src="/dist/vscode-checkbox/index.js"></script>
+  </head>
+
+  <body>
+    <h1>Checkbox</h1>
+    <h2>Listen "change" and "invalid" events</h2>
+    <vscode-demo>
+      <form action="#">
+        <p>
+          <vscode-checkbox-group id="group-1">
+            <vscode-checkbox name="checkbox-1">Checkbox #1</vscode-checkbox>
+            <vscode-checkbox name="checkbox-2">Checkbox #2</vscode-checkbox>
+            <vscode-checkbox name="checkbox-3" id="checkbox-3" required
+              >Checkbox #3</vscode-checkbox
+            >
+          </vscode-checkbox-group>
+          <input type="checkbox" id="native-checkbox-1" name="native-checkbox-1">
+          <label for="native-checkbox-1">Native checkbox</label>
+        </p>
+        <button type="submit">Submit</button>
+      </form>
+      <script type="module">
+        const logEvents = (selector, eventType) => {
+          document.querySelector(selector).addEventListener(eventType, (ev) => {
+            console.log(ev);
+          });
+        };
+
+        logEvents('#group-1', 'change');
+        logEvents('#group-1', 'invalid');
+        logEvents('#checkbox-3', 'change');
+        logEvents('#checkbox-3', 'invalid');
+        logEvents('#native-checkbox-1', 'change');
+      </script>
+    </vscode-demo>
+  </body>
+</html>
