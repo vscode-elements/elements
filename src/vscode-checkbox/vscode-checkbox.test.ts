@@ -329,4 +329,15 @@ describe('vscode-checkbox', () => {
 
     expect(el.checkValidity()).to.eq(false);
   });
+
+  it('should dispatch change event', async () => {
+    const el = await fixture(html`<vscode-checkbox></vscode-checkbox>`);
+    const lb = el.shadowRoot?.querySelector('label');
+    const spy = sinon.spy();
+    el.addEventListener('change', spy);
+
+    lb?.click();
+
+    expect(spy).to.have.been.calledOnce;
+  });
 });
