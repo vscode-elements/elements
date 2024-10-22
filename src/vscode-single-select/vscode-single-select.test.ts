@@ -21,7 +21,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.equal(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Ipsum
           </span>
@@ -70,7 +70,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.equal(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Ipsum
           </span>
@@ -99,7 +99,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.equal(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             <span class="empty-label-placeholder"></span>
           </span>
@@ -128,7 +128,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.equal(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Ipsum
           </span>
@@ -157,7 +157,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.equal(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             <span class="empty-label-placeholder"></span>
           </span>
@@ -220,7 +220,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.equal(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Lorem
           </span>
@@ -251,7 +251,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.eq(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Ipsum
           </span>
@@ -290,7 +290,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.eq(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Ipsum
           </span>
@@ -315,7 +315,7 @@ describe('vscode-single-select', () => {
     it('dropdown should be opened when "Space" key pressed', async () => {
       const markupOpen = `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Lorem
           </span>
@@ -367,7 +367,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.eq(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Lorem
           </span>
@@ -397,7 +397,7 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot">
         </slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Lorem
           </span>
@@ -434,7 +434,7 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot">
         </slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Dolor
           </span>
@@ -462,7 +462,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.eq(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Lorem
           </span>
@@ -491,7 +491,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.eq(
         `
         <slot class="main-slot"></slot>
-        <div class="select-face">
+        <div class="select-face face">
           <span class="text">
             Lorem
           </span>
@@ -572,7 +572,7 @@ describe('vscode-single-select', () => {
       expect(el).shadowDom.to.eq(`
         <slot class="main-slot">
         </slot>
-        <div class="combobox-face">
+        <div class="combobox-face face">
           <input
             class="combobox-input"
             spellcheck="false"
@@ -612,7 +612,7 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot">
         </slot>
-        <div class="combobox-face">
+        <div class="combobox-face face">
           <input
             class="combobox-input"
             spellcheck="false"
