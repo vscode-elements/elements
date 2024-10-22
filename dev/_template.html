@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
   <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
   <script type="module" src="/dist/%%COMPONENT%%/index.js"></script>
+  <script>
+    const logEvents = (selector, eventType) => {
+      document.querySelector(selector).addEventListener(eventType, (ev) => {
+        console.log(ev);
+      });
+    };
+  </script>
 </head>
 
 <body>
