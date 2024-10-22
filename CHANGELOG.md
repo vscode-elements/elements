@@ -6,12 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
-## Changed
-
-- **Checkbox**: Bubbling change event in the same way as the native checkbox.
-
 ### Fixed
 
+- **Checkbox**: Bubbling change event in the same way as the native checkbox.
 - **Checkbox**: Click event dispatched twice.
 - **SingleSelect**, **MultiSelect**: The option description was not always visible on mouseover.
 - **SingleSelect**, **MultiSelect**: Fixed the unfocusable element error when validation is triggered.
