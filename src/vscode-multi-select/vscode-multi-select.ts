@@ -1,5 +1,5 @@
 import {html, LitElement, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
@@ -138,7 +138,6 @@ export class VscodeMultiSelect
 
   connectedCallback(): void {
     super.connectedCallback();
-    this._manageRequired();
 
     this.updateComplete.then(() => {
       this._setDefaultValue();
@@ -165,6 +164,9 @@ export class VscodeMultiSelect
     });
   }
 
+  @query('.face')
+  private _faceElement!: HTMLDivElement;
+
   private _setDefaultValue() {
     if (Array.isArray(this.defaultValue) && this.defaultValue.length > 0) {
       const val = this.defaultValue.map((v) => String(v));
@@ -179,7 +181,8 @@ export class VscodeMultiSelect
         {
           valueMissing: true,
         },
-        'Please select an item in the list.'
+        'Please select an item in the list.',
+        this._faceElement
       );
     } else {
       this._internals.setValidity({});
@@ -275,7 +278,7 @@ export class VscodeMultiSelect
   protected _renderSelectFace(): TemplateResult {
     return html`
       <div
-        class="select-face multiselect"
+        class="select-face face multiselect"
         @click="${this._onFaceClick}"
         tabindex="${this.tabIndex > -1 ? 0 : -1}"
       >
@@ -289,7 +292,7 @@ export class VscodeMultiSelect
       this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
 
     return html`
-      <div class="combobox-face">
+      <div class="combobox-face face">
         ${this._renderLabel()}
         <input
           class="combobox-input"
@@ -344,7 +347,7 @@ export class VscodeMultiSelect
               >
                 <span class="${checkboxClasses}"></span>
                 <span class="option-label"
-                  >${op.ranges?.length ?? 0 > 0
+                  >${(op.ranges?.length ?? 0 > 0)
                     ? highlightRanges(op.label, op.ranges ?? [])
                     : op.label}</span
                 >
