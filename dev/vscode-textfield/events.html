@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Textfield</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-textfield/index.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Textfield</h1>
+    <h2>Change, Input</h2>
+    <vscode-demo>
+      <vscode-textfield id="textfield-1"></vscode-textfield>
+      <script type="module">
+        logEvents('#textfield-1', 'change');
+        logEvents('#textfield-1', 'input');
+      </script>
+    </vscode-demo>
+    <h2>Invalid</h2>
+    <vscode-demo>
+      <form action="#">
+        <vscode-textfield id="textfield-2" required></vscode-textfield>
+        <button type="submit">Submit</button>
+      </form>
+      <script type="module">
+        logEvents('#textfield-2', 'invalid');
+      </script>
+    </vscode-demo>
+  </body>
+</html>
