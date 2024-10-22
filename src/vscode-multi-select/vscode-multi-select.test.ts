@@ -21,7 +21,7 @@ describe('vscode-multi-select', () => {
     expect(el).shadowDom.to.equal(
       `
       <slot class="main-slot"></slot>
-      <div class="multiselect select-face">
+      <div class="multiselect select-face face">
         <span class="select-face-badge">
           1 item selected
         </span>
