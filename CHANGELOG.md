@@ -12,8 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 
+- **Checkbox**: Click event dispatched twice.
 - **SingleSelect**, **MultiSelect**: The option description was not always visible on mouseover.
-- **SingleSelect**: Fixed the unfocusable element error when validation is triggered.
+- **SingleSelect**, **MultiSelect**: Fixed the unfocusable element error when validation is triggered.
 
 ## [1.7.0] - 2024-10-13
 
