@@ -47,7 +47,7 @@ const styles: CSSResultGroup = [
 
     .wrapper.panel.active,
     .wrapper.panel:hover {
-      color: var(--vscode-panelTitle-inactiveForeground);
+      color: var(--vscode-panelTitle-activeForeground);
     }
 
     :host([panel]) .wrapper {
