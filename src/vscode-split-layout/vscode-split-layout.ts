@@ -10,6 +10,8 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 
+export type VscSplitLayoutSizeChangedEvent = CustomEvent<{newSize: number}>;
+
 /**
  * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]
  */
@@ -85,6 +87,17 @@ export class VscodeSplitLayout extends VscElement {
     this._initPosition();
   }
 
+  private _dispatchSizeChanged() {
+    this.dispatchEvent(
+      new CustomEvent('vsc-split-layout-size-changed', {
+        detail: {
+          newSize: this.split === "vertical" ? this._handleLeft : this._handleTop,
+        },
+        composed: true,
+      }) as VscSplitLayoutSizeChangedEvent
+    );
+  }
+
   private _initPosition() {
     this._boundRect = this.getBoundingClientRect();
     const {height, width} = this._boundRect;
@@ -122,6 +135,8 @@ export class VscodeSplitLayout extends VscElement {
       this._endPaneTop = (pos / height) * 100;
       this._handleTop = (pos / height) * 100;
     }
+
+    this._dispatchSizeChanged();
   }
 
   private _handleMouseOver() {
@@ -202,6 +217,8 @@ export class VscodeSplitLayout extends VscElement {
       this._startPaneBottom = startPaneBottomPercentage;
       this._endPaneTop = this._handleTop;
     }
+
+    this._dispatchSizeChanged();
   };
 
   private _handleDblClick() {
@@ -223,6 +240,20 @@ export class VscodeSplitLayout extends VscElement {
         e.initializeResizeHandler();
       }
     });
+  }
+
+  public setSize(newSize: number): void {
+    const {height, width} = this._boundRect;
+
+    if(this.split === "vertical") {
+      this._handleLeft = newSize;
+      this._endPaneLeft = this._handleLeft;
+      this._startPaneRight = (Math.max(0, width - this._handleLeft * width / 100) / width) * 100
+    } else {
+      this._handleTop = newSize;
+      this._endPaneTop = this._handleTop;
+      this._startPaneBottom = (Math.max(0, height - this._handleTop * height / 100) / height) * 100
+    }
   }
 
   render(): TemplateResult {
@@ -291,5 +322,9 @@ export class VscodeSplitLayout extends VscElement {
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-split-layout': VscodeSplitLayout;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-split-layout-size-changed': VscSplitLayoutSizeChangedEvent;
   }
 }
