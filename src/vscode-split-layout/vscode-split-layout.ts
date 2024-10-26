@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -74,6 +74,12 @@ export class VscodeSplitLayout extends VscElement {
     this._initPosition();
   }
 
+  protected updated(_changedProperties: PropertyValues): void {
+    if(_changedProperties.has("split")) {
+      this._initPosition();
+    }
+  }
+
   /** @internal */
   initializeResizeHandler() {
     this._initPosition();
@@ -103,9 +109,15 @@ export class VscodeSplitLayout extends VscElement {
       this._startPaneRight = ((maxPos - pos) / width) * 100;
       this._endPaneLeft = (pos / width) * 100;
       this._handleLeft = (pos / width) * 100;
+      this._startPaneBottom = 0;
+      this._endPaneTop = 0;
+      this._handleTop = 0;
     }
 
     if (this.split === 'horizontal') {
+      this._startPaneRight = 0;
+      this._endPaneLeft = 0;
+      this._handleLeft = 0;
       this._startPaneBottom = ((maxPos - pos) / height) * 100;
       this._endPaneTop = (pos / height) * 100;
       this._handleTop = (pos / height) * 100;
