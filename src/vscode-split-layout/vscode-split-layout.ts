@@ -10,7 +10,9 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 
-export type VscSplitLayoutSizeChangedEvent = CustomEvent<{newSize: number}>;
+export type VscSplitLayoutPositionChangedEvent = CustomEvent<{
+  position: number;
+}>;
 
 /**
  * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]
@@ -33,6 +35,9 @@ export class VscodeSplitLayout extends VscElement {
 
   @property({reflect: true, attribute: 'initial-handle-position'})
   initialHandlePosition = '50%';
+
+  @property({type: Number})
+  position = 0;
 
   @state()
   private _startPaneRight = 0;
@@ -77,25 +82,48 @@ export class VscodeSplitLayout extends VscElement {
   }
 
   protected updated(_changedProperties: PropertyValues): void {
-    if(_changedProperties.has("split")) {
+    if (_changedProperties.has("split")) {
       this._initPosition();
+    } else if (_changedProperties.has("position")) {
+      const {height, width} = this._boundRect;
+
+      if(this.split === "vertical") {
+        this._handleLeft = this.position;
+        this._endPaneLeft = this._handleLeft;
+        this._startPaneRight = (Math.max(0, width - this._handleLeft * width / 100) / width) * 100
+      } else {
+        this._handleTop = this.position;
+        this._endPaneTop = this._handleTop;
+        this._startPaneBottom = (Math.max(0, height - this._handleTop * height / 100) / height) * 100
+      }  
+    }
+  }
+
+  protected willUpdate(_changedProperties: PropertyValues): void {
+    if (
+      _changedProperties.has('split') ||
+      _changedProperties.has('_handleLeft') ||
+      _changedProperties.has('_handleTop')
+    ) {
+      const previousPosition = this.position;
+      this.position =
+        this.split === 'vertical' ? this._handleLeft : this._handleTop;
+      if (previousPosition !== this.position) {
+        this.dispatchEvent(
+          new CustomEvent('vsc-split-layout-position-changed', {
+            detail: {
+              position: this.position,
+            },
+            composed: true,
+          }) as VscSplitLayoutPositionChangedEvent
+        );
+      }
     }
   }
 
   /** @internal */
   initializeResizeHandler() {
     this._initPosition();
-  }
-
-  private _dispatchSizeChanged() {
-    this.dispatchEvent(
-      new CustomEvent('vsc-split-layout-size-changed', {
-        detail: {
-          newSize: this.split === "vertical" ? this._handleLeft : this._handleTop,
-        },
-        composed: true,
-      }) as VscSplitLayoutSizeChangedEvent
-    );
   }
 
   private _initPosition() {
@@ -135,8 +163,6 @@ export class VscodeSplitLayout extends VscElement {
       this._endPaneTop = (pos / height) * 100;
       this._handleTop = (pos / height) * 100;
     }
-
-    this._dispatchSizeChanged();
   }
 
   private _handleMouseOver() {
@@ -217,8 +243,6 @@ export class VscodeSplitLayout extends VscElement {
       this._startPaneBottom = startPaneBottomPercentage;
       this._endPaneTop = this._handleTop;
     }
-
-    this._dispatchSizeChanged();
   };
 
   private _handleDblClick() {
@@ -240,20 +264,6 @@ export class VscodeSplitLayout extends VscElement {
         e.initializeResizeHandler();
       }
     });
-  }
-
-  public setSize(newSize: number): void {
-    const {height, width} = this._boundRect;
-
-    if(this.split === "vertical") {
-      this._handleLeft = newSize;
-      this._endPaneLeft = this._handleLeft;
-      this._startPaneRight = (Math.max(0, width - this._handleLeft * width / 100) / width) * 100
-    } else {
-      this._handleTop = newSize;
-      this._endPaneTop = this._handleTop;
-      this._startPaneBottom = (Math.max(0, height - this._handleTop * height / 100) / height) * 100
-    }
   }
 
   render(): TemplateResult {
@@ -325,6 +335,6 @@ declare global {
   }
 
   interface GlobalEventHandlersEventMap {
-    'vsc-split-layout-size-changed': VscSplitLayoutSizeChangedEvent;
+    'vsc-split-layout-position-changed': VscSplitLayoutPositionChangedEvent;
   }
 }
