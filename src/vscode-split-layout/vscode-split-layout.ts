@@ -10,7 +10,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 
-export type VscSplitLayoutPositionChangedEvent = CustomEvent<{
+export type VscSplitLayoutPositionChangeEvent = CustomEvent<{
   position: number;
 }>;
 
@@ -333,6 +333,6 @@ declare global {
   }
 
   interface GlobalEventHandlersEventMap {
-    'vsc-split-layout-position-changed': VscSplitLayoutPositionChangedEvent;
+    'vsc-split-layout-position-change': VscSplitLayoutPositionChangeEvent;
   }
 }
