@@ -103,19 +103,8 @@ export class VscodeSplitLayout extends VscElement {
       _changedProperties.has('_handleLeft') ||
       _changedProperties.has('_handleTop')
     ) {
-      const previousPosition = this.position;
       this.position =
         this.split === 'vertical' ? this._handleLeft : this._handleTop;
-      if (previousPosition !== this.position) {
-        this.dispatchEvent(
-          new CustomEvent('vsc-split-layout-position-changed', {
-            detail: {
-              position: this.position,
-            },
-            composed: true,
-          }) as VscSplitLayoutPositionChangedEvent
-        );
-      }
     }
   }
 
@@ -204,6 +193,15 @@ export class VscodeSplitLayout extends VscElement {
     this._isDragActive = false;
     window.removeEventListener('mouseup', this._handleMouseUp);
     window.removeEventListener('mousemove', this._handleMouseMove);
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-split-layout-position-change', {
+        detail: {
+          position: this.position,
+        },
+        composed: true,
+      }) as VscSplitLayoutPositionChangeEvent
+    );
   };
 
   private _handleMouseMove = (event: MouseEvent) => {
