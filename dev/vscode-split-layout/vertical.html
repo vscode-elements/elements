@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split Layout</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-split-layout/index.js"></script>
+    <script type="module" src="/dist/vscode-scrollable/index.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Split Layout</h1>
+    <h2>Vertical example</h2>
+    <vscode-demo>
+      <vscode-split-layout
+        initial-position="50%"
+        split="vertical"
+        style="width: 500px; height: 250px;"
+      >
+        <div slot="start" class="split-layout-content start">
+          <vscode-scrollable style="width: 100%; height: 100%">
+            Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
+            Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
+            Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo
+            et velit molestie maximus. Vestibulum arcu leo, tempor nec pretium
+            id, vehicula id odio. Etiam ultricies ligula dolor, in tincidunt
+            nunc maximus at. Curabitur tincidunt nulla in magna pharetra
+            commodo. Donec vestibulum mollis quam, ut consequat dolor finibus
+            ac. Nulla suscipit ac sem non fringilla. Nullam eros ante, suscipit
+            hendrerit molestie a, tempor nec turpis. Morbi eget erat suscipit,
+            blandit nibh nec, molestie augue. Aenean consectetur dapibus mauris,
+            eget ultricies sapien porttitor nec. Praesent ultrices mauris
+            lectus, eu molestie erat lacinia vitae. Phasellus vestibulum
+            pellentesque ligula malesuada sollicitudin. Vivamus vitae erat eget
+            nulla laoreet porttitor. Nullam sit amet leo et velit molestie
+            maximus. Vestibulum arcu leo, tempor nec pretium id, vehicula id
+            odio. Etiam ultricies ligula dolor, in tincidunt nunc maximus at.
+            Curabitur tincidunt nulla in magna pharetra commodo. Donec
+            vestibulum mollis quam, ut consequat dolor finibus ac. Nulla
+            suscipit ac sem non fringilla. Nullam eros ante, suscipit hendrerit
+            molestie a, tempor nec turpis. Morbi eget erat suscipit, blandit
+            nibh nec, molestie augue. Aenean consectetur dapibus mauris, eget
+            ultricies sapien porttitor nec.
+          </vscode-scrollable>
+        </div>
+        <div slot="end" class="split-layout-content">
+          <vscode-scrollable style="width: 100%; height: 100%">
+            Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
+            Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
+            Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo
+            et velit molestie maximus. Vestibulum arcu leo, tempor nec pretium
+            id, vehicula id odio. Etiam ultricies ligula dolor, in tincidunt
+            nunc maximus at. Curabitur tincidunt nulla in magna pharetra
+            commodo. Donec vestibulum mollis quam, ut consequat dolor finibus
+            ac. Nulla suscipit ac sem non fringilla. Nullam eros ante, suscipit
+            hendrerit molestie a, tempor nec turpis. Morbi eget erat suscipit,
+            blandit nibh nec, molestie augue. Aenean consectetur dapibus mauris,
+            eget ultricies sapien porttitor nec. Praesent ultrices mauris
+            lectus, eu molestie erat lacinia vitae. Phasellus vestibulum
+            pellentesque ligula malesuada sollicitudin. Vivamus vitae erat eget
+            nulla laoreet porttitor. Nullam sit amet leo et velit molestie
+            maximus. Vestibulum arcu leo, tempor nec pretium id, vehicula id
+            odio. Etiam ultricies ligula dolor, in tincidunt nunc maximus at.
+            Curabitur tincidunt nulla in magna pharetra commodo. Donec
+            vestibulum mollis quam, ut consequat dolor finibus ac. Nulla
+            suscipit ac sem non fringilla. Nullam eros ante, suscipit hendrerit
+            molestie a, tempor nec turpis. Morbi eget erat suscipit, blandit
+            nibh nec, molestie augue. Aenean consectetur dapibus mauris, eget
+            ultricies sapien porttitor nec.
+          </vscode-scrollable>
+        </div>
+      </vscode-split-layout>
+    </vscode-demo>
+  </body>
+</html>
