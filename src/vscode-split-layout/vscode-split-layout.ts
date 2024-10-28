@@ -85,17 +85,15 @@ export class VscodeSplitLayout extends VscElement {
     if (_changedProperties.has("split")) {
       this._initPosition();
     } else if (_changedProperties.has("position")) {
-      const {height, width} = this._boundRect;
-
       if(this.split === "vertical") {
         this._handleLeft = this.position;
         this._endPaneLeft = this._handleLeft;
-        this._startPaneRight = (Math.max(0, width - this._handleLeft * width / 100) / width) * 100
+        this._startPaneRight = 100 - this._handleLeft;
       } else {
         this._handleTop = this.position;
         this._endPaneTop = this._handleTop;
-        this._startPaneBottom = (Math.max(0, height - this._handleTop * height / 100) / height) * 100
-      }  
+        this._startPaneBottom = 100 - this._handleTop;
+      }
     }
   }
 
