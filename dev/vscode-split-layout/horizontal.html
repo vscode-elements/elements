@@ -33,6 +33,7 @@
         split="horizontal"
         reset-on-dbl-click
         style="width: 500px; height: 250px;"
+        id="split-example"
       >
         <div slot="start" class="split-layout-content start">
           <vscode-scrollable style="width: 100%; height: 100%">
@@ -87,6 +88,9 @@
           </vscode-scrollable>
         </div>
       </vscode-split-layout>
+      <script type="module">
+        logEvents('#split-example', 'vsc-split-layout-position-change');
+      </script>
     </vscode-demo>
   </body>
 </html>

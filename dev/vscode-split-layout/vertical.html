@@ -29,12 +29,13 @@
     <h2>Vertical example</h2>
     <vscode-demo>
       <vscode-split-layout
-        initial-position="50%"
+        initial-handle-position="100px"
+        reset-on-dbl-click
         split="vertical"
         style="width: 500px; height: 250px;"
       >
         <div slot="start" class="split-layout-content start">
-          <vscode-scrollable style="width: 100%; height: 100%">
+          <vscode-scrollable style="width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.2);">
             Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
             Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
             Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo
@@ -60,7 +61,7 @@
           </vscode-scrollable>
         </div>
         <div slot="end" class="split-layout-content">
-          <vscode-scrollable style="width: 100%; height: 100%">
+          <vscode-scrollable style="width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.2);">
             Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
             Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
             Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo
