@@ -10,6 +10,28 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 
+type PositionUnit = 'pixel' | 'percent';
+
+const parseValue = (raw: string) => {
+  let unit: PositionUnit;
+  let rawVal: number;
+
+  if (raw.endsWith('%')) {
+    unit = 'percent';
+    rawVal = +raw.substring(0, raw.length - 1);
+  } else if (raw.endsWith('px')) {
+    unit = 'pixel';
+    rawVal = +raw.substring(0, raw.length - 2);
+  } else {
+    unit = 'pixel';
+    rawVal = +raw;
+  }
+
+  const value = isNaN(rawVal) ? 0 : rawVal;
+
+  return {unit, value};
+};
+
 export type VscSplitLayoutPositionChangeEvent = CustomEvent<{
   position: number;
 }>;
