@@ -235,7 +235,6 @@ export class VscodeSplitLayout extends VscElement {
       this._handleOffset = mouseYLocal - this._handlePosition;
     }
 
-    this._boundRect = this.getBoundingClientRect();
     this._isDragActive = true;
 
     window.addEventListener('mouseup', this._handleMouseUp);
