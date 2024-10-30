@@ -38,11 +38,6 @@ const pxToPercent = (current: number, max: number) => {
   return max === 0 ? 0 : Math.min(100, (current / max) * 100);
 };
 
-// Returns a pixel value between 0 and max value
-const percentToPx = (current: number, max: number) => {
-  return Math.min(max, (max * current) / 100);
-};
-
 const inset = ({
   top,
   right,
