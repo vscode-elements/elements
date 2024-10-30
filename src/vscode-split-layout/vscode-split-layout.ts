@@ -148,9 +148,30 @@ export class VscodeSplitLayout extends VscElement {
       this._positionUnit = unit;
       this._handlePosition = value;
     } else if (changedProperties.has('initialHandlePosition')) {
-      const {value, unit} = parseValue(this.initialHandlePosition);
+      const {unit} = parseValue(this.initialHandlePosition);
+      this._convertPosition(unit);
       this._positionUnit = unit;
-      this._handlePosition = value;
+    }
+  }
+
+  private _convertPosition(newUnit: PositionUnit) {
+    if (this._positionUnit === newUnit) {
+      return;
+    }
+
+    const rect = this.getBoundingClientRect();
+    const {width, height} = rect;
+
+    if (newUnit === 'percent') {
+      this._handlePosition =
+        this.split === 'vertical'
+          ? (this._handlePosition / width) * 100
+          : (this._handlePosition / height) * 100;
+    } else {
+      this._handlePosition =
+        this.split === 'vertical'
+          ? (width * this._handlePosition) / 100
+          : (height * this._handlePosition) / 100;
     }
   }
 
