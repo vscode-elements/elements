@@ -1,4 +1,4 @@
-import {html, PropertyValues, TemplateResult} from 'lit';
+import {html, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -44,7 +44,7 @@ const percentToPx = (current: number, max: number) => {
 };
 
 export type VscSplitLayoutPositionChangeEvent = CustomEvent<{
-  position: number;
+  position: string;
 }>;
 
 /**
@@ -102,11 +102,11 @@ export class VscodeSplitLayout extends VscElement {
     this._setHandlePosition(value, unit);
   }
   get position() {
-    const cssUnit = this._positionUnit === 'percent' ? '%' : 'px'
+    const cssUnit = this._positionUnit === 'percent' ? '%' : 'px';
 
     return this._split === 'vertical'
-    ? `${this._handleLeft}${cssUnit}`
-    : `${this._handleTop}${cssUnit}`;
+      ? `${this._handleLeft}${cssUnit}`
+      : `${this._handleTop}${cssUnit}`;
   }
 
   @state()
@@ -197,7 +197,7 @@ export class VscodeSplitLayout extends VscElement {
     // position in pixels
     const pos = unit === 'percent' ? percentToPx(value, maxPos) : value;
 
-    if (this.split === 'vertical') {
+    if (this._split === 'vertical') {
       this._startPaneRight = this._getActualValue(maxPos - pos, maxPos);
       this._endPaneLeft = this._getActualValue(pos, maxPos);
       this._handleLeft = this._getActualValue(pos, maxPos);
@@ -206,7 +206,7 @@ export class VscodeSplitLayout extends VscElement {
       this._handleTop = 0;
     }
 
-    if (this.split === 'horizontal') {
+    if (this._split === 'horizontal') {
       this._startPaneRight = 0;
       this._endPaneLeft = 0;
       this._handleLeft = 0;
@@ -241,7 +241,7 @@ export class VscodeSplitLayout extends VscElement {
     const {left, top, width, height} = this._boundRect;
 
     const mouseXLocal = this._getActualValue(event.clientX - left, width);
-    const mouseYLocal = ((event.clientY - top) / height) * 100;
+    const mouseYLocal = this._getActualValue(event.clientY - top, height);
 
     if (this.split === 'vertical') {
       this._handleOffset = mouseXLocal - this._handleLeft;
@@ -277,7 +277,7 @@ export class VscodeSplitLayout extends VscElement {
     const {clientX, clientY} = event;
     const {left, top, height, width} = this._boundRect;
 
-    if (this.split === 'vertical') {
+    if (this._split === 'vertical') {
       const mouseXLocal = clientX - left;
       const handleLeftPx = Math.max(
         0,
@@ -285,18 +285,12 @@ export class VscodeSplitLayout extends VscElement {
       );
       const startPaneRightPx = Math.max(0, width - handleLeftPx);
 
-      this._handleLeft =
-        this._positionUnit === 'percent'
-          ? (handleLeftPx / width) * 100
-          : handleLeftPx;
-      this._startPaneRight =
-        this._positionUnit === 'percent'
-          ? (startPaneRightPx / width) * 100
-          : startPaneRightPx;
+      this._handleLeft = this._getActualValue(handleLeftPx, width);
+      this._startPaneRight = this._getActualValue(startPaneRightPx, width);
       this._endPaneLeft = this._handleLeft;
     }
 
-    if (this.split === 'horizontal') {
+    if (this._split === 'horizontal') {
       const mouseYLocal = clientY - top;
       const handleTopPx = Math.max(
         0,
@@ -304,11 +298,8 @@ export class VscodeSplitLayout extends VscElement {
       );
       const startPaneBottomPx = Math.max(0, height - handleTopPx);
 
-      const handleTopPercentage = (handleTopPx / height) * 100;
-      const startPaneBottomPercentage = (startPaneBottomPx / height) * 100;
-
-      this._handleTop = handleTopPercentage;
-      this._startPaneBottom = startPaneBottomPercentage;
+      this._handleTop = this._getActualValue(handleTopPx, height);
+      this._startPaneBottom = this._getActualValue(startPaneBottomPx, height);
       this._endPaneTop = this._handleTop;
     }
   };
