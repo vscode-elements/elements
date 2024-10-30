@@ -76,21 +76,32 @@ export class VscodeSplitLayout extends VscElement {
   }
   private _split: Orientation = 'vertical';
 
+  /**
+   * Controls whether the handle position should reset to the value set in the
+   * `initialHandlePosition` when it is double-clicked.
+   */
   @property({type: Boolean, reflect: true, attribute: 'reset-on-dbl-click'})
   resetOnDblClick = false;
 
   /**
-   * Controls the draggable area size in pixels. it is recommended to use the value of `workbench.sash.size`.
+   * Controls the draggable area size in pixels. it is intended to use the value
+   * of `workbench.sash.size`.
    */
   @property({type: Number, reflect: true, attribute: 'handle-size'})
   handleSize = 4;
 
   /**
-   * The handler position will reset to this position when it is double-clicked.
+   * The handler position will reset to this position when it is double-clicked,
+   * or the `resetHandlePosition()` is called.
    */
   @property({reflect: true, attribute: 'initial-handle-position'})
   initialHandlePosition: string = '50%';
 
+  /**
+   * Set the handle position programmatically. The value must include a unit,
+   * either `%` or `px`. If no unit is specified, the value is interpreted as
+   * `px`.
+   */
   @property({attribute: 'handle-position'})
   handlePosition?: string;
 
