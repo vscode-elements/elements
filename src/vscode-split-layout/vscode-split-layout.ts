@@ -69,7 +69,7 @@ export class VscodeSplitLayout extends VscElement {
   @property({reflect: true})
   set split(newVal: Orientation) {
     this._split = newVal;
-    this._initPosition();
+    this.resetHandlePosition();
   }
   get split(): Orientation {
     return this._split;
@@ -127,16 +127,25 @@ export class VscodeSplitLayout extends VscElement {
   private _handleOffset = 0;
   private _positionUnit: PositionUnit = 'percent';
 
+  /**
+   * Sets the handle position to the value specified in the `initialHandlePosition` property.
+   */
+  resetHandlePosition() {
+    const {value, unit} = parseValue(this.initialHandlePosition);
+    this._handlePosition = value;
+    this._positionUnit = unit;
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
 
     this._boundRect = this.getBoundingClientRect();
-    this._initPosition();
+    this.resetHandlePosition();
   }
 
   /** @internal */
   initializeResizeHandler() {
-    this._initPosition();
+    this.resetHandlePosition();
   }
 
   protected update(
@@ -194,12 +203,6 @@ export class VscodeSplitLayout extends VscElement {
 
   private _getCssVal(value: number) {
     return this._positionUnit === 'percent' ? `${value}%` : `${value}px`;
-  }
-
-  private _initPosition() {
-    const {unit, value} = parseValue(this.initialHandlePosition);
-    this._handlePosition = value;
-    this._positionUnit = unit;
   }
 
   private _handleMouseOver() {
@@ -284,7 +287,7 @@ export class VscodeSplitLayout extends VscElement {
       return;
     }
 
-    this._initPosition();
+    this.resetHandlePosition();
   }
 
   private _handleSlotChange() {
