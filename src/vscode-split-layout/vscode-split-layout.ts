@@ -51,7 +51,7 @@ const inset = ({
   left: string;
 }) => `${top} ${right} ${bottom} ${left}`;
 
-export type VscSplitLayoutPositionChangeEvent = CustomEvent<{
+export type VscSplitLayoutChangeEvent = CustomEvent<{
   position: string;
 }>;
 
@@ -249,12 +249,12 @@ export class VscodeSplitLayout extends VscElement {
     window.removeEventListener('mousemove', this._handleMouseMove);
 
     this.dispatchEvent(
-      new CustomEvent('vsc-split-layout-position-change', {
+      new CustomEvent('vsc-split-layout-change', {
         detail: {
           position: this._getCssVal(this._handlePosition),
         },
         composed: true,
-      }) as VscSplitLayoutPositionChangeEvent
+      }) as VscSplitLayoutChangeEvent
     );
   };
 
@@ -393,6 +393,6 @@ declare global {
   }
 
   interface GlobalEventHandlersEventMap {
-    'vsc-split-layout-position-change': VscSplitLayoutPositionChangeEvent;
+    'vsc-split-layout-change': VscSplitLayoutChangeEvent;
   }
 }
