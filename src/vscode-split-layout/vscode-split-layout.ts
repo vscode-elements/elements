@@ -2,6 +2,7 @@ import {html, PropertyValues, TemplateResult} from 'lit';
 import {
   customElement,
   property,
+  query,
   queryAssignedElements,
   state,
 } from 'lit/decorators.js';
@@ -112,6 +113,9 @@ export class VscodeSplitLayout extends VscElement {
   @state()
   private _hide = false;
 
+  @query('.wrapper')
+  private _wrapperEl!: HTMLDivElement;
+
   @queryAssignedElements({slot: 'start', selector: 'vscode-split-layout'})
   private _nestedLayoutsAtStart!: HTMLElement[];
 
@@ -133,14 +137,17 @@ export class VscodeSplitLayout extends VscElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-
-    this._boundRect = this.getBoundingClientRect();
-    this.resetHandlePosition();
   }
 
   /** @internal */
   initializeResizeHandler() {
     this.resetHandlePosition();
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    this._boundRect = this._wrapperEl.getBoundingClientRect();
+    this.resetHandlePosition();
+    this.requestUpdate();
   }
 
   protected update(
@@ -174,7 +181,7 @@ export class VscodeSplitLayout extends VscElement {
       return;
     }
 
-    const rect = this.getBoundingClientRect();
+    const rect = this._wrapperEl.getBoundingClientRect();
     const {width, height} = rect;
 
     if (newUnit === 'percent') {
@@ -216,7 +223,7 @@ export class VscodeSplitLayout extends VscElement {
     event.stopPropagation();
     event.preventDefault();
 
-    this._boundRect = this.getBoundingClientRect();
+    this._boundRect = this._wrapperEl.getBoundingClientRect();
     const {left, top, width, height} = this._boundRect;
 
     const mouseXLocal = this._getActualValue(event.clientX - left, width);
@@ -359,21 +366,23 @@ export class VscodeSplitLayout extends VscElement {
     });
 
     return html`
-      <div class="start" style="${styleMap({inset: startPaneInset})}">
-        <slot name="start" @slotchange=${this._handleSlotChange}></slot>
+      <div class="wrapper">
+        <div class="start" style="${styleMap({inset: startPaneInset})}">
+          <slot name="start" @slotchange=${this._handleSlotChange}></slot>
+        </div>
+        <div class="end" style="${styleMap({inset: endPaneInset})}">
+          <slot name="end" @slotchange=${this._handleSlotChange}></slot>
+        </div>
+        <div class="${handleOverlayClasses}"></div>
+        <div
+          class="${handleClasses}"
+          style="${handleStyles}"
+          @mouseover="${this._handleMouseOver}"
+          @mouseout="${this._handleMouseOut}"
+          @mousedown="${this._handleMouseDown}"
+          @dblclick="${this._handleDblClick}"
+        ></div>
       </div>
-      <div class="end" style="${styleMap({inset: endPaneInset})}">
-        <slot name="end" @slotchange=${this._handleSlotChange}></slot>
-      </div>
-      <div class="${handleOverlayClasses}"></div>
-      <div
-        class="${handleClasses}"
-        style="${handleStyles}"
-        @mouseover="${this._handleMouseOver}"
-        @mouseout="${this._handleMouseOut}"
-        @mousedown="${this._handleMouseDown}"
-        @dblclick="${this._handleDblClick}"
-      ></div>
     `;
   }
 }
