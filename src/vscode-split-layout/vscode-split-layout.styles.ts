@@ -7,7 +7,7 @@ const styles: CSSResultGroup = [
     :host {
       --separator-border: var(--vscode-editorWidget-border, transparent);
 
-      /* border: 1px solid var(--vscode-editorWidget-border); */
+      border: 1px solid var(--vscode-editorWidget-border);
       display: block;
       overflow: hidden;
       position: relative;
@@ -20,6 +20,11 @@ const styles: CSSResultGroup = [
 
     ::slotted(vscode-split-layout) {
       border: 0;
+    }
+
+    .wrapper {
+      height: 100%;
+      width: 100%;
     }
 
     .start {
