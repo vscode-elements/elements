@@ -15,28 +15,15 @@
     ></script>
     <script type="module" src="/dist/vscode-split-layout/index.js"></script>
     <script type="module" src="/dist/vscode-scrollable/index.js"></script>
-    <script>
-      const logEvents = (selector, eventType) => {
-        document.querySelector(selector).addEventListener(eventType, (ev) => {
-          console.log(ev);
-        });
-      };
-    </script>
   </head>
 
   <body>
     <h1>Split Layout</h1>
     <h2>Vertical example</h2>
     <vscode-demo>
-      <vscode-split-layout
-        initial-handle-position="100px"
-        handle-position="25%"
-        reset-on-dbl-click
-        split="vertical"
-        style="width: 500px; height: 250px; border-width: 10px;"
-      >
+      <vscode-split-layout style="width: 500px; height: 250px">
         <div slot="start" class="split-layout-content start">
-          <vscode-scrollable style="width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.2);">
+          <vscode-scrollable style="width: 100%; height: 100%">
             Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
             Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
             Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo
@@ -62,7 +49,7 @@
           </vscode-scrollable>
         </div>
         <div slot="end" class="split-layout-content">
-          <vscode-scrollable style="width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.2);">
+          <vscode-scrollable style="width: 100%; height: 100%">
             Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
             Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
             Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo
