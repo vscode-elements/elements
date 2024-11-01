@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Fixed
+
+- **SingleSelect**, **MultiSelect**: Fix the widget height when it is empty.
 - **Tabs**: Active tab highlights previously showed as inactive.
 - **SplitLayout**: Reinitialize panes when the split layout orientation changes.
 
