@@ -1,7 +1,7 @@
-import {resetMouse, sendMouse} from '@web/test-runner-commands';
 import {VscodeSplitLayout} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import {parseValue} from './vscode-split-layout.js';
+import {dragElement} from '../includes/test-helpers.js';
 
 describe('vscode-split-layout', () => {
   it('is defined', () => {
@@ -107,22 +107,17 @@ describe('vscode-split-layout', () => {
       const el = await fixture<VscodeSplitLayout>(
         html`<vscode-split-layout
           style="width: 500px; height: 500px;"
-          initial-handle-position="50%"
-          handle-position="50%"
+          initial-handle-position="100px"
         ></vscode-split-layout>`
       );
 
       const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
 
-      expect(handle.style.left).to.eq('50%');
+      expect(handle.style.left).to.eq('100px');
 
-      await resetMouse();
-      await sendMouse({type: 'move', position: [252, 10]});
-      await sendMouse({type: 'down'});
-      await sendMouse({type: 'move', position: [280, 10]});
-      await sendMouse({type: 'up'});
+      await dragElement(handle, 40);
 
-      expect(handle.style.left).to.eq('');
+      expect(handle.style.left).to.eq('140px');
     });
 
     it('should panes resize in horizontal mode');
