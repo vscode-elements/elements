@@ -17,7 +17,13 @@ const DEFAULT_HANDLE_SIZE = 4;
 type PositionUnit = 'pixel' | 'percent';
 type Orientation = 'horizontal' | 'vertical';
 
-export const parseValue = (raw: string) => {
+export const parseValue = (
+  raw: string
+): {value: number; unit: PositionUnit} => {
+  if (!raw) {
+    return {value: 0, unit: 'pixel'};
+  }
+
   let unit: PositionUnit;
   let rawVal: number;
 
