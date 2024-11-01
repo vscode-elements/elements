@@ -11,10 +11,13 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 
+const DEFAULT_INITIAL_POSITION = '50%';
+const DEFAULT_HANDLE_SIZE = 4;
+
 type PositionUnit = 'pixel' | 'percent';
 type Orientation = 'horizontal' | 'vertical';
 
-const parseValue = (raw: string) => {
+export const parseValue = (raw: string) => {
   let unit: PositionUnit;
   let rawVal: number;
 
@@ -35,7 +38,7 @@ const parseValue = (raw: string) => {
 };
 
 // Returns a percentage between 0 and 100
-const pxToPercent = (current: number, max: number) => {
+export const pxToPercent = (current: number, max: number) => {
   return max === 0 ? 0 : Math.min(100, (current / max) * 100);
 };
 
@@ -91,7 +94,7 @@ export class VscodeSplitLayout extends VscElement {
    * or the `resetHandlePosition()` is called.
    */
   @property({reflect: true, attribute: 'initial-handle-position'})
-  initialHandlePosition: string = '50%';
+  initialHandlePosition: string = DEFAULT_INITIAL_POSITION;
 
   /**
    * Set the handle position programmatically. The value must include a unit,
@@ -130,7 +133,7 @@ export class VscodeSplitLayout extends VscElement {
    * Sets the handle position to the value specified in the `initialHandlePosition` property.
    */
   resetHandlePosition() {
-    const {value, unit} = parseValue(this.initialHandlePosition);
+    const {value, unit} = parseValue(this.initialHandlePosition ?? DEFAULT_INITIAL_POSITION);
     this._handlePosition = value;
     this._positionUnit = unit;
   }
@@ -170,7 +173,7 @@ export class VscodeSplitLayout extends VscElement {
       this._positionUnit = unit;
       this._handlePosition = value;
     } else if (changedProperties.has('initialHandlePosition')) {
-      const {unit} = parseValue(this.initialHandlePosition);
+      const {unit} = parseValue(this.initialHandlePosition ?? DEFAULT_INITIAL_POSITION);
       this._convertPosition(unit);
       this._positionUnit = unit;
     }
@@ -338,14 +341,16 @@ export class VscodeSplitLayout extends VscElement {
         this.split === 'vertical' ? '0' : this._getCssVal(this._handlePosition),
     };
 
+    const handleSize = this.handleSize ?? DEFAULT_HANDLE_SIZE;
+
     if (this.split === 'vertical') {
-      handleStylesPropObj.marginLeft = `${0 - this.handleSize / 2}px`;
-      handleStylesPropObj.width = `${this.handleSize}px`;
+      handleStylesPropObj.marginLeft = `${0 - handleSize / 2}px`;
+      handleStylesPropObj.width = `${handleSize}px`;
     }
 
     if (this.split === 'horizontal') {
-      handleStylesPropObj.height = `${this.handleSize}px`;
-      handleStylesPropObj.marginTop = `${0 - this.handleSize / 2}px`;
+      handleStylesPropObj.height = `${handleSize}px`;
+      handleStylesPropObj.marginTop = `${0 - handleSize / 2}px`;
     }
 
     const handleStyles = styleMap(handleStylesPropObj);
