@@ -1,9 +1,14 @@
 import {VscodeSplitLayout} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
+import {resetMouse} from '@web/test-runner-commands';
 import {parseValue} from './vscode-split-layout.js';
 import {dragElement} from '../includes/test-helpers.js';
 
 describe('vscode-split-layout', () => {
+  afterEach(async () => {
+    await resetMouse();
+  });
+
   it('is defined', () => {
     const el = document.createElement('vscode-split-layout');
     expect(el).to.instanceOf(VscodeSplitLayout);
@@ -113,13 +118,35 @@ describe('vscode-split-layout', () => {
 
       const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
 
+      expect(handle).not.to.be.null;
       expect(handle.style.left).to.eq('100px');
+      expect(handle.style.top).to.eq('0px');
 
-      await dragElement(handle, 40);
+      await dragElement(handle, 40, 0);
 
       expect(handle.style.left).to.eq('140px');
+      expect(handle.style.top).to.eq('0px');
     });
 
-    it('should panes resize in horizontal mode');
+    it('should panes resize in horizontal mode', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          split="horizontal"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle).not.to.be.null;
+      expect(handle.style.left).to.eq('0px');
+      expect(handle.style.top).to.eq('100px');
+
+      await dragElement(handle, 0, 40);
+
+      expect(handle.style.left).to.eq('0px');
+      expect(handle.style.top).to.eq('140px');
+    });
   });
 });
