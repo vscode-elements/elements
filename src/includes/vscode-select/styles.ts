@@ -44,7 +44,14 @@ export default [
 
     .select-face {
       cursor: pointer;
+      display: block;
       padding: 3px 4px;
+    }
+
+    .select-face .text {
+      display: block;
+      height: 18px;
+      overflow: hidden;
     }
 
     .select-face.multiselect {
@@ -72,11 +79,6 @@ export default [
 
     .combobox-face {
       display: flex;
-    }
-
-    .empty-label-placeholder {
-      display: block;
-      height: 16px;
     }
 
     :host(:focus) .select-face,
@@ -140,10 +142,6 @@ export default [
       color: var(--vscode-foreground);
       height: 100%;
       width: 100%;
-    }
-
-    .select-face:empty:before {
-      content: '\\00a0';
     }
 
     .dropdown {

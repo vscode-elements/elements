@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Select</title>
+  <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
+  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
+  <script type="module" src="/dist/vscode-single-select/index.js"></script>
+  <script type="module" src="/dist/vscode-option/index.js"></script>
+  <script>
+    const logEvents = (selector, eventType) => {
+      document.querySelector(selector).addEventListener(eventType, (ev) => {
+        console.log(ev);
+      });
+    };
+  </script>
+</head>
+
+<body>
+  <h1>Single Select</h1>
+
+  <h2>Basic example</h2>
+  <vscode-demo>
+    <vscode-single-select>
+      <vscode-option></vscode-option>
+      <vscode-option>lorem</vscode-option>
+      <vscode-option>ipsum</vscode-option>
+    </vscode-single-select>
+  </vscode-demo>
+
+  <h2>Combobox example</h2>
+  <vscode-demo>
+    <vscode-single-select combobox>
+      <vscode-option></vscode-option>
+      <vscode-option>lorem</vscode-option>
+      <vscode-option>ipsum</vscode-option>
+    </vscode-single-select>
+  </vscode-demo>
+</body>
+
+</html>

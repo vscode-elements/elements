@@ -298,13 +298,6 @@ export class VscodeSingleSelect
     }
   }
 
-  private _renderLabel() {
-    const labelContent =
-      this._labelText || html`<span class="empty-label-placeholder"></span>`;
-
-    return html`<span class="text">${labelContent}</span>`;
-  }
-
   protected _renderSelectFace(): TemplateResult {
     return html`
       <div
@@ -312,7 +305,7 @@ export class VscodeSingleSelect
         @click="${this._onFaceClick}"
         tabindex="${this.tabIndex > -1 ? 0 : -1}"
       >
-        ${this._renderLabel()} ${chevronDownIcon}
+        <span class="text">${this._labelText}</span> ${chevronDownIcon}
       </div>
     `;
   }
