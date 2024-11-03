@@ -117,14 +117,20 @@ describe('vscode-split-layout', () => {
       );
 
       const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const paneStart = el.shadowRoot?.querySelector('.start') as HTMLDivElement;
+      const paneEnd = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
 
       expect(handle).not.to.be.null;
-      expect(handle.style.left).to.eq('100px');
+      expect(handle.style.left).to.eq('20%');
       expect(handle.style.top).to.eq('0px');
+      expect(paneStart.style.width).to.eq('20%');
+      expect(paneEnd.style.width).to.eq('80%');
 
-      await dragElement(handle, 40, 0);
+      await dragElement(handle, 100);
 
-      expect(handle.style.left).to.eq('140px');
+      expect(paneStart.style.width).to.eq('40%');
+      expect(paneEnd.style.width).to.eq('60%');
+      expect(handle.style.left).to.eq('40%');
       expect(handle.style.top).to.eq('0px');
     });
 
@@ -141,12 +147,12 @@ describe('vscode-split-layout', () => {
 
       expect(handle).not.to.be.null;
       expect(handle.style.left).to.eq('0px');
-      expect(handle.style.top).to.eq('100px');
+      expect(handle.style.top).to.eq('20%');
 
-      await dragElement(handle, 0, 40);
+      await dragElement(handle, 0, 100);
 
       expect(handle.style.left).to.eq('0px');
-      expect(handle.style.top).to.eq('140px');
+      expect(handle.style.top).to.eq('40%');
     });
   });
 });
