@@ -23,16 +23,19 @@ const styles: CSSResultGroup = [
     }
 
     .wrapper {
+      display: flex;
       height: 100%;
       width: 100%;
     }
 
+    .wrapper.horizontal {
+      flex-direction: column;
+    }
+
     .start {
       box-sizing: border-box;
-      left: 0;
-      top: 0;
-      overflow: hidden;
-      position: absolute;
+      flex-shrink: 0;
+      width: 100%;
     }
 
     :host([split='vertical']) .start {
@@ -44,11 +47,8 @@ const styles: CSSResultGroup = [
     }
 
     .end {
-      bottom: 0;
-      box-sizing: border-box;
-      overflow: hidden;
-      position: absolute;
-      right: 0;
+      flex-shrink: 0;
+      width: 100%;
     }
 
     .handle-overlay {
