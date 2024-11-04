@@ -85,7 +85,7 @@ export class VscodeMultiSelect
     this._selectedIndexes = [];
 
     sanitizedVal.forEach((v) => {
-      if (this._valueOptionIndexMap[v]) {
+      if (typeof this._valueOptionIndexMap[v] === 'number') {
         this._selectedIndexes.push(this._valueOptionIndexMap[v]);
         this._options[this._valueOptionIndexMap[v]].selected = true;
       }
