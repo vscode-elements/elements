@@ -63,6 +63,9 @@ export type VscSplitLayoutChangeEvent = CustomEvent<{
 export class VscodeSplitLayout extends VscElement {
   static styles = styles;
 
+  /**
+   * Direction of the divider.
+   */
   @property({reflect: true})
   set split(newVal: Orientation) {
     this._split = newVal;
@@ -109,6 +112,9 @@ export class VscodeSplitLayout extends VscElement {
   }
   private _rawHandlePosition?: string;
 
+  /**
+   * The size of the fixed pane will not change when the component is resized.
+   */
   @property({attribute: 'fixed-pane'})
   fixedPane: 'none' | 'start' | 'end' = 'none';
 
