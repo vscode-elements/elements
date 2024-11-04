@@ -54,6 +54,7 @@ export const percentToPx = (current: number, max: number) => {
 
 export type VscSplitLayoutChangeEvent = CustomEvent<{
   position: number;
+  positionInPercentage: number;
 }>;
 
 /**
@@ -244,10 +245,15 @@ export class VscodeSplitLayout extends VscElement {
     window.removeEventListener('mouseup', this._handleMouseUp);
     window.removeEventListener('mousemove', this._handleMouseMove);
 
+    const {width, height} = this._boundRect;
+    const max = this.split === 'vertical' ? width : height;
+    const positionInPercentage = pxToPercent(this._handlePosition, max);
+
     this.dispatchEvent(
       new CustomEvent('vsc-split-layout-change', {
         detail: {
           position: this._handlePosition,
+          positionInPercentage,
         },
         composed: true,
       }) as VscSplitLayoutChangeEvent
