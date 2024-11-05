@@ -100,9 +100,7 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text">
-            <span class="empty-label-placeholder"></span>
-          </span>
+          <span class="text"></span>
           <span class="icon">
           </span>
         </div>
@@ -158,9 +156,7 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text">
-            <span class="empty-label-placeholder"></span>
-          </span>
+          <span class="text"></span>
           <span class="icon">
           </span>
         </div>
