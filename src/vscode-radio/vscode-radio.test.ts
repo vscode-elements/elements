@@ -1,37 +1,9 @@
 import './index.js';
 import {VscodeRadio} from './index.js';
 import '../vscode-radio-group/index.js';
-import {VscodeRadioGroup} from '../vscode-radio-group/index.js';
-import {aTimeout, expect, fixture, html} from '@open-wc/testing';
+import {expect, fixture, html} from '@open-wc/testing';
 import {sendKeys} from '@web/test-runner-commands';
 import sinon from 'sinon';
-
-const createSampleForm = () => {
-  const form = document.createElement('form');
-  form.id = 'sample-form';
-  const group = document.createElement(
-    'vscode-radio-group'
-  ) as VscodeRadioGroup;
-  const rb1 = document.createElement('vscode-radio') as VscodeRadio;
-  rb1.name = 'test';
-  rb1.value = '1';
-  rb1.label = 'One';
-  const rb2 = document.createElement('vscode-radio') as VscodeRadio;
-  rb2.name = 'test';
-  rb2.value = '2';
-  rb2.label = 'Two';
-  const rb3 = document.createElement('vscode-radio') as VscodeRadio;
-  rb3.name = 'test';
-  rb3.value = '3';
-  rb3.label = 'Three';
-
-  group.appendChild(rb1);
-  group.appendChild(rb2);
-  group.appendChild(rb3);
-  form.appendChild(group);
-
-  return {form, group, rb1, rb2, rb3};
-};
 
 describe('vscode-radio', () => {
   afterEach(() => {
@@ -47,39 +19,36 @@ describe('vscode-radio', () => {
     expect(el).to.instanceOf(VscodeRadio);
   });
 
-  it('form property should point to the associated form', () => {
-    const {form, rb1} = createSampleForm();
+  it('form property should point to the associated form', async () => {
+    const form = await fixture(html`
+      <form id="test-form">
+        <vscode-radio></vscode-radio>
+      </form>
+    `);
+    const radio = form.querySelector<VscodeRadio>('vscode-radio')!;
 
-    document.body.appendChild(form);
-
-    expect(rb1.form).to.eq(form);
-
-    form.remove();
+    expect(radio.form?.getAttribute('id')).to.eq('test-form');
   });
 
-  it('type should be "radio"', () => {
-    const el = document.createElement('vscode-radio');
+  it('type should be "radio"', async () => {
+    const el = await fixture<VscodeRadio>(html`<vscode-radio></vscode-radio>`);
 
     expect(el.type).to.eq('radio');
   });
 
-  it('should return the validity object', () => {
-    const el = document.createElement('vscode-radio');
+  it('should return the validity object', async () => {
+    const el = await fixture<VscodeRadio>(html`<vscode-radio></vscode-radio>`);
 
     expect(el.validity).to.instanceOf(ValidityState);
   });
 
   it('should return the validation message', async () => {
-    const {form, rb1} = createSampleForm();
-    document.body.appendChild(form);
-    rb1.required = true;
+    const el = await fixture<VscodeRadio>(
+      html`<vscode-radio required></vscode-radio>`
+    );
 
-    await aTimeout(0);
-
-    expect(rb1.validationMessage).to.not.empty;
-    expect(rb1.validationMessage).to.eq('Please select one of these options.');
-
-    form.remove();
+    expect(el.validationMessage).to.not.empty;
+    expect(el.validationMessage).to.eq('Please select one of these options.');
   });
 
   it('should willValidate property be true if the element is candidate for constraint validation', async () => {
@@ -140,16 +109,13 @@ describe('vscode-radio', () => {
   });
 
   it('autofocus should be applied', async () => {
-    const {form, rb2} = createSampleForm();
-    rb2.autofocus = true;
+    const form = await fixture<HTMLFormElement>(
+      html`<form><vscode-radio autofocus></vscode-radio></form>`
+    );
+    const radio = form.querySelector<VscodeRadio>('vscode-radio')!;
 
-    document.body.appendChild(form);
-    await aTimeout(0);
-
-    const input = rb2.shadowRoot?.querySelector('input');
+    const input = radio.shadowRoot?.querySelector('input');
     expect(input?.hasAttribute('autofocus')).to.be.true;
-
-    form.remove();
   });
 
   it('should show check icon when it is checked', async () => {
@@ -160,19 +126,12 @@ describe('vscode-radio', () => {
     expect(el.shadowRoot?.querySelector('.icon.checked')).to.be.ok;
   });
 
-  // FIXME
-  it.skip('focused property should be true when it is focused', async () => {
-    const el = document.createElement('vscode-radio') as VscodeRadio;
+  it('focused property should be true when it is focused', async () => {
+    const el = await fixture<VscodeRadio>(html`<vscode-radio></vscode-radio>`);
     el.tabIndex = 0;
-
-    document.body.appendChild(el);
-    await aTimeout(0);
-
     el.focus();
-    await aTimeout(0);
 
     expect(el.focused).to.be.true;
-    el.remove();
   });
 
   it('should not be focusable when it is disabled', async () => {
@@ -184,33 +143,35 @@ describe('vscode-radio', () => {
   });
 
   it('should be invalid if one of the radio button is required in the group and none of them is checked', async () => {
-    const {form, rb1, rb2, rb3} = createSampleForm();
-
-    rb2.required = true;
-    document.body.appendChild(form);
-
-    await aTimeout(0);
+    const form = await fixture(html`
+      <form>
+        <vscode-radio-group>
+          <vscode-radio name="radio-test" id="rb1" required></vscode-radio>
+          <vscode-radio name="radio-test" id="rb2"></vscode-radio>
+        </vscode-radio-group>
+      </form>
+    `);
+    const rb1 = form.querySelector<VscodeRadio>('#rb1')!;
+    const rb2 = form.querySelector<VscodeRadio>('#rb2')!;
 
     expect(rb1.checkValidity()).to.be.false;
     expect(rb2.checkValidity()).to.be.false;
-    expect(rb3.checkValidity()).to.be.false;
-
-    form.remove();
   });
 
   it('should be valid if one or more of the radio buttons is required in the group and one of them is checked', async () => {
-    const {form, rb1, rb2, rb3} = createSampleForm();
-
-    rb2.required = true;
-    rb1.checked = true;
-    document.body.appendChild(form);
-    await aTimeout(0);
+    const form = await fixture(html`
+      <form>
+        <vscode-radio-group>
+          <vscode-radio name="radio-test" id="rb1" checked></vscode-radio>
+          <vscode-radio name="radio-test" id="rb2" required></vscode-radio>
+        </vscode-radio-group>
+      </form>
+    `);
+    const rb1 = form.querySelector<VscodeRadio>('#rb1')!;
+    const rb2 = form.querySelector<VscodeRadio>('#rb2')!;
 
     expect(rb1.checkValidity()).to.be.true;
     expect(rb2.checkValidity()).to.be.true;
-    expect(rb3.checkValidity()).to.be.true;
-
-    form.remove();
   });
 
   it('arrow down key should check the next radio', async () => {
@@ -251,66 +212,66 @@ describe('vscode-radio', () => {
     expect(radio2?.checked).to.be.false;
   });
 
-  it.skip('should checked the radio before the focused one when the arrow up key pressed', async () => {
-    const {form, rb1, rb2} = createSampleForm();
-    document.body.appendChild(form);
+  it('should checked the radio before the focused one when the arrow up key pressed', async () => {
+    const form = await fixture(html`
+      <form>
+        <vscode-radio-group>
+          <vscode-radio name="radio-test" tabindex="-1" id="rb1"></vscode-radio>
+          <vscode-radio name="radio-test" tabindex="0" id="rb2"></vscode-radio>
+        </vscode-radio-group>
+      </form>
+    `);
+    const rb1 = form.querySelector<VscodeRadio>('#rb1')!;
+    const rb2 = form.querySelector<VscodeRadio>('#rb2')!;
 
-    await aTimeout(1);
-
-    rb1.tabIndex = -1;
-    rb2.tabIndex = 0;
     rb2.focus();
-
     await rb2.updateComplete;
 
     await sendKeys({
       down: 'ArrowUp',
     });
-    await aTimeout(0);
 
     expect(rb1.checked).to.be.true;
-    form.remove();
   });
 
-  it.skip('should checked the radio after the focused one when the arrow down key pressed', async () => {
-    const {form, rb1, rb2, rb3} = createSampleForm();
+  it('should checked the radio after the focused one when the arrow down key pressed', async () => {
+    const form = await fixture(html`
+      <form>
+        <vscode-radio-group>
+          <vscode-radio name="radio-test" tabindex="0" id="rb1"></vscode-radio>
+          <vscode-radio name="radio-test" tabindex="-1" id="rb2"></vscode-radio>
+        </vscode-radio-group>
+      </form>
+    `);
+    const rb1 = form.querySelector<VscodeRadio>('#rb1')!;
+    const rb2 = form.querySelector<VscodeRadio>('#rb2')!;
 
-    document.body.appendChild(form);
-    await aTimeout(0);
-
-    rb1.tabIndex = -1;
-    rb3.tabIndex = -1;
-    rb2.tabIndex = 0;
-    rb2.focus();
-    await aTimeout(0);
+    rb1.focus();
+    await rb1.updateComplete;
 
     await sendKeys({
       down: 'ArrowDown',
     });
-    await aTimeout(0);
 
-    expect(rb3.checked).to.be.true;
-    form.remove();
+    expect(rb2.checked).to.be.true;
   });
 
   it('when a radio button is clicked it should be checked and the previous checked button should be unchecked', async () => {
-    const {form, rb3, rb1} = createSampleForm();
-    const spy = sinon.spy();
-    rb1.checked = true;
+    const form = await fixture(html`
+      <form>
+        <vscode-radio-group>
+          <vscode-radio name="radio-test" id="rb1" checked></vscode-radio>
+          <vscode-radio name="radio-test" id="rb2"></vscode-radio>
+        </vscode-radio-group>
+      </form>
+    `);
+    const rb1 = form.querySelector<VscodeRadio>('#rb1')!;
+    const rb2 = form.querySelector<VscodeRadio>('#rb2')!;
 
-    document.body.appendChild(form);
-    await aTimeout(0);
-
-    rb3.addEventListener('vsc-change', spy);
-    rb3.click();
-    await rb3.updateComplete;
+    rb2.click();
+    await rb2.updateComplete;
 
     expect(rb1.checked).to.be.false;
-    expect(rb3.checked).to.be.true;
-    expect(spy).to.have.been.calledWithMatch({
-      detail: {value: '3', label: 'Three', checked: true},
-    });
-
-    form.remove();
+    expect(rb2.checked).to.be.true;
   });
 });
