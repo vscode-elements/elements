@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **MultiSelect**: The value of `selectedIndexes` was not correctly updated.
 - **Tabs**: Active tab highlights previously showed as inactive.
 - **SplitLayout**: Reinitialize panes when the split layout orientation changes.
+- Use fully specified paths for better compatibility. See [#213](https://github.com/vscode-elements/elements/issues/213)
 
 ## [1.7.1] - 2024-10-22
 
