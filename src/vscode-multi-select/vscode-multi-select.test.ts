@@ -234,4 +234,18 @@ describe('vscode-multi-select', () => {
 
     expect(el.tabIndex).to.eq(2);
   });
+
+  it('should selectedIndexes reflect the selected options when value set through property', async () => {
+    const el = await fixture<VscodeMultiSelect>(
+      html`<vscode-multi-select>
+        <vscode-option value="A">A</vscode-option>
+        <vscode-option value="B">B</vscode-option>
+        <vscode-option value="C">C</vscode-option>
+      </vscode-multi-select>`
+    );
+
+    el.value = ['A', 'B', 'C'];
+
+    expect(el.selectedIndexes).to.eql([0, 1, 2]);
+  });
 });

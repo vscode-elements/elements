@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi Select</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-multi-select/index.js"></script>
+    <script type="module" src="/dist/vscode-option/index.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Multi Select</h1>
+    <p>description</p>
+    <vscode-demo>
+      <vscode-multi-select id="my-select">
+        <vscode-option value="A">A</vscode-option>
+        <vscode-option value="B">B</vscode-option>
+        <vscode-option value="C">C</vscode-option>
+      </vscode-multi-select>
+      <script type="module">
+        // wait for the page to be ready
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        const select = document.getElementById('my-select');
+        console.log(select.value); // show initially empty
+        select.value = ['A', 'B', 'C']; // fill with all values
+        console.log(select.value); // show all set now
+      </script>
+    </vscode-demo>
+  </body>
+</html>
