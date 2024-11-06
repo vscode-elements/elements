@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - **SingleSelect**, **MultiSelect**: Fix the widget height when it is empty.
+- **MultiSelect**: The value of `selectedIndexes` was not correctly updated.
 - **Tabs**: Active tab highlights previously showed as inactive.
 - **SplitLayout**: Reinitialize panes when the split layout orientation changes.
 
