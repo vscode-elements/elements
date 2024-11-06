@@ -5,7 +5,7 @@ import type {
   VscClickEventDetail,
   VscodeContextMenuItem,
 } from '../vscode-context-menu-item/vscode-context-menu-item.js';
-import '../vscode-context-menu-item';
+import '../vscode-context-menu-item/index.js';
 import styles from './vscode-context-menu.styles.js';
 
 interface MenuItemData {

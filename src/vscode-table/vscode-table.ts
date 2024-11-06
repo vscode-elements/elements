@@ -10,7 +10,7 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
-import '../vscode-scrollable';
+import '../vscode-scrollable/index.js';
 import {VscodeScrollable} from '../vscode-scrollable/index.js';
 import {VscodeTableBody} from '../vscode-table-body/index.js';
 import {VscodeTableCell} from '../vscode-table-cell/index.js';

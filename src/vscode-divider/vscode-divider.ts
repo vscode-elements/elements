@@ -1,7 +1,7 @@
 import {TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-divider.styles';
+import {VscElement} from '../includes/VscElement.js';
+import styles from './vscode-divider.styles.js';
 
 @customElement('vscode-divider')
 export class VscodeDivider extends VscElement {

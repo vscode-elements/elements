@@ -1,8 +1,8 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import '../../vscode-button';
-import '../../vscode-option';
+import '../../vscode-button/index.js';
+import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
 import type {InternalOption, Option, SearchMethod} from './types.js';
 import {filterOptionsByPattern} from './helpers.js';
