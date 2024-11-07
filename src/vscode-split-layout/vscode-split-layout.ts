@@ -16,6 +16,7 @@ const DEFAULT_HANDLE_SIZE = 4;
 
 type PositionUnit = 'pixel' | 'percent';
 type Orientation = 'horizontal' | 'vertical';
+type FixedPane = 'start' | 'end' | 'none';
 
 export const parseValue = (
   raw: string
@@ -117,7 +118,37 @@ export class VscodeSplitLayout extends VscElement {
    * The size of the fixed pane will not change when the component is resized.
    */
   @property({attribute: 'fixed-pane'})
-  fixedPane: 'none' | 'start' | 'end' = 'none';
+  set fixedPane(newVal: FixedPane) {
+    this._fixedPane = newVal;
+
+    if (!this._wrapperEl) {
+      return;
+    }
+
+    if (newVal === 'none') {
+      if (this._wrapperObserved) {
+        this._resizeObserver.unobserve(this._wrapperEl);
+        this._wrapperObserved = false;
+      }
+    } else {
+      const {width, height} = this._boundRect;
+      const max = this.split === 'vertical' ? width : height;
+
+      this._fixedPaneSize =
+        this.fixedPane === 'start'
+          ? this._handlePosition
+          : max - this._handlePosition;
+
+      if (!this._wrapperObserved) {
+        this._resizeObserver.observe(this._wrapperEl);
+        this._wrapperObserved = true;
+      }
+    }
+  }
+  get fixedPane(): FixedPane {
+    return this._fixedPane;
+  }
+  private _fixedPane: FixedPane = 'none';
 
   @state()
   private _handlePosition = 0;
@@ -145,6 +176,15 @@ export class VscodeSplitLayout extends VscElement {
 
   private _boundRect: DOMRect = new DOMRect();
   private _handleOffset = 0;
+  private _resizeObserver: ResizeObserver;
+  private _wrapperObserved: boolean = false;
+  private _fixedPaneSize: number = 0;
+
+  constructor() {
+    super();
+
+    this._resizeObserver = new ResizeObserver(this._handleResize);
+  }
 
   /**
    * Sets the handle position to the value specified in the `initialHandlePosition` property.
@@ -178,6 +218,11 @@ export class VscodeSplitLayout extends VscElement {
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
+    if (this.fixedPane !== 'none') {
+      this._resizeObserver.observe(this._wrapperEl);
+      this._wrapperObserved = true;
+    }
+
     this._boundRect = this._wrapperEl.getBoundingClientRect();
 
     const {value, unit} = this.handlePosition
@@ -186,6 +231,21 @@ export class VscodeSplitLayout extends VscElement {
 
     this._setPosition(value, unit);
   }
+
+  private _handleResize = (entries: ResizeObserverEntry[]) => {
+    const rect = entries[0].contentRect;
+    const {width, height} = rect;
+    this._boundRect = rect;
+    const max = this.split === 'vertical' ? width : height;
+
+    if (this.fixedPane === 'start') {
+      this._handlePosition = this._fixedPaneSize;
+    }
+
+    if (this.fixedPane === 'end') {
+      this._handlePosition = max - this._fixedPaneSize;
+    }
+  };
 
   private _handlePositionChanged() {
     if (this.handlePosition && this._wrapperEl) {
@@ -263,21 +323,21 @@ export class VscodeSplitLayout extends VscElement {
   private _handleMouseMove = (event: MouseEvent) => {
     const {clientX, clientY} = event;
     const {left, top, height, width} = this._boundRect;
+    const vert = this.split === 'vertical';
+    const maxPos = vert ? width : height;
+    const mousePos = vert ? clientX - left : clientY - top;
 
-    if (this._split === 'vertical') {
-      const mouseXLocal = clientX - left;
-      this._handlePosition = Math.max(
-        0,
-        Math.min(mouseXLocal - this._handleOffset + this.handleSize / 2, width)
-      );
+    this._handlePosition = Math.max(
+      0,
+      Math.min(mousePos - this._handleOffset + this.handleSize / 2, maxPos)
+    );
+
+    if (this.fixedPane === 'start') {
+      this._fixedPaneSize = this._handlePosition;
     }
 
-    if (this._split === 'horizontal') {
-      const mouseYLocal = clientY - top;
-      this._handlePosition = Math.max(
-        0,
-        Math.min(mouseYLocal - this._handleOffset + this.handleSize / 2, height)
-      );
+    if (this.fixedPane === 'end') {
+      this._fixedPaneSize = maxPos - this._handlePosition;
     }
   };
 
@@ -304,49 +364,26 @@ export class VscodeSplitLayout extends VscElement {
 
   render(): TemplateResult {
     const {width, height} = this._boundRect;
-    const handlePosMax = this.split === 'vertical' ? width : height;
+    const maxPos = this.split === 'vertical' ? width : height;
     const handlePosCss =
       this.fixedPane !== 'none'
         ? `${this._handlePosition}px`
-        : `${pxToPercent(this._handlePosition, handlePosMax)}%`;
-    const startPaneStyles = {height: '100%', width: '100%'};
+        : `${pxToPercent(this._handlePosition, maxPos)}%`;
 
-    if (this.split === 'vertical') {
-      if (this.fixedPane === 'none') {
-        startPaneStyles.width = `${pxToPercent(this._handlePosition, width)}%`;
-      } else if (this.fixedPane === 'start') {
-        startPaneStyles.width = `${this._handlePosition}px`;
-      } else {
-        startPaneStyles.width = '100%';
-      }
+    let startPaneSize = '';
+
+    if (this.fixedPane === 'start') {
+      startPaneSize = `0 0 ${this._fixedPaneSize}px`;
     } else {
-      if (this.fixedPane === 'none') {
-        startPaneStyles.height = `${pxToPercent(this._handlePosition, height)}%`;
-      } else if (this.fixedPane === 'start') {
-        startPaneStyles.height = `${this._handlePosition}px`;
-      } else {
-        startPaneStyles.height = '100%';
-      }
+      startPaneSize = `1 1 ${pxToPercent(this._handlePosition, maxPos)}%`;
     }
 
-    const endPaneStyles = {height: '100%', width: '100%'};
+    let endPaneSize = '';
 
-    if (this.split === 'vertical') {
-      if (this.fixedPane === 'none') {
-        endPaneStyles.width = `${pxToPercent(width - this._handlePosition, width)}%`;
-      } else if (this.fixedPane === 'end') {
-        endPaneStyles.width = `${width - this._handlePosition}px`;
-      } else {
-        endPaneStyles.width = '100%';
-      }
+    if (this.fixedPane === 'end') {
+      endPaneSize = `0 0 ${this._fixedPaneSize}px`;
     } else {
-      if (this.fixedPane === 'none') {
-        endPaneStyles.height = `${pxToPercent(height - this._handlePosition, height)}%`;
-      } else if (this.fixedPane === 'end') {
-        endPaneStyles.height = `${height - this._handlePosition}px`;
-      } else {
-        endPaneStyles.height = '100%';
-      }
+      endPaneSize = `1 1 ${pxToPercent(maxPos - this._handlePosition, maxPos)}%`;
     }
 
     const handleStylesPropObj: {[prop: string]: string} = {
@@ -390,10 +427,10 @@ export class VscodeSplitLayout extends VscElement {
 
     return html`
       <div class="${classMap(wrapperClasses)}">
-        <div class="start" style="${styleMap(startPaneStyles)}">
+        <div class="start" style="${styleMap({flex: startPaneSize})}">
           <slot name="start" @slotchange=${this._handleSlotChange}></slot>
         </div>
-        <div class="end" style="${styleMap(endPaneStyles)}">
+        <div class="end" style="${styleMap({flex: endPaneSize})}">
           <slot name="end" @slotchange=${this._handleSlotChange}></slot>
         </div>
         <div class="${handleOverlayClasses}"></div>

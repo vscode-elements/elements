@@ -34,8 +34,9 @@ const styles: CSSResultGroup = [
 
     .start {
       box-sizing: border-box;
-      flex-shrink: 0;
-      width: 100%;
+      flex: 1;
+      min-height: 0;
+      min-width: 0;
     }
 
     :host([split='vertical']) .start {
@@ -47,7 +48,18 @@ const styles: CSSResultGroup = [
     }
 
     .end {
-      flex-shrink: 0;
+      flex: 1;
+      min-height: 0;
+      min-width: 0;
+    }
+
+    :host([split='vertical']) .start,
+    :host([split='vertical']) .end {
+      height: 100%;
+    }
+
+    :host([split='horizontal']) .start,
+    :host([split='horizontal']) .end {
       width: 100%;
     }
 
