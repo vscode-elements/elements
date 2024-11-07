@@ -15,6 +15,18 @@ describe('vscode-split-layout', () => {
     expect(el).to.instanceOf(VscodeSplitLayout);
   });
 
+  it('default values', async () => {
+    const el = await fixture<VscodeSplitLayout>(
+      html`<vscode-split-layout></vscode-split-layout>`
+    );
+
+    expect(el.split).to.eq('vertical');
+    expect(el.resetOnDblClick).to.be.false;
+    expect(el.handleSize).to.eq(4);
+    expect(el.initialHandlePosition).to.eq('50%');
+    expect(el.fixedPane).to.eq('none');
+  });
+
   describe('helper functions', () => {
     it('should parse percentage value correctly', () => {
       expect(parseValue('50%')).to.deep.equal({unit: 'percent', value: 50});
@@ -75,38 +87,62 @@ describe('vscode-split-layout', () => {
   });
 
   describe('when provided parameters', () => {
-    it('should adjust the handle vertical', async () => {
+    it('should handle position set correctly when the divider orientation is vertical, and the position is specified in pixels', async () => {
       const el = await fixture<VscodeSplitLayout>(
         html`<vscode-split-layout
           style="width: 500px; height: 500px;"
-          initial-handle-position="50%"
-          handle-position="50%"
-          handle-size="4"
-          split="vertical"
+          handle-position="100px"
         ></vscode-split-layout>`
       );
 
       const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
 
-      expect(handle.style.left).to.eq('50%');
-      expect(handle.style.top).to.eq('0px');
+      expect(handle.offsetLeft).to.eq(98);
+      expect(handle.offsetTop).to.eq(0);
     });
 
-    it('should adjust the handle horizontal', async () => {
+    it('should handle position set correctly when the divider orientation is vertical, and the position is specified in percent', async () => {
       const el = await fixture<VscodeSplitLayout>(
         html`<vscode-split-layout
           style="width: 500px; height: 500px;"
-          initial-handle-position="50%"
-          handle-position="50%"
-          handle-size="4"
+          handle-position="20%"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetLeft).to.eq(98);
+      expect(handle.offsetTop).to.eq(0);
+    });
+
+    it('should handle position set correctly when the divider orientation is horizontal, and the position is specified in pixels', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          handle-position="100px"
           split="horizontal"
         ></vscode-split-layout>`
       );
 
       const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
 
-      expect(handle.style.left).to.eq('0px');
-      expect(handle.style.top).to.eq('50%');
+      expect(handle.offsetLeft).to.eq(0);
+      expect(handle.offsetTop).to.eq(98);
+    });
+
+    it('should handle position set correctly when the divider orientation is horizontal, and the position is specified in percent', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          handle-position="20%"
+          split="horizontal"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetLeft).to.eq(0);
+      expect(handle.offsetTop).to.eq(98);
     });
 
     it('should set handle size in vertical split mode', async () => {
@@ -134,6 +170,61 @@ describe('vscode-split-layout', () => {
 
       expect(handle.offsetHeight).to.eq(20);
       expect(handle.offsetTop).to.eq(240);
+    });
+
+    it('should change divider orientation from vertical to horizontal correctly', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="20%"
+        ></vscode-split-layout>`
+      );
+
+      const startWidthBefore =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.start')!.offsetWidth;
+      const endWidthBefore =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.end')!.offsetWidth;
+
+      el.split = 'horizontal';
+      await el.updateComplete;
+
+      const startHeightAfter =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.start')!.offsetHeight;
+      const endHeightAfter =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.end')!.offsetHeight;
+
+      expect(startWidthBefore).to.eq(100);
+      expect(endWidthBefore).to.eq(400);
+      expect(startHeightAfter).to.eq(100);
+      expect(endHeightAfter).to.eq(400);
+    });
+
+    it('should change divider orientation from horizontal to vertical correctly', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="20%"
+          split="horizontal"
+        ></vscode-split-layout>`
+      );
+
+      const startHeightBefore =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.start')!.offsetHeight;
+      const endHeightBefore =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.end')!.offsetHeight;
+
+      el.split = 'vertical';
+      await el.updateComplete;
+
+      const startWidthAfter =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.start')!.offsetWidth;
+      const endWidthAfter =
+        el.shadowRoot?.querySelector<HTMLDivElement>('.end')!.offsetWidth;
+
+      expect(startHeightBefore).to.eq(100);
+      expect(endHeightBefore).to.eq(400);
+      expect(startWidthAfter).to.eq(100);
+      expect(endWidthAfter).to.eq(400);
     });
   });
 
@@ -248,15 +339,8 @@ describe('vscode-split-layout', () => {
   });
 
   // TODO
-  it('should change divider orientation from vertical to horizontal');
-  it('should change divider orientation from horizontal to vertical');
   it('should set fixed start panel');
   it('should set fixed end panel');
-  it(
-    'should set handle position programmatically when divider orientation is vertical'
-  );
-  it(
-    'should set handle position programmatically when divider orientation is horizontal'
-  );
   it('should reset to the default position programmatically');
+  it('should nested instances reset when slotted content is changed');
 });
