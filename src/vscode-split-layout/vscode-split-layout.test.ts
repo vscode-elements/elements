@@ -108,13 +108,40 @@ describe('vscode-split-layout', () => {
       expect(handle.style.left).to.eq('0px');
       expect(handle.style.top).to.eq('50%');
     });
+
+    it('should set handle size in vertical split mode', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          handle-size="20"
+        ></vscode-split-layout>`
+      );
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetWidth).to.eq(20);
+      expect(handle.offsetLeft).to.eq(240);
+    });
+
+    it('should set handle size in horizontal split mode', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          handle-size="20"
+          split="horizontal"
+        ></vscode-split-layout>`
+      );
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetHeight).to.eq(20);
+      expect(handle.offsetTop).to.eq(240);
+    });
   });
 
   describe('user interactions', () => {
     it('should panes resize in vertical mode', async () => {
       const el = await fixture<VscodeSplitLayout>(
         html`<vscode-split-layout
-          style="width: 500px; height: 500px;"
+          style="width: 500px; height: 500px;border: 0;"
           initial-handle-position="100px"
         ></vscode-split-layout>`
       );
@@ -125,18 +152,17 @@ describe('vscode-split-layout', () => {
       ) as HTMLDivElement;
       const paneEnd = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
 
-      expect(handle).not.to.be.null;
-      expect(handle.style.left).to.eq('20%');
-      expect(handle.style.top).to.eq('0px');
-      expect(paneStart.style.width).to.eq('20%');
-      expect(paneEnd.style.width).to.eq('80%');
+      expect(paneStart.offsetWidth, 'start pane width before resizing').to.eq(
+        100
+      );
+      expect(paneEnd.offsetWidth, 'end pane width before resizing').to.eq(400);
 
       await dragElement(handle, 100);
 
-      expect(paneStart.style.width).to.eq('40%');
-      expect(paneEnd.style.width).to.eq('60%');
-      expect(handle.style.left).to.eq('40%');
-      expect(handle.style.top).to.eq('0px');
+      expect(paneStart.offsetWidth, 'start pane width after resizing').to.eq(
+        200
+      );
+      expect(paneEnd.offsetWidth, 'end pane width after resizing').to.eq(300);
     });
 
     it('should panes resize in horizontal mode', async () => {
@@ -149,15 +175,24 @@ describe('vscode-split-layout', () => {
       );
 
       const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const paneStart = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const paneEnd = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
 
-      expect(handle).not.to.be.null;
-      expect(handle.style.left).to.eq('0px');
-      expect(handle.style.top).to.eq('20%');
+      expect(paneStart.offsetHeight, 'start pane height before resizing').to.eq(
+        100
+      );
+      expect(paneEnd.offsetHeight, 'end pane height before resizing').to.eq(
+        400
+      );
 
       await dragElement(handle, 0, 100);
 
-      expect(handle.style.left).to.eq('0px');
-      expect(handle.style.top).to.eq('40%');
+      expect(paneStart.offsetHeight, 'start pane height after resizing').to.eq(
+        200
+      );
+      expect(paneEnd.offsetHeight, 'end pane height after resizing').to.eq(300);
     });
 
     it('should dispatch "vsc-split-layout-change" event when handle position is changed', async () => {
@@ -207,17 +242,21 @@ describe('vscode-split-layout', () => {
       expect(revertedHandlePos).to.eq('20%');
     });
 
-    it('should not reset handle position on double click when "reset-on-dbl-click" is unset');
+    it(
+      'should not reset handle position on double click when "reset-on-dbl-click" is unset'
+    );
   });
 
   // TODO
-  it('should set vertical handle size');
-  it('should set horizontal handle size');
   it('should change divider orientation from vertical to horizontal');
   it('should change divider orientation from horizontal to vertical');
   it('should set fixed start panel');
   it('should set fixed end panel');
-  it('should set handle position programmatically when divider orientation is vertical');
-  it('should set handle position programmatically when divider orientation is horizontal');
+  it(
+    'should set handle position programmatically when divider orientation is vertical'
+  );
+  it(
+    'should set handle position programmatically when divider orientation is horizontal'
+  );
   it('should reset to the default position programmatically');
 });
