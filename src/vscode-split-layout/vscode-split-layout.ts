@@ -16,7 +16,7 @@ const DEFAULT_HANDLE_SIZE = 4;
 
 type PositionUnit = 'pixel' | 'percent';
 type Orientation = 'horizontal' | 'vertical';
-type FixedPane = 'start' | 'end' | 'none';
+type FixedPaneType = 'start' | 'end' | 'none';
 
 export const parseValue = (
   raw: string
@@ -107,7 +107,7 @@ export class VscodeSplitLayout extends VscElement {
   @property({attribute: 'handle-position'})
   set handlePosition(newVal: string) {
     this._rawHandlePosition = newVal;
-    this._handlePositionChanged();
+    this._handlePositionPropChanged();
   }
   get handlePosition(): string | undefined {
     return this._rawHandlePosition;
@@ -118,37 +118,14 @@ export class VscodeSplitLayout extends VscElement {
    * The size of the fixed pane will not change when the component is resized.
    */
   @property({attribute: 'fixed-pane'})
-  set fixedPane(newVal: FixedPane) {
+  set fixedPane(newVal: FixedPaneType) {
     this._fixedPane = newVal;
-
-    if (!this._wrapperEl) {
-      return;
-    }
-
-    if (newVal === 'none') {
-      if (this._wrapperObserved) {
-        this._resizeObserver.unobserve(this._wrapperEl);
-        this._wrapperObserved = false;
-      }
-    } else {
-      const {width, height} = this._boundRect;
-      const max = this.split === 'vertical' ? width : height;
-
-      this._fixedPaneSize =
-        this.fixedPane === 'start'
-          ? this._handlePosition
-          : max - this._handlePosition;
-
-      if (!this._wrapperObserved) {
-        this._resizeObserver.observe(this._wrapperEl);
-        this._wrapperObserved = true;
-      }
-    }
+    this._fixedPanePropChanged(newVal);
   }
-  get fixedPane(): FixedPane {
+  get fixedPane(): FixedPaneType {
     return this._fixedPane;
   }
-  private _fixedPane: FixedPane = 'none';
+  private _fixedPane: FixedPaneType = 'none';
 
   @state()
   private _handlePosition = 0;
@@ -232,6 +209,40 @@ export class VscodeSplitLayout extends VscElement {
     this._setPosition(value, unit);
   }
 
+  private _handlePositionPropChanged() {
+    if (this.handlePosition && this._wrapperEl) {
+      this._boundRect = this._wrapperEl.getBoundingClientRect();
+      const {value, unit} = parseValue(this.handlePosition);
+      this._setPosition(value, unit);
+    }
+  }
+
+  private _fixedPanePropChanged(newVal: FixedPaneType) {
+    if (!this._wrapperEl) {
+      return;
+    }
+
+    if (newVal === 'none') {
+      if (this._wrapperObserved) {
+        this._resizeObserver.unobserve(this._wrapperEl);
+        this._wrapperObserved = false;
+      }
+    } else {
+      const {width, height} = this._boundRect;
+      const max = this.split === 'vertical' ? width : height;
+
+      this._fixedPaneSize =
+        this.fixedPane === 'start'
+          ? this._handlePosition
+          : max - this._handlePosition;
+
+      if (!this._wrapperObserved) {
+        this._resizeObserver.observe(this._wrapperEl);
+        this._wrapperObserved = true;
+      }
+    }
+  }
+
   private _handleResize = (entries: ResizeObserverEntry[]) => {
     const rect = entries[0].contentRect;
     const {width, height} = rect;
@@ -246,14 +257,6 @@ export class VscodeSplitLayout extends VscElement {
       this._handlePosition = max - this._fixedPaneSize;
     }
   };
-
-  private _handlePositionChanged() {
-    if (this.handlePosition && this._wrapperEl) {
-      this._boundRect = this._wrapperEl.getBoundingClientRect();
-      const {value, unit} = parseValue(this.handlePosition);
-      this._setPosition(value, unit);
-    }
-  }
 
   private _setPosition(value: number, unit: PositionUnit) {
     const {width, height} = this._boundRect;
