@@ -86,18 +86,19 @@ const styles: CSSResultGroup = [
     }
 
     .handle {
+      background-color: transparent;
       position: absolute;
       z-index: 2;
     }
 
     .handle.hover {
+      transition: background-color 0.1s ease-out 0.3s;
       background-color: var(--vscode-sash-hoverBorder);
-      transition: background-color 100ms linear 300ms;
     }
 
     .handle.hide {
       background-color: transparent;
-      transition: background-color 100ms linear;
+      transition: background-color 0.1s ease-out;
     }
 
     .handle.split-vertical {
