@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- **SplitLayout**: Added `handlePosition` property to adjust the handle position programmatically.
+- **SplitLayout**: Added `fixedPane` property. When the parent element is resized, the panes adjust proportionally. 
+  This parameter allows you to set one of the panes to a fixed size so its dimensions won’t change during resizing.
+- **SplitLayout**: Added `resetHandlePosition()` method to reset the handle position to the default value.
+- **SplitLayout**: Dispatch `vsc-split-layout-change` event when a panel is resized.
+
 ### Fixed
 
 - **SingleSelect**, **MultiSelect**: Fix the widget height when it is empty.
