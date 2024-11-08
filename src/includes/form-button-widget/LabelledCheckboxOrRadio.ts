@@ -1,8 +1,8 @@
 import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-type Constructor<T = {}> = new (...args: any[]) => T;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Constructor<T = unknown> = new (...args: any[]) => T;
 
 export declare class LabelledCheckboxOrRadioInterface {
   label: string;
