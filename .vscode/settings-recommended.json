@@ -1,8 +1,12 @@
 {
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "files.autoSave": "onFocusChange",
-  "files.eol": "\n",
   "files.readonlyInclude": {
     "dist/**": true
-  }
+  },
+  "cSpell.words": [
+    "cssprop",
+    "datetime",
+    "maxlength",
+    "slotchange"
+  ],
+  "typescript.preferences.importModuleSpecifierEnding": "js"
 }
