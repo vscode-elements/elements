@@ -43,7 +43,7 @@ const styles: CSSResultGroup = [
       font-weight: 400;
       margin-left: 10px;
       text-transform: none;
-      opacity: .6;
+      opacity: 0.6;
     }
 
     .header-icon {

@@ -6,7 +6,10 @@ const styles: CSSResultGroup = [
   css`
     :host {
       background-color: var(--vscode-button-background);
-      border-color: var(--vscode-button-border, var(--vscode-button-background));
+      border-color: var(
+        --vscode-button-border,
+        var(--vscode-button-background)
+      );
       border-style: solid;
       border-radius: 2px;
       border-width: 1px;
@@ -26,7 +29,10 @@ const styles: CSSResultGroup = [
     :host([secondary]) {
       color: var(--vscode-button-secondaryForeground);
       background-color: var(--vscode-button-secondaryBackground);
-      border-color: var(--vscode-button-border, var(--vscode-button-secondaryBackground));
+      border-color: var(
+        --vscode-button-border,
+        var(--vscode-button-secondaryBackground)
+      );
     }
 
     :host([disabled]) {

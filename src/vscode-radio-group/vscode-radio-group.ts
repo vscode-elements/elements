@@ -147,16 +147,14 @@ export class VscodeRadioGroup extends VscElement {
       this._firstContentLoaded = true;
     }
 
-    this._radios.forEach(
-      (r, i) => {
-        // if _focusedRadio is not set, the first radio should be focusable
-        if (this._focusedRadio > -1) {
-          r.tabIndex = i === this._focusedRadio ? 0 : -1
-        } else {
-          r.tabIndex = i === 0 ? 0 : -1;
-        }
+    this._radios.forEach((r, i) => {
+      // if _focusedRadio is not set, the first radio should be focusable
+      if (this._focusedRadio > -1) {
+        r.tabIndex = i === this._focusedRadio ? 0 : -1;
+      } else {
+        r.tabIndex = i === 0 ? 0 : -1;
       }
-    );
+    });
   }
 
   render(): TemplateResult {

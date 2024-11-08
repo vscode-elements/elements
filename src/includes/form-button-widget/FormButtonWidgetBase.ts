@@ -38,9 +38,9 @@ export class FormButtonWidgetBase extends VscElement {
 
   private _handleFocus = (): void => {
     this.focused = true;
-  }
+  };
 
   private _handleBlur = (): void => {
     this.focused = false;
-  }
+  };
 }

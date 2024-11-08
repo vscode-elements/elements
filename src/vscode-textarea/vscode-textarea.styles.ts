@@ -35,7 +35,10 @@ const styles: CSSResultGroup = [
 
     textarea {
       background-color: var(--vscode-settings-textInputBackground);
-      border-color: var(--vscode-settings-textInputBorder, var(--vscode-settings-textInputBackground));
+      border-color: var(
+        --vscode-settings-textInputBorder,
+        var(--vscode-settings-textInputBackground)
+      );
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;

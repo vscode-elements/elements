@@ -89,9 +89,7 @@ export class VscodeScrollable extends VscElement {
   connectedCallback(): void {
     super.connectedCallback();
 
-    this._hostResizeObserver = new ResizeObserver(
-      this._resizeObserverCallback
-    );
+    this._hostResizeObserver = new ResizeObserver(this._resizeObserverCallback);
     this._contentResizeObserver = new ResizeObserver(
       this._resizeObserverCallback
     );

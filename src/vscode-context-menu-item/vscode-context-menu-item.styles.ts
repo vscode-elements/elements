@@ -51,7 +51,10 @@ const styles: CSSResultGroup = [
 
     :host([selected]) .context-menu-item a {
       background-color: var(--vscode-menu-selectionBackground);
-      border-color: var(--vscode-menu-selectionBorder, var(--vscode-menu-selectionBackground));
+      border-color: var(
+        --vscode-menu-selectionBorder,
+        var(--vscode-menu-selectionBackground)
+      );
       color: var(--vscode-menu-selectionForeground);
     }
 

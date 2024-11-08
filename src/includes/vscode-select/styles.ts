@@ -159,7 +159,7 @@ export default [
       z-index: var(--dropdown-z-index, 2);
     }
 
-    :host([position="above"]) .dropdown {
+    :host([position='above']) .dropdown {
       border-radius: 3px 3px 0 0;
       bottom: 26px;
       padding-bottom: 0;
@@ -250,13 +250,13 @@ export default [
 
     .dropdown.multiple .option.selected {
       background-color: var(--vscode-list-hoverBackground);
-      border-color:  var(--vscode-list-hoverBackground);
+      border-color: var(--vscode-list-hoverBackground);
     }
 
     .dropdown.multiple .option.selected.active {
       background-color: var(--vscode-list-activeSelectionBackground);
       color: var(--vscode-list-activeSelectionForeground);
-      border-color:  var(--vscode-list-activeSelectionBackground);
+      border-color: var(--vscode-list-activeSelectionBackground);
     }
 
     .checkbox-icon {
@@ -335,10 +335,10 @@ export default [
       font-weight: var(--vscode-font-weight);
       line-height: 1.3;
       padding: 6px 4px;
-      word-wrap:break-word;
+      word-wrap: break-word;
     }
 
-    :host([position="above"]) .description {
+    :host([position='above']) .description {
       border-width: 0 0 1px;
     }
   `,
