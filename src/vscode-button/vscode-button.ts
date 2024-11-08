@@ -151,8 +151,10 @@ export class VscodeButton extends VscElement {
     if (changedProperties.has('disabled')) {
       if (this.disabled) {
         this._prevTabindex = this.tabIndex;
+        // eslint-disable-next-line lit/no-property-change-update
         this.tabIndex = -1;
       } else {
+        // eslint-disable-next-line lit/no-property-change-update
         this.tabIndex = this._prevTabindex;
       }
     }

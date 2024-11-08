@@ -168,6 +168,7 @@
     "custom-element-vs-code-integration": "^1.4.1",
     "deepmerge": "^4.3.1",
     "dotenv": "^16.4.5",
+    "eslint-plugin-lit": "^1.15.0",
     "lit-analyzer": "^2.0.3",
     "mocha": "^10.8.2",
     "prettier": "^3.3.3",
