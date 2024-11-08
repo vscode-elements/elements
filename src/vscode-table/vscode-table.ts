@@ -599,21 +599,21 @@ export class VscodeTable extends VscElement {
       return this.resizable
         ? html`
             <div
-              class="${classes}"
-              data-index="${index}"
-              style="${styleMap({left})}"
-              @mousedown="${this._onSashMouseDown}"
-              @mouseover="${this._onSashMouseOver}"
-              @mouseout="${this._onSashMouseOut}"
+              class=${classes}
+              data-index=${index}
+              style=${styleMap({left})}
+              @mousedown=${this._onSashMouseDown}
+              @mouseover=${this._onSashMouseOver}
+              @mouseout=${this._onSashMouseOut}
             >
               <div class="sash-visible"></div>
               <div class="sash-clickable"></div>
             </div>
           `
         : html`<div
-            class="${classes}"
-            data-index="${index}"
-            style="${styleMap({left})}"
+            class=${classes}
+            data-index=${index}
+            style=${styleMap({left})}
           >
             <div class="sash-visible"></div>
           </div>`;
@@ -627,8 +627,8 @@ export class VscodeTable extends VscElement {
     });
 
     return html`
-      <div class="${wrapperClasses}">
-        <div class="header" @slotchange="${this._onHeaderSlotChange}">
+      <div class=${wrapperClasses}>
+        <div class="header" @slotchange=${this._onHeaderSlotChange}>
           <slot name="caption"></slot>
           <div class="header-slot-wrapper">
             <slot name="header"></slot>
@@ -636,7 +636,7 @@ export class VscodeTable extends VscElement {
         </div>
         <vscode-scrollable class="scrollable">
           <div>
-            <slot name="body" @slotchange="${this._onBodySlotChange}"></slot>
+            <slot name="body" @slotchange=${this._onBodySlotChange}></slot>
           </div>
         </vscode-scrollable>
         ${sashes}

@@ -279,8 +279,8 @@ export class VscodeMultiSelect
     return html`
       <div
         class="select-face face multiselect"
-        @click="${this._onFaceClick}"
-        tabindex="${this.tabIndex > -1 ? 0 : -1}"
+        @click=${this._onFaceClick}
+        tabindex=${this.tabIndex > -1 ? 0 : -1}
       >
         ${this._renderLabel()} ${chevronDownIcon}
       </div>
@@ -298,16 +298,16 @@ export class VscodeMultiSelect
           class="combobox-input"
           spellcheck="false"
           type="text"
-          .value="${inputVal}"
-          @focus="${this._onComboboxInputFocus}"
-          @input="${this._onComboboxInputInput}"
-          @click="${this._onComboboxInputClick}"
+          .value=${inputVal}
+          @focus=${this._onComboboxInputFocus}
+          @input=${this._onComboboxInputInput}
+          @click=${this._onComboboxInputClick}
         />
         <button
           class="combobox-button"
           type="button"
-          @click="${this._onComboboxButtonClick}"
-          @keydown="${this._onComboboxButtonKeyDown}"
+          @click=${this._onComboboxButtonClick}
+          @keydown=${this._onComboboxButtonKeyDown}
         >
           ${chevronDownIcon}
         </button>
@@ -321,8 +321,8 @@ export class VscodeMultiSelect
     return html`
       <ul
         class="options"
-        @click="${this._onOptionClick}"
-        @mouseover="${this._onOptionMouseOver}"
+        @click=${this._onOptionClick}
+        @mouseover=${this._onOptionMouseOver}
       >
         ${repeat(
           list,
@@ -341,11 +341,11 @@ export class VscodeMultiSelect
 
             return html`
               <li
-                class="${optionClasses}"
-                data-index="${op.index}"
-                data-filtered-index="${index}"
+                class=${optionClasses}
+                data-index=${op.index}
+                data-filtered-index=${index}
               >
-                <span class="${checkboxClasses}"></span>
+                <span class=${checkboxClasses}></span>
                 <span class="option-label"
                   >${(op.ranges?.length ?? 0 > 0)
                     ? highlightRanges(op.label, op.ranges ?? [])
@@ -364,7 +364,7 @@ export class VscodeMultiSelect
       <div class="dropdown-controls">
         <button
           type="button"
-          @click="${this._onMultiSelectAllClick}"
+          @click=${this._onMultiSelectAllClick}
           title="Select all"
           class="action-icon"
           id="select-all"
@@ -373,7 +373,7 @@ export class VscodeMultiSelect
         </button>
         <button
           type="button"
-          @click="${this._onMultiDeselectAllClick}"
+          @click=${this._onMultiDeselectAllClick}
           title="Deselect all"
           class="action-icon"
           id="select-none"
@@ -382,7 +382,7 @@ export class VscodeMultiSelect
         </button>
         <vscode-button
           class="button-accept"
-          @click="${this._onMultiAcceptClick}"
+          @click=${this._onMultiAcceptClick}
           >OK</vscode-button
         >
       </div>

@@ -257,39 +257,39 @@ export class VscodeScrollable extends VscElement {
     return html`
       <div
         class="scrollable-container"
-        style="${styleMap({
+        style=${styleMap({
           'user-select': this._isDragging ? 'none' : 'auto',
-        })}"
+        })}
       >
-        <div class="${classMap({shadow: true, visible: this.scrolled})}"></div>
+        <div class=${classMap({shadow: true, visible: this.scrolled})}></div>
         ${this._isDragging
           ? html`<div class="prevent-interaction"></div>`
           : nothing}
         <div
-          class="${classMap({
+          class=${classMap({
             'scrollbar-track': true,
             hidden: !this._scrollbarVisible,
-          })}"
-          style="${styleMap({
+          })}
+          style=${styleMap({
             'z-index': String(this._scrollbarTrackZ),
-          })}"
+          })}
         >
           <div
-            class="${classMap({
+            class=${classMap({
               'scrollbar-thumb': true,
               visible: this._thumbVisible,
               fade: this._thumbFade,
               active: this._thumbActive,
-            })}"
-            style="${styleMap({
+            })}
+            style=${styleMap({
               height: `${this._thumbHeight}px`,
               top: `${this._thumbY}px`,
-            })}"
+            })}
             @mousedown=${this._onScrollThumbMouseDown}
           ></div>
         </div>
         <div class="content">
-          <slot @slotchange="${this._onSlotChange}"></slot>
+          <slot @slotchange=${this._onSlotChange}></slot>
         </div>
       </div>
     `;

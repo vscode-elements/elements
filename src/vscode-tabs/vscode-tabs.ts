@@ -204,7 +204,7 @@ export class VscodeTabs extends VscElement {
     return html`
       <div
         class=${classMap({header: true, panel: this.panel})}
-        @click="${this._onHeaderClick}"
+        @click=${this._onHeaderClick}
         @keydown=${this._onHeaderKeyDown}
       >
         <slot name="header" @slotchange=${this._onHeaderSlotChange}></slot>

@@ -274,13 +274,13 @@ export class VscodeContextMenu extends VscElement {
                 index
               ) => html`
                 <vscode-context-menu-item
-                  label="${label}"
-                  keybinding="${keybinding}"
-                  value="${value}"
-                  ?separator="${separator}"
-                  ?selected="${index === selectedIndex}"
-                  tabindex="${tabindex}"
-                  @vsc-click="${this._onItemClick}"
+                  label=${label}
+                  keybinding=${keybinding}
+                  value=${value}
+                  ?separator=${separator}
+                  ?selected=${index === selectedIndex}
+                  tabindex=${tabindex}
+                  @vsc-click=${this._onItemClick}
                   @mouseover=${this._onItemMouseOver}
                   @mouseout=${this._onItemMouseOut}
                   data-index=${index}

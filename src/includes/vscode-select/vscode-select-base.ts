@@ -569,7 +569,7 @@ export class VscodeSelectBase extends VscElement {
     });
 
     return html`
-      <div class="${classes}">
+      <div class=${classes}>
         ${this.position === 'above' ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
         ${this.position === 'below' ? this._renderDescription() : nothing}
@@ -579,7 +579,7 @@ export class VscodeSelectBase extends VscElement {
 
   render(): TemplateResult {
     return html`
-      <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
+      <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
       ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
       ${this._showDropdown ? this._renderDropdown() : nothing}
     `;

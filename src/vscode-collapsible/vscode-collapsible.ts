@@ -80,13 +80,13 @@ export class VscodeCollapsible extends VscElement {
       : nothing;
 
     return html`
-      <div class="${classes}">
+      <div class=${classes}>
         <div
           class="collapsible-header"
           tabindex="0"
-          title="${this.title}"
-          @click="${this._onHeaderClick}"
-          @keydown="${this._onHeaderKeyDown}"
+          title=${this.title}
+          @click=${this._onHeaderClick}
+          @keydown=${this._onHeaderKeyDown}
         >
           ${icon}
           <h3 class="title">${this.title}${descriptionMarkup}</h3>

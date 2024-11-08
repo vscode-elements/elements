@@ -70,7 +70,7 @@ export class VscodeContextMenuItem extends VscElement {
           `
         : html`
             <div class="context-menu-item">
-              <a @click="${this.onItemClick}">
+              <a @click=${this.onItemClick}>
                 ${this.label
                   ? html`<span class="label">${this.label}</span>`
                   : nothing}

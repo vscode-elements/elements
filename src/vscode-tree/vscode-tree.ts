@@ -430,7 +430,7 @@ export class VscodeTree extends VscElement {
 
     return html`
       <div class="arrow-container">
-        <vscode-icon name="${arrowIconName}" class="icon-arrow"></vscode-icon>
+        <vscode-icon name=${arrowIconName} class="icon-arrow"></vscode-icon>
       </div>
     `;
   }
@@ -608,15 +608,15 @@ export class VscodeTree extends VscElement {
     }
 
     return html`
-      <li data-path="${path.join('/')}" class="${liClasses.join(' ')}">
+      <li data-path=${path.join('/')} class=${liClasses.join(' ')}>
         <div
-          class="${contentsClasses.join(' ')}"
-          style="${styleMap({paddingLeft: `${padLeft + CONTENT_PADDING}px`})}"
+          class=${contentsClasses.join(' ')}
+          style=${styleMap({paddingLeft: `${padLeft + CONTENT_PADDING}px`})}
         >
           ${arrowMarkup}${iconMarkup}<span
             class="text-content"
             part="text-content"
-            title="${ifDefined(tooltip)}"
+            title=${ifDefined(tooltip)}
             >${label}${descriptionMarkup}</span
           >
           ${actionsMarkup} ${decorationsMarkup}
@@ -956,7 +956,7 @@ export class VscodeTree extends VscElement {
     });
 
     return html`
-      <div @click="${this._handleClick}" class="${classes}">
+      <div @click=${this._handleClick} class=${classes}>
         <ul>
           ${this._renderTree(this._data)}
         </ul>
