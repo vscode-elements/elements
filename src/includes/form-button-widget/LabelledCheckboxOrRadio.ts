@@ -46,5 +46,6 @@ export const LabelledCheckboxOrRadioMixin = <T extends Constructor<LitElement>>(
     }
   }
 
-  return LabelledCheckboxOrRadio as unknown as Constructor<LabelledCheckboxOrRadioInterface> & T;
+  return LabelledCheckboxOrRadio as unknown as Constructor<LabelledCheckboxOrRadioInterface> &
+    T;
 };

@@ -7,7 +7,10 @@ const styles: CSSResultGroup = [
     :host {
       align-items: center;
       background-color: var(--vscode-settings-textInputBackground);
-      border-color: var(--vscode-settings-textInputBorder, var(--vscode-settings-textInputBackground));
+      border-color: var(
+        --vscode-settings-textInputBorder,
+        var(--vscode-settings-textInputBackground)
+      );
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
@@ -67,7 +70,7 @@ const styles: CSSResultGroup = [
       width: 100%;
     }
 
-    input:read-only:not([type="file"]) {
+    input:read-only:not([type='file']) {
       cursor: not-allowed;
     }
 

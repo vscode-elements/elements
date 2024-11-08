@@ -10,8 +10,7 @@ const styles: CSSResultGroup = [
       width: 100%;
     }
 
-
-      ::slotted(vscode-table-row:nth-child(even)) {
+    ::slotted(vscode-table-row:nth-child(even)) {
       background-color: var(--vsc-row-even-background);
     }
 

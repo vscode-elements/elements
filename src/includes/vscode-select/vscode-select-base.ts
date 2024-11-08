@@ -309,12 +309,12 @@ export class VscodeSelectBase extends VscElement {
       this._toggleDropdown(false);
       window.removeEventListener('click', this._onClickOutside);
     }
-  }
+  };
 
   private _onMouseMove = () => {
     this._isHoverForbidden = false;
     window.removeEventListener('mousemove', this._onMouseMove);
-  }
+  };
 
   private _toggleComboboxDropdown() {
     this._filterPattern = '';
@@ -570,9 +570,9 @@ export class VscodeSelectBase extends VscElement {
 
     return html`
       <div class="${classes}">
-        ${this.position === "above" ? this._renderDescription() : nothing}
+        ${this.position === 'above' ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
-        ${this.position === "below" ? this._renderDescription() : nothing}
+        ${this.position === 'below' ? this._renderDescription() : nothing}
       </div>
     `;
   }

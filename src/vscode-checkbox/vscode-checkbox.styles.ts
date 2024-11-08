@@ -29,7 +29,7 @@ const styles: CSSResultGroup = [
       outline-offset: -1px;
     }
   `,
-  formHelperTextStyles
+  formHelperTextStyles,
 ];
 
 export default styles;

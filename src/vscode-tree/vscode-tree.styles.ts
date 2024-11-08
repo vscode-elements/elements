@@ -198,7 +198,10 @@ const styles: CSSResultGroup = [
     }
 
     :host(:focus) .contents.selected.focused {
-      outline-color: var(--vscode-list-focusAndSelectionOutline, var(--vscode-list-focusOutline));
+      outline-color: var(
+        --vscode-list-focusAndSelectionOutline,
+        var(--vscode-list-focusOutline)
+      );
     }
 
     .contents:hover {
