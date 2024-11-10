@@ -140,6 +140,7 @@
     "lit": "^3.2.1"
   },
   "devDependencies": {
+    "@bendera/wds-plugin-directory-index": "^0.3.0",
     "@custom-elements-manifest/analyzer": "^0.10.3",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.14.0",
