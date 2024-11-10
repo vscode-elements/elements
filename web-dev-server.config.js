@@ -5,6 +5,7 @@
  */
 
 import {legacyPlugin} from '@web/dev-server-legacy';
+import {directoryIndexPlugin} from '@bendera/wds-plugin-directory-index';
 
 export default {
   appIndex: 'dev/index.html',
@@ -18,5 +19,6 @@ export default {
         webcomponents: false,
       },
     }),
+    directoryIndexPlugin(),
   ],
 };
