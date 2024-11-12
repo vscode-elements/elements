@@ -120,7 +120,7 @@ export class VscodeSplitLayout extends VscElement {
   @property({attribute: 'fixed-pane'})
   set fixedPane(newVal: FixedPaneType) {
     this._fixedPane = newVal;
-    this._fixedPanePropChanged(newVal);
+    this._fixedPanePropChanged();
   }
   get fixedPane(): FixedPaneType {
     return this._fixedPane;
@@ -207,6 +207,7 @@ export class VscodeSplitLayout extends VscElement {
       : parseValue(this.initialHandlePosition);
 
     this._setPosition(value, unit);
+    this._initFixedPane();
   }
 
   private _handlePositionPropChanged() {
@@ -217,12 +218,16 @@ export class VscodeSplitLayout extends VscElement {
     }
   }
 
-  private _fixedPanePropChanged(newVal: FixedPaneType) {
+  private _fixedPanePropChanged() {
     if (!this._wrapperEl) {
       return;
     }
 
-    if (newVal === 'none') {
+    this._initFixedPane();
+  }
+
+  private _initFixedPane() {
+    if (this.fixedPane === 'none') {
       if (this._wrapperObserved) {
         this._resizeObserver.unobserve(this._wrapperEl);
         this._wrapperObserved = false;
