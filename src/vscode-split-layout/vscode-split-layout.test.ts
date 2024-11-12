@@ -226,6 +226,73 @@ describe('vscode-split-layout', () => {
       expect(startWidthAfter).to.eq(100);
       expect(endWidthAfter).to.eq(400);
     });
+
+    it('should set start pane fixed in vertical split mode', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          fixed-pane="start"
+        ></vscode-split-layout>`
+      );
+
+      const startPane = el.shadowRoot?.querySelector<HTMLDivElement>('.start')!;
+      const endPane = el.shadowRoot?.querySelector<HTMLDivElement>('.end')!;
+      const startPaneSizeBefore = startPane.offsetWidth;
+      const endPaneSizeBefore = endPane.offsetWidth;
+
+      el.style.width = "600px";
+
+      expect(startPaneSizeBefore).to.eq(100);
+      expect(endPaneSizeBefore).to.eq(400);
+      expect(startPane.offsetWidth).to.eq(100);
+      expect(endPane.offsetWidth).to.eq(500);
+    });
+
+    it('should set end pane fixed in vertical split mode', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          fixed-pane="end"
+        ></vscode-split-layout>`
+      );
+
+      const startPane = el.shadowRoot?.querySelector<HTMLDivElement>('.start')!;
+      const endPane = el.shadowRoot?.querySelector<HTMLDivElement>('.end')!;
+      const startPaneSizeBefore = startPane.offsetWidth;
+      const endPaneSizeBefore = endPane.offsetWidth;
+
+      el.style.width = "600px";
+
+      expect(startPaneSizeBefore).to.eq(100);
+      expect(endPaneSizeBefore).to.eq(400);
+      expect(startPane.offsetWidth).to.eq(200);
+      expect(endPane.offsetWidth).to.eq(400);
+    });
+
+    it('should set start pane fixed in horizontal split mode', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          fixed-pane="start"
+          split="horizontal"
+        ></vscode-split-layout>`
+      );
+
+      const startPane = el.shadowRoot?.querySelector<HTMLDivElement>('.start')!;
+      const endPane = el.shadowRoot?.querySelector<HTMLDivElement>('.end')!;
+      const startPaneSizeBefore = startPane.offsetHeight;
+      const endPaneSizeBefore = endPane.offsetHeight;
+
+      el.style.height = "600px";
+
+      expect(startPaneSizeBefore).to.eq(100);
+      expect(endPaneSizeBefore).to.eq(400);
+      expect(startPane.offsetHeight).to.eq(100);
+      expect(endPane.offsetHeight).to.eq(500);
+    });
   });
 
   describe('user interactions', () => {
@@ -333,14 +400,34 @@ describe('vscode-split-layout', () => {
       expect(revertedHandlePos).to.eq('20%');
     });
 
-    it(
-      'should not reset handle position on double click when "reset-on-dbl-click" is unset'
-    );
+    it('should not reset handle position on double click when "reset-on-dbl-click" is unset', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          split="vertical"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const initialHandlePos = handle.offsetLeft;
+      await dragElement(handle, 100);
+
+      const changedHandlePos = handle.offsetLeft;
+      handle.dispatchEvent(new MouseEvent('dblclick'));
+      await el.updateComplete;
+
+      const revertedHandlePos = handle.offsetLeft;
+
+      expect(initialHandlePos).to.eq(98);
+      expect(changedHandlePos).to.eq(198);
+      expect(revertedHandlePos).to.eq(198);
+    });
   });
 
   // TODO
-  it('should set fixed start panel');
-  it('should set fixed end panel');
   it('should reset to the default position programmatically');
   it('should nested instances reset when slotted content is changed');
+  it('fixed pane prop changed');
+  it('handlePosition prop changed');
 });
