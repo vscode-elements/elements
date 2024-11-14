@@ -189,11 +189,6 @@ export class VscodeSplitLayout extends VscElement {
     super.connectedCallback();
   }
 
-  /** @internal */
-  initializeResizeHandler() {
-    this.resetHandlePosition();
-  }
-
   protected firstUpdated(_changedProperties: PropertyValues): void {
     if (this.fixedPane !== 'none') {
       this._resizeObserver.observe(this._wrapperEl);
@@ -365,7 +360,7 @@ export class VscodeSplitLayout extends VscElement {
 
     nestedLayouts.forEach((e) => {
       if (e instanceof VscodeSplitLayout) {
-        e.initializeResizeHandler();
+        e.resetHandlePosition();
       }
     });
   }
