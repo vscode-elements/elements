@@ -87,6 +87,64 @@ describe('vscode-split-layout', () => {
   });
 
   describe('when provided parameters', () => {
+    it('should initial handle position set correctly when the divider orientation is vertical, and the position is specified in pixels', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetLeft).to.eq(98);
+      expect(handle.offsetTop).to.eq(0);
+    });
+
+    it('should initial handle position set correctly when the divider orientation is vertical, and the position is specified in percent', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="20%"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetLeft).to.eq(98);
+      expect(handle.offsetTop).to.eq(0);
+    });
+
+    it('should initial handle position set correctly when the divider orientation is horizontal, and the position is specified in pixels', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          split="horizontal"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetLeft).to.eq(0);
+      expect(handle.offsetTop).to.eq(98);
+    });
+
+    it('should initial handle position set correctly when the divider orientation is horizontal, and the position is specified in percent', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="20%"
+          split="horizontal"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetLeft).to.eq(0);
+      expect(handle.offsetTop).to.eq(98);
+    });
+
     it('should handle position set correctly when the divider orientation is vertical, and the position is specified in pixels', async () => {
       const el = await fixture<VscodeSplitLayout>(
         html`<vscode-split-layout
@@ -143,6 +201,21 @@ describe('vscode-split-layout', () => {
 
       expect(handle.offsetLeft).to.eq(0);
       expect(handle.offsetTop).to.eq(98);
+    });
+
+    it('should apply handle-position when both handle-position and initial-handle-position are present', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          handle-position="200px"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+
+      expect(handle.offsetLeft).to.eq(198);
+      expect(handle.offsetTop).to.eq(0);
     });
 
     it('should set handle size in vertical split mode', async () => {
@@ -241,7 +314,7 @@ describe('vscode-split-layout', () => {
       const startPaneSizeBefore = startPane.offsetWidth;
       const endPaneSizeBefore = endPane.offsetWidth;
 
-      el.style.width = "600px";
+      el.style.width = '600px';
 
       expect(startPaneSizeBefore).to.eq(100);
       expect(endPaneSizeBefore).to.eq(400);
@@ -263,7 +336,7 @@ describe('vscode-split-layout', () => {
       const startPaneSizeBefore = startPane.offsetWidth;
       const endPaneSizeBefore = endPane.offsetWidth;
 
-      el.style.width = "600px";
+      el.style.width = '600px';
 
       expect(startPaneSizeBefore).to.eq(100);
       expect(endPaneSizeBefore).to.eq(400);
@@ -286,7 +359,7 @@ describe('vscode-split-layout', () => {
       const startPaneSizeBefore = startPane.offsetHeight;
       const endPaneSizeBefore = endPane.offsetHeight;
 
-      el.style.height = "600px";
+      el.style.height = '600px';
 
       expect(startPaneSizeBefore).to.eq(100);
       expect(endPaneSizeBefore).to.eq(400);
@@ -295,7 +368,7 @@ describe('vscode-split-layout', () => {
     });
   });
 
-  describe('user interactions', () => {
+  describe('interactions', () => {
     it('should panes resize in vertical mode', async () => {
       const el = await fixture<VscodeSplitLayout>(
         html`<vscode-split-layout
@@ -329,6 +402,124 @@ describe('vscode-split-layout', () => {
           style="width: 500px; height: 500px;"
           initial-handle-position="100px"
           split="horizontal"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const paneStart = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const paneEnd = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      expect(paneStart.offsetHeight, 'start pane height before resizing').to.eq(
+        100
+      );
+      expect(paneEnd.offsetHeight, 'end pane height before resizing').to.eq(
+        400
+      );
+
+      await dragElement(handle, 0, 100);
+
+      expect(paneStart.offsetHeight, 'start pane height after resizing').to.eq(
+        200
+      );
+      expect(paneEnd.offsetHeight, 'end pane height after resizing').to.eq(300);
+    });
+
+    it('should panes resize in vertical mode when start pane is fixed', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;border: 0;"
+          initial-handle-position="100px"
+          fixed-pane="start"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const paneStart = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const paneEnd = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      expect(paneStart.offsetWidth, 'start pane width before resizing').to.eq(
+        100
+      );
+      expect(paneEnd.offsetWidth, 'end pane width before resizing').to.eq(400);
+
+      await dragElement(handle, 100);
+
+      expect(paneStart.offsetWidth, 'start pane width after resizing').to.eq(
+        200
+      );
+      expect(paneEnd.offsetWidth, 'end pane width after resizing').to.eq(300);
+    });
+
+    it('should panes resize in vertical mode when end pane is fixed', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;border: 0;"
+          initial-handle-position="100px"
+          fixed-pane="end"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const paneStart = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const paneEnd = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      expect(paneStart.offsetWidth, 'start pane width before resizing').to.eq(
+        100
+      );
+      expect(paneEnd.offsetWidth, 'end pane width before resizing').to.eq(400);
+
+      await dragElement(handle, 100);
+
+      expect(paneStart.offsetWidth, 'start pane width after resizing').to.eq(
+        200
+      );
+      expect(paneEnd.offsetWidth, 'end pane width after resizing').to.eq(300);
+    });
+
+    it('should panes resize in horizontal mode when start pane is fixed', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          split="horizontal"
+          fixed-pane="start"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const paneStart = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const paneEnd = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      expect(paneStart.offsetHeight, 'start pane height before resizing').to.eq(
+        100
+      );
+      expect(paneEnd.offsetHeight, 'end pane height before resizing').to.eq(
+        400
+      );
+
+      await dragElement(handle, 0, 100);
+
+      expect(paneStart.offsetHeight, 'start pane height after resizing').to.eq(
+        200
+      );
+      expect(paneEnd.offsetHeight, 'end pane height after resizing').to.eq(300);
+    });
+
+    it('should panes resize in horizontal mode when end pane is fixed', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          split="horizontal"
+          fixed-pane="end"
         ></vscode-split-layout>`
       );
 
@@ -423,11 +614,28 @@ describe('vscode-split-layout', () => {
       expect(changedHandlePos).to.eq(198);
       expect(revertedHandlePos).to.eq(198);
     });
+
+    it('should reset handle position to the initial value', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          initial-handle-position="100px"
+          handle-position="200px"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+      const handlePosBefore = handle.offsetLeft;
+
+      el.resetHandlePosition();
+      await el.updateComplete;
+
+      expect(handlePosBefore).to.eq(198);
+      expect(handle.offsetLeft).to.eq(98);
+    });
   });
 
   // TODO
-  it('should reset to the default position programmatically');
   it('should nested instances reset when slotted content is changed');
   it('fixed pane prop changed');
-  it('handlePosition prop changed');
 });
