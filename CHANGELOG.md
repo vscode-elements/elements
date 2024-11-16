@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Fixed
+
+- **SplitLayout**: The fixed pane size was set to zero initially.
+- **SplitLayout**: The mouse-over state was not reset when the button was released outside the component.
+
 ## [1.8.0] - 2024-11-08
 
 ### Added
