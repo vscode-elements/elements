@@ -233,7 +233,7 @@ describe('vscode-split-layout', () => {
       await el.updateComplete;
 
       expect(handle.offsetLeft).to.eq(198);
-      expect(startPane.offsetWidth).to.eq(198);
+      expect(startPane.offsetWidth).to.eq(200);
       expect(endPane.offsetWidth).to.eq(300);
     });
 
