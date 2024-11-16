@@ -218,6 +218,25 @@ describe('vscode-split-layout', () => {
       expect(handle.offsetTop).to.eq(0);
     });
 
+    it('should change handle position correctly when the handlePosition property changed', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 500px;"
+          handle-position="100px"
+        ></vscode-split-layout>`
+      );
+      const handle = el.shadowRoot?.querySelector<HTMLDivElement>('.handle')!;
+      const startPane = el.shadowRoot?.querySelector<HTMLDivElement>('.start')!;
+      const endPane = el.shadowRoot?.querySelector<HTMLDivElement>('.end')!;
+
+      el.handlePosition = '200px';
+      await el.updateComplete;
+
+      expect(handle.offsetLeft).to.eq(198);
+      expect(startPane.offsetWidth).to.eq(198);
+      expect(endPane.offsetWidth).to.eq(300);
+    });
+
     it('should set handle size in vertical split mode', async () => {
       const el = await fixture<VscodeSplitLayout>(
         html`<vscode-split-layout
