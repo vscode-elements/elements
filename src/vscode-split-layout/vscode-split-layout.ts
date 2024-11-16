@@ -303,8 +303,14 @@ export class VscodeSplitLayout extends VscElement {
     window.addEventListener('mousemove', this._handleMouseMove);
   }
 
-  private _handleMouseUp = (_ev: MouseEvent) => {
+  private _handleMouseUp = (ev: MouseEvent) => {
     this._isDragActive = false;
+
+    if (ev.target !== this) {
+      this._hover = false;
+      this._hide = true;
+    }
+
     window.removeEventListener('mouseup', this._handleMouseUp);
     window.removeEventListener('mousemove', this._handleMouseMove);
 
