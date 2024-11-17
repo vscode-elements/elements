@@ -114,7 +114,7 @@ export class VscodeContextMenu extends VscElement {
 
   private _onClickOutside(ev: MouseEvent) {
     if (!ev.composedPath().includes(this)) {
-      this._show = false;
+      this.show = false;
     }
   }
 
@@ -169,7 +169,7 @@ export class VscodeContextMenu extends VscElement {
   }
 
   private _handleEscape() {
-    this._show = false;
+    this.show = false;
     document.removeEventListener('click', this._onClickOutsideBound);
   }
 
@@ -223,7 +223,7 @@ export class VscodeContextMenu extends VscElement {
 
     this._dispatchLegacySelectEvent(selectedOption);
     this._dispatchSelectEvent(selectedOption);
-    this._show = false;
+    this.show = false;
     document.removeEventListener('click', this._onClickOutsideBound);
   }
 
@@ -232,7 +232,7 @@ export class VscodeContextMenu extends VscElement {
 
     this._dispatchLegacySelectEvent(et);
     this._dispatchSelectEvent(et);
-    this._show = false;
+    this.show = false;
   }
 
   private _onItemMouseOver(event: MouseEvent) {
