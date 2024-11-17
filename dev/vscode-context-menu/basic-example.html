@@ -1,16 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>&lt;vscode-context-menu&gt; Demo</title>
-    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <title>Context Menu</title>
     <link
       rel="stylesheet"
-      href="../node_modules/@vscode/codicons/dist/codicon.css"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
     />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-context-menu/index.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
     <style>
       .menu-wrapper {
         overflow: visible;
@@ -29,24 +39,17 @@
         z-index: 2;
       }
     </style>
-    <script type="module" src="../dev-assets/component-preview.js"></script>
-    <script type="module" src="../dist/vscode-icon/index.js"></script>
-    <script type="module" src="../dist/vscode-context-menu/index.js"></script>
   </head>
 
-  <body class="vscode-light">
-    <div class="story">
-      <h2 class="story-title">Basic example</h2>
-      <div class="story-content">
-        <component-preview>
-          <button id="toggle-menu-button">toggle</button>
-          <div class="menu-wrapper">
-            <vscode-context-menu
-              id="context-menu"
-              class="context-menu"
-            ></vscode-context-menu>
-          </div>
-        </component-preview>
+  <body>
+    <h1>Context Menu</h1>
+    <vscode-demo>
+      <button id="toggle-menu-button">toggle</button>
+      <div class="menu-wrapper">
+        <vscode-context-menu
+          id="context-menu"
+          class="context-menu"
+        ></vscode-context-menu>
       </div>
       <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -75,6 +78,7 @@
           ];
 
           button.addEventListener('click', () => {
+            console.log(menu.show);
             menu.show = !menu.show;
           });
 
@@ -83,6 +87,6 @@
           });
         });
       </script>
-    </div>
+    </vscode-demo>
   </body>
 </html>
