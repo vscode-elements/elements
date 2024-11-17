@@ -57,6 +57,12 @@ export class VscodeContextMenu extends VscElement {
     return this._data;
   }
 
+  /**
+   * By default, the menu closes when an item is clicked. This attribute prevents the menu from closing.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'prevent-close'})
+  preventClose = false;
+
   @property({type: Boolean, reflect: true})
   set show(show: boolean) {
     this._show = show;
@@ -223,8 +229,11 @@ export class VscodeContextMenu extends VscElement {
 
     this._dispatchLegacySelectEvent(selectedOption);
     this._dispatchSelectEvent(selectedOption);
-    this.show = false;
-    document.removeEventListener('click', this._onClickOutsideBound);
+
+    if (!this.preventClose) {
+      this.show = false;
+      document.removeEventListener('click', this._onClickOutsideBound);
+    }
   }
 
   private _onItemClick(event: CustomEvent) {
@@ -232,7 +241,10 @@ export class VscodeContextMenu extends VscElement {
 
     this._dispatchLegacySelectEvent(et);
     this._dispatchSelectEvent(et);
-    this.show = false;
+
+    if (!this.preventClose) {
+      this.show = false;
+    }
   }
 
   private _onItemMouseOver(event: MouseEvent) {
