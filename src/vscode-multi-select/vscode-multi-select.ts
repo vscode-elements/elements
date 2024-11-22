@@ -74,8 +74,10 @@ export class VscodeMultiSelect
   }
 
   @property({type: Array})
-  set value(val: string[]) {
-    const sanitizedVal = val.map((v) => String(v));
+  set value(val: string[] | string) {
+    const sanitizedVal = Array.isArray(val)
+      ? val.map((v) => String(v))
+      : [String(val)];
     this._values = sanitizedVal;
 
     this._selectedIndexes.forEach((i) => {
