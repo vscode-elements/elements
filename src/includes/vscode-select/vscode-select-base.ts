@@ -291,6 +291,7 @@ export class VscodeSelectBase extends VscElement {
       );
     }
     this.dispatchEvent(new Event('change'));
+    this.dispatchEvent(new Event('input'));
   }
 
   protected _onFaceClick(): void {
