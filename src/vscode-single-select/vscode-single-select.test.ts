@@ -35,6 +35,31 @@ describe('vscode-single-select', () => {
       expect(el.value).to.eq('Ipsum');
     });
 
+    it('should show selected value when options are added later', async () => {
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select></vscode-single-select>`
+      );
+      el.value = 'dolor';
+
+      const op1 = document.createElement('vscode-option');
+      const op2 = document.createElement('vscode-option');
+      const op3 = document.createElement('vscode-option');
+
+      op1.innerHTML = 'lorem';
+      op2.innerHTML = 'ipsum';
+      op3.innerHTML = 'dolor';
+
+      el.appendChild(op1);
+      el.appendChild(op2);
+      el.appendChild(op3);
+
+      await aTimeout(0);
+
+      expect(
+        el.shadowRoot?.querySelector<HTMLDivElement>('.face')!.innerText
+      ).to.eq('dolor');
+    });
+
     it('should return the validity object', () => {
       const el = document.createElement(
         'vscode-single-select'
@@ -415,7 +440,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      const spy = sinon.spy(el, 'dispatchEvent');
+      const spy = sinon.spy();
+      el.addEventListener('change', spy);
 
       el.dispatchEvent(new MouseEvent('click'));
       await el.updateComplete;
@@ -423,8 +449,6 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
-
-      const changeEvent = spy.lastCall.args[0] as CustomEvent;
 
       expect(el).shadowDom.to.eq(
         `
@@ -442,7 +466,7 @@ describe('vscode-single-select', () => {
       );
       expect(el.value).to.eq('Dolor');
       expect(el.selectedIndex).to.eq(2);
-      expect(changeEvent.type).to.eq('change');
+      expect(spy.calledWithMatch({type: 'change'})).to.be.true;
     });
 
     it('dropdown should be closed when ESC key pressed', async () => {
@@ -797,7 +821,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      const spy = sinon.spy(el, 'dispatchEvent');
+      const spy = sinon.spy();
+      el.addEventListener('change', spy);
 
       const input = el.shadowRoot?.querySelector(
         '.combobox-input'
@@ -811,11 +836,9 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
       await el.updateComplete;
 
-      const changeEvent = spy.lastCall.args[0] as CustomEvent;
-
       expect(el.value).to.eq('Dolor');
       expect(el.selectedIndex).to.eq(2);
-      expect(changeEvent.type).to.eq('change');
+      expect(spy.calledWithMatch({type: 'change'})).to.be.true;
       expect(input.value).to.eq('Dolor');
     });
   });

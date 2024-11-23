@@ -101,9 +101,11 @@ export class VscodeSingleSelect
       this._options[this._selectedIndex].selected = true;
       this._labelText = this._options[this._selectedIndex].label;
       this._value = val;
+      this._requestedValueToSetLater = '';
     } else {
       this._labelText = '';
       this._value = '';
+      this._requestedValueToSetLater = val;
     }
   }
   get value(): string {
@@ -200,8 +202,22 @@ export class VscodeSingleSelect
     return this._internals.form;
   }
 
+  private _requestedValueToSetLater = '';
+
   protected _onSlotChange(): void {
     super._onSlotChange();
+
+    if (this._requestedValueToSetLater) {
+      // the value is set before the available options are appended
+      const foundIndex = this._options.findIndex(
+        (op) => op.value === this._requestedValueToSetLater
+      );
+
+      if (foundIndex > 0) {
+        this._selectedIndex = foundIndex;
+        this._requestedValueToSetLater = '';
+      }
+    }
 
     if (this._selectedIndex > -1) {
       this._labelText = this._options[this._selectedIndex]?.label ?? '';
