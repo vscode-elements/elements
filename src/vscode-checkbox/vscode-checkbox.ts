@@ -104,9 +104,8 @@ export class VscodeCheckbox
   }
 
   /** @internal */
-  get type(): 'checkbox' {
-    return 'checkbox';
-  }
+  @property()
+  type = 'checkbox';
 
   get validity(): ValidityState {
     return this._internals.validity;
