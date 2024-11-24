@@ -515,7 +515,7 @@ export class VscodeSelectBase extends VscElement {
       !this.combobox &&
       stat.selectedIndexes.length === 0
     ) {
-      this._selectedIndex = 0;
+      this._selectedIndex = -1;
     }
 
     this.requestUpdate();

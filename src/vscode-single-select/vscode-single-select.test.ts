@@ -242,17 +242,15 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text">
-            Lorem
-          </span>
+          <span class="text"></span>
           <span class="icon">
           </span>
         </div>
       `,
         {ignoreAttributes: ['tabindex']}
       );
-      expect(el.value).to.eq('Lorem');
-      expect(el.selectedIndex).to.eq(0);
+      expect(el.value).to.eq('');
+      expect(el.selectedIndex).to.eq(-1);
     });
 
     it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
@@ -337,16 +335,14 @@ describe('vscode-single-select', () => {
       const markupOpen = `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text">
-            Lorem
-          </span>
+          <span class="text"></span>
           <span class="icon">
           </span>
         </div>
         <div class="dropdown">
           <ul class="options">
             <li
-              class="active option"
+              class="option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -389,16 +385,14 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text">
-            Lorem
-          </span>
+          <span class="text"></span>
           <span class="icon">
           </span>
         </div>
         <div class="dropdown">
           <ul class="options">
             <li
-              class="active option"
+              class="option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -410,25 +404,6 @@ describe('vscode-single-select', () => {
         {ignoreAttributes: ['tabindex']}
       );
       expect(el.getAttribute('aria-expanded')).to.eq('true');
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot">
-        </slot>
-        <div class="select-face face">
-          <span class="text">
-            Lorem
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
-      expect(el.getAttribute('aria-expanded')).to.eq('false');
     });
 
     it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
@@ -444,6 +419,8 @@ describe('vscode-single-select', () => {
       el.addEventListener('change', spy);
 
       el.dispatchEvent(new MouseEvent('click'));
+      await el.updateComplete;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
@@ -483,16 +460,14 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text">
-            Lorem
-          </span>
+          <span class="text"></span>
           <span class="icon">
           </span>
         </div>
         <div class="dropdown">
           <ul class="options">
             <li
-              class="active option"
+              class="option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -512,9 +487,7 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text">
-            Lorem
-          </span>
+          <span class="text"></span>
           <span class="icon">
           </span>
         </div>
@@ -893,7 +866,7 @@ describe('vscode-single-select', () => {
 
     const fd = new FormData(el as HTMLFormElement);
 
-    expect(fd.get('test')).to.eq('lorem');
+    expect(fd.get('test')).to.be.null;
   });
 
   it('should set the initial selected value', async () => {
