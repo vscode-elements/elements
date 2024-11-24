@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>%%TITLE%%</title>
+  <title>VSCode Elements</title>
   <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
   <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
-  <script type="module" src="/dist/%%COMPONENT%%/index.js"></script>
+  <script type="module" src="/dist/main.js"></script>
   <script>
     const logEvents = (selector, eventType) => {
       document.querySelector(selector).addEventListener(eventType, (ev) => {
@@ -19,8 +19,9 @@
 
 <body>
   <h1>%%TITLE%%</h1>
-  <p>description</p>
-  <vscode-demo></vscode-demo>
+  <main>
+    <vscode-demo></vscode-demo>
+  </main>
 </body>
 
 </html>
