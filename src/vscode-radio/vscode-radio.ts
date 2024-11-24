@@ -129,9 +129,8 @@ export class VscodeRadio
   }
 
   /** @internal */
-  get type() {
-    return 'radio';
-  }
+  @property()
+  type = 'radio';
 
   get validity(): ValidityState {
     return this._internals.validity;
