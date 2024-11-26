@@ -248,4 +248,25 @@ describe('vscode-multi-select', () => {
 
     expect(el.selectedIndexes).to.eql([0, 1, 2]);
   });
+
+  it('Set the "value" property before adding selectable options', async () => {
+    const el = await fixture<VscodeMultiSelect>(
+      html`<vscode-multi-select></vscode-multi-select>`
+    );
+    el.value = 'dolor';
+    const op1 = document.createElement('vscode-option');
+    const op2 = document.createElement('vscode-option');
+    const op3 = document.createElement('vscode-option');
+    op1.innerHTML = 'lorem';
+    op2.innerHTML = 'ipsum';
+    op3.innerHTML = 'dolor';
+
+    el.appendChild(op1);
+    el.appendChild(op2);
+    el.appendChild(op3);
+
+    await el.updateComplete;
+
+    expect(el.value).to.eql(['dolor']);
+  });
 });

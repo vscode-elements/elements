@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-multi-select/index.js"></script>
+    <script type="module" src="/dist/vscode-option/index.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Select</h1>
+    <vscode-demo>
+      <form>
+        <vscode-multi-select id="select" name="test"></vscode-multi-select>
+      </form>
+    </vscode-demo>
+    <script type="module">
+      const select = document.querySelector('vscode-multi-select');
+      select.value = ['lorem', 'ipsum'];
+
+      const op1 = document.createElement('vscode-option');
+      const op2 = document.createElement('vscode-option');
+      const op3 = document.createElement('vscode-option');
+
+      op1.innerHTML = 'lorem';
+      op2.innerHTML = 'ipsum';
+      op3.innerHTML = 'dolor';
+
+      select.appendChild(op1);
+      select.appendChild(op2);
+      select.appendChild(op3);
+
+      const form = document.querySelector('form');
+      const fd = new FormData(form);
+      console.log(fd.get('test'));
+    </script>
+  </body>
+</html>
