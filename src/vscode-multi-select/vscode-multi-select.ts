@@ -78,7 +78,7 @@ export class VscodeMultiSelect
     const sanitizedVal = Array.isArray(val)
       ? val.map((v) => String(v))
       : [String(val)];
-    this._values = sanitizedVal;
+    this._values = [];
 
     this._selectedIndexes.forEach((i) => {
       this._options[i].selected = false;
@@ -90,8 +90,15 @@ export class VscodeMultiSelect
       if (typeof this._valueOptionIndexMap[v] === 'number') {
         this._selectedIndexes.push(this._valueOptionIndexMap[v]);
         this._options[this._valueOptionIndexMap[v]].selected = true;
+        this._values.push(v);
       }
     });
+
+    if (this._selectedIndexes.length > 0) {
+      this._requestedValueToSetLater = [];
+    } else {
+      this._requestedValueToSetLater = Array.isArray(val) ? val : [val];
+    }
 
     this._setFormValue();
     this._manageRequired();
@@ -199,6 +206,24 @@ export class VscodeMultiSelect
     });
 
     this._internals.setFormValue(fd);
+  }
+
+  private _requestedValueToSetLater: string[] = [];
+
+  protected _onSlotChange(): void {
+    super._onSlotChange();
+
+    if (this._requestedValueToSetLater.length > 0) {
+      this.options.forEach((o, i) => {
+        if (this._requestedValueToSetLater.includes(o.value)) {
+          this._selectedIndexes.push(i);
+          this._values.push(o.value);
+          this._options[i].selected = true;
+          this._requestedValueToSetLater =
+            this._requestedValueToSetLater.filter((v) => v !== o.value);
+        }
+      });
+    }
   }
 
   private _onOptionClick(ev: MouseEvent) {
