@@ -5,11 +5,12 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      background-color: var(--vscode-widget-border);
+      background-color: var(--vscode-foreground);
       display: block;
       height: 1px;
       margin-bottom: 10px;
       margin-top: 10px;
+      opacity: 0.4;
     }
   `,
 ];
