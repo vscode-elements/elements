@@ -12,12 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [1.9.0] - 2024-11-26
 
-## Added
+### Added
 
 - Add support for two-way binding with form controls in Vue.
 - **ContextMenu**: Added `preventClose` property.
 
-## Fixed
+### Fixed
 
 - **ContextMenu**: `show` attribute was not synchronized correctly.
 
