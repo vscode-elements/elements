@@ -27,6 +27,8 @@ type InputType =
  * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
  * can be applied through the `invalid` property.
  *
+ * @tag vscode-textfield
+ *
  * @slot content-before - A slot before the editable area but inside of the component. It is used to place icons.
  * @slot content-after - A slot after the editable area but inside of the component. It is used to place icons.
  *

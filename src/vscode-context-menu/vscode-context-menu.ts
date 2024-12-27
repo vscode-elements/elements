@@ -25,6 +25,8 @@ export type VscContextMenuSelectEvent = CustomEvent<{
 }>;
 
 /**
+ * @tag vscode-context-menu
+ *
  * @fires {VscMenuSelectEvent} vsc-menu-select - Emitted when a menu item is clicked
  *
  * @cssprop --vscode-font-family

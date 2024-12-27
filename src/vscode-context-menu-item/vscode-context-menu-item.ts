@@ -12,6 +12,8 @@ export interface VscClickEventDetail {
 }
 
 /**
+ * @tag vscode-context-menu-item
+ *
  * Child component of [ContextMenu](/components/context-menu/).
  *
  * @cssprop --vscode-font-family

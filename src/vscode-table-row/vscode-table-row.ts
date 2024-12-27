@@ -4,6 +4,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-table-row.styles.js';
 
 /**
+ * @tag vscode-table-row
+ *
  * @cssprop --vscode-editorGroup-border
  */
 @customElement('vscode-table-row')

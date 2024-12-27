@@ -22,6 +22,8 @@ import styles from './vscode-table.styles.js';
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 
 /**
+ * @tag vscode-table
+ *
  * @attr {Boolean} zebra - Zebra stripes, even rows are tinted.
  * @attr {Boolean} zebra-odd - Zebra stripes, odd rows are tinted.
  * @attr {Boolean} bordered-rows - Rows are separated by borders

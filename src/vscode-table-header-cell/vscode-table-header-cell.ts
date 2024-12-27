@@ -4,6 +4,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-table-header-cell.styles.js';
 
 /**
+ * @tag vscode-table-header-cell
+ *
  * @cssprop --vscode-foreground
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size

@@ -51,6 +51,9 @@ const isRadio = (el: Element): el is VscodeRadio => {
   return el.tagName.toLocaleLowerCase() === 'vscode-radio';
 };
 
+/**
+ * @tag vscode-form-container
+ */
 @customElement('vscode-form-container')
 export class VscodeFormContainer extends VscElement {
   static styles = styles;

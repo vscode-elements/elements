@@ -4,6 +4,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-tab-panel.styles.js';
 
 /**
+ * @tag vscode-tab-panel
+ *
  * @cssprop --vscode-panel--background
  * @cssprop --vscode-focusBorder
  */

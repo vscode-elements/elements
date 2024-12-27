@@ -5,6 +5,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-tab-header.styles.js';
 
 /**
+ * @tag vscode-tab-header
+ *
  * @cssprop --vscode-foreground
  * @cssprop --vscode-panelTitle-inactiveForeground
  * @cssprop --vscode-panelTitle-activeForeground
