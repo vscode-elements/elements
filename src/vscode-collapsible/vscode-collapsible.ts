@@ -7,6 +7,8 @@ import styles from './vscode-collapsible.styles.js';
 export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
 
 /**
+ * @tag vscode-collapsible
+ *
  * @slot - Main content.
  * @slot actions - You can place any action icon in this slot in the header, but it's also possible to use any HTML element in it. It's only visible when the component is open.
  * @slot decorations - The elements placed in the decorations slot are always visible.

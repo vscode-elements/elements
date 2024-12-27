@@ -10,6 +10,8 @@ import {VscodeRadio} from '../vscode-radio/index.js';
 import styles from './vscode-radio-group.styles.js';
 
 /**
+ * @tag vscode-radio-group
+ *
  * @fires {Event} change - Dispatched when a child radio button is changed.
  */
 @customElement('vscode-radio-group')

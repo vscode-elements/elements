@@ -10,6 +10,8 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
  * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
  * can be applied through the `invalid` property.
  *
+ * @tag vscode-radio
+ *
  * @attr name - Name which is used as a variable name in the data of the form-container.
  * @attr label - Attribute pair of the `label` property.
  *

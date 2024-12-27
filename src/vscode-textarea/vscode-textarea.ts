@@ -13,6 +13,8 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
  * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
  * can be applied through the `invalid` property.
  *
+ * @tag vscode-textarea
+ *
  * @fires {InputEvent} input
  * @fires {Event} change
  *

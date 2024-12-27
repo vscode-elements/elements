@@ -4,6 +4,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-table-body.styles.js';
 
 /**
+ * @tag vscode-table-body
+ *
  * @cssprop --vscode-keybindingTable-rowsBackground
  */
 @customElement('vscode-table-body')

@@ -6,6 +6,8 @@ import styles from './vscode-form-group.styles.js';
 export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
 
 /**
+ * @tag vscode-form-group
+ *
  * @cssprop [--label-width=150px] - The width of the label in horizontal mode
  * @cssprop [--label-right-margin=14px] - The right margin of the label in horizontal mode
  */

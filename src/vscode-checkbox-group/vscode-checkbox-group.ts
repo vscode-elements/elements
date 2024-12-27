@@ -3,6 +3,9 @@ import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-checkbox-group.styles.js';
 
+/**
+ * @tag vscode-checkbox-group
+ */
 @customElement('vscode-checkbox-group')
 export class VscodeCheckboxGroup extends VscElement {
   static styles = styles;

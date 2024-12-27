@@ -13,6 +13,8 @@ import {highlightRanges} from '../includes/vscode-select/helpers.js';
  * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
  * can be applied through the `invalid` property.
  *
+ * @tag vscode-single-select
+ *
  * ## Types
  *
  * ```typescript

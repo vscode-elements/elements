@@ -4,6 +4,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-badge.styles.js';
 
 /**
+ * @tag vscode-badge
+ *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-badge-background - default and counter variant background color
  * @cssprop --vscode-badge-foreground - default and counter variant foreground color

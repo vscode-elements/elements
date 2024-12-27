@@ -14,6 +14,8 @@ interface FocusableElement extends Element {
 }
 
 /**
+ * @tag vscode-label
+ *
  * @cssprop --vscode-font-family
  * @cssprop --vscode-font-size
  * @cssprop --vscode-foreground

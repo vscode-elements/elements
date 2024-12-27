@@ -3,6 +3,9 @@ import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-option.styles.js';
 
+/**
+ * @tag vscode-option
+ */
 @customElement('vscode-option')
 export class VscodeOption extends VscElement {
   static styles = styles;

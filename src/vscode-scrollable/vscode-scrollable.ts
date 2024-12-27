@@ -12,6 +12,8 @@ import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-scrollable.styles.js';
 
 /**
+ * @tag vscode-scrollable
+ *
  * @cssprop [--min-thumb-height=20px] - Scrollbar thumb minimum height
  * @cssprop --vscode-scrollbar-shadow
  * @cssprop --vscode-scrollbarSlider-background
