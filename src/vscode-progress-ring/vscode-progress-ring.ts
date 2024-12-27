@@ -3,6 +3,9 @@ import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-progress-ring.styles.js';
 
+/**
+ * @tag vscode-progress-ring
+ */
 @customElement('vscode-progress-ring')
 export class VscodeProgressRing extends VscElement {
   static styles = styles;

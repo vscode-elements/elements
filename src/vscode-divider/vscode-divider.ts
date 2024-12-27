@@ -3,6 +3,9 @@ import {customElement, property} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-divider.styles.js';
 
+/**
+ * @tag vscode-divider
+ */
 @customElement('vscode-divider')
 export class VscodeDivider extends VscElement {
   static styles = styles;

@@ -14,6 +14,8 @@ import styles from './vscode-tabs.styles.js';
 export type VscTabsSelectEvent = CustomEvent<{selectedIndex: number}>;
 
 /**
+ * @tag vscode-tabs
+ *
  * @slot - Default slot. It is used for tab panels.
  * @slot header - Slot for tab headers.
  * @slot addons - Right aligned area in the header.

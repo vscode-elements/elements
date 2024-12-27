@@ -14,6 +14,8 @@ import {highlightRanges} from '../includes/vscode-select/helpers.js';
  * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
  * can be applied through the `invalid` property.
  *
+ * @tag vscode-multi-select
+ *
  * @prop {boolean} invalid
  * @attr {boolean} invalid
  * @attr name - Name which is used as a variable name in the data of the form-container.

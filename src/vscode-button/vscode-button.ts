@@ -7,6 +7,8 @@ import styles from './vscode-button.styles.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 /**
+ * @tag vscode-button
+ *
  * @fires vsc-click Dispatched only when button is not in disabled state.
  *
  * @cssprop --vscode-button-background
