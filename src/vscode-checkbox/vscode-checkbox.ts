@@ -7,8 +7,9 @@ import styles from './vscode-checkbox.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
 /**
- * When participating in a form, it supports the `:invalid` pseudo class. Otherwise the error styles
- * can be applied through the `invalid` property.
+ * Allows users to select one or more options from a set. When participating in a form, it supports
+ * the `:invalid` pseudo class. Otherwise the error styles can be applied through the `invalid`
+ * property.
  *
  * @tag vscode-checkbox
  *
