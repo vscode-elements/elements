@@ -156,7 +156,7 @@ const isBranch = (item: TreeItem) => {
  * @tag vscode-tree
  *
  * @fires vsc-select Dispatched when an item is selected.
- * @fires {CustomEvent} vsc-tree-select Dispatched when an item is selected.
+ * @fires {VscTreeSelectEvent} vsc-tree-select Dispatched when an item is selected.
  * @fires vsc-run-action Dispatched when an action icon is clicked.
  * @fires {VscTreeActionEvent} vsc-tree-action Dispatched when an action icon is clicked.
  *
