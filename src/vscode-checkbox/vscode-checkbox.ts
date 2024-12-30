@@ -47,6 +47,11 @@ export class VscodeCheckbox
     delegatesFocus: true,
   };
 
+  /**
+   * Automatically focus on the element when the page loads.
+   *
+   * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus)
+   */
   @property({type: Boolean, reflect: true})
   autofocus = false;
 
@@ -62,6 +67,9 @@ export class VscodeCheckbox
 
   private _checked = false;
 
+  /**
+   * The element's initial checked state, which will be restored when the containing form is reset.
+   */
   @property({type: Boolean, reflect: true, attribute: 'default-checked'})
   defaultChecked = false;
 
@@ -91,6 +99,7 @@ export class VscodeCheckbox
   @property({type: Boolean, reflect: true})
   indeterminate = false;
 
+  
   @property({type: Boolean, reflect: true})
   set required(newVal: boolean) {
     this._required = newVal;
@@ -114,6 +123,7 @@ export class VscodeCheckbox
     return this._internals.validity;
   }
 
+
   get validationMessage(): string {
     return this._internals.validationMessage;
   }
@@ -122,10 +132,23 @@ export class VscodeCheckbox
     return this._internals.willValidate;
   }
 
+  /**
+   * Returns `true` if the element's value is valid; otherwise, it returns `false`.
+   * If the element's value is invalid, an invalid event is triggered on the element.
+   *
+   * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity)
+   */
   checkValidity(): boolean {
     return this._internals.checkValidity();
   }
 
+  /**
+   * Returns `true` if the element's value is valid; otherwise, it returns `false`.
+   * If the element's value is invalid, an invalid event is triggered on the element, and the
+   * browser displays an error message to the user.
+   *
+   * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity)
+   */
   reportValidity(): boolean {
     return this._internals.reportValidity();
   }
