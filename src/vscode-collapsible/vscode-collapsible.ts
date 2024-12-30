@@ -7,6 +7,8 @@ import styles from './vscode-collapsible.styles.js';
 export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
 
 /**
+ * Allows users to reveal or hide related content on a page.
+ *
  * @tag vscode-collapsible
  *
  * @slot - Main content.
