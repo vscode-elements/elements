@@ -242,15 +242,15 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text"></span>
+          <span class="text">Lorem</span>
           <span class="icon">
           </span>
         </div>
       `,
         {ignoreAttributes: ['tabindex']}
       );
-      expect(el.value).to.eq('');
-      expect(el.selectedIndex).to.eq(-1);
+      expect(el.value).to.eq('Lorem');
+      expect(el.selectedIndex).to.eq(0);
     });
 
     it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
@@ -335,14 +335,14 @@ describe('vscode-single-select', () => {
       const markupOpen = `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text"></span>
+          <span class="text">Lorem</span>
           <span class="icon">
           </span>
         </div>
         <div class="dropdown">
           <ul class="options">
             <li
-              class="option"
+              class="active option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -385,14 +385,14 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text"></span>
+          <span class="text">Lorem</span>
           <span class="icon">
           </span>
         </div>
         <div class="dropdown">
           <ul class="options">
             <li
-              class="option"
+              class="active option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -460,14 +460,14 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text"></span>
+          <span class="text">Lorem</span>
           <span class="icon">
           </span>
         </div>
         <div class="dropdown">
           <ul class="options">
             <li
-              class="option"
+              class="active option"
               data-filtered-index="0"
               data-index="0"
             >
@@ -487,7 +487,7 @@ describe('vscode-single-select', () => {
         `
         <slot class="main-slot"></slot>
         <div class="select-face face">
-          <span class="text"></span>
+          <span class="text">Lorem</span>
           <span class="icon">
           </span>
         </div>
@@ -866,7 +866,7 @@ describe('vscode-single-select', () => {
 
     const fd = new FormData(el as HTMLFormElement);
 
-    expect(fd.get('test')).to.be.null;
+    expect(fd.get('test')).to.eq('lorem');
   });
 
   it('should set the initial selected value', async () => {

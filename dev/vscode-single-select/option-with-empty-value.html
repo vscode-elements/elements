@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+    <style>
+      select:invalid {
+        background-color: rgba(255, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Option with empty value</h1>
+    <main>
+      <h2>VSCode Elements SingleSelect</h2>
+      <vscode-demo>
+        <form action="">
+          <vscode-single-select id="vscode-select" name="select" required>
+            <vscode-option value="">--- Choose an option ---</vscode-option>
+            <vscode-option>Lorem</vscode-option>
+            <vscode-option>Ipsum</vscode-option>
+            <vscode-option>Dolor</vscode-option>
+          </vscode-single-select>
+          <button type="submit">Submit</button>
+        </form>
+      </vscode-demo>
+      <script type="module">
+        logEvents('#vscode-select', 'change');
+      </script>
+      <h2>Native select element</h2>
+      <form action="">
+        <select id="native-select" name="select" required>
+          <option value="">--- Choose an option ---</option>
+          <option>Lorem</option>
+          <option>Ipsum</option>
+          <option>Dolor</option>
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+      <script type="module">
+        logEvents('#native-select', 'change');
+      </script>
+    </main>
+  </body>
+</html>
