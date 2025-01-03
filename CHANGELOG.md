@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Unreleased
+
+### Fixed
+
+- **Checkbox**: Fix the border color in the focused state.
+
 ## [1.9.1] - 2025-01-03
 
 ### Fixed
