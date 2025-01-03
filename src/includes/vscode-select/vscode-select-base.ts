@@ -219,7 +219,7 @@ export class VscodeSelectBase extends VscElement {
 
     optionElements.forEach((el) => {
       const {innerText, description, disabled} = el;
-      const value = (el.value ?? '') ? el.value : innerText.trim();
+      const value = typeof el.value === 'string' ? el.value : innerText.trim();
       const selected = el.selected ?? false;
       const op: InternalOption = {
         label: innerText.trim(),
@@ -515,7 +515,7 @@ export class VscodeSelectBase extends VscElement {
       !this.combobox &&
       stat.selectedIndexes.length === 0
     ) {
-      this._selectedIndex = -1;
+      this._selectedIndex = this._options.length > 0 ? 0 : -1;
     }
 
     this.requestUpdate();
