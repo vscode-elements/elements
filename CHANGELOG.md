@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - **Divider**: Make component color visible in all themes.
+- **SingleSelect**: Add the ability to set an option's value to empty.
+- **SingleSelect**: If no option is selected, the first one should be selected by default.
 
 ## [1.9.0] - 2024-11-26
 
