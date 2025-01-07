@@ -187,7 +187,7 @@ export class VscodeButton extends VscElement {
         })
       );
 
-      const syntheticClick = new Event('click', {
+      const syntheticClick = new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
       }) as Event & {synthetic?: boolean};
