@@ -187,11 +187,22 @@ export class VscodeButton extends VscElement {
         })
       );
 
+      const syntheticClick = new Event('click', {
+        bubbles: true,
+        cancelable: true,
+      }) as Event & {synthetic?: boolean};
+
+      syntheticClick.synthetic = true;
+      this.dispatchEvent(syntheticClick);
+
       this._executeAction();
     }
   }
 
   private _handleClick(event: MouseEvent) {
+    if ((event as MouseEvent & {synthetic?: boolean}).synthetic) {
+      return;
+    }
     if (!this.hasAttribute('disabled')) {
       this.dispatchEvent(
         new CustomEvent<{
