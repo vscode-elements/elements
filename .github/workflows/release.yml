@@ -78,6 +78,13 @@ jobs:
       - name: Update version number in the base class
         run: node scripts/update-version-number.mjs
 
+      - name: Build
+        run: |
+          npm run build
+          npm run test
+          npm run lint
+          npm pack
+
       - name: Tagging
         run: |
           git add .
@@ -92,12 +99,6 @@ jobs:
       - run: |
           export GIT_TAG=$(git describe --tags --abbrev=0)
           echo "GIT_TAG=$GIT_TAG" >> $GITHUB_ENV
-
-      - name: Build package
-        run: |
-          npm run build
-          npm run test
-          npm pack
 
       - name: Publish to Npmjs.com (Pre)
         run: npm publish --access=public --tag=next vscode-elements-elements-${{ env.RELEASE_VERSION }}.tgz
