@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **Checkbox**: Fix the border color in the focused state.
 
+### Added
+
+- **SingleSelect**, **MultiSelect**: added `open` property.
+
 ## [1.9.1] - 2025-01-03
 
 ### Fixed

@@ -913,4 +913,16 @@ describe('vscode-single-select', () => {
 
     expect(fd.get('test')).to.eq('ipsum');
   });
+
+  it('open by default', async () => {
+    const sl = await fixture(
+      html`<vscode-single-select open>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-single-select>`
+    );
+
+    expect(sl.shadowRoot?.querySelector('ul.options')).to.be.ok;
+  });
 });

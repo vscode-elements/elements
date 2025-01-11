@@ -233,7 +233,7 @@ export class VscodeSingleSelect
   protected _onArrowUpKeyDown(): void {
     super._onArrowUpKeyDown();
 
-    if (this._showDropdown || this._selectedIndex <= 0) {
+    if (this.open || this._selectedIndex <= 0) {
       return;
     }
 
@@ -250,7 +250,7 @@ export class VscodeSingleSelect
   protected _onArrowDownKeyDown(): void {
     super._onArrowDownKeyDown();
 
-    if (this._showDropdown || this._selectedIndex >= this._options.length - 1) {
+    if (this.open || this._selectedIndex >= this._options.length - 1) {
       return;
     }
 

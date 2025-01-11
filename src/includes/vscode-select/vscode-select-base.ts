@@ -90,6 +90,9 @@ export class VscodeSelectBase extends VscElement {
   @property({type: Boolean, reflect: true})
   focused = false;
 
+  @property({type: Boolean, reflect: true})
+  open = false;
+
   /**
    * @attr [options=[]]
    * @type {Option[]}
@@ -172,9 +175,6 @@ export class VscodeSelectBase extends VscElement {
   protected _selectedIndexes: number[] = [];
 
   @state()
-  protected _showDropdown = false;
-
-  @state()
   protected _options: InternalOption[] = [];
 
   @state()
@@ -246,7 +246,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected async _toggleDropdown(visible: boolean): Promise<void> {
-    this._showDropdown = visible;
+    this.open = visible;
     this.ariaExpanded = String(visible);
 
     if (visible && !this._multiple && !this.combobox) {
@@ -295,7 +295,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onFaceClick(): void {
-    this._toggleDropdown(!this._showDropdown);
+    this._toggleDropdown(!this.open);
 
     if (this._multiple) {
       this._activeIndex = 0;
@@ -319,7 +319,7 @@ export class VscodeSelectBase extends VscElement {
 
   private _toggleComboboxDropdown() {
     this._filterPattern = '';
-    this._toggleDropdown(!this._showDropdown);
+    this._toggleDropdown(!this.open);
 
     if (this._multiple) {
       this._activeIndex = -1;
@@ -354,7 +354,7 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onEnterKeyDown(): void {
     const list = this.combobox ? this._filteredOptions : this._options;
-    const showDropdownNext = !this._showDropdown;
+    const showDropdownNext = !this.open;
 
     this._toggleDropdown(showDropdownNext);
 
@@ -386,12 +386,12 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _onSpaceKeyDown() {
-    if (!this._showDropdown) {
+    if (!this.open) {
       this._toggleDropdown(true);
       return;
     }
 
-    if (this._showDropdown && this._multiple && this._activeIndex > -1) {
+    if (this.open && this._multiple && this._activeIndex > -1) {
       const opts = this.combobox ? this._filteredOptions : this._options;
       const {selected} = opts[this._activeIndex];
 
@@ -444,7 +444,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onArrowUpKeyDown(): void {
-    if (this._showDropdown) {
+    if (this.open) {
       if (this._activeIndex <= 0) {
         return;
       }
@@ -455,7 +455,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onArrowDownKeyDown(): void {
-    if (this._showDropdown) {
+    if (this.open) {
       if (this._activeIndex >= this._currentOptions.length - 1) {
         return;
       }
@@ -582,7 +582,7 @@ export class VscodeSelectBase extends VscElement {
     return html`
       <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
       ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
-      ${this._showDropdown ? this._renderDropdown() : nothing}
+      ${this.open ? this._renderDropdown() : nothing}
     `;
   }
 }
