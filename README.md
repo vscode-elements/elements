@@ -26,18 +26,6 @@ Start TypeScript compiler in development mode and start the [@web-dev-server](ht
 npm run start
 ```
 
-### Generate the documentation site
-
-```bash
-npm run docs
-```
-
-### Start the documentation site development server
-
-```bash
-npm run docs:start
-```
-
 ### Testing
 
 ```bash
