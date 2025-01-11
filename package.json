@@ -19,7 +19,7 @@
     "build:watch": "wireit",
     "clean": "rimraf -g .wireit coverage dist custom-elements.json stats.html vscode.*-custom-data.json tsconfig.tsbuildinfo",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
-    "lint:eslint": "eslint src/**/*.ts",
+    "lint:eslint": "eslint src/**/*.ts --no-warn-ignored",
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier src/**/* --write",
     "analyze": "wireit",
@@ -178,6 +178,7 @@
     "rollup-plugin-visualizer": "^5.14.0",
     "semver": "^7.6.3",
     "sinon": "^19.0.2",
+    "ts-lit-plugin": "^2.0.2",
     "typescript": "^5.7.3",
     "wireit": "^0.14.9"
   }
