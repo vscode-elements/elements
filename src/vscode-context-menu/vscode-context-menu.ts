@@ -290,7 +290,6 @@ export class VscodeContextMenu extends VscElement {
                   keybinding="${keybinding}"
                   value="${value}"
                   ?separator="${separator}"
-                  ?selected="${index === selectedIndex}"
                   tabindex="${tabindex}"
                   @vsc-click="${this._onItemClick}"
                   @mouseover=${this._onItemMouseOver}

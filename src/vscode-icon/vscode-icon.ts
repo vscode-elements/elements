@@ -124,7 +124,7 @@ export class VscodeIcon extends VscElement {
       <link
         rel="stylesheet"
         href="${ifDefined(stylesheetHref)}"
-        nonce="${ifDefined(nonce)}"
+        nonce=${ifDefined(nonce)}
       />
       ${wrapped}
     `;
