@@ -268,9 +268,6 @@ export class VscodeContextMenu extends VscElement {
       return html`${nothing}`;
     }
 
-    const selectedIndex =
-      this._clickableItemIndexes[this._selectedClickableItemIndex];
-
     return html`
       <div class="context-menu" tabindex="0">
         ${this.data
