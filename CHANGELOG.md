@@ -12,7 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- **SingleSelect**, **MultiSelect**: added `open` property.
+- **SingleSelect**, **MultiSelect**: Added `open` property.
+- **Button**: Emit `click` event on enter or space key down.
 
 ## [1.9.1] - 2025-01-03
 
