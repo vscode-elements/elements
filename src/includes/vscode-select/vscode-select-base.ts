@@ -25,9 +25,15 @@ export class VscodeSelectBase extends VscElement {
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
   ariaExpanded = 'false';
 
+  /**
+   * Options can be filtered by typing into a text input field.
+   */
   @property({type: Boolean, reflect: true})
   combobox = false;
 
+  /**
+   * The element cannot be used and is not focusable.
+   */
   @property({type: Boolean, reflect: true})
   set disabled(newState: boolean) {
     this._disabled = newState;
@@ -87,9 +93,15 @@ export class VscodeSelectBase extends VscElement {
     return this._filter;
   }
 
+  /**
+   * Its value is true when element is focused.
+   */
   @property({type: Boolean, reflect: true})
   focused = false;
 
+  /**
+   * Toggle the dropdown visibility.
+   */
   @property({type: Boolean, reflect: true})
   open = false;
 
