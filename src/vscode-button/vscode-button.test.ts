@@ -8,6 +8,14 @@ describe('vscode-button', () => {
     expect(el).to.instanceOf(VscodeButton);
   });
 
+  it('is focused automatically', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button autofocus>test</vscode-button>`
+    );
+
+    expect(el.focused).to.be.true;
+  });
+
   it('dispatches click event when enter key is pressed', async () => {
     const el = await fixture<VscodeButton>(
       html`<vscode-button>test</vscode-button>`
@@ -34,16 +42,144 @@ describe('vscode-button', () => {
     expect(spy.called).to.be.true;
   });
 
-  // TODO
-  it('is disabled');
-  it('is secondary');
-  it('icon is set');
-  it('iconSpin is set');
-  it('iconSpinDuration is set');
-  it('iconAfter is set');
-  it('iconAfterSpin is set');
-  it('iconAfterSpinDuration is set');
-  it('reset the assigned form');
-  it('submit the assigned form');
+  it('is disabled', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button></vscode-button>`
+    );
+    el.disabled = true;
+    await el.updateComplete;
+
+    expect(el.hasAttribute('disabled')).to.be.true;
+    expect(el.tabIndex).to.eq(-1);
+  });
+
+  it('is secondary', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button></vscode-button>`
+    );
+    el.secondary = true;
+    await el.updateComplete;
+
+    expect(el.hasAttribute('secondary')).to.be.true;
+  });
+
+  it('icon is set', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button icon="account"></vscode-button>`
+    );
+
+    expect(el).shadowDom.to.eq(`
+      <span class="has-icon-before wrapper">
+        <vscode-icon name="account" class="icon"></vscode-icon>
+        <slot></slot>
+      </span>
+    `);
+  });
+
+  it('iconSpin is set', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button icon="account" icon-spin></vscode-button>`
+    );
+
+    expect(el).shadowDom.to.eq(`
+      <span class="has-icon-before wrapper">
+        <vscode-icon name="account" spin class="icon"></vscode-icon>
+        <slot></slot>
+      </span>
+    `);
+  });
+
+  it('iconSpinDuration is set', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button
+        icon="account"
+        icon-spin-duration="5"
+      ></vscode-button>`
+    );
+
+    expect(el).shadowDom.to.eq(`
+      <span class="has-icon-before wrapper">
+        <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
+        <slot></slot>
+      </span>
+    `);
+  });
+
+  it('iconAfter is set', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button icon-after="account"></vscode-button>`
+    );
+
+    expect(el).shadowDom.to.eq(`
+      <span class="has-icon-after wrapper">
+        <slot></slot>
+        <vscode-icon name="account" class="icon-after"></vscode-icon>
+      </span>
+    `);
+  });
+
+  it('iconAfterSpin is set', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button icon-after="account" icon-after-spin></vscode-button>`
+    );
+
+    expect(el).shadowDom.to.eq(`
+      <span class="has-icon-after wrapper">
+        <slot></slot>
+        <vscode-icon name="account" class="icon-after" spin></vscode-icon>
+      </span>
+    `);
+  });
+
+  it('iconAfterSpinDuration is set', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button
+        icon-after="account"
+        icon-after-spin-duration="5"
+      ></vscode-button>`
+    );
+
+    expect(el).shadowDom.to.eq(`
+      <span class="has-icon-after wrapper">
+        <slot></slot>
+        <vscode-icon name="account" class="icon-after" spin-duration="5"></vscode-icon>
+      </span>
+    `);
+  });
+
+  it('resets the assigned form', async () => {
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    input.setAttribute('value', 'Default value');
+
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button type="reset">Reset</vscode-button>`,
+      {parentNode: form}
+    );
+
+    form.appendChild(input);
+    input.value = 'Modified value';
+    el.dispatchEvent(new MouseEvent('click'));
+
+    expect(input.value).to.eq('Default value');
+  });
+
+  it('submit the assigned form', async () => {
+    const submitSpy = sinon.spy((ev) => {
+      ev.preventDefault();
+    });
+    const form = document.createElement('form');
+    form.addEventListener('submit', submitSpy);
+
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button type="submit">Submit</vscode-button>`,
+      {parentNode: form}
+    );
+
+    el.dispatchEvent(new MouseEvent('click'));
+
+    expect(submitSpy.called).to.be.true;
+  });
+
   it('sets the form value');
 });
