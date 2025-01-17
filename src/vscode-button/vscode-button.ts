@@ -150,9 +150,13 @@ export class VscodeButton extends VscElement {
 
     if (changedProperties.has('disabled')) {
       if (this.disabled) {
+        // Save the original tabIndex, which may have been modified by the user.
         this._prevTabindex = this.tabIndex;
+        // It's a native property, we don't care about re-rendering.
+        // eslint-disable-next-line lit/no-property-change-update
         this.tabIndex = -1;
       } else {
+        // eslint-disable-next-line lit/no-property-change-update
         this.tabIndex = this._prevTabindex;
       }
     }
