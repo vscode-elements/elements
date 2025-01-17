@@ -289,14 +289,14 @@ export class VscodeCheckbox
           id="input"
           class="checkbox"
           type="checkbox"
-          ?checked="${this.checked}"
-          value="${this.value}"
+          ?checked=${this.checked}
+          value=${this.value}
         />
-        <div class="${iconClasses}">${indeterminate}${check}</div>
-        <label for="input" class="label" @click="${this._handleClick}">
-          <span class="${labelInnerClasses}">
+        <div class=${iconClasses}>${indeterminate}${check}</div>
+        <label for="input" class="label" @click=${this._handleClick}>
+          <span class=${labelInnerClasses}>
             ${this._renderLabelAttribute()}
-            <slot @slotchange="${this._handleSlotChange}"></slot>
+            <slot @slotchange=${this._handleSlotChange}></slot>
           </span>
         </label>
       </div>

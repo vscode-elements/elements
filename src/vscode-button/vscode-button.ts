@@ -241,24 +241,24 @@ export class VscodeButton extends VscElement {
 
     const iconElem = hasIcon
       ? html`<vscode-icon
-          name="${this.icon}"
-          ?spin="${this.iconSpin}"
-          spin-duration="${ifDefined(this.iconSpinDuration)}"
+          name=${this.icon}
+          ?spin=${this.iconSpin}
+          spin-duration=${ifDefined(this.iconSpinDuration)}
           class="icon"
         ></vscode-icon>`
       : nothing;
 
     const iconAfterElem = hasIconAfter
       ? html`<vscode-icon
-          name="${this.iconAfter}"
-          ?spin="${this.iconAfterSpin}"
-          spin-duration="${ifDefined(this.iconAfterSpinDuration)}"
+          name=${this.iconAfter}
+          ?spin=${this.iconAfterSpin}
+          spin-duration=${ifDefined(this.iconAfterSpinDuration)}
           class="icon-after"
         ></vscode-icon>`
       : nothing;
 
     return html`
-      <span class="${classMap(wrapperClasses)}">
+      <span class=${classMap(wrapperClasses)}>
         ${iconElem}
         <slot></slot>
         ${iconAfterElem}

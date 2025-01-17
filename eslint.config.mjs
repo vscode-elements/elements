@@ -42,6 +42,7 @@ export default [
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-use-before-define': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
+      'lit/quoted-expressions': 'error',
     },
   },
 ];

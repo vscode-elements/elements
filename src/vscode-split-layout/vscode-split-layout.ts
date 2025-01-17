@@ -435,21 +435,21 @@ export class VscodeSplitLayout extends VscElement {
     };
 
     return html`
-      <div class="${classMap(wrapperClasses)}">
-        <div class="start" style="${styleMap({flex: startPaneSize})}">
+      <div class=${classMap(wrapperClasses)}>
+        <div class="start" style=${styleMap({flex: startPaneSize})}>
           <slot name="start" @slotchange=${this._handleSlotChange}></slot>
         </div>
-        <div class="end" style="${styleMap({flex: endPaneSize})}">
+        <div class="end" style=${styleMap({flex: endPaneSize})}>
           <slot name="end" @slotchange=${this._handleSlotChange}></slot>
         </div>
-        <div class="${handleOverlayClasses}"></div>
+        <div class=${handleOverlayClasses}></div>
         <div
-          class="${handleClasses}"
-          style="${handleStyles}"
-          @mouseover="${this._handleMouseOver}"
-          @mouseout="${this._handleMouseOut}"
-          @mousedown="${this._handleMouseDown}"
-          @dblclick="${this._handleDblClick}"
+          class=${handleClasses}
+          style=${handleStyles}
+          @mouseover=${this._handleMouseOver}
+          @mouseout=${this._handleMouseOut}
+          @mousedown=${this._handleMouseDown}
+          @dblclick=${this._handleDblClick}
         ></div>
       </div>
     `;
