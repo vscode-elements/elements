@@ -95,17 +95,17 @@ export class VscodeIcon extends VscElement {
     const {stylesheetHref, nonce} = VscodeIcon;
 
     const content = html`<span
-      class="${classMap({
+      class=${classMap({
         codicon: true,
         ['codicon-' + this.name]: true,
         spin: this.spin,
-      })}"
-      style="${styleMap({
+      })}
+      style=${styleMap({
         animationDuration: String(this.spinDuration) + 's',
         fontSize: this.size + 'px',
         height: this.size + 'px',
         width: this.size + 'px',
-      })}"
+      })}
     ></span>`;
 
     const wrapped = this.actionIcon
@@ -123,7 +123,7 @@ export class VscodeIcon extends VscElement {
     return html`
       <link
         rel="stylesheet"
-        href="${ifDefined(stylesheetHref)}"
+        href=${ifDefined(stylesheetHref)}
         nonce=${ifDefined(nonce)}
       />
       ${wrapped}

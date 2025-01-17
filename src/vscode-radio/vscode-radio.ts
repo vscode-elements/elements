@@ -329,15 +329,15 @@ export class VscodeRadio
           id="input"
           class="radio"
           type="checkbox"
-          ?checked="${this.checked}"
-          value="${this.value}"
+          ?checked=${this.checked}
+          value=${this.value}
           tabindex=${this.tabIndex}
         />
-        <div class="${iconClasses}"></div>
-        <label for="input" class="label" @click="${this._handleClick}">
-          <span class="${labelInnerClasses}">
+        <div class=${iconClasses}></div>
+        <label for="input" class="label" @click=${this._handleClick}>
+          <span class=${labelInnerClasses}>
             ${this._renderLabelAttribute()}
-            <slot @slotchange="${this._handleSlotChange}"></slot>
+            <slot @slotchange=${this._handleSlotChange}></slot>
           </span>
         </label>
       </div>

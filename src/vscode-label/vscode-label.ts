@@ -123,7 +123,7 @@ export class VscodeLabel extends VscElement {
   render(): TemplateResult {
     return html`
       <label
-        class="${classMap({wrapper: true, required: this.required})}"
+        class=${classMap({wrapper: true, required: this.required})}
         @click=${this._handleClick}
         ><slot></slot
       ></label>
