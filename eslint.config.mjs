@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import js from '@eslint/js';
 import {FlatCompat} from '@eslint/eslintrc';
 import {configs as litPluginConfigs} from 'eslint-plugin-lit';
+import {configs as wcPluginConfigs} from 'eslint-plugin-wc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,7 @@ const compat = new FlatCompat({
 
 export default [
   litPluginConfigs['flat/recommended'],
+  wcPluginConfigs['flat/recommended'],
   {
     ignores: ['dist/', 'docs-src/', '**/*.test.ts'],
   },
@@ -43,6 +45,12 @@ export default [
       '@typescript-eslint/no-use-before-define': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'lit/quoted-expressions': 'error',
+    },
+
+    settings: {
+      wc: {
+        elementBaseClasses: ['LitElement'], // Recognize `LitElement` as a Custom Element base class
+      },
     },
   },
 ];
