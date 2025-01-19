@@ -141,6 +141,31 @@ export class VscodeSelectBase extends VscElement {
   })
   private _assignedOptions!: VscodeOption[];
 
+  constructor() {
+    super();
+    this.addEventListener('vsc-option-state-change', (ev) => {
+      ev.stopPropagation();
+      const stat = this._addOptionsFromSlottedElements();
+
+      if (stat.selectedIndexes.length > 0) {
+        this._selectedIndex = stat.selectedIndexes[0];
+        this._selectedIndexes = stat.selectedIndexes;
+        this._value = stat.values[0];
+        this._values = stat.values;
+      }
+
+      if (
+        !this._multiple &&
+        !this.combobox &&
+        stat.selectedIndexes.length === 0
+      ) {
+        this._selectedIndex = this._options.length > 0 ? 0 : -1;
+      }
+
+      this.requestUpdate();
+    });
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this._onComponentKeyDown);
@@ -575,6 +600,10 @@ export class VscodeSelectBase extends VscElement {
     return html`${nothing}`;
   }
 
+  private _onPropChange = () => {
+    console.log('ONPROPCHANGE');
+  };
+
   private _renderDropdown() {
     const classes = classMap({
       dropdown: true,
@@ -582,7 +611,7 @@ export class VscodeSelectBase extends VscElement {
     });
 
     return html`
-      <div class="${classes}">
+      <div class="${classes}" @vsc-property-change=${this._onPropChange}>
         ${this.position === 'above' ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
         ${this.position === 'below' ? this._renderDescription() : nothing}
