@@ -8,11 +8,6 @@ import type {InternalOption, Option, SearchMethod} from './types.js';
 import {filterOptionsByPattern} from './helpers.js';
 import {VscElement} from '../VscElement.js';
 
-interface OptionListStat {
-  selectedIndexes: number[];
-  values: string[];
-}
-
 const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 22;
 const LIST_HEIGHT = VISIBLE_OPTS + OPT_HEIGHT + 2;
