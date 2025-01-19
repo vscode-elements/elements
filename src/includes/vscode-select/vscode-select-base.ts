@@ -145,23 +145,7 @@ export class VscodeSelectBase extends VscElement {
     super();
     this.addEventListener('vsc-option-state-change', (ev) => {
       ev.stopPropagation();
-      const stat = this._addOptionsFromSlottedElements();
-
-      if (stat.selectedIndexes.length > 0) {
-        this._selectedIndex = stat.selectedIndexes[0];
-        this._selectedIndexes = stat.selectedIndexes;
-        this._value = stat.values[0];
-        this._values = stat.values;
-      }
-
-      if (
-        !this._multiple &&
-        !this.combobox &&
-        stat.selectedIndexes.length === 0
-      ) {
-        this._selectedIndex = this._options.length > 0 ? 0 : -1;
-      }
-
+      this._setStateFromSlottedElements();
       this.requestUpdate();
     });
   }
@@ -244,14 +228,12 @@ export class VscodeSelectBase extends VscElement {
     return this.combobox ? this._filteredOptions : this._options;
   }
 
-  protected _addOptionsFromSlottedElements(): OptionListStat {
+  protected _setStateFromSlottedElements() {
     const options: InternalOption[] = [];
     let nextIndex = 0;
     const optionElements = this._assignedOptions ?? [];
-    const optionsListStat: OptionListStat = {
-      selectedIndexes: [],
-      values: [],
-    };
+    const selectedIndexes: number[] = [];
+    const values: string[] = [];
     this._valueOptionIndexMap = {};
 
     optionElements.forEach((el) => {
@@ -270,8 +252,8 @@ export class VscodeSelectBase extends VscElement {
       nextIndex = options.push(op);
 
       if (selected) {
-        optionsListStat.selectedIndexes.push(options.length - 1);
-        optionsListStat.values.push(value);
+        selectedIndexes.push(options.length - 1);
+        values.push(value);
       }
 
       this._valueOptionIndexMap[op.value] = op.index;
@@ -279,7 +261,20 @@ export class VscodeSelectBase extends VscElement {
 
     this._options = options;
 
-    return optionsListStat;
+    if (selectedIndexes.length > 0) {
+      this._selectedIndex = selectedIndexes[0];
+      this._selectedIndexes = selectedIndexes;
+      this._value = values[0];
+      this._values = values;
+    }
+
+    if (
+      !this._multiple &&
+      !this.combobox &&
+      selectedIndexes.length === 0
+    ) {
+      this._selectedIndex = this._options.length > 0 ? 0 : -1;
+    }
   }
 
   protected async _toggleDropdown(visible: boolean): Promise<void> {
@@ -538,23 +533,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onSlotChange(): void {
-    const stat = this._addOptionsFromSlottedElements();
-
-    if (stat.selectedIndexes.length > 0) {
-      this._selectedIndex = stat.selectedIndexes[0];
-      this._selectedIndexes = stat.selectedIndexes;
-      this._value = stat.values[0];
-      this._values = stat.values;
-    }
-
-    if (
-      !this._multiple &&
-      !this.combobox &&
-      stat.selectedIndexes.length === 0
-    ) {
-      this._selectedIndex = this._options.length > 0 ? 0 : -1;
-    }
-
+    this._setStateFromSlottedElements();
     this.requestUpdate();
   }
 
