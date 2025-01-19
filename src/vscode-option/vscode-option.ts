@@ -46,8 +46,10 @@ export class VscodeOption extends VscElement {
   }
 
   private _handleSlotChange = () => {
-    /** @internal */
-    this.dispatchEvent(new Event('vsc-option-state-change', {bubbles: true}));
+    if (this._initialized) {
+      /** @internal */
+      this.dispatchEvent(new Event('vsc-option-state-change', {bubbles: true}));
+    }
   };
 
   render(): TemplateResult {
