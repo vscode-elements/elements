@@ -83,9 +83,6 @@ export class VscodeSingleSelect
     this._value = this._options[this._selectedIndex]
       ? this._options[this._selectedIndex].value
       : '';
-    this._labelText = this._options[this._selectedIndex]
-      ? this._options[this._selectedIndex].label
-      : '';
   }
   get selectedIndex(): number {
     return this._selectedIndex;
@@ -101,11 +98,9 @@ export class VscodeSingleSelect
 
     if (this._selectedIndex > -1) {
       this._options[this._selectedIndex].selected = true;
-      this._labelText = this._options[this._selectedIndex].label;
       this._value = val;
       this._requestedValueToSetLater = '';
     } else {
-      this._labelText = '';
       this._value = '';
       this._requestedValueToSetLater = val;
     }
@@ -140,9 +135,6 @@ export class VscodeSingleSelect
   reportValidity(): boolean {
     return this._internals.reportValidity();
   }
-
-  @state()
-  private _labelText = '';
 
   @query('.face')
   private _face!: HTMLDivElement;
@@ -221,10 +213,6 @@ export class VscodeSingleSelect
       }
     }
 
-    if (this._selectedIndex > -1) {
-      this._labelText = this._options[this._selectedIndex]?.label ?? '';
-    }
-
     if (this._selectedIndex > -1 && this._options.length > 0) {
       this._internals.setFormValue(this._options[this._selectedIndex].value);
     } else {
@@ -242,7 +230,6 @@ export class VscodeSingleSelect
     this._filterPattern = '';
     this._selectedIndex -= 1;
     this._activeIndex = this._selectedIndex;
-    this._labelText = this._options[this._selectedIndex].label;
     this._value = this._options[this._selectedIndex].value;
     this._internals.setFormValue(this._value);
     this._manageRequired();
@@ -259,7 +246,6 @@ export class VscodeSingleSelect
     this._filterPattern = '';
     this._selectedIndex += 1;
     this._activeIndex = this._selectedIndex;
-    this._labelText = this._options[this._selectedIndex].label;
     this._value = this._options[this._selectedIndex].value;
     this._internals.setFormValue(this._value);
     this._manageRequired();
@@ -268,10 +254,6 @@ export class VscodeSingleSelect
 
   protected _onEnterKeyDown(): void {
     super._onEnterKeyDown();
-
-    if (this._selectedIndex > -1) {
-      this._labelText = this._options[this._selectedIndex].label;
-    }
 
     this.updateInputValue();
     this._internals.setFormValue(this._value);
@@ -290,10 +272,6 @@ export class VscodeSingleSelect
 
     this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
     this._value = this._options[this._selectedIndex].value;
-
-    if (this._selectedIndex > -1) {
-      this._labelText = this._options[this._selectedIndex].label;
-    }
 
     this._toggleDropdown(false);
     this._internals.setFormValue(this._value);
@@ -317,13 +295,15 @@ export class VscodeSingleSelect
   }
 
   protected _renderSelectFace(): TemplateResult {
+    const label = this._options[this._selectedIndex]?.label ?? '';
+
     return html`
       <div
         class="select-face face"
         @click=${this._onFaceClick}
         tabindex=${this.tabIndex > -1 ? 0 : -1}
       >
-        <span class="text">${this._labelText}</span> ${chevronDownIcon}
+        <span class="text">${label}</span> ${chevronDownIcon}
       </div>
     `;
   }
