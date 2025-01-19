@@ -207,7 +207,7 @@ export default [
       color: var(--vscode-list-focusHighlightForeground);
     }
 
-    .option:hover {
+    .option:not(.disabled):hover {
       background-color: var(--vscode-list-hoverBackground);
       color: var(--vscode-list-hoverForeground);
     }
