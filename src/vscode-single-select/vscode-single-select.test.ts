@@ -1,3 +1,5 @@
+import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
+import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
@@ -924,5 +926,29 @@ describe('vscode-single-select', () => {
     );
 
     expect(sl.shadowRoot?.querySelector('ul.options')).to.be.ok;
+  });
+
+  it('changes the description of an option in an existing select', async () => {
+    const el = await fixture<VscodeSingleSelect>(html`
+      <vscode-single-select>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-single-select>
+    `);
+    const secondOption = el.querySelectorAll<VscodeOption>('vscode-option')[1];
+
+    secondOption.description = 'Test description';
+    await el.updateComplete;
+
+    await clickOnElement(el);
+    await el.updateComplete;
+
+    await moveMouseOnElement(el.shadowRoot!.querySelectorAll('li')[1]);
+    await el.updateComplete;
+
+    const desc = el.shadowRoot?.querySelector<HTMLDivElement>('.description');
+
+    expect(/Test description/.exec(desc!.innerHTML)).to.be.ok;
   });
 });
