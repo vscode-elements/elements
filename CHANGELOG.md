@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Added
+
+- **SingleSelect**: Added the ability to update the state of an already initialized component 
+  by modifying its child options.
+
 ## [1.10.0] - 2025-01-11
 
 ### Fixed
