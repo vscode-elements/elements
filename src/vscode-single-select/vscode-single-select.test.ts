@@ -71,13 +71,9 @@ describe('vscode-single-select', () => {
     });
 
     it('should return the validation message', async () => {
-      const el = document.createElement(
-        'vscode-single-select'
-      ) as VscodeSingleSelect;
-      el.required = true;
-      document.body.appendChild(el);
-
-      await aTimeout(0);
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select required></vscode-single-select>`
+      );
 
       expect(el.validationMessage).to.eql('Please select an item in the list.');
     });
@@ -845,10 +841,11 @@ describe('vscode-single-select', () => {
     expect(el.tabIndex).to.eq(2);
   });
 
-  it('should not throw error when selectedIndex points to a non-existent option', () => {
-    const el = document.createElement('vscode-single-select');
+  it('should not throw error when selectedIndex points to a non-existent option', async () => {
+    const el = await fixture<VscodeSingleSelect>(
+      html`<vscode-single-select></vscode-single-select>`
+    );
     el.selectedIndex = 2;
-    document.body.appendChild(el);
 
     expect(() => {
       // trigger a slot change event
