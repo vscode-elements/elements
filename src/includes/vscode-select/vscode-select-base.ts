@@ -574,10 +574,6 @@ export class VscodeSelectBase extends VscElement {
     return html`${nothing}`;
   }
 
-  private _onPropChange = () => {
-    console.log('ONPROPCHANGE');
-  };
-
   private _renderDropdown() {
     const classes = classMap({
       dropdown: true,
@@ -585,7 +581,7 @@ export class VscodeSelectBase extends VscElement {
     });
 
     return html`
-      <div class="${classes}" @vsc-property-change=${this._onPropChange}>
+      <div class="${classes}">
         ${this.position === 'above' ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
         ${this.position === 'below' ? this._renderDescription() : nothing}
