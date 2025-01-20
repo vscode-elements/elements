@@ -8,8 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- **SingleSelect**: Added the ability to update the state of an already initialized component 
-  by modifying its child options.
+- **SingleSelect**, **MultiSelect**: Added the ability to update the state of an already initialized 
+  component by modifying its child options.
 
 ## [1.10.0] - 2025-01-11
 
