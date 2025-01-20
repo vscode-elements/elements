@@ -231,7 +231,7 @@ export class VscodeSelectBase extends VscElement {
     const values: string[] = [];
     this._valueOptionIndexMap = {};
 
-    optionElements.forEach((el) => {
+    optionElements.forEach((el, i) => {
       const {innerText, description, disabled} = el;
       const value = typeof el.value === 'string' ? el.value : innerText.trim();
       const selected = el.selected ?? false;
@@ -245,6 +245,10 @@ export class VscodeSelectBase extends VscElement {
       };
 
       nextIndex = options.push(op);
+
+      if (selected && !this._multiple) {
+        this._activeIndex = i;
+      }
 
       if (selected) {
         selectedIndexes.push(options.length - 1);
