@@ -340,8 +340,9 @@ export class VscodeSingleSelect
     const options = list.map((op, index) => {
       const classes = classMap({
         option: true,
-        active: index === this._activeIndex && !op.disabled,
         disabled: op.disabled,
+        selected: op.selected,
+        active: index === this._activeIndex && !op.disabled,
       });
 
       return html`
