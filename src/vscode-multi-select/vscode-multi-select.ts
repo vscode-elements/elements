@@ -245,6 +245,10 @@ export class VscodeMultiSelect
     const index = Number((optEl as HTMLElement).dataset.index);
 
     if (this._options[index]) {
+      if (this._options[index].disabled) {
+        return;
+      }
+
       this._options[index].selected = !this._options[index].selected;
     }
 
@@ -359,9 +363,10 @@ export class VscodeMultiSelect
           (op, index) => {
             const selected = this._selectedIndexes.includes(op.index);
             const optionClasses = classMap({
-              active: index === this._activeIndex,
+              active: index === this._activeIndex && !op.disabled,
               option: true,
               selected,
+              disabled: op.disabled,
             });
             const checkboxClasses = classMap({
               'checkbox-icon': true,

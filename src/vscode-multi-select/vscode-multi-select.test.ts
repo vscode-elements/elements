@@ -2,6 +2,8 @@ import {VscodeMultiSelect} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
 import '../vscode-option/index.js';
+import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
+import {VscodeOption} from '../vscode-option/index.js';
 
 describe('vscode-multi-select', () => {
   it('is defined', () => {
@@ -268,5 +270,72 @@ describe('vscode-multi-select', () => {
     await el.updateComplete;
 
     expect(el.value).to.eql(['dolor']);
+  });
+
+  it('changes the description of an option in an existing select', async () => {
+    const el = await fixture<VscodeMultiSelect>(html`
+      <vscode-multi-select>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-multi-select>
+    `);
+    const secondOption = el.querySelectorAll<VscodeOption>('vscode-option')[1];
+
+    secondOption.description = 'Test description';
+    await el.updateComplete;
+
+    await clickOnElement(el);
+    await el.updateComplete;
+
+    await moveMouseOnElement(el.shadowRoot!.querySelectorAll('li')[1]);
+    await el.updateComplete;
+
+    const desc = el.shadowRoot!.querySelector<HTMLDivElement>('.description');
+
+    expect(desc).lightDom.to.eq('Test description');
+  });
+
+  it('changes the label of an option in an existing select', async () => {
+    const el = await fixture<VscodeMultiSelect>(html`
+      <vscode-multi-select>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-multi-select>
+    `);
+    const secondOption = el.querySelectorAll<VscodeOption>('vscode-option')[1];
+
+    secondOption.innerHTML = 'Test label';
+    await el.updateComplete;
+
+    await clickOnElement(el);
+    await el.updateComplete;
+
+    const li = el.shadowRoot!.querySelectorAll<HTMLLIElement>('li')[1];
+    const label = li.querySelector('.option-label');
+
+    expect(label).lightDom.to.eq('Test label');
+  });
+
+  it('changes the disabled state of an option in an existing select', async () => {
+    const el = await fixture<VscodeMultiSelect>(html`
+      <vscode-multi-select>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-multi-select>
+    `);
+    const secondOption = el.querySelectorAll<VscodeOption>('vscode-option')[1];
+
+    secondOption.disabled = true;
+    await el.updateComplete;
+
+    await clickOnElement(el);
+    await el.updateComplete;
+
+    const li = el.shadowRoot!.querySelectorAll<HTMLLIElement>('li')[1];
+
+    expect(li.classList.contains('disabled')).to.be.true;
   });
 });
