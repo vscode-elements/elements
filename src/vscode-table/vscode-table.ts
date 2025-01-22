@@ -138,8 +138,8 @@ export class VscodeTable extends VscElement {
    */
   private _sashHovers: boolean[] = [];
   private _columns: string[] = [];
-  private _componentResizeObserver!: ResizeObserver;
-  private _headerResizeObserver!: ResizeObserver;
+  private _componentResizeObserver?: ResizeObserver;
+  private _headerResizeObserver?: ResizeObserver;
   private _bodyResizeObserver?: ResizeObserver;
   private _activeSashElementIndex = -1;
   private _activeSashCursorOffset = 0;
@@ -170,8 +170,8 @@ export class VscodeTable extends VscElement {
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._componentResizeObserver.unobserve(this);
-    this._componentResizeObserver.disconnect();
+    this._componentResizeObserver?.unobserve(this);
+    this._componentResizeObserver?.disconnect();
     this._bodyResizeObserver?.disconnect();
   }
 
