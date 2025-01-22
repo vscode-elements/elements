@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+
+- **Table**: The empty component threw an error when it was deleted from the document.
+
 ### Added
 
 - **SingleSelect**, **MultiSelect**: Added the ability to update the state of an already initialized 
