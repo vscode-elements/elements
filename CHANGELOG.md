@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - **Table**: The empty component threw an error when it was deleted from the document.
+- **SingleSelect**, **MultiSelect**: Fix selected state when opened by default.
 
 ### Added
 
