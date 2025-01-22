@@ -925,6 +925,21 @@ describe('vscode-single-select', () => {
     expect(sl.shadowRoot?.querySelector('ul.options')).to.be.ok;
   });
 
+  it('shows selected option when opened by default', async () => {
+    const sl = await fixture(
+      html`<vscode-single-select open>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option selected>Ipsum</vscode-option>
+        <vscode-option>Dolor</vscode-option>
+      </vscode-single-select>`
+    );
+
+    const op = sl.shadowRoot?.querySelector<HTMLLIElement>('ul.options li:nth-child(2)');
+
+    expect(op).lightDom.to.eq('Ipsum');
+    expect(op?.classList.contains('selected')).to.be.true;
+  });
+
   it('changes the description of an option in an existing select', async () => {
     const el = await fixture<VscodeSingleSelect>(html`
       <vscode-single-select>
