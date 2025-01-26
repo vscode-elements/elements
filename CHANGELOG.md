@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **Icon**: Eliminating style tags to prevent CSP violations.
 
+### Added
+
+- **Icon**: Show warning in the dev console when codicon css is missing.
+
 ## [1.11.0] - 2025-01-22
 
 ### Fixed
