@@ -70,7 +70,7 @@ export class VscodeIcon extends VscElement {
   }
 
   protected willUpdate(changedProperties: PropertyValues): void {
-    if(changedProperties.has('size')) {
+    if (changedProperties.has('size')) {
       this.style.setProperty('--size', `${this.size}px`);
     }
 
@@ -92,6 +92,13 @@ export class VscodeIcon extends VscElement {
     const linkElement = document.getElementById('vscode-codicon-stylesheet');
     const href = linkElement?.getAttribute('href') || undefined;
     const nonce = linkElement?.getAttribute('nonce') || undefined;
+
+    if (!linkElement) {
+      let msg = '[VSCode Elements] To use the Icon component, the codicons.css file must be included in the page with the id `vscode-codicon-stylesheet`! ';
+      msg += 'See https://vscode-elements.github.io/components/icon/ for more details.';
+
+      console.warn(msg);
+    }
 
     return {nonce, href};
   }
