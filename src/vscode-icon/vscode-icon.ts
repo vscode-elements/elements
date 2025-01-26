@@ -1,7 +1,6 @@
-import {html, TemplateResult} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-icon.styles.js';
@@ -70,6 +69,16 @@ export class VscodeIcon extends VscElement {
     VscodeIcon.nonce = nonce;
   }
 
+  protected willUpdate(changedProperties: PropertyValues): void {
+    if(changedProperties.has('size')) {
+      this.style.setProperty('--size', `${this.size}px`);
+    }
+
+    if (changedProperties.has('spinDuration')) {
+      this.style.setProperty('--spin-duration', `${this.spinDuration}s`);
+    }
+  }
+
   /**
    * For using web fonts in web components, the font stylesheet must be included
    * twice: on the page and in the web component. This function looks for the
@@ -101,12 +110,6 @@ export class VscodeIcon extends VscElement {
         codicon: true,
         ['codicon-' + this.name]: true,
         spin: this.spin,
-      })}
-      style=${styleMap({
-        animationDuration: String(this.spinDuration) + 's',
-        fontSize: this.size + 'px',
-        height: this.size + 'px',
-        width: this.size + 'px',
       })}
     ></span>`;
 

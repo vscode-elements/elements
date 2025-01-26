@@ -10,7 +10,11 @@ const styles: CSSResultGroup = [
     }
 
     .codicon[class*='codicon-'] {
+      animation-duration: var(--spin-duration) !important;
       display: block;
+      font-size: var(--size);
+      height: var(--size);
+      width: var(--size);
     }
 
     .icon,
