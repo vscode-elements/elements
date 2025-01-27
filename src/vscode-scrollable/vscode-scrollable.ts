@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import {html, nothing, PropertyValues, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -7,7 +7,6 @@ import {
   state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-scrollable.styles.js';
 
@@ -55,12 +54,6 @@ export class VscodeScrollable extends VscElement {
   private _isDragging = false;
 
   @state()
-  private _thumbHeight = 0;
-
-  @state()
-  private _thumbY = 0;
-
-  @state()
   private _thumbVisible = false;
 
   @state()
@@ -69,10 +62,13 @@ export class VscodeScrollable extends VscElement {
   @state()
   private _thumbActive = false;
 
+  @state()
+  private _scrollbarTrackZ = 0;
+
   @query('.content')
   private _contentElement!: HTMLDivElement;
 
-  @query('.scrollbar-thumb')
+  @query('.scrollbar-thumb', true)
   private _scrollThumbElement!: HTMLDivElement;
 
   @query('.scrollable-container')
@@ -86,7 +82,6 @@ export class VscodeScrollable extends VscElement {
   private _scrollThumbStartY = 0;
   private _mouseStartY = 0;
   private _scrollbarVisible = true;
-  private _scrollbarTrackZ = 0;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -123,6 +118,15 @@ export class VscodeScrollable extends VscElement {
     this.removeEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
+  protected willUpdate(changedProperties: PropertyValues): void {
+    if (changedProperties.has('_scrollbarTrackZ')) {
+      this.style.setProperty(
+        '--scrollbar-track-z',
+        this._scrollbarTrackZ.toString()
+      );
+    }
+  }
+
   private _resizeObserverCallback = () => {
     this._updateScrollbar();
   };
@@ -135,7 +139,7 @@ export class VscodeScrollable extends VscElement {
       this._scrollbarVisible = false;
     } else {
       this._scrollbarVisible = true;
-      this._thumbHeight = compCr.height * (compCr.height / contentCr.height);
+      this._scrollThumbElement.style.height = `${compCr.height * (compCr.height / contentCr.height)}px`;
     }
 
     this.requestUpdate();
@@ -159,12 +163,11 @@ export class VscodeScrollable extends VscElement {
     });
 
     this._scrollbarTrackZ = highestZ + 1;
-    this.requestUpdate();
   }
 
-  private _onSlotChange() {
+  private _onSlotChange = () => {
     this._zIndexFix();
-  }
+  };
 
   private _onScrollThumbMouseDown(event: MouseEvent) {
     const cmpCr = this.getBoundingClientRect();
@@ -195,7 +198,7 @@ export class VscodeScrollable extends VscElement {
       nextPos = predictedPos;
     }
 
-    this._thumbY = nextPos;
+    this._scrollThumbElement.style.top = `${nextPos}px`;
     this._scrollableContainer.scrollTop =
       (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
   }
@@ -236,7 +239,7 @@ export class VscodeScrollable extends VscElement {
     const overflown = contentH - cmpH;
     const ratio = scrollTop / overflown;
 
-    this._thumbY = ratio * (cmpH - thumbH);
+    this._scrollThumbElement.style.top = `${ratio * (cmpH - thumbH)}px`;
   }
 
   private _onComponentMouseOver() {
@@ -258,9 +261,9 @@ export class VscodeScrollable extends VscElement {
   render(): TemplateResult {
     return html`
       <div
-        class="scrollable-container"
-        style=${styleMap({
-          'user-select': this._isDragging ? 'none' : 'auto',
+        class=${classMap({
+          'scrollable-container': true,
+          dragging: this._isDragging,
         })}
       >
         <div class=${classMap({shadow: true, visible: this.scrolled})}></div>
@@ -272,9 +275,6 @@ export class VscodeScrollable extends VscElement {
             'scrollbar-track': true,
             hidden: !this._scrollbarVisible,
           })}
-          style=${styleMap({
-            'z-index': String(this._scrollbarTrackZ),
-          })}
         >
           <div
             class=${classMap({
@@ -282,10 +282,6 @@ export class VscodeScrollable extends VscElement {
               visible: this._thumbVisible,
               fade: this._thumbFade,
               active: this._thumbActive,
-            })}
-            style=${styleMap({
-              height: `${this._thumbHeight}px`,
-              top: `${this._thumbY}px`,
             })}
             @mousedown=${this._onScrollThumbMouseDown}
           ></div>
