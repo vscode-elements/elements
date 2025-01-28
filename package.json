@@ -1,6 +1,6 @@
 {
   "name": "@vscode-elements/elements",
-  "version": "1.11.0",
+  "version": "1.11.1-pre.0",
   "description": "Webcomponents for creating Visual Studio Code extensions",
   "main": "dist/main.js",
   "module": "dist/main.js",
