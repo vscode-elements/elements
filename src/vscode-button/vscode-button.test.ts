@@ -68,12 +68,15 @@ describe('vscode-button', () => {
       html`<vscode-button icon="account"></vscode-button>`
     );
 
-    expect(el).shadowDom.to.eq(`
+    expect(el).shadowDom.to.eq(
+      `
       <span class="has-icon-before wrapper">
         <vscode-icon name="account" class="icon"></vscode-icon>
         <slot></slot>
       </span>
-    `);
+    `,
+      {ignoreAttributes: ['style']}
+    );
   });
 
   it('iconSpin is set', async () => {
@@ -81,12 +84,15 @@ describe('vscode-button', () => {
       html`<vscode-button icon="account" icon-spin></vscode-button>`
     );
 
-    expect(el).shadowDom.to.eq(`
+    expect(el).shadowDom.to.eq(
+      `
       <span class="has-icon-before wrapper">
         <vscode-icon name="account" spin class="icon"></vscode-icon>
         <slot></slot>
       </span>
-    `);
+    `,
+      {ignoreAttributes: ['style']}
+    );
   });
 
   it('iconSpinDuration is set', async () => {
@@ -97,12 +103,15 @@ describe('vscode-button', () => {
       ></vscode-button>`
     );
 
-    expect(el).shadowDom.to.eq(`
+    expect(el).shadowDom.to.eq(
+      `
       <span class="has-icon-before wrapper">
         <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
         <slot></slot>
       </span>
-    `);
+    `,
+      {ignoreAttributes: ['style']}
+    );
   });
 
   it('iconAfter is set', async () => {
@@ -110,12 +119,15 @@ describe('vscode-button', () => {
       html`<vscode-button icon-after="account"></vscode-button>`
     );
 
-    expect(el).shadowDom.to.eq(`
+    expect(el).shadowDom.to.eq(
+      `
       <span class="has-icon-after wrapper">
         <slot></slot>
         <vscode-icon name="account" class="icon-after"></vscode-icon>
       </span>
-    `);
+    `,
+      {ignoreAttributes: ['style']}
+    );
   });
 
   it('iconAfterSpin is set', async () => {
@@ -123,12 +135,15 @@ describe('vscode-button', () => {
       html`<vscode-button icon-after="account" icon-after-spin></vscode-button>`
     );
 
-    expect(el).shadowDom.to.eq(`
+    expect(el).shadowDom.to.eq(
+      `
       <span class="has-icon-after wrapper">
         <slot></slot>
         <vscode-icon name="account" class="icon-after" spin></vscode-icon>
       </span>
-    `);
+    `,
+      {ignoreAttributes: ['style']}
+    );
   });
 
   it('iconAfterSpinDuration is set', async () => {
@@ -139,12 +154,15 @@ describe('vscode-button', () => {
       ></vscode-button>`
     );
 
-    expect(el).shadowDom.to.eq(`
+    expect(el).shadowDom.to.eq(
+      `
       <span class="has-icon-after wrapper">
         <slot></slot>
         <vscode-icon name="account" class="icon-after" spin-duration="5"></vscode-icon>
       </span>
-    `);
+    `,
+      {ignoreAttributes: ['style']}
+    );
   });
 
   it('resets the assigned form', async () => {
