@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'none';
+        script-src 'nonce-abc123';
+        script-src-elem 'nonce-abc123';
+        font-src 'self' 'nonce-abc123';
+        img-src data:;
+        style-src 'nonce-abc123';
+        style-src-elem 'nonce-abc123'"
+    />
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+      nonce="abc123"
+    />
+    <style nonce="abc123">
+      vscode-scrollable {
+        width: 200px;
+        height: 200px;
+      }
+
+      vscode-scrollable div {
+        z-index: 200;
+      }
+    </style>
+    <script nonce="abc123">
+      window.vscodeWebviewPlaygroundNonce = 'abc123';
+    </script>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+      nonce="abc123"
+    ></script>
+    <script type="module" src="/dist/main.js" nonce="abc123"></script>
+    <script nonce="abc123">
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Apply CSP</h1>
+    <main>
+      <vscode-demo>
+        <vscode-textarea value="ffff"></vscode-textarea>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
