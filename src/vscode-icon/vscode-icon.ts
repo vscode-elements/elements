@@ -91,7 +91,7 @@ export class VscodeIcon extends VscElement {
   } {
     const linkElement = document.getElementById('vscode-codicon-stylesheet');
     const href = linkElement?.getAttribute('href') || undefined;
-    const nonce = linkElement?.getAttribute('nonce') || undefined;
+    const nonce = linkElement?.nonce || undefined;
 
     if (!linkElement) {
       let msg = '[VSCode Elements] To use the Icon component, the codicons.css file must be included in the page with the id `vscode-codicon-stylesheet`! ';
