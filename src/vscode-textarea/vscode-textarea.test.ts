@@ -19,7 +19,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -36,7 +36,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -53,7 +53,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -70,7 +70,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -87,7 +87,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -104,7 +104,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -121,7 +121,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -138,7 +138,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -155,7 +155,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -172,7 +172,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -185,11 +185,11 @@ describe('vscode-textarea', () => {
     expect(el).shadowDom.to.equal(`
       <div class="shadow"></div>
       <textarea
-        style="resize:both;"
+        style=""
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -206,7 +206,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
@@ -223,7 +223,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style="resize:none;"
+        style=""
       ></textarea>
     `);
   });
