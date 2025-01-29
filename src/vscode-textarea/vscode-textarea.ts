@@ -2,7 +2,6 @@ import {html, LitElement, TemplateResult, PropertyValues} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-textarea.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
@@ -319,9 +318,9 @@ export class VscodeTextarea
         name=${ifDefined(this.name)}
         placeholder=${ifDefined(this.placeholder)}
         ?readonly=${this.readonly}
-        style=${styleMap({
+        .style=${{
           resize: this.resize,
-        })}
+        }}
         ?required=${this.required}
         spellcheck=${this.spellcheck}
         @change=${this._handleChange}
