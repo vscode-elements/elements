@@ -16,7 +16,7 @@ describe('vscode-textfield', () => {
     expect(el).shadowDom.to.equal(
       `
       <slot name="content-before"></slot>
-      <input aria-label="" id="input" type="text" value="">
+      <input aria-label="" id="input" type="text">
       <slot name="content-after"></slot>
       `
     );
