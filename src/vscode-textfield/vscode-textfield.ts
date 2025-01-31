@@ -379,7 +379,7 @@ export class VscodeTextfield
         ?readonly=${this.readonly}
         ?required=${this.required}
         step=${ifDefined(this.step)}
-        value=${ifDefined(this.type !== 'file' ? this._value : undefined)}
+        .value=${this._value}
         @blur=${this._onBlur}
         @change=${this._onChange}
         @focus=${this._onFocus}
