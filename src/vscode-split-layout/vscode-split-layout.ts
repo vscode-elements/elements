@@ -7,7 +7,6 @@ import {
   state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 
@@ -144,7 +143,13 @@ export class VscodeSplitLayout extends VscElement {
   @query('.wrapper')
   private _wrapperEl!: HTMLDivElement;
 
-  @query('.handle')
+  @query('#start-pane', true)
+  private _startPaneEl!: HTMLDivElement;
+
+  @query('#end-pane', true)
+  private _endPaneEl!: HTMLDivElement;
+
+  @query('#handle', true)
   private _handleEl!: HTMLDivElement;
 
   @queryAssignedElements({slot: 'start', selector: 'vscode-split-layout'})
@@ -158,6 +163,7 @@ export class VscodeSplitLayout extends VscElement {
   private _resizeObserver: ResizeObserver;
   private _wrapperObserved: boolean = false;
   private _fixedPaneSize: number = 0;
+  private _firstUpdated = false;
 
   constructor() {
     super();
@@ -191,7 +197,7 @@ export class VscodeSplitLayout extends VscElement {
     super.connectedCallback();
   }
 
-  protected firstUpdated(_changedProperties: PropertyValues): void {
+  protected firstUpdated(changedProperties: PropertyValues): void {
     if (this.fixedPane !== 'none') {
       this._resizeObserver.observe(this._wrapperEl);
       this._wrapperObserved = true;
@@ -205,6 +211,74 @@ export class VscodeSplitLayout extends VscElement {
 
     this._setPosition(value, unit);
     this._initFixedPane();
+    this._updateInlineStyles(changedProperties);
+    this._firstUpdated = true;
+  }
+
+  protected willUpdate(changedProperties: PropertyValues): void {
+    if (this._firstUpdated) {
+      this._updateInlineStyles(changedProperties);
+    }
+  }
+
+  // Updating inline styles via the style property because using the style
+  // attribute is not CSP-compliant.
+  private _updateInlineStyles(changedProperties: PropertyValues) {
+    if (
+      changedProperties.has('_handlePosition') ||
+      changedProperties.has('split') ||
+      changedProperties.has('fixedPane') ||
+      changedProperties.has('handleSize')
+    ) {
+      const {width, height} = this._boundRect;
+      const maxPos = this.split === 'vertical' ? width : height;
+      const startPaneFlexValue =
+        this.fixedPane === 'start'
+          ? `0 0 ${this._fixedPaneSize}px`
+          : `1 1 ${pxToPercent(this._handlePosition, maxPos)}%`;
+      const endPaneFlexValue =
+        this.fixedPane === 'end'
+          ? `0 0 ${this._fixedPaneSize}px`
+          : `1 1 ${pxToPercent(maxPos - this._handlePosition, maxPos)}%`;
+
+      if (this._startPaneEl) {
+        this._startPaneEl.style.flex = startPaneFlexValue;
+      }
+
+      if (this._endPaneEl) {
+        this._endPaneEl.style.flex = endPaneFlexValue;
+      }
+    }
+
+    if (changedProperties.has('split')) {
+      const handleSize = this.handleSize ?? DEFAULT_HANDLE_SIZE;
+
+      if (this.split === 'vertical') {
+        this._handleEl.style.marginLeft = `${0 - handleSize / 2}px`;
+        this._handleEl.style.marginTop = '0';
+        this._handleEl.style.width = `${handleSize}px`;
+      }
+
+      if (this.split === 'horizontal') {
+        this._handleEl.style.marginTop = `${0 - handleSize / 2}px`;
+        this._handleEl.style.marginLeft = '0';
+        this._handleEl.style.height = `${handleSize}px`;
+      }
+    }
+
+    if (changedProperties.has('_handlePosition')) {
+      const {width, height} = this._boundRect;
+      const maxPos = this.split === 'vertical' ? width : height;
+
+      const handlePosCss =
+        this.fixedPane !== 'none'
+          ? `${this._handlePosition}px`
+          : `${pxToPercent(this._handlePosition, maxPos)}%`;
+
+      this._handleEl.style.left =
+        this.split === 'vertical' ? handlePosCss : '0';
+      this._handleEl.style.top = this.split === 'vertical' ? '0' : handlePosCss;
+    }
   }
 
   private _handlePositionPropChanged() {
@@ -374,48 +448,6 @@ export class VscodeSplitLayout extends VscElement {
   }
 
   render(): TemplateResult {
-    const {width, height} = this._boundRect;
-    const maxPos = this.split === 'vertical' ? width : height;
-    const handlePosCss =
-      this.fixedPane !== 'none'
-        ? `${this._handlePosition}px`
-        : `${pxToPercent(this._handlePosition, maxPos)}%`;
-
-    let startPaneSize = '';
-
-    if (this.fixedPane === 'start') {
-      startPaneSize = `0 0 ${this._fixedPaneSize}px`;
-    } else {
-      startPaneSize = `1 1 ${pxToPercent(this._handlePosition, maxPos)}%`;
-    }
-
-    let endPaneSize = '';
-
-    if (this.fixedPane === 'end') {
-      endPaneSize = `0 0 ${this._fixedPaneSize}px`;
-    } else {
-      endPaneSize = `1 1 ${pxToPercent(maxPos - this._handlePosition, maxPos)}%`;
-    }
-
-    const handleStylesPropObj: {[prop: string]: string} = {
-      left: this.split === 'vertical' ? handlePosCss : '0',
-      top: this.split === 'vertical' ? '0' : handlePosCss,
-    };
-
-    const handleSize = this.handleSize ?? DEFAULT_HANDLE_SIZE;
-
-    if (this.split === 'vertical') {
-      handleStylesPropObj.marginLeft = `${0 - handleSize / 2}px`;
-      handleStylesPropObj.width = `${handleSize}px`;
-    }
-
-    if (this.split === 'horizontal') {
-      handleStylesPropObj.height = `${handleSize}px`;
-      handleStylesPropObj.marginTop = `${0 - handleSize / 2}px`;
-    }
-
-    const handleStyles = styleMap(handleStylesPropObj);
-
     const handleOverlayClasses = classMap({
       'handle-overlay': true,
       active: this._isDragActive,
@@ -438,16 +470,16 @@ export class VscodeSplitLayout extends VscElement {
 
     return html`
       <div class=${classMap(wrapperClasses)}>
-        <div class="start" style=${styleMap({flex: startPaneSize})}>
+        <div class="start" id="start-pane">
           <slot name="start" @slotchange=${this._handleSlotChange}></slot>
         </div>
-        <div class="end" style=${styleMap({flex: endPaneSize})}>
+        <div class="end" id="end-pane">
           <slot name="end" @slotchange=${this._handleSlotChange}></slot>
         </div>
         <div class=${handleOverlayClasses}></div>
         <div
           class=${handleClasses}
-          style=${handleStyles}
+          id="handle"
           @mouseover=${this._handleMouseOver}
           @mouseout=${this._handleMouseOut}
           @mousedown=${this._handleMouseDown}
