@@ -9,7 +9,7 @@
         default-src 'none';
         script-src 'nonce-abc123';
         script-src-elem 'nonce-abc123';
-        font-src 'self' 'nonce-abc123';
+        font-src 'self' data: 'nonce-abc123';
         img-src data:;
         style-src 'nonce-abc123';
         style-src-elem 'nonce-abc123'"
@@ -53,7 +53,7 @@
     <h1>Apply CSP</h1>
     <main>
       <vscode-demo>
-        <vscode-textarea value="ffff"></vscode-textarea>
+        <vscode-textarea value="ffff" resize="vertical"></vscode-textarea>
       </vscode-demo>
     </main>
   </body>

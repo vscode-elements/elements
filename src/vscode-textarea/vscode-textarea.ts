@@ -3,8 +3,9 @@ import {customElement, property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement.js';
-import styles from './vscode-textarea.styles.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
+import styles from './vscode-textarea.styles.js';
 
 /**
  * Multi-line text input.
@@ -318,9 +319,9 @@ export class VscodeTextarea
         name=${ifDefined(this.name)}
         placeholder=${ifDefined(this.placeholder)}
         ?readonly=${this.readonly}
-        .style=${{
+        .style=${stylePropertyMap({
           resize: this.resize,
-        }}
+        })}
         ?required=${this.required}
         spellcheck=${this.spellcheck}
         @change=${this._handleChange}
