@@ -2,8 +2,8 @@ import {html, nothing, TemplateResult} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 import '../vscode-badge/index.js';
 import '../vscode-icon/index.js';
 import {VscodeIcon} from '../vscode-icon/index.js';
@@ -344,7 +344,7 @@ export class VscodeTree extends VscElement {
     } else {
       return html`<span
         class="image-icon"
-        style="background-image: url(${value});"
+        .style=${stylePropertyMap({backgroundImage: `url(${value})`})}
       ></span>`;
     }
   }
@@ -516,7 +516,7 @@ export class VscodeTree extends VscElement {
                 size="14"
                 class=${['filled-circle', visibleWhenClass].join(' ')}
                 part="filled-circle-decoration"
-                style=${styleMap(inlineStyles)}
+                .style=${stylePropertyMap(inlineStyles)}
               ></vscode-icon>`
             );
             break;
@@ -525,7 +525,7 @@ export class VscodeTree extends VscElement {
               html`<div
                 class=${['decoration-text', visibleWhenClass].join(' ')}
                 part="caption-decoration"
-                style=${styleMap(inlineStyles)}
+                .style=${stylePropertyMap(inlineStyles)}
               >
                 ${content}
               </div>`
@@ -585,7 +585,9 @@ export class VscodeTree extends VscElement {
     const subTreeMarkup =
       open && itemType === 'branch'
         ? html`<ul
-            style=${styleMap({'--indent-guide-pos': `${indentGuidePos}px`})}
+            .style=${stylePropertyMap({
+              '--indent-guide-pos': `${indentGuidePos}px`,
+            })}
             class=${classMap({
               'has-active-item': hasFocusedItem || hasSelectedItem,
             })}
@@ -613,7 +615,9 @@ export class VscodeTree extends VscElement {
       <li data-path=${path.join('/')} class=${liClasses.join(' ')}>
         <div
           class=${contentsClasses.join(' ')}
-          style=${styleMap({paddingLeft: `${padLeft + CONTENT_PADDING}px`})}
+          .style=${stylePropertyMap({
+            paddingLeft: `${padLeft + CONTENT_PADDING}px`,
+          })}
         >
           ${arrowMarkup}${iconMarkup}<span
             class="text-content"
