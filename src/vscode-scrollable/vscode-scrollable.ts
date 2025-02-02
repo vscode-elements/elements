@@ -1,4 +1,4 @@
-import {html, nothing, PropertyValues, TemplateResult} from 'lit';
+import {html, nothing, TemplateResult} from 'lit';
 import {
   customElement,
   property,
@@ -8,6 +8,7 @@ import {
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 import styles from './vscode-scrollable.styles.js';
 
 /**
@@ -54,6 +55,12 @@ export class VscodeScrollable extends VscElement {
   private _isDragging = false;
 
   @state()
+  private _thumbHeight = 0;
+
+  @state()
+  private _thumbY = 0;
+
+  @state()
   private _thumbVisible = false;
 
   @state()
@@ -61,9 +68,6 @@ export class VscodeScrollable extends VscElement {
 
   @state()
   private _thumbActive = false;
-
-  @state()
-  private _scrollbarTrackZ = 0;
 
   @query('.content')
   private _contentElement!: HTMLDivElement;
@@ -82,6 +86,7 @@ export class VscodeScrollable extends VscElement {
   private _scrollThumbStartY = 0;
   private _mouseStartY = 0;
   private _scrollbarVisible = true;
+  private _scrollbarTrackZ = 0;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -118,15 +123,6 @@ export class VscodeScrollable extends VscElement {
     this.removeEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
-  protected willUpdate(changedProperties: PropertyValues): void {
-    if (changedProperties.has('_scrollbarTrackZ')) {
-      this.style.setProperty(
-        '--scrollbar-track-z',
-        this._scrollbarTrackZ.toString()
-      );
-    }
-  }
-
   private _resizeObserverCallback = () => {
     this._updateScrollbar();
   };
@@ -139,7 +135,7 @@ export class VscodeScrollable extends VscElement {
       this._scrollbarVisible = false;
     } else {
       this._scrollbarVisible = true;
-      this._scrollThumbElement.style.height = `${compCr.height * (compCr.height / contentCr.height)}px`;
+      this._thumbHeight = compCr.height * (compCr.height / contentCr.height);
     }
 
     this.requestUpdate();
@@ -163,6 +159,7 @@ export class VscodeScrollable extends VscElement {
     });
 
     this._scrollbarTrackZ = highestZ + 1;
+    this.requestUpdate();
   }
 
   private _onSlotChange = () => {
@@ -198,7 +195,7 @@ export class VscodeScrollable extends VscElement {
       nextPos = predictedPos;
     }
 
-    this._scrollThumbElement.style.top = `${nextPos}px`;
+    this._thumbY = nextPos;
     this._scrollableContainer.scrollTop =
       (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
   }
@@ -239,7 +236,7 @@ export class VscodeScrollable extends VscElement {
     const overflown = contentH - cmpH;
     const ratio = scrollTop / overflown;
 
-    this._scrollThumbElement.style.top = `${ratio * (cmpH - thumbH)}px`;
+    this._thumbY = ratio * (cmpH - thumbH);
   }
 
   private _onComponentMouseOver() {
@@ -261,12 +258,17 @@ export class VscodeScrollable extends VscElement {
   render(): TemplateResult {
     return html`
       <div
-        class=${classMap({
-          'scrollable-container': true,
-          dragging: this._isDragging,
+        class="scrollable-container"
+        .style=${stylePropertyMap({
+          userSelect: this._isDragging ? 'none' : 'auto',
         })}
       >
-        <div class=${classMap({shadow: true, visible: this.scrolled})}></div>
+        <div
+          class=${classMap({shadow: true, visible: this.scrolled})}
+          .style=${stylePropertyMap({
+            zIndex: String(this._scrollbarTrackZ),
+          })}
+        ></div>
         ${this._isDragging
           ? html`<div class="prevent-interaction"></div>`
           : nothing}
@@ -282,6 +284,10 @@ export class VscodeScrollable extends VscElement {
               visible: this._thumbVisible,
               fade: this._thumbFade,
               active: this._thumbActive,
+            })}
+            .style=${stylePropertyMap({
+              height: `${this._thumbHeight}px`,
+              top: `${this._thumbY}px`,
             })}
             @mousedown=${this._onScrollThumbMouseDown}
           ></div>
