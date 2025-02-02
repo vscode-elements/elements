@@ -14,14 +14,16 @@ class StylePropertyMap extends Directive {
     }
   }
 
-  update(
-    part: PropertyPart,
-    [styleProps]: [{[key: string]: string}]
-  ): unknown {
+  update(part: PropertyPart, [styleProps]: [{[key: string]: string}]): unknown {
     Object.entries(styleProps).forEach(([key, val]) => {
       if (this._prevProperties[key] !== val) {
-        // @ts-expect-error I'm so sick of these stupid unresolvable TS errors.
-        part.element.style[key] = val;
+        if (key.startsWith('--')) {
+          part.element.style.setProperty(key, val);
+        } else {
+          // @ts-expect-error I'm so sick of these stupid unresolvable TS errors.
+          part.element.style[key] = val;
+        }
+
         this._prevProperties[key as string] = val;
       }
     });
