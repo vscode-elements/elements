@@ -14,10 +14,6 @@ const styles: CSSResultGroup = [
       overflow: auto;
     }
 
-    .scrollable-container.dragging {
-      user-select: none;
-    }
-
     .scrollable-container::-webkit-scrollbar {
       cursor: default;
       width: 0;
@@ -49,7 +45,7 @@ const styles: CSSResultGroup = [
       right: 0;
       top: 0;
       width: 10px;
-      z-index: var(--scrollbar-track-z, 100);
+      z-index: 100;
     }
 
     .scrollbar-track.hidden {
