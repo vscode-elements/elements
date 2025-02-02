@@ -3,6 +3,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {VscElement} from '../includes/VscElement.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 import styles from './vscode-icon.styles.js';
 
 /**
@@ -69,16 +70,6 @@ export class VscodeIcon extends VscElement {
     VscodeIcon.nonce = nonce;
   }
 
-  protected willUpdate(changedProperties: PropertyValues): void {
-    if (changedProperties.has('size')) {
-      this.style.setProperty('--size', `${this.size}px`);
-    }
-
-    if (changedProperties.has('spinDuration')) {
-      this.style.setProperty('--spin-duration', `${this.spinDuration}s`);
-    }
-  }
-
   /**
    * For using web fonts in web components, the font stylesheet must be included
    * twice: on the page and in the web component. This function looks for the
@@ -94,8 +85,10 @@ export class VscodeIcon extends VscElement {
     const nonce = linkElement?.nonce || undefined;
 
     if (!linkElement) {
-      let msg = '[VSCode Elements] To use the Icon component, the codicons.css file must be included in the page with the id `vscode-codicon-stylesheet`! ';
-      msg += 'See https://vscode-elements.github.io/components/icon/ for more details.';
+      let msg =
+        '[VSCode Elements] To use the Icon component, the codicons.css file must be included in the page with the id `vscode-codicon-stylesheet`! ';
+      msg +=
+        'See https://vscode-elements.github.io/components/icon/ for more details.';
 
       console.warn(msg);
     }
@@ -117,6 +110,12 @@ export class VscodeIcon extends VscElement {
         codicon: true,
         ['codicon-' + this.name]: true,
         spin: this.spin,
+      })}
+      .style=${stylePropertyMap({
+        animationDuration: String(this.spinDuration) + 's',
+        fontSize: this.size + 'px',
+        height: this.size + 'px',
+        width: this.size + 'px',
       })}
     ></span>`;
 
