@@ -8,8 +8,8 @@ import {
   state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 import '../vscode-scrollable/index.js';
 import {VscodeScrollable} from '../vscode-scrollable/index.js';
 import {VscodeTableBody} from '../vscode-table-body/index.js';
@@ -603,7 +603,7 @@ export class VscodeTable extends VscElement {
             <div
               class=${classes}
               data-index=${index}
-              style=${styleMap({left})}
+              .style=${stylePropertyMap({left})}
               @mousedown=${this._onSashMouseDown}
               @mouseover=${this._onSashMouseOver}
               @mouseout=${this._onSashMouseOut}
@@ -615,7 +615,7 @@ export class VscodeTable extends VscElement {
         : html`<div
             class=${classes}
             data-index=${index}
-            style=${styleMap({left})}
+            .style=${stylePropertyMap({left})}
           >
             <div class="sash-visible"></div>
           </div>`;
