@@ -7,9 +7,9 @@ import {
   state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 
 const DEFAULT_INITIAL_POSITION = '50%';
 const DEFAULT_HANDLE_SIZE = 4;
@@ -414,8 +414,6 @@ export class VscodeSplitLayout extends VscElement {
       handleStylesPropObj.marginTop = `${0 - handleSize / 2}px`;
     }
 
-    const handleStyles = styleMap(handleStylesPropObj);
-
     const handleOverlayClasses = classMap({
       'handle-overlay': true,
       active: this._isDragActive,
@@ -438,16 +436,16 @@ export class VscodeSplitLayout extends VscElement {
 
     return html`
       <div class=${classMap(wrapperClasses)}>
-        <div class="start" style=${styleMap({flex: startPaneSize})}>
+        <div class="start" .style=${stylePropertyMap({flex: startPaneSize})}>
           <slot name="start" @slotchange=${this._handleSlotChange}></slot>
         </div>
-        <div class="end" style=${styleMap({flex: endPaneSize})}>
+        <div class="end" .style=${stylePropertyMap({flex: endPaneSize})}>
           <slot name="end" @slotchange=${this._handleSlotChange}></slot>
         </div>
         <div class=${handleOverlayClasses}></div>
         <div
           class=${handleClasses}
-          style=${handleStyles}
+          .style=${stylePropertyMap(handleStylesPropObj)}
           @mouseover=${this._handleMouseOver}
           @mouseout=${this._handleMouseOut}
           @mousedown=${this._handleMouseDown}
