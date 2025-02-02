@@ -74,8 +74,7 @@ describe('vscode-button', () => {
         <vscode-icon name="account" class="icon"></vscode-icon>
         <slot></slot>
       </span>
-    `,
-      {ignoreAttributes: ['style']}
+    `
     );
   });
 
@@ -90,8 +89,7 @@ describe('vscode-button', () => {
         <vscode-icon name="account" spin class="icon"></vscode-icon>
         <slot></slot>
       </span>
-    `,
-      {ignoreAttributes: ['style']}
+    `
     );
   });
 
@@ -109,8 +107,7 @@ describe('vscode-button', () => {
         <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
         <slot></slot>
       </span>
-    `,
-      {ignoreAttributes: ['style']}
+    `
     );
   });
 
@@ -125,8 +122,7 @@ describe('vscode-button', () => {
         <slot></slot>
         <vscode-icon name="account" class="icon-after"></vscode-icon>
       </span>
-    `,
-      {ignoreAttributes: ['style']}
+    `
     );
   });
 
@@ -141,8 +137,7 @@ describe('vscode-button', () => {
         <slot></slot>
         <vscode-icon name="account" class="icon-after" spin></vscode-icon>
       </span>
-    `,
-      {ignoreAttributes: ['style']}
+    `
     );
   });
 
@@ -160,8 +155,7 @@ describe('vscode-button', () => {
         <slot></slot>
         <vscode-icon name="account" class="icon-after" spin-duration="5"></vscode-icon>
       </span>
-    `,
-      {ignoreAttributes: ['style']}
+    `
     );
   });
 
