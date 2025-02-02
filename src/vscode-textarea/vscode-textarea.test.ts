@@ -19,7 +19,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -36,7 +36,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -53,7 +53,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -70,7 +70,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -87,7 +87,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -104,7 +104,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -121,7 +121,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -138,7 +138,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -155,7 +155,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -172,7 +172,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -185,11 +185,10 @@ describe('vscode-textarea', () => {
     expect(el).shadowDom.to.equal(`
       <div class="shadow"></div>
       <textarea
-        style=""
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: both;"
       ></textarea>
     `);
   });
@@ -206,7 +205,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
@@ -223,7 +222,7 @@ describe('vscode-textarea', () => {
         aria-label=""
         id="textarea"
         spellcheck="false"
-        style=""
+        style="resize: none;"
       ></textarea>
     `);
   });
