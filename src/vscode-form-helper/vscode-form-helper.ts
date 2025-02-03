@@ -17,7 +17,6 @@ export class VscodeFormHelper extends VscElement {
 
   constructor() {
     super();
-    applyForegroundRGBA();
   }
 
   render(): TemplateResult {
