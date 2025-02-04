@@ -38,7 +38,7 @@ const styles: CSSResultGroup = [
       border-width: 1px;
       box-sizing: border-box;
       color: var(--vscode-menu-foreground);
-      cursor: default;
+      cursor: pointer;
       display: flex;
       flex: 1 1 auto;
       height: 2em;
