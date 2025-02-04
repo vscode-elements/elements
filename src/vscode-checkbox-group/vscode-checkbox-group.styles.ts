@@ -1,6 +1,5 @@
 import {css, CSSResultGroup} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
-import formHelperTextStyles from '../includes/formHelperTextStyles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
@@ -35,7 +34,6 @@ const styles: CSSResultGroup = [
       margin-bottom: 0;
     }
   `,
-  formHelperTextStyles,
 ];
 
 export default styles;

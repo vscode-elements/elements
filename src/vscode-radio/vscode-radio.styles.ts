@@ -1,7 +1,6 @@
 import {css, CSSResultGroup} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
 import baseStyles from '../includes/form-button-widget/base.styles.js';
-import formHelperTextStyles from '../includes/formHelperTextStyles.js';
 
 const styles: CSSResultGroup = [
   defaultStyles,
@@ -34,7 +33,6 @@ const styles: CSSResultGroup = [
       outline-offset: -1px;
     }
   `,
-  formHelperTextStyles,
 ];
 
 export default styles;
