@@ -271,6 +271,9 @@ export class VscodeContextMenu extends VscElement {
       return html`${nothing}`;
     }
 
+    const selectedIndex =
+      this._clickableItemIndexes[this._selectedClickableItemIndex];
+
     return html`
       <div class="context-menu" tabindex="0">
         ${this.data
@@ -290,6 +293,7 @@ export class VscodeContextMenu extends VscElement {
                   keybinding=${keybinding}
                   value=${value}
                   ?separator=${separator}
+                  ?selected=${index === selectedIndex}
                   tabindex=${tabindex}
                   @vsc-click=${this._onItemClick}
                   @mouseover=${this._onItemMouseOver}
