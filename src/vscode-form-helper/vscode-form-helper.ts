@@ -1,8 +1,18 @@
 import {html, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {applyForegroundRGBA} from '../includes/themeHelpers.js';
 import {VscElement} from '../includes/VscElement.js';
 import styles from './vscode-form-helper.styles.js';
+
+const lightDOMStyles = new CSSStyleSheet();
+lightDOMStyles.replaceSync(`
+  vscode-form-helper * {
+    margin: 0;
+  }
+
+  vscode-form-helper *:not(:last-child) {
+    margin-bottom: 8px;
+  }
+`);
 
 /**
  * Adds more detailed description to a [FromGroup](https://bendera.github.io/vscode-webview-elements/components/vscode-form-group/)
@@ -17,7 +27,15 @@ export class VscodeFormHelper extends VscElement {
 
   constructor() {
     super();
-    applyForegroundRGBA();
+    this._injectLightDOMStyles();
+  }
+
+  private _injectLightDOMStyles() {
+    const found = document.adoptedStyleSheets.find((s) => s === lightDOMStyles);
+
+    if (!found) {
+      document.adoptedStyleSheets.push(lightDOMStyles);
+    }
   }
 
   render(): TemplateResult {
