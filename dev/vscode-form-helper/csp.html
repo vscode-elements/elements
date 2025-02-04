@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'none';
+        script-src 'nonce-abc123';
+        script-src-elem 'nonce-abc123' http://localhost:8000/__web-dev-server__web-socket.js;
+        font-src 'self' data: 'nonce-abc123';
+        style-src 'nonce-abc123';
+        style-src-elem 'nonce-abc123';
+        connect-src ws://localhost:8000/wds
+      "
+    />
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+      nonce="abc123"
+    />
+    <script nonce="abc123">
+      window.vscodeWebviewPlaygroundNonce = 'abc123';
+      window.vscodeElementsNonce = 'abc123';
+
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+      nonce="abc123"
+    ></script>
+    <script type="module" src="/dist/main.js" nonce="abc123"></script>
+  </head>
+
+  <body>
+    <vscode-dev-toolbar></vscode-dev-toolbar>
+    <h1>CSP</h1>
+    <main>
+      <vscode-demo>
+        <vscode-form-helper>
+          <p>
+            Controls the window title based on the active editor. Variables are
+            substituted based on the context:
+          </p>
+          <ul>
+            <li>
+              <code>${activeEditorShort}</code>: the file name (e.g.
+              myFile.txt).
+            </li>
+            <li>
+              <code>${activeEditorMedium}</code>: the path of the file relative
+              to the workspace folder (e.g. myFolder/myFileFolder/myFile.txt).
+            </li>
+            <li>
+              <code>${activeEditorLong}</code>: the full path of the file (e.g.
+              /Users/Development/myFolder/myFileFolder/myFile.txt).
+            </li>
+            <li>
+              <code>${activeFolderShort}</code>: the name of the folder the file
+              is contained in (e.g. myFileFolder).
+            </li>
+            <li>
+              <code>${activeFolderMedium}</code>: the path of the folder the
+              file is contained in, relative to the workspace folder (e.g.
+              myFolder/myFileFolder).
+            </li>
+            <li>
+              <code>${activeFolderLong}</code>: the full path of the folder the
+              file is contained in (e.g.
+              /Users/Development/myFolder/myFileFolder).
+            </li>
+            <li>
+              <code>${folderName}</code>: name of the workspace folder the file
+              is contained in (e.g. myFolder).
+            </li>
+            <li>
+              <code>${folderPath}</code>: file path of the workspace folder the
+              file is contained in (e.g. /Users/Development/myFolder).
+            </li>
+            <li>
+              <code>${rootName}</code>: name of the opened workspace or folder
+              (e.g. myFolder or myWorkspace).
+            </li>
+            <li>
+              <code>${rootPath}</code>: file path of the opened workspace or
+              folder (e.g. /Users/Development/myWorkspace).
+            </li>
+            <li><code>${appName}</code>: e.g. VS Code.</li>
+            <li><code>${remoteName}</code>: e.g. SSH</li>
+            <li>
+              <code>${dirty}</code>: a dirty indicator if the active editor is
+              dirty.
+            </li>
+            <li>
+              <code>${separator}</code>: a conditional separator (" - ") that
+              only shows when surrounded by variables with values or static
+              text.
+            </li>
+          </ul>
+        </vscode-form-helper>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
