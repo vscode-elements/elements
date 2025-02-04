@@ -79,6 +79,7 @@ export default [
 
     .label-inner {
       display: block;
+      opacity: 0.9;
       padding-left: 27px;
     }
 

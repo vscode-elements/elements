@@ -1,5 +1,4 @@
 import {property} from 'lit/decorators.js';
-import {applyForegroundRGBA} from '../themeHelpers.js';
 import {VscElement} from '../VscElement.js';
 
 export class FormButtonWidgetBase extends VscElement {
@@ -8,7 +7,6 @@ export class FormButtonWidgetBase extends VscElement {
 
   constructor() {
     super();
-    applyForegroundRGBA();
   }
 
   connectedCallback(): void {
