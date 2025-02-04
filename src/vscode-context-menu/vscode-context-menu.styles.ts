@@ -15,7 +15,7 @@ const styles: CSSResultGroup = [
 
     .context-menu {
       background-color: var(--vscode-menu-background);
-      border-color: var(--vscode-menu-border);
+      border-color: var(--vscode-menu-border, var(--vscode-menu-background));
       border-radius: 5px;
       border-style: solid;
       border-width: 1px;
