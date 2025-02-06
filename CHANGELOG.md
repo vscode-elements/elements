@@ -8,7 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 
-- **Icon**: Eliminating style tags to prevent CSP violations.
+- All components are made CSP compliant. The affected components are: **Icon**, **Scrollable**, **TextArea**, **SplitLayout**, **Tree**, **Checkbox**, **Radio**, **FormHelper**.
+- **TextField**: Fixed the synchronization of the inner input value.
+- **ContextMenu**: Fixed mouse over styles.
 
 ### Added
 
