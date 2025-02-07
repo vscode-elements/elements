@@ -331,6 +331,7 @@ export class VscodeMultiSelect
           class="combobox-input"
           spellcheck="false"
           type="text"
+          autocomplete="off"
           .value=${inputVal}
           @focus=${this._onComboboxInputFocus}
           @input=${this._onComboboxInputInput}
