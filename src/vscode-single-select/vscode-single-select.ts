@@ -6,6 +6,7 @@ import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js'
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 import {highlightRanges} from '../includes/vscode-select/helpers.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 /**
  * Allows to select an item from multiple options.
@@ -115,6 +116,9 @@ export class VscodeSingleSelect
 
   @property({type: Boolean, reflect: true})
   required = false;
+
+  @property()
+  autocomplete: 'on' | 'off' | undefined = undefined;
 
   get validity(): ValidityState {
     return this._internals.validity;
@@ -318,7 +322,7 @@ export class VscodeSingleSelect
           class="combobox-input"
           spellcheck="false"
           type="text"
-          autocomplete="off"
+          autocomplete=${ifDefined(this.autocomplete)}
           .value=${inputVal}
           @focus=${this._onComboboxInputFocus}
           @input=${this._onComboboxInputInput}
