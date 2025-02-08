@@ -3,8 +3,8 @@
  */
 import fs from 'fs';
 import util from 'util';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path, {dirname} from 'path';
+import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,7 +18,7 @@ const CHANGELOG_PATH = path.join(__dirname, '..', 'CHANGELOG.md');
 async function main() {
   const pkgPath = path.join(__dirname, '..', 'package.json');
   const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
-  const { version } = pkg;
+  const {version} = pkg;
 
   const fc = await readFile(CHANGELOG_PATH, 'utf-8');
 

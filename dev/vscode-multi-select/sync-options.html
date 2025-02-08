@@ -1,47 +1,52 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VSCode Elements</title>
-  <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
-  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
-  <script type="module" src="/dist/main.js"></script>
-  <script>
-    const logEvents = (selector, eventType) => {
-      document.querySelector(selector).addEventListener(eventType, (ev) => {
-        console.log(ev);
-      });
-    };
-  </script>
-</head>
-
-<body>
-  <h1>Sync options</h1>
-  <main>
-    <vscode-demo>
-      <vscode-multi-select id="select">
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option>Ipsum</vscode-option>
-        <vscode-option>Dolor</vscode-option>
-      </vscode-multi-select>
-      <button id="button">Change</button>
-      <script>
-        logEvents('#select', 'change');
-
-        document.querySelector('#button').addEventListener('click', () => {
-          const op1 = document.querySelectorAll('vscode-option')[0];
-          const op2 = document.querySelectorAll('vscode-option')[1];
-          const op3 = document.querySelectorAll('vscode-option')[2];
-
-          op1.disabled = true;
-          op2.description = 'Test description';
-          op3.selected = true;
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
         });
-      </script>
-    </vscode-demo>
-  </main>
-</body>
+      };
+    </script>
+  </head>
 
+  <body>
+    <h1>Sync options</h1>
+    <main>
+      <vscode-demo>
+        <vscode-multi-select id="select">
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-multi-select>
+        <button id="button">Change</button>
+        <script>
+          logEvents('#select', 'change');
+
+          document.querySelector('#button').addEventListener('click', () => {
+            const op1 = document.querySelectorAll('vscode-option')[0];
+            const op2 = document.querySelectorAll('vscode-option')[1];
+            const op3 = document.querySelectorAll('vscode-option')[2];
+
+            op1.disabled = true;
+            op2.description = 'Test description';
+            op3.selected = true;
+          });
+        </script>
+      </vscode-demo>
+    </main>
+  </body>
 </html>

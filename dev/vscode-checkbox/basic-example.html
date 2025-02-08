@@ -1,42 +1,58 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VSCode Webview Elements demo page</title>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script src="/dist/vscode-checkbox/index.js" type="module"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>VSCode Webview Elements demo page</title>
-  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
-  <script src="/dist/vscode-checkbox/index.js" type="module"></script>
-</head>
-
-<body>
-  <main>
-    <h2>Basic example</h2>
-    <vscode-demo>
-      <vscode-checkbox label="Checkbox example" value="testvalue1" autofocus required id="checkbox-1"></vscode-checkbox>
-      <vscode-checkbox label="Checkbox example" value="testvalue1" checked disabled></vscode-checkbox>
-      <vscode-checkbox label="Checkbox example" value="testvalue1" indeterminate></vscode-checkbox>
-      <input type="checkbox" id="native-checkbox-1" disabled />
-      <label for="native-checkbox-1" disabled>Native checkbox</label>
-      <script type="module">
-        const cb1 = document.querySelector('#checkbox-1');
-        const ncb1 = document.querySelector('#native-checkbox-1');
-        cb1.addEventListener('click', (ev) => {
-          console.log(ev);
-        });
-        cb1.addEventListener('change', (ev) => {
-          console.log(ev);
-        });
-        cb1.addEventListener('invalid', (ev) => {
-          console.log(ev);
-        });
-        ncb1.addEventListener('click', (ev) => {
-          console.log(ev);
-        });
-      </script>
-    </vscode-demo>
-  </main>
-</body>
-
+  <body>
+    <main>
+      <h2>Basic example</h2>
+      <vscode-demo>
+        <vscode-checkbox
+          label="Checkbox example"
+          value="testvalue1"
+          autofocus
+          required
+          id="checkbox-1"
+        ></vscode-checkbox>
+        <vscode-checkbox
+          label="Checkbox example"
+          value="testvalue1"
+          checked
+          disabled
+        ></vscode-checkbox>
+        <vscode-checkbox
+          label="Checkbox example"
+          value="testvalue1"
+          indeterminate
+        ></vscode-checkbox>
+        <input type="checkbox" id="native-checkbox-1" disabled>
+        <label for="native-checkbox-1" disabled>Native checkbox</label>
+        <script type="module">
+          const cb1 = document.querySelector('#checkbox-1');
+          const ncb1 = document.querySelector('#native-checkbox-1');
+          cb1.addEventListener('click', (ev) => {
+            console.log(ev);
+          });
+          cb1.addEventListener('change', (ev) => {
+            console.log(ev);
+          });
+          cb1.addEventListener('invalid', (ev) => {
+            console.log(ev);
+          });
+          ncb1.addEventListener('click', (ev) => {
+            console.log(ev);
+          });
+        </script>
+      </vscode-demo>
+    </main>
+  </body>
 </html>

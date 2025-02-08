@@ -24,7 +24,7 @@ async function main() {
   const {version} = pkg;
 
   const fc = await readFile(BASE_CLASS_PATH, 'utf-8');
-  const re = /private _version = '[0-9a-z-.]+';/g
+  const re = /private _version = '[0-9a-z-.]+';/g;
 
   if (!fc.match(re)) {
     console.log('VscElement.ts version number is not found');
@@ -35,7 +35,9 @@ async function main() {
 
   await writeFile(BASE_CLASS_PATH, newContent);
 
-  console.log(`VscElement.ts version number updated successfully to ${version}`);
+  console.log(
+    `VscElement.ts version number updated successfully to ${version}`
+  );
 }
 
 main();

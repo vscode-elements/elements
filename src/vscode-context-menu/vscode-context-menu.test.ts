@@ -1,4 +1,4 @@
-import { clickOnElement } from '../includes/test-helpers.js';
+import {clickOnElement} from '../includes/test-helpers.js';
 import type {VscodeContextMenuItem} from '../main.js';
 import {VscodeContextMenu} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';

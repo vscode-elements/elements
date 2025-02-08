@@ -1,30 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VSCode Webview Elements demo page</title>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script src="/dist/vscode-checkbox/index.js" type="module"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>VSCode Webview Elements demo page</title>
-  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
-  <script src="/dist/vscode-checkbox/index.js" type="module"></script>
-</head>
-
-<body>
-  <main>
-    <vscode-demo>
-      <style>
-        input[type="checkbox"]:invalid {
-          outline: 2px solid red;
-          outline-offset: 2px;
-        }
-      </style>
-      <vscode-checkbox label="Checkbox example" value="testvalue1" required></vscode-checkbox>
-      <vscode-checkbox label="Checkbox example" value="testvalue1" checked required></vscode-checkbox>
-      <input type="checkbox" required>
-      <input type="checkbox" required checked>
-    </vscode-demo>
-  </main>
-</body>
-
+  <body>
+    <main>
+      <vscode-demo>
+        <style>
+          input[type='checkbox']:invalid {
+            outline: 2px solid red;
+            outline-offset: 2px;
+          }
+        </style>
+        <vscode-checkbox
+          label="Checkbox example"
+          value="testvalue1"
+          required
+        ></vscode-checkbox>
+        <vscode-checkbox
+          label="Checkbox example"
+          value="testvalue1"
+          checked
+          required
+        ></vscode-checkbox>
+        <input type="checkbox" required>
+        <input type="checkbox" required checked>
+      </vscode-demo>
+    </main>
+  </body>
 </html>

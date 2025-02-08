@@ -31,7 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- **SingleSelect**, **MultiSelect**: Added the ability to update the state of an already initialized 
+- **SingleSelect**, **MultiSelect**: Added the ability to update the state of an already initialized
   component by modifying its child options.
 
 ## [1.10.0] - 2025-01-11
@@ -76,7 +76,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - **SplitLayout**: Added `handlePosition` property to adjust the handle position programmatically.
-- **SplitLayout**: Added `fixedPane` property. When the parent element is resized, the panes adjust proportionally. 
+- **SplitLayout**: Added `fixedPane` property. When the parent element is resized, the panes adjust proportionally.
   This parameter allows you to set one of the panes to a fixed size so its dimensions won’t change during resizing.
 - **SplitLayout**: Added `resetHandlePosition()` method to reset the handle position to the default value.
 - **SplitLayout**: Dispatch `vsc-split-layout-change` event when a panel is resized.
@@ -169,7 +169,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- **Tree**: Added `deselectAll()` and `getItemByPath()` helper methods. 
+- **Tree**: Added `deselectAll()` and `getItemByPath()` helper methods.
 
 ## [1.0.1] - 2024-01-05
 

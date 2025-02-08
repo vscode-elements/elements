@@ -336,7 +336,7 @@ export class VscodeMultiSelect
           @focus=${this._onComboboxInputFocus}
           @input=${this._onComboboxInputInput}
           @click=${this._onComboboxInputClick}
-        />
+        >
         <button
           class="combobox-button"
           type="button"
@@ -415,9 +415,7 @@ export class VscodeMultiSelect
         >
           <vscode-icon name="clear-all"></vscode-icon>
         </button>
-        <vscode-button
-          class="button-accept"
-          @click=${this._onMultiAcceptClick}
+        <vscode-button class="button-accept" @click=${this._onMultiAcceptClick}
           >OK</vscode-button
         >
       </div>

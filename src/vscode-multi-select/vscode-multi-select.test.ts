@@ -293,7 +293,9 @@ describe('vscode-multi-select', () => {
       </vscode-multi-select>`
     );
 
-    const op = sl.shadowRoot?.querySelector<HTMLLIElement>('ul.options li:nth-child(2)');
+    const op = sl.shadowRoot?.querySelector<HTMLLIElement>(
+      'ul.options li:nth-child(2)'
+    );
 
     expect(op).lightDom.to.eq(`
       <span class="checkbox-icon checked"></span>

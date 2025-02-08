@@ -385,7 +385,7 @@ export class VscodeTextfield
         @focus=${this._onFocus}
         @input=${this._onInput}
         @keydown=${this._onKeyDown}
-      />
+      >
       <slot name="content-after"></slot>
     `;
   }

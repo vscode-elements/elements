@@ -267,11 +267,7 @@ export class VscodeSelectBase extends VscElement {
       this._values = values;
     }
 
-    if (
-      !this._multiple &&
-      !this.combobox &&
-      selectedIndexes.length === 0
-    ) {
+    if (!this._multiple && !this.combobox && selectedIndexes.length === 0) {
       this._selectedIndex = this._options.length > 0 ? 0 : -1;
     }
   }

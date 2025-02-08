@@ -2,11 +2,6 @@
   "files.readonlyInclude": {
     "dist/**": true
   },
-  "cSpell.words": [
-    "cssprop",
-    "datetime",
-    "maxlength",
-    "slotchange"
-  ],
+  "cSpell.words": ["cssprop", "datetime", "maxlength", "slotchange"],
   "typescript.preferences.importModuleSpecifierEnding": "js"
 }

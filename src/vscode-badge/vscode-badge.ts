@@ -20,8 +20,11 @@ export class VscodeBadge extends VscElement {
   static styles = styles;
 
   @property({reflect: true})
-  variant: 'default' | 'counter' | 'activity-bar-counter' | 'tab-header-counter' =
-    'default';
+  variant:
+    | 'default'
+    | 'counter'
+    | 'activity-bar-counter'
+    | 'tab-header-counter' = 'default';
 
   render(): TemplateResult {
     return html` <slot></slot> `;

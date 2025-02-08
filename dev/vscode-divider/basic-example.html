@@ -1,31 +1,55 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-divider/index.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VSCode Elements</title>
-  <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" id="vscode-codicon-stylesheet">
-  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
-  <script type="module" src="/dist/vscode-divider/index.js"></script>
-  <script>
-    const logEvents = (selector, eventType) => {
-      document.querySelector(selector).addEventListener(eventType, (ev) => {
-        console.log(ev);
-      });
-    };
-  </script>
-</head>
-
-<body>
-  <h1>Divider</h1>
-  <main>
-    <vscode-demo>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis ligula id magna vulputate mollis vel eu massa. Nam cursus velit in egestas viverra. Pellentesque euismod porta elit, sed imperdiet lectus ultrices vel. Aenean eleifend interdum tincidunt. Fusce interdum leo vitae ante egestas imperdiet nec vel quam. Integer dictum eget tortor id porta. Ut faucibus, lacus a interdum molestie, neque urna luctus purus, quis vulputate est est sit amet lectus. Sed eros mauris, lacinia sed lacinia in, fringilla in neque. Nulla eu auctor tortor.</p>
-      <vscode-divider></vscode-divider>
-      <p>Maecenas non velit velit. Fusce tempor risus a gravida volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tincidunt condimentum orci, sit amet consequat odio semper non. Ut a pharetra orci. Ut et aliquet quam. Phasellus a ullamcorper metus. Sed eu ornare magna. In ac semper sem. Cras eget fringilla velit. Praesent convallis ex ac massa semper efficitur. Aliquam ac magna ut arcu ultrices ullamcorper a sit amet eros. Nunc congue massa sit amet leo lacinia cursus. Aenean porta non ligula et euismod.</p>
-    </vscode-demo>
-  </main>
-</body>
-
+  <body>
+    <h1>Divider</h1>
+    <main>
+      <vscode-demo>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis
+          ligula id magna vulputate mollis vel eu massa. Nam cursus velit in
+          egestas viverra. Pellentesque euismod porta elit, sed imperdiet lectus
+          ultrices vel. Aenean eleifend interdum tincidunt. Fusce interdum leo
+          vitae ante egestas imperdiet nec vel quam. Integer dictum eget tortor
+          id porta. Ut faucibus, lacus a interdum molestie, neque urna luctus
+          purus, quis vulputate est est sit amet lectus. Sed eros mauris,
+          lacinia sed lacinia in, fringilla in neque. Nulla eu auctor tortor.
+        </p>
+        <vscode-divider></vscode-divider>
+        <p>
+          Maecenas non velit velit. Fusce tempor risus a gravida volutpat. Class
+          aptent taciti sociosqu ad litora torquent per conubia nostra, per
+          inceptos himenaeos. Etiam tincidunt condimentum orci, sit amet
+          consequat odio semper non. Ut a pharetra orci. Ut et aliquet quam.
+          Phasellus a ullamcorper metus. Sed eu ornare magna. In ac semper sem.
+          Cras eget fringilla velit. Praesent convallis ex ac massa semper
+          efficitur. Aliquam ac magna ut arcu ultrices ullamcorper a sit amet
+          eros. Nunc congue massa sit amet leo lacinia cursus. Aenean porta non
+          ligula et euismod.
+        </p>
+      </vscode-demo>
+    </main>
+  </body>
 </html>

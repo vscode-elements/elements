@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'none'; script-src 'nonce-abc123'; script-src-elem 'nonce-abc123'; font-src 'self' data: 'nonce-abc123'; style-src-elem 'nonce-abc123'"
-    />
+    >
     <title>VSCode Elements</title>
     <link
       rel="stylesheet"
       href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
       nonce="abc123"
-    />
+    >
     <script
       type="module"
       src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
@@ -38,7 +38,12 @@
     <main>
       <vscode-demo>
         <vscode-icon name="account"></vscode-icon>
-        <vscode-icon name="loading" size="32" spin spin-duration="3"></vscode-icon>
+        <vscode-icon
+          name="loading"
+          size="32"
+          spin
+          spin-duration="3"
+        ></vscode-icon>
         <vscode-button icon="account">Hello World</vscode-button>
         <vscode-button secondary>Hello World</vscode-button>
       </vscode-demo>
