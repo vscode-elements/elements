@@ -138,6 +138,7 @@
     "lit": "^3.2.1"
   },
   "devDependencies": {
+    "@awmottaz/prettier-plugin-void-html": "^1.7.0",
     "@bendera/wds-plugin-directory-index": "^0.4.0",
     "@custom-elements-manifest/analyzer": "^0.10.4",
     "@eslint/eslintrc": "^3.2.0",
