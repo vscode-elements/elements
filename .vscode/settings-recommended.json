@@ -1,7 +1,17 @@
 {
   "files.readonlyInclude": {
-    "dist/**": true
+    "dist/**/*": true,
+    "node_modules/**/*": true
   },
-  "cSpell.words": ["cssprop", "datetime", "maxlength", "slotchange"],
+  "cSpell.words": [
+    "csspart",
+    "cssprop",
+    "listbox",
+    "radiogroup",
+    "rgba",
+    "rowgroup",
+    "slotchange",
+    "unfocusable"
+  ],
   "typescript.preferences.importModuleSpecifierEnding": "js"
 }
