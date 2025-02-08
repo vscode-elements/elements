@@ -22,7 +22,7 @@ interface FocusableElement extends Element {
  */
 @customElement('vscode-label')
 export class VscodeLabel extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({reflect: true, attribute: 'for'})
   set htmlFor(val: string) {
@@ -39,18 +39,18 @@ export class VscodeLabel extends VscElement {
   }
 
   @property()
-  set id(val: string) {
+  override set id(val: string) {
     this._id = val;
   }
 
-  get id(): string {
+  override get id(): string {
     return this._id;
   }
 
   @property({type: Boolean, reflect: true})
   required = false;
 
-  attributeChangedCallback(
+  override attributeChangedCallback(
     name: string,
     old: string | null,
     value: string
@@ -58,7 +58,7 @@ export class VscodeLabel extends VscElement {
     super.attributeChangedCallback(name, old, value);
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this._connected = true;
@@ -122,7 +122,7 @@ export class VscodeLabel extends VscElement {
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <label
         class=${classMap({wrapper: true, required: this.required})}

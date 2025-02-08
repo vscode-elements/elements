@@ -16,7 +16,7 @@ import styles from './vscode-tab-header.styles.js';
  */
 @customElement('vscode-tab-header')
 export class VscodeTabHeader extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Boolean, reflect: true})
   active = false;
@@ -33,13 +33,13 @@ export class VscodeTabHeader extends VscElement {
 
   /** @internal */
   @property({reflect: true})
-  role = 'tab';
+  override role = 'tab';
 
   /** @internal */
   @property({type: Number, reflect: true, attribute: 'tab-id'})
   tabId = -1;
 
-  attributeChangedCallback(
+  override attributeChangedCallback(
     name: string,
     old: string | null,
     value: string | null
@@ -53,7 +53,7 @@ export class VscodeTabHeader extends VscElement {
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div
         class=${classMap({

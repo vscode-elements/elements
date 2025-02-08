@@ -27,17 +27,17 @@ import {ifDefined} from 'lit/directives/if-defined.js';
  */
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   static formAssociated = true;
 
   @property({type: Boolean, reflect: true})
-  autofocus = false;
+  override autofocus = false;
 
   /** @internal */
   @property({type: Number, reflect: true})
-  tabIndex = 0;
+  override tabIndex = 0;
 
   /**
    * Button has a less prominent style.
@@ -47,7 +47,7 @@ export class VscodeButton extends VscElement {
 
   /** @internal */
   @property({reflect: true})
-  role = 'button';
+  override role = 'button';
 
   @property({type: Boolean, reflect: true})
   disabled = false;
@@ -118,7 +118,7 @@ export class VscodeButton extends VscElement {
     this._internals = this.attachInternals();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     if (this.autofocus) {
@@ -136,13 +136,13 @@ export class VscodeButton extends VscElement {
     this.addEventListener('blur', this._handleBlur);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('focus', this._handleFocus);
     this.removeEventListener('blur', this._handleBlur);
   }
 
-  update(
+  override update(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -234,7 +234,7 @@ export class VscodeButton extends VscElement {
     this.focused = false;
   };
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const hasIcon = this.icon !== '';
     const hasIconAfter = this.iconAfter !== '';
     const wrapperClasses = {

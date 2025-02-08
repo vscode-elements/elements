@@ -12,13 +12,13 @@ import styles from './vscode-table-header-cell.styles.js';
  */
 @customElement('vscode-table-header-cell')
 export class VscodeTableHeaderCell extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   @property({reflect: true})
-  role = 'columnheader';
+  override role = 'columnheader';
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div class="wrapper">
         <slot></slot>

@@ -18,7 +18,7 @@ const LIST_HEIGHT = VISIBLE_OPTS + OPT_HEIGHT + 2;
 export class VscodeSelectBase extends VscElement {
   /** @internal */
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
-  ariaExpanded = 'false';
+  override ariaExpanded = 'false';
 
   /**
    * Options can be filtered by typing into a text input field.
@@ -128,7 +128,7 @@ export class VscodeSelectBase extends VscElement {
 
   /** @internal */
   @property({type: Number, attribute: true, reflect: true})
-  tabIndex = 0;
+  override tabIndex = 0;
 
   @queryAssignedElements({
     flatten: true,
@@ -145,14 +145,14 @@ export class VscodeSelectBase extends VscElement {
     });
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this._onComponentKeyDown);
     this.addEventListener('focus', this._onComponentFocus);
     this.addEventListener('blur', this._onComponentBlur);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this._onComponentKeyDown);
     this.removeEventListener('focus', this._onComponentFocus);
@@ -589,7 +589,7 @@ export class VscodeSelectBase extends VscElement {
     `;
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <slot class="main-slot" @slotchange="${this._onSlotChange}"></slot>
       ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}

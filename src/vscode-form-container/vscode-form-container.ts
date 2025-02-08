@@ -56,7 +56,7 @@ const isRadio = (el: Element): el is VscodeRadio => {
  */
 @customElement('vscode-form-container')
 export class VscodeFormContainer extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Boolean, reflect: true})
   set responsive(isResponsive: boolean) {
@@ -214,7 +214,7 @@ export class VscodeFormContainer extends VscElement {
     this._resizeObserver = null;
   }
 
-  firstUpdated(): void {
+  override firstUpdated(): void {
     this._firstUpdateComplete = true;
 
     if (this._responsive) {
@@ -222,7 +222,7 @@ export class VscodeFormContainer extends VscElement {
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div class="wrapper">
         <slot></slot>

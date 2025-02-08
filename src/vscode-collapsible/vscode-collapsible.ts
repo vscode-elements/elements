@@ -28,11 +28,11 @@ export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
  */
 @customElement('vscode-collapsible')
 export class VscodeCollapsible extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   /** Component heading text */
   @property({type: String})
-  title = '';
+  override title = '';
 
   /** Less prominent text than the title in the header */
   @property()
@@ -61,7 +61,7 @@ export class VscodeCollapsible extends VscElement {
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const classes = classMap({collapsible: true, open: this.open});
 
     const icon = html`<svg

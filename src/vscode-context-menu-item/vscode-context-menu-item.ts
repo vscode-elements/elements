@@ -28,7 +28,7 @@ export interface VscClickEventDetail {
  */
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: String})
   label = '';
@@ -62,7 +62,7 @@ export class VscodeContextMenuItem extends VscElement {
     );
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       ${this.separator
         ? html`

@@ -67,7 +67,7 @@ export type VscSplitLayoutChangeEvent = CustomEvent<{
  */
 @customElement('vscode-split-layout')
 export class VscodeSplitLayout extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   /**
    * Direction of the divider.
@@ -189,11 +189,11 @@ export class VscodeSplitLayout extends VscElement {
     }
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
   }
 
-  protected firstUpdated(_changedProperties: PropertyValues): void {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     if (this.fixedPane !== 'none') {
       this._resizeObserver.observe(this._wrapperEl);
       this._wrapperObserved = true;
@@ -375,7 +375,7 @@ export class VscodeSplitLayout extends VscElement {
     });
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const {width, height} = this._boundRect;
     const maxPos = this.split === 'vertical' ? width : height;
     const handlePosCss =

@@ -36,7 +36,7 @@ export class VscodeCheckbox
   extends LabelledCheckboxOrRadioMixin(FormButtonWidgetBase)
   implements AssociatedFormControl
 {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   static formAssociated = true;
@@ -53,7 +53,7 @@ export class VscodeCheckbox
    * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus)
    */
   @property({type: Boolean, reflect: true})
-  autofocus = false;
+  override autofocus = false;
 
   @property({type: Boolean, reflect: true})
   set checked(newVal: boolean) {
@@ -81,7 +81,7 @@ export class VscodeCheckbox
 
   /** @internal */
   @property({reflect: true})
-  role = 'checkbox';
+  override role = 'checkbox';
 
   /**
    * Associate a value to the checkbox. According to the native checkbox [specification](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value_2), If the component participates in a form:
@@ -156,7 +156,7 @@ export class VscodeCheckbox
     this._internals = this.attachInternals();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener('keydown', this._handleKeyDown);
@@ -167,11 +167,11 @@ export class VscodeCheckbox
     });
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     this.removeEventListener('keydown', this._handleKeyDown);
   }
 
-  update(
+  override update(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -277,7 +277,7 @@ export class VscodeCheckbox
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const iconClasses = classMap({
       icon: true,
       checked: this.checked,

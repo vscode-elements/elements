@@ -30,7 +30,7 @@ export type VscTabsSelectEvent = CustomEvent<{selectedIndex: number}>;
  */
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {
-  static styles = styles;
+  static override styles = styles;
   /**
    * Panel-like look
    */
@@ -39,7 +39,7 @@ export class VscodeTabs extends VscElement {
 
   /** @internal */
   @property({reflect: true})
-  role = 'tablist';
+  override role = 'tablist';
 
   @property({type: Number, reflect: true, attribute: 'selected-index'})
   selectedIndex = 0;
@@ -49,7 +49,7 @@ export class VscodeTabs extends VscElement {
     this._componentId = uniqueId();
   }
 
-  attributeChangedCallback(
+  override attributeChangedCallback(
     name: string,
     old: string | null,
     value: string | null
@@ -202,7 +202,7 @@ export class VscodeTabs extends VscElement {
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div
         class=${classMap({header: true, panel: this.panel})}

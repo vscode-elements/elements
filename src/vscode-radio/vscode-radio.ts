@@ -36,7 +36,7 @@ export class VscodeRadio
   extends LabelledCheckboxOrRadioMixin(FormButtonWidgetBase)
   implements AssociatedFormControl
 {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   static formAssociated = true;
@@ -48,7 +48,7 @@ export class VscodeRadio
   };
 
   @property({type: Boolean, reflect: true})
-  autofocus = false;
+  override autofocus = false;
 
   @property({type: Boolean, reflect: true})
   checked = false;
@@ -76,11 +76,11 @@ export class VscodeRadio
 
   /** @internal */
   @property({reflect: true})
-  role = 'radio';
+  override role = 'radio';
 
   /** @internal */
   @property({type: Number, reflect: true})
-  tabIndex = 0;
+  override tabIndex = 0;
 
   @state()
   private _slottedText = '';
@@ -95,7 +95,7 @@ export class VscodeRadio
     this._internals = this.attachInternals();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener('keydown', this._handleKeyDown);
@@ -104,14 +104,14 @@ export class VscodeRadio
     this._handleValueChange();
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener('keydown', this._handleKeyDown);
     this.removeEventListener('click', this._handleClick);
   }
 
-  update(
+  override update(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -314,7 +314,7 @@ export class VscodeRadio
     }
   };
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const iconClasses = classMap({
       icon: true,
       checked: this.checked,
