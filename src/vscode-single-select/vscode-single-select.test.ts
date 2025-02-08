@@ -565,6 +565,7 @@ describe('vscode-single-select', () => {
         </slot>
         <div class="combobox-face face">
           <input
+            autocomplete="off"
             class="combobox-input"
             spellcheck="false"
             type="text"
@@ -605,6 +606,7 @@ describe('vscode-single-select', () => {
         </slot>
         <div class="combobox-face face">
           <input
+            autocomplete="off"
             class="combobox-input"
             spellcheck="false"
             type="text"
