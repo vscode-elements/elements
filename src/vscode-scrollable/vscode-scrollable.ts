@@ -22,7 +22,7 @@ import styles from './vscode-scrollable.styles.js';
  */
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Boolean, reflect: true})
   shadow = true;
@@ -88,7 +88,7 @@ export class VscodeScrollable extends VscElement {
   private _scrollbarVisible = true;
   private _scrollbarTrackZ = 0;
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this._hostResizeObserver = new ResizeObserver(this._resizeObserverCallback);
@@ -111,7 +111,7 @@ export class VscodeScrollable extends VscElement {
     this.addEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this._hostResizeObserver.unobserve(this);
@@ -255,7 +255,7 @@ export class VscodeScrollable extends VscElement {
 
   private _onComponentMouseOutBound = this._onComponentMouseOut.bind(this);
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div
         class="scrollable-container"

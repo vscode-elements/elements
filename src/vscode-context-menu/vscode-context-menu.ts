@@ -40,7 +40,7 @@ export type VscContextMenuSelectEvent = CustomEvent<{
  */
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Array, attribute: false})
   set data(data: MenuItemData[]) {
@@ -91,7 +91,7 @@ export class VscodeContextMenu extends VscElement {
 
   /** @internal */
   @property({type: Number, reflect: true})
-  tabIndex = 0;
+  override tabIndex = 0;
 
   constructor() {
     super();
@@ -266,7 +266,7 @@ export class VscodeContextMenu extends VscElement {
     this._selectedClickableItemIndex = -1;
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     if (!this._show) {
       return html`${nothing}`;
     }

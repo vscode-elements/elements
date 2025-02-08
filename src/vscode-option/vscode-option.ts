@@ -8,7 +8,7 @@ import styles from './vscode-option.styles.js';
  */
 @customElement('vscode-option')
 export class VscodeOption extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: String})
   value?: string | undefined;
@@ -24,7 +24,7 @@ export class VscodeOption extends VscElement {
 
   private _initialized = false;
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
@@ -32,7 +32,7 @@ export class VscodeOption extends VscElement {
     });
   }
 
-  protected willUpdate(changedProperties: PropertyValues): void {
+  protected override willUpdate(changedProperties: PropertyValues): void {
     if (
       this._initialized &&
       (changedProperties.has('description') ||
@@ -52,7 +52,7 @@ export class VscodeOption extends VscElement {
     }
   };
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`<slot @slotchange=${this._handleSlotChange}></slot>`;
   }
 }

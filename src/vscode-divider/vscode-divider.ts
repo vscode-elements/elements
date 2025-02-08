@@ -8,12 +8,12 @@ import styles from './vscode-divider.styles.js';
  */
 @customElement('vscode-divider')
 export class VscodeDivider extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({reflect: true})
-  role: 'separator' | 'presentation' = 'separator';
+  override role: 'separator' | 'presentation' = 'separator';
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html``;
   }
 }

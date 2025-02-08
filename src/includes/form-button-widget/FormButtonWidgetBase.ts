@@ -9,19 +9,19 @@ export class FormButtonWidgetBase extends VscElement {
     super();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('focus', this._handleFocus);
     this.addEventListener('blur', this._handleBlur);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('focus', this._handleFocus);
     this.removeEventListener('blur', this._handleBlur);
   }
 
-  attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
+  override attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
     super.attributeChangedCallback(name, oldVal, newVal);
 
     if (name === 'disabled' && this.hasAttribute('disabled')) {

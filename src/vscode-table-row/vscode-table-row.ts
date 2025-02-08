@@ -10,13 +10,13 @@ import styles from './vscode-table-row.styles.js';
  */
 @customElement('vscode-table-row')
 export class VscodeTableRow extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   @property({reflect: true})
-  role = 'row';
+  override role = 'row';
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html` <slot></slot> `;
   }
 }

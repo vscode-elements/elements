@@ -23,7 +23,7 @@ lightDOMStyles.replaceSync(`
  */
 @customElement('vscode-form-helper')
 export class VscodeFormHelper extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   constructor() {
     super();
@@ -38,7 +38,7 @@ export class VscodeFormHelper extends VscElement {
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }

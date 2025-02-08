@@ -56,7 +56,7 @@ export class VscodeSingleSelect
   extends VscodeSelectBase
   implements AssociatedFormControl
 {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
@@ -72,7 +72,7 @@ export class VscodeSingleSelect
 
   /** @internal */
   @property({type: String, attribute: true, reflect: true})
-  role = 'listbox';
+  override role = 'listbox';
 
   @property({reflect: true})
   name: string | undefined = undefined;
@@ -164,7 +164,7 @@ export class VscodeSingleSelect
     this._internals = this.attachInternals();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
@@ -198,7 +198,7 @@ export class VscodeSingleSelect
 
   private _requestedValueToSetLater = '';
 
-  protected _onSlotChange(): void {
+  protected override _onSlotChange(): void {
     super._onSlotChange();
 
     if (this._requestedValueToSetLater) {
@@ -220,7 +220,7 @@ export class VscodeSingleSelect
     }
   }
 
-  protected _onArrowUpKeyDown(): void {
+  protected override _onArrowUpKeyDown(): void {
     super._onArrowUpKeyDown();
 
     if (this.open || this._selectedIndex <= 0) {
@@ -236,7 +236,7 @@ export class VscodeSingleSelect
     this._dispatchChangeEvent();
   }
 
-  protected _onArrowDownKeyDown(): void {
+  protected override _onArrowDownKeyDown(): void {
     super._onArrowDownKeyDown();
 
     if (this.open || this._selectedIndex >= this._options.length - 1) {
@@ -252,7 +252,7 @@ export class VscodeSingleSelect
     this._dispatchChangeEvent();
   }
 
-  protected _onEnterKeyDown(): void {
+  protected override _onEnterKeyDown(): void {
     super._onEnterKeyDown();
 
     this.updateInputValue();
@@ -294,7 +294,7 @@ export class VscodeSingleSelect
     }
   }
 
-  protected _renderSelectFace(): TemplateResult {
+  protected override _renderSelectFace(): TemplateResult {
     const label = this._options[this._selectedIndex]?.label ?? '';
 
     return html`
@@ -308,7 +308,7 @@ export class VscodeSingleSelect
     `;
   }
 
-  protected _renderComboboxFace(): TemplateResult {
+  protected override _renderComboboxFace(): TemplateResult {
     const inputVal =
       this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
 
@@ -336,7 +336,7 @@ export class VscodeSingleSelect
     `;
   }
 
-  protected _renderOptions(): TemplateResult {
+  protected override _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
     const options = list.map((op, index) => {
       const classes = classMap({

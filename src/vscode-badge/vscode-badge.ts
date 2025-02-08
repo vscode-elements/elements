@@ -17,7 +17,7 @@ import styles from './vscode-badge.styles.js';
  */
 @customElement('vscode-badge')
 export class VscodeBadge extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({reflect: true})
   variant:
@@ -26,7 +26,7 @@ export class VscodeBadge extends VscElement {
     | 'activity-bar-counter'
     | 'tab-header-counter' = 'default';
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html` <slot></slot> `;
   }
 }

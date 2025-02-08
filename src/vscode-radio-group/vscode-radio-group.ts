@@ -16,22 +16,22 @@ import styles from './vscode-radio-group.styles.js';
  */
 @customElement('vscode-radio-group')
 export class VscodeRadioGroup extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({reflect: true})
   variant: 'horizontal' | 'vertical' = 'horizontal';
 
   /** @internal */
   @property({reflect: true})
-  role = 'radiogroup';
+  override role = 'radiogroup';
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener('keydown', this._onKeyDownBound);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener('keydown', this._onKeyDownBound);
@@ -159,7 +159,7 @@ export class VscodeRadioGroup extends VscElement {
     });
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div class="wrapper">
         <slot

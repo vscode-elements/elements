@@ -42,7 +42,7 @@ export class VscodeTextarea
   extends VscElement
   implements AssociatedFormControl
 {
-  static styles = styles;
+  static override styles = styles;
 
   /**
    * @internal
@@ -60,7 +60,7 @@ export class VscodeTextarea
   autocomplete: 'on' | 'off' | undefined = undefined;
 
   @property({type: Boolean, reflect: true})
-  autofocus = false;
+  override autofocus = false;
 
   @property({attribute: 'default-value'})
   defaultValue = '';
@@ -102,7 +102,7 @@ export class VscodeTextarea
   required = false;
 
   @property({type: Boolean})
-  spellcheck = false;
+  override spellcheck = false;
 
   /**
    * Use monospace fonts. The font family, weight, size, and color will be the same as set in the
@@ -177,7 +177,7 @@ export class VscodeTextarea
     this._internals = this.attachInternals();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
@@ -187,7 +187,7 @@ export class VscodeTextarea
     });
   }
 
-  updated(
+  override updated(
     changedProperties: PropertyValues<unknown> | Map<PropertyKey, unknown>
   ): void {
     const validationRelatedProps = ['maxLength', 'minLength', 'required'];
@@ -294,7 +294,7 @@ export class VscodeTextarea
     this._shadow = this._textareaEl.scrollTop > 0;
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div
         class=${classMap({

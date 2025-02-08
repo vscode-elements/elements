@@ -48,7 +48,7 @@ export class VscodeMultiSelect
   extends VscodeSelectBase
   implements AssociatedFormControl
 {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
@@ -147,7 +147,7 @@ export class VscodeMultiSelect
     this._internals = this.attachInternals();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
@@ -212,7 +212,7 @@ export class VscodeMultiSelect
 
   private _requestedValueToSetLater: string[] = [];
 
-  protected _onSlotChange(): void {
+  protected override _onSlotChange(): void {
     super._onSlotChange();
 
     if (this._requestedValueToSetLater.length > 0) {
@@ -308,7 +308,7 @@ export class VscodeMultiSelect
     }
   }
 
-  protected _renderSelectFace(): TemplateResult {
+  protected override _renderSelectFace(): TemplateResult {
     return html`
       <div
         class="select-face face multiselect"
@@ -320,7 +320,7 @@ export class VscodeMultiSelect
     `;
   }
 
-  protected _renderComboboxFace(): TemplateResult {
+  protected override _renderComboboxFace(): TemplateResult {
     const inputVal =
       this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
 
@@ -349,7 +349,7 @@ export class VscodeMultiSelect
     `;
   }
 
-  protected _renderOptions(): TemplateResult {
+  protected override _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
 
     return html`
@@ -394,7 +394,7 @@ export class VscodeMultiSelect
     `;
   }
 
-  protected _renderDropdownControls(): TemplateResult {
+  protected override _renderDropdownControls(): TemplateResult {
     return html`
       <div class="dropdown-controls">
         <button

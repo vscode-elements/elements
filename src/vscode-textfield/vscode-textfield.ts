@@ -52,7 +52,7 @@ export class VscodeTextfield
   extends VscElement
   implements AssociatedFormControl
 {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   static formAssociated = true;
@@ -67,7 +67,7 @@ export class VscodeTextfield
   autocomplete: 'on' | 'off' | undefined = undefined;
 
   @property({type: Boolean, reflect: true})
-  autofocus = false;
+  override autofocus = false;
 
   @property({attribute: 'default-value'})
   defaultValue = '';
@@ -240,7 +240,7 @@ export class VscodeTextfield
     this._internals = this.attachInternals();
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this.updateComplete.then(() => {
@@ -250,7 +250,7 @@ export class VscodeTextfield
     });
   }
 
-  attributeChangedCallback(
+  override attributeChangedCallback(
     name: string,
     old: string | null,
     value: string | null
@@ -358,7 +358,7 @@ export class VscodeTextfield
     }
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <slot name="content-before"></slot>
       <input

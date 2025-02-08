@@ -186,7 +186,7 @@ const isBranch = (item: TreeItem) => {
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Array, reflect: false})
   set data(val: TreeItem[]) {
@@ -253,12 +253,12 @@ export class VscodeTree extends VscElement {
     return this._getItemByPath(path);
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('keydown', this._handleComponentKeyDownBound);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this._handleComponentKeyDownBound);
   }
@@ -951,7 +951,7 @@ export class VscodeTree extends VscElement {
   private _handleComponentKeyDownBound =
     this._handleComponentKeyDown.bind(this);
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const classes = classMap({
       multi: this.multiline,
       single: !this.multiline,

@@ -20,7 +20,7 @@ import styles from './vscode-icon.styles.js';
  */
 @customElement('vscode-icon')
 export class VscodeIcon extends VscElement {
-  static styles = styles;
+  static override styles = styles;
   /**
    * Set a meaningful label in `action-icon` mode for the screen readers
    */
@@ -61,7 +61,7 @@ export class VscodeIcon extends VscElement {
 
   private static nonce: string | undefined = '';
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     const {href, nonce} = this._getStylesheetConfig();
@@ -102,7 +102,7 @@ export class VscodeIcon extends VscElement {
     );
   };
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const {stylesheetHref, nonce} = VscodeIcon;
 
     const content = html`<span

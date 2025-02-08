@@ -11,10 +11,10 @@ import styles from './vscode-tab-panel.styles.js';
  */
 @customElement('vscode-tab-panel')
 export class VscodeTabPanel extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Boolean, reflect: true})
-  hidden = false;
+  override hidden = false;
 
   /** @internal */
   @property({reflect: true, attribute: 'aria-labelledby'})
@@ -28,13 +28,13 @@ export class VscodeTabPanel extends VscElement {
 
   /** @internal */
   @property({reflect: true})
-  role = 'tabpanel';
+  override role = 'tabpanel';
 
   /** @internal */
   @property({type: Number, reflect: true})
-  tabIndex = 0;
+  override tabIndex = 0;
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html` <slot></slot> `;
   }
 }

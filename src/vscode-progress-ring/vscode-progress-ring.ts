@@ -8,18 +8,18 @@ import styles from './vscode-progress-ring.styles.js';
  */
 @customElement('vscode-progress-ring')
 export class VscodeProgressRing extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({reflect: true, attribute: 'aria-label'})
-  ariaLabel = 'Loading';
+  override ariaLabel = 'Loading';
 
   @property({reflect: true, attribute: 'aria-live'})
-  ariaLive = 'assertive';
+  override ariaLive = 'assertive';
 
   @property({reflect: true})
-  role = 'alert';
+  override role = 'alert';
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`<svg class="progress" part="progress" viewBox="0 0 16 16">
       <circle
         class="background"

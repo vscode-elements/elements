@@ -13,12 +13,12 @@ export type FormGroupVariant = 'horizontal' | 'vertical' | 'settings-group';
  */
 @customElement('vscode-form-group')
 export class VscodeFormGroup extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({reflect: true})
   variant: FormGroupVariant = 'horizontal';
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
       <div class="wrapper">
         <slot></slot>

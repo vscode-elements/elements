@@ -40,11 +40,11 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
  */
 @customElement('vscode-table')
 export class VscodeTable extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   /** @internal */
   @property({reflect: true})
-  role = 'table';
+  override role = 'table';
 
   @property({type: Boolean, reflect: true})
   resizable = false;
@@ -161,14 +161,14 @@ export class VscodeTable extends VscElement {
   private _prevHeaderHeight = 0;
   private _prevComponentHeight = 0;
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this._memoizeComponentDimensions();
     this._initDefaultColumnSizes();
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._componentResizeObserver?.unobserve(this);
     this._componentResizeObserver?.disconnect();
@@ -588,7 +588,7 @@ export class VscodeTable extends VscElement {
     document.removeEventListener('mouseup', this._onResizingMouseUp);
   };
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const sashes = this._sashPositions.map((val, index) => {
       const classes = classMap({
         sash: true,
