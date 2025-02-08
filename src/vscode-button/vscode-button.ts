@@ -13,17 +13,17 @@ import {ifDefined} from 'lit/directives/if-defined.js';
  *
  * @fires vsc-click Dispatched only when button is not in disabled state.
  *
- * @cssprop --vscode-button-background
- * @cssprop --vscode-button-foreground
- * @cssprop [--vscode-button-border=var(--vscode-button-background)]
- * @cssprop --vscode-button-hoverBackground
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-font-weight
- * @cssprop --vscode-button-secondaryForeground
- * @cssprop --vscode-button-secondaryBackground
- * @cssprop --vscode-button-secondaryHoverBackground
- * @cssprop --vscode-focusBorder
+ * @cssprop [--vscode-button-background=#0078d4]
+ * @cssprop [--vscode-button-foreground=#ffffff]
+ * @cssprop [--vscode-button-border=var(--vscode-button-background, rgba(255, 255, 255, 0.07))]
+ * @cssprop [--vscode-button-hoverBackground=#026ec1]
+ * @cssprop [--vscode-font-family=sans-serif] - A sans-serif font type depends on the host OS.
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-button-secondaryForeground=#cccccc]
+ * @cssprop [--vscode-button-secondaryBackground=#313131]
+ * @cssprop [--vscode-button-secondaryHoverBackground=#3c3c3c]
+ * @cssprop [--vscode-focusBorder=#0078d4]
  */
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {
