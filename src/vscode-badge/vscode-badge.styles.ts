@@ -1,17 +1,20 @@
-import {css, CSSResultGroup} from 'lit';
+import {css, CSSResultGroup, unsafeCSS} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
+import {getDefaultFontStack} from '../includes/helpers.js';
+
+const defaultFontStack = unsafeCSS(getDefaultFontStack());
 
 const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      background-color: var(--vscode-badge-background);
+      background-color: var(--vscode-badge-background, #616161);
       border: 1px solid var(--vscode-contrastBorder, transparent);
       border-radius: 2px;
       box-sizing: border-box;
-      color: var(--vscode-badge-foreground);
+      color: var(--vscode-badge-foreground, #f8f8f8);
       display: inline-block;
-      font-family: var(--vscode-font-family);
+      font-family: var(--vscode-font-family, ${defaultFontStack});
       font-size: 11px;
       font-weight: 400;
       line-height: 14px;
@@ -30,9 +33,9 @@ const styles: CSSResultGroup = [
     }
 
     :host([variant='activity-bar-counter']) {
-      background-color: var(--vscode-activityBarBadge-background);
+      background-color: var(--vscode-activityBarBadge-background, #0078d4);
       border-radius: 20px;
-      color: var(--vscode-activityBarBadge-foreground);
+      color: var(--vscode-activityBarBadge-foreground, #ffffff);
       font-size: 9px;
       font-weight: 600;
       line-height: 16px;
@@ -40,9 +43,9 @@ const styles: CSSResultGroup = [
     }
 
     :host([variant='tab-header-counter']) {
-      background-color: var(--vscode-activityBarBadge-background);
+      background-color: var(--vscode-activityBarBadge-background, #0078d4);
       border-radius: 10px;
-      color: var(--vscode-activityBarBadge-foreground);
+      color: var(--vscode-activityBarBadge-foreground, #ffffff);
       line-height: 10px;
       min-height: 16px;
       min-width: 16px;
