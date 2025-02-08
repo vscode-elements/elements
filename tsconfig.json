@@ -18,9 +18,9 @@
     "noImplicitThis": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
     "types": ["mocha"]
   },
   "include": ["src/**/*.ts"],
