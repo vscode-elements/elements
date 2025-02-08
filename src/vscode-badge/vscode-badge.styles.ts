@@ -23,10 +23,10 @@ const styles: CSSResultGroup = [
 
     :host([variant='counter']) {
       border-radius: 11px;
-      box-sizing: border-box;
-      height: 18px;
-      line-height: 1;
-      padding: 3px 5px;
+      line-height: 11px;
+      min-height: 18px;
+      min-width: 18px;
+      padding: 3px 6px;
     }
 
     :host([variant='activity-bar-counter']) {
@@ -37,6 +37,16 @@ const styles: CSSResultGroup = [
       font-weight: 600;
       line-height: 16px;
       padding: 0 4px;
+    }
+
+    :host([variant='tab-header-counter']) {
+      background-color: var(--vscode-activityBarBadge-background);
+      border-radius: 10px;
+      color: var(--vscode-activityBarBadge-foreground);
+      line-height: 10px;
+      min-height: 16px;
+      min-width: 16px;
+      padding: 3px 5px;
     }
   `,
 ];
