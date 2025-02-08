@@ -9,7 +9,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 async function main() {
-  const fc = await readFile(path.join(__dirname, '..', 'custom-elements.json'), 'utf-8');
+  const fc = await readFile(
+    path.join(__dirname, '..', 'custom-elements.json'),
+    'utf-8'
+  );
   const manifest = JSON.parse(fc);
 
   const options = {};

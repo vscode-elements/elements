@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>&lt;vscode-tabs&gt; Demo</title>
-    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css">
     <link
       rel="stylesheet"
       href="../node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
       nonce="testid123"
-    />
+    >
     <script src="../dev-assets/component-preview.js" type="module"></script>
     <script type="module" src="../dist/vscode-badge.js"></script>
     <script type="module" src="../dist/vscode-icon.js"></script>
@@ -34,7 +34,9 @@
           <component-preview>
             <vscode-tabs class="tabs-1" id="tabs-1">
               <!-- display:block -->
-              <vscode-tab-header>Lorem Loooooooooooooooooooooooooooooooooooooong text</vscode-tab-header>
+              <vscode-tab-header>
+                Lorem Loooooooooooooooooooooooooooooooooooooong text
+              </vscode-tab-header>
               <vscode-tab-panel>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
@@ -57,7 +59,8 @@
               </vscode-tab-panel>
               <!-- display:block -->
               <vscode-tab-header>
-                Ipsum loooooooooooooooooooooooooooooooooooooong text<vscode-badge variant="counter" slot="content-after"
+                Ipsum loooooooooooooooooooooooooooooooooooooong
+                text<vscode-badge variant="counter" slot="content-after"
                   >2</vscode-badge
                 >
               </vscode-tab-header>
@@ -100,7 +103,7 @@
 
             tabs.addEventListener('vsc-select', (ev) => {
               console.log(ev);
-            })
+            });
 
             tabs.selectedIndex = 3;
 

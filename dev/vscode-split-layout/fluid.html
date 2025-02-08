@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split Layout</title>
     <link
       rel="stylesheet"
       href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
-    />
+    >
     <script
       type="module"
       src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
@@ -32,10 +32,16 @@
         initial-handle-position="100px"
         reset-on-dbl-click
         split="vertical"
-        style="width: 100%; height: 250px; border-width: 10px;"
+        style="width: 100%; height: 250px; border-width: 10px"
       >
         <div slot="start" class="split-layout-content start">
-          <vscode-scrollable style="width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.2);">
+          <vscode-scrollable
+            style="
+              width: 100%;
+              height: 100%;
+              background-color: rgba(255, 0, 0, 0.2);
+            "
+          >
             Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
             Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
             Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo
@@ -61,7 +67,13 @@
           </vscode-scrollable>
         </div>
         <div slot="end" class="split-layout-content">
-          <vscode-scrollable style="width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.2);">
+          <vscode-scrollable
+            style="
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 255, 0.2);
+            "
+          >
             Praesent ultrices mauris lectus, eu molestie erat lacinia vitae.
             Phasellus vestibulum pellentesque ligula malesuada sollicitudin.
             Vivamus vitae erat eget nulla laoreet porttitor. Nullam sit amet leo

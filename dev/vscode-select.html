@@ -1,16 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>&lt;vscode-single-select&gt; Demo</title>
     <link
       rel="stylesheet"
       href="../node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
-    />
-    <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
     <script type="module" src="../dist/vscode-icon/index.js"></script>
     <script type="module" src="../dist/vscode-option/index.js"></script>
     <script type="module" src="../dist/vscode-single-select/index.js"></script>
@@ -35,7 +38,10 @@
         style="--dropdown-z-index: 10"
         position="above"
       >
-        <vscode-option description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus elementum mauris, eget porttitor libero varius nec.">Afghanistan</vscode-option>
+        <vscode-option
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus elementum mauris, eget porttitor libero varius nec."
+          >Afghanistan</vscode-option
+        >
         <vscode-option description="Test ">Albania</vscode-option>
         <vscode-option>Algeria</vscode-option>
         <vscode-option>Andorra</vscode-option>
@@ -251,7 +257,10 @@
     <vscode-demo>
       <vscode-single-select>
         <vscode-option>Lorem</vscode-option>
-        <vscode-option description="C:\workspace\vscodewebviewelements\src\vscodesingleselect.ts">Ipsum</vscode-option>
+        <vscode-option
+          description="C:\workspace\vscodewebviewelements\src\vscodesingleselect.ts"
+          >Ipsum</vscode-option
+        >
       </vscode-single-select>
     </vscode-demo>
 
@@ -287,7 +296,7 @@
         id="sl-2"
         combobox
         filter="startsWithPerTerm"
-        style="--dropdown-z-index: 1000;"
+        style="--dropdown-z-index: 1000"
       >
         <vscode-option>Lorem Ipsum Dolor</vscode-option>
         <vscode-option>Afghanistan</vscode-option>
@@ -645,7 +654,9 @@
         <vscode-option description="Add or update text and literals." value="💬"
           >💬 speech_balloon</vscode-option
         >
-        <vscode-option description="Perform database related changes." value="🗃"
+        <vscode-option
+          description="Perform database related changes."
+          value="🗃"
           >🗃 card_file_box</vscode-option
         >
         <vscode-option description="Add or update logs." value="🔊"
@@ -771,7 +782,13 @@
 
     <h2>Multi combo box example</h2>
     <vscode-demo>
-      <vscode-multi-select data-cloak id="sl-4" combobox filter="fuzzy" position="above">
+      <vscode-multi-select
+        data-cloak
+        id="sl-4"
+        combobox
+        filter="fuzzy"
+        position="above"
+      >
         <vscode-option>Afghanistan</vscode-option>
         <vscode-option description="Test ">Albania</vscode-option>
         <vscode-option>Algeria</vscode-option>

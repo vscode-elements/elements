@@ -16,7 +16,7 @@ const styles: CSSResultGroup = [
     :host([vertical]) {
       margin-left: 0;
     }
-   `,
+  `,
 ];
 
 export default styles;

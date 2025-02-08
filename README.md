@@ -1,4 +1,4 @@
-# VSCode Elements 
+# VSCode Elements
 
 For the end-user documentation, [click here](https://vscode-elements.github.io).
 

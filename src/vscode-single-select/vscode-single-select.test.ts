@@ -934,7 +934,9 @@ describe('vscode-single-select', () => {
       </vscode-single-select>`
     );
 
-    const op = sl.shadowRoot?.querySelector<HTMLLIElement>('ul.options li:nth-child(2)');
+    const op = sl.shadowRoot?.querySelector<HTMLLIElement>(
+      'ul.options li:nth-child(2)'
+    );
 
     expect(op).lightDom.to.eq('Ipsum');
     expect(op?.classList.contains('selected')).to.be.true;

@@ -1,34 +1,41 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>&lt;vscode-single-select&gt; Demo</title>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-single-select/index.js"></script>
+    <script type="module" src="/dist/vscode-option/index.js"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>&lt;vscode-single-select&gt; Demo</title>
-  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
-  <script type="module" src="/dist/vscode-single-select/index.js"></script>
-  <script type="module" src="/dist/vscode-option/index.js"></script>
-</head>
+  <body class="vscode-light">
+    <vscode-demo>
+      <vscode-single-select id="select">
+        <vscode-option value="3f7382c7-d4cb-49a5-a1d3-4e9df19ed432"
+          >Lorem</vscode-option
+        >
+        <vscode-option value="fb2d78db-6b69-4148-a534-99f26c2411e6"
+          >Ipsum</vscode-option
+        >
+        <vscode-option value="250ec3a2-0b2b-45d5-a053-b8f71ed5e15e"
+          >Dolor</vscode-option
+        >
+      </vscode-single-select>
+    </vscode-demo>
+    <div id="out"></div>
+    <script type="module">
+      const sl = document.getElementById('select');
+      const out = document.getElementById('out');
 
-<body class="vscode-light">
-  <vscode-demo>
-    <vscode-single-select id="select">
-      <vscode-option value="3f7382c7-d4cb-49a5-a1d3-4e9df19ed432">Lorem</vscode-option>
-      <vscode-option value="fb2d78db-6b69-4148-a534-99f26c2411e6">Ipsum</vscode-option>
-      <vscode-option value="250ec3a2-0b2b-45d5-a053-b8f71ed5e15e">Dolor</vscode-option>
-    </vscode-single-select>
-  </vscode-demo>
-  <div id="out"></div>
-  <script type="module">
-    const sl = document.getElementById('select');
-    const out = document.getElementById('out');
-
-    sl.addEventListener('change', (ev) => {
-      console.log(ev.target.value);
-      out.innerHTML = ev.target.value;
-    });
-  </script>
-</body>
-
+      sl.addEventListener('change', (ev) => {
+        console.log(ev.target.value);
+        out.innerHTML = ev.target.value;
+      });
+    </script>
+  </body>
 </html>

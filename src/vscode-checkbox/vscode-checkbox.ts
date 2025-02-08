@@ -99,7 +99,6 @@ export class VscodeCheckbox
   @property({type: Boolean, reflect: true})
   indeterminate = false;
 
-  
   @property({type: Boolean, reflect: true})
   set required(newVal: boolean) {
     this._required = newVal;
@@ -122,7 +121,6 @@ export class VscodeCheckbox
   get validity(): ValidityState {
     return this._internals.validity;
   }
-
 
   get validationMessage(): string {
     return this._internals.validationMessage;
@@ -317,7 +315,7 @@ export class VscodeCheckbox
           type="checkbox"
           ?checked=${this.checked}
           value=${this.value}
-        />
+        >
         <div class=${iconClasses}>${indeterminate}${check}</div>
         <label for="input" class="label" @click=${this._handleClick}>
           <span class=${labelInnerClasses}>

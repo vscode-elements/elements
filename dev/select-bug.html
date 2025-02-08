@@ -1,43 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>&lt;vscode-single-select&gt; Demo</title>
+    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css">
+    <script type="module" src="../dev-assets/component-preview.js"></script>
+    <script type="module" src="../dist/vscode-option/index.js"></script>
+    <script type="module" src="../dist/vscode-single-select/index.js"></script>
+    <script type="module" src="../dist/vscode-multi-select/index.js"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>&lt;vscode-single-select&gt; Demo</title>
-  <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
-  <script type="module" src="../dev-assets/component-preview.js"></script>
-  <script type="module" src="../dist/vscode-option/index.js"></script>
-  <script type="module" src="../dist/vscode-single-select/index.js"></script>
-  <script type="module" src="../dist/vscode-multi-select/index.js"></script>
-</head>
+  <body>
+    <component-preview>
+      <!-- empty but contains white spaces -->
+      <vscode-single-select id="select"> </vscode-single-select>
+    </component-preview>
 
-<body>
-  <component-preview>
-    <!-- empty but contains white spaces -->
-    <vscode-single-select id="select">
+    <button type="button" id="button">Add options</button>
 
-    </vscode-single-select>
-  </component-preview>
+    <script>
+      const select = document.getElementById('select');
+      const button = document.getElementById('button');
+      const options = [
+        (document.createElement('vscode-option').innerHTML = 'Lorem'),
+        (document.createElement('vscode-option').innerHTML = 'Ipsum'),
+        (document.createElement('vscode-option').innerHTML = 'Dolor'),
+      ];
 
-  <button type="button" id="button">Add options</button>
+      select.selectedIndex = 0;
 
-  <script>
-    const select = document.getElementById('select');
-    const button = document.getElementById('button');
-    const options = [
-      document.createElement('vscode-option').innerHTML = "Lorem",
-      document.createElement('vscode-option').innerHTML = "Ipsum",
-      document.createElement('vscode-option').innerHTML = "Dolor",
-    ];
-
-    select.selectedIndex = 0;
-
-    button.addEventListener('click', () =>{
-
-    });
-  </script>
-</body>
-
+      button.addEventListener('click', () => {});
+    </script>
+  </body>
 </html>

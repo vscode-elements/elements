@@ -1,55 +1,64 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>&lt;vscode-table&gt; Demo</title>
+    <link rel="stylesheet" href="/dev-assets/default-webview-styles.css">
+    <script type="module" src="/dev-assets/component-preview.js"></script>
+    <script type="module" src="/dist/vscode-split-layout/index.js"></script>
+    <script type="module" src="/dist/vscode-scrollable/index.js"></script>
+    <script type="module" src="/dist/vscode-table/index.js"></script>
+    <script type="module" src="/dist/vscode-table-header/index.js"></script>
+    <script
+      type="module"
+      src="/dist/vscode-table-header-cell/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-table-cell/index.js"></script>
+    <script type="module" src="/dist/vscode-table-row/index.js"></script>
+    <script type="module" src="/dist/vscode-table-body/index.js"></script>
+    <script type="module" src="/dist/vscode-collapsible/index.js"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>&lt;vscode-table&gt; Demo</title>
-  <link rel="stylesheet" href="/dev-assets/default-webview-styles.css" />
-  <script type="module" src="/dev-assets/component-preview.js"></script>
-  <script type="module" src="/dist/vscode-split-layout/index.js"></script>
-  <script type="module" src="/dist/vscode-scrollable/index.js"></script>
-  <script type="module" src="/dist/vscode-table/index.js"></script>
-  <script type="module" src="/dist/vscode-table-header/index.js"></script>
-  <script type="module" src="/dist/vscode-table-header-cell/index.js"></script>
-  <script type="module" src="/dist/vscode-table-cell/index.js"></script>
-  <script type="module" src="/dist/vscode-table-row/index.js"></script>
-  <script type="module" src="/dist/vscode-table-body/index.js"></script>
-  <script type="module" src="/dist/vscode-collapsible/index.js"></script>
-</head>
-
-<body class="vscode-light">
-
-  <component-preview>
-    <vscode-collapsible title="Installed" description="Packages in this namespace" open>
-      <p>
-        <vscode-table class="packages" zebra bordered-columns resizable columns='["15%", "10%", "15%", "60%"]'>
-          <vscode-table-header slot="header">
-            <vscode-table-header-cell>Name</vscode-table-header-cell>
-            <vscode-table-header-cell>Version</vscode-table-header-cell>
-            <vscode-table-header-cell>Display Name</vscode-table-header-cell>
-            <vscode-table-header-cell>Description</vscode-table-header-cell>
-          </vscode-table-header>
-          <vscode-table-body slot="body">
-            <vscode-table-row>
-              <vscode-table-cell>one</vscode-table-cell>
-              <vscode-table-cell>1.0</vscode-table-cell>
-              <vscode-table-cell>First package</vscode-table-cell>
-              <vscode-table-cell>Fake description #1</vscode-table-cell>
-            </vscode-table-row>
-            <vscode-table-row>
-              <vscode-table-cell>two</vscode-table-cell>
-              <vscode-table-cell>2.0</vscode-table-cell>
-              <vscode-table-cell>Second package</vscode-table-cell>
-              <vscode-table-cell>Fake description #2</vscode-table-cell>
-            </vscode-table-row>
-          </vscode-table-body>
-        </vscode-table>
-      </p>
-    </vscode-collapsible>
-  </component-preview>
-
-</body>
-
+  <body class="vscode-light">
+    <component-preview>
+      <vscode-collapsible
+        title="Installed"
+        description="Packages in this namespace"
+        open
+      >
+        <p>
+          <vscode-table
+            class="packages"
+            zebra
+            bordered-columns
+            resizable
+            columns='["15%", "10%", "15%", "60%"]'
+          >
+            <vscode-table-header slot="header">
+              <vscode-table-header-cell>Name</vscode-table-header-cell>
+              <vscode-table-header-cell>Version</vscode-table-header-cell>
+              <vscode-table-header-cell>Display Name</vscode-table-header-cell>
+              <vscode-table-header-cell>Description</vscode-table-header-cell>
+            </vscode-table-header>
+            <vscode-table-body slot="body">
+              <vscode-table-row>
+                <vscode-table-cell>one</vscode-table-cell>
+                <vscode-table-cell>1.0</vscode-table-cell>
+                <vscode-table-cell>First package</vscode-table-cell>
+                <vscode-table-cell>Fake description #1</vscode-table-cell>
+              </vscode-table-row>
+              <vscode-table-row>
+                <vscode-table-cell>two</vscode-table-cell>
+                <vscode-table-cell>2.0</vscode-table-cell>
+                <vscode-table-cell>Second package</vscode-table-cell>
+                <vscode-table-cell>Fake description #2</vscode-table-cell>
+              </vscode-table-row>
+            </vscode-table-body>
+          </vscode-table>
+        </p>
+      </vscode-collapsible>
+    </component-preview>
+  </body>
 </html>
