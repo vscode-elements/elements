@@ -10,6 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **SingleSelect**, **MultiSelect**: Prevent browser suggestions in single and multi-selects in combobox mode.
 
+## Added
+
+- **Badge**: Added `tab-header-counter` variant.
+- Added fallback styles from **Badge** and **Button**.
+  These components still look proper even if the theme variables provided by VSCode are not present. 
+  In such cases, the components appear with the default theme (Dark Modern).
+
 ## [1.12.0] - 2025-02-06
 
 ### Fixed
