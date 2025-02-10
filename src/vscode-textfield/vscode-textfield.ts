@@ -35,17 +35,20 @@ type InputType =
  * @fires {InputEvent} input
  * @fires {Event} change
  *
- * @cssprop --vscode-settings-textInputBackground
- * @cssprop --vscode-settings-textInputBorder
- * @cssprop --vscode-settings-textInputForeground
- * @cssprop --vscode-focusBorder
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-font-weight
- * @cssprop --vscode-input-placeholderForeground
- * @cssprop --vscode-button-background
- * @cssprop --vscode-button-foreground
- * @cssprop --vscode-button-hoverBackground
+ * @cssprop [--vscode-settings-textInputBackground=#313131]
+ * @cssprop [--vscode-settings-textInputBorder=var(--vscode-settings-textInputBackground, #3c3c3c)]
+ * @cssprop [--vscode-settings-textInputForeground=#cccccc]
+ * @cssprop [--vscode-settings-textInputBackground=#313131]
+ * @cssprop [--vscode-focusBorder=#0078d4]
+ * @cssprop [--vscode-font-family=sans-serif] - A sans-serif font type depends on the host OS.
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-inputValidation-errorBorder=#be1100]
+ * @cssprop [--vscode-inputValidation-errorBackground=#5a1d1d]
+ * @cssprop [--vscode-input-placeholderForeground=#989898]
+ * @cssprop [--vscode-button-background=#0078d4]
+ * @cssprop [--vscode-button-foreground=#ffffff]
+ * @cssprop [--vscode-button-hoverBackground=#026ec1]
  */
 @customElement('vscode-textfield')
 export class VscodeTextfield
