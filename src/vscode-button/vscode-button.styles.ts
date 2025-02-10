@@ -72,7 +72,7 @@ const styles: CSSResultGroup = [
     }
 
     :host([disabled]:focus) {
-      background-color: var(--vscode-button-background,#0078d4);
+      background-color: var(--vscode-button-background, #0078d4);
       outline: 0;
     }
 
