@@ -1,21 +1,24 @@
-import {css, CSSResultGroup} from 'lit';
+import {css, CSSResultGroup, unsafeCSS} from 'lit';
 import defaultStyles from '../includes/default.styles.js';
+import {getDefaultFontStack} from '../includes/helpers.js';
+
+const defaultFontStack = unsafeCSS(getDefaultFontStack());
 
 const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
       align-items: center;
-      background-color: var(--vscode-settings-textInputBackground);
+      background-color: var(--vscode-settings-textInputBackground, #313131);
       border-color: var(
         --vscode-settings-textInputBorder,
-        var(--vscode-settings-textInputBackground)
+        var(--vscode-settings-textInputBackground, #3c3c3c)
       );
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
-      color: var(--vscode-settings-textInputForeground);
+      color: var(--vscode-settings-textInputForeground, #cccccc);
       display: inline-flex;
       max-width: 100%;
       position: relative;
@@ -23,7 +26,7 @@ const styles: CSSResultGroup = [
     }
 
     :host([focused]) {
-      border-color: var(--vscode-focusBorder);
+      border-color: var(--vscode-focusBorder, #0078d4);
     }
 
     :host([invalid]),
@@ -33,7 +36,7 @@ const styles: CSSResultGroup = [
 
     :host([invalid]) input,
     :host(:invalid) input {
-      background-color: var(--vscode-inputValidation-errorBackground);
+      background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d);
     }
 
     ::slotted([slot='content-before']) {
@@ -53,14 +56,14 @@ const styles: CSSResultGroup = [
     }
 
     input {
-      background-color: var(--vscode-settings-textInputBackground);
+      background-color: var(--vscode-settings-textInputBackground, #313131);
       border: 0;
       box-sizing: border-box;
-      color: var(--vscode-settings-textInputForeground);
+      color: var(--vscode-settings-textInputForeground, #cccccc);
       display: block;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      font-family: var(--vscode-font-family, ${defaultFontStack});
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, 'normal');
       line-height: 18px;
       outline: none;
       padding-bottom: 3px;
@@ -75,7 +78,7 @@ const styles: CSSResultGroup = [
     }
 
     input::placeholder {
-      color: var(--vscode-input-placeholderForeground);
+      color: var(--vscode-input-placeholderForeground, #989898);
       opacity: 1;
     }
 
@@ -87,20 +90,20 @@ const styles: CSSResultGroup = [
     }
 
     input[type='file']::file-selector-button {
-      background-color: var(--vscode-button-background);
+      background-color: var(--vscode-button-background, #0078d4);
       border: 0;
       border-radius: 2px;
-      color: var(--vscode-button-foreground);
+      color: var(--vscode-button-foreground, #ffffff);
       cursor: pointer;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      font-family: var(--vscode-font-family, ${defaultFontStack});
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, 'normal');
       line-height: 20px;
       padding: 0 14px;
     }
 
     input[type='file']::file-selector-button:hover {
-      background-color: var(--vscode-button-hoverBackground);
+      background-color: var(--vscode-button-hoverBackground, #026ec1);
     }
   `,
 ];
