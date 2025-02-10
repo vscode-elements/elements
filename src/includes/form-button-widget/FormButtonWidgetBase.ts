@@ -21,7 +21,11 @@ export class FormButtonWidgetBase extends VscElement {
     this.removeEventListener('blur', this._handleBlur);
   }
 
-  override attributeChangedCallback(name: string, oldVal: string, newVal: string): void {
+  override attributeChangedCallback(
+    name: string,
+    oldVal: string,
+    newVal: string
+  ): void {
     super.attributeChangedCallback(name, oldVal, newVal);
 
     if (name === 'disabled' && this.hasAttribute('disabled')) {

@@ -14,7 +14,10 @@ class StylePropertyMap extends Directive {
     }
   }
 
-  override update(part: PropertyPart, [styleProps]: [{[key: string]: string}]): unknown {
+  override update(
+    part: PropertyPart,
+    [styleProps]: [{[key: string]: string}]
+  ): unknown {
     Object.entries(styleProps).forEach(([key, val]) => {
       if (this._prevProperties[key] !== val) {
         if (key.startsWith('--')) {
