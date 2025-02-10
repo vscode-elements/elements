@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## Added
 
 - **Badge**: Added `tab-header-counter` variant.
-- Added fallback styles from **Badge** and **Button**.
+- Added fallback styles from **Badge**, **Button** and **Textfield**.
   These components still look proper even if the theme variables provided by VSCode are not present.
   In such cases, the components appear with the default theme (Dark Modern).
 
