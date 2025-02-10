@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **SingleSelect**, **MultiSelect**: Prevent browser suggestions in single and multi-selects in combobox mode.
 
-## Added
+### Added
 
 - **Badge**: Added `tab-header-counter` variant.
 - Added fallback styles from **Badge**, **Button** and **Textfield**.
