@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - **SingleSelect**, **MultiSelect**: Prevent browser suggestions in single and multi-selects in combobox mode.
+- **Table**: The style attributes (`bordered`, `bordered-columns`, `bordered-rows`, `zebra`, `zebra-odd`) could not be used in React Elements.
 
 ### Added
 

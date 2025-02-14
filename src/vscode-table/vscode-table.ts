@@ -24,12 +24,6 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
 /**
  * @tag vscode-table
  *
- * @attr {Boolean} zebra - Zebra stripes, even rows are tinted.
- * @attr {Boolean} zebra-odd - Zebra stripes, odd rows are tinted.
- * @attr {Boolean} bordered-rows - Rows are separated by borders
- * @attr {Boolean} bordered-columns - Columns are separated by borders
- * @attr {Boolean} bordered - Rows and columns are separated by borders
- *
  * @cssprop [--border=var(--vscode-editorGroup-border)]
  * @cssprop [--foreground=var(--vscode-foreground)]
  * @cssprop [--resize-hover-border=var(--vscode-sash-hoverBorder)]
@@ -51,6 +45,24 @@ export class VscodeTable extends VscElement {
 
   @property({type: Boolean, reflect: true})
   responsive = false;
+
+  /**
+   * Both rows and columns are separated by borders.
+   */
+  @property({type: Boolean, reflect: true})
+  bordered = false;
+
+  /**
+   * Columns are separated by borders.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'bordered-columns'})
+  borderedColumns = false;
+
+  /**
+   * Rows are separated by borders.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'bordered-rows'})
+  borderedRows = false;
 
   @property({type: Number})
   breakpoint = 300;
@@ -93,10 +105,22 @@ export class VscodeTable extends VscElement {
   delayedResizing = false;
 
   /**
-   * For internal use only
+   * @internal
    */
   @property({type: Boolean, reflect: true})
   compact = false;
+
+  /**
+   * Zebra stripes, even rows are tinted.
+   */
+  @property({type: Boolean, reflect: true})
+  zebra = false;
+
+  /**
+   * Zebra stripes, odd rows are tinted.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'zebra-odd'})
+  zebraOdd = false;
 
   @query('slot[name="body"]')
   private _bodySlot!: HTMLSlotElement;
