@@ -4,7 +4,27 @@ For the end-user documentation, [click here](https://vscode-elements.github.io).
 
 This documentation is intended for developers who would like to contribute to or modify the code on their own.
 
-VSCode Elements is based on the [Lit](https://lit.dev/) library. The local development environment requires `NodeJS 22` or newer.
+VSCode Elements is based on the [Lit](https://lit.dev/) library. The local development environment requires `NodeJS 22` or newer. If you want to use a local copy of the library in your codebase, you can use the `npm link` command. First, navigate to the VSCode Elements directory and run:
+
+```bash
+npm link
+```
+
+Then, go to the library where you want to use it and run:
+
+```bash
+npm link @vscode-elements/elements
+```
+
+> [!WARNING]
+> 
+> Multiple packages must be linked with a single command. For example:
+> 
+> ```bash
+> npm link @vscode-elements/elements @vscode-elements/webview-playground
+> ```
+
+Don't forget to run the build script before using the package.
 
 ## Setup
 
