@@ -22,3 +22,5 @@ Before submitting a pull request, ensure the code follows the styling guidelines
 well-formatted. It’s easier than it sounds—just use the lint and Prettier scripts (see the README).
 Writing tests is not required, but we appreciate it if you add tests for new code. If your changes
 affect the user-facing functionality, please update the changelog file.
+
+Commit messages aim to follow the [50/72 style](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
