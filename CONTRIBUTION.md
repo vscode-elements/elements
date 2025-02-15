@@ -1,6 +1,6 @@
 # How to contribute
 
-Thank you for deciding to contribute to the development of the library.
+Thank you for deciding to contribute to the development of the VSCode Elements.
 
 If you don’t feel confident enough to submit code changes, you can still contribute. Did you find
 a typo, grammatical error, or unclear documentation? Improving the documentation is a valuable
