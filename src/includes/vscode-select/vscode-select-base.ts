@@ -390,15 +390,22 @@ export class VscodeSelectBase extends VscElement {
       !showDropdownNext &&
       this._selectedIndex !== this._activeIndex
     ) {
-      this._selectedIndex = this._activeIndex > -1 ? list[this._activeIndex].index : -1
-      this._value = this._selectedIndex > -1 ? this._options[this._selectedIndex].value : ''
+      this._selectedIndex =
+        this._activeIndex > -1 ? list[this._activeIndex].index : -1;
+      this._value =
+        this._selectedIndex > -1
+          ? this._options[this._selectedIndex].value
+          : '';
       this._dispatchChangeEvent();
     }
 
     if (this.combobox) {
       if (!this._multiple && !showDropdownNext) {
-        this._selectedIndex = this._activeIndex > -1 ? this._filteredOptions[this._activeIndex].index : -1;
-        }
+        this._selectedIndex =
+          this._activeIndex > -1
+            ? this._filteredOptions[this._activeIndex].index
+            : -1;
+      }
 
       if (!this._multiple && showDropdownNext) {
         this.updateComplete.then(() => {
