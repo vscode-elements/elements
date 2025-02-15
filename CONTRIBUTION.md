@@ -6,8 +6,8 @@ If you don’t feel confident enough to submit code changes, you can still contr
 a typo, grammatical error, or unclear documentation? Improving the documentation is a valuable
 contribution as well.
 
-If you’re not yet familiar with the code, we recommend tasks labeled as 
-[“good first issue”](https://github.com/vscode-elements/elements/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22). 
+If you’re not yet familiar with the code, we recommend tasks labeled as
+[“good first issue”](https://github.com/vscode-elements/elements/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22).
 These tasks are relatively simple but still important to complete.
 
 If you decide to work on an issue, please indicate it on the issue page to avoid duplication of work.
