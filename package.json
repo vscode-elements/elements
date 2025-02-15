@@ -29,7 +29,6 @@
     "test:coverage": "wireit",
     "test:watch": "wtr --watch",
     "checksize": "npm run build && cat dist/bundled.js | gzip -9 | wc -c",
-    "generate": "node scripts/generateComponent.js",
     "icons": "node scripts/generateIconList.js",
     "vscode-data": "wireit"
   },
