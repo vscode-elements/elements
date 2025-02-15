@@ -17,9 +17,9 @@ npm link @vscode-elements/elements
 ```
 
 > [!WARNING]
-> 
+>
 > Multiple packages must be linked with a single command. For example:
-> 
+>
 > ```bash
 > npm link @vscode-elements/elements @vscode-elements/webview-playground
 > ```
