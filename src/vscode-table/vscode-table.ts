@@ -135,6 +135,12 @@ export class VscodeTable extends VscElement {
   private _sashVisibleElements!: HTMLDivElement[];
 
   @queryAssignedElements({
+    flatten: true,
+    selector: 'vscode-table-header, vscode-table-body',
+  })
+  private _assignedElements!: NodeListOf<HTMLElement>;
+
+  @queryAssignedElements({
     slot: 'header',
     flatten: true,
     selector: 'vscode-table-header',
@@ -440,6 +446,20 @@ export class VscodeTable extends VscElement {
     }
   }
 
+  private _onDefaultSlotChange() {
+    this._assignedElements.forEach((el) => {
+      if (el.tagName.toLowerCase() === 'vscode-table-header') {
+        el.slot = 'header';
+        return;
+      }
+
+      if (el.tagName.toLowerCase() === 'vscode-table-body') {
+        el.slot = 'body';
+        return;
+      }
+    });
+  }
+
   private _onHeaderSlotChange() {
     this._headerCells = this._queryHeaderCells();
   }
@@ -654,10 +674,10 @@ export class VscodeTable extends VscElement {
 
     return html`
       <div class=${wrapperClasses}>
-        <div class="header" @slotchange=${this._onHeaderSlotChange}>
+        <div class="header">
           <slot name="caption"></slot>
           <div class="header-slot-wrapper">
-            <slot name="header"></slot>
+            <slot name="header" @slotchange=${this._onHeaderSlotChange}></slot>
           </div>
         </div>
         <vscode-scrollable class="scrollable">
@@ -666,6 +686,7 @@ export class VscodeTable extends VscElement {
           </div>
         </vscode-scrollable>
         ${sashes}
+        <slot @slotchange=${this._onDefaultSlotChange}></slot>
       </div>
     `;
   }
