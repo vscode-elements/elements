@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       releaseType:
-        description: "Release Type"
+        description: 'Release Type'
         required: true
         type: choice
-        default: "patch"
+        default: 'patch'
         options:
           - patch
           - minor
           - major
       releaseChannel:
-        description: "Release Channel"
+        description: 'Release Channel'
         required: true
         type: choice
         default: next
@@ -48,10 +48,10 @@ jobs:
       - name: Setup Node version
         uses: actions/setup-node@v4
         with:
-          scope: "@vscode-elements"
+          scope: '@vscode-elements'
           node-version: 22
-          registry-url: "https://registry.npmjs.org"
-          cache: "npm"
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
           cache-dependency-path: |
             package-lock.json
 
@@ -123,7 +123,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'next' || github.event.inputs.releaseChannel == 'nextmajor' }}
         with:
-          artifacts: "./vscode-elements-elements-*"
+          artifacts: './vscode-elements-elements-*'
           prerelease: true
           draft: true
           tag: ${{ env.GIT_TAG }}
@@ -133,7 +133,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
         with:
-          artifacts: "./vscode-elements-elements-*"
+          artifacts: './vscode-elements-elements-*'
           prerelease: false
           draft: true
           tag: ${{ env.GIT_TAG }}
