@@ -9,10 +9,7 @@ const styles: CSSResultGroup = [
   css`
     :host {
       background-color: var(--vscode-button-background, #0078d4);
-      border-color: var(
-        --vscode-button-border,
-        var(--vscode-button-background, rgba(255, 255, 255, 0.07))
-      );
+      border-color: var(--vscode-button-border, transparent);
       border-style: solid;
       border-radius: 2px;
       border-width: 1px;

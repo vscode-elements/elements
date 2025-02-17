@@ -9,6 +9,10 @@
       href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
     >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
     <script type="module" src="/dist/main.js"></script>
     <script>
       const logEvents = (selector, eventType) => {
@@ -19,10 +23,12 @@
     </script>
   </head>
 
-  <body style="background-color: #1f1f1f">
+  <body>
     <main>
-      <p><vscode-button>Primary Button</vscode-button></p>
-      <p><vscode-button secondary>Secondary Button</vscode-button></p>
+      <vscode-demo>
+        <vscode-button>Primary Button</vscode-button>
+        <vscode-button secondary>Secondary Button</vscode-button>
+      </vscode-demo>
     </main>
   </body>
 </html>
