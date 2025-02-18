@@ -9,6 +9,14 @@ describe('vscode-checkbox', () => {
     expect(el).to.instanceOf(VscodeCheckbox);
   });
 
+  it('is accessible', async () => {
+    const el = await fixture(
+      html`<vscode-checkbox>Test checkbox</vscode-checkbox>`
+    );
+
+    await expect(el).to.be.accessible();
+  });
+
   it('should type attribute return "checkbox"', () => {
     const el = document.createElement('vscode-checkbox');
     expect(el.type).to.eq('checkbox');
