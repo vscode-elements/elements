@@ -16,9 +16,9 @@ interface FocusableElement extends Element {
 /**
  * @tag vscode-label
  *
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-foreground
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-foreground=#cccccc]
  */
 @customElement('vscode-label')
 export class VscodeLabel extends VscElement {

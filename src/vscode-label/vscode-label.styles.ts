@@ -6,9 +6,9 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      color: var(--vscode-foreground);
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
+      color: var(--vscode-foreground, #cccccc);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
       font-weight: 600;
       line-height: ${INPUT_LINE_HEIGHT_RATIO};
       cursor: default;
@@ -29,7 +29,7 @@ const styles: CSSResultGroup = [
     }
 
     ::slotted(.lightened) {
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       opacity: 0.9;
     }
   `,
