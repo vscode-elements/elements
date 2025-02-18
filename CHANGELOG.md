@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **Button**: Fixed the button border style.
 
+### Added
+
+- Added fallback styles to **Textarea**.
+
 ## [1.13.1] - 2025-02-16
 
 ### Fixed
@@ -27,7 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - **Badge**: Added `tab-header-counter` variant.
-- Added fallback styles from **Badge**, **Button** and **Textfield**.
+- Added fallback styles to **Badge**, **Button** and **Textfield**.
   These components still look proper even if the theme variables provided by VSCode are not present.
   In such cases, the components appear with the default theme (Dark Modern).
 

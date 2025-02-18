@@ -18,24 +18,24 @@ import styles from './vscode-textarea.styles.js';
  * @fires {InputEvent} input
  * @fires {Event} change
  *
- * @cssprop --vscode-scrollbar-shadow
- * @cssprop --vscode-settings-textInputBackground
- * @cssprop --vscode-settings-textInputBorder
- * @cssprop --vscode-settings-textInputForeground
- * @cssprop --vscode-input-placeholderForeground
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-font-weight
- * @cssprop --vscode-editor-background
- * @cssprop --vscode-editor-foreground
- * @cssprop --vscode-editor-font-family
- * @cssprop --vscode-editor-font-size
- * @cssprop --vscode-editor-font-weight
- * @cssprop --vscode-editor-inlineValuesForeground
- * @cssprop --vscode-focusBorder
- * @cssprop --vscode-scrollbarSlider-background
- * @cssprop --vscode-scrollbarSlider-hoverBackground
- * @cssprop --vscode-scrollbarSlider-activeBackground
+ * @cssprop [--vscode-scrollbar-shadow=#000000]
+ * @cssprop [--vscode-settings-textInputBackground=#313131]
+ * @cssprop [--vscode-settings-textInputBorder=transparent]
+ * @cssprop [--vscode-settings-textInputForeground=#cccccc]
+ * @cssprop [--vscode-input-placeholderForeground=#989898]
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-editor-background=#1f1f1f]
+ * @cssprop [--vscode-editor-foreground=#cccccc]
+ * @cssprop [--vscode-editor-font-family=monospace]
+ * @cssprop [--vscode-editor-font-size=14px]
+ * @cssprop [--vscode-editor-font-weight=normal]
+ * @cssprop [--vscode-editor-inlineValuesForeground=rgba(255, 255, 255, 0.5)]
+ * @cssprop [--vscode-focusBorder=#0078d4]
+ * @cssprop [--vscode-scrollbarSlider-background=rgba(121, 121, 121, 0.4)]
+ * @cssprop [--vscode-scrollbarSlider-hoverBackground=rgba(100, 100, 100, 0.7)]
+ * @cssprop [--vscode-scrollbarSlider-activeBackground=rgba(191, 191, 191, 0.4)]
  */
 @customElement('vscode-textarea')
 export class VscodeTextarea
