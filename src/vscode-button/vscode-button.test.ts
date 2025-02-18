@@ -8,6 +8,12 @@ describe('vscode-button', () => {
     expect(el).to.instanceOf(VscodeButton);
   });
 
+  it('is accessible', async () => {
+    const el = await fixture(html`<vscode-button>Test button</vscode-button>`);
+
+    await expect(el).to.be.accessible();
+  });
+
   it('is focused automatically', async () => {
     const el = await fixture<VscodeButton>(
       html`<vscode-button autofocus>test</vscode-button>`
