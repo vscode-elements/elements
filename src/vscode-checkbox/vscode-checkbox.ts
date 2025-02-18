@@ -82,10 +82,6 @@ export class VscodeCheckbox
   @property({reflect: true})
   name: string | undefined = undefined;
 
-  /** @internal */
-  @property({reflect: true})
-  override role = 'checkbox';
-
   /**
    * Associate a value to the checkbox. According to the native checkbox [specification](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value_2), If the component participates in a form:
    *

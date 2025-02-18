@@ -1,6 +1,7 @@
 import sinon from 'sinon';
-import {VscodeTextarea} from './index.js';
-import './index.js';
+import {VscodeTextarea} from './vscode-textarea.js';
+import './vscode-textarea.js';
+import '../vscode-label/vscode-label.js';
 import {sendKeys, sendMouse} from '@web/test-runner-commands';
 import {expect, fixture, html, aTimeout} from '@open-wc/testing';
 
@@ -8,6 +9,18 @@ describe('vscode-textarea', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-textarea');
     expect(el).to.instanceOf(VscodeTextarea);
+  });
+
+  it('is accessible', async () => {
+    const container = await fixture(html`
+      <div>
+        <vscode-label for="textarea">Test label</vscode-label>
+        <vscode-textarea id="textarea"></vscode-textarea>
+      </div>
+    `);
+    const el = container.querySelector('#textarea');
+
+    await expect(el).to.be.accessible();
   });
 
   it('renders with default values', async () => {
