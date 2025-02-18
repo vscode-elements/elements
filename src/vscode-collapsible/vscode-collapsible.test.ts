@@ -7,6 +7,14 @@ describe('vscode-collapsible', () => {
     expect(el).to.instanceOf(VscodeCollapsible);
   });
 
+  it('is accessible', async () => {
+    const el = await fixture(html`
+      <vscode-collapsible title="Test title">Test content</vscode-collapsible>
+    `);
+
+    await expect(el).to.be.accessible();
+  });
+
   it('title should be visible', async () => {
     const el = await fixture(html`
       <vscode-collapsible title="Test title"></vscode-collapsible>
