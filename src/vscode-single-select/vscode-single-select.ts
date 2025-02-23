@@ -337,7 +337,10 @@ export class VscodeSingleSelect
   }
 
   protected override _renderOptions(): TemplateResult {
-    const list = this.combobox ? this._filteredOptions : this._options;
+    const list =
+      this.combobox && this._filterPattern.length > 0
+        ? this._filteredOptions
+        : this._options;
     const options = list.map((op, index) => {
       const classes = classMap({
         option: true,

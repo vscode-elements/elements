@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import '../vscode-option/index.js';
 import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
 import {VscodeOption} from '../vscode-option/index.js';
+import {sendKeys} from '@web/test-runner-commands';
 
 describe('vscode-multi-select', () => {
   it('is defined', () => {
@@ -171,6 +172,36 @@ describe('vscode-multi-select', () => {
     const comboboxFace = el.shadowRoot?.querySelector('.combobox-face');
 
     expect(comboboxFace).to.be.ok;
+  });
+
+  it('selects multiple items in a filtered list', async () => {
+    const el = await fixture(html`
+      <vscode-multi-select combobox
+        ><vscode-option>Afghanistan</vscode-option>
+        <vscode-option>Albania</vscode-option>
+        <vscode-option>Algeria</vscode-option>
+        <vscode-option>Andorra</vscode-option>
+        <vscode-option>Angola</vscode-option>
+        <vscode-option>Antigua and Barbuda</vscode-option>
+        <vscode-option>Argentina</vscode-option>
+        <vscode-option>Armenia</vscode-option>
+        <vscode-option>Australia</vscode-option>
+        <vscode-option>Austria</vscode-option>
+        <vscode-option>Azerbaijan</vscode-option>
+      </vscode-multi-select>
+    `);
+
+    const input = el.shadowRoot!.querySelector('.combobox-input')!;
+    await clickOnElement(input);
+    await sendKeys({type: 'al'});
+    await sendKeys({press: 'ArrowDown'});
+    await sendKeys({press: ' '});
+    await sendKeys({press: 'ArrowDown'});
+    await sendKeys({press: ' '});
+
+    const badge = el.shadowRoot!.querySelector('.select-face-badge');
+
+    expect(badge).lightDom.to.eq('2 items selected');
   });
 
   it('should "select all" and "deselect all" work properly', async () => {

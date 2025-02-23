@@ -169,17 +169,7 @@ export class VscodeSelectBase extends VscElement {
   protected _filter: SearchMethod = 'fuzzy';
 
   @state()
-  protected get _filteredOptions(): InternalOption[] {
-    if (!this.combobox || this._filterPattern === '') {
-      return this._options;
-    }
-
-    return filterOptionsByPattern(
-      this._options,
-      this._filterPattern,
-      this._filter
-    );
-  }
+  protected _filteredOptions: InternalOption[] = [];
 
   @state()
   protected _filterPattern = '';
@@ -546,6 +536,11 @@ export class VscodeSelectBase extends VscElement {
   protected _onComboboxInputInput(ev: InputEvent): void {
     this._filterPattern = (ev.target as HTMLInputElement).value;
     this._activeIndex = -1;
+    this._filteredOptions = filterOptionsByPattern(
+      this._options,
+      this._filterPattern,
+      this._filter
+    );
     this._toggleDropdown(true);
   }
 

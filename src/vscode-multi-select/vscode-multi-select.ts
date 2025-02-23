@@ -350,7 +350,10 @@ export class VscodeMultiSelect
   }
 
   protected override _renderOptions(): TemplateResult {
-    const list = this.combobox ? this._filteredOptions : this._options;
+    const list =
+      this.combobox && this._filterPattern.length > 0
+        ? this._filteredOptions
+        : this._options;
 
     return html`
       <ul
