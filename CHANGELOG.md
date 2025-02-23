@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- Added fallback styles to **Textarea**.
+- Added fallback styles to **Textarea**, **Collapsible**.
 
 ## [1.13.1] - 2025-02-16
 
