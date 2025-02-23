@@ -74,7 +74,7 @@ export class VscodeSplitLayout extends VscElement {
    */
   @property({reflect: true})
   set split(newVal: Orientation) {
-    if(this._split === newVal) {
+    if (this._split === newVal) {
       return;
     }
     this._split = newVal;
