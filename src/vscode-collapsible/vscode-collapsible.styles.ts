@@ -5,12 +5,12 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     .collapsible {
-      background-color: var(--vscode-sideBar-background);
+      background-color: var(--vscode-sideBar-background, #181818);
     }
 
     .collapsible-header {
       align-items: center;
-      background-color: var(--vscode-sideBarSectionHeader-background);
+      background-color: var(--vscode-sideBarSectionHeader-background, #181818);
       cursor: pointer;
       display: flex;
       height: 22px;
@@ -23,13 +23,13 @@ const styles: CSSResultGroup = [
       outline-offset: -1px;
       outline-style: solid;
       outline-width: 1px;
-      outline-color: var(--vscode-focusBorder);
+      outline-color: var(--vscode-focusBorder, #0078d4);
     }
 
     .title {
-      color: var(--vscode-sideBarTitle-foreground);
+      color: var(--vscode-sideBarTitle-foreground, #cccccc);
       display: block;
-      font-family: var(--vscode-font-family);
+      font-family: var(--vscode-font-family, sans-serif);
       font-size: 11px;
       font-weight: 700;
       margin: 0;
@@ -47,7 +47,7 @@ const styles: CSSResultGroup = [
     }
 
     .header-icon {
-      color: var(--vscode-icon-foreground);
+      color: var(--vscode-icon-foreground, #cccccc);
       display: block;
       flex-shrink: 0;
       margin: 0 3px;

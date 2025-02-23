@@ -17,12 +17,12 @@ export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
  *
  * @fires {VscCollapsibleToggleEvent} vsc-collapsible-toggle - Dispatched when the content visibility is changed.
  *
- * @cssprop --vscode-sideBar-background - Background color
- * @cssprop --vscode-focusBorder - Focus border color
- * @cssprop --vscode-font-family - Header font family
- * @cssprop --vscode-sideBarSectionHeader-background - Header background
- * @cssprop --vscode-icon-foreground - Arrow icon color
- * @cssprop --vscode-sideBarTitle-foreground - Header font color
+ * @cssprop [--vscode-sideBar-background=#181818] - Background color
+ * @cssprop [--vscode-focusBorder=#0078d4] - Focus border color
+ * @cssprop [--vscode-font-family=sans-serif] - Header font family
+ * @cssprop [--vscode-sideBarSectionHeader-background=#181818] - Header background
+ * @cssprop [--vscode-icon-foreground=#cccccc] - Arrow icon color
+ * @cssprop [--vscode-sideBarTitle-foreground=#cccccc] - Header font color
  *
  * @csspart body - Container for the toggleable content of the component. The container's overflow content is hidden by default. This CSS part can serve as an escape hatch to modify this behavior.
  */
