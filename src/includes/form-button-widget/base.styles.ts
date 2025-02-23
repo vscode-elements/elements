@@ -3,11 +3,11 @@ import {css} from 'lit';
 export default [
   css`
     :host {
-      color: var(--vsc-foreground-translucent);
+      color: var(--vscode-foreground, #cccccc);
       display: inline-block;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
       line-height: 18px;
     }
 
@@ -22,7 +22,7 @@ export default [
     .wrapper {
       cursor: pointer;
       display: block;
-      font-size: var(--vscode-font-size);
+      font-size: var(--vscode-font-size, 13px);
       margin-bottom: 4px;
       margin-top: 4px;
       min-height: 18px;
@@ -48,11 +48,11 @@ export default [
 
     .icon {
       align-items: center;
-      background-color: var(--vscode-settings-checkboxBackground);
+      background-color: var(--vscode-settings-checkboxBackground, #313131);
       background-size: 16px;
-      border: 1px solid var(--vscode-settings-checkboxBorder);
+      border: 1px solid var(--vscode-settings-checkboxBorder, #3c3c3c);
       box-sizing: border-box;
-      color: var(--vscode-settings-checkboxForeground);
+      color: var(--vscode-settings-checkboxForeground, #cccccc);
       display: flex;
       height: 18px;
       justify-content: center;

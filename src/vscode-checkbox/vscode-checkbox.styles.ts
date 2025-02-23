@@ -8,7 +8,7 @@ const styles: CSSResultGroup = [
   css`
     :host(:invalid) .icon,
     :host([invalid]) .icon {
-      background-color: var(--vscode-inputValidation-errorBackground);
+      background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d);
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
@@ -24,7 +24,7 @@ const styles: CSSResultGroup = [
     }
 
     :host(:focus):host(:not([disabled])) .icon {
-      outline: 1px solid var(--vscode-focusBorder);
+      outline: 1px solid var(--vscode-focusBorder, #0078d4);
       outline-offset: -1px;
     }
   `,

@@ -22,14 +22,16 @@ import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
  *
  * [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event)
  *
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-font-weight
- * @cssprop --vsc-foreground-translucent - Label font color. 90% transparency version of `--vscode-foreground` by default.
- * @cssprop --vscode-settings-checkboxBackground
- * @cssprop --vscode-settings-checkboxBorder
- * @cssprop --vscode-settings-checkboxForeground
- * @cssprop --vscode-focusBorder
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-foreground=#cccccc]
+ * @cssprop [--vscode-settings-checkboxBackground=#313131]
+ * @cssprop [--vscode-settings-checkboxBorder=#3c3c3c]
+ * @cssprop [--vscode-settings-checkboxForeground=#cccccc]
+ * @cssprop [--vscode-focusBorder=#0078d4]
+ * @cssprop [--vscode-inputValidation-errorBackground=#5a1d1d]
+ * @cssprop [--vscode-inputValidation-errorBorder=#be1100]
  */
 @customElement('vscode-checkbox')
 export class VscodeCheckbox
