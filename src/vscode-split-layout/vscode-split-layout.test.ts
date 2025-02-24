@@ -663,7 +663,7 @@ describe('vscode-split-layout', () => {
       ></vscode-split-layout>`
     );
 
-    el.handlePosition = "200px";
+    el.handlePosition = '200px';
     await el.updateComplete;
 
     const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
