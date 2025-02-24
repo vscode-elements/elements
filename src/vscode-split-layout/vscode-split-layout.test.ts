@@ -654,7 +654,7 @@ describe('vscode-split-layout', () => {
     });
   });
 
-  it.only('should not reset handle position when split is set to the same value', async () => {
+  it('should not reset handle position when split is set to the same value', async () => {
     const el = await fixture<VscodeSplitLayout>(
       html`<vscode-split-layout
         style="width: 500px; height: 500px;"
@@ -667,12 +667,15 @@ describe('vscode-split-layout', () => {
     await el.updateComplete;
 
     const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
-    expect(handle.offsetTop).to.eq(198);
+    await dragElement(handle, 0, 50);
+
+    const handleYPosBefore = handle.offsetTop;
 
     el.setAttribute('split', 'horizontal');
     await el.updateComplete;
 
-    expect(handle.offsetTop).to.eq(198);
+    expect(handleYPosBefore).to.eq(248);
+    expect(handle.offsetTop).to.eq(248);
   });
 
   // TODO
