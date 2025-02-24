@@ -654,6 +654,27 @@ describe('vscode-split-layout', () => {
     });
   });
 
+  it.only('should not reset handle position when split is set to the same value', async () => {
+    const el = await fixture<VscodeSplitLayout>(
+      html`<vscode-split-layout
+        style="width: 500px; height: 500px;"
+        initial-handle-position="100px"
+        split="horizontal"
+      ></vscode-split-layout>`
+    );
+
+    el.handlePosition = "200px";
+    await el.updateComplete;
+
+    const handle = el.shadowRoot!.querySelector('.handle') as HTMLDivElement;
+    expect(handle.offsetTop).to.eq(198);
+
+    el.setAttribute('split', 'horizontal');
+    await el.updateComplete;
+
+    expect(handle.offsetTop).to.eq(198);
+  });
+
   // TODO
   it('should nested instances reset when slotted content is changed');
   it('fixed pane prop changed');
