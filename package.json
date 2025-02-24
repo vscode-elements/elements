@@ -129,12 +129,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bendera/vscode-webview-elements.git"
+    "url": "git+https://github.com/vscode-elements/elements.git"
   },
   "bugs": {
-    "url": "https://github.com/bendera/vscode-webview-elements/issues"
+    "url": "https://github.com/vscode-elements/elements/issues"
   },
-  "homepage": "https://bendera.github.io/vscode-webview-elements",
+  "homepage": "https://vscode-elements.github.io",
   "dependencies": {
     "lit": "^3.2.1"
   },
