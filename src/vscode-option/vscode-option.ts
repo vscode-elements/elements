@@ -1,6 +1,6 @@
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement.js';
+import {property} from 'lit/decorators.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-option.styles.js';
 
 /**

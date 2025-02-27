@@ -1,7 +1,7 @@
 import {html, LitElement, TemplateResult} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+import {property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-textfield.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 

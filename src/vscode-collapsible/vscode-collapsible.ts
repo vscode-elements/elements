@@ -1,7 +1,7 @@
 import {html, nothing, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-collapsible.styles.js';
 
 export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
