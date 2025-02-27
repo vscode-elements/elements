@@ -1,6 +1,6 @@
 import {html, nothing, TemplateResult} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement.js';
+import {property, query, state} from 'lit/decorators.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import type {
   VscClickEventDetail,
   VscodeContextMenuItem,

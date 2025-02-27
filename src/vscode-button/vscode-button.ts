@@ -1,7 +1,7 @@
 import {html, nothing, PropertyValueMap, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import '../vscode-icon/index.js';
 import styles from './vscode-button.styles.js';
 import {ifDefined} from 'lit/directives/if-defined.js';

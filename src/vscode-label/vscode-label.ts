@@ -1,8 +1,8 @@
 import {html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import uniqueId from '../includes/uniqueId.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import {VscodeCheckboxGroup} from '../vscode-checkbox-group/index.js';
 import {VscodeRadioGroup} from '../vscode-radio-group/index.js';
 import {VscodeTextarea} from '../vscode-textarea/index.js';

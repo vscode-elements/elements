@@ -1,8 +1,8 @@
 import {html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import {stylePropertyMap} from '../includes/style-property-map.js';
 import styles from './vscode-icon.styles.js';
 

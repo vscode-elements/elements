@@ -1,8 +1,8 @@
 import {html, LitElement, TemplateResult, PropertyValues} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+import {property, query, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import {stylePropertyMap} from '../includes/style-property-map.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 import styles from './vscode-textarea.styles.js';

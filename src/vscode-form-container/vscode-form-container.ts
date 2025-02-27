@@ -1,11 +1,6 @@
 import {html, TemplateResult} from 'lit';
-import {
-  customElement,
-  property,
-  query,
-  queryAssignedElements,
-} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement.js';
+import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import {VscodeCheckbox} from '../vscode-checkbox/index.js';
 import {VscodeCheckboxGroup} from '../vscode-checkbox-group/index.js';
 import {VscodeFormGroup, FormGroupVariant} from '../vscode-form-group/index.js';

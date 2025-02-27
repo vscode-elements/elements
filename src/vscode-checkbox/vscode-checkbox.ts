@@ -1,6 +1,7 @@
 import {html, LitElement, nothing, PropertyValueMap, TemplateResult} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {customElement} from '../includes/VscElement.js';
 import {FormButtonWidgetBase} from '../includes/form-button-widget/FormButtonWidgetBase.js';
 import {LabelledCheckboxOrRadioMixin} from '../includes/form-button-widget/LabelledCheckboxOrRadio.js';
 import styles from './vscode-checkbox.styles.js';

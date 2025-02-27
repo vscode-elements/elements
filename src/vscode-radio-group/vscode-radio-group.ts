@@ -1,11 +1,6 @@
 import {html, TemplateResult} from 'lit';
-import {
-  customElement,
-  property,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import {VscodeRadio} from '../vscode-radio/index.js';
 import styles from './vscode-radio-group.styles.js';
 

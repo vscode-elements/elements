@@ -1,13 +1,7 @@
 import {html, PropertyValues, TemplateResult} from 'lit';
-import {
-  customElement,
-  property,
-  query,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-split-layout.styles.js';
 import {stylePropertyMap} from '../includes/style-property-map.js';
 

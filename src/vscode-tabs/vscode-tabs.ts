@@ -1,12 +1,8 @@
 import {html, TemplateResult} from 'lit';
-import {
-  customElement,
-  property,
-  queryAssignedElements,
-} from 'lit/decorators.js';
+import {property, queryAssignedElements} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import uniqueId from '../includes/uniqueId.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import {VscodeTabHeader} from '../vscode-tab-header/index.js';
 import {VscodeTabPanel} from '../vscode-tab-panel/index.js';
 import styles from './vscode-tabs.styles.js';
