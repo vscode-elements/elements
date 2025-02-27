@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - Added fallback styles to **Textarea**, **Collapsible**, **Checkbox**.
+- Added support for handling multiple versions of registered custom elements. 
+  If a tag name is already registered in the CustomElementRegistry, the browser error is prevented, 
+  and a warning is displayed. This warning can be suppressed.
 
 ## [1.13.1] - 2025-02-16
 
