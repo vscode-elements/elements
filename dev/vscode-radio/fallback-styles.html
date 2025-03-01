@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body style="background-color: #1f1f1f">
+    <h1>%%TITLE%%</h1>
+    <main>
+      <vscode-radio-group>
+        <vscode-radio name="radio" required>Lorem</vscode-radio>
+        <vscode-radio name="radio">Ipsum</vscode-radio>
+      </vscode-radio-group>
+    </main>
+  </body>
+</html>
