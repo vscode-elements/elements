@@ -10,6 +10,7 @@ describe('vscode-checkbox', () => {
   });
 
   it('is accessible', async () => {
+    document.body.style.backgroundColor = '#1f1f1f';
     const el = await fixture(
       html`<vscode-checkbox>Test checkbox</vscode-checkbox>`
     );
