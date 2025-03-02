@@ -18,16 +18,16 @@ export default [
 
     .select-face,
     .combobox-face {
-      background-color: var(--vscode-settings-dropdownBackground);
-      border-color: var(--vscode-settings-dropdownBorder);
+      background-color: var(--vscode-settings-dropdownBackground, #313131);
+      border-color: var(--vscode-settings-dropdownBorder, #3c3c3c);
       border-radius: 2px;
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
-      color: var(--vscode-settings-dropdownForeground);
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      color: var(--vscode-settings-dropdownForeground, #cccccc);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
       line-height: 18px;
       position: relative;
       user-select: none;
@@ -38,7 +38,7 @@ export default [
     :host(:invalid) .select-face,
     :host([invalid]) .combobox-face,
     :host(:invalid) .combobox-face {
-      background-color: var(--vscode-inputValidation-errorBackground);
+      background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d);
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
@@ -59,9 +59,9 @@ export default [
     }
 
     .select-face-badge {
-      background-color: var(--vscode-badge-background);
+      background-color: var(--vscode-badge-background, #616161);
       border-radius: 2px;
-      color: var(--vscode-badge-foreground);
+      color: var(--vscode-badge-foreground, #f8f8f8);
       display: inline-block;
       flex-shrink: 0;
       font-size: 11px;
@@ -85,7 +85,7 @@ export default [
     :host(:focus) .combobox-face,
     :host([focused]) .select-face,
     :host([focused]) .combobox-face {
-      border-color: var(--vscode-focusBorder);
+      border-color: var(--vscode-focusBorder, #0078d4);
       outline: none;
     }
 
@@ -93,10 +93,10 @@ export default [
       background-color: transparent;
       box-sizing: border-box;
       border: 0;
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       display: block;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
       line-height: 16px;
       padding: 4px;
       width: 100%;
@@ -109,7 +109,7 @@ export default [
     .combobox-button {
       background-color: transparent;
       border: 0;
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       cursor: pointer;
       flex-shrink: 0;
       height: 24px;
@@ -120,7 +120,7 @@ export default [
 
     .combobox-button:focus,
     .combobox-button:hover {
-      background-color: var(--vscode-list-hoverBackground);
+      background-color: var(--vscode-list-hoverBackground, #2a2d2e);
     }
 
     .combobox-button:focus {
@@ -128,7 +128,7 @@ export default [
     }
 
     .icon {
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       display: block;
       height: 14px;
       pointer-events: none;
@@ -139,14 +139,14 @@ export default [
     }
 
     .icon svg {
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       height: 100%;
       width: 100%;
     }
 
     .dropdown {
-      background-color: var(--vscode-settings-dropdownBackground);
-      border-color: var(--vscode-settings-dropdownListBorder);
+      background-color: var(--vscode-settings-dropdownBackground, #313131);
+      border-color: var(--vscode-settings-dropdownListBorder, #454545);
       border-radius: 0 0 3px 3px;
       border-style: solid;
       border-width: 1px;
@@ -169,7 +169,7 @@ export default [
 
     :host(:focus) .dropdown,
     :host([focused]) .dropdown {
-      border-color: var(--vscode-focusBorder);
+      border-color: var(--vscode-focusBorder, #0078d4);
     }
 
     .options {
@@ -184,12 +184,12 @@ export default [
 
     .option {
       align-items: center;
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       cursor: pointer;
       display: flex;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
       line-height: 18px;
       min-height: calc(var(--vscode-font-size) * 1.3);
       padding: 1px 3px;
@@ -200,16 +200,16 @@ export default [
     }
 
     .option b {
-      color: var(--vscode-list-highlightForeground);
+      color: var(--vscode-list-highlightForeground, #2aaaff);
     }
 
     .option.active b {
-      color: var(--vscode-list-focusHighlightForeground);
+      color: var(--vscode-list-focusHighlightForeground, #2aaaff);
     }
 
     .option:not(.disabled):hover {
-      background-color: var(--vscode-list-hoverBackground);
-      color: var(--vscode-list-hoverForeground);
+      background-color: var(--vscode-list-hoverBackground, #2a2d2e);
+      color: var(--vscode-list-hoverForeground, #ffffff);
     }
 
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast'])
@@ -217,7 +217,7 @@ export default [
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
       .option:hover {
       border-style: dotted;
-      border-color: var(--vscode-list-focusOutline);
+      border-color: var(--vscode-list-focusOutline, #0078d4);
     }
 
     .option.disabled {
@@ -227,9 +227,9 @@ export default [
 
     .option.active,
     .option.active:hover {
-      background-color: var(--vscode-list-activeSelectionBackground);
-      color: var(--vscode-list-activeSelectionForeground);
-      border-color: var(--vscode-list-activeSelectionBackground);
+      background-color: var(--vscode-list-activeSelectionBackground, #04395e);
+      color: var(--vscode-list-activeSelectionForeground, #ffffff);
+      border-color: var(--vscode-list-activeSelectionBackground, #04395e);
       border-style: solid;
       border-width: 1px;
     }
@@ -238,7 +238,7 @@ export default [
       .option.active,
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
       .option.active:hover {
-      border-color: var(--vscode-list-focusOutline);
+      border-color: var(--vscode-list-focusOutline, #0078d4);
       border-style: dashed;
     }
 
@@ -249,18 +249,18 @@ export default [
     }
 
     .dropdown.multiple .option.selected {
-      background-color: var(--vscode-list-hoverBackground);
-      border-color: var(--vscode-list-hoverBackground);
+      background-color: var(--vscode-list-hoverBackground, #2a2d2e);
+      border-color: var(--vscode-list-hoverBackground, #2a2d2e);
     }
 
     .dropdown.multiple .option.selected.active {
-      background-color: var(--vscode-list-activeSelectionBackground);
-      color: var(--vscode-list-activeSelectionForeground);
-      border-color: var(--vscode-list-activeSelectionBackground);
+      background-color: var(--vscode-list-activeSelectionBackground, #04395e);
+      color: var(--vscode-list-activeSelectionForeground, #ffffff);
+      border-color: var(--vscode-list-activeSelectionBackground, #04395e);
     }
 
     .checkbox-icon {
-      background-color: var(--vscode-settings-checkboxBackground);
+      background-color: var(--vscode-settings-checkboxBackground, #313131);
       border: 1px solid currentColor;
       border-radius: 2px;
       box-sizing: border-box;
@@ -282,13 +282,13 @@ export default [
     }
 
     .checkbox-icon.checked:before {
-      background-color: var(--vscode-foreground);
+      background-color: var(--vscode-foreground, #cccccc);
       left: 1px;
       top: 2.5px;
     }
 
     .checkbox-icon.checked:after {
-      background-color: var(--vscode-settings-checkboxBackground);
+      background-color: var(--vscode-settings-checkboxBackground, #313131);
       left: 1px;
       top: -0.5px;
     }
@@ -307,7 +307,7 @@ export default [
       align-items: center;
       background-color: transparent;
       border: 0;
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       cursor: pointer;
       display: flex;
       height: 24px;
@@ -321,18 +321,18 @@ export default [
     }
 
     .action-icon:focus-visible {
-      outline: 1px solid var(--vscode-focusBorder);
+      outline: 1px solid var(--vscode-focusBorder, #0078d4);
       outline-offset: -1px;
     }
 
     .description {
-      border-color: var(--vscode-settings-dropdownBorder);
+      border-color: var(--vscode-settings-dropdownBorder, #3c3c3c);
       border-style: solid;
       border-width: 1px 0 0;
-      color: var(--vscode-foreground);
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      color: var(--vscode-foreground, #cccccc);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
       line-height: 1.3;
       padding: 6px 4px;
       word-wrap: break-word;
