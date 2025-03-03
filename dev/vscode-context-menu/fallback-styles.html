@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body style="background-color: #1f1f1f">
+    <main>
+      <button id="toggle-menu-button">toggle</button>
+      <div class="menu-wrapper">
+        <vscode-context-menu
+          id="context-menu"
+          class="context-menu"
+          show
+          style="max-width: 300px"
+        ></vscode-context-menu>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const menu = document.querySelector('#context-menu');
+          const button = document.querySelector('#toggle-menu-button');
+
+          document.querySelector('#context-menu').data = [
+            {
+              label: 'Command palette...',
+              keybinding: 'Ctrl+Shift+A',
+              value: 'menuitem1',
+            },
+            {
+              separator: true,
+            },
+            {
+              label: 'Settings',
+              keybinding: 'Ctrl+Comma',
+              value: 'menuitem2',
+            },
+            {
+              label: 'Extensions',
+              keybinding: 'Ctrl+Shift+X',
+              value: 'menuitem3',
+            },
+          ];
+
+          button.addEventListener('click', () => {
+            console.log(menu.show);
+            menu.show = !menu.show;
+          });
+
+          menu.addEventListener('vsc-select', (event) => {
+            console.log(event);
+          });
+        });
+      </script>
+    </main>
+  </body>
+</html>

@@ -6,24 +6,24 @@ const styles: CSSResultGroup = [
   css`
     :host {
       display: block;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
       line-height: 1.4em;
       outline: none;
       position: relative;
     }
 
     .context-menu-item {
-      background-color: var(--vscode-menu-background);
-      color: var(--vscode-menu-foreground);
+      background-color: var(--vscode-menu-background, #1f1f1f);
+      color: var(--vscode-menu-foreground, #cccccc);
       display: flex;
       user-select: none;
       white-space: nowrap;
     }
 
     .ruler {
-      border-bottom: 1px solid var(--vscode-menu-separatorBackground);
+      border-bottom: 1px solid var(--vscode-menu-separatorBackground, #454545);
       display: block;
       margin: 0 0 4px;
       padding-top: 4px;
@@ -37,7 +37,7 @@ const styles: CSSResultGroup = [
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
-      color: var(--vscode-menu-foreground);
+      color: var(--vscode-menu-foreground, #cccccc);
       cursor: pointer;
       display: flex;
       flex: 1 1 auto;
@@ -50,12 +50,9 @@ const styles: CSSResultGroup = [
     }
 
     :host([selected]) .context-menu-item a {
-      background-color: var(--vscode-menu-selectionBackground);
-      border-color: var(
-        --vscode-menu-selectionBorder,
-        var(--vscode-menu-selectionBackground)
-      );
-      color: var(--vscode-menu-selectionForeground);
+      background-color: var(--vscode-menu-selectionBackground, #0078d4);
+      border-color: var(--vscode-menu-selectionBorder, transparent);
+      color: var(--vscode-menu-selectionForeground, #ffffff);
     }
 
     .label {

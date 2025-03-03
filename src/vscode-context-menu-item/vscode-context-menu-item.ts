@@ -16,15 +16,15 @@ export interface VscClickEventDetail {
  *
  * Child component of [ContextMenu](/components/context-menu/).
  *
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-font-weight
- * @cssprop --vscode-menu-background
- * @cssprop [--vscode-menu-selectionBorder=var(--vscode-menu-selectionBackground)]
- * @cssprop --vscode-menu-foreground
- * @cssprop --vscode-menu-selectionBackground
- * @cssprop --vscode-menu-selectionForeground
- * @cssprop --vscode-menu-separatorBackground
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-menu-background=#1f1f1f]
+ * @cssprop [--vscode-menu-selectionBorder=transparent]
+ * @cssprop [--vscode-menu-foreground=#cccccc]
+ * @cssprop [--vscode-menu-selectionBackground=#0078d4]
+ * @cssprop [--vscode-menu-selectionForeground=#ffffff]
+ * @cssprop [--vscode-menu-separatorBackground=#454545]
  */
 @customElement('vscode-context-menu-item')
 export class VscodeContextMenuItem extends VscElement {
