@@ -30,13 +30,13 @@ export type VscContextMenuSelectEvent = CustomEvent<{
  *
  * @fires {VscMenuSelectEvent} vsc-menu-select - Emitted when a menu item is clicked
  *
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-font-weight
- * @cssprop --vscode-menu-background
- * @cssprop --vscode-menu-border
- * @cssprop --vscode-menu-foreground
- * @cssprop --vscode-widget-shadow
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-menu-background=#1f1f1f]
+ * @cssprop [--vscode-menu-border=#454545]
+ * @cssprop [--vscode-menu-foreground=#cccccc]
+ * @cssprop [--vscode-widget-shadow=rgba(0, 0, 0, 0.36)]
  */
 @customElement('vscode-context-menu')
 export class VscodeContextMenu extends VscElement {
