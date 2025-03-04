@@ -26,7 +26,7 @@ const styles: CSSResultGroup = [
 
     .indeterminate-indicator-1 {
       fill: none;
-      stroke: var(--vscode-progressBar-background);
+      stroke: var(--vscode-progressBar-background, #0078d4);
       stroke-width: 2px;
       stroke-linecap: square;
       transform-origin: 50% 50%;

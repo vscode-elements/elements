@@ -5,6 +5,8 @@ import styles from './vscode-progress-ring.styles.js';
 
 /**
  * @tag vscode-progress-ring
+ *
+ * @cssprop [--vscode-progressBar-background=#0078d4]
  */
 @customElement('vscode-progress-ring')
 export class VscodeProgressRing extends VscElement {
