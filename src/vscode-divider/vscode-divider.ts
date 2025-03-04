@@ -5,6 +5,8 @@ import styles from './vscode-divider.styles.js';
 
 /**
  * @tag vscode-divider
+ *
+ * @cssprop [--vscode-foreground=#cccccc]
  */
 @customElement('vscode-divider')
 export class VscodeDivider extends VscElement {

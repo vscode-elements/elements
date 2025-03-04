@@ -5,7 +5,7 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      background-color: var(--vscode-foreground);
+      background-color: var(--vscode-foreground, #cccccc);
       display: block;
       height: 1px;
       margin-bottom: 10px;
