@@ -5,7 +5,7 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      color: var(--vscode-icon-foreground);
+      color: var(--vscode-icon-foreground, #cccccc);
       display: inline-block;
     }
 
@@ -31,11 +31,17 @@ const styles: CSSResultGroup = [
     }
 
     .button:hover {
-      background-color: var(--vscode-toolbar-hoverBackground);
+      background-color: var(
+        --vscode-toolbar-hoverBackground,
+        rgba(90, 93, 94, 0.31)
+      );
     }
 
     .button:active {
-      background-color: var(--vscode-toolbar-activeBackground);
+      background-color: var(
+        --vscode-toolbar-activeBackground,
+        rgba(99, 102, 103, 0.31)
+      );
     }
 
     .button:focus {
@@ -43,7 +49,7 @@ const styles: CSSResultGroup = [
     }
 
     .button:focus-visible {
-      border-color: var(--vscode-focusBorder);
+      border-color: var(--vscode-focusBorder, #0078d4);
     }
 
     @keyframes icon-spin {
