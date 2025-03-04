@@ -13,10 +13,10 @@ import styles from './vscode-icon.styles.js';
  *
  * @tag vscode-icon
  *
- * @cssprop --vscode-icon-foreground
- * @cssprop --vscode-toolbar-hoverBackground - Hover state background color in `active-icon` mode
- * @cssprop --vscode-toolbar-activeBackground - Active state background color in `active-icon` mode
- * @cssprop --vscode-focusBorder
+ * @cssprop [--vscode-icon-foreground=#cccccc]
+ * @cssprop [--vscode-toolbar-hoverBackground=rgba(90, 93, 94, 0.31)] - Hover state background color in `active-icon` mode
+ * @cssprop [--vscode-toolbar-activeBackground=rgba(99, 102, 103, 0.31)] - Active state background color in `active-icon` mode
+ * @cssprop [--vscode-focusBorder=#0078d4]
  */
 @customElement('vscode-icon')
 export class VscodeIcon extends VscElement {
