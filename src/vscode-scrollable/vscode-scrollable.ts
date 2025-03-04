@@ -9,10 +9,10 @@ import styles from './vscode-scrollable.styles.js';
  * @tag vscode-scrollable
  *
  * @cssprop [--min-thumb-height=20px] - Scrollbar thumb minimum height
- * @cssprop --vscode-scrollbar-shadow
- * @cssprop --vscode-scrollbarSlider-background
- * @cssprop --vscode-scrollbarSlider-hoverBackground
- * @cssprop --vscode-scrollbarSlider-activeBackground
+ * @cssprop [--vscode-scrollbar-shadow=#000000]
+ * @cssprop [--vscode-scrollbarSlider-background=rgba(121, 121, 121, 0.4)]
+ * @cssprop [--vscode-scrollbarSlider-hoverBackground=rgba(100, 100, 100, 0.7)]
+ * @cssprop [--vscode-scrollbarSlider-activeBackground=rgba(191, 191, 191, 0.4)]
  */
 @customElement('vscode-scrollable')
 export class VscodeScrollable extends VscElement {

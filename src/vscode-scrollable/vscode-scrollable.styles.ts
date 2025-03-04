@@ -24,7 +24,7 @@ const styles: CSSResultGroup = [
     }
 
     .shadow {
-      box-shadow: var(--vscode-scrollbar-shadow) 0 6px 6px -6px inset;
+      box-shadow: var(--vscode-scrollbar-shadow, #000000) 0 6px 6px -6px inset;
       display: none;
       height: 3px;
       left: 0;
@@ -62,24 +62,36 @@ const styles: CSSResultGroup = [
     }
 
     .scrollbar-thumb.visible {
-      background-color: var(--vscode-scrollbarSlider-background);
+      background-color: var(
+        --vscode-scrollbarSlider-background,
+        rgba(121, 121, 121, 0.4)
+      );
       opacity: 1;
       transition: opacity 100ms;
     }
 
     .scrollbar-thumb.fade {
-      background-color: var(--vscode-scrollbarSlider-background);
+      background-color: var(
+        --vscode-scrollbarSlider-background,
+        rgba(121, 121, 121, 0.4)
+      );
       opacity: 0;
       transition: opacity 800ms;
     }
 
     .scrollbar-thumb.visible:hover {
-      background-color: var(--vscode-scrollbarSlider-hoverBackground);
+      background-color: var(
+        --vscode-scrollbarSlider-hoverBackground,
+        rgba(100, 100, 100, 0.7)
+      );
     }
 
     .scrollbar-thumb.visible.active,
     .scrollbar-thumb.visible.active:hover {
-      background-color: var(--vscode-scrollbarSlider-activeBackground);
+      background-color: var(
+        --vscode-scrollbarSlider-activeBackground,
+        rgba(191, 191, 191, 0.4)
+      );
     }
 
     .prevent-interaction {
