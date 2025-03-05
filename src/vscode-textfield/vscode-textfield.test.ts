@@ -1,12 +1,26 @@
 import sinon from 'sinon';
-import {VscodeTextfield} from './index.js';
-import {expect, fixture, html} from '@open-wc/testing';
+import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import {sendKeys, sendMouse} from '@web/test-runner-commands';
+import '../vscode-label/vscode-label.js';
+import {VscodeTextfield} from './index.js';
 
 describe('vscode-textfield', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-textfield');
     expect(el).to.instanceOf(VscodeTextfield);
+  });
+
+  it('is accessible', async () => {
+    const container = await fixture(
+      html`<div>
+        <vscode-label for="textfield">Test label</vscode-label>
+        <vscode-textfield id="textfield"></vscode-textfield>
+      </div>`
+    );
+    await aTimeout(10);
+    const el = container.querySelector('#textfield');
+
+    await expect(el).to.be.accessible();
   });
 
   it('renders with default values', async () => {

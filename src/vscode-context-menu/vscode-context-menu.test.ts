@@ -9,6 +9,19 @@ describe('vscode-context-menu', () => {
     expect(el).to.instanceOf(VscodeContextMenu);
   });
 
+  it('is accessible', async () => {
+    const el = await fixture<VscodeContextMenu>(
+      html`<vscode-context-menu show></vscode-context-menu>`
+    );
+    el.data = [
+      {label: 'Menu Item 1', value: 'menuitem1'},
+      {label: 'Menu Item 2', value: 'menuitem2'},
+    ];
+    await el.updateComplete;
+
+    await expect(el).to.be.accessible();
+  });
+
   it('should synchronize visibility state', async () => {
     const el = await fixture<VscodeContextMenu>(
       html`<vscode-context-menu show></vscode-context-menu>`
