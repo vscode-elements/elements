@@ -30,4 +30,5 @@ export {VscodeTable} from './vscode-table/index.js';
 export {VscodeTabs} from './vscode-tabs/index.js';
 export {VscodeTextarea} from './vscode-textarea/index.js';
 export {VscodeTextfield} from './vscode-textfield/index.js';
+export {VscodeToolbarButton} from './vscode-toolbar-button/index.js';
 export {VscodeTree} from './vscode-tree/index.js';
