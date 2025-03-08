@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-toolbar-container>
+          <vscode-toolbar-button
+            icon="layout"
+            label="layout"
+            toggleable
+          ></vscode-toolbar-button>
+        </vscode-toolbar-container>
+        <script>
+          const el = document.querySelector('vscode-toolbar-button');
+          el.addEventListener('change', () => {
+            console.log(el.checked);
+          });
+        </script>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
