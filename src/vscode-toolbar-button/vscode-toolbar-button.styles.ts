@@ -36,6 +36,27 @@ const styles: CSSResultGroup = [
       outline-color: var(--vscode-toolbar-hoverOutline, transparent);
     }
 
+    button:active {
+      background-color: var(
+        --vscode-toolbar-activeBackground,
+        rgba(99, 102, 103, 0.31)
+      );
+    }
+
+    button.checked {
+      background-color: var(
+        --vscode-inputOption-activeBackground,
+        rgba(36, 137, 219, 0.51)
+      );
+      outline-color: var(--vscode-inputOption-activeBorder, #2488db);
+      outline-style: solid;
+      color: var(--vscode-inputOption-activeForeground, #ffffff);
+    }
+
+    button.checked vscode-icon {
+      color: var(--vscode-inputOption-activeForeground, #ffffff);
+    }
+
     vscode-icon {
       display: block;
       padding: 3px;
@@ -46,6 +67,10 @@ const styles: CSSResultGroup = [
       display: flex;
       height: 22px;
       padding: 0 5px 0 2px;
+    }
+
+    slot.textOnly:not(.empty) {
+      padding: 0 5px;
     }
   `,
 ];

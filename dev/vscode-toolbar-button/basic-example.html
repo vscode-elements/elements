@@ -13,7 +13,7 @@
       type="module"
       src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
     ></script>
-    <script type="module" src="/dist/main.js"></script>
+    <script type="module" src="/dist/vscode-toolbar-button/vscode-toolbar-button.js"></script>
     <script>
       const logEvents = (selector, eventType) => {
         document.querySelector(selector).addEventListener(eventType, (ev) => {
@@ -26,8 +26,11 @@
   <body>
     <main>
       <vscode-demo>
-        <vscode-toolbar-button icon="plus">Markdown</vscode-toolbar-button>
-        <vscode-toolbar-button icon="layout"></vscode-toolbar-button>
+        <div style="align-items: center; display: flex; gap: 3px;">
+          <vscode-toolbar-button icon="plus">Markdown</vscode-toolbar-button>
+          <vscode-toolbar-button>Markdown</vscode-toolbar-button>
+          <vscode-toolbar-button icon="layout" label="layout"></vscode-toolbar-button>
+        </div>
       </vscode-demo>
     </main>
   </body>
