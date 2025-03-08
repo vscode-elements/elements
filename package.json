@@ -142,7 +142,7 @@
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-replace": "^6.0.2",
     "@rollup/plugin-terser": "^0.4.4",
-    "@types/chai": "^4.3.20",
+    "@types/chai": "4.3.20",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.10",
     "@typescript-eslint/eslint-plugin": "^8.26.0",
