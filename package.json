@@ -24,10 +24,10 @@
     "prettier:fix": "prettier . --write",
     "analyze": "wireit",
     "serve": "wireit",
-    "start": "wireit",
+    "start": "concurrently --raw \"tsc --watch --preserveWatchOutput\" \"wds --watch\"",
     "test": "wireit",
     "test:coverage": "wireit",
-    "test:watch": "wtr --watch",
+    "test:watch": "concurrently --raw \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
     "checksize": "npm run build && cat dist/bundled.js | gzip -9 | wc -c",
     "icons": "node scripts/generateIconList.js",
     "vscode-data": "wireit"
@@ -74,13 +74,6 @@
     },
     "serve": {
       "command": "wds --watch",
-      "service": true
-    },
-    "start": {
-      "command": "wds --watch",
-      "dependencies": [
-        "build:watch"
-      ],
       "service": true
     },
     "test": {
