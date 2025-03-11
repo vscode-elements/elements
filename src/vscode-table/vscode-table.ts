@@ -270,6 +270,27 @@ export class VscodeTable extends VscElement {
     return this._cellsOfFirstRow;
   }
 
+  private _resizeTableBody() {
+    let headerHeight = 0;
+    let tbodyHeight = 0;
+    const tableHeight = this.getBoundingClientRect().height;
+
+    if (this._assignedHeaderElements && this._assignedHeaderElements.length) {
+      headerHeight =
+        this._assignedHeaderElements[0].getBoundingClientRect().height;
+    }
+
+    if (this._assignedBodyElements && this._assignedBodyElements.length) {
+      tbodyHeight =
+        this._assignedBodyElements[0].getBoundingClientRect().height;
+    }
+
+    const overflownContentHeight = tbodyHeight - headerHeight - tableHeight;
+
+    this._scrollableElement.style.height =
+      overflownContentHeight > 0 ? `${tableHeight - headerHeight}px` : 'auto';
+  }
+
   private _initResizeObserver() {
     this._componentResizeObserver = new ResizeObserver(
       this._componentResizeObserverCallback
@@ -289,6 +310,8 @@ export class VscodeTable extends VscElement {
     if (this.responsive) {
       this._toggleCompactView();
     }
+
+    this._resizeTableBody();
   };
 
   private _headerResizeObserverCallback = () => {
@@ -296,24 +319,7 @@ export class VscodeTable extends VscElement {
   };
 
   private _bodyResizeObserverCallback = () => {
-    let headerHeight = 0;
-    let tbodyHeight = 0;
-    const tableHeight = this.getBoundingClientRect().height;
-
-    if (this._assignedHeaderElements && this._assignedHeaderElements.length) {
-      headerHeight =
-        this._assignedHeaderElements[0].getBoundingClientRect().height;
-    }
-
-    if (this._assignedBodyElements && this._assignedBodyElements.length) {
-      tbodyHeight =
-        this._assignedBodyElements[0].getBoundingClientRect().height;
-    }
-
-    const overflownContentHeight = tbodyHeight - headerHeight - tableHeight;
-
-    this._scrollableElement.style.height =
-      overflownContentHeight > 0 ? `${tableHeight - headerHeight}px` : 'auto';
+    this._resizeTableBody();
   };
 
   private _calcColWidthPercentages(): number[] {

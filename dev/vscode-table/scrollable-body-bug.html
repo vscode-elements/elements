@@ -15,17 +15,12 @@
       });
     };
   </script>
-  <style>
-    .scrollable-example {
-      height: calc(100vh - 20px);
-    }
-  </style>
 </head>
 
 <body>
   <vscode-dev-toolbar></vscode-dev-toolbar>
   <main>
-    <vscode-table class="scrollable-example" resizable>
+    <vscode-table class="scrollable-example" resizable style="height: 200px;">
       <vscode-table-header slot="header">
         <vscode-table-header-cell>First name</vscode-table-header-cell>
         <vscode-table-header-cell>Last name</vscode-table-header-cell>
