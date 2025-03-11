@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **Table**: Fixed resizing scrollable part of the table when table is resized.
 
+### Added
+
+- Added **ToolbarButton** component.
+
 ## [1.14.0] - 2025-03-06
 
 ### Fixed
