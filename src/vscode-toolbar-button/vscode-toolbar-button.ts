@@ -28,7 +28,7 @@ export class VscodeToolbarButton extends VscElement {
   checked = false;
 
   @state()
-  _isSlotEmpty = true;
+  private _isSlotEmpty = true;
 
   @queryAssignedNodes()
   private _assignedNodes!: NodeList | null;
