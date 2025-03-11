@@ -4,9 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Fixed
+
+- **Table**: Fixed resizing scrollable part of the table when table is resized.
+
 ## [1.14.0] - 2025-03-06
 
-## Fixed
+### Fixed
 
 - **Button**: Fixed the button border style.
 - **SplitLayout**: Prevented the handle position from resetting when the `split` property is changed
