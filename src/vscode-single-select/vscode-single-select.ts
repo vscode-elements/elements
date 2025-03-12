@@ -70,6 +70,9 @@ export class VscodeSingleSelect
   /** @internal */
   static formAssociated = true;
 
+  @property({type: Boolean, reflect: true})
+  creatable = false;
+
   @property({attribute: 'default-value'})
   defaultValue = '';
 
@@ -273,7 +276,28 @@ export class VscodeSingleSelect
       return;
     }
 
-    this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
+    let nextSelectedIndex = -1;
+
+    if (optEl.dataset.placeholderOption) {
+      if (this.creatable) {
+        nextSelectedIndex = this._options.length;
+
+        this._options.push({
+          index: nextSelectedIndex,
+          value: this._filterPattern,
+          label: this._filterPattern,
+          description: '',
+          selected: true,
+          disabled: false,
+        });
+      } else {
+        return;
+      }
+    }
+
+    this._selectedIndex = this.creatable
+      ? nextSelectedIndex
+      : Number((optEl as HTMLElement).dataset.index);
     this._value = this._options[this._selectedIndex].value;
 
     this._toggleDropdown(false);
@@ -341,26 +365,31 @@ export class VscodeSingleSelect
 
   protected override _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
-    const options = list.map((op, index) => {
-      const classes = classMap({
-        option: true,
-        disabled: op.disabled,
-        selected: op.selected,
-        active: index === this._activeIndex && !op.disabled,
-      });
+    const options =
+      list.length > 0
+        ? list.map((op, index) => {
+            const classes = classMap({
+              option: true,
+              disabled: op.disabled,
+              selected: op.selected,
+              active: index === this._activeIndex && !op.disabled,
+            });
 
-      return html`
-        <li
-          class=${classes}
-          data-index=${op.index}
-          data-filtered-index=${index}
-        >
-          ${(op.ranges?.length ?? 0 > 0)
-            ? highlightRanges(op.label, op.ranges ?? [])
-            : op.label}
-        </li>
-      `;
-    });
+            return html`
+              <li
+                class=${classes}
+                data-index=${op.index}
+                data-filtered-index=${index}
+              >
+                ${(op.ranges?.length ?? 0 > 0)
+                  ? highlightRanges(op.label, op.ranges ?? [])
+                  : op.label}
+              </li>
+            `;
+          })
+        : html`<li class="option" data-placeholder-option>
+            ${this.creatable ? `Add "${this._filterPattern}"` : 'No options'}
+          </li>`;
 
     return html`
       <ul
