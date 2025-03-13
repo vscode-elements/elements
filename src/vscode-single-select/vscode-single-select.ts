@@ -276,9 +276,9 @@ export class VscodeSingleSelect
       return;
     }
 
-    let nextSelectedIndex = -1;
+    let nextSelectedIndex = Number((optEl as HTMLElement).dataset.index);
 
-    if (optEl.dataset.placeholderOption) {
+    if (typeof optEl.dataset.placeholderOption !== 'undefined') {
       if (this.creatable) {
         nextSelectedIndex = this._options.length;
 
@@ -295,9 +295,7 @@ export class VscodeSingleSelect
       }
     }
 
-    this._selectedIndex = this.creatable
-      ? nextSelectedIndex
-      : Number((optEl as HTMLElement).dataset.index);
+    this._selectedIndex = nextSelectedIndex;
     this._value = this._options[this._selectedIndex].value;
 
     this._toggleDropdown(false);
@@ -310,9 +308,7 @@ export class VscodeSingleSelect
     const {value} = this;
     if (value === '' && this.required) {
       this._internals.setValidity(
-        {
-          valueMissing: true,
-        },
+        {valueMissing: true},
         'Please select an item in the list.',
         this._face
       );

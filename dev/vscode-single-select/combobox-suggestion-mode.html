@@ -223,6 +223,12 @@
           <vscode-option>Zambia</vscode-option>
           <vscode-option>Zimbabwe</vscode-option>
         </vscode-single-select>
+        <script type="module">
+          const sl = document.querySelector('vscode-single-select');
+          sl.addEventListener('change', () => {
+            console.log(sl.value);
+          });
+        </script>
       </vscode-demo>
     </main>
   </body>
