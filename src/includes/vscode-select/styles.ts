@@ -234,8 +234,22 @@ export default [
       border-width: 1px;
     }
 
-    .option .dimmed {
+    .no-options {
+      align-items: center;
+      border-color: transparent;
+      border-style: solid;
+      border-width: 1px;
+      color: var(--vscode-foreground, #cccccc);
+      cursor: default;
+      display: flex;
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
+      line-height: 18px;
+      min-height: calc(var(--vscode-font-size) * 1.3);
       opacity: 0.85;
+      padding: 1px 3px;
+      user-select: none;
     }
 
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast'])

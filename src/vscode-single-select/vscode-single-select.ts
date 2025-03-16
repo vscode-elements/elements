@@ -351,22 +351,6 @@ export class VscodeSingleSelect
   protected override _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
 
-    const placeholderOption = this.combobox
-      ? html`<li
-          class=${classMap({
-            option: true,
-            placeholder: true,
-            active: this._isPlaceholderOptionActive,
-          })}
-          @mouseout=${this._onPlaceholderOptionMouseOut}
-          data-placeholder-option
-        >
-          ${this.creatable
-            ? `Add "${this._filterPattern}"`
-            : html`<span class="dimmed">No options</span>`}
-        </li>`
-      : nothing;
-
     const options =
       list.length > 0
         ? list.map((op, index) => {
@@ -389,7 +373,7 @@ export class VscodeSingleSelect
               </li>
             `;
           })
-        : placeholderOption;
+        : this._renderPlaceholderOption();
 
     return html`
       <ul
