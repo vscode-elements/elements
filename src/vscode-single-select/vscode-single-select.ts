@@ -361,7 +361,9 @@ export class VscodeSingleSelect
           @mouseout=${this._onPlaceholderOptionMouseOut}
           data-placeholder-option
         >
-          ${this.creatable ? `Add "${this._filterPattern}"` : 'No options'}
+          ${this.creatable
+            ? `Add "${this._filterPattern}"`
+            : html`<span class="dimmed">No options</span>`}
         </li>`
       : nothing;
 

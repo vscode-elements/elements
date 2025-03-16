@@ -234,6 +234,10 @@ export default [
       border-width: 1px;
     }
 
+    .option .dimmed {
+      opacity: 0.85;
+    }
+
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast'])
       .option.active,
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
