@@ -598,6 +598,27 @@ export class VscodeSelectBase extends VscElement {
     return [];
   }
 
+  protected _renderPlaceholderOption() {
+    if (!this.combobox) {
+      return nothing;
+    }
+
+    if (this.creatable) {
+      return html`<li
+        class=${classMap({
+          option: true,
+          placeholder: true,
+          active: this._isPlaceholderOptionActive,
+        })}
+        @mouseout=${this._onPlaceholderOptionMouseOut}
+      >
+        Add "${this._filterPattern}"
+      </li>`;
+    } else {
+      return html`<li class="no-options">No options</li>`;
+    }
+  }
+
   private _renderDescription() {
     if (!this._options[this._activeIndex]) {
       return nothing;
