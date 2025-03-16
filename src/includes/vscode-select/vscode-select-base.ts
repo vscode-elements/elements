@@ -20,6 +20,9 @@ export class VscodeSelectBase extends VscElement {
   @property({type: String, reflect: true, attribute: 'aria-expanded'})
   override ariaExpanded = 'false';
 
+  @property({type: Boolean, reflect: true})
+  creatable = false;
+
   /**
    * Options can be filtered by typing into a text input field.
    */
@@ -202,6 +205,9 @@ export class VscodeSelectBase extends VscElement {
   @state()
   protected _listScrollTop = 0;
 
+  @state()
+  protected _isPlaceholderOptionActive = false;
+
   @query('.options')
   private _listElement!: HTMLUListElement;
 
@@ -295,6 +301,21 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
+  protected _createSuggestedOption() {
+    const nextIndex = this._options.length;
+
+    this._options.push({
+      index: nextIndex,
+      value: this._filterPattern,
+      label: this._filterPattern,
+      description: '',
+      selected: true,
+      disabled: false,
+    });
+
+    return nextIndex;
+  }
+
   protected _dispatchChangeEvent(): void {
     if (!this._multiple) {
       /** @deprecated */
@@ -374,9 +395,17 @@ export class VscodeSelectBase extends VscElement {
       return;
     }
 
+    if (this.combobox && this._filteredOptions.length < 1) {
+      this._isPlaceholderOptionActive = true;
+    }
+
     this._activeIndex = Number(
       this.combobox ? el.dataset.filteredIndex : el.dataset.index
     );
+  }
+
+  protected _onPlaceholderOptionMouseOut() {
+    this._isPlaceholderOptionActive = false;
   }
 
   protected _onEnterKeyDown(): void {
@@ -400,17 +429,24 @@ export class VscodeSelectBase extends VscElement {
     }
 
     if (this.combobox) {
-      if (!this._multiple && !showDropdownNext) {
-        this._selectedIndex =
-          this._activeIndex > -1
-            ? this._filteredOptions[this._activeIndex].index
-            : -1;
-      }
+      if (this._isPlaceholderOptionActive) {
+        const nextSelectedIndex = this._createSuggestedOption();
+        this._selectedIndex = nextSelectedIndex;
+        this._dispatchChangeEvent();
+        this._isPlaceholderOptionActive = false;
+      } else {
+        if (!this._multiple && !showDropdownNext) {
+          this._selectedIndex =
+            this._activeIndex > -1
+              ? this._filteredOptions[this._activeIndex].index
+              : -1;
+        }
 
-      if (!this._multiple && showDropdownNext) {
-        this.updateComplete.then(() => {
-          this._scrollActiveElementToTop();
-        });
+        if (!this._multiple && showDropdownNext) {
+          this.updateComplete.then(() => {
+            this._scrollActiveElementToTop();
+          });
+        }
       }
     }
 
@@ -490,6 +526,11 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onArrowDownKeyDown(): void {
     if (this.open) {
+      if (this.combobox && this.creatable && this._filteredOptions.length < 1) {
+        this._isPlaceholderOptionActive = true;
+        return;
+      }
+
       if (this._activeIndex >= this._currentOptions.length - 1) {
         return;
       }
@@ -499,7 +540,7 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
-  private _onComponentKeyDown(event: KeyboardEvent) {
+  private _onComponentKeyDown = (event: KeyboardEvent) => {
     if ([' ', 'ArrowUp', 'ArrowDown', 'Escape'].includes(event.key)) {
       event.stopPropagation();
       event.preventDefault();
@@ -524,15 +565,15 @@ export class VscodeSelectBase extends VscElement {
     if (event.key === 'ArrowDown') {
       this._onArrowDownKeyDown();
     }
-  }
+  };
 
-  private _onComponentFocus() {
+  private _onComponentFocus = () => {
     this.focused = true;
-  }
+  };
 
-  private _onComponentBlur() {
+  private _onComponentBlur = () => {
     this.focused = false;
-  }
+  };
 
   protected _onSlotChange(): void {
     this._setStateFromSlottedElements();

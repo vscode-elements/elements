@@ -1,4 +1,4 @@
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement} from '../includes/VscElement.js';
@@ -69,9 +69,6 @@ export class VscodeSingleSelect
 
   /** @internal */
   static formAssociated = true;
-
-  @property({type: Boolean, reflect: true})
-  creatable = false;
 
   @property({attribute: 'default-value'})
   defaultValue = '';
@@ -276,20 +273,12 @@ export class VscodeSingleSelect
       return;
     }
 
+    const isPlaceholderOption = optEl.classList.contains('placeholder');
     let nextSelectedIndex = Number((optEl as HTMLElement).dataset.index);
 
-    if (typeof optEl.dataset.placeholderOption !== 'undefined') {
+    if (isPlaceholderOption) {
       if (this.creatable) {
-        nextSelectedIndex = this._options.length;
-
-        this._options.push({
-          index: nextSelectedIndex,
-          value: this._filterPattern,
-          label: this._filterPattern,
-          description: '',
-          selected: true,
-          disabled: false,
-        });
+        nextSelectedIndex = this._createSuggestedOption();
       } else {
         return;
       }
@@ -361,6 +350,21 @@ export class VscodeSingleSelect
 
   protected override _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
+
+    const placeholderOption = this.combobox
+      ? html`<li
+          class=${classMap({
+            option: true,
+            placeholder: true,
+            active: this._isPlaceholderOptionActive,
+          })}
+          @mouseout=${this._onPlaceholderOptionMouseOut}
+          data-placeholder-option
+        >
+          ${this.creatable ? `Add "${this._filterPattern}"` : 'No options'}
+        </li>`
+      : nothing;
+
     const options =
       list.length > 0
         ? list.map((op, index) => {
@@ -383,9 +387,7 @@ export class VscodeSingleSelect
               </li>
             `;
           })
-        : html`<li class="option" data-placeholder-option>
-            ${this.creatable ? `Add "${this._filterPattern}"` : 'No options'}
-          </li>`;
+        : placeholderOption;
 
     return html`
       <ul
