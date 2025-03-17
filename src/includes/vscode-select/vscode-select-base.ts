@@ -463,16 +463,20 @@ export class VscodeSelectBase extends VscElement {
 
     if (this.open && this._multiple && this._activeIndex > -1) {
       const opts = this.combobox ? this._filteredOptions : this._options;
-      const {selected} = opts[this._activeIndex];
+      const selectedOption = opts[this._activeIndex];
+      const nextSelectedIndexes: number[] = [];
 
-      opts[this._activeIndex].selected = !selected;
-      this._selectedIndexes = [];
+      this._options[selectedOption.index].selected = !selectedOption.selected;
 
-      opts.forEach(({index, selected}) => {
+      opts.forEach(({index}) => {
+        const {selected} = this._options[index];
+
         if (selected) {
-          this._selectedIndexes.push(index);
+          nextSelectedIndexes.push(index);
         }
       });
+
+      this._selectedIndexes = nextSelectedIndexes;
     }
   }
 
