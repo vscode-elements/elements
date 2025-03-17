@@ -1,4 +1,4 @@
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
@@ -359,68 +359,74 @@ export class VscodeMultiSelect
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
       >
-        ${repeat(
-          list,
-          (op) => op.index,
-          (op, index) => {
-            const selected = this._selectedIndexes.includes(op.index);
-            const optionClasses = classMap({
-              active: index === this._activeIndex && !op.disabled,
-              option: true,
-              selected,
-              disabled: op.disabled,
-            });
-            const checkboxClasses = classMap({
-              'checkbox-icon': true,
-              checked: selected,
-            });
+        ${list.length > 0
+          ? repeat(
+              list,
+              (op) => op.index,
+              (op, index) => {
+                const selected = this._selectedIndexes.includes(op.index);
+                const optionClasses = classMap({
+                  active: index === this._activeIndex && !op.disabled,
+                  option: true,
+                  selected,
+                  disabled: op.disabled,
+                });
+                const checkboxClasses = classMap({
+                  'checkbox-icon': true,
+                  checked: selected,
+                });
 
-            return html`
-              <li
-                class=${optionClasses}
-                data-index=${op.index}
-                data-filtered-index=${index}
-              >
-                <span class=${checkboxClasses}></span>
-                <span class="option-label"
-                  >${(op.ranges?.length ?? 0 > 0)
-                    ? highlightRanges(op.label, op.ranges ?? [])
-                    : op.label}</span
-                >
-              </li>
-            `;
-          }
-        )}
+                return html`
+                  <li
+                    class=${optionClasses}
+                    data-index=${op.index}
+                    data-filtered-index=${index}
+                  >
+                    <span class=${checkboxClasses}></span>
+                    <span class="option-label"
+                      >${(op.ranges?.length ?? 0 > 0)
+                        ? highlightRanges(op.label, op.ranges ?? [])
+                        : op.label}</span
+                    >
+                  </li>
+                `;
+              }
+            )
+          : this._renderPlaceholderOption()}
       </ul>
     `;
   }
 
   protected override _renderDropdownControls(): TemplateResult {
-    return html`
-      <div class="dropdown-controls">
-        <button
-          type="button"
-          @click=${this._onMultiSelectAllClick}
-          title="Select all"
-          class="action-icon"
-          id="select-all"
-        >
-          <vscode-icon name="checklist"></vscode-icon>
-        </button>
-        <button
-          type="button"
-          @click=${this._onMultiDeselectAllClick}
-          title="Deselect all"
-          class="action-icon"
-          id="select-none"
-        >
-          <vscode-icon name="clear-all"></vscode-icon>
-        </button>
-        <vscode-button class="button-accept" @click=${this._onMultiAcceptClick}
-          >OK</vscode-button
-        >
-      </div>
-    `;
+    return this._filteredOptions.length > 0
+      ? html`
+          <div class="dropdown-controls">
+            <button
+              type="button"
+              @click=${this._onMultiSelectAllClick}
+              title="Select all"
+              class="action-icon"
+              id="select-all"
+            >
+              <vscode-icon name="checklist"></vscode-icon>
+            </button>
+            <button
+              type="button"
+              @click=${this._onMultiDeselectAllClick}
+              title="Deselect all"
+              class="action-icon"
+              id="select-none"
+            >
+              <vscode-icon name="clear-all"></vscode-icon>
+            </button>
+            <vscode-button
+              class="button-accept"
+              @click=${this._onMultiAcceptClick}
+              >OK</vscode-button
+            >
+          </div>
+        `
+      : html`${nothing}`;
   }
 }
 
