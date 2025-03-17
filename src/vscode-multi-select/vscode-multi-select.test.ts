@@ -370,4 +370,6 @@ describe('vscode-multi-select', () => {
 
     expect(li.classList.contains('disabled')).to.be.true;
   });
+
+  it('selects multiple options with keyboard');
 });
