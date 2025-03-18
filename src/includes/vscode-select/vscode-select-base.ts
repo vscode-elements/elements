@@ -313,6 +313,8 @@ export class VscodeSelectBase extends VscElement {
       disabled: false,
     });
 
+    this._valueOptionIndexMap[this._filterPattern] = nextIndex;
+
     return nextIndex;
   }
 
@@ -602,12 +604,16 @@ export class VscodeSelectBase extends VscElement {
     return [];
   }
 
-  protected _renderPlaceholderOption() {
+  protected _renderPlaceholderOption(isListEmpty: boolean) {
     if (!this.combobox) {
       return nothing;
     }
 
-    if (this.creatable) {
+    if (
+      this.creatable &&
+      this._filterPattern.length > 0 &&
+      !this._valueOptionIndexMap[this._filterPattern]
+    ) {
       return html`<li
         class=${classMap({
           option: true,
@@ -616,10 +622,12 @@ export class VscodeSelectBase extends VscElement {
         })}
         @mouseout=${this._onPlaceholderOptionMouseOut}
       >
-        Add "${this._filterPattern}"
+        Add&nbsp;<span>${this._filterPattern}</span>
       </li>`;
     } else {
-      return html`<li class="no-options">No options</li>`;
+      return isListEmpty
+        ? html`<li class="no-options">No options</li>`
+        : nothing;
     }
   }
 

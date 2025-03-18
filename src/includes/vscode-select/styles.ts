@@ -252,6 +252,20 @@ export default [
       user-select: none;
     }
 
+    .placeholder {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .placeholder span {
+      font-weight: bold;
+    }
+
+    .placeholder:not(.disabled):hover {
+      color: var(--vscode-list-activeSelectionForeground, #ffffff);
+    }
+
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast'])
       .option.active,
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
