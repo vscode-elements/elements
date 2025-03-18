@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import {html, render, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import '../../vscode-button/index.js';
@@ -302,20 +302,13 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _createSuggestedOption() {
-    const nextIndex = this._options.length;
+    const nextSelectedIndex = this._options.length;
+    const op = document.createElement('vscode-option');
+    op.value = this._filterPattern;
+    render(this._filterPattern, op);
+    this.appendChild(op);
 
-    this._options.push({
-      index: nextIndex,
-      value: this._filterPattern,
-      label: this._filterPattern,
-      description: '',
-      selected: true,
-      disabled: false,
-    });
-
-    this._valueOptionIndexMap[this._filterPattern] = nextIndex;
-
-    return nextIndex;
+    return nextSelectedIndex;
   }
 
   protected _dispatchChangeEvent(): void {
