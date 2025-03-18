@@ -369,40 +369,39 @@ export class VscodeMultiSelect
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
       >
-        ${list.length > 0
-          ? repeat(
-              list,
-              (op) => op.index,
-              (op, index) => {
-                const selected = this._selectedIndexes.includes(op.index);
-                const optionClasses = classMap({
-                  active: index === this._activeIndex && !op.disabled,
-                  option: true,
-                  selected,
-                  disabled: op.disabled,
-                });
-                const checkboxClasses = classMap({
-                  'checkbox-icon': true,
-                  checked: selected,
-                });
+        ${repeat(
+          list,
+          (op) => op.index,
+          (op, index) => {
+            const selected = this._selectedIndexes.includes(op.index);
+            const optionClasses = classMap({
+              active: index === this._activeIndex && !op.disabled,
+              option: true,
+              selected,
+              disabled: op.disabled,
+            });
+            const checkboxClasses = classMap({
+              'checkbox-icon': true,
+              checked: selected,
+            });
 
-                return html`
-                  <li
-                    class=${optionClasses}
-                    data-index=${op.index}
-                    data-filtered-index=${index}
-                  >
-                    <span class=${checkboxClasses}></span>
-                    <span class="option-label"
-                      >${(op.ranges?.length ?? 0 > 0)
-                        ? highlightRanges(op.label, op.ranges ?? [])
-                        : op.label}</span
-                    >
-                  </li>
-                `;
-              }
-            )
-          : this._renderPlaceholderOption()}
+            return html`
+              <li
+                class=${optionClasses}
+                data-index=${op.index}
+                data-filtered-index=${index}
+              >
+                <span class=${checkboxClasses}></span>
+                <span class="option-label"
+                  >${(op.ranges?.length ?? 0 > 0)
+                    ? highlightRanges(op.label, op.ranges ?? [])
+                    : op.label}</span
+                >
+              </li>
+            `;
+          }
+        )}
+        ${this._renderPlaceholderOption(list.length < 1)}
       </ul>
     `;
   }

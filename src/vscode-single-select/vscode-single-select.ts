@@ -351,37 +351,33 @@ export class VscodeSingleSelect
   protected override _renderOptions(): TemplateResult {
     const list = this.combobox ? this._filteredOptions : this._options;
 
-    const options =
-      list.length > 0
-        ? list.map((op, index) => {
-            const classes = classMap({
-              option: true,
-              disabled: op.disabled,
-              selected: op.selected,
-              active: index === this._activeIndex && !op.disabled,
-            });
-
-            return html`
-              <li
-                class=${classes}
-                data-index=${op.index}
-                data-filtered-index=${index}
-              >
-                ${(op.ranges?.length ?? 0 > 0)
-                  ? highlightRanges(op.label, op.ranges ?? [])
-                  : op.label}
-              </li>
-            `;
-          })
-        : this._renderPlaceholderOption();
-
     return html`
       <ul
         class="options"
         @mouseover=${this._onOptionMouseOver}
         @click=${this._onOptionClick}
       >
-        ${options}
+        ${list.map((op, index) => {
+          const classes = classMap({
+            option: true,
+            disabled: op.disabled,
+            selected: op.selected,
+            active: index === this._activeIndex && !op.disabled,
+          });
+
+          return html`
+            <li
+              class=${classes}
+              data-index=${op.index}
+              data-filtered-index=${index}
+            >
+              ${(op.ranges?.length ?? 0 > 0)
+                ? highlightRanges(op.label, op.ranges ?? [])
+                : op.label}
+            </li>
+          `;
+        })}
+        ${this._renderPlaceholderOption(list.length < 1)}
       </ul>
     `;
   }
