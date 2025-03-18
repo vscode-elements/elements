@@ -229,7 +229,7 @@ export class VscodeMultiSelect
     }
   }
 
-  private _onOptionClick(ev: MouseEvent) {
+  private _onOptionClick = (ev: MouseEvent) => {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) => {
       if ('matches' in et) {
@@ -243,14 +243,24 @@ export class VscodeMultiSelect
       return;
     }
 
-    const index = Number((optEl as HTMLElement).dataset.index);
+    const isPlaceholderOption = (optEl as HTMLElement).classList.contains(
+      'placeholder'
+    );
+    const index = isPlaceholderOption
+      ? this._createSuggestedOption()
+      : Number((optEl as HTMLElement).dataset.index);
 
-    if (this._options[index]) {
-      if (this._options[index].disabled) {
-        return;
+    if (isPlaceholderOption) {
+      this._options[index].selected = true;
+      this.requestUpdate();
+    } else {
+      if (this._options[index]) {
+        if (this._options[index].disabled) {
+          return;
+        }
+
+        this._options[index].selected = !this._options[index].selected;
       }
-
-      this._options[index].selected = !this._options[index].selected;
     }
 
     this._selectedIndexes = [];
@@ -266,7 +276,7 @@ export class VscodeMultiSelect
     this._setFormValue();
     this._manageRequired();
     this._dispatchChangeEvent();
-  }
+  };
 
   private _onMultiAcceptClick(): void {
     this._toggleDropdown(false);
