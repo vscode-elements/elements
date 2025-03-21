@@ -1,12 +1,10 @@
 import {html, LitElement, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
 import {customElement} from '../includes/VscElement.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
-import {highlightRanges} from '../includes/vscode-select/helpers.js';
 
 /**
  * Allows to select an item from multiple options.
@@ -263,7 +261,7 @@ export class VscodeSingleSelect
     this._manageRequired();
   }
 
-  private _onOptionClick(ev: MouseEvent) {
+  protected override _onOptionClick(ev: MouseEvent) {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) =>
       (et as HTMLElement)?.matches('li.option')
@@ -345,40 +343,6 @@ export class VscodeSingleSelect
           ${chevronDownIcon}
         </button>
       </div>
-    `;
-  }
-
-  protected override _renderOptions(): TemplateResult {
-    const list = this.combobox ? this._filteredOptions : this._options;
-
-    return html`
-      <ul
-        class="options"
-        @mouseover=${this._onOptionMouseOver}
-        @click=${this._onOptionClick}
-      >
-        ${list.map((op, index) => {
-          const classes = classMap({
-            option: true,
-            disabled: op.disabled,
-            selected: op.selected,
-            active: index === this._activeIndex && !op.disabled,
-          });
-
-          return html`
-            <li
-              class=${classes}
-              data-index=${op.index}
-              data-filtered-index=${index}
-            >
-              ${(op.ranges?.length ?? 0 > 0)
-                ? highlightRanges(op.label, op.ranges ?? [])
-                : op.label}
-            </li>
-          `;
-        })}
-        ${this._renderPlaceholderOption(list.length < 1)}
-      </ul>
     `;
   }
 }

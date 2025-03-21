@@ -1,11 +1,12 @@
 import {html, render, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {repeat} from 'lit/directives/repeat.js';
 import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
 import type {InternalOption, Option, SearchMethod} from './types.js';
-import {filterOptionsByPattern} from './helpers.js';
+import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import {VscElement} from '../VscElement.js';
 
 const VISIBLE_OPTS = 10;
@@ -593,8 +594,57 @@ export class VscodeSelectBase extends VscElement {
     this._toggleDropdown(true);
   }
 
+  protected _onOptionClick(_ev: MouseEvent) {
+    return;
+  }
+
   protected _renderOptions(): TemplateResult | TemplateResult[] {
-    return [];
+    const list = this.combobox ? this._filteredOptions : this._options;
+
+    return html`
+      <ul
+        class="options"
+        @click=${this._onOptionClick}
+        @mouseover=${this._onOptionMouseOver}
+      >
+        ${repeat(
+          list,
+          (op) => op.index,
+          (op, index) => {
+            const optionClasses = {
+              active: index === this._activeIndex && !op.disabled,
+              disabled: op.disabled,
+              option: true,
+              selected: op.selected,
+            };
+
+            const checkboxClasses = {
+              'checkbox-icon': true,
+              checked: op.selected,
+            };
+
+            const labelText =
+              (op.ranges?.length ?? 0 > 0)
+                ? highlightRanges(op.label, op.ranges ?? [])
+                : op.label;
+
+            return html`
+              <li
+                class=${classMap(optionClasses)}
+                data-index=${op.index}
+                data-filtered-index=${index}
+              >
+                ${this._multiple
+                  ? html`<span class=${classMap(checkboxClasses)}></span
+                      ><span class="option-label">${labelText}</span>`
+                  : labelText}
+              </li>
+            `;
+          }
+        )}
+        ${this._renderPlaceholderOption(list.length < 1)}
+      </ul>
+    `;
   }
 
   protected _renderPlaceholderOption(isListEmpty: boolean) {
@@ -615,7 +665,7 @@ export class VscodeSelectBase extends VscElement {
         })}
         @mouseout=${this._onPlaceholderOptionMouseOut}
       >
-        Add&nbsp;<span>${this._filterPattern}</span>
+        Add "${this._filterPattern}"
       </li>`;
     } else {
       return isListEmpty

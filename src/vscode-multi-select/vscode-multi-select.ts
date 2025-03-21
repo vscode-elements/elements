@@ -1,13 +1,10 @@
 import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
-import {repeat} from 'lit/directives/repeat.js';
 import {customElement} from '../includes/VscElement.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-multi-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
-import {highlightRanges} from '../includes/vscode-select/helpers.js';
 
 /**
  * Allows to select multiple items from a list of options.
@@ -229,7 +226,7 @@ export class VscodeMultiSelect
     }
   }
 
-  private _onOptionClick = (ev: MouseEvent) => {
+  protected override _onOptionClick = (ev: MouseEvent) => {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) => {
       if ('matches' in et) {
@@ -357,52 +354,6 @@ export class VscodeMultiSelect
           ${chevronDownIcon}
         </button>
       </div>
-    `;
-  }
-
-  protected override _renderOptions(): TemplateResult {
-    const list = this.combobox ? this._filteredOptions : this._options;
-
-    return html`
-      <ul
-        class="options"
-        @click=${this._onOptionClick}
-        @mouseover=${this._onOptionMouseOver}
-      >
-        ${repeat(
-          list,
-          (op) => op.index,
-          (op, index) => {
-            const selected = this._selectedIndexes.includes(op.index);
-            const optionClasses = classMap({
-              active: index === this._activeIndex && !op.disabled,
-              option: true,
-              selected,
-              disabled: op.disabled,
-            });
-            const checkboxClasses = classMap({
-              'checkbox-icon': true,
-              checked: selected,
-            });
-
-            return html`
-              <li
-                class=${optionClasses}
-                data-index=${op.index}
-                data-filtered-index=${index}
-              >
-                <span class=${checkboxClasses}></span>
-                <span class="option-label"
-                  >${(op.ranges?.length ?? 0 > 0)
-                    ? highlightRanges(op.label, op.ranges ?? [])
-                    : op.label}</span
-                >
-              </li>
-            `;
-          }
-        )}
-        ${this._renderPlaceholderOption(list.length < 1)}
-      </ul>
     `;
   }
 
