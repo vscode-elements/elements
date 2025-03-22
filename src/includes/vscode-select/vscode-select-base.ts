@@ -652,11 +652,7 @@ export class VscodeSelectBase extends VscElement {
       return nothing;
     }
 
-    if (
-      this.creatable &&
-      this._filterPattern.length > 0 &&
-      !this._valueOptionIndexMap[this._filterPattern]
-    ) {
+    if (this.creatable && this._filterPattern.length > 0) {
       return html`<li
         class=${classMap({
           option: true,

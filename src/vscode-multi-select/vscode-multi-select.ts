@@ -6,6 +6,8 @@ import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js'
 import styles from './vscode-multi-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
+export type VscMultiSelectCreateOptionEvent = CustomEvent<{value: string}>;
+
 /**
  * Allows to select multiple items from a list of options.
  *
@@ -67,7 +69,18 @@ export class VscodeMultiSelect
 
   @property({type: Array, attribute: false})
   set selectedIndexes(val: number[]) {
-    this._selectedIndexes = val;
+    const newIndexes: number[] = [];
+
+    val.forEach((v) => {
+      if (typeof this._options[v] !== 'undefined') {
+        if (!newIndexes.includes(v)) {
+          this._options[v].selected = true;
+          newIndexes.push(v);
+        }
+      }
+    });
+
+    this._selectedIndexes = newIndexes;
   }
   get selectedIndexes(): number[] {
     return this._selectedIndexes;
@@ -210,6 +223,20 @@ export class VscodeMultiSelect
 
   private _requestedValueToSetLater: string[] = [];
 
+  private async _createAndSelectSuggestedOption() {
+    const nextIndex = this._createSuggestedOption();
+
+    await this.updateComplete;
+
+    this.selectedIndexes = [...this.selectedIndexes, nextIndex];
+    this._dispatchChangeEvent();
+    const opCreateEvent: VscMultiSelectCreateOptionEvent = new CustomEvent(
+      'vsc-multi-select-create-option',
+      {detail: {value: this._options[nextIndex]?.value ?? ''}}
+    );
+    this.dispatchEvent(opCreateEvent);
+  }
+
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
@@ -243,21 +270,20 @@ export class VscodeMultiSelect
     const isPlaceholderOption = (optEl as HTMLElement).classList.contains(
       'placeholder'
     );
-    const index = isPlaceholderOption
-      ? this._createSuggestedOption()
-      : Number((optEl as HTMLElement).dataset.index);
 
     if (isPlaceholderOption) {
-      this._options[index].selected = true;
-      this.requestUpdate();
-    } else {
-      if (this._options[index]) {
-        if (this._options[index].disabled) {
-          return;
-        }
+      this._createAndSelectSuggestedOption();
+      return;
+    }
 
-        this._options[index].selected = !this._options[index].selected;
+    const index = Number((optEl as HTMLElement).dataset.index);
+
+    if (this._options[index]) {
+      if (this._options[index].disabled) {
+        return;
       }
+
+      this._options[index].selected = !this._options[index].selected;
     }
 
     this._selectedIndexes = [];
@@ -393,5 +419,9 @@ export class VscodeMultiSelect
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-multi-select': VscodeMultiSelect;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-multi-select-create-option': VscMultiSelectCreateOptionEvent;
   }
 }
