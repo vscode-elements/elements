@@ -228,6 +228,10 @@
           sl.addEventListener('change', () => {
             console.log(sl.value);
           });
+
+          sl.addEventListener('vsc-multi-select-create-option', (ev) => {
+            console.log(ev);
+          });
         </script>
       </vscode-demo>
     </main>

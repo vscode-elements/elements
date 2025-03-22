@@ -372,4 +372,5 @@ describe('vscode-multi-select', () => {
   });
 
   it('selects multiple options with keyboard');
+  it('selectedIndexes sync with values');
 });

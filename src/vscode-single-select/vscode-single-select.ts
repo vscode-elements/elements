@@ -6,6 +6,8 @@ import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js'
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 
+export type VscSingleSelectCreateOptionEvent = CustomEvent<{value: string}>;
+
 /**
  * Allows to select an item from multiple options.
  *
@@ -199,6 +201,21 @@ export class VscodeSingleSelect
 
   private _requestedValueToSetLater = '';
 
+  private async _createAndSelectSuggestedOption() {
+    const nextIndex = this._createSuggestedOption();
+
+    await this.updateComplete;
+
+    this.selectedIndex = nextIndex;
+    this._dispatchChangeEvent();
+    const opCreateEvent: VscSingleSelectCreateOptionEvent = new CustomEvent(
+      'vsc-single-select-create-option',
+      {detail: {value: this._options[nextIndex]?.value ?? ''}}
+    );
+    this.dispatchEvent(opCreateEvent);
+    this._toggleDropdown(false);
+  }
+
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
@@ -272,23 +289,20 @@ export class VscodeSingleSelect
     }
 
     const isPlaceholderOption = optEl.classList.contains('placeholder');
-    let nextSelectedIndex = Number((optEl as HTMLElement).dataset.index);
 
     if (isPlaceholderOption) {
       if (this.creatable) {
-        nextSelectedIndex = this._createSuggestedOption();
-      } else {
-        return;
+        this._createAndSelectSuggestedOption();
       }
+    } else {
+      this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
+      this._value = this._options[this._selectedIndex].value;
+
+      this._toggleDropdown(false);
+      this._internals.setFormValue(this._value);
+      this._manageRequired();
+      this._dispatchChangeEvent();
     }
-
-    this._selectedIndex = nextSelectedIndex;
-    this._value = this._options[this._selectedIndex].value;
-
-    this._toggleDropdown(false);
-    this._internals.setFormValue(this._value);
-    this._manageRequired();
-    this._dispatchChangeEvent();
   }
 
   private _manageRequired() {
@@ -350,5 +364,9 @@ export class VscodeSingleSelect
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-single-select': VscodeSingleSelect;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-single-select-create-option': VscSingleSelectCreateOptionEvent;
   }
 }
