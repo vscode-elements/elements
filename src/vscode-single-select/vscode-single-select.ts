@@ -331,34 +331,6 @@ export class VscodeSingleSelect
       </div>
     `;
   }
-
-  protected override _renderComboboxFace(): TemplateResult {
-    const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
-
-    return html`
-      <div class="combobox-face face">
-        <input
-          class="combobox-input"
-          spellcheck="false"
-          type="text"
-          autocomplete="off"
-          .value=${inputVal}
-          @focus=${this._onComboboxInputFocus}
-          @input=${this._onComboboxInputInput}
-          @click=${this._onComboboxInputClick}
-        >
-        <button
-          class="combobox-button"
-          type="button"
-          @click=${this._onComboboxButtonClick}
-          @keydown=${this._onComboboxButtonKeyDown}
-        >
-          ${chevronDownIcon}
-        </button>
-      </div>
-    `;
-  }
 }
 
 declare global {
