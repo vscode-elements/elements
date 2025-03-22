@@ -8,6 +8,7 @@ import {VscodeOption} from '../../vscode-option/index.js';
 import type {InternalOption, Option, SearchMethod} from './types.js';
 import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import {VscElement} from '../VscElement.js';
+import {chevronDownIcon} from './template-elements.js';
 
 const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 22;
@@ -686,8 +687,48 @@ export class VscodeSelectBase extends VscElement {
     return html`${nothing}`;
   }
 
+  private _renderMultiSelectLabel() {
+    switch (this._selectedIndexes.length) {
+      case 0:
+        return html`<span class="select-face-badge no-item"
+          >No items selected</span
+        >`;
+      case 1:
+        return html`<span class="select-face-badge">1 item selected</span>`;
+      default:
+        return html`<span class="select-face-badge"
+          >${this._selectedIndexes.length} items selected</span
+        >`;
+    }
+  }
+
   protected _renderComboboxFace(): TemplateResult {
-    return html`${nothing}`;
+    const inputVal =
+      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
+
+    return html`
+      <div class="combobox-face face">
+        ${this._multiple ? this._renderMultiSelectLabel() : nothing}
+        <input
+          class="combobox-input"
+          spellcheck="false"
+          type="text"
+          autocomplete="off"
+          .value=${inputVal}
+          @focus=${this._onComboboxInputFocus}
+          @input=${this._onComboboxInputInput}
+          @click=${this._onComboboxInputClick}
+        >
+        <button
+          class="combobox-button"
+          type="button"
+          @click=${this._onComboboxButtonClick}
+          @keydown=${this._onComboboxButtonKeyDown}
+        >
+          ${chevronDownIcon}
+        </button>
+      </div>
+    `;
   }
 
   protected _renderDropdownControls(): TemplateResult {

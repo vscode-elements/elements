@@ -354,35 +354,6 @@ export class VscodeMultiSelect
     `;
   }
 
-  protected override _renderComboboxFace(): TemplateResult {
-    const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
-
-    return html`
-      <div class="combobox-face face">
-        ${this._renderLabel()}
-        <input
-          class="combobox-input"
-          spellcheck="false"
-          type="text"
-          autocomplete="off"
-          .value=${inputVal}
-          @focus=${this._onComboboxInputFocus}
-          @input=${this._onComboboxInputInput}
-          @click=${this._onComboboxInputClick}
-        >
-        <button
-          class="combobox-button"
-          type="button"
-          @click=${this._onComboboxButtonClick}
-          @keydown=${this._onComboboxButtonKeyDown}
-        >
-          ${chevronDownIcon}
-        </button>
-      </div>
-    `;
-  }
-
   protected override _renderDropdownControls(): TemplateResult {
     return this._filteredOptions.length > 0
       ? html`
