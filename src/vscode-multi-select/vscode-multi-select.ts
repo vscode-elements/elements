@@ -223,7 +223,8 @@ export class VscodeMultiSelect
 
   private _requestedValueToSetLater: string[] = [];
 
-  private async _createAndSelectSuggestedOption() {
+  protected override async _createAndSelectSuggestedOption() {
+    super._createAndSelectSuggestedOption();
     const nextIndex = this._createSuggestedOption();
 
     await this.updateComplete;
@@ -235,6 +236,8 @@ export class VscodeMultiSelect
       {detail: {value: this._options[nextIndex]?.value ?? ''}}
     );
     this.dispatchEvent(opCreateEvent);
+    this._toggleDropdown(false);
+    this._isPlaceholderOptionActive = false;
   }
 
   protected override _onSlotChange(): void {

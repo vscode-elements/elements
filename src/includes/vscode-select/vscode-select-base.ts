@@ -339,6 +339,8 @@ export class VscodeSelectBase extends VscElement {
     this.dispatchEvent(new Event('input'));
   }
 
+  protected async _createAndSelectSuggestedOption() {}
+
   protected _onFaceClick(): void {
     this._toggleDropdown(!this.open);
 
@@ -392,13 +394,15 @@ export class VscodeSelectBase extends VscElement {
       return;
     }
 
-    if (this.combobox && this._filteredOptions.length < 1) {
+    if (el.matches('.placeholder')) {
       this._isPlaceholderOptionActive = true;
+      this._activeIndex = -1;
+    } else {
+      this._isPlaceholderOptionActive = false;
+      this._activeIndex = Number(
+        this.combobox ? el.dataset.filteredIndex : el.dataset.index
+      );
     }
-
-    this._activeIndex = Number(
-      this.combobox ? el.dataset.filteredIndex : el.dataset.index
-    );
   }
 
   protected _onPlaceholderOptionMouseOut() {
@@ -427,10 +431,7 @@ export class VscodeSelectBase extends VscElement {
 
     if (this.combobox) {
       if (this._isPlaceholderOptionActive) {
-        const nextSelectedIndex = this._createSuggestedOption();
-        this._selectedIndex = nextSelectedIndex;
-        this._dispatchChangeEvent();
-        this._isPlaceholderOptionActive = false;
+        this._createAndSelectSuggestedOption();
       } else {
         if (!this._multiple && !showDropdownNext) {
           this._selectedIndex =
@@ -527,17 +528,26 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onArrowDownKeyDown(): void {
     if (this.open) {
+      if (this._isPlaceholderOptionActive && this._activeIndex === -1) {
+        return;
+      }
+
       if (this.combobox && this.creatable && this._filteredOptions.length < 1) {
         this._isPlaceholderOptionActive = true;
         return;
       }
 
       if (this._activeIndex >= this._currentOptions.length - 1) {
-        return;
+        if (this.combobox && this.creatable) {
+          this._isPlaceholderOptionActive = true;
+          this._activeIndex = -1;
+        } else {
+          return;
+        }
+      } else {
+        this._activeIndex += 1;
+        this._adjustOptionListScrollPos('down');
       }
-
-      this._activeIndex += 1;
-      this._adjustOptionListScrollPos('down');
     }
   }
 
@@ -653,6 +663,10 @@ export class VscodeSelectBase extends VscElement {
       return nothing;
     }
 
+    if (this._valueOptionIndexMap[this._filterPattern]) {
+      return nothing;
+    }
+
     if (this.creatable && this._filterPattern.length > 0) {
       return html`<li
         class=${classMap({
@@ -704,7 +718,7 @@ export class VscodeSelectBase extends VscElement {
 
   protected _renderComboboxFace(): TemplateResult {
     const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex].label : '';
+      this._selectedIndex > -1 ? this._options[this._selectedIndex]?.label : '';
 
     return html`
       <div class="combobox-face face">

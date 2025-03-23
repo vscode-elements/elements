@@ -201,7 +201,7 @@ export class VscodeSingleSelect
 
   private _requestedValueToSetLater = '';
 
-  private async _createAndSelectSuggestedOption() {
+  protected override async _createAndSelectSuggestedOption() {
     const nextIndex = this._createSuggestedOption();
 
     await this.updateComplete;
@@ -214,6 +214,7 @@ export class VscodeSingleSelect
     );
     this.dispatchEvent(opCreateEvent);
     this._toggleDropdown(false);
+    this._isPlaceholderOptionActive = false;
   }
 
   protected override _onSlotChange(): void {
