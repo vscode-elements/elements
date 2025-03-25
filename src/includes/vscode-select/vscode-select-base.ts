@@ -416,7 +416,21 @@ export class VscodeSelectBase extends VscElement {
     this._isPlaceholderOptionActive = false;
   }
 
-  protected _onEnterKeyDown(): void {
+  protected _onEnterKeyDown(ev: KeyboardEvent): void {
+    const clickedOnAcceptButton = ev?.composedPath
+      ? ev
+          .composedPath()
+          .find((el) =>
+            (el as HTMLElement).matches
+              ? (el as HTMLElement).matches('vscode-button.button-accept')
+              : false
+          )
+      : false;
+
+    if (clickedOnAcceptButton) {
+      return;
+    }
+
     const list = this.combobox ? this._filteredOptions : this._options;
     const showDropdownNext = !this.open;
 
@@ -560,7 +574,6 @@ export class VscodeSelectBase extends VscElement {
         return;
       }
 
-
       if (this._activeIndex < this._currentOptions.length - 1) {
         this._activeIndex += 1;
         this._adjustOptionListScrollPos('down');
@@ -580,7 +593,7 @@ export class VscodeSelectBase extends VscElement {
     }
 
     if (event.key === 'Enter') {
-      this._onEnterKeyDown();
+      this._onEnterKeyDown(event);
     }
 
     if (event.key === ' ') {
