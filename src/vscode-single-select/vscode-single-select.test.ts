@@ -1009,4 +1009,9 @@ describe('vscode-single-select', () => {
 
     expect(li.classList.contains('disabled')).to.be.true;
   });
+
+  it('no options placeholder is visible');
+  it('suggested option is visible');
+  it('press arrow down key when no options');
+  it('press arrow down key when suggested option is active');
 });
