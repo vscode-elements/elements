@@ -28,6 +28,7 @@
     "test": "wireit",
     "test:coverage": "wireit",
     "test:watch": "concurrently --raw \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
+    "wtr:watch": "wtr --watch",
     "checksize": "npm run build && cat dist/bundled.js | gzip -9 | wc -c",
     "icons": "node scripts/generateIconList.js",
     "vscode-data": "wireit"
