@@ -271,8 +271,8 @@ export class VscodeSingleSelect
     this._dispatchChangeEvent();
   }
 
-  protected override _onEnterKeyDown(): void {
-    super._onEnterKeyDown();
+  protected override _onEnterKeyDown(ev: KeyboardEvent): void {
+    super._onEnterKeyDown(ev);
 
     this.updateInputValue();
     this._internals.setFormValue(this._value);
