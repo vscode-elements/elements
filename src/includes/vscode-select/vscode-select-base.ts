@@ -231,6 +231,13 @@ export class VscodeSelectBase extends VscElement {
     return this.combobox ? this._filteredOptions : this._options;
   }
 
+  protected get _isSuggestedOptionVisible() {
+    const filterPatternExistsAsOption =
+      typeof this._valueOptionIndexMap[this._filterPattern] !== 'undefined';
+    const filtered = this._filterPattern.length > 0;
+    return this.combobox && !filterPatternExistsAsOption && filtered;
+  }
+
   protected _setStateFromSlottedElements() {
     const options: InternalOption[] = [];
     let nextIndex = 0;
@@ -483,9 +490,14 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private async _adjustOptionListScrollPos(direction: 'down' | 'up') {
-    const numOpts = this.combobox
+    let numOpts = this.combobox
       ? this._filteredOptions.length
       : this._options.length;
+    const suggestedOptionVisible = this._isSuggestedOptionVisible;
+
+    if (suggestedOptionVisible) {
+      numOpts += 1;
+    }
 
     if (numOpts <= VISIBLE_OPTS) {
       return;
@@ -504,7 +516,9 @@ export class VscodeSelectBase extends VscElement {
     if (direction === 'down') {
       if (liPosY + OPT_HEIGHT >= LIST_HEIGHT + ulScrollTop) {
         this._listElement.scrollTop =
-          (this._activeIndex - (VISIBLE_OPTS - 1)) * OPT_HEIGHT;
+          suggestedOptionVisible && this._activeIndex === numOpts - 1
+            ? numOpts * OPT_HEIGHT
+            : (this._activeIndex - (VISIBLE_OPTS - 1)) * OPT_HEIGHT;
       }
     }
 
@@ -517,36 +531,44 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onArrowUpKeyDown(): void {
     if (this.open) {
-      if (this._activeIndex <= 0) {
+      if (this._activeIndex <= 0 && !(this.combobox && this.creatable)) {
         return;
       }
 
-      this._activeIndex -= 1;
-      this._adjustOptionListScrollPos('up');
+      if (this._isPlaceholderOptionActive) {
+        this._activeIndex = this._currentOptions.length - 1;
+        this._isPlaceholderOptionActive = false;
+      } else {
+        this._activeIndex = Math.max(this._activeIndex - 1, 0);
+        this._adjustOptionListScrollPos('up');
+      }
     }
   }
 
   protected _onArrowDownKeyDown(): void {
+    let numOpts = this.combobox
+      ? this._filteredOptions.length
+      : this._options.length;
+    const suggestedOptionVisible = this._isSuggestedOptionVisible;
+
+    if (suggestedOptionVisible) {
+      numOpts += 1;
+    }
+
     if (this.open) {
       if (this._isPlaceholderOptionActive && this._activeIndex === -1) {
         return;
       }
 
-      if (this.combobox && this.creatable && this._filteredOptions.length < 1) {
-        this._isPlaceholderOptionActive = true;
-        return;
-      }
 
-      if (this._activeIndex >= this._currentOptions.length - 1) {
-        if (this.combobox && this.creatable) {
-          this._isPlaceholderOptionActive = true;
-          this._activeIndex = -1;
-        } else {
-          return;
-        }
-      } else {
+      if (this._activeIndex < this._currentOptions.length - 1) {
         this._activeIndex += 1;
         this._adjustOptionListScrollPos('down');
+      } else {
+        if (suggestedOptionVisible) {
+          this._activeIndex = -1;
+          this._isPlaceholderOptionActive = true;
+        }
       }
     }
   }
