@@ -184,19 +184,22 @@ export default [
 
     .option {
       align-items: center;
+      box-sizing: border-box;
       color: var(--vscode-foreground, #cccccc);
       cursor: pointer;
       display: flex;
       font-family: var(--vscode-font-family, sans-serif);
       font-size: var(--vscode-font-size, 13px);
       font-weight: var(--vscode-font-weight, normal);
+      height: 22px;
       line-height: 18px;
       min-height: calc(var(--vscode-font-size) * 1.3);
       padding: 1px 3px;
       user-select: none;
-      border-width: 1px;
-      border-style: solid;
-      border-color: transparent;
+      outline-color: transparent;
+      outline-offset: -1px;
+      outline-style: solid;
+      outline-width: 1px;
     }
 
     .option b {
@@ -216,8 +219,9 @@ export default [
       .option:hover,
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
       .option:hover {
-      border-style: dotted;
-      border-color: var(--vscode-list-focusOutline, #0078d4);
+      outline-style: dotted;
+      outline-color: var(--vscode-list-focusOutline, #0078d4);
+      outline-width: 1px;
     }
 
     .option.disabled {
@@ -229,9 +233,9 @@ export default [
     .option.active:hover {
       background-color: var(--vscode-list-activeSelectionBackground, #04395e);
       color: var(--vscode-list-activeSelectionForeground, #ffffff);
-      border-color: var(--vscode-list-activeSelectionBackground, #04395e);
-      border-style: solid;
-      border-width: 1px;
+      outline-color: var(--vscode-list-activeSelectionBackground, #04395e);
+      outline-style: solid;
+      outline-width: 1px;
     }
 
     .no-options {
@@ -270,8 +274,8 @@ export default [
       .option.active,
     :host-context(body[data-vscode-theme-kind='vscode-high-contrast-light'])
       .option.active:hover {
-      border-color: var(--vscode-list-focusOutline, #0078d4);
-      border-style: dashed;
+      outline-color: var(--vscode-list-focusOutline, #0078d4);
+      outline-style: dashed;
     }
 
     .option-label {
@@ -282,13 +286,13 @@ export default [
 
     .dropdown.multiple .option.selected {
       background-color: var(--vscode-list-hoverBackground, #2a2d2e);
-      border-color: var(--vscode-list-hoverBackground, #2a2d2e);
+      outline-color: var(--vscode-list-hoverBackground, #2a2d2e);
     }
 
     .dropdown.multiple .option.selected.active {
       background-color: var(--vscode-list-activeSelectionBackground, #04395e);
       color: var(--vscode-list-activeSelectionForeground, #ffffff);
-      border-color: var(--vscode-list-activeSelectionBackground, #04395e);
+      outline-color: var(--vscode-list-activeSelectionBackground, #04395e);
     }
 
     .checkbox-icon {

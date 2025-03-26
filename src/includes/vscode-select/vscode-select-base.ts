@@ -526,18 +526,20 @@ export class VscodeSelectBase extends VscElement {
 
     const ulScrollTop = this._listElement.scrollTop;
     const liPosY = this._activeIndex * OPT_HEIGHT;
+    const fullyVisible =
+      liPosY >= ulScrollTop &&
+      liPosY <= ulScrollTop + VISIBLE_OPTS * OPT_HEIGHT - OPT_HEIGHT;
 
     if (direction === 'down') {
-      if (liPosY + OPT_HEIGHT >= LIST_HEIGHT + ulScrollTop) {
-        this._listElement.scrollTop =
-          suggestedOptionVisible && this._activeIndex === numOpts - 1
-            ? numOpts * OPT_HEIGHT
-            : (this._activeIndex - (VISIBLE_OPTS - 1)) * OPT_HEIGHT;
+      if (!fullyVisible) {
+        this._listElement.scrollTop = Math.ceil(
+          this._activeIndex * OPT_HEIGHT - (VISIBLE_OPTS - 1) * OPT_HEIGHT
+        );
       }
     }
 
     if (direction === 'up') {
-      if (liPosY <= ulScrollTop - OPT_HEIGHT) {
+      if (!fullyVisible) {
         this._scrollActiveElementToTop();
       }
     }
