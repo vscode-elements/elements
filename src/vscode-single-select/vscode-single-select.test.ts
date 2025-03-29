@@ -1162,4 +1162,15 @@ describe('vscode-single-select', () => {
       expect(li.classList.contains('disabled')).to.be.true;
     });
   });
+
+  //keyboard navigation
+  it('selects previous option with keyboard');
+  it('selects next option with keyboard');
+  it('selects an option above the viewport with keyboard');
+  it('selects an option below the viewport with keyboard');
+  it('selects previous option in a filtered list with keyboard');
+  it('selects next option in a filtered list with keyboard');
+  it('selects an option in a filtered list above the viewport with keyboard');
+  it('selects an option in a filtered list below the viewport with keyboard');
+  it('skips disabled options');
 });
