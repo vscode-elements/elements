@@ -12,7 +12,6 @@ import {chevronDownIcon} from './template-elements.js';
 
 const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 22;
-const LIST_HEIGHT = VISIBLE_OPTS + OPT_HEIGHT + 2;
 
 /**
  * @cssprop --dropdown-z-index - workaround for dropdown z-index issues
@@ -503,7 +502,10 @@ export class VscodeSelectBase extends VscElement {
     this._listElement.scrollTop = Math.floor(this._activeIndex * OPT_HEIGHT);
   }
 
-  private async _adjustOptionListScrollPos(direction: 'down' | 'up') {
+  private async _adjustOptionListScrollPos(
+    direction: 'down' | 'up',
+    optionIndex: number
+  ) {
     let numOpts = this.combobox
       ? this._filteredOptions.length
       : this._options.length;
@@ -520,27 +522,25 @@ export class VscodeSelectBase extends VscElement {
     this._isHoverForbidden = true;
     window.addEventListener('mousemove', this._onMouseMove);
 
-    if (!this._listElement) {
-      await this.updateComplete;
-    }
-
     const ulScrollTop = this._listElement.scrollTop;
-    const liPosY = this._activeIndex * OPT_HEIGHT;
+    const liPosY = optionIndex * OPT_HEIGHT;
+
     const fullyVisible =
       liPosY >= ulScrollTop &&
       liPosY <= ulScrollTop + VISIBLE_OPTS * OPT_HEIGHT - OPT_HEIGHT;
 
     if (direction === 'down') {
       if (!fullyVisible) {
-        this._listElement.scrollTop = Math.ceil(
-          this._activeIndex * OPT_HEIGHT - (VISIBLE_OPTS - 1) * OPT_HEIGHT
-        );
+        this._listElement.scrollTop =
+          optionIndex * OPT_HEIGHT - (VISIBLE_OPTS - 1) * OPT_HEIGHT;
       }
     }
 
     if (direction === 'up') {
       if (!fullyVisible) {
-        this._scrollActiveElementToTop();
+        this._listElement.scrollTop = Math.floor(
+          this._activeIndex * OPT_HEIGHT
+        );
       }
     }
   }
@@ -552,11 +552,13 @@ export class VscodeSelectBase extends VscElement {
       }
 
       if (this._isPlaceholderOptionActive) {
-        this._activeIndex = this._currentOptions.length - 1;
+        const optionIndex = this._currentOptions.length - 1;
+        this._activeIndex = optionIndex;
         this._isPlaceholderOptionActive = false;
       } else {
-        this._activeIndex = Math.max(this._activeIndex - 1, 0);
-        this._adjustOptionListScrollPos('up');
+        const optionIndex = Math.max(this._activeIndex - 1, 0);
+        this._activeIndex = optionIndex;
+        this._adjustOptionListScrollPos('up', optionIndex);
       }
     }
   }
@@ -576,14 +578,13 @@ export class VscodeSelectBase extends VscElement {
         return;
       }
 
-      if (this._activeIndex < this._currentOptions.length - 1) {
+      if (suggestedOptionVisible && this._activeIndex === numOpts - 2) {
+        this._isPlaceholderOptionActive = true;
+        this._adjustOptionListScrollPos('down', numOpts - 1);
+        this._activeIndex = -1;
+      } else if (this._activeIndex < numOpts - 1) {
         this._activeIndex += 1;
-        this._adjustOptionListScrollPos('down');
-      } else {
-        if (suggestedOptionVisible) {
-          this._activeIndex = -1;
-          this._isPlaceholderOptionActive = true;
-        }
+        this._adjustOptionListScrollPos('down', this._activeIndex);
       }
     }
   }
