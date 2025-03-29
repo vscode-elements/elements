@@ -1,3 +1,4 @@
+import {sendKeys} from '@web/test-runner-commands';
 import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
 import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
@@ -814,204 +815,351 @@ describe('vscode-single-select', () => {
       expect(spy.calledWithMatch({type: 'change'})).to.be.true;
       expect(input.value).to.eq('Dolor');
     });
-  });
 
-  it('should be unfocusable when it is disabled', () => {
-    const el = document.createElement('vscode-single-select');
-    el.tabIndex = 2;
-    el.disabled = true;
-
-    expect(el.tabIndex).to.eq(-1);
-  });
-
-  it('should aria-disabled attribute applied when it is disabled', () => {
-    const el = document.createElement('vscode-single-select');
-    el.disabled = true;
-
-    expect(el.getAttribute('aria-disabled')).to.eq('true');
-  });
-
-  it('should original tabindex restored when enabled again', () => {
-    const el = document.createElement('vscode-single-select');
-    el.tabIndex = 2;
-    el.disabled = true;
-
-    expect(el.tabIndex).to.eq(-1);
-
-    el.disabled = false;
-
-    expect(el.tabIndex).to.eq(2);
-  });
-
-  it('should not throw error when selectedIndex points to a non-existent option', async () => {
-    const el = await fixture<VscodeSingleSelect>(
-      html`<vscode-single-select></vscode-single-select>`
-    );
-    el.selectedIndex = 2;
-
-    expect(() => {
-      // trigger a slot change event
-      el.innerHTML = '   ';
-    }).not.throw();
-  });
-
-  it('should set the initial form value', async () => {
-    const el = await fixture(html`
-      <form id="fr">
-        <vscode-single-select name="test">
-          <vscode-option value="lorem">Lorem</vscode-option>
-          <vscode-option value="ipsum">Ipsum</vscode-option>
+    it('shows "no options" state', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      </form>
-    `);
+      `)) as VscodeSingleSelect;
 
-    const fd = new FormData(el as HTMLFormElement);
+      el.shadowRoot?.querySelector('.combobox-input');
+      await clickOnElement(el);
+      await sendKeys({type: 'Test'});
 
-    expect(fd.get('test')).to.eq('lorem');
-  });
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
-  it('should set the initial selected value', async () => {
-    const el = await fixture(html`
-      <form id="fr">
-        <vscode-single-select name="test">
-          <vscode-option value="lorem">Lorem</vscode-option>
-          <vscode-option value="ipsum" selected>Ipsum</vscode-option>
+      expect(dropdown).lightDom.to.eq(`
+        <ul class="options">
+          <li class="no-options">
+            No options
+          </li>
+        </ul>
+      `);
+    });
+
+    it('shows suggested option below the options', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox creatable>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
-      </form>
-    `);
+      `)) as VscodeSingleSelect;
 
-    const fd = new FormData(el as HTMLFormElement);
-    const sl = el.querySelector('vscode-single-select');
-    const text = sl?.shadowRoot?.querySelector('span.text') as HTMLSpanElement;
+      el.shadowRoot?.querySelector('.combobox-input');
+      await clickOnElement(el);
+      await sendKeys({type: 'lo'});
 
-    expect(fd.get('test')).to.eq('ipsum');
-    expect(text.innerText).to.eq('Ipsum');
-  });
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
-  it('should set the initial selected value', async () => {
-    const el = await fixture(html`
-      <form id="fr">
-        <vscode-single-select name="test"></vscode-single-select>
-      </form>
-    `);
+      expect(dropdown).lightDom.to.eq(
+        `
+        <ul class="options">
+          <li class="option">
+            <b>L</b><b>o</b>rem
+          </li>
+          <li class="option">
+            Do<b>l</b><b>o</b>r
+          </li>
+          <li class="option placeholder">Add "lo"</li>
+        </ul>
+      `,
+        {
+          ignoreAttributes: ['data-filtered-index', 'data-index'],
+        }
+      );
+    });
 
-    const sl = el.querySelector('vscode-single-select');
+    it('shows only suggested option', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox creatable>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
 
-    const op1 = document.createElement('vscode-option');
-    op1.value = 'lorem';
-    op1.innerHTML = 'Lorem';
-    const op2 = document.createElement('vscode-option');
-    op2.value = 'ipsum';
-    op2.innerHTML = 'Ipsum';
-    op2.selected = true;
+      el.shadowRoot?.querySelector('.combobox-input');
+      await clickOnElement(el);
+      await sendKeys({type: 'Sit'});
 
-    sl?.appendChild(op1);
-    sl?.appendChild(op2);
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
-    await sl?.updateComplete;
+      expect(dropdown).lightDom.to.eq(
+        `
+        <ul class="options">
+          <li class="option placeholder">Add "Sit"</li>
+        </ul>
+      `,
+        {
+          ignoreAttributes: ['data-filtered-index', 'data-index'],
+        }
+      );
+    });
 
-    const fd = new FormData(el as HTMLFormElement);
+    it('selects the suggested option', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox creatable>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
 
-    expect(fd.get('test')).to.eq('ipsum');
-  });
+      el.shadowRoot?.querySelector('.combobox-input');
+      await clickOnElement(el);
+      await sendKeys({type: 'dol'});
 
-  it('open by default', async () => {
-    const sl = await fixture(
-      html`<vscode-single-select open>
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'ArrowDown'});
+
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown).lightDom.to.eq(
+        `
+        <ul class="options">
+          <li class="option"><b>D</b><b>o</b><b>l</b>or</li>
+          <li class="active option placeholder">Add "dol"</li>
+        </ul>
+        `,
+        {
+          ignoreAttributes: ['data-filtered-index', 'data-index'],
+        }
+      );
+    });
+
+    it('creates the suggested option', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox creatable>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+      const spy = sinon.spy();
+      el.addEventListener('vsc-single-select-create-option', spy);
+
+      el.shadowRoot?.querySelector('.combobox-input');
+      await clickOnElement(el);
+      await sendKeys({type: 'Sit'});
+
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'Enter'});
+
+      expect(el).lightDom.to.eq(`
         <vscode-option>Lorem</vscode-option>
         <vscode-option>Ipsum</vscode-option>
         <vscode-option>Dolor</vscode-option>
-      </vscode-single-select>`
-    );
-
-    expect(sl.shadowRoot?.querySelector('ul.options')).to.be.ok;
+        <vscode-option>Sit</vscode-option>
+      `);
+      expect(el.value).to.eq('Sit');
+      expect(el.selectedIndex).to.eq(3);
+      expect(spy.called).to.be.true;
+      expect(spy.getCalls()[0].args[0].detail).to.eql({value: 'Sit'});
+    });
   });
 
-  it('shows selected option when opened by default', async () => {
-    const sl = await fixture(
-      html`<vscode-single-select open>
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option selected>Ipsum</vscode-option>
-        <vscode-option>Dolor</vscode-option>
-      </vscode-single-select>`
-    );
+  describe('general behavior', () => {
+    it('should be unfocusable when it is disabled', () => {
+      const el = document.createElement('vscode-single-select');
+      el.tabIndex = 2;
+      el.disabled = true;
 
-    const op = sl.shadowRoot?.querySelector<HTMLLIElement>(
-      'ul.options li:nth-child(2)'
-    );
+      expect(el.tabIndex).to.eq(-1);
+    });
 
-    expect(op).lightDom.to.eq('Ipsum');
-    expect(op?.classList.contains('selected')).to.be.true;
+    it('should aria-disabled attribute applied when it is disabled', () => {
+      const el = document.createElement('vscode-single-select');
+      el.disabled = true;
+
+      expect(el.getAttribute('aria-disabled')).to.eq('true');
+    });
+
+    it('should original tabindex restored when enabled again', () => {
+      const el = document.createElement('vscode-single-select');
+      el.tabIndex = 2;
+      el.disabled = true;
+
+      expect(el.tabIndex).to.eq(-1);
+
+      el.disabled = false;
+
+      expect(el.tabIndex).to.eq(2);
+    });
+
+    it('should not throw error when selectedIndex points to a non-existent option', async () => {
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select></vscode-single-select>`
+      );
+      el.selectedIndex = 2;
+
+      expect(() => {
+        // trigger a slot change event
+        el.innerHTML = '   ';
+      }).not.throw();
+    });
+
+    it('should set the initial form value', async () => {
+      const el = await fixture(html`
+        <form id="fr">
+          <vscode-single-select name="test">
+            <vscode-option value="lorem">Lorem</vscode-option>
+            <vscode-option value="ipsum">Ipsum</vscode-option>
+          </vscode-single-select>
+        </form>
+      `);
+
+      const fd = new FormData(el as HTMLFormElement);
+
+      expect(fd.get('test')).to.eq('lorem');
+    });
+
+    it('should set the initial selected value', async () => {
+      const el = await fixture(html`
+        <form id="fr">
+          <vscode-single-select name="test">
+            <vscode-option value="lorem">Lorem</vscode-option>
+            <vscode-option value="ipsum" selected>Ipsum</vscode-option>
+          </vscode-single-select>
+        </form>
+      `);
+
+      const fd = new FormData(el as HTMLFormElement);
+      const sl = el.querySelector('vscode-single-select');
+      const text = sl?.shadowRoot?.querySelector(
+        'span.text'
+      ) as HTMLSpanElement;
+
+      expect(fd.get('test')).to.eq('ipsum');
+      expect(text.innerText).to.eq('Ipsum');
+    });
+
+    it('should set the initial selected value', async () => {
+      const el = await fixture(html`
+        <form id="fr">
+          <vscode-single-select name="test"></vscode-single-select>
+        </form>
+      `);
+
+      const sl = el.querySelector('vscode-single-select');
+
+      const op1 = document.createElement('vscode-option');
+      op1.value = 'lorem';
+      op1.innerHTML = 'Lorem';
+      const op2 = document.createElement('vscode-option');
+      op2.value = 'ipsum';
+      op2.innerHTML = 'Ipsum';
+      op2.selected = true;
+
+      sl?.appendChild(op1);
+      sl?.appendChild(op2);
+
+      await sl?.updateComplete;
+
+      const fd = new FormData(el as HTMLFormElement);
+
+      expect(fd.get('test')).to.eq('ipsum');
+    });
+
+    it('open by default', async () => {
+      const sl = await fixture(
+        html`<vscode-single-select open>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>`
+      );
+
+      expect(sl.shadowRoot?.querySelector('ul.options')).to.be.ok;
+    });
+
+    it('shows selected option when opened by default', async () => {
+      const sl = await fixture(
+        html`<vscode-single-select open>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option selected>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>`
+      );
+
+      const op = sl.shadowRoot?.querySelector<HTMLLIElement>(
+        'ul.options li:nth-child(2)'
+      );
+
+      expect(op).lightDom.to.eq('Ipsum');
+      expect(op?.classList.contains('selected')).to.be.true;
+    });
+
+    it('changes the description of an option in an existing select', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `);
+      const secondOption =
+        el.querySelectorAll<VscodeOption>('vscode-option')[1];
+
+      secondOption.description = 'Test description';
+      await el.updateComplete;
+
+      await clickOnElement(el);
+      await el.updateComplete;
+
+      await moveMouseOnElement(el.shadowRoot!.querySelectorAll('li')[1]);
+      await el.updateComplete;
+
+      const desc = el.shadowRoot!.querySelector<HTMLDivElement>('.description');
+
+      expect(desc).lightDom.to.eq('Test description');
+    });
+
+    it('changes the label of an option in an existing select', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `);
+      const secondOption =
+        el.querySelectorAll<VscodeOption>('vscode-option')[1];
+
+      secondOption.innerHTML = 'Test label';
+      await el.updateComplete;
+
+      await clickOnElement(el);
+      await el.updateComplete;
+
+      const li = el.shadowRoot!.querySelectorAll<HTMLLIElement>('li')[1];
+
+      expect(li).lightDom.to.eq('Test label');
+    });
+
+    it('changes the disabled state of an option in an existing select', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `);
+      const secondOption =
+        el.querySelectorAll<VscodeOption>('vscode-option')[1];
+
+      secondOption.disabled = true;
+      await el.updateComplete;
+
+      await clickOnElement(el);
+      await el.updateComplete;
+
+      const li = el.shadowRoot!.querySelectorAll<HTMLLIElement>('li')[1];
+
+      expect(li.classList.contains('disabled')).to.be.true;
+    });
   });
-
-  it('changes the description of an option in an existing select', async () => {
-    const el = await fixture<VscodeSingleSelect>(html`
-      <vscode-single-select>
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option>Ipsum</vscode-option>
-        <vscode-option>Dolor</vscode-option>
-      </vscode-single-select>
-    `);
-    const secondOption = el.querySelectorAll<VscodeOption>('vscode-option')[1];
-
-    secondOption.description = 'Test description';
-    await el.updateComplete;
-
-    await clickOnElement(el);
-    await el.updateComplete;
-
-    await moveMouseOnElement(el.shadowRoot!.querySelectorAll('li')[1]);
-    await el.updateComplete;
-
-    const desc = el.shadowRoot!.querySelector<HTMLDivElement>('.description');
-
-    expect(desc).lightDom.to.eq('Test description');
-  });
-
-  it('changes the label of an option in an existing select', async () => {
-    const el = await fixture<VscodeSingleSelect>(html`
-      <vscode-single-select>
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option>Ipsum</vscode-option>
-        <vscode-option>Dolor</vscode-option>
-      </vscode-single-select>
-    `);
-    const secondOption = el.querySelectorAll<VscodeOption>('vscode-option')[1];
-
-    secondOption.innerHTML = 'Test label';
-    await el.updateComplete;
-
-    await clickOnElement(el);
-    await el.updateComplete;
-
-    const li = el.shadowRoot!.querySelectorAll<HTMLLIElement>('li')[1];
-
-    expect(li).lightDom.to.eq('Test label');
-  });
-
-  it('changes the disabled state of an option in an existing select', async () => {
-    const el = await fixture<VscodeSingleSelect>(html`
-      <vscode-single-select>
-        <vscode-option>Lorem</vscode-option>
-        <vscode-option>Ipsum</vscode-option>
-        <vscode-option>Dolor</vscode-option>
-      </vscode-single-select>
-    `);
-    const secondOption = el.querySelectorAll<VscodeOption>('vscode-option')[1];
-
-    secondOption.disabled = true;
-    await el.updateComplete;
-
-    await clickOnElement(el);
-    await el.updateComplete;
-
-    const li = el.shadowRoot!.querySelectorAll<HTMLLIElement>('li')[1];
-
-    expect(li.classList.contains('disabled')).to.be.true;
-  });
-
-  it('no options placeholder is visible');
-  it('suggested option is visible');
-  it('press arrow down key when no options');
-  it('press arrow down key when suggested option is active');
 });
