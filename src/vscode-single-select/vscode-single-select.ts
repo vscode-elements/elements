@@ -5,6 +5,10 @@ import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
+import {
+  findNextSelectableOptionIndex,
+  findPrevSelectableOptionIndex,
+} from '../includes/vscode-select/helpers.js';
 
 export type VscSingleSelectCreateOptionEvent = CustomEvent<{value: string}>;
 
@@ -246,10 +250,13 @@ export class VscodeSingleSelect
       return;
     }
 
+    const options = this.combobox ? this._filteredOptions : this._options;
+    const prevIndex = findPrevSelectableOptionIndex(options, this._activeIndex);
+
     this._filterPattern = '';
-    this._selectedIndex -= 1;
-    this._activeIndex = this._selectedIndex;
-    this._value = this._options[this._selectedIndex].value;
+    this._selectedIndex = prevIndex;
+    this._activeIndex = prevIndex;
+    this._value = prevIndex > -1 ? this._options[prevIndex].value : '';
     this._internals.setFormValue(this._value);
     this._manageRequired();
     this._dispatchChangeEvent();
@@ -262,10 +269,13 @@ export class VscodeSingleSelect
       return;
     }
 
+    const options = this.combobox ? this._filteredOptions : this._options;
+    const nextIndex = findNextSelectableOptionIndex(options, this._activeIndex);
+
     this._filterPattern = '';
-    this._selectedIndex += 1;
-    this._activeIndex = this._selectedIndex;
-    this._value = this._options[this._selectedIndex].value;
+    this._selectedIndex = nextIndex;
+    this._activeIndex = nextIndex;
+    this._value = nextIndex > -1 ? this._options[nextIndex].value : '';
     this._internals.setFormValue(this._value);
     this._manageRequired();
     this._dispatchChangeEvent();
@@ -281,9 +291,15 @@ export class VscodeSingleSelect
 
   protected override _onOptionClick(ev: MouseEvent) {
     const composedPath = ev.composedPath();
-    const optEl = composedPath.find((et) =>
-      (et as HTMLElement)?.matches('li.option')
-    ) as HTMLElement | undefined;
+    const optEl = composedPath.find((et) => {
+      const el = et as HTMLElement;
+
+      if ('matches' in el) {
+        return el.matches('li.option');
+      }
+
+      return;
+    }) as HTMLElement | undefined;
 
     if (!optEl || optEl.matches('.disabled')) {
       return;
