@@ -197,3 +197,44 @@ export const highlightRanges = (
 
   return res;
 };
+
+export function findNextSelectableOptionIndex(
+  options: InternalOption[],
+  fromIndex: number
+) {
+  let result = 0;
+
+  if (fromIndex < 0 || !options[fromIndex] || !options[fromIndex + 1]) {
+    return result;
+  }
+
+  for (let i = fromIndex + 1; i < options.length; i++) {
+    if (!options[i].disabled) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+export function findPrevSelectableOptionIndex(
+  options: InternalOption[],
+  fromIndex: number
+) {
+  let result = 0;
+
+
+  if (fromIndex < 0 || !options[fromIndex] || !options[fromIndex - 1]) {
+    return result;
+  }
+
+  for (let i = fromIndex - 1; i >= 0; i--) {
+    if (!options[i].disabled) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}

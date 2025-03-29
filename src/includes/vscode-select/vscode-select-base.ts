@@ -6,7 +6,12 @@ import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
 import type {InternalOption, Option, SearchMethod} from './types.js';
-import {filterOptionsByPattern, highlightRanges} from './helpers.js';
+import {
+  filterOptionsByPattern,
+  findNextSelectableOptionIndex,
+  findPrevSelectableOptionIndex,
+  highlightRanges,
+} from './helpers.js';
 import {VscElement} from '../VscElement.js';
 import {chevronDownIcon} from './template-elements.js';
 
@@ -556,9 +561,19 @@ export class VscodeSelectBase extends VscElement {
         this._activeIndex = optionIndex;
         this._isPlaceholderOptionActive = false;
       } else {
-        const optionIndex = Math.max(this._activeIndex - 1, 0);
-        this._activeIndex = optionIndex;
-        this._adjustOptionListScrollPos('up', optionIndex);
+        const currentOptions = this.combobox
+          ? this._filteredOptions
+          : this._options;
+
+        const prevSelectable = findPrevSelectableOptionIndex(
+          currentOptions,
+          this._activeIndex
+        );
+
+        if (prevSelectable > -1) {
+          this._activeIndex = prevSelectable;
+          this._adjustOptionListScrollPos('up', prevSelectable);
+        }
       }
     }
   }
@@ -567,6 +582,9 @@ export class VscodeSelectBase extends VscElement {
     let numOpts = this.combobox
       ? this._filteredOptions.length
       : this._options.length;
+    const currentOptions = this.combobox
+      ? this._filteredOptions
+      : this._options;
     const suggestedOptionVisible = this._isSuggestedOptionVisible;
 
     if (suggestedOptionVisible) {
@@ -583,8 +601,15 @@ export class VscodeSelectBase extends VscElement {
         this._adjustOptionListScrollPos('down', numOpts - 1);
         this._activeIndex = -1;
       } else if (this._activeIndex < numOpts - 1) {
-        this._activeIndex += 1;
-        this._adjustOptionListScrollPos('down', this._activeIndex);
+        const nextSelectable = findNextSelectableOptionIndex(
+          currentOptions,
+          this._activeIndex
+        );
+
+        if (nextSelectable > -1) {
+          this._activeIndex = nextSelectable;
+          this._adjustOptionListScrollPos('down', nextSelectable);
+        }
       }
     }
   }

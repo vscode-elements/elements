@@ -1161,6 +1161,50 @@ describe('vscode-single-select', () => {
 
       expect(li.classList.contains('disabled')).to.be.true;
     });
+
+    it('skips disabled options', async () => {
+      const el = await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option disabled>Ipsum</vscode-option>
+          <vscode-option disabled>Dolor</vscode-option>
+          <vscode-option>Sit</vscode-option>
+        </vscode-single-select>
+      `);
+
+      await clickOnElement(el);
+      await clickOnElement(el);
+      await sendKeys({down: 'ArrowDown'});
+
+      const text = el.shadowRoot?.querySelector('.text');
+
+      expect(text).lightDom.to.eq('Sit');
+    });
+
+    it('skips disabled options when dropdown is open', async () => {
+      const el = await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option disabled>Ipsum</vscode-option>
+          <vscode-option disabled>Dolor</vscode-option>
+          <vscode-option>Sit</vscode-option>
+        </vscode-single-select>
+      `);
+
+      await clickOnElement(el);
+      await sendKeys({down: 'ArrowDown'});
+
+      const options = el.shadowRoot?.querySelector('.options');
+
+      expect(options).to.lightDom.eq(`
+        <li class="option">Lorem</li>
+        <li class="option disabled">Ipsum</li>
+        <li class="option disabled">Dolor</li>
+        <li class="option active">Sit</li>
+      `, {
+        ignoreAttributes: ['data-filtered-index', 'data-index'],
+      });
+    });
   });
 
   //keyboard navigation
@@ -1172,5 +1216,5 @@ describe('vscode-single-select', () => {
   it('selects next option in a filtered list with keyboard');
   it('selects an option in a filtered list above the viewport with keyboard');
   it('selects an option in a filtered list below the viewport with keyboard');
-  it('skips disabled options');
+  it('highlights active option when selectedIndex is changed');
 });

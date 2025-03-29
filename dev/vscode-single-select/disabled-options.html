@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-single-select combobox>
+          <vscode-option>Afghanistan</vscode-option>
+          <vscode-option>Albania</vscode-option>
+          <vscode-option>Algeria</vscode-option>
+          <vscode-option disabled="">Andorra</vscode-option>
+          <vscode-option>Angola</vscode-option>
+          <vscode-option>Antigua and Barbuda</vscode-option>
+          <vscode-option disabled="">Argentina</vscode-option>
+          <vscode-option disabled="">Armenia</vscode-option>
+          <vscode-option>Australia</vscode-option>
+          <vscode-option>Austria</vscode-option>
+          <vscode-option>Azerbaijan</vscode-option>
+          <vscode-option>Bahamas</vscode-option>
+          <vscode-option>Bahrain</vscode-option>
+          <vscode-option>Bangladesh</vscode-option>
+          <vscode-option>Barbados</vscode-option>
+          <vscode-option>Belarus</vscode-option>
+          <vscode-option>Belgium</vscode-option>
+          <vscode-option>Belize</vscode-option>
+          <vscode-option>Benin</vscode-option>
+          <vscode-option>Bhutan</vscode-option>
+          <vscode-option>Bolivia</vscode-option>
+          <vscode-option>Bosnia and Herzegovina</vscode-option>
+          <vscode-option>Botswana</vscode-option>
+          <vscode-option>Brazil</vscode-option>
+          <vscode-option>Brunei</vscode-option>
+          <vscode-option>Bulgaria</vscode-option>
+          <vscode-option>Burkina Faso</vscode-option>
+          <vscode-option>Burundi</vscode-option>
+          <vscode-option>Côte d'Ivoire</vscode-option>
+          <vscode-option>Cabo Verde</vscode-option>
+          <vscode-option>Cambodia</vscode-option>
+          <vscode-option>Cameroon</vscode-option>
+          <vscode-option>Canada</vscode-option>
+          <vscode-option>Central African Republic</vscode-option>
+          <vscode-option>Chad</vscode-option>
+          <vscode-option>Chile</vscode-option>
+          <vscode-option>China</vscode-option>
+          <vscode-option>Colombia</vscode-option>
+          <vscode-option>Comoros</vscode-option>
+          <vscode-option>Congo (Congo-Brazzaville)</vscode-option>
+          <vscode-option>Costa Rica</vscode-option>
+          <vscode-option>Croatia</vscode-option>
+          <vscode-option>Cuba</vscode-option>
+          <vscode-option>Cyprus</vscode-option>
+          <vscode-option>Czechia (Czech Republic)</vscode-option>
+          <vscode-option>Democratic Republic of the Congo</vscode-option>
+          <vscode-option>Denmark</vscode-option>
+          <vscode-option>Djibouti</vscode-option>
+          <vscode-option>Dominica</vscode-option>
+          <vscode-option>Dominican Republic</vscode-option>
+          <vscode-option>Ecuador</vscode-option>
+          <vscode-option>Egypt</vscode-option>
+          <vscode-option>El Salvador</vscode-option>
+          <vscode-option>Equatorial Guinea</vscode-option>
+          <vscode-option>Eritrea</vscode-option>
+          <vscode-option>Estonia</vscode-option>
+          <vscode-option>Eswatini (fmr. "Swaziland")</vscode-option>
+          <vscode-option>Ethiopia</vscode-option>
+          <vscode-option>Fiji</vscode-option>
+          <vscode-option>Finland</vscode-option>
+          <vscode-option>France</vscode-option>
+          <vscode-option>Gabon</vscode-option>
+          <vscode-option>Gambia</vscode-option>
+          <vscode-option>Georgia</vscode-option>
+          <vscode-option>Germany</vscode-option>
+          <vscode-option>Ghana</vscode-option>
+          <vscode-option>Greece</vscode-option>
+          <vscode-option>Grenada</vscode-option>
+          <vscode-option>Guatemala</vscode-option>
+          <vscode-option>Guinea</vscode-option>
+          <vscode-option>Guinea-Bissau</vscode-option>
+          <vscode-option>Guyana</vscode-option>
+          <vscode-option>Haiti</vscode-option>
+          <vscode-option>Holy See</vscode-option>
+          <vscode-option>Honduras</vscode-option>
+          <vscode-option>Hungary</vscode-option>
+          <vscode-option>Iceland</vscode-option>
+          <vscode-option>India</vscode-option>
+          <vscode-option>Indonesia</vscode-option>
+          <vscode-option>Iran</vscode-option>
+          <vscode-option>Iraq</vscode-option>
+          <vscode-option>Ireland</vscode-option>
+          <vscode-option>Israel</vscode-option>
+          <vscode-option>Italy</vscode-option>
+          <vscode-option>Jamaica</vscode-option>
+          <vscode-option>Japan</vscode-option>
+          <vscode-option>Jordan</vscode-option>
+          <vscode-option>Kazakhstan</vscode-option>
+          <vscode-option>Kenya</vscode-option>
+          <vscode-option>Kiribati</vscode-option>
+          <vscode-option>Kuwait</vscode-option>
+          <vscode-option>Kyrgyzstan</vscode-option>
+          <vscode-option>Laos</vscode-option>
+          <vscode-option>Latvia</vscode-option>
+          <vscode-option>Lebanon</vscode-option>
+          <vscode-option>Lesotho</vscode-option>
+          <vscode-option>Liberia</vscode-option>
+          <vscode-option>Libya</vscode-option>
+          <vscode-option>Liechtenstein</vscode-option>
+          <vscode-option>Lithuania</vscode-option>
+          <vscode-option>Luxembourg</vscode-option>
+          <vscode-option>Madagascar</vscode-option>
+          <vscode-option>Malawi</vscode-option>
+          <vscode-option>Malaysia</vscode-option>
+          <vscode-option>Maldives</vscode-option>
+          <vscode-option>Mali</vscode-option>
+          <vscode-option>Malta</vscode-option>
+          <vscode-option>Marshall Islands</vscode-option>
+          <vscode-option>Mauritania</vscode-option>
+          <vscode-option>Mauritius</vscode-option>
+          <vscode-option>Mexico</vscode-option>
+          <vscode-option>Micronesia</vscode-option>
+          <vscode-option>Moldova</vscode-option>
+          <vscode-option>Monaco</vscode-option>
+          <vscode-option>Mongolia</vscode-option>
+          <vscode-option>Montenegro</vscode-option>
+          <vscode-option>Morocco</vscode-option>
+          <vscode-option>Mozambique</vscode-option>
+          <vscode-option>Myanmar (formerly Burma)</vscode-option>
+          <vscode-option>Namibia</vscode-option>
+          <vscode-option>Nauru</vscode-option>
+          <vscode-option>Nepal</vscode-option>
+          <vscode-option>Netherlands</vscode-option>
+          <vscode-option>New Zealand</vscode-option>
+          <vscode-option>Nicaragua</vscode-option>
+          <vscode-option>Niger</vscode-option>
+          <vscode-option>Nigeria</vscode-option>
+          <vscode-option>North Korea</vscode-option>
+          <vscode-option>North Macedonia</vscode-option>
+          <vscode-option>Norway</vscode-option>
+          <vscode-option>Oman</vscode-option>
+          <vscode-option>Pakistan</vscode-option>
+          <vscode-option>Palau</vscode-option>
+          <vscode-option>Palestine State</vscode-option>
+          <vscode-option>Panama</vscode-option>
+          <vscode-option>Papua New Guinea</vscode-option>
+          <vscode-option>Paraguay</vscode-option>
+          <vscode-option>Peru</vscode-option>
+          <vscode-option>Philippines</vscode-option>
+          <vscode-option>Poland</vscode-option>
+          <vscode-option>Portugal</vscode-option>
+          <vscode-option>Qatar</vscode-option>
+          <vscode-option>Romania</vscode-option>
+          <vscode-option>Russia</vscode-option>
+          <vscode-option>Rwanda</vscode-option>
+          <vscode-option>Saint Kitts and Nevis</vscode-option>
+          <vscode-option>Saint Lucia</vscode-option>
+          <vscode-option>Saint Vincent and the Grenadines</vscode-option>
+          <vscode-option>Samoa</vscode-option>
+          <vscode-option>San Marino</vscode-option>
+          <vscode-option>Sao Tome and Principe</vscode-option>
+          <vscode-option>Saudi Arabia</vscode-option>
+          <vscode-option>Senegal</vscode-option>
+          <vscode-option>Serbia</vscode-option>
+          <vscode-option>Seychelles</vscode-option>
+          <vscode-option>Sierra Leone</vscode-option>
+          <vscode-option>Singapore</vscode-option>
+          <vscode-option>Slovakia</vscode-option>
+          <vscode-option>Slovenia</vscode-option>
+          <vscode-option>Solomon Islands</vscode-option>
+          <vscode-option>Somalia</vscode-option>
+          <vscode-option>South Africa</vscode-option>
+          <vscode-option>South Korea</vscode-option>
+          <vscode-option>South Sudan</vscode-option>
+          <vscode-option>Spain</vscode-option>
+          <vscode-option>Sri Lanka</vscode-option>
+          <vscode-option>Sudan</vscode-option>
+          <vscode-option>Suriname</vscode-option>
+          <vscode-option>Sweden</vscode-option>
+          <vscode-option>Switzerland</vscode-option>
+          <vscode-option>Syria</vscode-option>
+          <vscode-option>Tajikistan</vscode-option>
+          <vscode-option>Tanzania</vscode-option>
+          <vscode-option>Thailand</vscode-option>
+          <vscode-option>Timor-Leste</vscode-option>
+          <vscode-option>Togo</vscode-option>
+          <vscode-option>Tonga</vscode-option>
+          <vscode-option>Trinidad and Tobago</vscode-option>
+          <vscode-option>Tunisia</vscode-option>
+          <vscode-option>Turkey</vscode-option>
+          <vscode-option>Turkmenistan</vscode-option>
+          <vscode-option>Tuvalu</vscode-option>
+          <vscode-option>Uganda</vscode-option>
+          <vscode-option>Ukraine</vscode-option>
+          <vscode-option>United Arab Emirates</vscode-option>
+          <vscode-option>United Kingdom</vscode-option>
+          <vscode-option>United States of America</vscode-option>
+          <vscode-option>Uruguay</vscode-option>
+          <vscode-option>Uzbekistan</vscode-option>
+          <vscode-option>Vanuatu</vscode-option>
+          <vscode-option>Venezuela</vscode-option>
+          <vscode-option>Vietnam</vscode-option>
+          <vscode-option>Yemen</vscode-option>
+          <vscode-option>Zambia</vscode-option>
+          <vscode-option>Zimbabwe</vscode-option>
+        </vscode-single-select>
+        <script type="module">
+          const sl = document.querySelector('vscode-single-select');
+          sl.addEventListener('change', () => {
+            console.log(sl.value);
+          });
+        </script>
+      </vscode-demo>
+
+      <fieldset>
+        <legend>Native select</legend>
+        <label for="native-select">Choose an option</label>
+        <select name="test" id="native-select">
+          <option>Afghanistan</option>
+          <option>Albania</option>
+          <option>Algeria</option>
+          <option disabled>Andorra</option>
+          <option>Angola</option>
+          <option>Antigua and Barbuda</option>
+          <option disabled>Argentina</option>
+          <option disabled>Armenia</option>
+          <option>Australia</option>
+          <option>Austria</option>
+          <option>Azerbaijan</option>
+          <option>Bahamas</option>
+          <option>Bahrain</option>
+          <option>Bangladesh</option>
+          <option>Barbados</option>
+          <option>Belarus</option>
+          <option>Belgium</option>
+          <option>Belize</option>
+          <option>Benin</option>
+          <option>Bhutan</option>
+          <option>Bolivia</option>
+          <option>Bosnia and Herzegovina</option>
+          <option>Botswana</option>
+          <option>Brazil</option>
+          <option>Brunei</option>
+          <option>Bulgaria</option>
+          <option>Burkina Faso</option>
+          <option>Burundi</option>
+          <option>Côte d'Ivoire</option>
+          <option>Cabo Verde</option>
+          <option>Cambodia</option>
+          <option>Cameroon</option>
+          <option>Canada</option>
+          <option>Central African Republic</option>
+          <option>Chad</option>
+          <option>Chile</option>
+          <option>China</option>
+          <option>Colombia</option>
+          <option>Comoros</option>
+          <option>Congo (Congo-Brazzaville)</option>
+          <option>Costa Rica</option>
+          <option>Croatia</option>
+          <option>Cuba</option>
+          <option>Cyprus</option>
+          <option>Czechia (Czech Republic)</option>
+          <option>Democratic Republic of the Congo</option>
+          <option>Denmark</option>
+          <option>Djibouti</option>
+          <option>Dominica</option>
+          <option>Dominican Republic</option>
+          <option>Ecuador</option>
+          <option>Egypt</option>
+          <option>El Salvador</option>
+          <option>Equatorial Guinea</option>
+          <option>Eritrea</option>
+          <option>Estonia</option>
+          <option>Eswatini (fmr. "Swaziland")</option>
+          <option>Ethiopia</option>
+          <option>Fiji</option>
+          <option>Finland</option>
+          <option>France</option>
+          <option>Gabon</option>
+          <option>Gambia</option>
+          <option>Georgia</option>
+          <option>Germany</option>
+          <option>Ghana</option>
+          <option>Greece</option>
+          <option>Grenada</option>
+          <option>Guatemala</option>
+          <option>Guinea</option>
+          <option>Guinea-Bissau</option>
+          <option>Guyana</option>
+          <option>Haiti</option>
+          <option>Holy See</option>
+          <option>Honduras</option>
+          <option>Hungary</option>
+          <option>Iceland</option>
+          <option>India</option>
+          <option>Indonesia</option>
+          <option>Iran</option>
+          <option>Iraq</option>
+          <option>Ireland</option>
+          <option>Israel</option>
+          <option>Italy</option>
+          <option>Jamaica</option>
+          <option>Japan</option>
+          <option>Jordan</option>
+          <option>Kazakhstan</option>
+          <option>Kenya</option>
+          <option>Kiribati</option>
+          <option>Kuwait</option>
+          <option>Kyrgyzstan</option>
+          <option>Laos</option>
+          <option>Latvia</option>
+          <option>Lebanon</option>
+          <option>Lesotho</option>
+          <option>Liberia</option>
+          <option>Libya</option>
+          <option>Liechtenstein</option>
+          <option>Lithuania</option>
+          <option>Luxembourg</option>
+          <option>Madagascar</option>
+          <option>Malawi</option>
+          <option>Malaysia</option>
+          <option>Maldives</option>
+          <option>Mali</option>
+          <option>Malta</option>
+          <option>Marshall Islands</option>
+          <option>Mauritania</option>
+          <option>Mauritius</option>
+          <option>Mexico</option>
+          <option>Micronesia</option>
+          <option>Moldova</option>
+          <option>Monaco</option>
+          <option>Mongolia</option>
+          <option>Montenegro</option>
+          <option>Morocco</option>
+          <option>Mozambique</option>
+          <option>Myanmar (formerly Burma)</option>
+          <option>Namibia</option>
+          <option>Nauru</option>
+          <option>Nepal</option>
+          <option>Netherlands</option>
+          <option>New Zealand</option>
+          <option>Nicaragua</option>
+          <option>Niger</option>
+          <option>Nigeria</option>
+          <option>North Korea</option>
+          <option>North Macedonia</option>
+          <option>Norway</option>
+          <option>Oman</option>
+          <option>Pakistan</option>
+          <option>Palau</option>
+          <option>Palestine State</option>
+          <option>Panama</option>
+          <option>Papua New Guinea</option>
+          <option>Paraguay</option>
+          <option>Peru</option>
+          <option>Philippines</option>
+          <option>Poland</option>
+          <option>Portugal</option>
+          <option>Qatar</option>
+          <option>Romania</option>
+          <option>Russia</option>
+          <option>Rwanda</option>
+          <option>Saint Kitts and Nevis</option>
+          <option>Saint Lucia</option>
+          <option>Saint Vincent and the Grenadines</option>
+          <option>Samoa</option>
+          <option>San Marino</option>
+          <option>Sao Tome and Principe</option>
+          <option>Saudi Arabia</option>
+          <option>Senegal</option>
+          <option>Serbia</option>
+          <option>Seychelles</option>
+          <option>Sierra Leone</option>
+          <option>Singapore</option>
+          <option>Slovakia</option>
+          <option>Slovenia</option>
+          <option>Solomon Islands</option>
+          <option>Somalia</option>
+          <option>South Africa</option>
+          <option>South Korea</option>
+          <option>South Sudan</option>
+          <option>Spain</option>
+          <option>Sri Lanka</option>
+          <option>Sudan</option>
+          <option>Suriname</option>
+          <option>Sweden</option>
+          <option>Switzerland</option>
+          <option>Syria</option>
+          <option>Tajikistan</option>
+          <option>Tanzania</option>
+          <option>Thailand</option>
+          <option>Timor-Leste</option>
+          <option>Togo</option>
+          <option>Tonga</option>
+          <option>Trinidad and Tobago</option>
+          <option>Tunisia</option>
+          <option>Turkey</option>
+          <option>Turkmenistan</option>
+          <option>Tuvalu</option>
+          <option>Uganda</option>
+          <option>Ukraine</option>
+          <option>United Arab Emirates</option>
+          <option>United Kingdom</option>
+          <option>United States of America</option>
+          <option>Uruguay</option>
+          <option>Uzbekistan</option>
+          <option>Vanuatu</option>
+          <option>Venezuela</option>
+          <option>Vietnam</option>
+          <option>Yemen</option>
+          <option>Zambia</option>
+          <option>Zimbabwe</option>
+        </select>
+      </fieldset>
+    </main>
+  </body>
+</html>
