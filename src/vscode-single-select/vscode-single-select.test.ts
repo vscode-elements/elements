@@ -1235,6 +1235,24 @@ describe('vscode-single-select', () => {
         }
       );
     });
+
+    it('checks validity when required property is changed', async () => {
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select combobox>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+        </vscode-single-select>`
+      );
+      const isValidBefore = el.checkValidity();
+
+      el.setAttribute('required', '');
+      await el.updateComplete;
+
+      const isValidAfter = el.checkValidity();
+
+      expect(isValidBefore).to.be.true;
+      expect(isValidAfter).to.be.false;
+    });
   });
 
   //keyboard navigation

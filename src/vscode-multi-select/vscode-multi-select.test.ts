@@ -371,6 +371,24 @@ describe('vscode-multi-select', () => {
     expect(li.classList.contains('disabled')).to.be.true;
   });
 
+  it('checks validity when required property is changed', async () => {
+    const el = await fixture<VscodeMultiSelect>(
+      html`<vscode-multi-select combobox>
+        <vscode-option>Lorem</vscode-option>
+        <vscode-option>Ipsum</vscode-option>
+      </vscode-multi-select>`
+    );
+    const isValidBefore = el.checkValidity();
+
+    el.setAttribute('required', '');
+    await el.updateComplete;
+
+    const isValidAfter = el.checkValidity();
+
+    expect(isValidBefore).to.be.true;
+    expect(isValidAfter).to.be.false;
+  });
+
   it('selects multiple options with keyboard');
   it('selectedIndexes sync with values');
 });

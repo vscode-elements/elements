@@ -196,7 +196,7 @@ export class VscodeMultiSelect
     }
   }
 
-  private _manageRequired() {
+  protected override _manageRequired() {
     const {value} = this;
     if (value.length === 0 && this.required) {
       this._internals.setValidity(
