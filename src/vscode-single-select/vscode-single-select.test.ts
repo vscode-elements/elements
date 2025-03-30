@@ -1196,14 +1196,17 @@ describe('vscode-single-select', () => {
 
       const options = el.shadowRoot?.querySelector('.options');
 
-      expect(options).to.lightDom.eq(`
+      expect(options).to.lightDom.eq(
+        `
         <li class="option">Lorem</li>
         <li class="option disabled">Ipsum</li>
         <li class="option disabled">Dolor</li>
         <li class="option active">Sit</li>
-      `, {
-        ignoreAttributes: ['data-filtered-index', 'data-index'],
-      });
+      `,
+        {
+          ignoreAttributes: ['data-filtered-index', 'data-index'],
+        }
+      );
     });
 
     it('highlights active option', async () => {
@@ -1221,13 +1224,16 @@ describe('vscode-single-select', () => {
 
       const options = el.shadowRoot?.querySelector('.options');
 
-      expect(options).lightDom.to.eq(`
+      expect(options).lightDom.to.eq(
+        `
         <li class="option">Lorem</li>
         <li class="option active">Ipsum</li>
         <li class="option">Dolor</li>
-      `, {
-        ignoreAttributes: ['data-filtered-index', 'data-index'],
-      });
+      `,
+        {
+          ignoreAttributes: ['data-filtered-index', 'data-index'],
+        }
+      );
     });
   });
 
