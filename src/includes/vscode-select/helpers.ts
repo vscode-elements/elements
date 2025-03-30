@@ -224,7 +224,6 @@ export function findPrevSelectableOptionIndex(
 ) {
   let result = 0;
 
-
   if (fromIndex < 0 || !options[fromIndex] || !options[fromIndex - 1]) {
     return result;
   }
