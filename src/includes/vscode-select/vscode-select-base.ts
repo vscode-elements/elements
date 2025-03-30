@@ -1,4 +1,4 @@
-import {html, render, nothing, TemplateResult} from 'lit';
+import {html, render, nothing, TemplateResult, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
@@ -168,6 +168,18 @@ export class VscodeSelectBase extends VscElement {
     this.removeEventListener('blur', this._onComponentBlur);
   }
 
+  protected _firstUpdateCompleted = false;
+
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    this._firstUpdateCompleted = true;
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    if (changedProperties.has('required') && this._firstUpdateCompleted) {
+      this._manageRequired();
+    }
+  }
+
   @state()
   protected _activeIndex = -1;
 
@@ -241,6 +253,8 @@ export class VscodeSelectBase extends VscElement {
     const filtered = this._filterPattern.length > 0;
     return this.combobox && !filterPatternExistsAsOption && filtered;
   }
+
+  protected _manageRequired() {}
 
   protected _setStateFromSlottedElements() {
     const options: InternalOption[] = [];

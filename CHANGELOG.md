@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - **Table**: Fixed resizing scrollable part of the table when table is resized.
+- **SingleSelect**, **MultiSelect**: Check the validity state when `required` attribute is changed.
 
 ### Added
 

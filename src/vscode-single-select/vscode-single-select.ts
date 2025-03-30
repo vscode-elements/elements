@@ -326,7 +326,7 @@ export class VscodeSingleSelect
     }
   }
 
-  private _manageRequired() {
+  protected override _manageRequired() {
     const {value} = this;
     if (value === '' && this.required) {
       this._internals.setValidity(
