@@ -1205,6 +1205,30 @@ describe('vscode-single-select', () => {
         ignoreAttributes: ['data-filtered-index', 'data-index'],
       });
     });
+
+    it('highlights active option', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `);
+      el.selectedIndex = 1;
+      el.open = true;
+
+      await el.updateComplete;
+
+      const options = el.shadowRoot?.querySelector('.options');
+
+      expect(options).lightDom.to.eq(`
+        <li class="option">Lorem</li>
+        <li class="option active">Ipsum</li>
+        <li class="option">Dolor</li>
+      `, {
+        ignoreAttributes: ['data-filtered-index', 'data-index'],
+      });
+    });
   });
 
   //keyboard navigation
@@ -1216,5 +1240,4 @@ describe('vscode-single-select', () => {
   it('selects next option in a filtered list with keyboard');
   it('selects an option in a filtered list above the viewport with keyboard');
   it('selects an option in a filtered list below the viewport with keyboard');
-  it('highlights active option when selectedIndex is changed');
 });
