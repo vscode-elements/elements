@@ -1,6 +1,6 @@
 import {LitElement} from 'lit';
 
-const VERSION = '1.14.1-pre.2';
+const VERSION = '1.14.1-pre.3';
 const CONFIG_KEY = '__vscodeElements_disableRegistryWarning__';
 
 export class VscElement extends LitElement {
