@@ -87,9 +87,13 @@ export class VscodeSingleSelect
   @property({type: Number, attribute: 'selected-index'})
   set selectedIndex(val: number) {
     this._selectedIndex = val;
-    this._value = this._options[this._selectedIndex]
-      ? this._options[this._selectedIndex].value
-      : '';
+
+    if (this._options[val]) {
+      this._activeIndex = val;
+      this._value = this._options[val].value;
+    } else {
+      this._value = '';
+    }
   }
   get selectedIndex(): number {
     return this._selectedIndex;
