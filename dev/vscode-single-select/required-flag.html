@@ -1,43 +1,55 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Required</title>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-single-select/index.js"></script>
+    <script type="module" src="/dist/vscode-textfield/index.js"></script>
+    <script type="module" src="/dist/vscode-option/index.js"></script>
+  </head>
+  <body>
+    <vscode-demo>
+      <p>
+        <vscode-textfield
+          id="none-required-textfield-example"
+        ></vscode-textfield>
+      </p>
+      <vscode-button id="required-textfield-button">Add Required</vscode-button>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Required</title>
-  <script type="module" src="/node_modules/@vscode-elements/webview-playground/dist/index.js"></script>
-  <script type="module" src="/dist/vscode-single-select/index.js"></script>
-  <script type="module" src="/dist/vscode-textfield/index.js"></script>
-  <script type="module" src="/dist/vscode-option/index.js"></script>
-</head>
-<body>
-  <vscode-demo>
-    <p>
-      <vscode-textfield id="none-required-textfield-example"></vscode-textfield>
-    </p>
-    <vscode-button id="required-textfield-button">Add Required</vscode-button>
+      <p>
+        <vscode-single-select id="none-required-combobox-example" combobox>
+          <vscode-option>Afghanistan</vscode-option>
+          <vscode-option>Albania</vscode-option>
+        </vscode-single-select>
+      </p>
+      <vscode-button id="required-combobox-button">Add Required</vscode-button>
 
-    <p>
-      <vscode-single-select id="none-required-combobox-example" combobox>
-        <vscode-option>Afghanistan</vscode-option>
-        <vscode-option>Albania</vscode-option>
-      </vscode-single-select>
-    </p>
-    <vscode-button id="required-combobox-button">Add Required</vscode-button>
+      <script type="module">
+        const textfield = document.querySelector(
+          '#none-required-textfield-example'
+        );
+        const textfieldButton = document.querySelector(
+          '#required-textfield-button'
+        );
+        textfieldButton.addEventListener('click', () => {
+          textfield.setAttribute('required', '');
+        });
 
-    <script type="module">
-      const textfield = document.querySelector('#none-required-textfield-example');
-      const textfieldButton = document.querySelector('#required-textfield-button');
-      textfieldButton.addEventListener("click", () => {
-        textfield.setAttribute('required', '');
-      })
-
-      const select = document.querySelector('#none-required-combobox-example');
-      const comboboxButton = document.querySelector('#required-combobox-button');
-      comboboxButton.addEventListener("click", () => {
-        select.setAttribute('required', '');
-      })
-    </script>
-</body>
-
+        const select = document.querySelector(
+          '#none-required-combobox-example'
+        );
+        const comboboxButton = document.querySelector(
+          '#required-combobox-button'
+        );
+        comboboxButton.addEventListener('click', () => {
+          select.setAttribute('required', '');
+        });
+      </script>
+    </vscode-demo>
+  </body>
 </html>
