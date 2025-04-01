@@ -1264,4 +1264,5 @@ describe('vscode-single-select', () => {
   it('selects next option in a filtered list with keyboard');
   it('selects an option in a filtered list above the viewport with keyboard');
   it('selects an option in a filtered list below the viewport with keyboard');
+  it('filters, select an option, close dropdown, check combobox input value');
 });

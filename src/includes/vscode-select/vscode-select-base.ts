@@ -226,6 +226,9 @@ export class VscodeSelectBase extends VscElement {
   @state()
   protected _isPlaceholderOptionActive = false;
 
+  @state()
+  protected _comboboxInputValue = '';
+
   @query('.options')
   private _listElement!: HTMLUListElement;
 
@@ -477,6 +480,10 @@ export class VscodeSelectBase extends VscElement {
             this._activeIndex > -1
               ? this._filteredOptions[this._activeIndex].index
               : -1;
+
+          if (this._selectedIndex > -1) {
+            this._comboboxInputValue = this._options[this._selectedIndex].label;
+          }
         }
 
         if (!this._multiple && showDropdownNext) {
@@ -672,8 +679,12 @@ export class VscodeSelectBase extends VscElement {
     (ev.target as HTMLInputElement).select();
   }
 
+  protected _onComboboxInputBlur(): void {}
+
   protected _onComboboxInputInput(ev: InputEvent): void {
-    this._filterPattern = (ev.target as HTMLInputElement).value;
+    const inputVal = (ev.target as HTMLInputElement).value;
+    this._filterPattern = inputVal;
+    this._comboboxInputValue = inputVal;
     this._activeIndex = -1;
     this._toggleDropdown(true);
   }
@@ -797,6 +808,8 @@ export class VscodeSelectBase extends VscElement {
     const inputVal =
       this._selectedIndex > -1 ? this._options[this._selectedIndex]?.label : '';
 
+    console.log('combobox input value:', this._comboboxInputValue);
+
     return html`
       <div class="combobox-face face">
         ${this._multiple ? this._renderMultiSelectLabel() : nothing}
@@ -805,8 +818,9 @@ export class VscodeSelectBase extends VscElement {
           spellcheck="false"
           type="text"
           autocomplete="off"
-          .value=${inputVal}
+          .value=${this._comboboxInputValue}
           @focus=${this._onComboboxInputFocus}
+          @blur=${this._onComboboxInputBlur}
           @input=${this._onComboboxInputInput}
           @click=${this._onComboboxInputClick}
         >

@@ -264,6 +264,10 @@ export class VscodeSingleSelect
     this._internals.setFormValue(this._value);
     this._manageRequired();
     this._dispatchChangeEvent();
+
+    if (this.combobox) {
+      this._comboboxInputValue = this._options[prevIndex]?.label ?? '';
+    }
   }
 
   protected override _onArrowDownKeyDown(): void {
@@ -275,6 +279,7 @@ export class VscodeSingleSelect
 
     const options = this.combobox ? this._filteredOptions : this._options;
     const nextIndex = findNextSelectableOptionIndex(options, this._activeIndex);
+    console.log('next index', nextIndex);
 
     this._filterPattern = '';
     this._selectedIndex = nextIndex;
@@ -283,6 +288,10 @@ export class VscodeSingleSelect
     this._internals.setFormValue(this._value);
     this._manageRequired();
     this._dispatchChangeEvent();
+
+    if (this.combobox) {
+      this._comboboxInputValue = this._options[nextIndex]?.label ?? '';
+    }
   }
 
   protected override _onEnterKeyDown(ev: KeyboardEvent): void {
@@ -291,6 +300,10 @@ export class VscodeSingleSelect
     this.updateInputValue();
     this._internals.setFormValue(this._value);
     this._manageRequired();
+  }
+
+  protected override _onComboboxInputBlur(): void {
+    this._comboboxInputValue = this._options[this.selectedIndex]?.label ?? '';
   }
 
   protected override _onOptionClick(ev: MouseEvent) {
@@ -316,13 +329,19 @@ export class VscodeSingleSelect
         this._createAndSelectSuggestedOption();
       }
     } else {
-      this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
+      console.log('option click');
+      const prevSelectedIndex = this._selectedIndex;
+      const nextSelectedIndex = Number((optEl as HTMLElement).dataset.index);
+      this._selectedIndex = nextSelectedIndex;
       this._value = this._options[this._selectedIndex].value;
 
       this._toggleDropdown(false);
       this._internals.setFormValue(this._value);
       this._manageRequired();
-      this._dispatchChangeEvent();
+
+      if (nextSelectedIndex !== prevSelectedIndex) {
+        this._dispatchChangeEvent();
+      }
     }
   }
 
