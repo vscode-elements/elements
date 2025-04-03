@@ -31,7 +31,8 @@
     "wtr:watch": "wtr --watch",
     "checksize": "npm run build && cat dist/bundled.js | gzip -9 | wc -c",
     "icons": "node scripts/generateIconList.js",
-    "vscode-data": "wireit"
+    "vscode-data": "wireit",
+    "ncu": "ncu -u"
   },
   "wireit": {
     "analyze": {
@@ -167,6 +168,7 @@
     "eslint-plugin-lit": "^1.15.0",
     "eslint-plugin-wc": "^2.2.1",
     "mocha": "^11.1.0",
+    "npm-check-updates": "^17.1.16",
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
     "rollup": "^4.35.0",
