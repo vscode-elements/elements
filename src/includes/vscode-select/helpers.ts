@@ -237,3 +237,48 @@ export function findPrevSelectableOptionIndex(
 
   return result;
 }
+
+export function getComboboxInputValue({
+  activeIndex,
+  dirty,
+  filterPattern,
+  inputFocused,
+  multiple,
+  open,
+  options,
+  selectedIndex,
+  value,
+}: {
+  activeIndex: number;
+  dirty: boolean;
+  filterPattern: string;
+  inputFocused: boolean;
+  multiple: boolean;
+  open: boolean;
+  options: InternalOption[];
+  selectedIndex: number;
+  value: string;
+}) {
+  console.log('getComboboxInputValue');
+  let val = '';
+  const selectedLabel = options[selectedIndex]?.label ?? '';
+
+  if (!open) {
+    val = selectedLabel;
+    console.log('selectedLabel:', selectedLabel);
+  } else {
+    if (inputFocused) {
+      // val = filterPattern.length > 0 ? filterPattern : selectedLabel;
+      if (filterPattern.length > 0) {
+        val = filterPattern;
+      } else {
+        val = dirty ? '' : selectedLabel;
+      }
+      console.log('filterPattern:', filterPattern);
+    } else {
+      val = selectedLabel;
+    }
+  }
+
+  return val;
+}

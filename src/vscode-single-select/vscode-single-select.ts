@@ -279,7 +279,6 @@ export class VscodeSingleSelect
 
     const options = this.combobox ? this._filteredOptions : this._options;
     const nextIndex = findNextSelectableOptionIndex(options, this._activeIndex);
-    console.log('next index', nextIndex);
 
     this._filterPattern = '';
     this._selectedIndex = nextIndex;
@@ -329,11 +328,11 @@ export class VscodeSingleSelect
         this._createAndSelectSuggestedOption();
       }
     } else {
-      console.log('option click');
       const prevSelectedIndex = this._selectedIndex;
       const nextSelectedIndex = Number((optEl as HTMLElement).dataset.index);
       this._selectedIndex = nextSelectedIndex;
       this._value = this._options[this._selectedIndex].value;
+      this._comboboxInputValue = this._options[this._selectedIndex].label;
 
       this._toggleDropdown(false);
       this._internals.setFormValue(this._value);
@@ -343,6 +342,8 @@ export class VscodeSingleSelect
         this._dispatchChangeEvent();
       }
     }
+
+    this._comboboxInputValue = this._options[this._selectedIndex]?.label ?? '';
   }
 
   protected override _manageRequired() {

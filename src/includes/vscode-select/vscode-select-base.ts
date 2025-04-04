@@ -10,6 +10,7 @@ import {
   filterOptionsByPattern,
   findNextSelectableOptionIndex,
   findPrevSelectableOptionIndex,
+  getComboboxInputValue,
   highlightRanges,
 } from './helpers.js';
 import {VscElement} from '../VscElement.js';
@@ -228,6 +229,12 @@ export class VscodeSelectBase extends VscElement {
 
   @state()
   protected _comboboxInputValue = '';
+
+  @state()
+  protected _comboboxInputFocused = false;
+
+  @state()
+  protected _comboboxInputDirty = false;
 
   @query('.options')
   private _listElement!: HTMLUListElement;
@@ -677,11 +684,18 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onComboboxInputFocus(ev: FocusEvent): void {
     (ev.target as HTMLInputElement).select();
+    this._filterPattern = '';
+    this._comboboxInputFocused = true;
+    this._comboboxInputDirty = false;
   }
 
-  protected _onComboboxInputBlur(): void {}
+  protected _onComboboxInputBlur(): void {
+    this._comboboxInputFocused = false;
+    this._comboboxInputDirty = false;
+  }
 
   protected _onComboboxInputInput(ev: InputEvent): void {
+    this._comboboxInputDirty = true;
     const inputVal = (ev.target as HTMLInputElement).value;
     this._filterPattern = inputVal;
     this._comboboxInputValue = inputVal;
@@ -805,10 +819,19 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _renderComboboxFace(): TemplateResult {
-    const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex]?.label : '';
+    const inputVal = getComboboxInputValue({
+      activeIndex: this._activeIndex,
+      dirty: this._comboboxInputDirty,
+      filterPattern: this._filterPattern,
+      inputFocused: this._comboboxInputFocused,
+      multiple: this._multiple,
+      open: this.open,
+      options: this._options,
+      selectedIndex: this._selectedIndex,
+      value: this._value,
+    });
 
-    console.log('combobox input value:', this._comboboxInputValue);
+    console.log('inputVal:', inputVal)
 
     return html`
       <div class="combobox-face face">
@@ -818,7 +841,7 @@ export class VscodeSelectBase extends VscElement {
           spellcheck="false"
           type="text"
           autocomplete="off"
-          .value=${this._comboboxInputValue}
+          .value=${inputVal}
           @focus=${this._onComboboxInputFocus}
           @blur=${this._onComboboxInputBlur}
           @input=${this._onComboboxInputInput}
