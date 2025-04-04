@@ -2,7 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "packageRules": [
-    "matchPackageNames": ["@types/chai"],
-    "allowedVersions": "<5"
+    {
+      "matchPackageNames": ["@types/chai"],
+      "allowedVersions": "<5"
+    }
   ]
 }
