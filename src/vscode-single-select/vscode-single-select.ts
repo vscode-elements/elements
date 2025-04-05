@@ -338,6 +338,7 @@ export class VscodeSingleSelect
       this._toggleDropdown(false);
       this._internals.setFormValue(this._value);
       this._manageRequired();
+      this._comboboxInputValue = this._options[this._selectedIndex].label;
 
       if (nextSelectedIndex !== prevSelectedIndex) {
         this._dispatchChangeEvent();

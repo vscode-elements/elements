@@ -308,19 +308,21 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
-  protected async _toggleDropdown(visible: boolean): Promise<void> {
+  protected _toggleDropdown(visible: boolean) {
     this.open = visible;
     this.ariaExpanded = String(visible);
 
-    if (visible && !this._multiple && !this.combobox) {
+    if (visible) {
       this._activeIndex = this._selectedIndex;
+    }
 
+    if (visible && !this._multiple && !this.combobox) {
       if (this._activeIndex > VISIBLE_OPTS - 1) {
-        await this.updateComplete;
-
-        this._listElement.scrollTop = Math.floor(
-          this._activeIndex * OPT_HEIGHT
-        );
+        this.updateComplete.then(() => {
+          this._listElement.scrollTop = Math.floor(
+            this._activeIndex * OPT_HEIGHT
+          );
+        });
       }
     }
 
@@ -329,6 +331,8 @@ export class VscodeSelectBase extends VscElement {
     } else {
       window.removeEventListener('click', this._onClickOutside);
     }
+
+    this.requestUpdate();
   }
 
   protected _createSuggestedOption() {
@@ -439,13 +443,13 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onEnterKeyDown(ev: KeyboardEvent): void {
     const clickedOnAcceptButton = ev?.composedPath
-      ? ev
+      ? (ev
           .composedPath()
           .find((el) =>
             (el as HTMLElement).matches
               ? (el as HTMLElement).matches('vscode-button.button-accept')
               : false
-          )
+          ) ?? false)
       : false;
 
     if (clickedOnAcceptButton) {
@@ -480,6 +484,11 @@ export class VscodeSelectBase extends VscElement {
             this._activeIndex > -1
               ? this._filteredOptions[this._activeIndex].index
               : -1;
+
+          console.log(
+            'combobox input val',
+            this._options[this._selectedIndex].label
+          );
 
           if (this._selectedIndex > -1) {
             this._comboboxInputValue = this._options[this._selectedIndex].label;
@@ -805,11 +814,6 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _renderComboboxFace(): TemplateResult {
-    const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex]?.label : '';
-
-    console.log('combobox input value:', this._comboboxInputValue);
-
     return html`
       <div class="combobox-face face">
         ${this._multiple ? this._renderMultiSelectLabel() : nothing}
