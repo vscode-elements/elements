@@ -226,6 +226,9 @@ export class VscodeSelectBase extends VscElement {
   @state()
   protected _isPlaceholderOptionActive = false;
 
+  @state()
+  private _isBeingFiltered = false;
+
   @query('.options')
   private _listElement!: HTMLUListElement;
 
@@ -435,6 +438,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onEnterKeyDown(ev: KeyboardEvent): void {
+    this._isBeingFiltered = false;
     const clickedOnAcceptButton = ev?.composedPath
       ? ev
           .composedPath()
@@ -672,17 +676,24 @@ export class VscodeSelectBase extends VscElement {
     (ev.target as HTMLInputElement).select();
   }
 
+  protected _onComboboxInputBlur() {
+    this._isBeingFiltered = false;
+  }
+
   protected _onComboboxInputInput(ev: InputEvent): void {
+    this._isBeingFiltered = true;
     this._filterPattern = (ev.target as HTMLInputElement).value;
     this._activeIndex = -1;
     this._toggleDropdown(true);
   }
 
   protected _onComboboxInputClick(): void {
+    this._isBeingFiltered = false;
     this._toggleDropdown(true);
   }
 
   protected _onOptionClick(_ev: MouseEvent) {
+    this._isBeingFiltered = false;
     return;
   }
 
@@ -794,8 +805,16 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _renderComboboxFace(): TemplateResult {
-    const inputVal =
-      this._selectedIndex > -1 ? this._options[this._selectedIndex]?.label : '';
+    let inputVal = '';
+
+    if (this._isBeingFiltered) {
+      inputVal = this._filterPattern;
+    } else {
+      inputVal =
+        this._selectedIndex > -1
+          ? (this._options[this._selectedIndex]?.label ?? '')
+          : '';
+    }
 
     return html`
       <div class="combobox-face face">
@@ -807,6 +826,7 @@ export class VscodeSelectBase extends VscElement {
           autocomplete="off"
           .value=${inputVal}
           @focus=${this._onComboboxInputFocus}
+          @blur=${this._onComboboxInputBlur}
           @input=${this._onComboboxInputInput}
           @click=${this._onComboboxInputClick}
         >
