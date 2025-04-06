@@ -650,6 +650,37 @@ describe('vscode-single-select', () => {
       );
     });
 
+    it('does not allow the highlight to move past the last item in the filtered list', async () => {
+      const el = await fixture(html`
+        <vscode-single-select combobox>
+          <vscode-option value="banana">Banana</vscode-option>
+          <vscode-option value="cherry">Cherry</vscode-option>
+          <vscode-option value="apple">Apple</vscode-option>
+          <vscode-option value="strawberry">Strawberry</vscode-option>
+          <vscode-option value="lemon">Lemon</vscode-option>
+          <vscode-option value="orange">Orange</vscode-option>
+        </vscode-single-select>
+      `);
+      const input = el.shadowRoot?.querySelector('.combobox-input')!;
+
+      await clickOnElement(input);
+      await sendKeys({type: 'le'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'ArrowDown'});
+
+      const options = el.shadowRoot?.querySelector('.options');
+
+      expect(options).lightDom.to.eq(
+        `
+        <li class="option">App<b>l</b><b>e</b></li>
+        <li class="option active"><b>L</b><b>e</b>mon</li>
+      `,
+        {ignoreAttributes: ['data-filtered-index', 'data-index']}
+      );
+    });
+
     it('highlight element when the arrow down key pressed', async () => {
       const el = (await fixture(html`
         <vscode-single-select combobox>
