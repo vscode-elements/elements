@@ -960,6 +960,22 @@ describe('vscode-single-select', () => {
       expect(spy.called).to.be.true;
       expect(spy.getCalls()[0].args[0].detail).to.eql({value: 'Sit'});
     });
+
+    it('displays the current value', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+      el.value = 'Ipsum';
+
+      const input =
+        el.shadowRoot?.querySelector<HTMLInputElement>('.combobox-input')!;
+
+      expect(input.value).to.eq('Ipsum');
+    });
   });
 
   describe('general behavior', () => {
