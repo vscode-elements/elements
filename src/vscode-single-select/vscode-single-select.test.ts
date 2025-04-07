@@ -1,4 +1,4 @@
-import {sendKeys} from '@web/test-runner-commands';
+import {sendKeys, sendMouse} from '@web/test-runner-commands';
 import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
 import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
@@ -1006,6 +1006,54 @@ describe('vscode-single-select', () => {
         el.shadowRoot?.querySelector<HTMLInputElement>('.combobox-input')!;
 
       expect(input.value).to.eq('Ipsum');
+    });
+
+    it('highlights selected option when opens the dropdown', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select combobox creatable>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      // selects the first option
+      await clickOnElement(el);
+      let options = el.shadowRoot?.querySelector('.options');
+      const firstOption = options?.querySelector('li')!;
+      await clickOnElement(firstOption);
+
+      expect(el.value).to.eq('Lorem');
+
+      // re-opens the dropdown, selects the second option with keyboard
+      await clickOnElement(el);
+      await sendKeys({down: 'ArrowDown'});
+
+      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(
+        `
+        <ul class="options">
+          <li class="option">Lorem</li>
+          <li class="active option">Ipsum</li>
+          <li class="option">Dolor</li>
+        </ul>
+      `,
+        {ignoreAttributes: ['data-index', 'data-filtered-index']}
+      );
+
+      // clicks outside, closes the dropdown
+      await sendMouse({type: 'click', position: [500, 500]});
+      // opens the dropdown again
+      await clickOnElement(el);
+
+      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(`
+        <ul class="options">
+          <li class="active option">Lorem</li>
+          <li class="option">Ipsum</li>
+          <li class="option">Dolor</li>
+        </ul>
+      `, {
+        ignoreAttributes: ['data-index', 'data-filtered-index'],
+      });
     });
   });
 

@@ -312,6 +312,10 @@ export class VscodeSelectBase extends VscElement {
     this.open = visible;
     this.ariaExpanded = String(visible);
 
+    if (visible && !this._multiple) {
+      this._activeIndex = this._selectedIndex;
+    }
+
     if (visible && !this._multiple && !this.combobox) {
       this._activeIndex = this._selectedIndex;
 
