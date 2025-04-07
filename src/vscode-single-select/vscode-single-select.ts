@@ -294,6 +294,7 @@ export class VscodeSingleSelect
   }
 
   protected override _onOptionClick(ev: MouseEvent) {
+    super._onOptionClick(ev);
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) => {
       const el = et as HTMLElement;
