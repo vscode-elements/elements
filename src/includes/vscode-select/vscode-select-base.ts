@@ -441,6 +441,10 @@ export class VscodeSelectBase extends VscElement {
     this._isPlaceholderOptionActive = false;
   }
 
+  protected _onNoOptionsClick(ev: MouseEvent) {
+    ev.stopPropagation();
+  }
+
   protected _onEnterKeyDown(ev: KeyboardEvent): void {
     this._isBeingFiltered = false;
     const clickedOnAcceptButton = ev?.composedPath
@@ -774,7 +778,9 @@ export class VscodeSelectBase extends VscElement {
       </li>`;
     } else {
       return isListEmpty
-        ? html`<li class="no-options">No options</li>`
+        ? html`<li class="no-options" @click=${this._onNoOptionsClick}>
+            No options
+          </li>`
         : nothing;
     }
   }
