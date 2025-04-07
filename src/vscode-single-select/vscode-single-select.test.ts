@@ -1010,7 +1010,7 @@ describe('vscode-single-select', () => {
 
     it('highlights selected option when opens the dropdown', async () => {
       const el = (await fixture(html`
-        <vscode-single-select combobox creatable>
+        <vscode-single-select combobox>
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
