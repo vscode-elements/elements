@@ -1331,9 +1331,10 @@ describe('vscode-single-select', () => {
       );
     });
 
-    it('checks validity when required property is changed', async () => {
+    it('updates validity when required property is changed', async () => {
       const el = await fixture<VscodeSingleSelect>(
-        html`<vscode-single-select combobox>
+        html`<vscode-single-select>
+          <vscode-option></vscode-option>
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
         </vscode-single-select>`
@@ -1347,6 +1348,42 @@ describe('vscode-single-select', () => {
 
       expect(isValidBefore).to.be.true;
       expect(isValidAfter).to.be.false;
+    });
+
+    it('updates validity when selectedIndex is changed', async () => {
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select required>
+          <vscode-option></vscode-option>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+        </vscode-single-select>`
+      );
+      const isValidBefore = el.checkValidity();
+
+      el.selectedIndex = 1;
+
+      const isValidAfter = el.checkValidity();
+
+      expect(isValidBefore).to.be.false;
+      expect(isValidAfter).to.be.true;
+    });
+
+    it('updates validity when value is changed', async () => {
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select required>
+          <vscode-option></vscode-option>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+        </vscode-single-select>`
+      );
+      const isValidBefore = el.checkValidity();
+
+      el.value = 'Lorem';
+
+      const isValidAfter = el.checkValidity();
+
+      expect(isValidBefore).to.be.false;
+      expect(isValidAfter).to.be.true;
     });
   });
 
