@@ -678,6 +678,8 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onComboboxInputFocus(ev: FocusEvent): void {
     (ev.target as HTMLInputElement).select();
+    this._isBeingFiltered = false;
+    this._filterPattern = '';
   }
 
   protected _onComboboxInputBlur() {
@@ -692,7 +694,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onComboboxInputClick(): void {
-    this._isBeingFiltered = false;
+    this._isBeingFiltered = this._filterPattern !== '';
     this._toggleDropdown(true);
   }
 
