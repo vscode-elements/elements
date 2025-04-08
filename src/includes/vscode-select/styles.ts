@@ -107,24 +107,34 @@ export default [
     }
 
     .combobox-button {
+      align-items: center;
       background-color: transparent;
       border: 0;
+      border-radius: 2px;
+      box-sizing: content-box;
       color: var(--vscode-foreground, #cccccc);
       cursor: pointer;
+      display: flex;
       flex-shrink: 0;
-      height: 24px;
-      margin: 0;
-      padding: 0;
-      width: 30px;
+      height: 16px;
+      justify-content: center;
+      margin: 1px 1px 0 0;
+      padding: 3px;
+      width: 22px;
     }
 
-    .combobox-button:focus,
-    .combobox-button:hover {
-      background-color: var(--vscode-list-hoverBackground, #2a2d2e);
+    .combobox-button:hover,
+    .combobox-button:focus-visible {
+      background-color: var(
+        --vscode-toolbar-hoverBackground,
+        rgba(90, 93, 94, 0.31)
+      );
+      outline-style: dashed;
+      outline-color: var(--vscode-toolbar-hoverOutline, transparent);
     }
 
-    .combobox-button:focus {
-      outline: 0;
+    .combobox-button:focus-visible {
+      outline: none;
     }
 
     .icon {
@@ -132,10 +142,13 @@ export default [
       display: block;
       height: 14px;
       pointer-events: none;
-      position: absolute;
-      right: 8px;
-      top: 5px;
       width: 14px;
+    }
+
+    .select-face .icon {
+      position: absolute;
+      right: 6px;
+      top: 5px;
     }
 
     .icon svg {
