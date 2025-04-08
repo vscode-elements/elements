@@ -251,10 +251,14 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected get _isSuggestedOptionVisible() {
+    if (!(this.combobox && this.creatable)) {
+      return false;
+    }
+
     const filterPatternExistsAsOption =
       typeof this._valueOptionIndexMap[this._filterPattern] !== 'undefined';
     const filtered = this._filterPattern.length > 0;
-    return this.combobox && !filterPatternExistsAsOption && filtered;
+    return !filterPatternExistsAsOption && filtered;
   }
 
   protected _manageRequired() {}
