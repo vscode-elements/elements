@@ -119,6 +119,9 @@ export class VscodeSingleSelect
       this._value = '';
       this._requestedValueToSetLater = val;
     }
+
+    this._internals.setFormValue(this._value);
+    this._manageRequired();
   }
   get value(): string {
     if (this._options[this._selectedIndex]) {
@@ -250,8 +253,10 @@ export class VscodeSingleSelect
 
     if (this._selectedIndex > -1 && this._options.length > 0) {
       this._internals.setFormValue(this._options[this._selectedIndex].value);
+      this._manageRequired();
     } else {
       this._internals.setFormValue(null);
+      this._manageRequired();
     }
   }
 
