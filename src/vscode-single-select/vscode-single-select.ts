@@ -211,6 +211,10 @@ export class VscodeSingleSelect
     return this._internals.form;
   }
 
+  /**
+   * This variable was introduced for cases where the value is set before the corresponding option
+   * exists. This can happen while a framework like Vue or React is rendering the component.
+   */
   private _requestedValueToSetLater = '';
 
   protected override async _createAndSelectSuggestedOption() {
