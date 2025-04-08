@@ -1047,15 +1047,18 @@ describe('vscode-single-select', () => {
       // opens the dropdown again
       await clickOnElement(el);
 
-      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(`
+      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(
+        `
         <ul class="options">
           <li class="active option">Lorem</li>
           <li class="option">Ipsum</li>
           <li class="option">Dolor</li>
         </ul>
-      `, {
-        ignoreAttributes: ['data-index', 'data-filtered-index'],
-      });
+      `,
+        {
+          ignoreAttributes: ['data-index', 'data-filtered-index'],
+        }
+      );
     });
   });
 
