@@ -91,8 +91,12 @@ export class VscodeSingleSelect
     if (this._options[val]) {
       this._activeIndex = val;
       this._value = this._options[val].value;
+      this._internals.setFormValue(this._value);
+      this._manageRequired();
     } else {
       this._value = '';
+      this._internals.setFormValue('');
+      this._manageRequired();
     }
   }
   get selectedIndex(): number {
