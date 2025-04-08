@@ -1002,6 +1002,8 @@ describe('vscode-single-select', () => {
       `)) as VscodeSingleSelect;
       el.value = 'Ipsum';
 
+      await el.updateComplete;
+
       const input =
         el.shadowRoot?.querySelector<HTMLInputElement>('.combobox-input')!;
 
