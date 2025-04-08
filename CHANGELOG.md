@@ -10,11 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - **Table**: Fixed resizing scrollable part of the table when table is resized.
 - **SingleSelect**, **MultiSelect**: Check the validity state when `required` attribute is changed.
+- **SingleSelect**: Fixed a bug where the current value was not displayed in combobox mode after the input content was cleared.
+- Many small bugfixes in the **SingleSelect** and **MultiSelect**.
 
 ### Added
 
 - Added **ToolbarButton** component.
-- Added the `creatable` property to **SingleSelect**, allowing users to create new options in
+- Added the `creatable` property to **SingleSelect** and **MultiSelect**, allowing users to create new options in
   combobox mode.
 
 ## [1.14.0] - 2025-03-06
