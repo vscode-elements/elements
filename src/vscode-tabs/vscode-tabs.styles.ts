@@ -11,20 +11,20 @@ const styles: CSSResultGroup = [
     .header {
       align-items: center;
       display: flex;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
       width: 100%;
     }
 
     .header {
-      border-bottom-color: var(--vscode-settings-headerBorder);
+      border-bottom-color: var(--vscode-settings-headerBorder, #2b2b2b);
       border-bottom-style: solid;
       border-bottom-width: 1px;
     }
 
     .header.panel {
-      background-color: var(--vscode-panel-background);
+      background-color: var(--vscode-panel-background, #181818);
       border-bottom-width: 0;
       box-sizing: border-box;
       padding-left: 8px;
