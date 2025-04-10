@@ -5,9 +5,9 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      --separator-border: var(--vscode-editorWidget-border, transparent);
+      --separator-border: var(--vscode-editorWidget-border, #454545);
 
-      border: 1px solid var(--vscode-editorWidget-border);
+      border: 1px solid var(--vscode-editorWidget-border, #454545);
       display: block;
       overflow: hidden;
       position: relative;
@@ -93,7 +93,7 @@ const styles: CSSResultGroup = [
 
     .handle.hover {
       transition: background-color 0.1s ease-out 0.3s;
-      background-color: var(--vscode-sash-hoverBorder);
+      background-color: var(--vscode-sash-hoverBorder, #0078d4);
     }
 
     .handle.hide {

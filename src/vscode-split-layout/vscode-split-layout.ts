@@ -57,7 +57,9 @@ export type VscSplitLayoutChangeEvent = CustomEvent<{
  *
  * @prop {'start' | 'end' | 'none'} fixedPane
  *
- * @cssprop [--hover-border=var(--vscode-sash-hoverBorder)]
+ * @cssprop [--separator-border=#454545]
+ * @cssprop [--vscode-editorWidget-border=#454545]
+ * @cssprop [--vscode-sash-hoverBorder=#0078d4]
  */
 @customElement('vscode-split-layout')
 export class VscodeSplitLayout extends VscElement {
