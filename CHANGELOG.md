@@ -160,7 +160,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **Collapsible**: Add `body` css part.
 - **Collapsible**: Dispatch a toggle event when opening or closing.
 
-## Fixed
+### Fixed
 
 - **Textfield**: Revalidate the element when the value is changed.
 - **Checkbox**: Revalidate the element when `required` or `checked` properties are changed.
@@ -362,7 +362,7 @@ The components will look "good" even if no theme variables are available.
 
 - Add `cols` and `rows` attributes to **Textarea** by [@chrjorgensen](https://github.com/chrjorgensen)
 
-## Fixed
+### Fixed
 
 - Set default color for **Textfield**.
 
