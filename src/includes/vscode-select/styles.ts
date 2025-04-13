@@ -68,7 +68,6 @@ export default [
       line-height: 16px;
       margin: 2px;
       padding: 2px 3px;
-      text-transform: uppercase;
       white-space: nowrap;
     }
 
@@ -164,12 +163,17 @@ export default [
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
+      display: none;
       left: 0;
       padding-bottom: 2px;
       position: absolute;
       top: 100%;
       width: 100%;
       z-index: var(--dropdown-z-index, 2);
+    }
+
+    .dropdown.open {
+      display: block;
     }
 
     :host([position='above']) .dropdown {

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <form action="#">
+          <vscode-form-group>
+            <vscode-label for="sl1">Country</vscode-label>
+            <vscode-multi-select id="sl1" combobox>
+              <vscode-option>Afghanistan</vscode-option>
+              <vscode-option>Albania</vscode-option>
+              <vscode-option>Algeria</vscode-option>
+              <vscode-option>Andorra</vscode-option>
+              <vscode-option>Angola</vscode-option>
+              <vscode-option>Antigua and Barbuda</vscode-option>
+              <vscode-option>Argentina</vscode-option>
+              <vscode-option>Armenia</vscode-option>
+              <vscode-option>Australia</vscode-option>
+              <vscode-option>Austria</vscode-option>
+              <vscode-option>Azerbaijan</vscode-option>
+              <vscode-option>Bahamas</vscode-option>
+              <vscode-option>Bahrain</vscode-option>
+              <vscode-option>Bangladesh</vscode-option>
+              <vscode-option>Barbados</vscode-option>
+              <vscode-option>Belarus</vscode-option>
+              <vscode-option>Belgium</vscode-option>
+              <vscode-option>Belize</vscode-option>
+              <vscode-option>Benin</vscode-option>
+              <vscode-option>Bhutan</vscode-option>
+              <vscode-option>Bolivia</vscode-option>
+              <vscode-option>Bosnia and Herzegovina</vscode-option>
+              <vscode-option>Botswana</vscode-option>
+              <vscode-option>Brazil</vscode-option>
+              <vscode-option>Brunei</vscode-option>
+              <vscode-option>Bulgaria</vscode-option>
+              <vscode-option>Burkina Faso</vscode-option>
+              <vscode-option>Burundi</vscode-option>
+              <vscode-option>Côte d'Ivoire</vscode-option>
+              <vscode-option>Cabo Verde</vscode-option>
+              <vscode-option>Cambodia</vscode-option>
+              <vscode-option>Cameroon</vscode-option>
+              <vscode-option>Canada</vscode-option>
+              <vscode-option>Central African Republic</vscode-option>
+              <vscode-option>Chad</vscode-option>
+              <vscode-option>Chile</vscode-option>
+              <vscode-option>China</vscode-option>
+              <vscode-option>Colombia</vscode-option>
+              <vscode-option>Comoros</vscode-option>
+              <vscode-option>Congo (Congo-Brazzaville)</vscode-option>
+              <vscode-option>Costa Rica</vscode-option>
+              <vscode-option>Croatia</vscode-option>
+              <vscode-option>Cuba</vscode-option>
+              <vscode-option>Cyprus</vscode-option>
+            </vscode-multi-select>
+          </vscode-form-group>
+          <div>
+            <label for="native-select">Choose a country</label>
+            <select name="a" id="native-select" multiple>
+              <option>Afghanistan</option>
+              <option>Albania</option>
+              <option>Algeria</option>
+              <option>Andorra</option>
+              <option>Angola</option>
+              <option>Antigua and Barbuda</option>
+              <option>Argentina</option>
+              <option>Armenia</option>
+              <option>Australia</option>
+              <option>Austria</option>
+              <option>Azerbaijan</option>
+              <option>Bahamas</option>
+              <option>Bahrain</option>
+              <option>Bangladesh</option>
+              <option>Barbados</option>
+              <option>Belarus</option>
+              <option>Belgium</option>
+              <option>Belize</option>
+              <option>Benin</option>
+              <option>Bhutan</option>
+              <option>Bolivia</option>
+              <option>Bosnia and Herzegovina</option>
+              <option>Botswana</option>
+              <option>Brazil</option>
+              <option>Brunei</option>
+              <option>Bulgaria</option>
+              <option>Burkina Faso</option>
+              <option>Burundi</option>
+              <option>Côte d'Ivoire</option>
+              <option>Cabo Verde</option>
+              <option>Cambodia</option>
+              <option>Cameroon</option>
+              <option>Canada</option>
+              <option>Central African Republic</option>
+              <option>Chad</option>
+              <option>Chile</option>
+              <option>China</option>
+              <option>Colombia</option>
+              <option>Comoros</option>
+              <option>Congo (Congo-Brazzaville)</option>
+              <option>Costa Rica</option>
+              <option>Croatia</option>
+              <option>Cuba</option>
+              <option>Cyprus</option>
+            </select>
+          </div>
+        </form>
+      </vscode-demo>
+
+      <div>
+        <fieldset>
+          <legend>Options</legend>
+          <ul>
+            <li>
+              <label tabindex="0"><input type="checkbox">Lorem</label>
+            </li>
+            <li>
+              <label tabindex="0"><input type="checkbox">Ipsum</label>
+            </li>
+            <li>
+              <label tabindex="0"><input type="checkbox">Dolor</label>
+            </li>
+            <li>
+              <label tabindex="0"><input type="checkbox">Sit</label>
+            </li>
+            <li>
+              <label tabindex="0"><input type="checkbox">Amur</label>
+            </li>
+          </ul>
+        </fieldset>
+      </div>
+    </main>
+  </body>
+</html>

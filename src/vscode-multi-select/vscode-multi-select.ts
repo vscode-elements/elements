@@ -5,6 +5,9 @@ import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-multi-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
+import {highlightRanges} from '../includes/vscode-select/helpers.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {repeat} from 'lit/directives/repeat.js';
 
 export type VscMultiSelectCreateOptionEvent = CustomEvent<{value: string}>;
 
@@ -256,6 +259,26 @@ export class VscodeMultiSelect
     }
   }
 
+  protected override _onEnterKeyDown(_ev: KeyboardEvent): void {
+    if (this.open && this._multiple && this._activeIndex > -1) {
+      const opts = this.combobox ? this._filteredOptions : this._options;
+      const selectedOption = opts[this._activeIndex];
+      const nextSelectedIndexes: number[] = [];
+
+      this._options[selectedOption.index].selected = !selectedOption.selected;
+
+      opts.forEach(({index}) => {
+        const {selected} = this._options[index];
+
+        if (selected) {
+          nextSelectedIndexes.push(index);
+        }
+      });
+
+      this._selectedIndexes = nextSelectedIndexes;
+    }
+  }
+
   protected override _onOptionClick = (ev: MouseEvent) => {
     const composedPath = ev.composedPath();
     const optEl = composedPath.find((et) => {
@@ -354,6 +377,64 @@ export class VscodeMultiSelect
       >
         ${this._renderLabel()} ${chevronDownIcon}
       </div>
+    `;
+  }
+
+  protected override _renderOptions(): TemplateResult | TemplateResult[] {
+    const list = this.combobox ? this._filteredOptions : this._options;
+
+    return html`
+      <ul
+        id="options-list"
+        class="options"
+        role="listbox"
+        aria-multiselectable=${this._multiple ? 'true' : 'false'}
+        aria-label=${`Options for ${this.label}`}
+        aria-expanded=${this.open ? 'true' : 'false'}
+        @click=${this._onOptionClick}
+        @mouseover=${this._onOptionMouseOver}
+      >
+        ${repeat(
+          list,
+          (op) => op.index,
+          (op, index) => {
+            const active = index === this._activeIndex && !op.disabled;
+
+            const optionClasses = {
+              active,
+              disabled: op.disabled,
+              option: true,
+              selected: op.selected,
+            };
+
+            const checkboxClasses = {
+              'checkbox-icon': true,
+              checked: op.selected,
+            };
+
+            const labelText =
+              (op.ranges?.length ?? 0 > 0)
+                ? highlightRanges(op.label, op.ranges ?? [])
+                : op.label;
+
+            return html`
+              <li
+                aria-selected=${op.selected ? 'true' : 'false'}
+                aria-disabled=${op.disabled ? 'true' : 'false'}
+                class=${classMap(optionClasses)}
+                data-index=${op.index}
+                data-filtered-index=${index}
+                id=${`op-${op.index}`}
+                role="option"
+              >
+                <input type="checkbox" .checked=${op.selected}>
+                ${labelText}
+              </li>
+            `;
+          }
+        )}
+        ${this._renderPlaceholderOption(list.length < 1)}
+      </ul>
     `;
   }
 

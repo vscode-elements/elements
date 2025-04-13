@@ -14,6 +14,7 @@ import {
 } from './helpers.js';
 import {VscElement} from '../VscElement.js';
 import {chevronDownIcon} from './template-elements.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 const VISIBLE_OPTS = 10;
 const OPT_HEIGHT = 22;
@@ -23,8 +24,8 @@ const OPT_HEIGHT = 22;
  */
 export class VscodeSelectBase extends VscElement {
   /** @internal */
-  @property({type: String, reflect: true, attribute: 'aria-expanded'})
-  override ariaExpanded = 'false';
+  /* @property({type: String, reflect: true, attribute: 'aria-expanded'})
+  override ariaExpanded = 'false'; */
 
   @property({type: Boolean, reflect: true})
   creatable = false;
@@ -102,6 +103,9 @@ export class VscodeSelectBase extends VscElement {
    */
   @property({type: Boolean, reflect: true})
   focused = false;
+
+  @property()
+  label = '';
 
   /**
    * Toggle the dropdown visibility.
@@ -314,7 +318,7 @@ export class VscodeSelectBase extends VscElement {
 
   protected async _toggleDropdown(visible: boolean): Promise<void> {
     this.open = visible;
-    this.ariaExpanded = String(visible);
+    // this.ariaExpanded = String(visible);
 
     if (visible && !this._multiple) {
       this._activeIndex = this._selectedIndex;
@@ -509,27 +513,9 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _onSpaceKeyDown() {
-    if (!this.open) {
+    if (!this._multiple && !this.combobox && !this.open) {
       this._toggleDropdown(true);
       return;
-    }
-
-    if (this.open && this._multiple && this._activeIndex > -1) {
-      const opts = this.combobox ? this._filteredOptions : this._options;
-      const selectedOption = opts[this._activeIndex];
-      const nextSelectedIndexes: number[] = [];
-
-      this._options[selectedOption.index].selected = !selectedOption.selected;
-
-      opts.forEach(({index}) => {
-        const {selected} = this._options[index];
-
-        if (selected) {
-          nextSelectedIndexes.push(index);
-        }
-      });
-
-      this._selectedIndexes = nextSelectedIndexes;
     }
   }
 
@@ -645,7 +631,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _onComponentKeyDown = (event: KeyboardEvent) => {
-    if ([' ', 'ArrowUp', 'ArrowDown', 'Escape'].includes(event.key)) {
+    if (['ArrowUp', 'ArrowDown', 'Escape'].includes(event.key)) {
       event.stopPropagation();
       event.preventDefault();
     }
@@ -716,7 +702,11 @@ export class VscodeSelectBase extends VscElement {
 
     return html`
       <ul
+        id="options-list"
         class="options"
+        role="listbox"
+        aria-multiselectable=${this._multiple ? 'true' : 'false'}
+        aria-label=${`Options for ${this.label}`}
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
       >
@@ -724,8 +714,10 @@ export class VscodeSelectBase extends VscElement {
           list,
           (op) => op.index,
           (op, index) => {
+            const active = index === this._activeIndex && !op.disabled;
+
             const optionClasses = {
-              active: index === this._activeIndex && !op.disabled,
+              active,
               disabled: op.disabled,
               option: true,
               selected: op.selected,
@@ -743,13 +735,18 @@ export class VscodeSelectBase extends VscElement {
 
             return html`
               <li
+                aria-selected=${op.selected || active ? 'true' : 'false'}
                 class=${classMap(optionClasses)}
                 data-index=${op.index}
                 data-filtered-index=${index}
+                role="option"
               >
                 ${this._multiple
-                  ? html`<span class=${classMap(checkboxClasses)}></span
-                      ><span class="option-label">${labelText}</span>`
+                  ? html`<span
+                        class=${classMap(checkboxClasses)}
+                        aria-hidden="true"
+                      ></span>
+                      <label><input type="checkbox">${labelText}</label> `
                   : labelText}
               </li>
             `;
@@ -809,13 +806,13 @@ export class VscodeSelectBase extends VscElement {
     switch (this._selectedIndexes.length) {
       case 0:
         return html`<span class="select-face-badge no-item"
-          >No items selected</span
+          >0 Selected</span
         >`;
       case 1:
-        return html`<span class="select-face-badge">1 item selected</span>`;
+        return html`<span class="select-face-badge">1 Selected</span>`;
       default:
         return html`<span class="select-face-badge"
-          >${this._selectedIndexes.length} items selected</span
+          >${this._selectedIndexes.length} Selected</span
         >`;
     }
   }
@@ -836,10 +833,19 @@ export class VscodeSelectBase extends VscElement {
       <div class="combobox-face face">
         ${this._multiple ? this._renderMultiSelectLabel() : nothing}
         <input
+          aria-autocomplete="list"
+          aria-controls=${ifDefined(
+            this.open ? 'options-list' : undefined
+          )}
+          aria-expanded=${this.open ? 'true' : 'false'}
+          aria-activedescendant=${`op-${this._activeIndex}`}
+          aria-label=${this.label}
+          aria-haspopup="listbox"
           class="combobox-input"
           spellcheck="false"
           type="text"
           autocomplete="off"
+          role="combobox"
           .value=${inputVal}
           @focus=${this._onComboboxInputFocus}
           @blur=${this._onComboboxInputBlur}
@@ -847,6 +853,7 @@ export class VscodeSelectBase extends VscElement {
           @click=${this._onComboboxInputClick}
         >
         <button
+          aria-label="Toggle dropdown"
           class="combobox-button"
           type="button"
           @click=${this._onComboboxButtonClick}
@@ -863,13 +870,15 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _renderDropdown() {
-    const classes = classMap({
-      dropdown: true,
-      multiple: this._multiple,
-    });
-
     return html`
-      <div class=${classes}>
+      <div
+        id="dropdown-container"
+        class=${classMap({
+          dropdown: true,
+          multiple: this._multiple,
+          open: this.open,
+        })}
+      >
         ${this.position === 'above' ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
         ${this.position === 'below' ? this._renderDescription() : nothing}
@@ -881,7 +890,7 @@ export class VscodeSelectBase extends VscElement {
     return html`
       <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
       ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
-      ${this.open ? this._renderDropdown() : nothing}
+      ${this._renderDropdown()}
     `;
   }
 }
