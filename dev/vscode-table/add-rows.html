@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+  </head>
+
+  <style>
+    .tableContainer {
+      margin: 0;
+      padding: 16px;
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: hidden;
+    }
+  </style>
+
+  <body>
+    <h1>%%TITLE%%</h1>
+    <vscode-demo>
+      <div id="tableContainer">
+        <vscode-table
+          id="timingTable"
+          class="scrollable-example"
+          resizable
+          responsive
+          zebra
+          bordered-columns
+          bordered-rows
+          style="height: 500px"
+        >
+          <vscode-table-header
+            slot="header"
+            style="user-select: none; cursor: pointer"
+          >
+            <vscode-table-header-cell id="h0"
+              >#
+              <!-- <span class="sorting">&#8597;</span> -->
+            </vscode-table-header-cell>
+
+            <vscode-table-header-cell id="h1"
+              >Logic Levels
+              <!-- <span class="sorting">&#8597;</span> -->
+            </vscode-table-header-cell>
+
+            <vscode-table-header-cell id="h2"
+              >Slack (ns)
+              <!-- <span class="sorting">&#8597;</span> -->
+            </vscode-table-header-cell>
+
+            <vscode-table-header-cell id="h3"
+              >From Clock
+              <!-- <span class="sorting">&#8597;</span> -->
+            </vscode-table-header-cell>
+
+            <vscode-table-header-cell id="h4"
+              >To Clock
+              <!-- <span class="sorting">&#8597;</span> -->
+            </vscode-table-header-cell>
+
+            <vscode-table-header-cell id="h3"
+              >From
+              <!-- <span class="sorting">&#8597;</span> -->
+            </vscode-table-header-cell>
+          </vscode-table-header>
+
+          <vscode-table-body slot="body" id="table-body"> </vscode-table-body>
+        </vscode-table>
+      </div>
+    </vscode-demo>
+
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+
+      window.onload = function () {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = '';
+        const rowList = [];
+        for (let i = 0; i < 10; i++) {
+          const row = document.createElement('vscode-table-row');
+
+          const cell1 = document.createElement('vscode-table-cell');
+          cell1.textContent = i;
+          row.appendChild(cell1);
+
+          const cell2 = document.createElement('vscode-table-cell');
+          cell2.textContent = Math.random() * 100;
+          row.appendChild(cell2);
+
+          const cell3 = document.createElement('vscode-table-cell');
+          cell3.textContent = Math.random() * 100;
+          row.appendChild(cell3);
+
+          const cell4 = document.createElement('vscode-table-cell');
+          cell4.textContent = Math.random() * 100;
+          row.appendChild(cell4);
+
+          const cell5 = document.createElement('vscode-table-cell');
+          cell5.textContent = Math.random() * 100;
+          row.appendChild(cell5);
+
+          const cell6 = document.createElement('vscode-table-cell');
+          cell6.textContent = Math.random() * 100;
+          row.appendChild(cell6);
+
+          rowList.push(row);
+        }
+        rowList.forEach((row) => {
+          tableBody.appendChild(row);
+        });
+        console.log(4);
+      };
+    </script>
+
+    <vscode-table
+      id="timingTable"
+      class="scrollable-example"
+      resizable=""
+      responsive=""
+      zebra=""
+      bordered-columns=""
+      bordered-rows=""
+      style="height: 500px"
+      role="table"
+    >
+      <vscode-table-header
+        slot="header"
+        style="user-select: none; cursor: pointer"
+        role="rowgroup"
+      >
+        <vscode-table-header-cell
+          id="h0"
+          role="columnheader"
+          style="width: 14.2857%"
+          >#
+          <!-- <span class="sorting">&#8597;</span> -->
+        </vscode-table-header-cell>
+
+        <vscode-table-header-cell
+          id="h1"
+          role="columnheader"
+          style="width: 14.2857%"
+          >Logic Levels
+          <!-- <span class="sorting">&#8597;</span> -->
+        </vscode-table-header-cell>
+
+        <vscode-table-header-cell
+          id="h2"
+          role="columnheader"
+          style="width: 14.2857%"
+          >Slack (ns)
+          <!-- <span class="sorting">&#8597;</span> -->
+        </vscode-table-header-cell>
+
+        <vscode-table-header-cell
+          id="h3"
+          role="columnheader"
+          style="width: 14.2857%"
+          >From Clock
+          <!-- <span class="sorting">&#8597;</span> -->
+        </vscode-table-header-cell>
+
+        <vscode-table-header-cell
+          id="h4"
+          role="columnheader"
+          style="width: 14.2857%"
+          >To Clock
+          <!-- <span class="sorting">&#8597;</span> -->
+        </vscode-table-header-cell>
+
+        <vscode-table-header-cell
+          id="h3"
+          role="columnheader"
+          style="width: 14.2857%"
+          >From
+          <!-- <span class="sorting">&#8597;</span> -->
+        </vscode-table-header-cell>
+
+      </vscode-table-header>
+
+      <vscode-table-body slot="body" id="table-body" role="rowgroup"
+        ><vscode-table-row role="row"
+          ><vscode-table-cell role="cell" style="width: 14.2857%"
+            >0</vscode-table-cell
+          ><vscode-table-cell role="cell" style="width: 14.2857%"
+            >1</vscode-table-cell
+          ><vscode-table-cell role="cell" style="width: 14.2857%"
+            >22</vscode-table-cell
+          ><vscode-table-cell role="cell" style="width: 14.2857%"
+            >8</vscode-table-cell
+          ><vscode-table-cell role="cell" style="width: 14.2857%"
+            >16.</vscode-table-cell
+          ><vscode-table-cell role="cell" style="width: 14.2857%"
+            >5.522882476297719</vscode-table-cell
+          ></vscode-table-row
+        ><vscode-table-row role="row"
+          ><vscode-table-cell role="cell">1</vscode-table-cell
+          ><vscode-table-cell role="cell">5</vscode-table-cell
+          ><vscode-table-cell role="cell">6</vscode-table-cell
+          ><vscode-table-cell role="cell">8</vscode-table-cell
+          ><vscode-table-cell role="cell">2</vscode-table-cell
+          ><vscode-table-cell role="cell"
+            >81.80563161589032</vscode-table-cell
+          ></vscode-table-row
+        ><vscode-table-row role="row"
+          ><vscode-table-cell role="cell">2</vscode-table-cell
+          ><vscode-table-cell role="cell">9</vscode-table-cell
+          ><vscode-table-cell role="cell">4</vscode-table-cell
+          ><vscode-table-cell role="cell">4.</vscode-table-cell
+          ><vscode-table-cell role="cell">15.574</vscode-table-cell
+          ><vscode-table-cell role="cell"
+            >70.91845987760404</vscode-table-cell
+          ></vscode-table-row
+        ><vscode-table-row role="row"
+          ><vscode-table-cell role="cell">3</vscode-table-cell
+          ><vscode-table-cell role="cell">96</vscode-table-cell
+          ><vscode-table-cell role="cell">29</vscode-table-cell
+          ><vscode-table-cell role="cell">11.097</vscode-table-cell
+          ><vscode-table-cell role="cell">61</vscode-table-cell
+          ><vscode-table-cell role="cell"
+            >19.836863140209648</vscode-table-cell
+          ></vscode-table-row
+        ></vscode-table-body
+      >
+    </vscode-table>
+  </body>
+</html>

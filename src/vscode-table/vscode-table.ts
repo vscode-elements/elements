@@ -175,6 +175,7 @@ export class VscodeTable extends VscElement {
   private _componentX = 0;
   private _componentH = 0;
   private _componentW = 0;
+  private _previousScreenX = 0;
   /**
    * Cached querySelectorAll result. Updated when the header slot changes.
    * It shouldn't be used directly, check the "_getHeaderCells" function.
@@ -513,6 +514,8 @@ export class VscodeTable extends VscElement {
   private _onSashMouseDown(event: MouseEvent) {
     event.stopPropagation();
 
+    this._previousScreenX = event.screenX;
+
     const {pageX, currentTarget} = event;
     const el = currentTarget as HTMLDivElement;
     const index = Number(el.dataset.index);
@@ -617,6 +620,7 @@ export class VscodeTable extends VscElement {
 
   private _onResizingMouseMove = (event: MouseEvent) => {
     event.stopPropagation();
+    console.log(event.screenX - this._previousScreenX);
     this._updateActiveSashPosition(event.pageX);
 
     if (!this.delayedResizing) {
@@ -627,6 +631,7 @@ export class VscodeTable extends VscElement {
   };
 
   private _onResizingMouseUp = (event: MouseEvent) => {
+    this._previousScreenX = 0;
     this._resizeColumns(true);
     this._updateActiveSashPosition(event.pageX);
     this._sashHovers[this._activeSashElementIndex] = false;
