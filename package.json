@@ -168,7 +168,7 @@
     "eslint-plugin-lit": "^2.0.0",
     "eslint-plugin-wc": "^3.0.0",
     "mocha": "^11.1.0",
-    "npm-check-updates": "^17.1.16",
+    "npm-check-updates": "^18.0.0",
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
     "rollup": "^4.39.0",
