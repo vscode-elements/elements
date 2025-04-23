@@ -350,27 +350,6 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _dispatchChangeEvent(): void {
-    if (!this._multiple) {
-      /** @deprecated */
-      this.dispatchEvent(
-        new CustomEvent('vsc-change', {
-          detail: {
-            selectedIndex: this._selectedIndex,
-            value: this._value,
-          },
-        })
-      );
-    } else {
-      /** @deprecated */
-      this.dispatchEvent(
-        new CustomEvent('vsc-change', {
-          detail: {
-            selectedIndexes: this._selectedIndexes,
-            value: this._values,
-          },
-        })
-      );
-    }
     this.dispatchEvent(new Event('change'));
     this.dispatchEvent(new Event('input'));
   }

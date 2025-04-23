@@ -196,6 +196,20 @@ export class VscodeMultiSelect
     }
   }
 
+  protected override _dispatchChangeEvent(): void {
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {
+          selectedIndexes: this._selectedIndexes,
+          value: this._values,
+        },
+      })
+    );
+
+    super._dispatchChangeEvent();
+  }
+
   protected override _manageRequired() {
     const {value} = this;
     if (value.length === 0 && this.required) {
