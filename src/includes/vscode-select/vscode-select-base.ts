@@ -358,10 +358,6 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onFaceClick(): void {
     this._toggleDropdown(!this.open);
-
-    if (this._multiple) {
-      this._activeIndex = 0;
-    }
   }
 
   private _onClickOutside = (event: MouseEvent): void => {
