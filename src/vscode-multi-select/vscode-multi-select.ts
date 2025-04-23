@@ -210,6 +210,11 @@ export class VscodeMultiSelect
     super._dispatchChangeEvent();
   }
 
+  protected override _onFaceClick(): void {
+    super._onFaceClick();
+    this._activeIndex = 0;
+  }
+
   protected override _manageRequired() {
     const {value} = this;
     if (value.length === 0 && this.required) {
