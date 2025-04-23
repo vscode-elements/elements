@@ -375,13 +375,9 @@ export class VscodeSelectBase extends VscElement {
     window.removeEventListener('mousemove', this._onMouseMove);
   };
 
-  private _toggleComboboxDropdown() {
+  protected _toggleComboboxDropdown() {
     this._filterPattern = '';
     this._toggleDropdown(!this.open);
-
-    if (this._multiple) {
-      this._activeIndex = -1;
-    }
   }
 
   protected _onComboboxButtonClick(): void {

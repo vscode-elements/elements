@@ -215,6 +215,11 @@ export class VscodeMultiSelect
     this._activeIndex = 0;
   }
 
+  protected override _toggleComboboxDropdown(): void {
+    super._toggleComboboxDropdown();
+    this._activeIndex = -1;
+  }
+
   protected override _manageRequired() {
     const {value} = this;
     if (value.length === 0 && this.required) {
