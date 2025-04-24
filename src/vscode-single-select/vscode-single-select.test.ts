@@ -21,19 +21,9 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.selectedIndex).to.eq(1);
       expect(el.value).to.eq('Ipsum');
     });
@@ -91,19 +81,9 @@ describe('vscode-single-select', () => {
       el.value = 'Ipsum';
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
     });
@@ -120,17 +100,9 @@ describe('vscode-single-select', () => {
       el.value = 'trololo';
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text"></span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('');
       expect(el.selectedIndex).to.eq(-1);
     });
@@ -147,19 +119,9 @@ describe('vscode-single-select', () => {
       el.selectedIndex = 1;
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
     });
@@ -176,17 +138,9 @@ describe('vscode-single-select', () => {
       el.selectedIndex = 999;
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text"></span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('');
       expect(el.selectedIndex).to.eq(999);
     });
@@ -237,17 +191,9 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('Lorem');
       expect(el.selectedIndex).to.eq(0);
     });
@@ -266,19 +212,9 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
 
@@ -305,19 +241,11 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowUp'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const text = el.shadowRoot?.querySelector('.text');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
+      expect(text).lightDom.to.eq('Ipsum');
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
 
@@ -338,7 +266,7 @@ describe('vscode-single-select', () => {
           <span class="icon">
           </span>
         </div>
-        <div class="dropdown">
+        <div class="dropdown open">
           <ul class="options">
             <li
               class="active option"
@@ -380,28 +308,9 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-        <div class="dropdown">
-          <ul class="options">
-            <li
-              class="active option"
-              data-filtered-index="0"
-              data-index="0"
-            >
-              Lorem
-            </li>
-          </ul>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.true;
       expect(el.getAttribute('aria-expanded')).to.eq('true');
     });
 
@@ -426,20 +335,9 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot">
-        </slot>
-        <div class="select-face face">
-          <span class="text">
-            Dolor
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const text = el.shadowRoot?.querySelector('.text');
+
+      expect(text).lightDom.to.eq('Dolor');
       expect(el.value).to.eq('Dolor');
       expect(el.selectedIndex).to.eq(2);
       expect(spy.calledWithMatch({type: 'change'})).to.be.true;
@@ -455,44 +353,17 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-        <div class="dropdown">
-          <ul class="options">
-            <li
-              class="active option"
-              data-filtered-index="0"
-              data-index="0"
-            >
-              Lorem
-            </li>
-          </ul>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdownBefore = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdownBefore?.classList.contains('open')).to.be.true;
       expect(el.getAttribute('aria-expanded')).to.eq('true');
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdownAfter = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdownAfter?.classList.contains('open')).to.be.false;
       expect(el.getAttribute('aria-expanded')).be.eq('false');
     });
 
@@ -579,6 +450,11 @@ describe('vscode-single-select', () => {
             </span>
           </button>
         </div>
+        <div class="dropdown">
+          <ul class="options">
+            <li class="no-options">No options</li>
+          </ul>
+        </div>
       `);
     });
 
@@ -601,53 +477,34 @@ describe('vscode-single-select', () => {
       input.dispatchEvent(new InputEvent('input'));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot">
-        </slot>
-        <div class="combobox-face face">
-          <input
-            autocomplete="off"
-            class="combobox-input"
-            spellcheck="false"
-            type="text"
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown).lightDom.to.eq(`
+        <ul class="options">
+          <li
+            class="option"
+            data-filtered-index="0"
+            data-index="0"
           >
-          <button
-            class="combobox-button"
-            type="button"
+            <b>A</b>ntig<b>u</b>a and Barbuda
+          </li>
+          <li
+            class="option"
+            data-filtered-index="1"
+            data-index="3"
           >
-            <span class="icon">
-            </span>
-          </button>
-        </div>
-        <div class="dropdown">
-          <ul class="options">
-            <li
-              class="option"
-              data-filtered-index="0"
-              data-index="0"
-            >
-              Antigua and Barbuda
-            </li>
-            <li
-              class="option"
-              data-filtered-index="1"
-              data-index="3"
-            >
-              Australia
-            </li>
-            <li
-              class="option"
-              data-filtered-index="2"
-              data-index="4"
-            >
-              Austria
-            </li>
-          </ul>
-        </div>
-      `,
-        {ignoreChildren: ['li']}
-      );
+            <b>A</b><b>u</b>stralia
+          </li>
+          <li
+            class="option"
+            data-filtered-index="2"
+            data-index="4"
+          >
+            <b>A</b><b>u</b>stria
+          </li>
+        </ul>
+      `);
+      expect(dropdown?.classList.contains('open')).to.be.true;
     });
 
     it('does not allow the highlight to move past the last item in the filtered list', async () => {
