@@ -20,19 +20,9 @@ describe('vscode-multi-select', () => {
       </vscode-multi-select>
     `)) as VscodeMultiSelect;
 
-    expect(el).shadowDom.to.equal(
-      `
-      <slot class="main-slot"></slot>
-      <div class="multiselect select-face face">
-        <span class="select-face-badge">
-          1 item selected
-        </span>
-        <span class="icon">
-        </span>
-      </div>
-    `,
-      {ignoreAttributes: ['tabindex']}
-    );
+    const badge = el.shadowRoot?.querySelector('.select-face-badge');
+
+    expect(badge).lightDom.to.eq('1 item selected');
     expect(el.selectedIndexes).to.eql([1]);
     expect(el.value).to.eql(['Ipsum']);
   });
@@ -143,7 +133,9 @@ describe('vscode-multi-select', () => {
       el.shadowRoot?.querySelector<HTMLDivElement>('.select-face');
     selectFace!.click();
     await el.updateComplete;
-    const dropdownVisibleBefore = !!el.shadowRoot?.querySelector('.dropdown');
+    const dropdownVisibleBefore = el.shadowRoot
+      ?.querySelector('.dropdown')
+      ?.classList.contains('open');
 
     const button =
       el.shadowRoot?.querySelector<HTMLButtonElement>('.button-accept');
@@ -153,7 +145,9 @@ describe('vscode-multi-select', () => {
     button?.click();
     await el.updateComplete;
 
-    const dropdownVisibleAfter = !!el.shadowRoot?.querySelector('.dropdown');
+    const dropdownVisibleAfter = el.shadowRoot
+      ?.querySelector('.dropdown')
+      ?.classList.contains('open');
 
     expect(dropdownVisibleBefore).to.eq(true);
     expect(dropdownVisibleAfter).to.eq(false);
