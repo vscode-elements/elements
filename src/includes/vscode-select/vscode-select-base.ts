@@ -834,13 +834,14 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _renderDropdown() {
-    const classes = classMap({
+    const classes = {
       dropdown: true,
       multiple: this._multiple,
-    });
+      open: this.open,
+    };
 
     return html`
-      <div class=${classes}>
+      <div class=${classMap(classes)}>
         ${this.position === 'above' ? this._renderDescription() : nothing}
         ${this._renderOptions()} ${this._renderDropdownControls()}
         ${this.position === 'below' ? this._renderDescription() : nothing}
@@ -852,7 +853,7 @@ export class VscodeSelectBase extends VscElement {
     return html`
       <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
       ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
-      ${this.open ? this._renderDropdown() : nothing}
+      ${this._renderDropdown()}
     `;
   }
 }
