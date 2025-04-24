@@ -1,5 +1,10 @@
 import {html, render, nothing, TemplateResult, PropertyValues} from 'lit';
-import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
+import {
+  eventOptions,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
 import '../../vscode-button/index.js';
@@ -221,16 +226,13 @@ export class VscodeSelectBase extends VscElement {
   protected _values: string[] = [];
 
   @state()
-  protected _listScrollTop = 0;
-
-  @state()
   protected _isPlaceholderOptionActive = false;
 
   @state()
   private _isBeingFiltered = false;
 
-  @query('.options')
-  private _listElement!: HTMLUListElement;
+  @state()
+  private _optionListScrollPos = 0;
 
   /** @internal */
   protected _multiple = false;
@@ -312,7 +314,7 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
-  protected async _toggleDropdown(visible: boolean): Promise<void> {
+  protected _toggleDropdown(visible: boolean) {
     this.open = visible;
     this.ariaExpanded = String(visible);
 
@@ -324,11 +326,7 @@ export class VscodeSelectBase extends VscElement {
       this._activeIndex = this._selectedIndex;
 
       if (this._activeIndex > VISIBLE_OPTS - 1) {
-        await this.updateComplete;
-
-        this._listElement.scrollTop = Math.floor(
-          this._activeIndex * OPT_HEIGHT
-        );
+        this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
       }
     }
 
@@ -388,6 +386,11 @@ export class VscodeSelectBase extends VscElement {
     if (ev.key === 'Enter') {
       this._toggleComboboxDropdown();
     }
+  }
+
+  @eventOptions({passive: true})
+  protected _onOptionListScroll(ev: Event) {
+    this._optionListScrollPos = (ev.target as HTMLUListElement).scrollTop;
   }
 
   protected _onOptionMouseOver(ev: MouseEvent): void {
@@ -467,9 +470,7 @@ export class VscodeSelectBase extends VscElement {
         }
 
         if (!this._multiple && showDropdownNext) {
-          this.updateComplete.then(() => {
-            this._scrollActiveElementToTop();
-          });
+          this._scrollActiveElementToTop();
         }
       }
     }
@@ -505,7 +506,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _scrollActiveElementToTop() {
-    this._listElement.scrollTop = Math.floor(this._activeIndex * OPT_HEIGHT);
+    this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
   }
 
   private async _adjustOptionListScrollPos(
@@ -528,7 +529,7 @@ export class VscodeSelectBase extends VscElement {
     this._isHoverForbidden = true;
     window.addEventListener('mousemove', this._onMouseMove);
 
-    const ulScrollTop = this._listElement.scrollTop;
+    const ulScrollTop = this._optionListScrollPos;
     const liPosY = optionIndex * OPT_HEIGHT;
 
     const fullyVisible =
@@ -537,16 +538,14 @@ export class VscodeSelectBase extends VscElement {
 
     if (direction === 'down') {
       if (!fullyVisible) {
-        this._listElement.scrollTop =
+        this._optionListScrollPos =
           optionIndex * OPT_HEIGHT - (VISIBLE_OPTS - 1) * OPT_HEIGHT;
       }
     }
 
     if (direction === 'up') {
       if (!fullyVisible) {
-        this._listElement.scrollTop = Math.floor(
-          this._activeIndex * OPT_HEIGHT
-        );
+        this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
       }
     }
   }
@@ -690,6 +689,8 @@ export class VscodeSelectBase extends VscElement {
         class="options"
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
+        @scroll=${this._onOptionListScroll}
+        .scrollTop=${this._optionListScrollPos}
       >
         ${repeat(
           list,
