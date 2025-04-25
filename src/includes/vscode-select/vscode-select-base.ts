@@ -20,8 +20,8 @@ import {
 import {VscElement} from '../VscElement.js';
 import {chevronDownIcon} from './template-elements.js';
 
-const VISIBLE_OPTS = 10;
-const OPT_HEIGHT = 22;
+export const VISIBLE_OPTS = 10;
+export const OPT_HEIGHT = 22;
 
 /**
  * @cssprop --dropdown-z-index - workaround for dropdown z-index issues
@@ -232,7 +232,7 @@ export class VscodeSelectBase extends VscElement {
   private _isBeingFiltered = false;
 
   @state()
-  private _optionListScrollPos = 0;
+  protected _optionListScrollPos = 0;
 
   /** @internal */
   protected _multiple = false;
@@ -308,27 +308,11 @@ export class VscodeSelectBase extends VscElement {
       this._value = values[0];
       this._values = values;
     }
-
-    if (!this._multiple && !this.combobox && selectedIndexes.length === 0) {
-      this._selectedIndex = this._options.length > 0 ? 0 : -1;
-    }
   }
 
   protected _toggleDropdown(visible: boolean) {
     this.open = visible;
     this.ariaExpanded = String(visible);
-
-    if (visible && !this._multiple) {
-      this._activeIndex = this._selectedIndex;
-    }
-
-    if (visible && !this._multiple && !this.combobox) {
-      this._activeIndex = this._selectedIndex;
-
-      if (this._activeIndex > VISIBLE_OPTS - 1) {
-        this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
-      }
-    }
 
     if (visible) {
       window.addEventListener('click', this._onClickOutside);
@@ -505,7 +489,7 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
-  private _scrollActiveElementToTop() {
+  protected _scrollActiveElementToTop() {
     this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
   }
 
