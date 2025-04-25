@@ -2,7 +2,11 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {customElement} from '../includes/VscElement.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
-import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
+import {
+  OPT_HEIGHT,
+  VISIBLE_OPTS,
+  VscodeSelectBase,
+} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 import {
@@ -248,6 +252,30 @@ export class VscodeSingleSelect
     );
 
     super._dispatchChangeEvent();
+  }
+
+  protected override _setStateFromSlottedElements(): void {
+    super._setStateFromSlottedElements();
+
+    if (!this.combobox && this._selectedIndexes.length === 0) {
+      this._selectedIndex = this._options.length > 0 ? 0 : -1;
+    }
+  }
+
+  protected override _toggleDropdown(visible: boolean): void {
+    super._toggleDropdown(visible);
+
+    if (visible) {
+      this._activeIndex = this._selectedIndex;
+    }
+
+    if (visible && !this.combobox) {
+      this._activeIndex = this._selectedIndex;
+
+      if (this._activeIndex > VISIBLE_OPTS - 1) {
+        this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
+      }
+    }
   }
 
   protected override _onSlotChange(): void {
