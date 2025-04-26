@@ -143,9 +143,9 @@ export class VscodeSelectBase extends VscElement {
   @property({reflect: true})
   position: 'above' | 'below' = 'below';
 
-  /** @internal */
-  @property({type: Number, attribute: true, reflect: true})
-  override tabIndex = 0;
+  // /** @internal */
+  // @property({type: Number, attribute: true, reflect: true})
+  // override tabIndex = 0;
 
   @queryAssignedElements({
     flatten: true,
@@ -315,7 +315,6 @@ export class VscodeSelectBase extends VscElement {
 
   protected _toggleDropdown(visible: boolean) {
     this.open = visible;
-    this.ariaExpanded = String(visible);
 
     if (visible) {
       window.addEventListener('click', this._onClickOutside);
@@ -562,6 +561,9 @@ export class VscodeSelectBase extends VscElement {
           this._adjustOptionListScrollPos('up', prevSelectable);
         }
       }
+    } else {
+      this._toggleDropdown(true);
+      this._activeIndex = 0;
     }
   }
 
@@ -598,7 +600,13 @@ export class VscodeSelectBase extends VscElement {
           this._adjustOptionListScrollPos('down', nextSelectable);
         }
       }
+    } else {
+      this._toggleDropdown(true);
     }
+  }
+
+  private _onEscapeKeyDown() {
+    this._toggleDropdown(false);
   }
 
   private _onComponentKeyDown = (event: KeyboardEvent) => {
@@ -616,7 +624,7 @@ export class VscodeSelectBase extends VscElement {
     }
 
     if (event.key === 'Escape') {
-      this._toggleDropdown(false);
+      this._onEscapeKeyDown();
     }
 
     if (event.key === 'ArrowUp') {

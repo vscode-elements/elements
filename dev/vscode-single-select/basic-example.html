@@ -26,12 +26,21 @@
   <body>
     <main>
       <vscode-demo>
-        <vscode-single-select label="Single Select example">
+        <vscode-single-select label="Single Select example" autofocus>
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
+        <button type="button">focus</button>
       </vscode-demo>
+      <script type="module">
+        const sl = document.querySelector('vscode-single-select');
+        const bt = document.querySelector('button');
+
+        bt.addEventListener('click', () => {
+          sl.focus();
+        });
+      </script>
     </main>
   </body>
 </html>
