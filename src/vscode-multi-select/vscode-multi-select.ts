@@ -412,6 +412,16 @@ export class VscodeMultiSelect
         `
       : html`${nothing}`;
   }
+
+  override render(): TemplateResult {
+    return html`
+      <div class="multi-select">
+        <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
+        ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+        ${this._renderDropdown()}
+      </div>
+    `;
+  }
 }
 
 declare global {

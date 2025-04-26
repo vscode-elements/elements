@@ -27,10 +27,6 @@ export const OPT_HEIGHT = 22;
  * @cssprop --dropdown-z-index - workaround for dropdown z-index issues
  */
 export class VscodeSelectBase extends VscElement {
-  /** @internal */
-  @property({type: String, reflect: true, attribute: 'aria-expanded'})
-  override ariaExpanded = 'false';
-
   @property({type: Boolean, reflect: true})
   creatable = false;
 
@@ -39,6 +35,13 @@ export class VscodeSelectBase extends VscElement {
    */
   @property({type: Boolean, reflect: true})
   combobox = false;
+
+  /**
+   * Accessible label for screen readers. When a `<vscode-label>` is connected
+   * to the component, it will be filled automatically.
+   */
+  @property({reflect: true})
+  label = '';
 
   /**
    * The element cannot be used and is not focusable.
@@ -671,6 +674,8 @@ export class VscodeSelectBase extends VscElement {
     return html`
       <ul
         class="options"
+        id=${`${this._multiple ? 'ms' : 'ss'}-listbox`}
+        role="listbox"
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
         @scroll=${this._onOptionListScroll}
@@ -680,8 +685,11 @@ export class VscodeSelectBase extends VscElement {
           list,
           (op) => op.index,
           (op, index) => {
+            const active = op.index === this._activeIndex && !op.disabled;
+            const selected = this._selectedIndex === op.index;
+
             const optionClasses = {
-              active: index === this._activeIndex && !op.disabled,
+              active,
               disabled: op.disabled,
               option: true,
               selected: op.selected,
@@ -699,9 +707,12 @@ export class VscodeSelectBase extends VscElement {
 
             return html`
               <li
+                aria-selected=${selected ? 'true' : 'false'}
                 class=${classMap(optionClasses)}
                 data-index=${op.index}
                 data-filtered-index=${index}
+                id=${`op-${op.index}`}
+                role="option"
               >
                 ${this._multiple
                   ? html`<span class=${classMap(checkboxClasses)}></span
@@ -818,7 +829,7 @@ export class VscodeSelectBase extends VscElement {
     return html`${nothing}`;
   }
 
-  private _renderDropdown() {
+  protected _renderDropdown() {
     const classes = {
       dropdown: true,
       multiple: this._multiple,
@@ -831,14 +842,6 @@ export class VscodeSelectBase extends VscElement {
         ${this._renderOptions()} ${this._renderDropdownControls()}
         ${this.position === 'below' ? this._renderDescription() : nothing}
       </div>
-    `;
-  }
-
-  override render(): TemplateResult {
-    return html`
-      <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
-      ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
-      ${this._renderDropdown()}
     `;
   }
 }
