@@ -198,6 +198,67 @@ describe('vscode-single-select', () => {
       expect(el.selectedIndex).to.eq(0);
     });
 
+    it('should not be allowed to select an element by down arrow key other than the existing ones', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.value = 'Lorem';
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      // Last option
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
+      expect(async () => {
+        el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+        await el.updateComplete;
+      }).not.throw();
+      expect(el.value).to.eq('Ipsum');
+    });
+
+    it('dropdown should be scrolled to the selected option', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Afghanistan</vscode-option>
+          <vscode-option>Albania</vscode-option>
+          <vscode-option>Algeria</vscode-option>
+          <vscode-option>Andorra</vscode-option>
+          <vscode-option>Angola</vscode-option>
+          <vscode-option>Antigua and Barbuda</vscode-option>
+          <vscode-option>Argentina</vscode-option>
+          <vscode-option>Armenia</vscode-option>
+          <vscode-option>Australia</vscode-option>
+          <vscode-option>Austria</vscode-option>
+          <vscode-option selected>Azerbaijan</vscode-option>
+          <vscode-option>Bahamas</vscode-option>
+          <vscode-option>Bahrain</vscode-option>
+          <vscode-option>Bangladesh</vscode-option>
+          <vscode-option>Barbados</vscode-option>
+          <vscode-option>Belarus</vscode-option>
+          <vscode-option>Belgium</vscode-option>
+          <vscode-option>Belize</vscode-option>
+          <vscode-option>Benin</vscode-option>
+          <vscode-option>Bhutan</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+      await el.updateComplete;
+
+      const face = el.shadowRoot?.querySelector('.select-face');
+      face?.dispatchEvent(new MouseEvent('click'));
+      await el.updateComplete;
+
+      const options = el.shadowRoot?.querySelector('.options');
+      expect(options?.scrollTop).to.eq(220);
+    });
+
+    //#region keyboard interactions
+
+
     it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
       const el = (await fixture(html`
         <vscode-single-select>
@@ -340,64 +401,7 @@ describe('vscode-single-select', () => {
       expect(dropdownAfter?.classList.contains('open')).to.be.false;
       expect(el.getAttribute('aria-expanded')).be.eq('false');
     });
-
-    it('should not be allowed to select an element by down arrow key other than the existing ones', async () => {
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-
-      el.value = 'Lorem';
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-
-      // Last option
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-
-      expect(async () => {
-        el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-        await el.updateComplete;
-      }).not.throw();
-      expect(el.value).to.eq('Ipsum');
-    });
-
-    it('dropdown should be scrolled to the selected option', async () => {
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Afghanistan</vscode-option>
-          <vscode-option>Albania</vscode-option>
-          <vscode-option>Algeria</vscode-option>
-          <vscode-option>Andorra</vscode-option>
-          <vscode-option>Angola</vscode-option>
-          <vscode-option>Antigua and Barbuda</vscode-option>
-          <vscode-option>Argentina</vscode-option>
-          <vscode-option>Armenia</vscode-option>
-          <vscode-option>Australia</vscode-option>
-          <vscode-option>Austria</vscode-option>
-          <vscode-option selected>Azerbaijan</vscode-option>
-          <vscode-option>Bahamas</vscode-option>
-          <vscode-option>Bahrain</vscode-option>
-          <vscode-option>Bangladesh</vscode-option>
-          <vscode-option>Barbados</vscode-option>
-          <vscode-option>Belarus</vscode-option>
-          <vscode-option>Belgium</vscode-option>
-          <vscode-option>Belize</vscode-option>
-          <vscode-option>Benin</vscode-option>
-          <vscode-option>Bhutan</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-      await el.updateComplete;
-
-      const face = el.shadowRoot?.querySelector('.select-face');
-      face?.dispatchEvent(new MouseEvent('click'));
-      await el.updateComplete;
-
-      const options = el.shadowRoot?.querySelector('.options');
-      expect(options?.scrollTop).to.eq(220);
-    });
+    //#endregion
   });
 
   describe('combobox mode', () => {
@@ -847,7 +851,15 @@ describe('vscode-single-select', () => {
           <li class="option">Dolor</li>
         </ul>
       `,
-        {ignoreAttributes: ['data-index', 'data-filtered-index']}
+        {
+          ignoreAttributes: [
+            'aria-selected',
+            'data-index',
+            'data-filtered-index',
+            'id',
+            'role',
+          ],
+        }
       );
 
       // clicks outside, closes the dropdown
@@ -1112,7 +1124,13 @@ describe('vscode-single-select', () => {
         <li class="option active">Sit</li>
       `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: [
+            'aria-selected',
+            'data-filtered-index',
+            'data-index',
+            'id',
+            'role',
+          ],
         }
       );
     });
@@ -1139,7 +1157,13 @@ describe('vscode-single-select', () => {
         <li class="option">Dolor</li>
       `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: [
+            'aria-selected',
+            'data-filtered-index',
+            'data-index',
+            'id',
+            'role',
+          ],
         }
       );
     });
@@ -1198,6 +1222,16 @@ describe('vscode-single-select', () => {
       expect(isValidBefore).to.be.false;
       expect(isValidAfter).to.be.true;
     });
+  });
+
+  describe('closed dropdown', () => {
+    it('opens the dropdown if it is not already displayed when DownArrow is pressed');
+    it('opens the dropdown when Alt + DownArrow are pressed');
+    it('Up Arrow is pressed');
+    it('Enter is pressed');
+    it('Space is pressed');
+    it('Home is pressed');
+    it('End is pressed');
   });
 
   //keyboard navigation
