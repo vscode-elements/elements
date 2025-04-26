@@ -317,6 +317,7 @@ export class VscodeSingleSelect
     this._selectedIndex = prevIndex;
     this._activeIndex = prevIndex;
     this._value = prevIndex > -1 ? this._options[prevIndex].value : '';
+
     this._internals.setFormValue(this._value);
     this._manageRequired();
     this._dispatchChangeEvent();
@@ -398,7 +399,8 @@ export class VscodeSingleSelect
 
   protected override _renderSelectFace(): TemplateResult {
     const label = this._options[this._selectedIndex]?.label ?? '';
-    const activeDescendant = `op-${this._activeIndex < 0 ? this._selectedIndex : this._activeIndex}`;
+    const activeDescendant =
+      this._activeIndex > -1 ? `op-${this._activeIndex}` : '';
 
     return html`
       <div
