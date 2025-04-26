@@ -13,6 +13,7 @@ import {
   findNextSelectableOptionIndex,
   findPrevSelectableOptionIndex,
 } from '../includes/vscode-select/helpers.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 export type VscSingleSelectCreateOptionEvent = CustomEvent<{value: string}>;
 
@@ -81,10 +82,6 @@ export class VscodeSingleSelect
   @property({attribute: 'default-value'})
   defaultValue = '';
 
-  /** @internal */
-  @property({type: String, attribute: true, reflect: true})
-  override role = 'listbox';
-
   @property({reflect: true})
   name: string | undefined = undefined;
 
@@ -106,6 +103,10 @@ export class VscodeSingleSelect
   get selectedIndex(): number {
     return this._selectedIndex;
   }
+
+  /** @internal */
+  @property({reflect: true, type: Number})
+  override tabIndex: number = 0;
 
   @property({type: String})
   set value(val: string) {
@@ -397,14 +398,31 @@ export class VscodeSingleSelect
 
   protected override _renderSelectFace(): TemplateResult {
     const label = this._options[this._selectedIndex]?.label ?? '';
+    const activeDescendant = `op-${this._activeIndex < 0 ? this._selectedIndex : this._activeIndex}`;
 
     return html`
       <div
+        aria-activedescendant=${activeDescendant}
+        aria-controls="ss-listbox"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-haspopup="listbox"
+        aria-label=${ifDefined(this.label)}
         class="select-face face"
         @click=${this._onFaceClick}
+        role="combobox"
         tabindex=${this.tabIndex > -1 ? 0 : -1}
       >
         <span class="text">${label}</span> ${chevronDownIcon}
+      </div>
+    `;
+  }
+
+  override render(): TemplateResult {
+    return html`
+      <div class="single-select">
+        <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
+        ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+        ${this._renderDropdown()}
       </div>
     `;
   }
