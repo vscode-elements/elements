@@ -19,6 +19,7 @@ import {
 } from './helpers.js';
 import {VscElement} from '../VscElement.js';
 import {chevronDownIcon} from './template-elements.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 export const VISIBLE_OPTS = 10;
 export const OPT_HEIGHT = 22;
@@ -254,6 +255,10 @@ export class VscodeSelectBase extends VscElement {
 
   private _setAutoFocus() {
     if (this.hasAttribute('autofocus')) {
+      if (this.tabIndex < 0) {
+        this.tabIndex = 0;
+      }
+
       if (this.combobox) {
         this.updateComplete.then(() => {
           this.shadowRoot
@@ -261,11 +266,11 @@ export class VscodeSelectBase extends VscElement {
             .focus();
         });
       } else {
-        if (this.tabIndex < 0) {
-          this.tabIndex = 0;
-        }
-
-        this.focus();
+        this.updateComplete.then(() => {
+          this.shadowRoot
+            ?.querySelector<HTMLInputElement>('.select-face')!
+            .focus();
+        });
       }
     }
   }
@@ -587,6 +592,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onArrowDownKeyDown(): void {
+    console.log(this);
     let numOpts = this.combobox
       ? this._filteredOptions.length
       : this._options.length;
@@ -695,13 +701,17 @@ export class VscodeSelectBase extends VscElement {
     return;
   }
 
+  //#region render functions
   protected _renderOptions(): TemplateResult | TemplateResult[] {
     const list = this.combobox ? this._filteredOptions : this._options;
 
+    //aria-multiselectable=${this._multiple ? 'true' : 'false'}
+
     return html`
       <ul
+        aria-label="List of options"
         class="options"
-        id=${`${this._multiple ? 'ms' : 'ss'}-listbox`}
+        id="select-listbox"
         role="listbox"
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
@@ -826,11 +836,22 @@ export class VscodeSelectBase extends VscElement {
           : '';
     }
 
+    const activeDescendant =
+      this._activeIndex > -1 ? `op-${this._activeIndex}` : '';
+
     return html`
       <div class="combobox-face face">
         ${this._multiple ? this._renderMultiSelectLabel() : nothing}
         <input
+          aria-activedescendant=${activeDescendant}
+          aria-label=${ifDefined(this.label)}
+          aria-autocomplete="list"
+          aria-controls=${this._multiple
+            ? 'multi-select-listbox'
+            : 'single-select-listbox'}
+          aria-expanded=${this.open ? 'true' : 'false'}
           class="combobox-input"
+          role="combobox"
           spellcheck="false"
           type="text"
           autocomplete="off"
@@ -841,10 +862,12 @@ export class VscodeSelectBase extends VscElement {
           @click=${this._onComboboxInputClick}
         >
         <button
+          aria-label="Open the list of options"
           class="combobox-button"
           type="button"
           @click=${this._onComboboxButtonClick}
           @keydown=${this._onComboboxButtonKeyDown}
+          tabindex="-1"
         >
           ${chevronDownIcon}
         </button>
@@ -871,4 +894,5 @@ export class VscodeSelectBase extends VscElement {
       </div>
     `;
   }
+  //#endregion
 }

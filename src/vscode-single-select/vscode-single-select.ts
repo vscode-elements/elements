@@ -104,10 +104,6 @@ export class VscodeSingleSelect
     return this._selectedIndex;
   }
 
-  /** @internal */
-  @property({reflect: true, type: Number})
-  override tabIndex: number = 0;
-
   @property({type: String})
   set value(val: string) {
     if (this._options[this._selectedIndex]) {
@@ -397,6 +393,7 @@ export class VscodeSingleSelect
     }
   }
 
+  //#region render functions
   protected override _renderSelectFace(): TemplateResult {
     const label = this._options[this._selectedIndex]?.label ?? '';
     const activeDescendant =
@@ -405,14 +402,14 @@ export class VscodeSingleSelect
     return html`
       <div
         aria-activedescendant=${activeDescendant}
-        aria-controls="ss-listbox"
+        aria-controls="select-listbox"
         aria-expanded=${this.open ? 'true' : 'false'}
         aria-haspopup="listbox"
         aria-label=${ifDefined(this.label)}
         class="select-face face"
         @click=${this._onFaceClick}
         role="combobox"
-        tabindex=${this.tabIndex > -1 ? 0 : -1}
+        tabindex="0"
       >
         <span class="text">${label}</span> ${chevronDownIcon}
       </div>
@@ -428,6 +425,7 @@ export class VscodeSingleSelect
       </div>
     `;
   }
+  //#endregion
 }
 
 declare global {
