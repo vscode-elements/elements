@@ -167,6 +167,7 @@ export class VscodeSelectBase extends VscElement {
     this.addEventListener('keydown', this._onComponentKeyDown);
     this.addEventListener('focus', this._onComponentFocus);
     this.addEventListener('blur', this._onComponentBlur);
+    this._setAutoFocus();
   }
 
   override disconnectedCallback(): void {
@@ -250,6 +251,24 @@ export class VscodeSelectBase extends VscElement {
   private _isHoverForbidden = false;
   private _disabled = false;
   private _originalTabIndex: number | undefined = undefined;
+
+  private _setAutoFocus() {
+    if (this.hasAttribute('autofocus')) {
+      if (this.combobox) {
+        this.updateComplete.then(() => {
+          this.shadowRoot
+            ?.querySelector<HTMLInputElement>('.combobox-input')!
+            .focus();
+        });
+      } else {
+        if (this.tabIndex < 0) {
+          this.tabIndex = 0;
+        }
+
+        this.focus();
+      }
+    }
+  }
 
   protected get _currentOptions(): InternalOption[] {
     return this.combobox ? this._filteredOptions : this._options;
