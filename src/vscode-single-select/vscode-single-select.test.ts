@@ -880,6 +880,13 @@ describe('vscode-single-select', () => {
         }
       );
     });
+
+    //#region  keyboard interactions
+    //#region textbox
+    it("when ESC key is pressed, closes the listbox if it is displayed");
+    it("when the ESC key is pressed, clears the textbox if the listbox is not displayed");
+    //#endregion
+    //#endregion
   });
 
   describe('general behavior', () => {

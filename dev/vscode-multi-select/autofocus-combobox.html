@@ -21,21 +21,16 @@
         });
       };
     </script>
-    <style>
-      vscode-single-select:focus {
-        --vscode-settings-dropdownBackground: rgba(0, 255, 0, 0.1);
-      }
-    </style>
   </head>
 
   <body>
     <main>
       <vscode-demo>
-        <vscode-single-select label="Single Select example" autofocus>
+        <vscode-multi-select label="Single Select example" autofocus combobox>
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
+        </vscode-multi-select>
         <button type="button">focus</button>
       </vscode-demo>
       <script type="module">

@@ -53,7 +53,7 @@ export class VscodeMultiSelect
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
+    delegatesFocus: false,
   };
 
   static formAssociated = true;
@@ -354,6 +354,7 @@ export class VscodeMultiSelect
     this._manageRequired();
   }
 
+  //#region render functions
   private _renderLabel() {
     switch (this._selectedIndexes.length) {
       case 0:
@@ -370,11 +371,18 @@ export class VscodeMultiSelect
   }
 
   protected override _renderSelectFace(): TemplateResult {
+    const activeDescendant =
+      this._activeIndex > -1 ? `op-${this._activeIndex}` : '';
+
     return html`
       <div
+        aria-activedescendant=${activeDescendant}
+        aria-controls="select-listbox"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-haspopup="listbox"
         class="select-face face multiselect"
         @click=${this._onFaceClick}
-        tabindex=${this.tabIndex > -1 ? 0 : -1}
+        .tabIndex=${this.disabled ? -1 : 0}
       >
         ${this._renderLabel()} ${chevronDownIcon}
       </div>
@@ -422,6 +430,7 @@ export class VscodeMultiSelect
       </div>
     `;
   }
+  //#endregion
 }
 
 declare global {
