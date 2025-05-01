@@ -449,7 +449,6 @@ export class VscodeSelectBase extends VscElement {
       return;
     }
 
-    const list = this.combobox ? this._filteredOptions : this._options;
     const showDropdownNext = !this.open;
 
     this._toggleDropdown(showDropdownNext);
@@ -459,8 +458,7 @@ export class VscodeSelectBase extends VscElement {
       !showDropdownNext &&
       this._selectedIndex !== this._activeIndex
     ) {
-      this._selectedIndex =
-        this._activeIndex > -1 ? list[this._activeIndex].index : -1;
+      this._selectedIndex = this._activeIndex > -1 ? this._activeIndex : -1;
       this._value =
         this._selectedIndex > -1
           ? this._options[this._selectedIndex].value
@@ -473,10 +471,7 @@ export class VscodeSelectBase extends VscElement {
         this._createAndSelectSuggestedOption();
       } else {
         if (!this._multiple && !showDropdownNext) {
-          this._selectedIndex =
-            this._activeIndex > -1
-              ? this._filteredOptions[this._activeIndex].index
-              : -1;
+          this._selectedIndex = this._activeIndex > -1 ? this._activeIndex : -1;
         }
 
         if (!this._multiple && showDropdownNext) {
@@ -621,7 +616,7 @@ export class VscodeSelectBase extends VscElement {
         );
 
         if (nextSelectable > -1) {
-          this._activeIndex = nextSelectable;
+          this._activeIndex = currentOptions[nextSelectable].index;
           this._adjustOptionListScrollPos('down', nextSelectable);
         }
       }
