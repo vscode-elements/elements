@@ -883,8 +883,11 @@ describe('vscode-single-select', () => {
 
     //#region  keyboard interactions
     //#region textbox
-    it("when ESC key is pressed, closes the listbox if it is displayed");
-    it("when the ESC key is pressed, clears the textbox if the listbox is not displayed");
+    it('when ESC key is pressed, closes the listbox if it is displayed');
+    it(
+      'when the ESC key is pressed, clears the textbox if the listbox is not displayed'
+    );
+    it('when the ArrowDown key is pressed selects the next option in a filtered list');
     //#endregion
     //#endregion
   });
