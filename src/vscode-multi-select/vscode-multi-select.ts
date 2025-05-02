@@ -235,6 +235,28 @@ export class VscodeMultiSelect
     }
   }
 
+  private _toggleActiveOptionSelection() {
+    if (this._activeIndex < 0) {
+      return;
+    }
+
+    const opts = this.combobox ? this._filteredOptions : this._options;
+    const selectedOption = this._options[this._activeIndex];
+    const nextSelectedIndexes: number[] = [];
+
+    this._options[selectedOption.index].selected = !selectedOption.selected;
+
+    opts.forEach(({index}) => {
+      const {selected} = this._options[index];
+
+      if (selected) {
+        nextSelectedIndexes.push(index);
+      }
+    });
+
+    this._selectedIndexes = nextSelectedIndexes;
+  }
+
   private _setFormValue() {
     const fd = new FormData();
 
@@ -327,6 +349,19 @@ export class VscodeMultiSelect
     this._manageRequired();
     this._dispatchChangeEvent();
   };
+
+  protected override _onEnterKeyDown(ev: KeyboardEvent): void {
+    super._onEnterKeyDown(ev);
+
+    if (!this.open) {
+      this._filterPattern = '';
+      this._toggleDropdown(true);
+    } else {
+      this._toggleActiveOptionSelection();
+    }
+
+    // TODO: dispatch change + set value
+  }
 
   private _onMultiAcceptClick(): void {
     this._toggleDropdown(false);

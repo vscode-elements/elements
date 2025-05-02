@@ -448,65 +448,12 @@ export class VscodeSelectBase extends VscElement {
     if (clickedOnAcceptButton) {
       return;
     }
-
-    const showDropdownNext = !this.open;
-
-    this._toggleDropdown(showDropdownNext);
-
-    if (
-      !this._multiple &&
-      !showDropdownNext &&
-      this._selectedIndex !== this._activeIndex
-    ) {
-      this._selectedIndex = this._activeIndex > -1 ? this._activeIndex : -1;
-      this._value =
-        this._selectedIndex > -1
-          ? this._options[this._selectedIndex].value
-          : '';
-      this._dispatchChangeEvent();
-    }
-
-    if (this.combobox) {
-      if (this._isPlaceholderOptionActive) {
-        this._createAndSelectSuggestedOption();
-      } else {
-        if (!this._multiple && !showDropdownNext) {
-          this._selectedIndex = this._activeIndex > -1 ? this._activeIndex : -1;
-        }
-
-        if (!this._multiple && showDropdownNext) {
-          this._scrollActiveElementToTop();
-        }
-      }
-    }
-
-    if (this._multiple && showDropdownNext) {
-      this._activeIndex = 0;
-    }
   }
 
   private _onSpaceKeyDown() {
     if (!this.open) {
       this._toggleDropdown(true);
       return;
-    }
-
-    if (this.open && this._multiple && this._activeIndex > -1) {
-      const opts = this.combobox ? this._filteredOptions : this._options;
-      const selectedOption = opts[this._activeIndex];
-      const nextSelectedIndexes: number[] = [];
-
-      this._options[selectedOption.index].selected = !selectedOption.selected;
-
-      opts.forEach(({index}) => {
-        const {selected} = this._options[index];
-
-        if (selected) {
-          nextSelectedIndexes.push(index);
-        }
-      });
-
-      this._selectedIndexes = nextSelectedIndexes;
     }
   }
 
@@ -587,7 +534,6 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _onArrowDownKeyDown(): void {
-    console.log(this);
     let numOpts = this.combobox
       ? this._filteredOptions.length
       : this._options.length;
@@ -689,6 +635,12 @@ export class VscodeSelectBase extends VscElement {
   protected _onComboboxInputClick(): void {
     this._isBeingFiltered = this._filterPattern !== '';
     this._toggleDropdown(true);
+  }
+
+  protected _onComboboxInputSpaceKeyDown(ev: KeyboardEvent) {
+    if (ev.key === ' ') {
+      ev.stopPropagation();
+    }
   }
 
   protected _onOptionClick(_ev: MouseEvent) {
@@ -855,6 +807,7 @@ export class VscodeSelectBase extends VscElement {
           @blur=${this._onComboboxInputBlur}
           @input=${this._onComboboxInputInput}
           @click=${this._onComboboxInputClick}
+          @keydown=${this._onComboboxInputSpaceKeyDown}
         >
         <button
           aria-label="Open the list of options"
