@@ -364,6 +364,7 @@ export class VscodeSelectBase extends VscElement {
 
   protected async _createAndSelectSuggestedOption() {}
 
+  //#region event handlers
   protected _onFaceClick(): void {
     this._toggleDropdown(!this.open);
   }
@@ -647,6 +648,7 @@ export class VscodeSelectBase extends VscElement {
     this._isBeingFiltered = false;
     return;
   }
+  //#endregion
 
   //#region render functions
   protected _renderOptions(): TemplateResult | TemplateResult[] {
@@ -791,12 +793,13 @@ export class VscodeSelectBase extends VscElement {
         ${this._multiple ? this._renderMultiSelectLabel() : nothing}
         <input
           aria-activedescendant=${activeDescendant}
-          aria-label=${ifDefined(this.label)}
           aria-autocomplete="list"
           aria-controls=${this._multiple
             ? 'multi-select-listbox'
             : 'single-select-listbox'}
           aria-expanded=${this.open ? 'true' : 'false'}
+          aria-haspopup="listbox"
+          aria-label=${ifDefined(this.label)}
           class="combobox-input"
           role="combobox"
           spellcheck="false"

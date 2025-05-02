@@ -258,7 +258,6 @@ describe('vscode-single-select', () => {
 
     //#region keyboard interactions
 
-
     it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
       const el = (await fixture(html`
         <vscode-single-select>
@@ -831,54 +830,13 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      // selects the first option
+      el.value = 'Ipsum';
+      await el.updateComplete;
+
       await clickOnElement(el);
-      let options = el.shadowRoot?.querySelector('.options');
-      const firstOption = options?.querySelector('li')!;
-      await clickOnElement(firstOption);
+      const activeOption = el.shadowRoot?.querySelector('.option.active');
 
-      expect(el.value).to.eq('Lorem');
-
-      // re-opens the dropdown, selects the second option with keyboard
-      await clickOnElement(el);
-      await sendKeys({down: 'ArrowDown'});
-
-      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(
-        `
-        <ul class="options">
-          <li class="option">Lorem</li>
-          <li class="active option">Ipsum</li>
-          <li class="option">Dolor</li>
-        </ul>
-      `,
-        {
-          ignoreAttributes: [
-            'aria-selected',
-            'data-index',
-            'data-filtered-index',
-            'id',
-            'role',
-          ],
-        }
-      );
-
-      // clicks outside, closes the dropdown
-      await sendMouse({type: 'click', position: [500, 500]});
-      // opens the dropdown again
-      await clickOnElement(el);
-
-      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(
-        `
-        <ul class="options">
-          <li class="active option">Lorem</li>
-          <li class="option">Ipsum</li>
-          <li class="option">Dolor</li>
-        </ul>
-      `,
-        {
-          ignoreAttributes: ['data-index', 'data-filtered-index'],
-        }
-      );
+      expect(activeOption).lightDom.to.eq('Ipsum');
     });
 
     //#region  keyboard interactions
@@ -887,7 +845,25 @@ describe('vscode-single-select', () => {
     it(
       'when the ESC key is pressed, clears the textbox if the listbox is not displayed'
     );
-    it('when the ArrowDown key is pressed selects the next option in a filtered list');
+
+    it('when the ArrowDown key is pressed selects the next option in a filtered list', async () => {
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select combobox>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>`
+      );
+
+      el.focus();
+      await sendKeys({type: 'l'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'ArrowDown'});
+
+      const activeOption = el.shadowRoot?.querySelector('.option.active');
+
+      expect(activeOption).lightDom.to.eq('Do<b>l</b>or');
+    });
     //#endregion
     //#endregion
   });
@@ -1093,7 +1069,7 @@ describe('vscode-single-select', () => {
     });
 
     it('skips disabled options', async () => {
-      const el = await fixture(html`
+      const el = await fixture<VscodeSingleSelect>(html`
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
           <vscode-option disabled>Ipsum</vscode-option>
@@ -1102,13 +1078,13 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `);
 
-      await clickOnElement(el);
-      await clickOnElement(el);
-      await sendKeys({down: 'ArrowDown'});
+      el.focus();
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'ArrowDown'});
 
-      const text = el.shadowRoot?.querySelector('.text');
+      const activeOption = el.shadowRoot?.querySelector('.option.active');
 
-      expect(text).lightDom.to.eq('Sit');
+      expect(activeOption).lightDom.to.eq('Sit');
     });
 
     it('skips disabled options when dropdown is open', async () => {
@@ -1235,7 +1211,9 @@ describe('vscode-single-select', () => {
   });
 
   describe('closed dropdown', () => {
-    it('opens the dropdown if it is not already displayed when DownArrow is pressed');
+    it(
+      'opens the dropdown if it is not already displayed when DownArrow is pressed'
+    );
     it('opens the dropdown when Alt + DownArrow are pressed');
     it('Up Arrow is pressed');
     it('Enter is pressed');
