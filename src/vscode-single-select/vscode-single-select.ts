@@ -340,10 +340,43 @@ export class VscodeSingleSelect
 
   protected override _onEnterKeyDown(ev: KeyboardEvent): void {
     super._onEnterKeyDown(ev);
+    let valueChanged = false;
 
-    this.updateInputValue();
-    this._internals.setFormValue(this._value);
-    this._manageRequired();
+    if (this.combobox) {
+      if (this.open) {
+        if (this._isPlaceholderOptionActive) {
+          this._createAndSelectSuggestedOption();
+        } else {
+          valueChanged = this._activeIndex !== this._selectedIndex;
+          this._selectedIndex = this._activeIndex;
+          this._toggleDropdown(false);
+        }
+      } else {
+        this._toggleDropdown(true);
+        this._scrollActiveElementToTop();
+      }
+    } else {
+      if (this.open) {
+        valueChanged = this._activeIndex !== this._selectedIndex;
+        this._selectedIndex = this._activeIndex;
+        this._toggleDropdown(false);
+      } else {
+        this._toggleDropdown(true);
+        this._scrollActiveElementToTop();
+      }
+    }
+
+    if (valueChanged) {
+      this._value =
+        this._selectedIndex > -1
+          ? this._options[this._selectedIndex].value
+          : '';
+      this._dispatchChangeEvent();
+
+      this.updateInputValue();
+      this._internals.setFormValue(this._value);
+      this._manageRequired();
+    }
   }
 
   protected override _onOptionClick(ev: MouseEvent) {
