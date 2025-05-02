@@ -53,7 +53,7 @@ export class VscodeMultiSelect
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: false,
+    delegatesFocus: true,
   };
 
   static formAssociated = true;
@@ -286,6 +286,7 @@ export class VscodeMultiSelect
     this._isPlaceholderOptionActive = false;
   }
 
+  //#region event handlers
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
@@ -388,6 +389,7 @@ export class VscodeMultiSelect
     this._setFormValue();
     this._manageRequired();
   }
+  //#endregion
 
   //#region render functions
   private _renderLabel() {
