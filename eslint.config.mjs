@@ -38,6 +38,7 @@ export default [
     },
 
     rules: {
+      'no-console': 'error',
       'no-unexpected-multiline': 'off',
       '@typescript-eslint/indent': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',

@@ -2,13 +2,18 @@ import {html, LitElement, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {customElement} from '../includes/VscElement.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
-import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
+import {
+  OPT_HEIGHT,
+  VISIBLE_OPTS,
+  VscodeSelectBase,
+} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
 import {
   findNextSelectableOptionIndex,
   findPrevSelectableOptionIndex,
 } from '../includes/vscode-select/helpers.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 export type VscSingleSelectCreateOptionEvent = CustomEvent<{value: string}>;
 
@@ -76,10 +81,6 @@ export class VscodeSingleSelect
 
   @property({attribute: 'default-value'})
   defaultValue = '';
-
-  /** @internal */
-  @property({type: String, attribute: true, reflect: true})
-  override role = 'listbox';
 
   @property({reflect: true})
   name: string | undefined = undefined;
@@ -236,6 +237,44 @@ export class VscodeSingleSelect
     this._isPlaceholderOptionActive = false;
   }
 
+  protected override _dispatchChangeEvent(): void {
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {
+          selectedIndex: this._selectedIndex,
+          value: this._value,
+        },
+      })
+    );
+
+    super._dispatchChangeEvent();
+  }
+
+  protected override _setStateFromSlottedElements(): void {
+    super._setStateFromSlottedElements();
+
+    if (!this.combobox && this._selectedIndexes.length === 0) {
+      this._selectedIndex = this._options.length > 0 ? 0 : -1;
+    }
+  }
+
+  protected override _toggleDropdown(visible: boolean): void {
+    super._toggleDropdown(visible);
+
+    if (visible) {
+      this._activeIndex = this._selectedIndex;
+    }
+
+    if (visible && !this.combobox) {
+      this._activeIndex = this._selectedIndex;
+
+      if (this._activeIndex > VISIBLE_OPTS - 1) {
+        this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
+      }
+    }
+  }
+
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
@@ -274,6 +313,7 @@ export class VscodeSingleSelect
     this._selectedIndex = prevIndex;
     this._activeIndex = prevIndex;
     this._value = prevIndex > -1 ? this._options[prevIndex].value : '';
+
     this._internals.setFormValue(this._value);
     this._manageRequired();
     this._dispatchChangeEvent();
@@ -300,10 +340,43 @@ export class VscodeSingleSelect
 
   protected override _onEnterKeyDown(ev: KeyboardEvent): void {
     super._onEnterKeyDown(ev);
+    let valueChanged = false;
 
-    this.updateInputValue();
-    this._internals.setFormValue(this._value);
-    this._manageRequired();
+    if (this.combobox) {
+      if (this.open) {
+        if (this._isPlaceholderOptionActive) {
+          this._createAndSelectSuggestedOption();
+        } else {
+          valueChanged = this._activeIndex !== this._selectedIndex;
+          this._selectedIndex = this._activeIndex;
+          this._toggleDropdown(false);
+        }
+      } else {
+        this._toggleDropdown(true);
+        this._scrollActiveElementToTop();
+      }
+    } else {
+      if (this.open) {
+        valueChanged = this._activeIndex !== this._selectedIndex;
+        this._selectedIndex = this._activeIndex;
+        this._toggleDropdown(false);
+      } else {
+        this._toggleDropdown(true);
+        this._scrollActiveElementToTop();
+      }
+    }
+
+    if (valueChanged) {
+      this._value =
+        this._selectedIndex > -1
+          ? this._options[this._selectedIndex].value
+          : '';
+      this._dispatchChangeEvent();
+
+      this.updateInputValue();
+      this._internals.setFormValue(this._value);
+      this._manageRequired();
+    }
   }
 
   protected override _onOptionClick(ev: MouseEvent) {
@@ -353,19 +426,39 @@ export class VscodeSingleSelect
     }
   }
 
+  //#region render functions
   protected override _renderSelectFace(): TemplateResult {
     const label = this._options[this._selectedIndex]?.label ?? '';
+    const activeDescendant =
+      this._activeIndex > -1 ? `op-${this._activeIndex}` : '';
 
     return html`
       <div
+        aria-activedescendant=${activeDescendant}
+        aria-controls="select-listbox"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-haspopup="listbox"
+        aria-label=${ifDefined(this.label)}
         class="select-face face"
         @click=${this._onFaceClick}
-        tabindex=${this.tabIndex > -1 ? 0 : -1}
+        role="combobox"
+        tabindex="0"
       >
         <span class="text">${label}</span> ${chevronDownIcon}
       </div>
     `;
   }
+
+  override render(): TemplateResult {
+    return html`
+      <div class="single-select">
+        <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
+        ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+        ${this._renderDropdown()}
+      </div>
+    `;
+  }
+  //#endregion
 }
 
 declare global {

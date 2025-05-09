@@ -1,5 +1,5 @@
 import {html, TemplateResult} from 'lit';
-import {InternalOption, SearchMethod} from './types.js';
+import {InternalOption, FilterMethod} from './types.js';
 
 export type SearchResult = {
   match: boolean;
@@ -112,8 +112,9 @@ export const fuzzySearch = (subject: string, pattern: string): SearchResult => {
 export const filterOptionsByPattern = (
   list: InternalOption[],
   pattern: string,
-  method: SearchMethod
+  method: FilterMethod
 ): InternalOption[] => {
+  console.log('filter options by patern');
   const filtered: InternalOption[] = [];
 
   list.forEach((op) => {
@@ -203,6 +204,8 @@ export function findNextSelectableOptionIndex(
   fromIndex: number
 ) {
   let result = 0;
+
+  console.log(options);
 
   if (fromIndex < 0 || !options[fromIndex] || !options[fromIndex + 1]) {
     return result;
