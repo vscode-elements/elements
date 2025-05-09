@@ -10,7 +10,7 @@ import {repeat} from 'lit/directives/repeat.js';
 import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
-import type {InternalOption, Option, SearchMethod} from './types.js';
+import type {InternalOption, Option, FilterMethod} from './types.js';
 import {
   filterOptionsByPattern,
   findNextSelectableOptionIndex,
@@ -20,6 +20,7 @@ import {
 import {VscElement} from '../VscElement.js';
 import {chevronDownIcon} from './template-elements.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
+import {OptionListController} from './OptionListCOntroller.js';
 
 export const VISIBLE_OPTS = 10;
 export const OPT_HEIGHT = 22;
@@ -85,15 +86,15 @@ export class VscodeSelectBase extends VscElement {
    */
   @property()
   set filter(val: 'contains' | 'fuzzy' | 'startsWith' | 'startsWithPerTerm') {
-    const validValues: SearchMethod[] = [
+    const validValues: FilterMethod[] = [
       'contains',
       'fuzzy',
       'startsWith',
       'startsWithPerTerm',
     ];
 
-    if (validValues.includes(val as SearchMethod)) {
-      this._filter = val as SearchMethod;
+    if (validValues.includes(val as FilterMethod)) {
+      this._filter = val as FilterMethod;
     } else {
       this._filter = 'fuzzy';
       console.warn(
@@ -154,6 +155,8 @@ export class VscodeSelectBase extends VscElement {
   })
   private _assignedOptions!: VscodeOption[];
 
+  private _optionListController = new OptionListController(this);
+
   constructor() {
     super();
     this.addEventListener('vsc-option-state-change', (ev) => {
@@ -197,7 +200,7 @@ export class VscodeSelectBase extends VscElement {
   protected _currentDescription = '';
 
   @state()
-  protected _filter: SearchMethod = 'fuzzy';
+  protected _filter: FilterMethod = 'fuzzy';
 
   @state()
   protected get _filteredOptions(): InternalOption[] {
@@ -210,6 +213,22 @@ export class VscodeSelectBase extends VscElement {
       this._filterPattern,
       this._filter
     );
+  }
+
+  protected get _visibleOptions(): InternalOption[] {
+    if (!this.combobox || this._filterPattern === '') {
+      return this._options;
+    }
+
+    if (!this._memoizedFilteredOptions) {
+      this._memoizedFilteredOptions = filterOptionsByPattern(
+        this._options,
+        this._filterPattern,
+        this._filter
+      );
+    }
+
+    return this._memoizedFilteredOptions;
   }
 
   @state()
@@ -252,6 +271,7 @@ export class VscodeSelectBase extends VscElement {
   private _isHoverForbidden = false;
   private _disabled = false;
   private _originalTabIndex: number | undefined = undefined;
+  private _memoizedFilteredOptions: InternalOption[] | null = null;
 
   private _setAutoFocus() {
     if (this.hasAttribute('autofocus')) {
@@ -561,6 +581,8 @@ export class VscodeSelectBase extends VscElement {
           currentOptions,
           this._activeIndex
         );
+
+        console.log(currentOptions, nextSelectable);
 
         if (nextSelectable > -1) {
           this._activeIndex = currentOptions[nextSelectable].index;
