@@ -102,6 +102,7 @@ const styles: CSSResultGroup = [
       justify-content: center;
       position: relative;
       width: 100%;
+      height: 100%;
     }
 
     slot {
@@ -114,6 +115,10 @@ const styles: CSSResultGroup = [
       color: inherit;
       display: block;
       margin-right: 3px;
+    }
+
+    :host([icon-only]) .icon {
+      margin-right: 0px;
     }
 
     .icon-after {
