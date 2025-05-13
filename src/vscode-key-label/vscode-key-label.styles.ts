@@ -6,10 +6,14 @@ const styles: CSSResultGroup = [
   css`
     :host {
       display: inline-block;
-      margin: 0 2px;
     }
 
-    span {
+    .wrapper {
+      align-items: center;
+      display: inline-flex;
+    }
+
+    .key {
       background-color: var(--vscode-keybindingLabel-background);
       border-bottom-color: var(--vscode-keybindingLabel-bottomBorder);
       border-top-color: var(--vscode-keybindingLabel-border);
@@ -24,6 +28,13 @@ const styles: CSSResultGroup = [
       font-size: 11px;
       line-height: 10px;
       padding: 3px 5px;
+      vertical-align: middle;
+    }
+
+    .before,
+    .after {
+      line-height: 18px;
+      margin: 0 2px;
       vertical-align: middle;
     }
   `,
