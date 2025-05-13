@@ -91,6 +91,10 @@ const styles: CSSResultGroup = [
       margin-left: 0;
     }
 
+    ::slotted(*:last-child) {
+      margin-right: 0;
+    }
+
     ::slotted(vscode-icon) {
       color: inherit;
     }
