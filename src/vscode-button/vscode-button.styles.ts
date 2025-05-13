@@ -102,6 +102,7 @@ const styles: CSSResultGroup = [
       justify-content: center;
       position: relative;
       width: 100%;
+      height: 100%;
     }
 
     slot {
@@ -110,15 +111,16 @@ const styles: CSSResultGroup = [
       height: 100%;
     }
 
-    .icon {
+    .icon, .icon-after {
       color: inherit;
       display: block;
+    }
+
+    :host(:not(:empty)) .icon {
       margin-right: 3px;
     }
 
-    .icon-after {
-      color: inherit;
-      display: block;
+    :host(:not(:empty)) .icon-after, :host([icon]) .icon-after {
       margin-left: 3px;
     }
   `,
