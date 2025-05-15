@@ -1,9 +1,6 @@
 import {css, CSSResultGroup} from 'lit';
 
 import defaultStyles from '../includes/default.styles.js';
-import {getDefaultFontStack} from '../includes/helpers.js';
-
-const defaultFontStack = getDefaultFontStack();
 
 const styles: CSSResultGroup = [
   defaultStyles,
