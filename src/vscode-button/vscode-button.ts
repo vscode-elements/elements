@@ -267,6 +267,7 @@ export class VscodeButton extends VscElement {
         <slot></slot>
         ${iconAfterElem}
       </span>
+      <div class="divider"><div></div></div>
     `;
   }
 }

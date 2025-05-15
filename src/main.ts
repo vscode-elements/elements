@@ -19,7 +19,6 @@ export {VscodeRadioGroup} from './vscode-radio-group/index.js';
 export {VscodeSingleSelect} from './vscode-single-select/index.js';
 export {VscodeScrollable} from './vscode-scrollable/index.js';
 export {VscodeSplitButton} from './vscode-split-button/index.js';
-export {VscodeSplitButtonDivider} from './vscode-split-button-divider/index.js';
 export {VscodeSplitLayout} from './vscode-split-layout/index.js';
 export {VscodeTabHeader} from './vscode-tab-header/index.js';
 export {VscodeTabPanel} from './vscode-tab-panel/index.js';
