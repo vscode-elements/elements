@@ -19,9 +19,15 @@ const styles: CSSResultGroup = [
     }
 
     ::slotted(vscode-button:not(:last-child)) {
+      --divider-display: block;
+
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       border-right-width: 0;
+    }
+
+    ::slotted(vscode-button:focus) {
+      z-index: 1;
     }
   `,
 ];
