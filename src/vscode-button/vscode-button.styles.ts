@@ -15,19 +15,15 @@ const styles: CSSResultGroup = [
       border-width: 1px;
       color: var(--vscode-button-foreground, #ffffff);
       cursor: pointer;
-      display: inline-block;
+      display: inline-flex;
       font-family: var(--vscode-font-family, ${defaultFontStack});
       font-size: var(--vscode-font-size, 13px);
       font-weight: var(--vscode-font-weight, normal);
       line-height: 22px;
       overflow: hidden;
-      padding: 1px 13px;
+      padding: 0;
       user-select: none;
       white-space: nowrap;
-    }
-
-    :host(:empty) {
-      padding: 1px 5px;
     }
 
     :host([secondary]) {
@@ -111,6 +107,11 @@ const styles: CSSResultGroup = [
       position: relative;
       width: 100%;
       height: 100%;
+      padding: 1px 13px;
+    }
+
+    :host(:empty) .wrapper {
+      padding: 1px 5px;
     }
 
     slot {
@@ -130,6 +131,23 @@ const styles: CSSResultGroup = [
 
     :host(:not(:empty)) .icon-after, :host([icon]) .icon-after {
       margin-left: 3px;
+    }
+
+    .divider {
+      display: var(--divider-display, none);
+      background-color: var(--vscode-button-background, #0078d4);
+      padding: 4px 0;
+      box-sizing: border-box;
+    }
+
+    :host([secondary]) .divider {
+      background-color: var(--vscode-button-secondaryBackground, #313131);
+    }
+
+    .divider > div {
+      background-color: var(--vscode-button-separator);
+      width: 1px;
+      margin: 0;
     }
   `,
 ];
