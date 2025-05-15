@@ -26,6 +26,10 @@ const styles: CSSResultGroup = [
       white-space: nowrap;
     }
 
+    :host(:empty) {
+      padding: 1px 5px;
+    }
+
     :host([secondary]) {
       color: var(--vscode-button-secondaryForeground, #cccccc);
       background-color: var(--vscode-button-secondaryBackground, #313131);
@@ -91,6 +95,10 @@ const styles: CSSResultGroup = [
       margin-left: 0;
     }
 
+    ::slotted(*:last-child) {
+      margin-right: 0;
+    }
+
     ::slotted(vscode-icon) {
       color: inherit;
     }
@@ -102,6 +110,7 @@ const styles: CSSResultGroup = [
       justify-content: center;
       position: relative;
       width: 100%;
+      height: 100%;
     }
 
     slot {
@@ -110,15 +119,16 @@ const styles: CSSResultGroup = [
       height: 100%;
     }
 
-    .icon {
+    .icon, .icon-after {
       color: inherit;
       display: block;
+    }
+
+    :host(:not(:empty)) .icon {
       margin-right: 3px;
     }
 
-    .icon-after {
-      color: inherit;
-      display: block;
+    :host(:not(:empty)) .icon-after, :host([icon]) .icon-after {
       margin-left: 3px;
     }
   `,
