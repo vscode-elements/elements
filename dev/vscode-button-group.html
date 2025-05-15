@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;vscode-button-group&gt; Demo</title>
+    <link
+      rel="stylesheet"
+      href="../node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="../dist/vscode-button/index.js"></script>
+    <script type="module" src="../dist/vscode-button-group/index.js"></script>
+  </head>
+
+  <body class="vscode-light">
+    <main>
+      <h2>Basic example</h2>
+
+      <vscode-demo>
+        <vscode-button-group>
+          <vscode-button secondary id="button-1">Hello World</vscode-button>
+          <vscode-button
+            secondary
+            icon="chevron-down"
+            id="button-2"
+          ></vscode-button>
+        </vscode-button-group>
+
+        <vscode-button-group>
+          <vscode-button secondary>Left</vscode-button>
+          <vscode-button secondary icon="arrow-swap"></vscode-button>
+          <vscode-button secondary>Right</vscode-button>
+        </vscode-button-group>
+
+        <vscode-button-group>
+          <vscode-button>Primary</vscode-button>
+          <vscode-button secondary>Secondary</vscode-button>
+        </vscode-button-group>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
