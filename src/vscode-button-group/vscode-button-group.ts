@@ -1,12 +1,12 @@
 import {html, TemplateResult} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {VscElement} from '../includes/VscElement.js';
-import styles from './vscode-split-button.styles.js';
+import styles from './vscode-button-group.styles.js';
 
 /**
  * Shows a split button, including several components in a single button. Commonly used to show a button with a dropdown to the right.
  *
- * @tag vscode-split-button
+ * @tag vscode-button-group
  *
  * @cssprop [--vscode-button-background=#0078d4]
  * @cssprop [--vscode-button-foreground=#ffffff]
@@ -20,8 +20,8 @@ import styles from './vscode-split-button.styles.js';
  * @cssprop [--vscode-button-secondaryHoverBackground=#3c3c3c]
  * @cssprop [--vscode-focusBorder=#0078d4]
  */
-@customElement('vscode-split-button')
-export class VscodeSplitButton extends VscElement {
+@customElement('vscode-button-group')
+export class VscodeButtonGroup extends VscElement {
   static override styles = styles;
 
   override render(): TemplateResult {
@@ -31,6 +31,6 @@ export class VscodeSplitButton extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-split-button': VscodeSplitButton;
+    'vscode-button-group': VscodeButtonGroup;
   }
 }

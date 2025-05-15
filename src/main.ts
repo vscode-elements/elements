@@ -1,5 +1,6 @@
 export {VscodeBadge} from './vscode-badge/index.js';
 export {VscodeButton} from './vscode-button/index.js';
+export {VscodeButtonGroup} from './vscode-button-group/index.js';
 export {VscodeCheckbox} from './vscode-checkbox/index.js';
 export {VscodeCheckboxGroup} from './vscode-checkbox-group/index.js';
 export {VscodeCollapsible} from './vscode-collapsible/index.js';
@@ -18,7 +19,6 @@ export {VscodeRadio} from './vscode-radio/index.js';
 export {VscodeRadioGroup} from './vscode-radio-group/index.js';
 export {VscodeSingleSelect} from './vscode-single-select/index.js';
 export {VscodeScrollable} from './vscode-scrollable/index.js';
-export {VscodeSplitButton} from './vscode-split-button/index.js';
 export {VscodeSplitLayout} from './vscode-split-layout/index.js';
 export {VscodeTabHeader} from './vscode-tab-header/index.js';
 export {VscodeTabPanel} from './vscode-tab-panel/index.js';
