@@ -147,7 +147,10 @@ const styles: CSSResultGroup = [
     }
 
     .divider > div {
-      background-color: var(--vscode-button-separator, rgba(255, 255, 255, 0.4));
+      background-color: var(
+        --vscode-button-separator,
+        rgba(255, 255, 255, 0.4)
+      );
       height: 100%;
       width: 1px;
       margin: 0;
