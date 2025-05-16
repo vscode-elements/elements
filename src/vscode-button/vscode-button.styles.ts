@@ -120,7 +120,8 @@ const styles: CSSResultGroup = [
       height: 100%;
     }
 
-    .icon, .icon-after {
+    .icon,
+    .icon-after {
       color: inherit;
       display: block;
     }
@@ -129,7 +130,8 @@ const styles: CSSResultGroup = [
       margin-right: 3px;
     }
 
-    :host(:not(:empty)) .icon-after, :host([icon]) .icon-after {
+    :host(:not(:empty)) .icon-after,
+    :host([icon]) .icon-after {
       margin-left: 3px;
     }
 
