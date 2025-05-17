@@ -98,6 +98,9 @@ export class VscodeButton extends VscElement {
   @property({type: String, reflect: true})
   name: string | undefined = undefined;
 
+  @property({type: Boolean, reflect: true, attribute: 'icon-only'})
+  iconOnly = false;
+
   @property({reflect: true})
   type: 'submit' | 'reset' | 'button' = 'button';
 
@@ -241,6 +244,7 @@ export class VscodeButton extends VscElement {
       wrapper: true,
       'has-icon-before': hasIcon,
       'has-icon-after': hasIconAfter,
+      'icon-only': this.iconOnly,
     };
 
     const iconElem = hasIcon
