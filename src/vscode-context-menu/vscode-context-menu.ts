@@ -9,8 +9,7 @@ import '../vscode-context-menu-item/index.js';
 import styles from './vscode-context-menu.styles.js';
 
 interface MenuItemData {
-  // TODO: make optional
-  label: string;
+  label?: string;
   keybinding?: string;
   value?: string;
   separator?: boolean;
