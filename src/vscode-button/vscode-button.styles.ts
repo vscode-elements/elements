@@ -140,13 +140,23 @@ const styles: CSSResultGroup = [
 
     .divider {
       display: var(--divider-display, none);
-      background-color: var(--vscode-button-background, #0078d4);
+      background-color: transparent;
       padding: 4px 0;
       box-sizing: border-box;
     }
 
+    :host(:hover) .divider,
+    :host(:focus-visible) .divider {
+      background-color: var(--vscode-button-hoverBackground, #026ec1);
+    }
+
     :host([secondary]) .divider {
       background-color: var(--vscode-button-secondaryBackground, #313131);
+    }
+
+    :host([secondary]:hover) .divider,
+    :host([secondary]:focus-visible) .divider {
+      background-color: var(--vscode-button-secondaryHoverBackground, #3c3c3c);
     }
 
     .divider > div {
