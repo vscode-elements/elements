@@ -101,7 +101,11 @@ Same as above, but it also generates coverage.
 
 ### test:watch
 
-Watches the transpiled test files and runs them if any changes are detected. This script does not compile the test files; the `build:watch` script needs to be run in a separate terminal. However, it can also be run in parallel with the `start` script instead of build:watch.
+Watches file changes and runs the tests automatically when any modifications are detected.
+
+### wtr:watch
+
+Starts the web-test-runner in watch mode without rebuilding any files. It can be run in a separate terminal during development, allowing you to catch new errors as you code.
 
 ### checksize
 
