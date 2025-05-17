@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;vscode-button-group&gt; Demo</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <style>
+      .dropdown-menu {
+        display: inline-block;
+        position: relative;
+      }
+
+      .dropdown-menu vscode-context-menu {
+        left: 100%;
+        margin-left: -26px;
+        margin-top: 1px;
+        position: absolute;
+        top: 100%;
+      }
+    </style>
+  </head>
+
+  <body class="vscode-light">
+    <main>
+      <h2>Basic example</h2>
+
+      <vscode-demo>
+        <div class="dropdown-menu">
+          <vscode-button-group>
+            <vscode-button secondary id="button-1" icon="check">Hello World</vscode-button>
+            <vscode-button
+              secondary
+              icon="chevron-down"
+              id="toggle-menu-button"
+            ></vscode-button>
+          </vscode-button-group>
+          <vscode-context-menu
+            id="context-menu"
+            class="context-menu"
+          ></vscode-context-menu>
+        </div>
+        <script type="module">
+          document.addEventListener('DOMContentLoaded', () => {
+            const menu = document.querySelector('#context-menu');
+            const button = document.querySelector('#toggle-menu-button');
+
+            menu.data = [
+              {
+                label: 'Command palette...',
+                keybinding: 'Ctrl+Shift+A',
+                value: 'menuitem1',
+              },
+              {
+                separator: true,
+              },
+              {
+                label: 'Settings',
+                keybinding: 'Ctrl+Comma',
+                value: 'menuitem2',
+              },
+              {
+                label: 'Extensions',
+                keybinding: 'Ctrl+Shift+X',
+                value: 'menuitem3',
+              },
+            ];
+
+            button.addEventListener('click', () => {
+              console.log(menu.show);
+              menu.show = !menu.show;
+            });
+
+            menu.addEventListener('vsc-select', (event) => {
+              console.log(event);
+            });
+          });
+
+          button.addEventListener('click', () => {
+            menu.show = !menu.show;
+          });
+        </script>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
