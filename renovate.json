@@ -5,6 +5,17 @@
     {
       "matchPackageNames": ["@types/chai"],
       "allowedVersions": "<5"
+    },
+    {
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchPackageNames": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
     }
   ]
 }
