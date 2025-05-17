@@ -6,7 +6,7 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      display: flex;
+      display: inline-flex;
       align-items: stretch;
       padding: 0;
       border: none;
