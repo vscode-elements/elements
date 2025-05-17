@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;vscode-button-group&gt; Demo</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <style>
+      .wysiwyg-toolbar {
+        display: flex;
+        gap: 6px;
+      }
+
+      .icon-letter {
+        flex: 1;
+        font-family: sans-serif;
+        font-size: 15px;
+        height: 16px;
+        line-height: 15px;
+        vertical-align: middle;
+        text-align: center;
+        width: 16px;
+      }
+
+      .icon-letter.b {
+        font-weight: bold;
+      }
+
+      .icon-letter.i {
+        font-style: italic;
+      }
+
+      .icon-letter.u {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body class="vscode-light">
+    <main>
+      <h2>Basic example</h2>
+
+      <vscode-demo>
+        <p>
+          <vscode-button-group>
+            <vscode-button secondary id="button-1">Hello World</vscode-button>
+            <vscode-button
+              secondary
+              icon="chevron-down"
+              id="button-2"
+            ></vscode-button>
+          </vscode-button-group>
+        </p>
+
+        <p>
+          <vscode-button-group>
+            <vscode-button secondary>Left</vscode-button>
+            <vscode-button secondary icon="arrow-swap"></vscode-button>
+            <vscode-button secondary>Right</vscode-button>
+          </vscode-button-group>
+        </p>
+
+        <p>
+          <vscode-button-group>
+            <vscode-button>Left</vscode-button>
+            <vscode-button icon="arrow-swap"></vscode-button>
+            <vscode-button>Right</vscode-button>
+          </vscode-button-group>
+        </p>
+
+        <p>
+          <vscode-button-group>
+            <vscode-button>Primary</vscode-button>
+            <vscode-button secondary>Secondary</vscode-button>
+          </vscode-button-group>
+        </p>
+
+        <div class="wysiwyg-toolbar">
+          <vscode-button-group>
+            <vscode-button secondary title="Align left" icon-only
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 3.5C1 3.22386 1.22386 3 1.5 3H10.5C10.7761 3 11 3.22386 11 3.5C11 3.77614 10.7761 4 10.5 4H1.5C1.22386 4 1 3.77614 1 3.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H14.5C14.7761 7 15 7.22386 15 7.5C15 7.77614 14.7761 8 14.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H6.5C6.77614 11 7 11.2239 7 11.5C7 11.7761 6.77614 12 6.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z"
+                  fill="#212121"
+                /></svg
+            ></vscode-button>
+            <vscode-button secondary title="Align center" icon-only
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3 3.5C3 3.22386 3.22386 3 3.5 3H12.5C12.7761 3 13 3.22386 13 3.5C13 3.77614 12.7761 4 12.5 4H3.5C3.22386 4 3 3.77614 3 3.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H14.5C14.7761 7 15 7.22386 15 7.5C15 7.77614 14.7761 8 14.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM5 11.5C5 11.2239 5.22386 11 5.5 11H10.5C10.7761 11 11 11.2239 11 11.5C11 11.7761 10.7761 12 10.5 12H5.5C5.22386 12 5 11.7761 5 11.5Z"
+                  fill="#212121"
+                /></svg
+            ></vscode-button>
+            <vscode-button secondary title="Align right" icon-only
+              ><svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 3.5C5 3.22386 5.22386 3 5.5 3H14.5C14.7761 3 15 3.22386 15 3.5C15 3.77614 14.7761 4 14.5 4H5.5C5.22386 4 5 3.77614 5 3.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H14.5C14.7761 7 15 7.22386 15 7.5C15 7.77614 14.7761 8 14.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM9 11.5C9 11.2239 9.22386 11 9.5 11H14.5C14.7761 11 15 11.2239 15 11.5C15 11.7761 14.7761 12 14.5 12H9.5C9.22386 12 9 11.7761 9 11.5Z"
+                  fill="#212121"
+                /></svg
+            ></vscode-button>
+            <vscode-button secondary title="Justified" icon-only
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="none"
+              >
+                <path
+                  fill="#212121"
+                  d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5Zm0 4a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5Zm0 4a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5Z"
+                />
+              </svg>
+            </vscode-button>
+          </vscode-button-group>
+          <vscode-button-group>
+            <vscode-button secondary icon-only title="Bold"
+              ><span class="icon-letter b">B</span></vscode-button
+            >
+            <vscode-button secondary icon-only title="Italic"
+              ><span class="icon-letter i">I</span></vscode-button
+            >
+            <vscode-button secondary icon-only title="Underline"
+              ><span class="icon-letter u">U</span></vscode-button
+            >
+          </vscode-button-group>
+        </div>
+      </vscode-demo>
+    </main>
+  </body>
+</html>

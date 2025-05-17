@@ -62,7 +62,7 @@ const styles: CSSResultGroup = [
       outline: none;
     }
 
-    :host(:focus) {
+    :host(:focus-visible) {
       background-color: var(--vscode-button-hoverBackground, #026ec1);
       outline: 1px solid var(--vscode-focusBorder, #0078d4);
       outline-offset: 2px;
@@ -110,7 +110,10 @@ const styles: CSSResultGroup = [
       padding: 1px 13px;
     }
 
-    :host(:empty) .wrapper {
+    :host(:empty) .wrapper,
+    :host([icon-only]) .wrapper {
+      min-height: 24px;
+      min-width: 16px;
       padding: 1px 5px;
     }
 
