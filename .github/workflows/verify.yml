@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Transpile files
+        run: npm run build:ts
+
       - name: Prettier
         run: npm run prettier
 
