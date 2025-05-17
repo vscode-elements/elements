@@ -8,7 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- Added falback styles to **SplitLayout**.
+- Added fallback styles to **SplitLayout**.
+- Added **ButtonGroup** component
+
+### Changed
+
+- The focus outline is only visible when the **Button** is focused using the keyboard. This behavior mimics the UI behavior of VSCode.
 
 ## [1.15.0] - 2025-04-08
 
