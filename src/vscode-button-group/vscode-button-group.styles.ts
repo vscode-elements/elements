@@ -10,6 +10,7 @@ const styles: CSSResultGroup = [
       align-items: stretch;
       padding: 0;
       border: none;
+      overflow: hidden;
     }
 
     ::slotted(vscode-button:not(:first-child)) {
