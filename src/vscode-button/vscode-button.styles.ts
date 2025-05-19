@@ -105,16 +105,16 @@ const styles: CSSResultGroup = [
       display: flex;
       justify-content: center;
       position: relative;
-      width: 100%;
+      width: calc(100% - 2px);
       height: 100%;
-      padding: 1px 13px;
+      padding: 1px 12px;
     }
 
     :host(:empty) .wrapper,
     :host([icon-only]) .wrapper {
       min-height: 24px;
       min-width: 16px;
-      padding: 1px 5px;
+      padding: 1px 4px;
     }
 
     slot {
