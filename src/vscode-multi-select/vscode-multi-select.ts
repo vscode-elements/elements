@@ -153,6 +153,7 @@ export class VscodeMultiSelect
 
   constructor() {
     super();
+    this._opts.multiSelect = true;
     /** @internal */
     this._multiple = true;
     this._internals = this.attachInternals();
