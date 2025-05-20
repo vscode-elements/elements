@@ -105,7 +105,7 @@ const styles: CSSResultGroup = [
       display: flex;
       justify-content: center;
       position: relative;
-      width: calc(100% - 2px);
+      width: calc(100% - 1px);
       height: 100%;
       padding: 1px 13px;
     }
