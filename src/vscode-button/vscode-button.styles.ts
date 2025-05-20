@@ -107,14 +107,14 @@ const styles: CSSResultGroup = [
       position: relative;
       width: calc(100% - 2px);
       height: 100%;
-      padding: 1px 12px;
+      padding: 1px 13px;
     }
 
     :host(:empty) .wrapper,
     :host([icon-only]) .wrapper {
       min-height: 24px;
       min-width: 16px;
-      padding: 1px 4px;
+      padding: 1px 5px;
     }
 
     slot {
