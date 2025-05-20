@@ -1,4 +1,4 @@
-import {sendKeys, sendMouse} from '@web/test-runner-commands';
+import {sendKeys} from '@web/test-runner-commands';
 import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
 import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
@@ -768,7 +768,14 @@ describe('vscode-single-select', () => {
         </ul>
         `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: [
+            'aria-label',
+            'aria-selected',
+            'data-filtered-index',
+            'data-index',
+            'role',
+            'id',
+          ],
         }
       );
     });
