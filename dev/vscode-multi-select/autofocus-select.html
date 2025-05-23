@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VSCode Elements</title>
+    <title>multi select</title>
     <link
       rel="stylesheet"
       href="/node_modules/@vscode/codicons/dist/codicon.css"
@@ -21,21 +21,25 @@
         });
       };
     </script>
+    <style>
+      vscode-single-select:focus {
+        --vscode-settings-dropdownBackground: red;
+      }
+    </style>
   </head>
 
   <body>
     <main>
       <vscode-demo>
-        <vscode-single-select label="Single Select example">
+        <vscode-multi-select label="Single Select example" autofocus>
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
-          <vscode-option>Sit</vscode-option>
-        </vscode-single-select>
+        </vscode-multi-select>
         <button type="button">focus</button>
       </vscode-demo>
       <script type="module">
-        const sl = document.querySelector('vscode-single-select');
+        const sl = document.querySelector('vscode-multi-select');
         const bt = document.querySelector('button');
 
         bt.addEventListener('click', () => {
