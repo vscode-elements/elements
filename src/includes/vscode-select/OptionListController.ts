@@ -175,11 +175,18 @@ export class OptionListController implements ReactiveController {
     this._host.requestUpdate();
   }
 
-  getOptionByValue(value: string): InternalOption | null {
+  getOptionByValue(
+    value: string,
+    includeHiddenOptions = false
+  ): InternalOption | null {
     const index = this._indexByValue.get(value) ?? -1;
 
     if (index === -1) {
       return null;
+    }
+
+    if (!includeHiddenOptions) {
+      return this._options[index].visible ? this._options[index] : null;
     }
 
     return this._options[index];
@@ -196,8 +203,8 @@ export class OptionListController implements ReactiveController {
       return this._options[0];
     }
 
-    if (!this._options[from] || !this._options[from + 1]) {
-      return this._options[this._options.length - 1];
+    if (from !== -1 && !this._options[from + 1]) {
+      return this._options[from];
     }
 
     let nextIndex = -1;
@@ -247,6 +254,17 @@ export class OptionListController implements ReactiveController {
     return prevIndex > -1 ? this._options[prevIndex] : null;
   }
 
+  activateDefault() {
+    if (this._selectedIndexes.length > 0) {
+      this._activeIndex = this._selectedIndexes[0];
+    } else {
+      const nextOp = this.getNextSelectableOption();
+      this._activeIndex = nextOp?.index ?? -1;
+    }
+
+    this._host.requestUpdate();
+  }
+
   activateNext() {
     const nextOp = this.getNextSelectableOption();
     this._activeIndex = nextOp?.index ?? -1;
@@ -254,7 +272,7 @@ export class OptionListController implements ReactiveController {
     return nextOp;
   }
 
-  selectPrev() {
+  activatePrev() {
     const prevOp = this.getPrevSelectableOption();
     this._activeIndex = prevOp?.index ?? -1;
     this._host.requestUpdate();
