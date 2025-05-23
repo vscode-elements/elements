@@ -314,8 +314,8 @@ export class VscodeSelectBase extends VscElement {
     }
 
     const filterPatternExistsAsOption =
-      typeof this._valueOptionIndexMap[this._filterPattern] !== 'undefined';
-    const filtered = this._filterPattern.length > 0;
+      this._opts.getOptionByValue(this._opts.filterPattern) !== null;
+    const filtered = this._opts.filterPattern.length > 0;
     return !filterPatternExistsAsOption && filtered;
   }
 
@@ -385,7 +385,7 @@ export class VscodeSelectBase extends VscElement {
     this.open = visible;
 
     if (!visible) {
-      this._opts.activeIndex = -1;
+      // this._opts.activeIndex = -1;
     }
 
     if (visible) {
@@ -594,30 +594,36 @@ export class VscodeSelectBase extends VscElement {
     }
 
     if (this.open) {
-      if (this._isPlaceholderOptionActive && this._activeIndex === -1) {
+      if (this._isPlaceholderOptionActive && this._opts.activeIndex === -1) {
         return;
       }
+
+      console.log('open');
 
       if (suggestedOptionVisible && this._activeIndex === numOpts - 2) {
         this._isPlaceholderOptionActive = true;
         this._adjustOptionListScrollPos('down', numOpts - 1);
         this._activeIndex = -1;
       } else if (this._activeIndex < numOpts - 1) {
-        const nextSelectable = findNextSelectableOptionIndex(
-          currentOptions,
-          this._activeIndex
-        );
+        const nextOpt = this._opts.activateNext();
+        console.log(nextOpt);
 
-        const nextOpt = this._opts.getNextSelectableOption();
+        // const nextSelectable = findNextSelectableOptionIndex(
+        //   currentOptions,
+        //   this._activeIndex
+        // );
+
+        // const nextOpt = this._opts.getNextSelectableOption();
         const nextSelectableIndex = nextOpt?.relativeIndex ?? -1;
 
-        if (nextSelectable > -1) {
-          this._activeIndex = currentOptions[nextSelectable].index;
+        if (nextSelectableIndex > -1) {
+          // this._activeIndex = currentOptions[nextSelectable].index;
           this._adjustOptionListScrollPos('down', nextSelectableIndex);
         }
       }
     } else {
       this._toggleDropdown(true);
+      this._opts.activateDefault();
     }
   }
 
@@ -724,7 +730,7 @@ export class VscodeSelectBase extends VscElement {
               return nothing;
             }
 
-            const active = op.index === this._activeIndex && !op.disabled;
+            const active = op.index === this._opts.activeIndex && !op.disabled;
             const selected = this._selectedIndex === op.index;
 
             const optionClasses = {
