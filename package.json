@@ -173,7 +173,7 @@
     "rimraf": "^6.0.1",
     "rollup": "^4.39.0",
     "rollup-plugin-filesize": "^10.0.0",
-    "rollup-plugin-visualizer": "^5.14.0",
+    "rollup-plugin-visualizer": "^6.0.0",
     "semver": "^7.7.1",
     "sinon": "^20.0.0",
     "ts-lit-plugin": "^2.0.2",
