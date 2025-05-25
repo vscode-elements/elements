@@ -11,12 +11,7 @@ import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
 import type {InternalOption, Option, FilterMethod} from './types.js';
-import {
-  filterOptionsByPattern,
-  findNextSelectableOptionIndex,
-  findPrevSelectableOptionIndex,
-  highlightRanges,
-} from './helpers.js';
+import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import {VscElement} from '../VscElement.js';
 import {chevronDownIcon} from './template-elements.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -207,9 +202,6 @@ export class VscodeSelectBase extends VscElement {
   }
 
   @state()
-  protected _activeIndex = -1;
-
-  @state()
   protected _currentDescription = '';
 
   @state()
@@ -217,38 +209,16 @@ export class VscodeSelectBase extends VscElement {
 
   @state()
   protected get _filteredOptions(): InternalOption[] {
-    if (!this.combobox || this._filterPattern === '') {
+    if (!this.combobox || this._opts.filterPattern === '') {
       return this._options;
     }
 
     return filterOptionsByPattern(
       this._options,
-      this._filterPattern,
+      this._opts.filterPattern,
       this._filter
     );
   }
-
-  protected get _visibleOptions(): InternalOption[] {
-    if (!this.combobox || this._filterPattern === '') {
-      return this._options;
-    }
-
-    if (!this._memoizedFilteredOptions) {
-      this._memoizedFilteredOptions = filterOptionsByPattern(
-        this._options,
-        this._filterPattern,
-        this._filter
-      );
-    }
-
-    return this._memoizedFilteredOptions;
-  }
-
-  @state()
-  protected _filterPattern = '';
-
-  @state()
-  protected _selectedIndex = -1;
 
   @state()
   protected _selectedIndexes: number[] = [];
@@ -284,7 +254,6 @@ export class VscodeSelectBase extends VscElement {
   private _isHoverForbidden = false;
   private _disabled = false;
   private _originalTabIndex: number | undefined = undefined;
-  private _memoizedFilteredOptions: InternalOption[] | null = null;
 
   private _setAutoFocus() {
     if (this.hasAttribute('autofocus')) {
@@ -322,48 +291,8 @@ export class VscodeSelectBase extends VscElement {
   protected _manageRequired() {}
 
   protected _setStateFromSlottedElements() {
-    const options: InternalOption[] = [];
-    let nextIndex = 0;
     const optionElements = this._assignedOptions ?? [];
-    const selectedIndexes: number[] = [];
-    const values: string[] = [];
     this._valueOptionIndexMap = {};
-
-    // optionElements.forEach((el, i) => {
-    //   const {innerText, description, disabled} = el;
-    //   const value = typeof el.value === 'string' ? el.value : innerText.trim();
-    //   const selected = el.selected ?? false;
-    //   const op: InternalOption = {
-    //     label: innerText.trim(),
-    //     value,
-    //     description,
-    //     selected,
-    //     index: nextIndex,
-    //     disabled,
-    //   };
-
-    //   nextIndex = options.push(op);
-
-    //   if (selected && !this._multiple) {
-    //     this._activeIndex = i;
-    //   }
-
-    //   if (selected) {
-    //     selectedIndexes.push(options.length - 1);
-    //     values.push(value);
-    //   }
-
-    //   this._valueOptionIndexMap[op.value] = op.index;
-    // });
-
-    // this._options = options;
-
-    if (selectedIndexes.length > 0) {
-      this._selectedIndex = selectedIndexes[0];
-      this._selectedIndexes = selectedIndexes;
-      this._value = values[0];
-      this._values = values;
-    }
 
     optionElements.forEach((el) => {
       const {innerText, description, disabled} = el;
@@ -384,10 +313,6 @@ export class VscodeSelectBase extends VscElement {
   protected _toggleDropdown(visible: boolean) {
     this.open = visible;
 
-    if (!visible) {
-      // this._opts.activeIndex = -1;
-    }
-
     if (visible) {
       window.addEventListener('click', this._onClickOutside);
     } else {
@@ -396,10 +321,10 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _createSuggestedOption() {
-    const nextSelectedIndex = this._options.length;
+    const nextSelectedIndex = this._opts.numOptions;
     const op = document.createElement('vscode-option');
-    op.value = this._filterPattern;
-    render(this._filterPattern, op);
+    op.value = this._opts.filterPattern;
+    render(this._opts.filterPattern, op);
     this.appendChild(op);
 
     return nextSelectedIndex;
@@ -433,7 +358,7 @@ export class VscodeSelectBase extends VscElement {
   };
 
   protected _toggleComboboxDropdown() {
-    this._filterPattern = '';
+    this._opts.filterPattern = '';
     this._toggleDropdown(!this.open);
   }
 
@@ -465,13 +390,9 @@ export class VscodeSelectBase extends VscElement {
 
     if (el.matches('.placeholder')) {
       this._isPlaceholderOptionActive = true;
-      // this._activeIndex = -1;
       this._opts.activeIndex = -1;
     } else {
       this._isPlaceholderOptionActive = false;
-      // this._activeIndex = Number(
-      //   this.combobox ? el.dataset.filteredIndex : el.dataset.index
-      // );
       this._opts.activeIndex = +el.dataset.index!;
     }
   }
@@ -509,7 +430,9 @@ export class VscodeSelectBase extends VscElement {
   }
 
   protected _scrollActiveElementToTop() {
-    this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
+    this._optionListScrollPos = Math.floor(
+      this._opts.relativeActiveIndex * OPT_HEIGHT
+    );
   }
 
   private async _adjustOptionListScrollPos(
@@ -546,47 +469,39 @@ export class VscodeSelectBase extends VscElement {
 
     if (direction === 'up') {
       if (!fullyVisible) {
-        this._optionListScrollPos = Math.floor(this._activeIndex * OPT_HEIGHT);
+        this._optionListScrollPos = Math.floor(
+          this._opts.relativeActiveIndex * OPT_HEIGHT
+        );
       }
     }
   }
 
   protected _onArrowUpKeyDown(): void {
     if (this.open) {
-      if (this._activeIndex <= 0 && !(this.combobox && this.creatable)) {
+      if (this._opts.activeIndex <= 0 && !(this.combobox && this.creatable)) {
         return;
       }
 
       if (this._isPlaceholderOptionActive) {
         const optionIndex = this._opts.numOfVisibleOptions - 1;
-        this._activeIndex = optionIndex;
+        this._opts.activeIndex = optionIndex;
         this._isPlaceholderOptionActive = false;
       } else {
-        const currentOptions = this.combobox
-          ? this._filteredOptions
-          : this._options;
+        const prevOpt = this._opts.activatePrev();
+        const prevSelectableIndex = prevOpt?.relativeIndex ?? -1;
 
-        const prevSelectable = findPrevSelectableOptionIndex(
-          currentOptions,
-          this._activeIndex
-        );
-
-        if (prevSelectable > -1) {
-          this._activeIndex = prevSelectable;
-          this._adjustOptionListScrollPos('up', prevSelectable);
+        if (prevSelectableIndex > -1) {
+          this._adjustOptionListScrollPos('up', prevSelectableIndex);
         }
       }
     } else {
       this._toggleDropdown(true);
-      this._activeIndex = 0;
+      this._opts.activeIndex = 0;
     }
   }
 
   protected _onArrowDownKeyDown(): void {
     let numOpts = this._opts.numOfVisibleOptions;
-    const currentOptions = this.combobox
-      ? this._filteredOptions
-      : this._options;
     const suggestedOptionVisible = this._isSuggestedOptionVisible;
 
     if (suggestedOptionVisible) {
@@ -598,26 +513,15 @@ export class VscodeSelectBase extends VscElement {
         return;
       }
 
-      console.log('open');
-
-      if (suggestedOptionVisible && this._activeIndex === numOpts - 2) {
+      if (suggestedOptionVisible && this._opts.activeIndex === numOpts - 2) {
         this._isPlaceholderOptionActive = true;
         this._adjustOptionListScrollPos('down', numOpts - 1);
-        this._activeIndex = -1;
-      } else if (this._activeIndex < numOpts - 1) {
+        this._opts.activeIndex = -1;
+      } else if (this._opts.activeIndex < numOpts - 1) {
         const nextOpt = this._opts.activateNext();
-        console.log(nextOpt);
-
-        // const nextSelectable = findNextSelectableOptionIndex(
-        //   currentOptions,
-        //   this._activeIndex
-        // );
-
-        // const nextOpt = this._opts.getNextSelectableOption();
         const nextSelectableIndex = nextOpt?.relativeIndex ?? -1;
 
         if (nextSelectableIndex > -1) {
-          // this._activeIndex = currentOptions[nextSelectable].index;
           this._adjustOptionListScrollPos('down', nextSelectableIndex);
         }
       }
@@ -674,7 +578,7 @@ export class VscodeSelectBase extends VscElement {
   protected _onComboboxInputFocus(ev: FocusEvent): void {
     (ev.target as HTMLInputElement).select();
     this._isBeingFiltered = false;
-    this._filterPattern = '';
+    this._opts.filterPattern = '';
   }
 
   protected _onComboboxInputBlur() {
@@ -683,13 +587,13 @@ export class VscodeSelectBase extends VscElement {
 
   protected _onComboboxInputInput(ev: InputEvent): void {
     this._isBeingFiltered = true;
-    this._filterPattern = (ev.target as HTMLInputElement).value;
-    this._activeIndex = -1;
+    this._opts.filterPattern = (ev.target as HTMLInputElement).value;
+    this._opts.activeIndex = -1;
     this._toggleDropdown(true);
   }
 
   protected _onComboboxInputClick(): void {
-    this._isBeingFiltered = this._filterPattern !== '';
+    this._isBeingFiltered = this._opts.filterPattern !== '';
     this._toggleDropdown(true);
   }
 
@@ -731,13 +635,13 @@ export class VscodeSelectBase extends VscElement {
             }
 
             const active = op.index === this._opts.activeIndex && !op.disabled;
-            const selected = this._selectedIndex === op.index;
+            const selected = op.index === this._opts.selectedIndex;
 
             const optionClasses = {
               active,
               disabled: op.disabled,
               option: true,
-              selected: op.selected,
+              selected,
             };
 
             const checkboxClasses = {
@@ -777,11 +681,13 @@ export class VscodeSelectBase extends VscElement {
       return nothing;
     }
 
-    if (this._valueOptionIndexMap[this._filterPattern]) {
+    const foundOption = this._opts.getOptionByLabel(this._opts.filterPattern);
+
+    if (foundOption) {
       return nothing;
     }
 
-    if (this.creatable && this._filterPattern.length > 0) {
+    if (this.creatable && this._opts.filterPattern.length > 0) {
       return html`<li
         class=${classMap({
           option: true,
@@ -790,7 +696,7 @@ export class VscodeSelectBase extends VscElement {
         })}
         @mouseout=${this._onPlaceholderOptionMouseOut}
       >
-        Add "${this._filterPattern}"
+        Add "${this._opts.filterPattern}"
       </li>`;
     } else {
       return isListEmpty
@@ -802,11 +708,13 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _renderDescription() {
-    if (!this._options[this._activeIndex]) {
+    const op = this._opts.getActiveOption();
+
+    if (!op) {
       return nothing;
     }
 
-    const {description} = this._options[this._activeIndex];
+    const {description} = op;
 
     return description
       ? html`<div class="description">${description}</div>`
@@ -836,16 +744,14 @@ export class VscodeSelectBase extends VscElement {
     let inputVal = '';
 
     if (this._isBeingFiltered) {
-      inputVal = this._filterPattern;
+      inputVal = this._opts.filterPattern;
     } else {
-      inputVal =
-        this._selectedIndex > -1
-          ? (this._options[this._selectedIndex]?.label ?? '')
-          : '';
+      const op = this._opts.getSelectedOption();
+      inputVal = op?.label ?? '';
     }
 
     const activeDescendant =
-      this._activeIndex > -1 ? `op-${this._activeIndex}` : '';
+      this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
 
     return html`
       <div class="combobox-face face">
