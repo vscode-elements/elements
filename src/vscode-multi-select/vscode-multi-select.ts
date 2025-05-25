@@ -213,12 +213,12 @@ export class VscodeMultiSelect
 
   protected override _onFaceClick(): void {
     super._onFaceClick();
-    this._activeIndex = 0;
+    this._opts.activeIndex = 0;
   }
 
   protected override _toggleComboboxDropdown(): void {
     super._toggleComboboxDropdown();
-    this._activeIndex = -1;
+    this._opts.activeIndex = -1;
   }
 
   protected override _manageRequired() {
@@ -234,28 +234,6 @@ export class VscodeMultiSelect
     } else {
       this._internals.setValidity({});
     }
-  }
-
-  private _toggleActiveOptionSelection() {
-    if (this._activeIndex < 0) {
-      return;
-    }
-
-    const opts = this.combobox ? this._filteredOptions : this._options;
-    const selectedOption = this._options[this._activeIndex];
-    const nextSelectedIndexes: number[] = [];
-
-    this._options[selectedOption.index].selected = !selectedOption.selected;
-
-    opts.forEach(({index}) => {
-      const {selected} = this._options[index];
-
-      if (selected) {
-        nextSelectedIndexes.push(index);
-      }
-    });
-
-    this._selectedIndexes = nextSelectedIndexes;
   }
 
   private _setFormValue() {
@@ -356,10 +334,10 @@ export class VscodeMultiSelect
     super._onEnterKeyDown(ev);
 
     if (!this.open) {
-      this._filterPattern = '';
+      this._opts.filterPattern = '';
       this._toggleDropdown(true);
     } else {
-      this._toggleActiveOptionSelection();
+      this._opts.toggleActiveMultiselectOption();
     }
 
     // TODO: dispatch change + set value
@@ -410,7 +388,7 @@ export class VscodeMultiSelect
 
   protected override _renderSelectFace(): TemplateResult {
     const activeDescendant =
-      this._activeIndex > -1 ? `op-${this._activeIndex}` : '';
+      this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
 
     return html`
       <div
