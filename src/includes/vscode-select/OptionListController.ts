@@ -37,8 +37,7 @@ export class OptionListController implements ReactiveController {
   }
 
   get relativeActiveIndex(): number {
-    const activeOption = this._options[this._activeIndex];
-    return activeOption.relativeIndex;
+    return this._options[this._activeIndex]?.relativeIndex ?? -1;
   }
 
   get comboboxMode() {
