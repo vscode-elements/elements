@@ -293,6 +293,7 @@ export class VscodeSelectBase extends VscElement {
   protected _setStateFromSlottedElements() {
     const optionElements = this._assignedOptions ?? [];
     this._valueOptionIndexMap = {};
+    this._opts.clear();
 
     optionElements.forEach((el) => {
       const {innerText, description, disabled} = el;
