@@ -201,6 +201,31 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
+  protected override update(changedProperties: PropertyValues) {
+    super.update(changedProperties);
+
+    if (changedProperties.has('open')) {
+      if (this.open) {
+        this._opts.activateDefault();
+
+        if (!this._multiple && !this.combobox) {
+          const activeOption = this._opts.getActiveOption();
+          const filteredActiveIndex = activeOption?.relativeIndex ?? -1;
+
+          if (filteredActiveIndex > VISIBLE_OPTS - 1) {
+            this._optionListScrollPos = Math.floor(
+              filteredActiveIndex * OPT_HEIGHT
+            );
+          }
+        }
+
+        window.addEventListener('click', this._onClickOutside);
+      } else {
+        window.removeEventListener('click', this._onClickOutside);
+      }
+    }
+  }
+
   @state()
   protected _currentDescription = '';
 
@@ -311,16 +336,6 @@ export class VscodeSelectBase extends VscElement {
     });
   }
 
-  protected _toggleDropdown(visible: boolean) {
-    this.open = visible;
-
-    if (visible) {
-      window.addEventListener('click', this._onClickOutside);
-    } else {
-      window.removeEventListener('click', this._onClickOutside);
-    }
-  }
-
   protected _createSuggestedOption() {
     const nextSelectedIndex = this._opts.numOptions;
     const op = document.createElement('vscode-option');
@@ -340,7 +355,7 @@ export class VscodeSelectBase extends VscElement {
 
   //#region event handlers
   protected _onFaceClick(): void {
-    this._toggleDropdown(!this.open);
+    this.open = !this.open;
   }
 
   private _onClickOutside = (event: MouseEvent): void => {
@@ -348,8 +363,7 @@ export class VscodeSelectBase extends VscElement {
     const found = path.findIndex((et) => et === this);
 
     if (found === -1) {
-      this._toggleDropdown(false);
-      window.removeEventListener('click', this._onClickOutside);
+      this.open = false;
     }
   };
 
@@ -358,9 +372,10 @@ export class VscodeSelectBase extends VscElement {
     window.removeEventListener('mousemove', this._onMouseMove);
   };
 
+  // TODO
   protected _toggleComboboxDropdown() {
     this._opts.filterPattern = '';
-    this._toggleDropdown(!this.open);
+    this.open = !this.open;
   }
 
   protected _onComboboxButtonClick(): void {
@@ -425,7 +440,7 @@ export class VscodeSelectBase extends VscElement {
 
   private _onSpaceKeyDown() {
     if (!this.open) {
-      this._toggleDropdown(true);
+      this.open = true;
       return;
     }
   }
@@ -496,7 +511,7 @@ export class VscodeSelectBase extends VscElement {
         }
       }
     } else {
-      this._toggleDropdown(true);
+      this.open = true;
       this._opts.activeIndex = 0;
     }
   }
@@ -527,13 +542,13 @@ export class VscodeSelectBase extends VscElement {
         }
       }
     } else {
-      this._toggleDropdown(true);
+      this.open = true;
       this._opts.activateDefault();
     }
   }
 
   private _onEscapeKeyDown() {
-    this._toggleDropdown(false);
+    this.open = false;
   }
 
   private _onComponentKeyDown = (event: KeyboardEvent) => {
@@ -590,12 +605,12 @@ export class VscodeSelectBase extends VscElement {
     this._isBeingFiltered = true;
     this._opts.filterPattern = (ev.target as HTMLInputElement).value;
     this._opts.activeIndex = -1;
-    this._toggleDropdown(true);
+    this.open = true;
   }
 
   protected _onComboboxInputClick(): void {
     this._isBeingFiltered = this._opts.filterPattern !== '';
-    this._toggleDropdown(true);
+    this.open = true;
   }
 
   protected _onComboboxInputSpaceKeyDown(ev: KeyboardEvent) {
