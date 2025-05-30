@@ -102,12 +102,6 @@ export class VscodeSingleSelect
   set value(val: string) {
     this._opts.value = val;
 
-    // if (this._options[this._selectedIndex]) {
-    //   this._options[this._selectedIndex].selected = false;
-    // }
-
-    // this._selectedIndex = this._options.findIndex((op) => op.value === val);
-
     if (this._opts.selectedIndex > -1) {
       this._requestedValueToSetLater = '';
     } else {
@@ -118,10 +112,6 @@ export class VscodeSingleSelect
     this._manageRequired();
   }
   get value(): string {
-    // if (this._options[this._selectedIndex]) {
-    //   return this._options[this._selectedIndex]?.value ?? '';
-    // }
-
     return this._opts.value as string;
   }
 
@@ -344,12 +334,7 @@ export class VscodeSingleSelect
     }
 
     if (valueChanged) {
-      /* this._value =
-        this._selectedIndex > -1
-          ? this._options[this._selectedIndex].value
-          : ''; */
       this._dispatchChangeEvent();
-
       this.updateInputValue();
       this._internals.setFormValue(this._opts.value as string);
       this._manageRequired();
@@ -381,7 +366,6 @@ export class VscodeSingleSelect
       }
     } else {
       this._opts.selectedIndex = Number((optEl as HTMLElement).dataset.index);
-      // this._value = this._options[this._selectedIndex].value;
 
       this.open = false;
       this._internals.setFormValue(this._value);

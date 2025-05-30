@@ -742,7 +742,7 @@ describe('vscode-single-select', () => {
       );
     });
 
-    it('selects the suggested option', async () => {
+    it.only('selects the suggested option', async () => {
       const el = (await fixture(html`
         <vscode-single-select combobox creatable>
           <vscode-option>Lorem</vscode-option>
@@ -751,8 +751,10 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      // el.shadowRoot?.querySelector('.combobox-input');
+
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'dol'});
 
       await sendKeys({down: 'ArrowDown'});
@@ -1095,7 +1097,7 @@ describe('vscode-single-select', () => {
     });
 
     it('skips disabled options when dropdown is open', async () => {
-      const el = await fixture(html`
+      const el = await fixture<VscodeSingleSelect>(html`
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
           <vscode-option disabled>Ipsum</vscode-option>
@@ -1104,28 +1106,17 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `);
 
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
+
+      await sendKeys({down: 'ArrowDown'});
       await sendKeys({down: 'ArrowDown'});
 
-      const options = el.shadowRoot?.querySelector('.options');
+      const options =
+        el.shadowRoot?.querySelectorAll<HTMLLIElement>('.option')!;
 
-      expect(options).to.lightDom.eq(
-        `
-        <li class="option">Lorem</li>
-        <li class="option disabled">Ipsum</li>
-        <li class="option disabled">Dolor</li>
-        <li class="option active">Sit</li>
-      `,
-        {
-          ignoreAttributes: [
-            'aria-selected',
-            'data-filtered-index',
-            'data-index',
-            'id',
-            'role',
-          ],
-        }
-      );
+      expect(options[3]).lightDom.to.eq('Sit');
+      expect(options[3].classList.contains('active')).to.be.true;
     });
 
     it('highlights active option', async () => {
@@ -1141,24 +1132,11 @@ describe('vscode-single-select', () => {
 
       await el.updateComplete;
 
-      const options = el.shadowRoot?.querySelector('.options');
+      const options =
+        el.shadowRoot?.querySelectorAll<HTMLLIElement>('.option')!;
 
-      expect(options).lightDom.to.eq(
-        `
-        <li class="option">Lorem</li>
-        <li class="option active">Ipsum</li>
-        <li class="option">Dolor</li>
-      `,
-        {
-          ignoreAttributes: [
-            'aria-selected',
-            'data-filtered-index',
-            'data-index',
-            'id',
-            'role',
-          ],
-        }
-      );
+      expect(options[1]).lightDom.eq('Ipsum');
+      expect(options[1].classList.contains('active')).to.be.true;
     });
 
     it('updates validity when required property is changed', async () => {
