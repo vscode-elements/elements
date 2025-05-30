@@ -18,7 +18,7 @@ export class OptionListController implements ReactiveController {
   private _indexByValue: Map<string, number> = new Map();
   private _indexByLabel: Map<string, number> = new Map();
   private _selectedIndex = -1;
-  private _selectedIndexes: number[] = [];
+  private _selectedIndexes: Set<number> = new Set();
   private _multiSelect = false;
 
   constructor(host: ReactiveControllerHost) {
@@ -46,7 +46,7 @@ export class OptionListController implements ReactiveController {
 
   set multiSelect(multiSelect: boolean) {
     this._selectedIndex = -1;
-    this._selectedIndexes = [];
+    this._selectedIndexes.clear();
     this._multiSelect = multiSelect;
     this._host.requestUpdate();
   }
@@ -65,14 +65,14 @@ export class OptionListController implements ReactiveController {
   }
 
   set selectedIndexes(value: number[]) {
-    this._selectedIndexes = value;
+    this._selectedIndexes = new Set(value);
     this._host.requestUpdate();
   }
 
   get value(): string | string[] {
     if (this._multiSelect) {
-      return this._selectedIndexes.length > 0
-        ? this._selectedIndexes.map((v) => this._options[v].value)
+      return this._selectedIndexes.size > 0
+        ? Array.from(this._selectedIndexes).map((v) => this._options[v].value)
         : [];
     } else {
       return this._selectedIndex > -1
@@ -83,9 +83,11 @@ export class OptionListController implements ReactiveController {
 
   set value(newValue: string | string[]) {
     if (this._multiSelect) {
-      this._selectedIndexes = (newValue as string[])
+      const valueList = (newValue as string[])
         .map((v) => this._indexByValue.get(v))
         .filter((v) => v !== undefined);
+
+      this._selectedIndexes = new Set(valueList);
     } else {
       this._selectedIndex = this._indexByValue.get(newValue as string) ?? -1;
     }
@@ -150,6 +152,7 @@ export class OptionListController implements ReactiveController {
 
     if (selected) {
       this._selectedIndex = nextIndex;
+      this._selectedIndexes.add(nextIndex);
     }
 
     this._options.push({
@@ -167,6 +170,8 @@ export class OptionListController implements ReactiveController {
 
   clear() {
     this._options = [];
+    this._indexByValue.clear();
+    this._indexByLabel.clear();
   }
 
   get options(): InternalOption[] {
@@ -181,6 +186,14 @@ export class OptionListController implements ReactiveController {
     return this._options.length;
   }
 
+  getIsIndexSelected(index: number) {
+    if (this._multiSelect) {
+      return this._selectedIndexes.has(index);
+    } else {
+      return this._selectedIndex === index;
+    }
+  }
+
   toggleComboboxMode(enabled: boolean) {
     this._combobox = enabled;
     this._host.requestUpdate();
@@ -188,15 +201,12 @@ export class OptionListController implements ReactiveController {
 
   toggleActiveMultiselectOption() {
     const activeOption = this._options[this._activeIndex] ?? null;
-    const checked = this._selectedIndexes.includes(activeOption.index);
+    const checked = this._selectedIndexes.has(activeOption.index);
 
     if (checked) {
-      this._selectedIndexes = this._selectedIndexes.filter(
-        (i) => i !== activeOption.index
-      );
+      this._selectedIndexes.delete(activeOption.index);
     } else {
-      this._selectedIndexes.push(activeOption.index);
-      this._selectedIndexes.sort();
+      this._selectedIndexes.add(activeOption.index);
     }
   }
 
@@ -302,8 +312,10 @@ export class OptionListController implements ReactiveController {
   }
 
   activateDefault() {
-    if (this._selectedIndexes.length > 0) {
-      this._activeIndex = this._selectedIndexes[0];
+    if (this._multiSelect && this._selectedIndexes.size > 0) {
+      const indexes = this._selectedIndexes.values();
+      const first = indexes.next();
+      this._activeIndex = first.value ? first.value : 0;
     } else {
       const nextOp = this.getNextSelectableOption(-1);
       this._activeIndex = nextOp?.index ?? -1;
