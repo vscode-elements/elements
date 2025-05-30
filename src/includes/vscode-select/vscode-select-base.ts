@@ -535,6 +535,7 @@ export class VscodeSelectBase extends VscElement {
         this._opts.activeIndex = -1;
       } else if (this._opts.activeIndex < numOpts - 1) {
         const nextOpt = this._opts.activateNext();
+        console.log(nextOpt)
         const nextSelectableIndex = nextOpt?.relativeIndex ?? -1;
 
         if (nextSelectableIndex > -1) {
@@ -742,7 +743,7 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _renderMultiSelectLabel() {
-    switch (this._selectedIndexes.length) {
+    switch (this._opts.selectedIndexes.length) {
       case 0:
         return html`<span class="select-face-badge no-item"
           >No items selected</span
@@ -751,7 +752,7 @@ export class VscodeSelectBase extends VscElement {
         return html`<span class="select-face-badge">1 item selected</span>`;
       default:
         return html`<span class="select-face-badge"
-          >${this._selectedIndexes.length} items selected</span
+          >${this._opts.selectedIndexes.length} items selected</span
         >`;
     }
   }

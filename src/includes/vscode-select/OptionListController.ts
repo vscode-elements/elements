@@ -323,11 +323,10 @@ export class OptionListController implements ReactiveController {
       const indexes = this._selectedIndexes.values();
       const first = indexes.next();
       this._activeIndex = first.value ? first.value : 0;
-    } else if (!this._multiSelect && this._selectedIndex > -1) {
+    }
+
+    if (!this._multiSelect && this._selectedIndex > -1) {
       this._activeIndex = this._selectedIndex;
-    } else {
-      const nextOp = this.getNextSelectableOption(-1);
-      this._activeIndex = nextOp?.index ?? -1;
     }
 
     this._host.requestUpdate();
