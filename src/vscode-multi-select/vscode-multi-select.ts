@@ -261,7 +261,7 @@ export class VscodeMultiSelect
       {detail: {value: this._options[nextIndex]?.value ?? ''}}
     );
     this.dispatchEvent(opCreateEvent);
-    this._toggleDropdown(false);
+    this.open = false;
     this._isPlaceholderOptionActive = false;
   }
 
@@ -335,7 +335,7 @@ export class VscodeMultiSelect
 
     if (!this.open) {
       this._opts.filterPattern = '';
-      this._toggleDropdown(true);
+      this.open = true;
     } else {
       this._opts.toggleActiveMultiselectOption();
     }
@@ -344,7 +344,7 @@ export class VscodeMultiSelect
   }
 
   private _onMultiAcceptClick(): void {
-    this._toggleDropdown(false);
+    this.open = false;
   }
 
   private _onMultiDeselectAllClick(): void {
