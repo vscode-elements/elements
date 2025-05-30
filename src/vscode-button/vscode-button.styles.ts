@@ -62,7 +62,7 @@ const styles: CSSResultGroup = [
       outline: none;
     }
 
-    :host(:focus-visible) {
+    :host(:focus) {
       background-color: var(--vscode-button-hoverBackground, #026ec1);
       outline: 1px solid var(--vscode-focusBorder, #0078d4);
       outline-offset: 2px;
@@ -146,7 +146,7 @@ const styles: CSSResultGroup = [
     }
 
     :host(:hover) .divider,
-    :host(:focus-visible) .divider {
+    :host(:focus) .divider {
       background-color: var(--vscode-button-hoverBackground, #026ec1);
     }
 
@@ -155,7 +155,7 @@ const styles: CSSResultGroup = [
     }
 
     :host([secondary]:hover) .divider,
-    :host([secondary]:focus-visible) .divider {
+    :host([secondary]:focus) .divider {
       background-color: var(--vscode-button-secondaryHoverBackground, #3c3c3c);
     }
 
