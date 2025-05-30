@@ -651,7 +651,7 @@ export class VscodeSelectBase extends VscElement {
             }
 
             const active = op.index === this._opts.activeIndex && !op.disabled;
-            const selected = op.index === this._opts.selectedIndex;
+            const selected = this._opts.getIsIndexSelected(op.index);
 
             const optionClasses = {
               active,
