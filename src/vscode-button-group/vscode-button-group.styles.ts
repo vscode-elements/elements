@@ -21,6 +21,7 @@ const styles: CSSResultGroup = [
 
     ::slotted(vscode-button:not(:last-child)) {
       --divider-display: block;
+      --wrapper-width: calc(100%-1px);
 
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
