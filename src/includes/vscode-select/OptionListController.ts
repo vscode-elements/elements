@@ -69,6 +69,10 @@ export class OptionListController implements ReactiveController {
     this._host.requestUpdate();
   }
 
+  get selectedIndexes() {
+    return Array.from(this._selectedIndexes);
+  }
+
   get value(): string | string[] {
     if (this._multiSelect) {
       return this._selectedIndexes.size > 0
@@ -153,6 +157,7 @@ export class OptionListController implements ReactiveController {
     if (selected) {
       this._selectedIndex = nextIndex;
       this._selectedIndexes.add(nextIndex);
+      this._activeIndex = nextIndex;
     }
 
     this._options.push({
@@ -316,6 +321,8 @@ export class OptionListController implements ReactiveController {
       const indexes = this._selectedIndexes.values();
       const first = indexes.next();
       this._activeIndex = first.value ? first.value : 0;
+    } else if (!this._multiSelect && this._selectedIndex > -1) {
+      this._activeIndex = this._selectedIndex;
     } else {
       const nextOp = this.getNextSelectableOption(-1);
       this._activeIndex = nextOp?.index ?? -1;

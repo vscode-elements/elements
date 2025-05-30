@@ -247,7 +247,7 @@ export class VscodeSingleSelect
   protected override _setStateFromSlottedElements(): void {
     super._setStateFromSlottedElements();
 
-    if (!this.combobox && this._selectedIndexes.length === 0) {
+    if (!this.combobox && this._opts.selectedIndexes.length === 0) {
       this._opts.selectedIndex = this._opts.options.length > 0 ? 0 : -1;
     }
   }
