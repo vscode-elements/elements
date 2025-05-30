@@ -55,8 +55,10 @@ export class OptionListController implements ReactiveController {
     return this._multiSelect;
   }
 
-  set selectedIndex(value: number) {
-    this._selectedIndex = value;
+  set selectedIndex(index: number) {
+    const op = this.getOptionByIndex(index)
+
+    this._selectedIndex = op ? index : -1;
     this._host.requestUpdate();
   }
 
