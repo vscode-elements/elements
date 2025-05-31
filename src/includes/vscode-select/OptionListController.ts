@@ -27,13 +27,15 @@ export class OptionListController implements ReactiveController {
 
   hostConnected(): void {}
 
-  set activeIndex(index: number) {
-    this._activeIndex = index;
-    this._host.requestUpdate();
-  }
+  //#region getters/setters
 
   get activeIndex(): number {
     return this._activeIndex;
+  }
+
+  set activeIndex(index: number) {
+    this._activeIndex = index;
+    this._host.requestUpdate();
   }
 
   get relativeActiveIndex(): number {
@@ -44,6 +46,10 @@ export class OptionListController implements ReactiveController {
     return this._combobox;
   }
 
+  get multiSelect() {
+    return this._multiSelect;
+  }
+
   set multiSelect(multiSelect: boolean) {
     this._selectedIndex = -1;
     this._selectedIndexes.clear();
@@ -51,8 +57,8 @@ export class OptionListController implements ReactiveController {
     this._host.requestUpdate();
   }
 
-  get multiSelect() {
-    return this._multiSelect;
+  get selectedIndex() {
+    return this._selectedIndex;
   }
 
   set selectedIndex(index: number) {
@@ -62,29 +68,13 @@ export class OptionListController implements ReactiveController {
     this._host.requestUpdate();
   }
 
-  get selectedIndex() {
-    return this._selectedIndex;
+  get selectedIndexes() {
+    return Array.from(this._selectedIndexes);
   }
 
   set selectedIndexes(value: number[]) {
     this._selectedIndexes = new Set(value);
     this._host.requestUpdate();
-  }
-
-  get selectedIndexes() {
-    return Array.from(this._selectedIndexes);
-  }
-
-  get value(): string | string[] {
-    if (this._multiSelect) {
-      return this._selectedIndexes.size > 0
-        ? Array.from(this._selectedIndexes).map((v) => this._options[v].value)
-        : [];
-    } else {
-      return this._selectedIndex > -1
-        ? this._options[this._selectedIndex].value
-        : '';
-    }
   }
 
   set value(newValue: string | string[]) {
@@ -100,13 +90,29 @@ export class OptionListController implements ReactiveController {
     this._host.requestUpdate();
   }
 
+  get value(): string | string[] {
+    if (this._multiSelect) {
+      return this._selectedIndexes.size > 0
+        ? Array.from(this._selectedIndexes).map((v) => this._options[v].value)
+        : [];
+    } else {
+      return this._selectedIndex > -1
+        ? this._options[this._selectedIndex].value
+        : '';
+    }
+  }
+
+  get filterPattern() {
+    return this._filterPattern;
+  }
+
   set filterPattern(pattern: string) {
     this._filterPattern = pattern;
     this._updateState();
   }
 
-  get filterPattern() {
-    return this._filterPattern;
+  get filterMethod(): FilterMethod {
+    return this._filterMethod;
   }
 
   set filterMethod(method: FilterMethod) {
@@ -114,9 +120,21 @@ export class OptionListController implements ReactiveController {
     this._updateState();
   }
 
-  get filterMethod(): FilterMethod {
-    return this._filterMethod;
+  get options(): InternalOption[] {
+    return this._options;
   }
+
+  get numOfVisibleOptions() {
+    return this._options.filter((o) => o.visible).length;
+  }
+
+  get numOptions() {
+    return this._options.length;
+  }
+
+  //#endregion
+
+  //#region public functions
 
   populate(options: Option[]) {
     this._indexByValue.clear();
@@ -179,18 +197,6 @@ export class OptionListController implements ReactiveController {
     this._options = [];
     this._indexByValue.clear();
     this._indexByLabel.clear();
-  }
-
-  get options(): InternalOption[] {
-    return this._options;
-  }
-
-  get numOfVisibleOptions() {
-    return this._options.filter((o) => o.visible).length;
-  }
-
-  get numOptions() {
-    return this._options.length;
   }
 
   getIsIndexSelected(index: number) {
@@ -373,6 +379,10 @@ export class OptionListController implements ReactiveController {
     return prevOp;
   }
 
+  //#endregion
+
+  //#region private functions
+
   private _searchByPattern(text: string) {
     let result: SearchResult;
 
@@ -393,7 +403,7 @@ export class OptionListController implements ReactiveController {
     return result;
   }
 
-  _updateState() {
+  private _updateState() {
     if (!this._combobox || this._filterPattern === '') {
       this._options.forEach((_, i) => {
         this._options[i].visible = true;
@@ -416,4 +426,6 @@ export class OptionListController implements ReactiveController {
 
     this._host.requestUpdate();
   }
+
+  //#endregion
 }
