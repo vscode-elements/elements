@@ -529,14 +529,15 @@ export class VscodeSelectBase extends VscElement {
         return;
       }
 
-      if (suggestedOptionVisible && this._opts.activeIndex === numOpts - 2) {
+      const nextOp = this._opts.next();
+
+      if (suggestedOptionVisible && nextOp.last) {
         this._isPlaceholderOptionActive = true;
         this._adjustOptionListScrollPos('down', numOpts - 1);
         this._opts.activeIndex = -1;
-      } else if (this._opts.activeIndex < numOpts - 1) {
-        const nextOpt = this._opts.activateNext();
-        console.log(nextOpt)
-        const nextSelectableIndex = nextOpt?.relativeIndex ?? -1;
+      } else {
+        const nextSelectableIndex = nextOp?.value.relativeIndex ?? -1;
+        this._opts.activeIndex = nextOp.value.index;
 
         if (nextSelectableIndex > -1) {
           this._adjustOptionListScrollPos('down', nextSelectableIndex);

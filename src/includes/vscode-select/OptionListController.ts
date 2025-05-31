@@ -56,7 +56,7 @@ export class OptionListController implements ReactiveController {
   }
 
   set selectedIndex(index: number) {
-    const op = this.getOptionByIndex(index)
+    const op = this.getOptionByIndex(index);
 
     this._selectedIndex = op ? index : -1;
     this._host.requestUpdate();
@@ -256,10 +256,37 @@ export class OptionListController implements ReactiveController {
     return this._options[index];
   }
 
+  next(fromIndex?: number): {value: InternalOption; last: boolean} {
+    const from = fromIndex ?? this._activeIndex;
+    let last = false;
+
+    let nextIndex = -1;
+
+    for (let i = from + 1; i < this._options.length; i++) {
+      if (
+        this._options[i] &&
+        !this._options[i].disabled &&
+        this._options[i].visible
+      ) {
+        nextIndex = i;
+        break;
+      }
+    }
+
+    const value =
+      nextIndex > -1 ? this._options[nextIndex] : (this._options[from] ?? null);
+    last = nextIndex === -1;
+
+    return {
+      value,
+      last,
+    };
+  }
+
   getNextSelectableOption(fromIndex?: number): InternalOption | null {
     const from = fromIndex ?? this._activeIndex;
 
-    if (this._options.length === 0) {
+    /* if (this._options.length === 0) {
       return null;
     }
 
@@ -269,7 +296,7 @@ export class OptionListController implements ReactiveController {
 
     if (from !== -1 && !this._options[from + 1]) {
       return this._options[from];
-    }
+    } */
 
     let nextIndex = -1;
 
