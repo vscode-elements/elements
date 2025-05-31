@@ -5,10 +5,7 @@ import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
-import {
-  findNextSelectableOptionIndex,
-  findPrevSelectableOptionIndex,
-} from '../includes/vscode-select/helpers.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 export type VscSingleSelectCreateOptionEvent = CustomEvent<{value: string}>;
 
@@ -77,20 +74,18 @@ export class VscodeSingleSelect
   @property({attribute: 'default-value'})
   defaultValue = '';
 
-  /** @internal */
-  @property({type: String, attribute: true, reflect: true})
-  override role = 'listbox';
-
   @property({reflect: true})
   name: string | undefined = undefined;
 
   @property({type: Number, attribute: 'selected-index'})
   set selectedIndex(val: number) {
-    this._selectedIndex = val;
+    this._opts.selectedIndex = val;
 
-    if (this._options[val]) {
-      this._activeIndex = val;
-      this._value = this._options[val].value;
+    const op = this._opts.getOptionByIndex(val);
+
+    if (op) {
+      this._opts.activeIndex = val;
+      this._value = op.value;
       this._internals.setFormValue(this._value);
       this._manageRequired();
     } else {
@@ -100,23 +95,16 @@ export class VscodeSingleSelect
     }
   }
   get selectedIndex(): number {
-    return this._selectedIndex;
+    return this._opts.selectedIndex;
   }
 
   @property({type: String})
   set value(val: string) {
-    if (this._options[this._selectedIndex]) {
-      this._options[this._selectedIndex].selected = false;
-    }
+    this._opts.value = val;
 
-    this._selectedIndex = this._options.findIndex((op) => op.value === val);
-
-    if (this._selectedIndex > -1) {
-      this._options[this._selectedIndex].selected = true;
-      this._value = val;
+    if (this._opts.selectedIndex > -1) {
       this._requestedValueToSetLater = '';
     } else {
-      this._value = '';
       this._requestedValueToSetLater = val;
     }
 
@@ -124,11 +112,7 @@ export class VscodeSingleSelect
     this._manageRequired();
   }
   get value(): string {
-    if (this._options[this._selectedIndex]) {
-      return this._options[this._selectedIndex]?.value ?? '';
-    }
-
-    return '';
+    return this._opts.value as string;
   }
 
   @property({type: Boolean, reflect: true})
@@ -169,14 +153,14 @@ export class VscodeSingleSelect
     ) as HTMLInputElement;
 
     if (input) {
-      input.value = this._options[this._selectedIndex]
-        ? this._options[this._selectedIndex].label
-        : '';
+      const selectedOption = this._opts.getSelectedOption();
+      input.value = selectedOption?.label ?? '';
     }
   }
 
   constructor() {
     super();
+    this._opts.multiSelect = false;
     /** @internal */
     this._multiple = false;
     this._internals = this.attachInternals();
@@ -232,27 +216,50 @@ export class VscodeSingleSelect
       {detail: {value: this._options[nextIndex]?.value ?? ''}}
     );
     this.dispatchEvent(opCreateEvent);
-    this._toggleDropdown(false);
+    this.open = false;
     this._isPlaceholderOptionActive = false;
   }
 
+  protected override _dispatchChangeEvent(): void {
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {
+          selectedIndex: this._opts.selectedIndex,
+          value: this._value,
+        },
+      })
+    );
+
+    super._dispatchChangeEvent();
+  }
+
+  protected override _setStateFromSlottedElements(): void {
+    super._setStateFromSlottedElements();
+
+    if (!this.combobox && this._opts.selectedIndexes.length === 0) {
+      this._opts.selectedIndex = this._opts.options.length > 0 ? 0 : -1;
+    }
+  }
+
+  //#region event handlers
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
     if (this._requestedValueToSetLater) {
       // the value is set before the available options are appended
-      const foundIndex = this._options.findIndex(
-        (op) => op.value === this._requestedValueToSetLater
+      const foundOption = this._opts.getOptionByValue(
+        this._requestedValueToSetLater
       );
 
-      if (foundIndex > 0) {
-        this._selectedIndex = foundIndex;
+      if (foundOption) {
+        this._opts.selectedIndex = foundOption.index;
         this._requestedValueToSetLater = '';
       }
     }
 
-    if (this._selectedIndex > -1 && this._options.length > 0) {
-      this._internals.setFormValue(this._options[this._selectedIndex].value);
+    if (this._opts.selectedIndex > -1 && this._opts.numOptions > 0) {
+      this._internals.setFormValue(this._opts.value as string);
       this._manageRequired();
     } else {
       this._internals.setFormValue(null);
@@ -263,7 +270,7 @@ export class VscodeSingleSelect
   protected override _onArrowUpKeyDown(): void {
     super._onArrowUpKeyDown();
 
-    if (this.open || this._selectedIndex <= 0) {
+    /* if (this.open || this._selectedIndex <= 0) {
       return;
     }
 
@@ -274,7 +281,8 @@ export class VscodeSingleSelect
     this._selectedIndex = prevIndex;
     this._activeIndex = prevIndex;
     this._value = prevIndex > -1 ? this._options[prevIndex].value : '';
-    this._internals.setFormValue(this._value);
+ */
+    this._internals.setFormValue(this._opts.value as string);
     this._manageRequired();
     this._dispatchChangeEvent();
   }
@@ -282,7 +290,7 @@ export class VscodeSingleSelect
   protected override _onArrowDownKeyDown(): void {
     super._onArrowDownKeyDown();
 
-    if (this.open || this._selectedIndex >= this._options.length - 1) {
+    /* if (this.open || this._selectedIndex >= this._options.length - 1) {
       return;
     }
 
@@ -292,18 +300,46 @@ export class VscodeSingleSelect
     this._filterPattern = '';
     this._selectedIndex = nextIndex;
     this._activeIndex = nextIndex;
-    this._value = nextIndex > -1 ? this._options[nextIndex].value : '';
-    this._internals.setFormValue(this._value);
+    this._value = nextIndex > -1 ? this._options[nextIndex].value : ''; */
+    this._internals.setFormValue(this._opts.value as string);
     this._manageRequired();
     this._dispatchChangeEvent();
   }
 
   protected override _onEnterKeyDown(ev: KeyboardEvent): void {
     super._onEnterKeyDown(ev);
+    let valueChanged = false;
 
-    this.updateInputValue();
-    this._internals.setFormValue(this._value);
-    this._manageRequired();
+    if (this.combobox) {
+      if (this.open) {
+        if (this._isPlaceholderOptionActive) {
+          this._createAndSelectSuggestedOption();
+        } else {
+          valueChanged = this._opts.activeIndex !== this._opts.selectedIndex;
+          this._opts.selectedIndex = this._opts.activeIndex;
+          this.open = false;
+        }
+      } else {
+        this.open = true;
+        this._scrollActiveElementToTop();
+      }
+    } else {
+      if (this.open) {
+        valueChanged = this._opts.activeIndex !== this._opts.selectedIndex;
+        this._opts.selectedIndex = this._opts.activeIndex;
+        this.open = false;
+      } else {
+        this.open = true;
+        this._scrollActiveElementToTop();
+      }
+    }
+
+    if (valueChanged) {
+      this._dispatchChangeEvent();
+      this.updateInputValue();
+      this._internals.setFormValue(this._opts.value as string);
+      this._manageRequired();
+    }
   }
 
   protected override _onOptionClick(ev: MouseEvent) {
@@ -330,15 +366,15 @@ export class VscodeSingleSelect
         this._createAndSelectSuggestedOption();
       }
     } else {
-      this._selectedIndex = Number((optEl as HTMLElement).dataset.index);
-      this._value = this._options[this._selectedIndex].value;
+      this._opts.selectedIndex = Number((optEl as HTMLElement).dataset.index);
 
-      this._toggleDropdown(false);
+      this.open = false;
       this._internals.setFormValue(this._value);
       this._manageRequired();
       this._dispatchChangeEvent();
     }
   }
+  //#endregion
 
   protected override _manageRequired() {
     const {value} = this;
@@ -353,19 +389,40 @@ export class VscodeSingleSelect
     }
   }
 
+  //#region render functions
   protected override _renderSelectFace(): TemplateResult {
-    const label = this._options[this._selectedIndex]?.label ?? '';
+    const selectedOption = this._opts.getSelectedOption();
+    const label = selectedOption?.label ?? '';
+    const activeDescendant =
+      this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
 
     return html`
       <div
+        aria-activedescendant=${activeDescendant}
+        aria-controls="select-listbox"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-haspopup="listbox"
+        aria-label=${ifDefined(this.label)}
         class="select-face face"
         @click=${this._onFaceClick}
-        tabindex=${this.tabIndex > -1 ? 0 : -1}
+        role="combobox"
+        tabindex="0"
       >
         <span class="text">${label}</span> ${chevronDownIcon}
       </div>
     `;
   }
+
+  override render(): TemplateResult {
+    return html`
+      <div class="single-select">
+        <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
+        ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+        ${this._renderDropdown()}
+      </div>
+    `;
+  }
+  //#endregion
 }
 
 declare global {

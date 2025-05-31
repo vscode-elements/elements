@@ -153,6 +153,7 @@ export class VscodeMultiSelect
 
   constructor() {
     super();
+    this._opts.multiSelect = true;
     /** @internal */
     this._multiple = true;
     this._internals = this.attachInternals();
@@ -196,6 +197,30 @@ export class VscodeMultiSelect
     }
   }
 
+  protected override _dispatchChangeEvent(): void {
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {
+          selectedIndexes: this._selectedIndexes,
+          value: this._values,
+        },
+      })
+    );
+
+    super._dispatchChangeEvent();
+  }
+
+  protected override _onFaceClick(): void {
+    super._onFaceClick();
+    this._opts.activeIndex = 0;
+  }
+
+  protected override _toggleComboboxDropdown(): void {
+    super._toggleComboboxDropdown();
+    this._opts.activeIndex = -1;
+  }
+
   protected override _manageRequired() {
     const {value} = this;
     if (value.length === 0 && this.required) {
@@ -236,10 +261,11 @@ export class VscodeMultiSelect
       {detail: {value: this._options[nextIndex]?.value ?? ''}}
     );
     this.dispatchEvent(opCreateEvent);
-    this._toggleDropdown(false);
+    this.open = false;
     this._isPlaceholderOptionActive = false;
   }
 
+  //#region event handlers
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
@@ -304,8 +330,21 @@ export class VscodeMultiSelect
     this._dispatchChangeEvent();
   };
 
+  protected override _onEnterKeyDown(ev: KeyboardEvent): void {
+    super._onEnterKeyDown(ev);
+
+    if (!this.open) {
+      this._opts.filterPattern = '';
+      this.open = true;
+    } else {
+      this._opts.toggleActiveMultiselectOption();
+    }
+
+    // TODO: dispatch change + set value
+  }
+
   private _onMultiAcceptClick(): void {
-    this._toggleDropdown(false);
+    this.open = false;
   }
 
   private _onMultiDeselectAllClick(): void {
@@ -329,7 +368,9 @@ export class VscodeMultiSelect
     this._setFormValue();
     this._manageRequired();
   }
+  //#endregion
 
+  //#region render functions
   private _renderLabel() {
     switch (this._selectedIndexes.length) {
       case 0:
@@ -346,11 +387,18 @@ export class VscodeMultiSelect
   }
 
   protected override _renderSelectFace(): TemplateResult {
+    const activeDescendant =
+      this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
+
     return html`
       <div
+        aria-activedescendant=${activeDescendant}
+        aria-controls="select-listbox"
+        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-haspopup="listbox"
         class="select-face face multiselect"
         @click=${this._onFaceClick}
-        tabindex=${this.tabIndex > -1 ? 0 : -1}
+        .tabIndex=${this.disabled ? -1 : 0}
       >
         ${this._renderLabel()} ${chevronDownIcon}
       </div>
@@ -388,6 +436,17 @@ export class VscodeMultiSelect
         `
       : html`${nothing}`;
   }
+
+  override render(): TemplateResult {
+    return html`
+      <div class="multi-select">
+        <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
+        ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+        ${this._renderDropdown()}
+      </div>
+    `;
+  }
+  //#endregion
 }
 
 declare global {

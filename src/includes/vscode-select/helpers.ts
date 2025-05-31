@@ -1,5 +1,5 @@
 import {html, TemplateResult} from 'lit';
-import {InternalOption, SearchMethod} from './types.js';
+import {InternalOption, FilterMethod} from './types.js';
 
 export type SearchResult = {
   match: boolean;
@@ -112,7 +112,7 @@ export const fuzzySearch = (subject: string, pattern: string): SearchResult => {
 export const filterOptionsByPattern = (
   list: InternalOption[],
   pattern: string,
-  method: SearchMethod
+  method: FilterMethod
 ): InternalOption[] => {
   const filtered: InternalOption[] = [];
 
