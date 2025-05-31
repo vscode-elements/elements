@@ -242,6 +242,7 @@ export class VscodeSingleSelect
     }
   }
 
+  //#region event handlers
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
@@ -300,7 +301,7 @@ export class VscodeSingleSelect
     this._selectedIndex = nextIndex;
     this._activeIndex = nextIndex;
     this._value = nextIndex > -1 ? this._options[nextIndex].value : ''; */
-    this._internals.setFormValue(this._value);
+    this._internals.setFormValue(this._opts.value as string);
     this._manageRequired();
     this._dispatchChangeEvent();
   }
@@ -373,6 +374,7 @@ export class VscodeSingleSelect
       this._dispatchChangeEvent();
     }
   }
+  //#endregion
 
   protected override _manageRequired() {
     const {value} = this;
