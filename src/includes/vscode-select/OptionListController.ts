@@ -124,6 +124,10 @@ export class OptionListController implements ReactiveController {
     return this._options;
   }
 
+  get filteredOptions(): InternalOption[] {
+    return this._options.filter((o) => o.visible);
+  }
+
   get numOfVisibleOptions() {
     return this._options.filter((o) => o.visible).length;
   }

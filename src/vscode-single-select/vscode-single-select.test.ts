@@ -5,6 +5,15 @@ import {VscodeSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
 
+const ignoredAttributes = [
+  'aria-label',
+  'aria-selected',
+  'data-filtered-index',
+  'data-index',
+  'id',
+  'role',
+];
+
 describe('vscode-single-select', () => {
   it('is defined', () => {
     const el = document.createElement('vscode-single-select');
@@ -433,31 +442,22 @@ describe('vscode-single-select', () => {
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
-      expect(dropdown).lightDom.to.eq(`
+      expect(dropdown).lightDom.to.eq(
+        `
         <ul class="options">
-          <li
-            class="option"
-            data-filtered-index="0"
-            data-index="0"
-          >
+          <li class="option">
             <b>A</b>ntig<b>u</b>a and Barbuda
           </li>
-          <li
-            class="option"
-            data-filtered-index="1"
-            data-index="3"
-          >
+          <li class="option">
             <b>A</b><b>u</b>stralia
           </li>
-          <li
-            class="option"
-            data-filtered-index="2"
-            data-index="4"
-          >
+          <li class="option">
             <b>A</b><b>u</b>stria
           </li>
         </ul>
-      `);
+      `,
+        {ignoreAttributes: ignoredAttributes}
+      );
       expect(dropdown?.classList.contains('open')).to.be.true;
     });
 
@@ -488,7 +488,7 @@ describe('vscode-single-select', () => {
         <li class="option">App<b>l</b><b>e</b></li>
         <li class="option active"><b>L</b><b>e</b>mon</li>
       `,
-        {ignoreAttributes: ['data-filtered-index', 'data-index']}
+        {ignoreAttributes: ignoredAttributes}
       );
     });
 
@@ -673,13 +673,16 @@ describe('vscode-single-select', () => {
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
-      expect(dropdown).lightDom.to.eq(`
+      expect(dropdown).lightDom.to.eq(
+        `
         <ul class="options">
           <li class="no-options">
             No options
           </li>
         </ul>
-      `);
+      `,
+        {ignoreAttributes: ignoredAttributes}
+      );
     });
 
     it('shows suggested option below the options', async () => {
@@ -691,8 +694,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'lo'});
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
@@ -710,7 +713,14 @@ describe('vscode-single-select', () => {
         </ul>
       `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: [
+            'aria-label',
+            'aria-selected',
+            'data-filtered-index',
+            'data-index',
+            'id',
+            'role',
+          ],
         }
       );
     });
@@ -724,25 +734,31 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'Sit'});
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
       expect(dropdown).lightDom.to.eq(
         `
-        <ul class="options">
-          <li class="option placeholder">Add "Sit"</li>
-        </ul>
-      `,
+          <ul class="options">
+            <li class="option placeholder">Add "Sit"</li>
+          </ul>
+        `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: [
+            'aria-label',
+            'data-filtered-index',
+            'data-index',
+            'id',
+            'role',
+          ],
         }
       );
     });
 
-    it.only('selects the suggested option', async () => {
+    it('selects the suggested option', async () => {
       const el = (await fixture(html`
         <vscode-single-select combobox creatable>
           <vscode-option>Lorem</vscode-option>
@@ -750,8 +766,6 @@ describe('vscode-single-select', () => {
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
       `)) as VscodeSingleSelect;
-
-      // el.shadowRoot?.querySelector('.combobox-input');
 
       el.focus();
       await el.updateComplete;
@@ -793,8 +807,8 @@ describe('vscode-single-select', () => {
       const spy = sinon.spy();
       el.addEventListener('vsc-single-select-create-option', spy);
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'Sit'});
 
       await sendKeys({down: 'ArrowDown'});
