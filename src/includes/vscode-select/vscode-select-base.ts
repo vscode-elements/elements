@@ -629,9 +629,7 @@ export class VscodeSelectBase extends VscElement {
 
   //#region render functions
   protected _renderOptions(): TemplateResult | TemplateResult[] {
-    const list = this._opts.options;
-
-    //aria-multiselectable=${this._multiple ? 'true' : 'false'}
+    const list = this._opts.filteredOptions;
 
     return html`
       <ul
