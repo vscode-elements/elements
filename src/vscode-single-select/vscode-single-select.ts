@@ -209,11 +209,11 @@ export class VscodeSingleSelect
 
     await this.updateComplete;
 
-    this.selectedIndex = nextIndex;
+    this._opts.selectedIndex = nextIndex;
     this._dispatchChangeEvent();
     const opCreateEvent: VscSingleSelectCreateOptionEvent = new CustomEvent(
       'vsc-single-select-create-option',
-      {detail: {value: this._options[nextIndex]?.value ?? ''}}
+      {detail: {value: this._opts.getOptionByIndex(nextIndex)?.value ?? ''}}
     );
     this.dispatchEvent(opCreateEvent);
     this.open = false;
