@@ -151,7 +151,7 @@ describe('vscode-single-select', () => {
 
       expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('');
-      expect(el.selectedIndex).to.eq(999);
+      expect(el.selectedIndex).to.eq(-1);
     });
 
     it('should display selected value when an option is clicked', async () => {
