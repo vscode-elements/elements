@@ -12,6 +12,7 @@ export class OptionListController implements ReactiveController {
   private _activeIndex = -1;
   private _host: ReactiveControllerHost;
   private _options: InternalOption[] = [];
+  private _filteredOptions: InternalOption[] | null = null;
   private _filterPattern = '';
   private _filterMethod: FilterMethod = 'fuzzy';
   private _combobox = false;
@@ -107,8 +108,11 @@ export class OptionListController implements ReactiveController {
   }
 
   set filterPattern(pattern: string) {
-    this._filterPattern = pattern;
-    this._updateState();
+    if (pattern !== this._filterPattern) {
+      this._filterPattern = pattern;
+      this._updateState();
+      this._filteredOptions = null;
+    }
   }
 
   get filterMethod(): FilterMethod {
@@ -116,8 +120,11 @@ export class OptionListController implements ReactiveController {
   }
 
   set filterMethod(method: FilterMethod) {
-    this._filterMethod = method;
-    this._updateState();
+    if (method !== this._filterMethod) {
+      this._filterMethod = method;
+      this._updateState();
+      this._filteredOptions = null;
+    }
   }
 
   get options(): InternalOption[] {
@@ -125,7 +132,15 @@ export class OptionListController implements ReactiveController {
   }
 
   get filteredOptions(): InternalOption[] {
-    return this._options.filter((o) => o.visible);
+    if (this._filterPattern === '') {
+      return this._options;
+    }
+
+    if (this._filteredOptions === null) {
+      this._filteredOptions = this._options.filter((o) => o.visible);
+    }
+
+    return this._filteredOptions;
   }
 
   get numOfVisibleOptions() {
@@ -169,7 +184,7 @@ export class OptionListController implements ReactiveController {
     let visible = true;
     let ranges: [number, number][] = [];
 
-    if (this._combobox) {
+    if (this._combobox && this._filterPattern !== '') {
       const res = this._searchByPattern(label);
       visible = res.match;
       ranges = res.ranges;
@@ -266,48 +281,8 @@ export class OptionListController implements ReactiveController {
     return this._options[index];
   }
 
-  next(fromIndex?: number): {value: InternalOption; last: boolean} {
+  next(fromIndex?: number): InternalOption | null {
     const from = fromIndex ?? this._activeIndex;
-    let last = false;
-
-    let nextIndex = -1;
-
-    for (let i = from + 1; i < this._options.length; i++) {
-      if (
-        this._options[i] &&
-        !this._options[i].disabled &&
-        this._options[i].visible
-      ) {
-        nextIndex = i;
-        break;
-      }
-    }
-
-    const value =
-      nextIndex > -1 ? this._options[nextIndex] : (this._options[from] ?? null);
-    last = nextIndex === -1;
-
-    return {
-      value,
-      last,
-    };
-  }
-
-  getNextSelectableOption(fromIndex?: number): InternalOption | null {
-    const from = fromIndex ?? this._activeIndex;
-
-    /* if (this._options.length === 0) {
-      return null;
-    }
-
-    if (this._options.length === 1) {
-      return this._options[0];
-    }
-
-    if (from !== -1 && !this._options[from + 1]) {
-      return this._options[from];
-    } */
-
     let nextIndex = -1;
 
     for (let i = from + 1; i < this._options.length; i++) {
@@ -367,13 +342,6 @@ export class OptionListController implements ReactiveController {
     }
 
     this._host.requestUpdate();
-  }
-
-  activateNext() {
-    const nextOp = this.getNextSelectableOption();
-    this._activeIndex = nextOp?.index ?? -1;
-    this._host.requestUpdate();
-    return nextOp;
   }
 
   activatePrev() {
