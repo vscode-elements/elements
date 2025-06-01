@@ -397,17 +397,19 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
 
       const dropdownBefore = el.shadowRoot?.querySelector('.dropdown');
+      const faceBefore = el.shadowRoot?.querySelector('.select-face');
 
       expect(dropdownBefore?.classList.contains('open')).to.be.true;
-      expect(el.getAttribute('aria-expanded')).to.eq('true');
+      expect(faceBefore?.getAttribute('aria-expanded')).to.eq('true');
 
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
       await el.updateComplete;
 
       const dropdownAfter = el.shadowRoot?.querySelector('.dropdown');
+      const faceAfter = el.shadowRoot?.querySelector('.select-face');
 
       expect(dropdownAfter?.classList.contains('open')).to.be.false;
-      expect(el.getAttribute('aria-expanded')).be.eq('false');
+      expect(faceAfter?.getAttribute('aria-expanded')).be.eq('false');
     });
     //#endregion
   });
