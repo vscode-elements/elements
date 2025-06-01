@@ -531,13 +531,13 @@ export class VscodeSelectBase extends VscElement {
 
       const nextOp = this._opts.next();
 
-      if (suggestedOptionVisible && nextOp.last) {
+      if (suggestedOptionVisible && nextOp === null) {
         this._isPlaceholderOptionActive = true;
         this._adjustOptionListScrollPos('down', numOpts - 1);
         this._opts.activeIndex = -1;
-      } else {
-        const nextSelectableIndex = nextOp?.value.relativeIndex ?? -1;
-        this._opts.activeIndex = nextOp.value.index;
+      } else if (nextOp !== null) {
+        const nextSelectableIndex = nextOp?.relativeIndex ?? -1;
+        this._opts.activeIndex = nextOp?.index ?? -1;
 
         if (nextSelectableIndex > -1) {
           this._adjustOptionListScrollPos('down', nextSelectableIndex);
