@@ -26,15 +26,15 @@
   <body>
     <main>
       <vscode-demo>
-        <vscode-single-select combobox>
+        <vscode-single-select>
           <vscode-option>Afghanistan</vscode-option>
           <vscode-option>Albania</vscode-option>
           <vscode-option>Algeria</vscode-option>
-          <vscode-option disabled="">Andorra</vscode-option>
+          <vscode-option>Andorra</vscode-option>
           <vscode-option>Angola</vscode-option>
           <vscode-option>Antigua and Barbuda</vscode-option>
-          <vscode-option disabled="">Argentina</vscode-option>
-          <vscode-option disabled="">Armenia</vscode-option>
+          <vscode-option>Argentina</vscode-option>
+          <vscode-option>Armenia</vscode-option>
           <vscode-option>Australia</vscode-option>
           <vscode-option>Austria</vscode-option>
           <vscode-option>Azerbaijan</vscode-option>
@@ -228,6 +228,10 @@
           sl.addEventListener('change', () => {
             console.log(sl.value);
           });
+
+          sl.addEventListener('vsc-single-select-create-option', (ev) => {
+            console.log(ev);
+          });
         </script>
       </vscode-demo>
 
@@ -238,11 +242,11 @@
           <option>Afghanistan</option>
           <option>Albania</option>
           <option>Algeria</option>
-          <option disabled>Andorra</option>
+          <option>Andorra</option>
           <option>Angola</option>
           <option>Antigua and Barbuda</option>
-          <option disabled>Argentina</option>
-          <option disabled>Armenia</option>
+          <option>Argentina</option>
+          <option>Armenia</option>
           <option>Australia</option>
           <option>Austria</option>
           <option>Azerbaijan</option>

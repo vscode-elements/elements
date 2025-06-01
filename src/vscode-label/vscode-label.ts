@@ -3,10 +3,6 @@ import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import uniqueId from '../includes/uniqueId.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
-import {VscodeCheckboxGroup} from '../vscode-checkbox-group/index.js';
-import {VscodeRadioGroup} from '../vscode-radio-group/index.js';
-import {VscodeTextarea} from '../vscode-textarea/index.js';
-import {VscodeTextfield} from '../vscode-textfield/index.js';
 import styles from './vscode-label.styles.js';
 
 interface FocusableElement extends Element {
@@ -97,10 +93,11 @@ export class VscodeLabel extends VscElement {
     const target = this._getTarget();
 
     if (
-      target instanceof VscodeRadioGroup ||
-      target instanceof VscodeCheckboxGroup
+      ['vscode-radio-group', 'vscode-checkbox-group'].includes(
+        target?.tagName.toLowerCase() ?? ''
+      )
     ) {
-      target.setAttribute('aria-labelledby', this._id);
+      (target as HTMLElement).setAttribute('aria-labelledby', this._id);
     }
 
     let label = '';
@@ -109,7 +106,16 @@ export class VscodeLabel extends VscElement {
       label = this.textContent.trim();
     }
 
-    if (target instanceof VscodeTextfield || target instanceof VscodeTextarea) {
+    if (
+      target &&
+      'label' in target &&
+      [
+        'vscode-textfield',
+        'vscode-textarea',
+        'vscode-single-select',
+        'vscode-multi-select',
+      ].includes(target?.tagName.toLowerCase() ?? '')
+    ) {
       target.label = label;
     }
   }
