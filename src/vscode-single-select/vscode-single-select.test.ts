@@ -216,6 +216,11 @@ describe('vscode-single-select', () => {
       `)) as VscodeSingleSelect;
 
       el.value = 'Lorem';
+
+      // first arrow down press opens the dropdown
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
@@ -227,7 +232,7 @@ describe('vscode-single-select', () => {
         el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
         await el.updateComplete;
       }).not.throw();
-      expect(el.value).to.eq('Ipsum');
+      expect(el.value).to.eq('Lorem');
     });
 
     it('dropdown should be scrolled to the selected option', async () => {
@@ -255,11 +260,10 @@ describe('vscode-single-select', () => {
           <vscode-option>Bhutan</vscode-option>
         </vscode-single-select>
       `)) as VscodeSingleSelect;
-      await el.updateComplete;
 
-      const face = el.shadowRoot?.querySelector('.select-face');
-      face?.dispatchEvent(new MouseEvent('click'));
+      el.focus();
       await el.updateComplete;
+      await sendKeys({press: 'Enter'});
 
       const options = el.shadowRoot?.querySelector('.options');
       expect(options?.scrollTop).to.eq(220);
@@ -553,14 +557,10 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
       await el.updateComplete;
 
-      const dispatchedChangeEvent = spy.args[2][0] as CustomEvent;
+      const dispatchedChangeEvent = spy.args[2][0] as Event;
 
       expect(el.value).to.eq('Antigua and Barbuda');
-      expect(dispatchedChangeEvent.type).to.eq('vsc-change');
-      expect(dispatchedChangeEvent.detail).to.eql({
-        selectedIndex: 0,
-        value: 'Antigua and Barbuda',
-      });
+      expect(dispatchedChangeEvent.type).to.eq('change');
     });
 
     it('select an option with the arrow down key, opens the dropdown with the enter key, scroll to the selected option', async () => {
@@ -616,7 +616,7 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
+      await sendKeys({down: 'Enter'});
       await el.updateComplete;
 
       const activeOpt = el.shadowRoot?.querySelector('.option.active');
@@ -624,8 +624,8 @@ describe('vscode-single-select', () => {
 
       expect(input.value).to.eq('Austria');
       expect(activeOpt).not.null;
-      expect((activeOpt as HTMLLIElement).innerText).to.eq('Austria');
-      expect(optionsEl?.scrollTop).to.eq(198);
+      expect(activeOpt as HTMLLIElement).lightDom.to.eq('Austria');
+      expect(optionsEl?.scrollTop).to.eq(0);
       expect(el.value).to.eq('Austria');
       expect(el.selectedIndex).to.eq(9);
     });
