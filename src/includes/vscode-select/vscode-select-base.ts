@@ -207,17 +207,7 @@ export class VscodeSelectBase extends VscElement {
     if (changedProperties.has('open')) {
       if (this.open) {
         this._opts.activateDefault();
-
-        if (!this._multiple && !this.combobox) {
-          const activeOption = this._opts.getActiveOption();
-          const filteredActiveIndex = activeOption?.relativeIndex ?? -1;
-
-          if (filteredActiveIndex > VISIBLE_OPTS - 1) {
-            this._optionListScrollPos = Math.floor(
-              filteredActiveIndex * OPT_HEIGHT
-            );
-          }
-        }
+        this._scrollActiveElementToTop();
 
         window.addEventListener('click', this._onClickOutside);
       } else {
