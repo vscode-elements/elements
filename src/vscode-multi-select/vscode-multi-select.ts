@@ -69,45 +69,17 @@ export class VscodeMultiSelect
 
   @property({type: Array, attribute: false})
   set selectedIndexes(val: number[]) {
-    const newIndexes: number[] = [];
-
-    val.forEach((v) => {
-      if (typeof this._options[v] !== 'undefined') {
-        if (!newIndexes.includes(v)) {
-          this._options[v].selected = true;
-          newIndexes.push(v);
-        }
-      }
-    });
-
-    this._selectedIndexes = newIndexes;
+    this._opts.selectedIndexes = val;
   }
   get selectedIndexes(): number[] {
-    return this._selectedIndexes;
+    return this._opts.selectedIndexes;
   }
 
   @property({type: Array})
-  set value(val: string[] | string) {
-    const sanitizedVal = Array.isArray(val)
-      ? val.map((v) => String(v))
-      : [String(val)];
-    this._values = [];
+  set value(val: string[]) {
+    this._opts.multiSelectValue = val;
 
-    this._selectedIndexes.forEach((i) => {
-      this._options[i].selected = false;
-    });
-
-    this._selectedIndexes = [];
-
-    sanitizedVal.forEach((v) => {
-      if (typeof this._valueOptionIndexMap[v] === 'number') {
-        this._selectedIndexes.push(this._valueOptionIndexMap[v]);
-        this._options[this._valueOptionIndexMap[v]].selected = true;
-        this._values.push(v);
-      }
-    });
-
-    if (this._selectedIndexes.length > 0) {
+    if (this._opts.selectedIndexes.length > 0) {
       this._requestedValueToSetLater = [];
     } else {
       this._requestedValueToSetLater = Array.isArray(val) ? val : [val];
@@ -117,7 +89,7 @@ export class VscodeMultiSelect
     this._manageRequired();
   }
   get value(): string[] {
-    return this._values;
+    return this._opts.multiSelectValue;
   }
 
   get form() {
@@ -202,8 +174,8 @@ export class VscodeMultiSelect
     this.dispatchEvent(
       new CustomEvent('vsc-change', {
         detail: {
-          selectedIndexes: this._selectedIndexes,
-          value: this._values,
+          selectedIndexes: this._opts.selectedIndexes,
+          value: this._opts.multiSelectValue,
         },
       })
     );
@@ -270,7 +242,18 @@ export class VscodeMultiSelect
     super._onSlotChange();
 
     if (this._requestedValueToSetLater.length > 0) {
-      this.options.forEach((o, i) => {
+      console.log('aa', this._opts.value, this._requestedValueToSetLater);
+
+      const prevValue = this._opts.value as string[];
+
+      this._opts.value = [
+        ...this._opts.value,
+        ...this._requestedValueToSetLater,
+      ];
+
+      console.log(this._opts.value);
+
+      /* this.options.forEach((o, i) => {
         if (this._requestedValueToSetLater.includes(o.value)) {
           this._selectedIndexes.push(i);
           this._values.push(o.value);
@@ -278,7 +261,7 @@ export class VscodeMultiSelect
           this._requestedValueToSetLater =
             this._requestedValueToSetLater.filter((v) => v !== o.value);
         }
-      });
+      }); */
     }
   }
 
@@ -307,23 +290,7 @@ export class VscodeMultiSelect
 
     const index = Number((optEl as HTMLElement).dataset.index);
 
-    if (this._options[index]) {
-      if (this._options[index].disabled) {
-        return;
-      }
-
-      this._options[index].selected = !this._options[index].selected;
-    }
-
-    this._selectedIndexes = [];
-    this._values = [];
-
-    this._options.forEach((op) => {
-      if (op.selected) {
-        this._selectedIndexes.push(op.index);
-        this._values.push(op.value);
-      }
-    });
+    this._opts.toggleOptionSelected(index);
 
     this._setFormValue();
     this._manageRequired();
@@ -348,7 +315,7 @@ export class VscodeMultiSelect
   }
 
   private _onMultiDeselectAllClick(): void {
-    this._selectedIndexes = [];
+    this._opts.selectedIndexes = [];
     this._values = [];
     this._options = this._options.map((op) => ({...op, selected: false}));
     this._manageRequired();
@@ -356,7 +323,7 @@ export class VscodeMultiSelect
   }
 
   private _onMultiSelectAllClick(): void {
-    this._selectedIndexes = [];
+    this._opts.selectedIndexes = [];
     this._values = [];
     this._options = this._options.map((op) => ({...op, selected: true}));
     this._options.forEach((op, index) => {

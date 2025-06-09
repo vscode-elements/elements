@@ -103,6 +103,20 @@ export class OptionListController implements ReactiveController {
     }
   }
 
+  set multiSelectValue(newValue: string[]) {
+    const valueList = (newValue as string[])
+      .map((v) => this._indexByValue.get(v))
+      .filter((v) => v !== undefined);
+
+    this._selectedIndexes = new Set(valueList);
+  }
+
+  get multiSelectValue(): string[] {
+    return this._selectedIndexes.size > 0
+      ? Array.from(this._selectedIndexes).map((v) => this._options[v].value)
+      : [];
+  }
+
   get filterPattern() {
     return this._filterPattern;
   }
@@ -239,6 +253,17 @@ export class OptionListController implements ReactiveController {
       this._selectedIndexes.delete(activeOption.index);
     } else {
       this._selectedIndexes.add(activeOption.index);
+    }
+  }
+
+  toggleOptionSelected(optIndex: number) {
+    const checked = this._selectedIndexes.has(optIndex);
+    this._options[optIndex].selected = !this._options[optIndex].selected;
+
+    if (checked) {
+      this._selectedIndexes.delete(optIndex);
+    } else {
+      this._selectedIndexes.add(optIndex);
     }
   }
 
@@ -384,9 +409,6 @@ export class OptionListController implements ReactiveController {
       this._options.forEach((_, i) => {
         this._options[i].visible = true;
       });
-
-      this._host.requestUpdate();
-      return;
     }
 
     let filteredListNextIndex = -1;
