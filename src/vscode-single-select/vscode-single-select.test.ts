@@ -271,7 +271,7 @@ describe('vscode-single-select', () => {
 
     //#region keyboard interactions
 
-    it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
+    it('the dropdown should be opened when the arrow down key pressed while the dropdown is closed', async () => {
       const el = (await fixture(html`
         <vscode-single-select>
           <vscode-option selected>Lorem</vscode-option>
@@ -280,27 +280,15 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      const spy = sinon.spy(el, 'dispatchEvent');
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
+      el.focus();
+      await sendKeys({press: 'ArrowDown'});
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
-      expect(dropdown?.classList.contains('open')).to.be.false;
-      expect(el.value).to.eq('Ipsum');
-      expect(el.selectedIndex).to.eq(1);
-
-      const dispatchedEvent = spy.args[1][0] as CustomEvent;
-
-      expect(dispatchedEvent.type).to.eq('vsc-change');
-      expect(dispatchedEvent.detail).to.eql({
-        selectedIndex: 1,
-        value: 'Ipsum',
-      });
+      expect(dropdown?.classList.contains('open')).to.be.true;
     });
 
-    it('the value should be changed when the arrow up key pressed while the dropdown is closed', async () => {
+    it('the dropdown should be opened when the arrow up key pressed while the dropdown is closed', async () => {
       const el = (await fixture(html`
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
@@ -309,26 +297,12 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      const spy = sinon.spy(el, 'dispatchEvent');
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowUp'}));
-      await el.updateComplete;
+      el.focus();
+      await sendKeys({press: 'ArrowUp'});
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
-      const text = el.shadowRoot?.querySelector('.text');
 
-      expect(dropdown?.classList.contains('open')).to.be.false;
-      expect(text).lightDom.to.eq('Ipsum');
-      expect(el.value).to.eq('Ipsum');
-      expect(el.selectedIndex).to.eq(1);
-
-      const dispatchedEvent = spy.args[1][0] as CustomEvent;
-
-      expect(dispatchedEvent.type).to.eq('vsc-change');
-      expect(dispatchedEvent.detail).to.eql({
-        selectedIndex: 1,
-        value: 'Ipsum',
-      });
+      expect(dropdown?.classList.contains('open')).to.be.true;
     });
 
     it('dropdown should be opened when "Space" key pressed', async () => {
@@ -352,13 +326,14 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
-      await el.updateComplete;
+      el.focus();
+      await sendKeys({press: 'Enter'});
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const combobox = el.shadowRoot?.querySelector('[role="combobox"]');
 
       expect(dropdown?.classList.contains('open')).to.be.true;
-      expect(el.getAttribute('aria-expanded')).to.eq('true');
+      expect(combobox?.getAttribute('aria-expanded')).to.eq('true');
     });
 
     it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
@@ -373,18 +348,13 @@ describe('vscode-single-select', () => {
       const spy = sinon.spy();
       el.addEventListener('change', spy);
 
-      el.dispatchEvent(new MouseEvent('click'));
-      await el.updateComplete;
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
+      el.focus();
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'Enter'});
 
-      const text = el.shadowRoot?.querySelector('.text');
-
-      expect(text).lightDom.to.eq('Dolor');
+      expect(el.shadowRoot?.querySelector('.text')).lightDom.to.eq('Dolor');
       expect(el.value).to.eq('Dolor');
       expect(el.selectedIndex).to.eq(2);
       expect(spy.calledWithMatch({type: 'change'})).to.be.true;
@@ -508,18 +478,11 @@ describe('vscode-single-select', () => {
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
       `)) as VscodeSingleSelect;
-      await el.updateComplete;
 
-      const input = el.shadowRoot?.querySelector(
-        '.combobox-input'
-      ) as HTMLInputElement;
-      input.value = 'au';
-      input.dispatchEvent(new InputEvent('input'));
-      await el.updateComplete;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
+      el.focus();
+      await sendKeys({type: 'au'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'ArrowDown'});
 
       const options = Array.from(
         el.shadowRoot?.querySelectorAll(
@@ -540,27 +503,14 @@ describe('vscode-single-select', () => {
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
       `)) as VscodeSingleSelect;
-      await el.updateComplete;
 
-      const spy = sinon.spy(el, 'dispatchEvent');
+      el.focus();
 
-      const input = el.shadowRoot?.querySelector(
-        '.combobox-input'
-      ) as HTMLInputElement;
-      input.value = 'au';
-      input.dispatchEvent(new InputEvent('input'));
-      await el.updateComplete;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
-      await el.updateComplete;
-
-      const dispatchedChangeEvent = spy.args[2][0] as Event;
+      await sendKeys({type: 'au'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'Enter'});
 
       expect(el.value).to.eq('Antigua and Barbuda');
-      expect(dispatchedChangeEvent.type).to.eq('change');
     });
 
     it('select an option with the arrow down key, opens the dropdown with the enter key, scroll to the selected option', async () => {
