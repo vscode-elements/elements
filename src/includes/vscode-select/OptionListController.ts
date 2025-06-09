@@ -331,14 +331,18 @@ export class OptionListController implements ReactiveController {
   }
 
   activateDefault() {
-    if (this._multiSelect && this._selectedIndexes.size > 0) {
-      const indexes = this._selectedIndexes.values();
-      const first = indexes.next();
-      this._activeIndex = first.value ? first.value : 0;
-    }
-
-    if (!this._multiSelect && this._selectedIndex > -1) {
-      this._activeIndex = this._selectedIndex;
+    if (this._multiSelect) {
+      if (this._selectedIndexes.size > 0) {
+        const indexes = this._selectedIndexes.values();
+        const first = indexes.next();
+        this._activeIndex = first.value ? first.value : 0;
+      }
+    } else {
+      if (this._selectedIndex > -1) {
+        this._activeIndex = this._selectedIndex;
+      } else {
+        this._activeIndex = 0;
+      }
     }
 
     this._host.requestUpdate();
