@@ -249,7 +249,7 @@ describe('vscode-multi-select', () => {
     const el = await fixture<VscodeMultiSelect>(
       html`<vscode-multi-select></vscode-multi-select>`
     );
-    el.value = 'dolor';
+    el.value = ['dolor'];
     const op1 = document.createElement('vscode-option');
     const op2 = document.createElement('vscode-option');
     const op3 = document.createElement('vscode-option');
