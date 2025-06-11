@@ -242,26 +242,10 @@ export class VscodeMultiSelect
     super._onSlotChange();
 
     if (this._requestedValueToSetLater.length > 0) {
-      console.log('aa', this._opts.value, this._requestedValueToSetLater);
-
-      const prevValue = this._opts.value as string[];
-
-      this._opts.value = [
-        ...this._opts.value,
-        ...this._requestedValueToSetLater,
-      ];
-
-      console.log(this._opts.value);
-
-      /* this.options.forEach((o, i) => {
-        if (this._requestedValueToSetLater.includes(o.value)) {
-          this._selectedIndexes.push(i);
-          this._values.push(o.value);
-          this._options[i].selected = true;
-          this._requestedValueToSetLater =
-            this._requestedValueToSetLater.filter((v) => v !== o.value);
-        }
-      }); */
+      this._opts.expandMultiSelection(this._requestedValueToSetLater);
+      this._requestedValueToSetLater = this._requestedValueToSetLater.filter(
+        (v) => this._opts.findOptionIndex(v) === -1
+      );
     }
   }
 
@@ -339,7 +323,7 @@ export class VscodeMultiSelect
 
   //#region render functions
   private _renderLabel() {
-    switch (this._selectedIndexes.length) {
+    switch (this._opts.selectedIndexes.length) {
       case 0:
         return html`<span class="select-face-badge no-item"
           >No items selected</span
@@ -348,7 +332,7 @@ export class VscodeMultiSelect
         return html`<span class="select-face-badge">1 item selected</span>`;
       default:
         return html`<span class="select-face-badge"
-          >${this._selectedIndexes.length} items selected</span
+          >${this._opts.selectedIndexes.length} items selected</span
         >`;
     }
   }
