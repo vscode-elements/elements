@@ -6,15 +6,15 @@ import {
   state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {repeat} from 'lit/directives/repeat.js';
 import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
-import type {InternalOption, Option, FilterMethod} from './types.js';
-import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import {VscElement} from '../VscElement.js';
+import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import {chevronDownIcon} from './template-elements.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
+import type {InternalOption, Option, FilterMethod} from './types.js';
 import {OptionListController} from './OptionListController.js';
 
 export const VISIBLE_OPTS = 10;
