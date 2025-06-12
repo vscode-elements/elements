@@ -90,6 +90,7 @@ export class VscodeIcon extends VscElement {
       msg +=
         'See https://vscode-elements.github.io/components/icon/ for more details.';
 
+      // eslint-disable-next-line no-console
       console.warn(msg);
     }
 

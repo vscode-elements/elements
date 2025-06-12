@@ -38,6 +38,7 @@ export const customElement = (tagName: string) => {
     let message = '';
 
     if (!anotherVersion) {
+      // eslint-disable-next-line no-console
       console.warn(
         tagName,
         'is already registered by an unknown custom element handler class.'
@@ -53,6 +54,7 @@ export const customElement = (tagName: string) => {
         'is already registered by the same version of VSCode Elements. ';
     }
 
+    // eslint-disable-next-line no-console
     console.warn(
       `[VSCode Elements] ${tagName} ${message}\nTo suppress this warning, set window.${CONFIG_KEY} to true`
     );
