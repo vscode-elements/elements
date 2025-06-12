@@ -1,5 +1,6 @@
 import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {customElement} from '../includes/VscElement.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
@@ -325,13 +326,21 @@ export class VscodeMultiSelect
   private _renderLabel() {
     switch (this._opts.selectedIndexes.length) {
       case 0:
-        return html`<span class="select-face-badge no-item"
-          >No items selected</span
+        return html`<span
+          class="select-face-badge no-item"
+          aria-label="Click to open the list of items"
+          >0 selected</span
         >`;
       case 1:
-        return html`<span class="select-face-badge">1 item selected</span>`;
+        return html`<span
+          class="select-face-badge"
+          aria-label="Click to open the list of items"
+          >1 item selected</span
+        >`;
       default:
-        return html`<span class="select-face-badge"
+        return html`<span
+          class="select-face-badge"
+          aria-label="Click to open the list of items"
           >${this._opts.selectedIndexes.length} items selected</span
         >`;
     }
@@ -340,13 +349,19 @@ export class VscodeMultiSelect
   protected override _renderSelectFace(): TemplateResult {
     const activeDescendant =
       this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
+    const expanded = this.open ? 'true' : 'false';
 
     return html`
       <div
-        aria-activedescendant=${activeDescendant}
+        aria-activedescendant=${ifDefined(
+          this._opts.multiSelect ? undefined : activeDescendant
+        )}
         aria-controls="select-listbox"
-        aria-expanded=${this.open ? 'true' : 'false'}
+        aria-expanded=${ifDefined(
+          this._opts.multiSelect ? undefined : expanded
+        )}
         aria-haspopup="listbox"
+        aria-label=${ifDefined(this.label ?? undefined)}
         class="select-face face multiselect"
         @click=${this._onFaceClick}
         .tabIndex=${this.disabled ? -1 : 0}
@@ -390,7 +405,10 @@ export class VscodeMultiSelect
 
   override render(): TemplateResult {
     return html`
-      <div class="multi-select">
+      <div
+        class="multi-select"
+        aria-label=${ifDefined(this.label ?? undefined)}
+      >
         <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
         ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
         ${this._renderDropdown()}
