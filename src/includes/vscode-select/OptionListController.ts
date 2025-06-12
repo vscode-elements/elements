@@ -281,6 +281,8 @@ export class OptionListController implements ReactiveController {
     } else {
       this._selectedIndexes.add(activeOption.index);
     }
+
+    this._host.requestUpdate();
   }
 
   toggleOptionSelected(optIndex: number) {
