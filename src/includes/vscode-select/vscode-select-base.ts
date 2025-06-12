@@ -652,7 +652,7 @@ export class VscodeSelectBase extends VscElement {
 
             const checkboxClasses = {
               'checkbox-icon': true,
-              checked: op.selected,
+              checked: selected,
             };
 
             const labelText =
