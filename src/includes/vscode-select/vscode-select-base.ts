@@ -32,7 +32,7 @@ export class VscodeSelectBase extends VscElement {
    */
   @property({type: Boolean, reflect: true})
   set combobox(enabled: boolean) {
-    this._opts.toggleComboboxMode(enabled);
+    this._opts.comboboxMode = enabled;
   }
   get combobox() {
     return this._opts.comboboxMode;

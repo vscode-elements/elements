@@ -43,6 +43,11 @@ export class OptionListController implements ReactiveController {
     return this._options[this._activeIndex]?.relativeIndex ?? -1;
   }
 
+  set comboboxMode(enabled: boolean) {
+    this._combobox = enabled;
+    this._host.requestUpdate();
+  }
+
   get comboboxMode() {
     return this._combobox;
   }
@@ -264,11 +269,6 @@ export class OptionListController implements ReactiveController {
       }
     });
 
-    this._host.requestUpdate();
-  }
-
-  toggleComboboxMode(enabled: boolean) {
-    this._combobox = enabled;
     this._host.requestUpdate();
   }
 
