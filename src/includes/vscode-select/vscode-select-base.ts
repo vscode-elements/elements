@@ -623,7 +623,7 @@ export class VscodeSelectBase extends VscElement {
 
     return html`
       <ul
-        aria-label="List of options"
+        aria-label=${ifDefined(this.label ?? undefined)}
         class="options"
         id="select-listbox"
         role="listbox"
@@ -668,6 +668,7 @@ export class VscodeSelectBase extends VscElement {
                 data-filtered-index=${index}
                 id=${`op-${op.index}`}
                 role="option"
+                tabindex="-1"
               >
                 ${this._multiple
                   ? html`<span class=${classMap(checkboxClasses)}></span
@@ -758,17 +759,22 @@ export class VscodeSelectBase extends VscElement {
 
     const activeDescendant =
       this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
+    const expanded = this.open ? 'true' : 'false';
 
     return html`
       <div class="combobox-face face">
         ${this._multiple ? this._renderMultiSelectLabel() : nothing}
         <input
-          aria-activedescendant=${activeDescendant}
+          aria-activedescendant=${ifDefined(
+            this._opts.multiSelect ? undefined : activeDescendant
+          )}
           aria-autocomplete="list"
           aria-controls=${this._multiple
             ? 'multi-select-listbox'
             : 'single-select-listbox'}
-          aria-expanded=${this.open ? 'true' : 'false'}
+          aria-expanded=${ifDefined(
+            this._opts.multiSelect ? undefined : expanded
+          )}
           aria-haspopup="listbox"
           aria-label=${ifDefined(this.label)}
           class="combobox-input"
