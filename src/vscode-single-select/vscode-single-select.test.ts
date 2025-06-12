@@ -12,6 +12,7 @@ const ignoredAttributes = [
   'data-index',
   'id',
   'role',
+  'tabindex',
 ];
 
 describe('vscode-single-select', () => {
@@ -665,14 +666,7 @@ describe('vscode-single-select', () => {
         </ul>
       `,
         {
-          ignoreAttributes: [
-            'aria-label',
-            'aria-selected',
-            'data-filtered-index',
-            'data-index',
-            'id',
-            'role',
-          ],
+          ignoreAttributes: ignoredAttributes,
         }
       );
     });
@@ -699,13 +693,7 @@ describe('vscode-single-select', () => {
           </ul>
         `,
         {
-          ignoreAttributes: [
-            'aria-label',
-            'data-filtered-index',
-            'data-index',
-            'id',
-            'role',
-          ],
+          ignoreAttributes: ignoredAttributes,
         }
       );
     });
@@ -736,14 +724,7 @@ describe('vscode-single-select', () => {
         </ul>
         `,
         {
-          ignoreAttributes: [
-            'aria-label',
-            'aria-selected',
-            'data-filtered-index',
-            'data-index',
-            'role',
-            'id',
-          ],
+          ignoreAttributes: ignoredAttributes,
         }
       );
     });
