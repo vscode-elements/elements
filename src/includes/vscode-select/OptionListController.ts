@@ -12,7 +12,6 @@ export class OptionListController implements ReactiveController {
   private _activeIndex = -1;
   private _host: ReactiveControllerHost;
   private _options: InternalOption[] = [];
-  private _filteredOptions: InternalOption[] | null = null;
   private _filterPattern = '';
   private _filterMethod: FilterMethod = 'fuzzy';
   private _combobox = false;
@@ -21,6 +20,7 @@ export class OptionListController implements ReactiveController {
   private _selectedIndex = -1;
   private _selectedIndexes: Set<number> = new Set();
   private _multiSelect = false;
+  private _numOfVisibleOptions = 0;
 
   constructor(host: ReactiveControllerHost) {
     (this._host = host).addController(this);
@@ -145,7 +145,6 @@ export class OptionListController implements ReactiveController {
     if (pattern !== this._filterPattern) {
       this._filterPattern = pattern;
       this._updateState();
-      this._filteredOptions = null;
     }
   }
 
@@ -157,7 +156,6 @@ export class OptionListController implements ReactiveController {
     if (method !== this._filterMethod) {
       this._filterMethod = method;
       this._updateState();
-      this._filteredOptions = null;
     }
   }
 
@@ -165,20 +163,8 @@ export class OptionListController implements ReactiveController {
     return this._options;
   }
 
-  get filteredOptions(): InternalOption[] {
-    if (this._filterPattern === '') {
-      return this._options;
-    }
-
-    if (this._filteredOptions === null) {
-      this._filteredOptions = this._options.filter((o) => o.visible);
-    }
-
-    return this._filteredOptions;
-  }
-
   get numOfVisibleOptions() {
-    return this._options.filter((o) => o.visible).length;
+    return this._numOfVisibleOptions;
   }
 
   get numOptions() {
@@ -210,6 +196,8 @@ export class OptionListController implements ReactiveController {
         visible: true,
       };
     });
+
+    this._numOfVisibleOptions = this._options.length;
   }
 
   add(option: Option) {
@@ -244,12 +232,17 @@ export class OptionListController implements ReactiveController {
       visible,
       ranges,
     });
+
+    if (visible) {
+      this._numOfVisibleOptions += 1;
+    }
   }
 
   clear() {
     this._options = [];
     this._indexByValue.clear();
     this._indexByLabel.clear();
+    this._numOfVisibleOptions = 0;
   }
 
   getIsIndexSelected(index: number) {
@@ -445,8 +438,10 @@ export class OptionListController implements ReactiveController {
         this._options[i].visible = true;
         this._options[i].ranges = [];
       });
+      this._numOfVisibleOptions = this._options.length;
     } else {
       let filteredListNextIndex = -1;
+      this._numOfVisibleOptions = 0;
 
       this._options.forEach(({label}, i) => {
         const result = this._searchByPattern(label);
@@ -455,6 +450,10 @@ export class OptionListController implements ReactiveController {
         this._options[i].relativeIndex = result.match
           ? ++filteredListNextIndex
           : -1;
+
+        if (result.match) {
+          this._numOfVisibleOptions += 1;
+        }
       });
     }
 
