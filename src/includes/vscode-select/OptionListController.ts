@@ -180,8 +180,8 @@ export class OptionListController implements ReactiveController {
     this._indexByLabel.clear();
 
     this._options = options.map((op, index) => {
-      this._indexByValue.set(op.value, index);
-      this._indexByLabel.set(op.label, index);
+      this._indexByValue.set(op.value ?? '', index);
+      this._indexByLabel.set(op.label ?? '', index);
 
       return {
         description: op.description ?? '',
@@ -190,8 +190,7 @@ export class OptionListController implements ReactiveController {
         selected: op.selected ?? false,
         value: op.value ?? '',
         index,
-        relativeIndex: index,
-        absoluteIndex: index,
+        filteredIndex: index,
         ranges: [],
         visible: true,
       };
@@ -207,13 +206,13 @@ export class OptionListController implements ReactiveController {
     let ranges: [number, number][] = [];
 
     if (this._combobox && this._filterPattern !== '') {
-      const res = this._searchByPattern(label);
+      const res = this._searchByPattern(label ?? '');
       visible = res.match;
       ranges = res.ranges;
     }
 
-    this._indexByValue.set(value, nextIndex);
-    this._indexByLabel.set(label, nextIndex);
+    this._indexByValue.set(value ?? '', nextIndex);
+    this._indexByLabel.set(label ?? '', nextIndex);
 
     if (selected) {
       this._selectedIndex = nextIndex;
@@ -224,11 +223,11 @@ export class OptionListController implements ReactiveController {
     this._options.push({
       index: nextIndex,
       filteredIndex: nextIndex,
-      description,
-      disabled,
-      label,
-      selected,
-      value,
+      description: description ?? '',
+      disabled: disabled ?? false,
+      label: label ?? '',
+      selected: selected ?? false,
+      value: value ?? '',
       visible,
       ranges,
     });
