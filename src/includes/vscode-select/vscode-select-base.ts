@@ -619,7 +619,7 @@ export class VscodeSelectBase extends VscElement {
 
   //#region render functions
   protected _renderOptions(): TemplateResult | TemplateResult[] {
-    const list = this._opts.filteredOptions;
+    const list = this._opts.options;
 
     return html`
       <ul
@@ -678,7 +678,7 @@ export class VscodeSelectBase extends VscElement {
             `;
           }
         )}
-        ${this._renderPlaceholderOption(list.length < 1)}
+        ${this._renderPlaceholderOption(this._opts.numOfVisibleOptions < 1)}
       </ul>
     `;
   }
