@@ -494,7 +494,7 @@ export class VscodeSelectBase extends VscElement {
         this._isPlaceholderOptionActive = false;
       } else {
         const prevOpt = this._opts.activatePrev();
-        const prevSelectableIndex = prevOpt?.relativeIndex ?? -1;
+        const prevSelectableIndex = prevOpt?.filteredIndex ?? -1;
 
         if (prevSelectableIndex > -1) {
           this._adjustOptionListScrollPos('up', prevSelectableIndex);
@@ -526,7 +526,7 @@ export class VscodeSelectBase extends VscElement {
         this._adjustOptionListScrollPos('down', numOpts - 1);
         this._opts.activeIndex = -1;
       } else if (nextOp !== null) {
-        const nextSelectableIndex = nextOp?.relativeIndex ?? -1;
+        const nextSelectableIndex = nextOp?.filteredIndex ?? -1;
         this._opts.activeIndex = nextOp?.index ?? -1;
 
         if (nextSelectableIndex > -1) {

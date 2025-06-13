@@ -40,7 +40,7 @@ export class OptionListController implements ReactiveController {
   }
 
   get relativeActiveIndex(): number {
-    return this._options[this._activeIndex]?.relativeIndex ?? -1;
+    return this._options[this._activeIndex]?.filteredIndex ?? -1;
   }
 
   set comboboxMode(enabled: boolean) {
@@ -223,7 +223,7 @@ export class OptionListController implements ReactiveController {
 
     this._options.push({
       index: nextIndex,
-      relativeIndex: nextIndex,
+      filteredIndex: nextIndex,
       description,
       disabled,
       label,
@@ -447,7 +447,7 @@ export class OptionListController implements ReactiveController {
         const result = this._searchByPattern(label);
         this._options[i].visible = result.match;
         this._options[i].ranges = result.ranges;
-        this._options[i].relativeIndex = result.match
+        this._options[i].filteredIndex = result.match
           ? ++filteredListNextIndex
           : -1;
 

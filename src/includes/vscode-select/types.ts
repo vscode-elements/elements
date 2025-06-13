@@ -9,7 +9,7 @@ export interface Option {
 
 export interface InternalOption extends Option {
   index: number;
-  relativeIndex: number;
+  filteredIndex: number;
   /** The original index of the option in the non-filtered list. */
   absoluteIndex?: number;
   /** Character ranges to highlight matches in the filtered list. */
