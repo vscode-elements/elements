@@ -443,19 +443,20 @@ export class OptionListController implements ReactiveController {
     if (!this._combobox || this._filterPattern === '') {
       this._options.forEach((_, i) => {
         this._options[i].visible = true;
+        this._options[i].ranges = [];
+      });
+    } else {
+      let filteredListNextIndex = -1;
+
+      this._options.forEach(({label}, i) => {
+        const result = this._searchByPattern(label);
+        this._options[i].visible = result.match;
+        this._options[i].ranges = result.ranges;
+        this._options[i].relativeIndex = result.match
+          ? ++filteredListNextIndex
+          : -1;
       });
     }
-
-    let filteredListNextIndex = -1;
-
-    this._options.forEach(({label}, i) => {
-      const result = this._searchByPattern(label);
-      this._options[i].visible = result.match;
-      this._options[i].ranges = result.ranges;
-      this._options[i].relativeIndex = result.match
-        ? ++filteredListNextIndex
-        : -1;
-    });
 
     this._host.requestUpdate();
   }
