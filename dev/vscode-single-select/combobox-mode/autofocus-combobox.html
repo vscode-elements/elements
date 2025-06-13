@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VSCode Elements</title>
+    <title>single combo</title>
     <link
       rel="stylesheet"
       href="/node_modules/@vscode/codicons/dist/codicon.css"
@@ -26,12 +26,21 @@
   <body>
     <main>
       <vscode-demo>
-        <vscode-single-select>
+        <vscode-single-select label="Single Select example" autofocus combobox>
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
         </vscode-single-select>
+        <button type="button">focus</button>
       </vscode-demo>
+      <script type="module">
+        const sl = document.querySelector('vscode-single-select');
+        const bt = document.querySelector('button');
+
+        bt.addEventListener('click', () => {
+          sl.focus();
+        });
+      </script>
     </main>
   </body>
 </html>

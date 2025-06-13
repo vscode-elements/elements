@@ -1,5 +1,6 @@
 import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {customElement} from '../includes/VscElement.js';
 import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
@@ -69,45 +70,17 @@ export class VscodeMultiSelect
 
   @property({type: Array, attribute: false})
   set selectedIndexes(val: number[]) {
-    const newIndexes: number[] = [];
-
-    val.forEach((v) => {
-      if (typeof this._options[v] !== 'undefined') {
-        if (!newIndexes.includes(v)) {
-          this._options[v].selected = true;
-          newIndexes.push(v);
-        }
-      }
-    });
-
-    this._selectedIndexes = newIndexes;
+    this._opts.selectedIndexes = val;
   }
   get selectedIndexes(): number[] {
-    return this._selectedIndexes;
+    return this._opts.selectedIndexes;
   }
 
   @property({type: Array})
-  set value(val: string[] | string) {
-    const sanitizedVal = Array.isArray(val)
-      ? val.map((v) => String(v))
-      : [String(val)];
-    this._values = [];
+  set value(val: string[]) {
+    this._opts.multiSelectValue = val;
 
-    this._selectedIndexes.forEach((i) => {
-      this._options[i].selected = false;
-    });
-
-    this._selectedIndexes = [];
-
-    sanitizedVal.forEach((v) => {
-      if (typeof this._valueOptionIndexMap[v] === 'number') {
-        this._selectedIndexes.push(this._valueOptionIndexMap[v]);
-        this._options[this._valueOptionIndexMap[v]].selected = true;
-        this._values.push(v);
-      }
-    });
-
-    if (this._selectedIndexes.length > 0) {
+    if (this._opts.selectedIndexes.length > 0) {
       this._requestedValueToSetLater = [];
     } else {
       this._requestedValueToSetLater = Array.isArray(val) ? val : [val];
@@ -117,7 +90,7 @@ export class VscodeMultiSelect
     this._manageRequired();
   }
   get value(): string[] {
-    return this._values;
+    return this._opts.multiSelectValue;
   }
 
   get form() {
@@ -153,6 +126,7 @@ export class VscodeMultiSelect
 
   constructor() {
     super();
+    this._opts.multiSelect = true;
     /** @internal */
     this._multiple = true;
     this._internals = this.attachInternals();
@@ -196,6 +170,30 @@ export class VscodeMultiSelect
     }
   }
 
+  protected override _dispatchChangeEvent(): void {
+    /** @deprecated */
+    this.dispatchEvent(
+      new CustomEvent('vsc-change', {
+        detail: {
+          selectedIndexes: this._opts.selectedIndexes,
+          value: this._opts.multiSelectValue,
+        },
+      })
+    );
+
+    super._dispatchChangeEvent();
+  }
+
+  protected override _onFaceClick(): void {
+    super._onFaceClick();
+    this._opts.activeIndex = 0;
+  }
+
+  protected override _toggleComboboxDropdown(): void {
+    super._toggleComboboxDropdown();
+    this._opts.activeIndex = -1;
+  }
+
   protected override _manageRequired() {
     const {value} = this;
     if (value.length === 0 && this.required) {
@@ -236,23 +234,19 @@ export class VscodeMultiSelect
       {detail: {value: this._options[nextIndex]?.value ?? ''}}
     );
     this.dispatchEvent(opCreateEvent);
-    this._toggleDropdown(false);
+    this.open = false;
     this._isPlaceholderOptionActive = false;
   }
 
+  //#region event handlers
   protected override _onSlotChange(): void {
     super._onSlotChange();
 
     if (this._requestedValueToSetLater.length > 0) {
-      this.options.forEach((o, i) => {
-        if (this._requestedValueToSetLater.includes(o.value)) {
-          this._selectedIndexes.push(i);
-          this._values.push(o.value);
-          this._options[i].selected = true;
-          this._requestedValueToSetLater =
-            this._requestedValueToSetLater.filter((v) => v !== o.value);
-        }
-      });
+      this._opts.expandMultiSelection(this._requestedValueToSetLater);
+      this._requestedValueToSetLater = this._requestedValueToSetLater.filter(
+        (v) => this._opts.findOptionIndex(v) === -1
+      );
     }
   }
 
@@ -281,35 +275,32 @@ export class VscodeMultiSelect
 
     const index = Number((optEl as HTMLElement).dataset.index);
 
-    if (this._options[index]) {
-      if (this._options[index].disabled) {
-        return;
-      }
-
-      this._options[index].selected = !this._options[index].selected;
-    }
-
-    this._selectedIndexes = [];
-    this._values = [];
-
-    this._options.forEach((op) => {
-      if (op.selected) {
-        this._selectedIndexes.push(op.index);
-        this._values.push(op.value);
-      }
-    });
+    this._opts.toggleOptionSelected(index);
 
     this._setFormValue();
     this._manageRequired();
     this._dispatchChangeEvent();
   };
 
+  protected override _onEnterKeyDown(ev: KeyboardEvent): void {
+    super._onEnterKeyDown(ev);
+
+    if (!this.open) {
+      this._opts.filterPattern = '';
+      this.open = true;
+    } else {
+      this._opts.toggleActiveMultiselectOption();
+    }
+
+    // TODO: dispatch change + set value
+  }
+
   private _onMultiAcceptClick(): void {
-    this._toggleDropdown(false);
+    this.open = false;
   }
 
   private _onMultiDeselectAllClick(): void {
-    this._selectedIndexes = [];
+    this._opts.selectedIndexes = [];
     this._values = [];
     this._options = this._options.map((op) => ({...op, selected: false}));
     this._manageRequired();
@@ -317,7 +308,7 @@ export class VscodeMultiSelect
   }
 
   private _onMultiSelectAllClick(): void {
-    this._selectedIndexes = [];
+    this._opts.selectedIndexes = [];
     this._values = [];
     this._options = this._options.map((op) => ({...op, selected: true}));
     this._options.forEach((op, index) => {
@@ -329,28 +320,51 @@ export class VscodeMultiSelect
     this._setFormValue();
     this._manageRequired();
   }
+  //#endregion
 
+  //#region render functions
   private _renderLabel() {
-    switch (this._selectedIndexes.length) {
+    switch (this._opts.selectedIndexes.length) {
       case 0:
-        return html`<span class="select-face-badge no-item"
-          >No items selected</span
+        return html`<span
+          class="select-face-badge no-item"
+          aria-label="Click to open the list of items"
+          >0 selected</span
         >`;
       case 1:
-        return html`<span class="select-face-badge">1 item selected</span>`;
+        return html`<span
+          class="select-face-badge"
+          aria-label="Click to open the list of items"
+          >1 item selected</span
+        >`;
       default:
-        return html`<span class="select-face-badge"
-          >${this._selectedIndexes.length} items selected</span
+        return html`<span
+          class="select-face-badge"
+          aria-label="Click to open the list of items"
+          >${this._opts.selectedIndexes.length} items selected</span
         >`;
     }
   }
 
   protected override _renderSelectFace(): TemplateResult {
+    const activeDescendant =
+      this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
+    const expanded = this.open ? 'true' : 'false';
+
     return html`
       <div
+        aria-activedescendant=${ifDefined(
+          this._opts.multiSelect ? undefined : activeDescendant
+        )}
+        aria-controls="select-listbox"
+        aria-expanded=${ifDefined(
+          this._opts.multiSelect ? undefined : expanded
+        )}
+        aria-haspopup="listbox"
+        aria-label=${ifDefined(this.label ?? undefined)}
         class="select-face face multiselect"
         @click=${this._onFaceClick}
-        tabindex=${this.tabIndex > -1 ? 0 : -1}
+        .tabIndex=${this.disabled ? -1 : 0}
       >
         ${this._renderLabel()} ${chevronDownIcon}
       </div>
@@ -388,6 +402,20 @@ export class VscodeMultiSelect
         `
       : html`${nothing}`;
   }
+
+  override render(): TemplateResult {
+    return html`
+      <div
+        class="multi-select"
+        aria-label=${ifDefined(this.label ?? undefined)}
+      >
+        <slot class="main-slot" @slotchange=${this._onSlotChange}></slot>
+        ${this.combobox ? this._renderComboboxFace() : this._renderSelectFace()}
+        ${this._renderDropdown()}
+      </div>
+    `;
+  }
+  //#endregion
 }
 
 declare global {

@@ -1,17 +1,21 @@
 export interface Option {
-  label: string;
-  value: string;
-  description: string;
-  selected: boolean;
-  disabled: boolean;
+  label?: string;
+  value?: string;
+  description?: string;
+  selected?: boolean;
+  disabled?: boolean;
 }
 
-export interface InternalOption extends Option {
+export interface InternalOption extends Required<Option> {
   index: number;
+  /** Option index in the filtered list. */
+  filteredIndex: number;
+  /** Character ranges to highlight matches in the filtered list. */
   ranges?: [number, number][];
+  visible: boolean;
 }
 
-export type SearchMethod =
+export type FilterMethod =
   | 'startsWithPerTerm'
   | 'startsWith'
   | 'contains'

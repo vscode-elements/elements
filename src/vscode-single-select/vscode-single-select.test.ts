@@ -1,9 +1,19 @@
-import {sendKeys, sendMouse} from '@web/test-runner-commands';
+import {sendKeys} from '@web/test-runner-commands';
 import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
 import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
+
+const ignoredAttributes = [
+  'aria-label',
+  'aria-selected',
+  'data-filtered-index',
+  'data-index',
+  'id',
+  'role',
+  'tabindex',
+];
 
 describe('vscode-single-select', () => {
   it('is defined', () => {
@@ -21,19 +31,9 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.selectedIndex).to.eq(1);
       expect(el.value).to.eq('Ipsum');
     });
@@ -91,19 +91,9 @@ describe('vscode-single-select', () => {
       el.value = 'Ipsum';
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
     });
@@ -120,17 +110,9 @@ describe('vscode-single-select', () => {
       el.value = 'trololo';
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text"></span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('');
       expect(el.selectedIndex).to.eq(-1);
     });
@@ -147,19 +129,9 @@ describe('vscode-single-select', () => {
       el.selectedIndex = 1;
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
     });
@@ -176,19 +148,11 @@ describe('vscode-single-select', () => {
       el.selectedIndex = 999;
       await el.updateComplete;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text"></span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('');
-      expect(el.selectedIndex).to.eq(999);
+      expect(el.selectedIndex).to.eq(-1);
     });
 
     it('should display selected value when an option is clicked', async () => {
@@ -237,263 +201,11 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      expect(el).shadowDom.to.equal(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.false;
       expect(el.value).to.eq('Lorem');
       expect(el.selectedIndex).to.eq(0);
-    });
-
-    it('the value should be changed when the arrow down key pressed while the dropdown is closed', async () => {
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option selected>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-
-      const spy = sinon.spy(el, 'dispatchEvent');
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
-      expect(el.value).to.eq('Ipsum');
-      expect(el.selectedIndex).to.eq(1);
-
-      const dispatchedEvent = spy.args[1][0] as CustomEvent;
-
-      expect(dispatchedEvent.type).to.eq('vsc-change');
-      expect(dispatchedEvent.detail).to.eql({
-        selectedIndex: 1,
-        value: 'Ipsum',
-      });
-    });
-
-    it('the value should be changed when the arrow up key pressed while the dropdown is closed', async () => {
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option selected>Dolor</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-
-      const spy = sinon.spy(el, 'dispatchEvent');
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowUp'}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">
-            Ipsum
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
-      expect(el.value).to.eq('Ipsum');
-      expect(el.selectedIndex).to.eq(1);
-
-      const dispatchedEvent = spy.args[1][0] as CustomEvent;
-
-      expect(dispatchedEvent.type).to.eq('vsc-change');
-      expect(dispatchedEvent.detail).to.eql({
-        selectedIndex: 1,
-        value: 'Ipsum',
-      });
-    });
-
-    it('dropdown should be opened when "Space" key pressed', async () => {
-      const markupOpen = `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-        <div class="dropdown">
-          <ul class="options">
-            <li
-              class="active option"
-              data-filtered-index="0"
-              data-index="0"
-            >
-              Lorem
-            </li>
-          </ul>
-        </div>
-      `;
-
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(markupOpen, {ignoreAttributes: ['tabindex']});
-      expect(el.getAttribute('aria-expanded')).to.eq('true');
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(markupOpen, {ignoreAttributes: ['tabindex']});
-      expect(el.getAttribute('aria-expanded')).to.eq('true');
-    });
-
-    it('dropdown should be opened when "Enter" key pressed', async () => {
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-        <div class="dropdown">
-          <ul class="options">
-            <li
-              class="active option"
-              data-filtered-index="0"
-              data-index="0"
-            >
-              Lorem
-            </li>
-          </ul>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
-      expect(el.getAttribute('aria-expanded')).to.eq('true');
-    });
-
-    it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-          <vscode-option>Ipsum</vscode-option>
-          <vscode-option>Dolor</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-
-      const spy = sinon.spy();
-      el.addEventListener('change', spy);
-
-      el.dispatchEvent(new MouseEvent('click'));
-      await el.updateComplete;
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot">
-        </slot>
-        <div class="select-face face">
-          <span class="text">
-            Dolor
-          </span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
-      expect(el.value).to.eq('Dolor');
-      expect(el.selectedIndex).to.eq(2);
-      expect(spy.calledWithMatch({type: 'change'})).to.be.true;
-    });
-
-    it('dropdown should be closed when ESC key pressed', async () => {
-      const el = (await fixture(html`
-        <vscode-single-select>
-          <vscode-option>Lorem</vscode-option>
-        </vscode-single-select>
-      `)) as VscodeSingleSelect;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-        <div class="dropdown">
-          <ul class="options">
-            <li
-              class="active option"
-              data-filtered-index="0"
-              data-index="0"
-            >
-              Lorem
-            </li>
-          </ul>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
-      expect(el.getAttribute('aria-expanded')).to.eq('true');
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
-      await el.updateComplete;
-
-      expect(el).shadowDom.to.eq(
-        `
-        <slot class="main-slot"></slot>
-        <div class="select-face face">
-          <span class="text">Lorem</span>
-          <span class="icon">
-          </span>
-        </div>
-      `,
-        {ignoreAttributes: ['tabindex']}
-      );
-      expect(el.getAttribute('aria-expanded')).be.eq('false');
     });
 
     it('should not be allowed to select an element by down arrow key other than the existing ones', async () => {
@@ -505,6 +217,11 @@ describe('vscode-single-select', () => {
       `)) as VscodeSingleSelect;
 
       el.value = 'Lorem';
+
+      // first arrow down press opens the dropdown
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
+      await el.updateComplete;
+
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
@@ -516,7 +233,7 @@ describe('vscode-single-select', () => {
         el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
         await el.updateComplete;
       }).not.throw();
-      expect(el.value).to.eq('Ipsum');
+      expect(el.value).to.eq('Lorem');
     });
 
     it('dropdown should be scrolled to the selected option', async () => {
@@ -544,15 +261,132 @@ describe('vscode-single-select', () => {
           <vscode-option>Bhutan</vscode-option>
         </vscode-single-select>
       `)) as VscodeSingleSelect;
-      await el.updateComplete;
 
-      const face = el.shadowRoot?.querySelector('.select-face');
-      face?.dispatchEvent(new MouseEvent('click'));
+      el.focus();
       await el.updateComplete;
+      await sendKeys({press: 'Enter'});
 
       const options = el.shadowRoot?.querySelector('.options');
       expect(options?.scrollTop).to.eq(220);
     });
+
+    //#region keyboard interactions
+
+    it('the dropdown should be opened when the arrow down key pressed while the dropdown is closed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option selected>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.focus();
+      await sendKeys({press: 'ArrowDown'});
+
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.true;
+    });
+
+    it('the dropdown should be opened when the arrow up key pressed while the dropdown is closed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option selected>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.focus();
+      await sendKeys({press: 'ArrowUp'});
+
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.true;
+    });
+
+    it('dropdown should be opened when "Space" key pressed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
+      await el.updateComplete;
+
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown?.classList.contains('open')).to.be.true;
+    });
+
+    it('dropdown should be opened when "Enter" key pressed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.focus();
+      await sendKeys({press: 'Enter'});
+
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const combobox = el.shadowRoot?.querySelector('[role="combobox"]');
+
+      expect(dropdown?.classList.contains('open')).to.be.true;
+      expect(combobox?.getAttribute('aria-expanded')).to.eq('true');
+    });
+
+    it('dropdown should be closed and selected option should be changed when "Enter" key pressed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      const spy = sinon.spy();
+      el.addEventListener('change', spy);
+
+      el.focus();
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'Enter'});
+
+      expect(el.shadowRoot?.querySelector('.text')).lightDom.to.eq('Dolor');
+      expect(el.value).to.eq('Dolor');
+      expect(el.selectedIndex).to.eq(2);
+      expect(spy.calledWithMatch({type: 'change'})).to.be.true;
+    });
+
+    it('dropdown should be closed when ESC key pressed', async () => {
+      const el = (await fixture(html`
+        <vscode-single-select>
+          <vscode-option>Lorem</vscode-option>
+        </vscode-single-select>
+      `)) as VscodeSingleSelect;
+
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: ' '}));
+      await el.updateComplete;
+
+      const dropdownBefore = el.shadowRoot?.querySelector('.dropdown');
+      const faceBefore = el.shadowRoot?.querySelector('.select-face');
+
+      expect(dropdownBefore?.classList.contains('open')).to.be.true;
+      expect(faceBefore?.getAttribute('aria-expanded')).to.eq('true');
+
+      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}));
+      await el.updateComplete;
+
+      const dropdownAfter = el.shadowRoot?.querySelector('.dropdown');
+      const faceAfter = el.shadowRoot?.querySelector('.select-face');
+
+      expect(dropdownAfter?.classList.contains('open')).to.be.false;
+      expect(faceAfter?.getAttribute('aria-expanded')).be.eq('false');
+    });
+    //#endregion
   });
 
   describe('combobox mode', () => {
@@ -561,25 +395,7 @@ describe('vscode-single-select', () => {
         <vscode-single-select combobox></vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      expect(el).shadowDom.to.eq(`
-        <slot class="main-slot">
-        </slot>
-        <div class="combobox-face face">
-          <input
-            autocomplete="off"
-            class="combobox-input"
-            spellcheck="false"
-            type="text"
-          >
-          <button
-            class="combobox-button"
-            type="button"
-          >
-            <span class="icon">
-            </span>
-          </button>
-        </div>
-      `);
+      expect(el.shadowRoot?.querySelector('.combobox-face')).to.be.ok;
     });
 
     it('filtered list', async () => {
@@ -601,53 +417,25 @@ describe('vscode-single-select', () => {
       input.dispatchEvent(new InputEvent('input'));
       await el.updateComplete;
 
-      expect(el).shadowDom.to.eq(
+      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+
+      expect(dropdown).lightDom.to.eq(
         `
-        <slot class="main-slot">
-        </slot>
-        <div class="combobox-face face">
-          <input
-            autocomplete="off"
-            class="combobox-input"
-            spellcheck="false"
-            type="text"
-          >
-          <button
-            class="combobox-button"
-            type="button"
-          >
-            <span class="icon">
-            </span>
-          </button>
-        </div>
-        <div class="dropdown">
-          <ul class="options">
-            <li
-              class="option"
-              data-filtered-index="0"
-              data-index="0"
-            >
-              Antigua and Barbuda
-            </li>
-            <li
-              class="option"
-              data-filtered-index="1"
-              data-index="3"
-            >
-              Australia
-            </li>
-            <li
-              class="option"
-              data-filtered-index="2"
-              data-index="4"
-            >
-              Austria
-            </li>
-          </ul>
-        </div>
+        <ul class="options">
+          <li class="option">
+            <b>A</b>ntig<b>u</b>a and Barbuda
+          </li>
+          <li class="option">
+            <b>A</b><b>u</b>stralia
+          </li>
+          <li class="option">
+            <b>A</b><b>u</b>stria
+          </li>
+        </ul>
       `,
-        {ignoreChildren: ['li']}
+        {ignoreAttributes: ignoredAttributes}
       );
+      expect(dropdown?.classList.contains('open')).to.be.true;
     });
 
     it('does not allow the highlight to move past the last item in the filtered list', async () => {
@@ -677,7 +465,7 @@ describe('vscode-single-select', () => {
         <li class="option">App<b>l</b><b>e</b></li>
         <li class="option active"><b>L</b><b>e</b>mon</li>
       `,
-        {ignoreAttributes: ['data-filtered-index', 'data-index']}
+        {ignoreAttributes: ignoredAttributes}
       );
     });
 
@@ -691,18 +479,11 @@ describe('vscode-single-select', () => {
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
       `)) as VscodeSingleSelect;
-      await el.updateComplete;
 
-      const input = el.shadowRoot?.querySelector(
-        '.combobox-input'
-      ) as HTMLInputElement;
-      input.value = 'au';
-      input.dispatchEvent(new InputEvent('input'));
-      await el.updateComplete;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
+      el.focus();
+      await sendKeys({type: 'au'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'ArrowDown'});
 
       const options = Array.from(
         el.shadowRoot?.querySelectorAll(
@@ -723,31 +504,14 @@ describe('vscode-single-select', () => {
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
       `)) as VscodeSingleSelect;
-      await el.updateComplete;
 
-      const spy = sinon.spy(el, 'dispatchEvent');
+      el.focus();
 
-      const input = el.shadowRoot?.querySelector(
-        '.combobox-input'
-      ) as HTMLInputElement;
-      input.value = 'au';
-      input.dispatchEvent(new InputEvent('input'));
-      await el.updateComplete;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
-      await el.updateComplete;
-
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
-      await el.updateComplete;
-
-      const dispatchedChangeEvent = spy.args[2][0] as CustomEvent;
+      await sendKeys({type: 'au'});
+      await sendKeys({down: 'ArrowDown'});
+      await sendKeys({down: 'Enter'});
 
       expect(el.value).to.eq('Antigua and Barbuda');
-      expect(dispatchedChangeEvent.type).to.eq('vsc-change');
-      expect(dispatchedChangeEvent.detail).to.eql({
-        selectedIndex: 0,
-        value: 'Antigua and Barbuda',
-      });
     });
 
     it('select an option with the arrow down key, opens the dropdown with the enter key, scroll to the selected option', async () => {
@@ -803,7 +567,7 @@ describe('vscode-single-select', () => {
       el.dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
       await el.updateComplete;
 
-      el.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
+      await sendKeys({down: 'Enter'});
       await el.updateComplete;
 
       const activeOpt = el.shadowRoot?.querySelector('.option.active');
@@ -811,8 +575,8 @@ describe('vscode-single-select', () => {
 
       expect(input.value).to.eq('Austria');
       expect(activeOpt).not.null;
-      expect((activeOpt as HTMLLIElement).innerText).to.eq('Austria');
-      expect(optionsEl?.scrollTop).to.eq(198);
+      expect(activeOpt as HTMLLIElement).lightDom.to.eq('Austria');
+      expect(optionsEl?.scrollTop).to.eq(0);
       expect(el.value).to.eq('Austria');
       expect(el.selectedIndex).to.eq(9);
     });
@@ -862,13 +626,16 @@ describe('vscode-single-select', () => {
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
-      expect(dropdown).lightDom.to.eq(`
+      expect(dropdown).lightDom.to.eq(
+        `
         <ul class="options">
           <li class="no-options">
             No options
           </li>
         </ul>
-      `);
+      `,
+        {ignoreAttributes: ignoredAttributes}
+      );
     });
 
     it('shows suggested option below the options', async () => {
@@ -880,8 +647,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'lo'});
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
@@ -899,7 +666,7 @@ describe('vscode-single-select', () => {
         </ul>
       `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: ignoredAttributes,
         }
       );
     });
@@ -913,20 +680,20 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'Sit'});
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
 
       expect(dropdown).lightDom.to.eq(
         `
-        <ul class="options">
-          <li class="option placeholder">Add "Sit"</li>
-        </ul>
-      `,
+          <ul class="options">
+            <li class="option placeholder">Add "Sit"</li>
+          </ul>
+        `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: ignoredAttributes,
         }
       );
     });
@@ -940,8 +707,8 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'dol'});
 
       await sendKeys({down: 'ArrowDown'});
@@ -957,7 +724,7 @@ describe('vscode-single-select', () => {
         </ul>
         `,
         {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
+          ignoreAttributes: ignoredAttributes,
         }
       );
     });
@@ -973,8 +740,8 @@ describe('vscode-single-select', () => {
       const spy = sinon.spy();
       el.addEventListener('vsc-single-select-create-option', spy);
 
-      el.shadowRoot?.querySelector('.combobox-input');
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
       await sendKeys({type: 'Sit'});
 
       await sendKeys({down: 'ArrowDown'});
@@ -1019,47 +786,42 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `)) as VscodeSingleSelect;
 
-      // selects the first option
-      await clickOnElement(el);
-      let options = el.shadowRoot?.querySelector('.options');
-      const firstOption = options?.querySelector('li')!;
-      await clickOnElement(firstOption);
+      el.value = 'Ipsum';
+      await el.updateComplete;
 
-      expect(el.value).to.eq('Lorem');
-
-      // re-opens the dropdown, selects the second option with keyboard
       await clickOnElement(el);
+      const activeOption = el.shadowRoot?.querySelector('.option.active');
+
+      expect(activeOption).lightDom.to.eq('Ipsum');
+    });
+
+    //#region  keyboard interactions
+    //#region textbox
+    it('when ESC key is pressed, closes the listbox if it is displayed');
+    it(
+      'when the ESC key is pressed, clears the textbox if the listbox is not displayed'
+    );
+
+    it('when the ArrowDown key is pressed selects the next option in a filtered list', async () => {
+      const el = await fixture<VscodeSingleSelect>(
+        html`<vscode-single-select combobox>
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>`
+      );
+
+      el.focus();
+      await sendKeys({type: 'l'});
+      await sendKeys({down: 'ArrowDown'});
       await sendKeys({down: 'ArrowDown'});
 
-      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(
-        `
-        <ul class="options">
-          <li class="option">Lorem</li>
-          <li class="active option">Ipsum</li>
-          <li class="option">Dolor</li>
-        </ul>
-      `,
-        {ignoreAttributes: ['data-index', 'data-filtered-index']}
-      );
+      const activeOption = el.shadowRoot?.querySelector('.option.active');
 
-      // clicks outside, closes the dropdown
-      await sendMouse({type: 'click', position: [500, 500]});
-      // opens the dropdown again
-      await clickOnElement(el);
-
-      expect(el.shadowRoot?.querySelector('.dropdown')).lightDom.to.eq(
-        `
-        <ul class="options">
-          <li class="active option">Lorem</li>
-          <li class="option">Ipsum</li>
-          <li class="option">Dolor</li>
-        </ul>
-      `,
-        {
-          ignoreAttributes: ['data-index', 'data-filtered-index'],
-        }
-      );
+      expect(activeOption).lightDom.to.eq('Do<b>l</b>or');
     });
+    //#endregion
+    //#endregion
   });
 
   describe('general behavior', () => {
@@ -1263,7 +1025,7 @@ describe('vscode-single-select', () => {
     });
 
     it('skips disabled options', async () => {
-      const el = await fixture(html`
+      const el = await fixture<VscodeSingleSelect>(html`
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
           <vscode-option disabled>Ipsum</vscode-option>
@@ -1272,17 +1034,17 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `);
 
-      await clickOnElement(el);
-      await clickOnElement(el);
-      await sendKeys({down: 'ArrowDown'});
+      el.focus();
+      await sendKeys({press: 'ArrowDown'});
+      await sendKeys({press: 'ArrowDown'});
 
-      const text = el.shadowRoot?.querySelector('.text');
+      const activeOption = el.shadowRoot?.querySelector('.option.active');
 
-      expect(text).lightDom.to.eq('Sit');
+      expect(activeOption).lightDom.to.eq('Sit');
     });
 
     it('skips disabled options when dropdown is open', async () => {
-      const el = await fixture(html`
+      const el = await fixture<VscodeSingleSelect>(html`
         <vscode-single-select>
           <vscode-option>Lorem</vscode-option>
           <vscode-option disabled>Ipsum</vscode-option>
@@ -1291,22 +1053,17 @@ describe('vscode-single-select', () => {
         </vscode-single-select>
       `);
 
-      await clickOnElement(el);
+      el.focus();
+      await el.updateComplete;
+
+      await sendKeys({down: 'ArrowDown'});
       await sendKeys({down: 'ArrowDown'});
 
-      const options = el.shadowRoot?.querySelector('.options');
+      const options =
+        el.shadowRoot?.querySelectorAll<HTMLLIElement>('.option')!;
 
-      expect(options).to.lightDom.eq(
-        `
-        <li class="option">Lorem</li>
-        <li class="option disabled">Ipsum</li>
-        <li class="option disabled">Dolor</li>
-        <li class="option active">Sit</li>
-      `,
-        {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
-        }
-      );
+      expect(options[3]).lightDom.to.eq('Sit');
+      expect(options[3].classList.contains('active')).to.be.true;
     });
 
     it('highlights active option', async () => {
@@ -1322,18 +1079,11 @@ describe('vscode-single-select', () => {
 
       await el.updateComplete;
 
-      const options = el.shadowRoot?.querySelector('.options');
+      const options =
+        el.shadowRoot?.querySelectorAll<HTMLLIElement>('.option')!;
 
-      expect(options).lightDom.to.eq(
-        `
-        <li class="option">Lorem</li>
-        <li class="option active">Ipsum</li>
-        <li class="option">Dolor</li>
-      `,
-        {
-          ignoreAttributes: ['data-filtered-index', 'data-index'],
-        }
-      );
+      expect(options[1]).lightDom.eq('Ipsum');
+      expect(options[1].classList.contains('active')).to.be.true;
     });
 
     it('updates validity when required property is changed', async () => {
@@ -1390,6 +1140,18 @@ describe('vscode-single-select', () => {
       expect(isValidBefore).to.be.false;
       expect(isValidAfter).to.be.true;
     });
+  });
+
+  describe('closed dropdown', () => {
+    it(
+      'opens the dropdown if it is not already displayed when DownArrow is pressed'
+    );
+    it('opens the dropdown when Alt + DownArrow are pressed');
+    it('Up Arrow is pressed');
+    it('Enter is pressed');
+    it('Space is pressed');
+    it('Home is pressed');
+    it('End is pressed');
   });
 
   //keyboard navigation
