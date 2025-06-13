@@ -132,7 +132,6 @@ export class VscodeSelectBase extends VscElement {
    */
   @property({type: Array})
   set options(opts: Option[]) {
-    // this._options = opts.map((op, index) => ({...op, index}));
     this._opts.populate(opts);
   }
   get options(): Option[] {
@@ -152,10 +151,6 @@ export class VscodeSelectBase extends VscElement {
    */
   @property({reflect: true})
   position: 'above' | 'below' = 'below';
-
-  // /** @internal */
-  // @property({type: Number, attribute: true, reflect: true})
-  // override tabIndex = 0;
 
   @queryAssignedElements({
     flatten: true,
@@ -259,13 +254,6 @@ export class VscodeSelectBase extends VscElement {
   /** @internal */
   protected _multiple = false;
 
-  /**
-   * @internal
-   * Quick-searchable map for searching a value in the options list.
-   * Keys are the options values, values are the option indexes.
-   */
-  protected _valueOptionIndexMap: {[key: string]: number} = {};
-
   private _isHoverForbidden = false;
   private _disabled = false;
   private _originalTabIndex: number | undefined = undefined;
@@ -307,7 +295,6 @@ export class VscodeSelectBase extends VscElement {
 
   protected _setStateFromSlottedElements() {
     const optionElements = this._assignedOptions ?? [];
-    this._valueOptionIndexMap = {};
     this._opts.clear();
 
     optionElements.forEach((el) => {
@@ -343,6 +330,58 @@ export class VscodeSelectBase extends VscElement {
 
   protected async _createAndSelectSuggestedOption() {}
 
+  protected _toggleComboboxDropdown() {
+    this._opts.filterPattern = '';
+    this.open = !this.open;
+  }
+
+  protected _scrollActiveElementToTop() {
+    this._optionListScrollPos = Math.floor(
+      this._opts.relativeActiveIndex * OPT_HEIGHT
+    );
+  }
+
+  private async _adjustOptionListScrollPos(
+    direction: 'down' | 'up',
+    optionIndex: number
+  ) {
+    let numOpts = this._opts.numOfVisibleOptions;
+    const suggestedOptionVisible = this._isSuggestedOptionVisible;
+
+    if (suggestedOptionVisible) {
+      numOpts += 1;
+    }
+
+    if (numOpts <= VISIBLE_OPTS) {
+      return;
+    }
+
+    this._isHoverForbidden = true;
+    window.addEventListener('mousemove', this._onMouseMove);
+
+    const ulScrollTop = this._optionListScrollPos;
+    const liPosY = optionIndex * OPT_HEIGHT;
+
+    const fullyVisible =
+      liPosY >= ulScrollTop &&
+      liPosY <= ulScrollTop + VISIBLE_OPTS * OPT_HEIGHT - OPT_HEIGHT;
+
+    if (direction === 'down') {
+      if (!fullyVisible) {
+        this._optionListScrollPos =
+          optionIndex * OPT_HEIGHT - (VISIBLE_OPTS - 1) * OPT_HEIGHT;
+      }
+    }
+
+    if (direction === 'up') {
+      if (!fullyVisible) {
+        this._optionListScrollPos = Math.floor(
+          this._opts.relativeActiveIndex * OPT_HEIGHT
+        );
+      }
+    }
+  }
+
   //#region event handlers
   protected _onFaceClick(): void {
     this.open = !this.open;
@@ -361,12 +400,6 @@ export class VscodeSelectBase extends VscElement {
     this._isHoverForbidden = false;
     window.removeEventListener('mousemove', this._onMouseMove);
   };
-
-  // TODO
-  protected _toggleComboboxDropdown() {
-    this._opts.filterPattern = '';
-    this.open = !this.open;
-  }
 
   protected _onComboboxButtonClick(): void {
     this._toggleComboboxDropdown();
@@ -432,53 +465,6 @@ export class VscodeSelectBase extends VscElement {
     if (!this.open) {
       this.open = true;
       return;
-    }
-  }
-
-  protected _scrollActiveElementToTop() {
-    this._optionListScrollPos = Math.floor(
-      this._opts.relativeActiveIndex * OPT_HEIGHT
-    );
-  }
-
-  private async _adjustOptionListScrollPos(
-    direction: 'down' | 'up',
-    optionIndex: number
-  ) {
-    let numOpts = this._opts.numOfVisibleOptions;
-    const suggestedOptionVisible = this._isSuggestedOptionVisible;
-
-    if (suggestedOptionVisible) {
-      numOpts += 1;
-    }
-
-    if (numOpts <= VISIBLE_OPTS) {
-      return;
-    }
-
-    this._isHoverForbidden = true;
-    window.addEventListener('mousemove', this._onMouseMove);
-
-    const ulScrollTop = this._optionListScrollPos;
-    const liPosY = optionIndex * OPT_HEIGHT;
-
-    const fullyVisible =
-      liPosY >= ulScrollTop &&
-      liPosY <= ulScrollTop + VISIBLE_OPTS * OPT_HEIGHT - OPT_HEIGHT;
-
-    if (direction === 'down') {
-      if (!fullyVisible) {
-        this._optionListScrollPos =
-          optionIndex * OPT_HEIGHT - (VISIBLE_OPTS - 1) * OPT_HEIGHT;
-      }
-    }
-
-    if (direction === 'up') {
-      if (!fullyVisible) {
-        this._optionListScrollPos = Math.floor(
-          this._opts.relativeActiveIndex * OPT_HEIGHT
-        );
-      }
     }
   }
 
