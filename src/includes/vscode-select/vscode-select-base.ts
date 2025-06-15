@@ -611,6 +611,9 @@ export class VscodeSelectBase extends VscElement {
     return html`
       <ul
         aria-label=${ifDefined(this.label ?? undefined)}
+        aria-multiselectable=${ifDefined(
+          this._opts.multiSelect ? 'true' : undefined
+        )}
         class="options"
         id="select-listbox"
         role="listbox"
@@ -752,16 +755,10 @@ export class VscodeSelectBase extends VscElement {
       <div class="combobox-face face">
         ${this._multiple ? this._renderMultiSelectLabel() : nothing}
         <input
-          aria-activedescendant=${ifDefined(
-            this._opts.multiSelect ? undefined : activeDescendant
-          )}
+          aria-activedescendant=${activeDescendant}
           aria-autocomplete="list"
-          aria-controls=${this._multiple
-            ? 'multi-select-listbox'
-            : 'single-select-listbox'}
-          aria-expanded=${ifDefined(
-            this._opts.multiSelect ? undefined : expanded
-          )}
+          aria-controls="select-listbox"
+          aria-expanded=${expanded}
           aria-haspopup="listbox"
           aria-label=${ifDefined(this.label)}
           class="combobox-input"
