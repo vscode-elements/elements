@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-single-select name="fruit" id="select" label="Fruits" combobox>
+          <vscode-option value="banana">Banana</vscode-option>
+          <vscode-option value="cherry">Cherry</vscode-option>
+          <vscode-option value="apple">Apple</vscode-option>
+          <vscode-option value="strawberry">Strawberry</vscode-option>
+          <vscode-option value="lemon">Lemon</vscode-option>
+          <vscode-option value="orange">Orange</vscode-option>
+        </vscode-single-select>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
