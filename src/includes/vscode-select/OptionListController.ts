@@ -351,20 +351,8 @@ export class OptionListController implements ReactiveController {
     return nextIndex > -1 ? this._options[nextIndex] : null;
   }
 
-  getPrevSelectableOption(fromIndex?: number): InternalOption | null {
+  prev(fromIndex?: number): InternalOption | null {
     const from = fromIndex ?? this._activeIndex;
-
-    if (this._options.length === 0) {
-      return null;
-    }
-
-    if (this._options.length === 1) {
-      return this._options[0];
-    }
-
-    if (!this._options[from] || !this._options[from - 1]) {
-      return this._options[0];
-    }
 
     let prevIndex = -1;
 
@@ -398,13 +386,6 @@ export class OptionListController implements ReactiveController {
     }
 
     this._host.requestUpdate();
-  }
-
-  activatePrev() {
-    const prevOp = this.getPrevSelectableOption();
-    this._activeIndex = prevOp?.index ?? -1;
-    this._host.requestUpdate();
-    return prevOp;
   }
 
   //#endregion
