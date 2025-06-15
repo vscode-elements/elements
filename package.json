@@ -32,7 +32,8 @@
     "checksize": "npm run build && cat dist/bundled.js | gzip -9 | wc -c",
     "icons": "node scripts/generateIconList.js",
     "vscode-data": "wireit",
-    "ncu": "ncu -u"
+    "ncu": "ncu -u",
+    "postinstall": "npx playwright install chromium --only-shell"
   },
   "wireit": {
     "analyze": {
