@@ -267,45 +267,6 @@ export class VscodeSingleSelect
     }
   }
 
-  protected override _onArrowUpKeyDown(): void {
-    super._onArrowUpKeyDown();
-
-    /* if (this.open || this._selectedIndex <= 0) {
-      return;
-    }
-
-    const options = this.combobox ? this._filteredOptions : this._options;
-    const prevIndex = findPrevSelectableOptionIndex(options, this._activeIndex);
-
-    this._filterPattern = '';
-    this._selectedIndex = prevIndex;
-    this._activeIndex = prevIndex;
-    this._value = prevIndex > -1 ? this._options[prevIndex].value : '';
- */
-    this._internals.setFormValue(this._opts.value as string);
-    this._manageRequired();
-    this._dispatchChangeEvent();
-  }
-
-  protected override _onArrowDownKeyDown(): void {
-    super._onArrowDownKeyDown();
-
-    /* if (this.open || this._selectedIndex >= this._options.length - 1) {
-      return;
-    }
-
-    const options = this.combobox ? this._filteredOptions : this._options;
-    const nextIndex = findNextSelectableOptionIndex(options, this._activeIndex);
-
-    this._filterPattern = '';
-    this._selectedIndex = nextIndex;
-    this._activeIndex = nextIndex;
-    this._value = nextIndex > -1 ? this._options[nextIndex].value : ''; */
-    this._internals.setFormValue(this._opts.value as string);
-    this._manageRequired();
-    this._dispatchChangeEvent();
-  }
-
   protected override _onEnterKeyDown(ev: KeyboardEvent): void {
     super._onEnterKeyDown(ev);
     let valueChanged = false;
