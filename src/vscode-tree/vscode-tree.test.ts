@@ -54,7 +54,7 @@ describe('vscode-tree', () => {
             <div class="contents" style="padding-left: 3px;">
               <span class="text-content" part="text-content"> Branch 2 </span>
             </div>
-            <ul style="--indent-guide-pos:3px;">
+            <ul style="--indent-guide-pos: 3px;">
               <li class="leaf" data-path="1/0">
                 <div class="contents" style="padding-left: 11px;">
                   <span class="text-content" part="text-content"> Leaf 2.1 </span>
