@@ -374,6 +374,55 @@ export class VscodeSingleSelect
     `;
   }
 
+  protected override _renderComboboxFace(): TemplateResult {
+    let inputVal = '';
+
+    if (this._isBeingFiltered) {
+      inputVal = this._opts.filterPattern;
+    } else {
+      const op = this._opts.getSelectedOption();
+      inputVal = op?.label ?? '';
+    }
+
+    const activeDescendant =
+      this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
+    const expanded = this.open ? 'true' : 'false';
+
+    return html`
+      <div class="combobox-face face">
+        <input
+          aria-activedescendant=${activeDescendant}
+          aria-autocomplete="list"
+          aria-controls="select-listbox"
+          aria-expanded=${expanded}
+          aria-haspopup="listbox"
+          aria-label=${ifDefined(this.label)}
+          class="combobox-input"
+          role="combobox"
+          spellcheck="false"
+          type="text"
+          autocomplete="off"
+          .value=${inputVal}
+          @focus=${this._onComboboxInputFocus}
+          @blur=${this._onComboboxInputBlur}
+          @input=${this._onComboboxInputInput}
+          @click=${this._onComboboxInputClick}
+          @keydown=${this._onComboboxInputSpaceKeyDown}
+        >
+        <button
+          aria-label="Open the list of options"
+          class="combobox-button"
+          type="button"
+          @click=${this._onComboboxButtonClick}
+          @keydown=${this._onComboboxButtonKeyDown}
+          tabindex="-1"
+        >
+          ${chevronDownIcon}
+        </button>
+      </div>
+    `;
+  }
+
   override render(): TemplateResult {
     return html`
       <div class="single-select">
