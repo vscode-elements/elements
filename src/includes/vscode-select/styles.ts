@@ -68,7 +68,6 @@ export default [
       line-height: 16px;
       margin: 2px;
       padding: 2px 3px;
-      text-transform: uppercase;
       white-space: nowrap;
     }
 
