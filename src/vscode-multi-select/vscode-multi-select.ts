@@ -326,22 +326,10 @@ export class VscodeMultiSelect
   private _renderLabel() {
     switch (this._opts.selectedIndexes.length) {
       case 0:
-        return html`<span
-          class="select-face-badge no-item"
-          aria-label="Click to open the list of items"
-          >0 selected</span
-        >`;
-      case 1:
-        return html`<span
-          class="select-face-badge"
-          aria-label="Click to open the list of items"
-          >1 item selected</span
-        >`;
+        return html`<span class="select-face-badge no-item">0 selected</span>`;
       default:
-        return html`<span
-          class="select-face-badge"
-          aria-label="Click to open the list of items"
-          >${this._opts.selectedIndexes.length} items selected</span
+        return html`<span class="select-face-badge"
+          >${this._opts.selectedIndexes.length} selected</span
         >`;
     }
   }
