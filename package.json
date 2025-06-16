@@ -176,7 +176,7 @@
     "rollup-plugin-filesize": "^10.0.0",
     "rollup-plugin-visualizer": "^6.0.0",
     "semver": "^7.7.1",
-    "sinon": "^20.0.0",
+    "sinon": "^21.0.0",
     "ts-lit-plugin": "^2.0.2",
     "typescript": "^5.8.2",
     "wireit": "^0.14.11"
