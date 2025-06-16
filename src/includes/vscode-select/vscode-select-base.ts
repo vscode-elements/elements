@@ -13,7 +13,6 @@ import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
 import {VscElement} from '../VscElement.js';
 import {filterOptionsByPattern, highlightRanges} from './helpers.js';
-import {chevronDownIcon} from './template-elements.js';
 import type {InternalOption, Option, FilterMethod} from './types.js';
 import {OptionListController} from './OptionListController.js';
 
@@ -246,7 +245,7 @@ export class VscodeSelectBase extends VscElement {
   protected _isPlaceholderOptionActive = false;
 
   @state()
-  private _isBeingFiltered = false;
+  protected _isBeingFiltered = false;
 
   @state()
   protected _optionListScrollPos = 0;
@@ -722,69 +721,8 @@ export class VscodeSelectBase extends VscElement {
     return html`${nothing}`;
   }
 
-  private _renderMultiSelectLabel() {
-    switch (this._opts.selectedIndexes.length) {
-      case 0:
-        return html`<span class="select-face-badge no-item"
-          >No items selected</span
-        >`;
-      case 1:
-        return html`<span class="select-face-badge">1 item selected</span>`;
-      default:
-        return html`<span class="select-face-badge"
-          >${this._opts.selectedIndexes.length} items selected</span
-        >`;
-    }
-  }
-
   protected _renderComboboxFace(): TemplateResult {
-    let inputVal = '';
-
-    if (this._isBeingFiltered) {
-      inputVal = this._opts.filterPattern;
-    } else {
-      const op = this._opts.getSelectedOption();
-      inputVal = op?.label ?? '';
-    }
-
-    const activeDescendant =
-      this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
-    const expanded = this.open ? 'true' : 'false';
-
-    return html`
-      <div class="combobox-face face">
-        ${this._multiple ? this._renderMultiSelectLabel() : nothing}
-        <input
-          aria-activedescendant=${activeDescendant}
-          aria-autocomplete="list"
-          aria-controls="select-listbox"
-          aria-expanded=${expanded}
-          aria-haspopup="listbox"
-          aria-label=${ifDefined(this.label)}
-          class="combobox-input"
-          role="combobox"
-          spellcheck="false"
-          type="text"
-          autocomplete="off"
-          .value=${inputVal}
-          @focus=${this._onComboboxInputFocus}
-          @blur=${this._onComboboxInputBlur}
-          @input=${this._onComboboxInputInput}
-          @click=${this._onComboboxInputClick}
-          @keydown=${this._onComboboxInputSpaceKeyDown}
-        >
-        <button
-          aria-label="Open the list of options"
-          class="combobox-button"
-          type="button"
-          @click=${this._onComboboxButtonClick}
-          @keydown=${this._onComboboxButtonKeyDown}
-          tabindex="-1"
-        >
-          ${chevronDownIcon}
-        </button>
-      </div>
-    `;
+    return html`${nothing}`;
   }
 
   protected _renderDropdownControls(): TemplateResult {
