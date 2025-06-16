@@ -250,9 +250,6 @@ export class VscodeSelectBase extends VscElement {
   @state()
   protected _optionListScrollPos = 0;
 
-  /** @internal */
-  protected _multiple = false;
-
   private _isHoverForbidden = false;
   private _disabled = false;
   private _originalTabIndex: number | undefined = undefined;
@@ -659,7 +656,7 @@ export class VscodeSelectBase extends VscElement {
                 role="option"
                 tabindex="-1"
               >
-                ${this._multiple
+                ${this._opts.multiSelect
                   ? html`<span class=${classMap(checkboxClasses)}></span
                       ><span class="option-label">${labelText}</span>`
                   : labelText}
@@ -732,7 +729,7 @@ export class VscodeSelectBase extends VscElement {
   protected _renderDropdown() {
     const classes = {
       dropdown: true,
-      multiple: this._multiple,
+      multiple: this._opts.multiSelect,
       open: this.open,
     };
 

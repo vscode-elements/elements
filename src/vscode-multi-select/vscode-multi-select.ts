@@ -127,8 +127,6 @@ export class VscodeMultiSelect
   constructor() {
     super();
     this._opts.multiSelect = true;
-    /** @internal */
-    this._multiple = true;
     this._internals = this.attachInternals();
   }
 
@@ -350,7 +348,7 @@ export class VscodeMultiSelect
 
     return html`
       <div class="combobox-face face">
-        ${this._multiple ? this._renderLabel() : nothing}
+        ${this._opts.multiSelect ? this._renderLabel() : nothing}
         <input
           aria-activedescendant=${activeDescendant}
           aria-autocomplete="list"

@@ -161,8 +161,6 @@ export class VscodeSingleSelect
   constructor() {
     super();
     this._opts.multiSelect = false;
-    /** @internal */
-    this._multiple = false;
     this._internals = this.attachInternals();
   }
 
