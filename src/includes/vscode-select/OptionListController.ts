@@ -388,6 +388,32 @@ export class OptionListController implements ReactiveController {
     this._host.requestUpdate();
   }
 
+  selectAll() {
+    if (!this._multiSelect) {
+      return;
+    }
+
+    this._options.forEach((_, i) => {
+      this._options[i].selected = true;
+      this._selectedIndexes.add(i);
+    });
+
+    this._host.requestUpdate();
+  }
+
+  selectNone() {
+    if (!this._multiSelect) {
+      return;
+    }
+
+    this._options.forEach((_, i) => {
+      this._options[i].selected = false;
+    });
+    this._selectedIndexes.clear();
+
+    this._host.requestUpdate();
+  }
+
   //#endregion
 
   //#region private functions
