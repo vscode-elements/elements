@@ -122,6 +122,14 @@ export class VscodeMultiSelect
     return this._internals.reportValidity();
   }
 
+  selectAll() {
+    this._opts.selectAll();
+  }
+
+  selectNone() {
+    this._opts.selectNone();
+  }
+
   private _internals: ElementInternals;
 
   constructor() {
