@@ -22,7 +22,7 @@ describe('vscode-multi-select', () => {
 
     const badge = el.shadowRoot?.querySelector('.select-face-badge');
 
-    expect(badge).lightDom.to.eq('1 item selected');
+    expect(badge).lightDom.to.eq('1 selected');
     expect(el.selectedIndexes).to.eql([1]);
     expect(el.value).to.eql(['Ipsum']);
   });
