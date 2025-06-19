@@ -23,7 +23,7 @@ const listenedKeys: ListenedKey[] = [
 
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Boolean, reflect: true})
   arrows = false;
@@ -43,7 +43,7 @@ export class VscodeList extends VscElement {
 
   /** @internal */
   @property({type: String, reflect: true})
-  role = 'tree';
+  override role = 'tree';
 
   @property({type: Number, reflect: true})
   numChildren = 0;
@@ -167,7 +167,7 @@ export class VscodeList extends VscElement {
     }
   };
 
-  protected willUpdate(changedProperties: PropertyValues<this>): void {
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
     const {arrows, indent} = this;
 
     if (changedProperties.has('arrows')) {
@@ -183,20 +183,20 @@ export class VscodeList extends VscElement {
     this.tabIndex = this._originalTabIndex;
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
 
     this._originalTabIndex = this.tabIndex;
     this.addEventListener('keydown', this._handleComponentKeyDown);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener('keydown', this._handleComponentKeyDown);
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     return html`<div>
       <slot @slotchange=${this._handleSlotChange}></slot>
     </div>`;

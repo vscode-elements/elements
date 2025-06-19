@@ -34,7 +34,7 @@ const arrowIcon = html`<svg
 
 @customElement('vscode-list-item')
 export class VscodeListItem extends VscElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({type: Boolean, reflect: true})
   branch = false;
@@ -56,7 +56,7 @@ export class VscodeListItem extends VscElement {
   private _selected = false;
 
   @property({type: Number, reflect: true})
-  tabIndex = -1;
+  override tabIndex = -1;
 
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
@@ -229,20 +229,20 @@ export class VscodeListItem extends VscElement {
     }
   };
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
     this._mainSlotChange();
 
     this.addEventListener('focus', this._handleComponentFocus);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener('focus', this._handleComponentFocus);
   }
 
-  render(): TemplateResult {
+  override render(): TemplateResult {
     const {arrows, indent, hasBranchItem} = this._listContextState;
     let indentation = BASE_INDENT + this.level * indent;
 
