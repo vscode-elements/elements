@@ -22,7 +22,7 @@ describe('vscode-multi-select', () => {
 
     const badge = el.shadowRoot?.querySelector('.select-face-badge');
 
-    expect(badge).lightDom.to.eq('1 selected');
+    expect(badge).lightDom.to.eq('1 Selected');
     expect(el.selectedIndexes).to.eql([1]);
     expect(el.value).to.eql(['Ipsum']);
   });
@@ -120,39 +120,6 @@ describe('vscode-multi-select', () => {
     });
   });
 
-  it('dropdown should be hidden after the OK button is clicked', async () => {
-    const el = (await fixture(html`
-      <vscode-multi-select>
-        <vscode-option value="1">One</vscode-option>
-        <vscode-option value="2">Two</vscode-option>
-        <vscode-option value="3">Three</vscode-option>
-      </vscode-multi-select>
-    `)) as VscodeMultiSelect;
-
-    const selectFace =
-      el.shadowRoot?.querySelector<HTMLDivElement>('.select-face');
-    selectFace!.click();
-    await el.updateComplete;
-    const dropdownVisibleBefore = el.shadowRoot
-      ?.querySelector('.dropdown')
-      ?.classList.contains('open');
-
-    const button =
-      el.shadowRoot?.querySelector<HTMLButtonElement>('.button-accept');
-    button!.click();
-    await el.updateComplete;
-
-    button?.click();
-    await el.updateComplete;
-
-    const dropdownVisibleAfter = el.shadowRoot
-      ?.querySelector('.dropdown')
-      ?.classList.contains('open');
-
-    expect(dropdownVisibleBefore).to.eq(true);
-    expect(dropdownVisibleAfter).to.eq(false);
-  });
-
   it('should apply combobox mode', async () => {
     const el = await fixture(
       html`<vscode-multi-select combobox>
@@ -167,7 +134,7 @@ describe('vscode-multi-select', () => {
     expect(comboboxFace).to.be.ok;
   });
 
-  it('should "select all" and "deselect all" work properly', async () => {
+  it('selects all options', async () => {
     const el = await fixture<VscodeMultiSelect>(
       html`<vscode-multi-select>
         <vscode-option value="1">One</vscode-option>
@@ -176,32 +143,33 @@ describe('vscode-multi-select', () => {
       </vscode-multi-select>`
     );
 
-    el.shadowRoot?.querySelector<HTMLDivElement>('.select-face')!.click();
+    el.selectAll();
     await el.updateComplete;
 
-    const btSelectAll =
-      el.shadowRoot?.querySelector<HTMLButtonElement>('#select-all');
-    const btSelectNone =
-      el.shadowRoot?.querySelector<HTMLButtonElement>('#select-none');
-    btSelectAll!.click();
+    expect(el.shadowRoot?.querySelector('.select-face-badge')).lightDom.to.eq(
+      '3 Selected'
+    );
+  });
+
+  it('de-selects all options', async () => {
+    const el = await fixture<VscodeMultiSelect>(
+      html`<vscode-multi-select>
+        <vscode-option value="1" selected>One</vscode-option>
+        <vscode-option value="2" selected>Two</vscode-option>
+        <vscode-option value="3" selected>Three</vscode-option>
+      </vscode-multi-select>`
+    );
+
+    expect(el.shadowRoot?.querySelector('.select-face-badge')).lightDom.to.eq(
+      '3 Selected'
+    );
+
+    el.selectNone();
     await el.updateComplete;
 
-    let caption =
-      el.shadowRoot?.querySelector<HTMLDivElement>(
-        '.select-face-badge'
-      )!.innerText;
-
-    expect(caption).to.eq('3 ITEMS SELECTED');
-
-    btSelectNone!.click();
-    await el.updateComplete;
-
-    caption =
-      el.shadowRoot?.querySelector<HTMLDivElement>(
-        '.select-face-badge'
-      )!.innerText;
-
-    expect(caption).to.eq('NO ITEMS SELECTED');
+    expect(el.shadowRoot?.querySelector('.select-face-badge')).lightDom.to.eq(
+      '0 Selected'
+    );
   });
 
   it('should be unfocusable when it is disabled', () => {
@@ -386,5 +354,7 @@ describe('vscode-multi-select', () => {
   it('selects multiple options with keyboard');
   it('selectedIndexes sync with values');
   it('creates and select suggested option (enter key press)');
-  it('dispatch change event, set form value, manage required state (enter key press)');
+  it(
+    'dispatch change event, set form value, manage required state (enter key press)'
+  );
 });

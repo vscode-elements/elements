@@ -337,10 +337,10 @@ export class VscodeMultiSelect
   private _renderLabel() {
     switch (this._opts.selectedIndexes.length) {
       case 0:
-        return html`<span class="select-face-badge no-item">0 selected</span>`;
+        return html`<span class="select-face-badge no-item">0 Selected</span>`;
       default:
         return html`<span class="select-face-badge"
-          >${this._opts.selectedIndexes.length} selected</span
+          >${this._opts.selectedIndexes.length} Selected</span
         >`;
     }
   }
