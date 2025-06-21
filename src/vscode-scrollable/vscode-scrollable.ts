@@ -123,14 +123,14 @@ export class VscodeScrollable extends VscElement {
   };
 
   private _updateScrollbar() {
-    const compCr = this.getBoundingClientRect();
-    const contentCr = this._contentElement.getBoundingClientRect();
+    const contentHeight = this._contentElement.offsetHeight;
+    const componentHeight = this.offsetHeight;
 
-    if (compCr.height >= contentCr.height) {
+    if (componentHeight >= contentHeight) {
       this._scrollbarVisible = false;
     } else {
       this._scrollbarVisible = true;
-      this._thumbHeight = compCr.height * (compCr.height / contentCr.height);
+      this._thumbHeight = componentHeight * (componentHeight / contentHeight);
     }
 
     this.requestUpdate();
