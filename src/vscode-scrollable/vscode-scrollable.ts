@@ -206,8 +206,7 @@ export class VscodeScrollable extends VscElement {
     }
 
     this._thumbY = nextPos;
-    this._scrollableContainer.scrollTop =
-      (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
+    this._scrollPos = (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
   };
 
   private _handleScrollThumbMouseUp = (event: MouseEvent) => {
@@ -225,7 +224,7 @@ export class VscodeScrollable extends VscElement {
 
     document.removeEventListener('mousemove', this._handleScrollThumbMouseMove);
     document.removeEventListener('mouseup', this._handleScrollThumbMouseUp);
-  }
+  };
 
   private _handleScrollableContainerScroll = () => {
     this._updateThumb();
