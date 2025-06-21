@@ -157,7 +157,7 @@ export class VscodeScrollable extends VscElement {
     this.requestUpdate();
   }
 
-  private _updateThumb() {
+  private _updateThumbPosition() {
     const scrollTop = this._scrollableContainer.scrollTop;
     this.scrolled = scrollTop > 0;
 
@@ -171,8 +171,9 @@ export class VscodeScrollable extends VscElement {
     this._thumbY = ratio * (componentH - thumbH);
   }
 
+  //#region event handlers
   private _handleSlotChange = () => {
-    this._updateThumb();
+    this._updateThumbPosition();
     this._zIndexFix();
   };
 
@@ -227,11 +228,11 @@ export class VscodeScrollable extends VscElement {
   };
 
   private _handleScrollableContainerScroll = () => {
-    this._updateThumb();
+    this._updateThumbPosition();
   };
 
   private _handleComponentMouseOver = () => {
-    this._updateThumb();
+    this._updateThumbPosition();
 
     this._thumbVisible = true;
     this._thumbFade = false;
@@ -243,6 +244,8 @@ export class VscodeScrollable extends VscElement {
       this._thumbFade = true;
     }
   };
+
+  //#endregion
 
   override render(): TemplateResult {
     return html`
