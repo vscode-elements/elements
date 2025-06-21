@@ -18,6 +18,9 @@ import styles from './vscode-scrollable.styles.js';
 export class VscodeScrollable extends VscElement {
   static override styles = styles;
 
+  @property({type: Boolean, reflect: true, attribute: 'always-visible'})
+  alwaysVisible = false;
+
   @property({type: Boolean, reflect: true})
   shadow = true;
 
@@ -26,15 +29,13 @@ export class VscodeScrollable extends VscElement {
 
   @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
-    this._scrollableContainer.scrollTop = val;
+    this._scrollPos = val;
   }
   get scrollPos(): number {
-    if (!this._scrollableContainer) {
-      return 0;
-    }
-
-    return this._scrollableContainer.scrollTop;
+    return this._scrollPos;
   }
+
+  private _scrollPos = 0;
 
   @property({type: Number, attribute: 'scroll-max'})
   get scrollMax(): number {
@@ -82,6 +83,12 @@ export class VscodeScrollable extends VscElement {
   private _scrollbarVisible = true;
   private _scrollbarTrackZ = 0;
 
+  constructor() {
+    super();
+    this.addEventListener('mouseover', this._handleComponentMouseOver);
+    this.addEventListener('mouseout', this._handleComponentMouseOut);
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -100,9 +107,6 @@ export class VscodeScrollable extends VscElement {
       this._hostResizeObserver.observe(this);
       this._contentResizeObserver.observe(this._contentElement);
     });
-
-    this.addEventListener('mouseover', this._onComponentMouseOverBound);
-    this.addEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
   override disconnectedCallback(): void {
@@ -112,9 +116,6 @@ export class VscodeScrollable extends VscElement {
     this._hostResizeObserver.disconnect();
     this._contentResizeObserver.unobserve(this._contentElement);
     this._contentResizeObserver.disconnect();
-
-    this.removeEventListener('mouseover', this._onComponentMouseOverBound);
-    this.removeEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
   private _resizeObserverCallback = () => {
@@ -122,14 +123,14 @@ export class VscodeScrollable extends VscElement {
   };
 
   private _updateScrollbar() {
-    const compCr = this.getBoundingClientRect();
-    const contentCr = this._contentElement.getBoundingClientRect();
+    const contentHeight = this._contentElement.offsetHeight;
+    const componentHeight = this.offsetHeight;
 
-    if (compCr.height >= contentCr.height) {
+    if (componentHeight >= contentHeight) {
       this._scrollbarVisible = false;
     } else {
       this._scrollbarVisible = true;
-      this._thumbHeight = compCr.height * (compCr.height / contentCr.height);
+      this._thumbHeight = componentHeight * (componentHeight / contentHeight);
     }
 
     this.requestUpdate();
@@ -156,7 +157,22 @@ export class VscodeScrollable extends VscElement {
     this.requestUpdate();
   }
 
+  private _updateThumb() {
+    const scrollTop = this._scrollableContainer.scrollTop;
+    this.scrolled = scrollTop > 0;
+
+    const cmpH = this.getBoundingClientRect().height;
+    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
+    const contentH = this._contentElement.getBoundingClientRect().height;
+
+    const overflown = contentH - cmpH;
+    const ratio = scrollTop / overflown;
+
+    this._thumbY = ratio * (cmpH - thumbH);
+  }
+
   private _onSlotChange = () => {
+    this._updateThumb();
     this._zIndexFix();
   };
 
@@ -220,34 +236,22 @@ export class VscodeScrollable extends VscElement {
   private _onScrollThumbMouseUpBound = this._onScrollThumbMouseUp.bind(this);
 
   private _onScrollableContainerScroll() {
-    const scrollTop = this._scrollableContainer.scrollTop;
-    this.scrolled = scrollTop > 0;
-
-    const cmpH = this.getBoundingClientRect().height;
-    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
-    const contentH = this._contentElement.getBoundingClientRect().height;
-
-    const overflown = contentH - cmpH;
-    const ratio = scrollTop / overflown;
-
-    this._thumbY = ratio * (cmpH - thumbH);
+    this._updateThumb();
   }
 
-  private _onComponentMouseOver() {
+  private _handleComponentMouseOver = () => {
+    this._updateThumb();
+
     this._thumbVisible = true;
     this._thumbFade = false;
-  }
+  };
 
-  private _onComponentMouseOverBound = this._onComponentMouseOver.bind(this);
-
-  private _onComponentMouseOut() {
+  private _handleComponentMouseOut = () => {
     if (!this._thumbActive) {
       this._thumbVisible = false;
       this._thumbFade = true;
     }
-  }
-
-  private _onComponentMouseOutBound = this._onComponentMouseOut.bind(this);
+  };
 
   override render(): TemplateResult {
     return html`
@@ -256,6 +260,7 @@ export class VscodeScrollable extends VscElement {
         .style=${stylePropertyMap({
           userSelect: this._isDragging ? 'none' : 'auto',
         })}
+        .scrollTop=${this._scrollPos}
       >
         <div
           class=${classMap({shadow: true, visible: this.scrolled})}
@@ -275,8 +280,8 @@ export class VscodeScrollable extends VscElement {
           <div
             class=${classMap({
               'scrollbar-thumb': true,
-              visible: this._thumbVisible,
-              fade: this._thumbFade,
+              visible: this.alwaysVisible ? true : this._thumbVisible,
+              fade: this.alwaysVisible ? false : this._thumbFade,
               active: this._thumbActive,
             })}
             .style=${stylePropertyMap({
