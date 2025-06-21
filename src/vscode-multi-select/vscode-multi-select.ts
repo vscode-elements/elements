@@ -299,10 +299,11 @@ export class VscodeMultiSelect
         this._createAndSelectSuggestedOption();
       } else {
         this._opts.toggleActiveMultiselectOption();
+        this._setFormValue();
+        this._manageRequired();
+        this._dispatchChangeEvent();
       }
     }
-
-    // TODO: dispatch change + set value
   }
 
   private _onMultiAcceptClick(): void {

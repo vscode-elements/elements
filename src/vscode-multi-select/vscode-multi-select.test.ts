@@ -386,4 +386,5 @@ describe('vscode-multi-select', () => {
   it('selects multiple options with keyboard');
   it('selectedIndexes sync with values');
   it('creates and select suggested option (enter key press)');
+  it('dispatch change event, set form value, manage required state (enter key press)');
 });
