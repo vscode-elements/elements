@@ -476,11 +476,14 @@ export class VscodeSelectBase extends VscElement {
         this._isPlaceholderOptionActive = false;
       } else {
         const prevOp = this._opts.prev();
-        this._opts.activeIndex = prevOp?.index ?? -1;
-        const prevSelectableIndex = prevOp?.filteredIndex ?? -1;
 
-        if (prevSelectableIndex > -1) {
-          this._adjustOptionListScrollPos('up', prevSelectableIndex);
+        if (prevOp !== null) {
+          this._opts.activeIndex = prevOp?.index ?? -1;
+          const prevSelectableIndex = prevOp?.filteredIndex ?? -1;
+
+          if (prevSelectableIndex > -1) {
+            this._adjustOptionListScrollPos('up', prevSelectableIndex);
+          }
         }
       }
     } else {
@@ -613,6 +616,7 @@ export class VscodeSelectBase extends VscElement {
         class="options"
         id="select-listbox"
         role="listbox"
+        tabindex="-1"
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
         @scroll=${this._onOptionListScroll}
