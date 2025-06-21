@@ -161,22 +161,22 @@ export class VscodeScrollable extends VscElement {
     const scrollTop = this._scrollableContainer.scrollTop;
     this.scrolled = scrollTop > 0;
 
-    const cmpH = this.getBoundingClientRect().height;
-    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
-    const contentH = this._contentElement.getBoundingClientRect().height;
+    const componentH = this.offsetHeight;
+    const thumbH = this._scrollThumbElement.offsetHeight;
+    const contentH = this._contentElement.offsetHeight;
 
-    const overflown = contentH - cmpH;
+    const overflown = contentH - componentH;
     const ratio = scrollTop / overflown;
 
-    this._thumbY = ratio * (cmpH - thumbH);
+    this._thumbY = ratio * (componentH - thumbH);
   }
 
-  private _onSlotChange = () => {
+  private _handleSlotChange = () => {
     this._updateThumb();
     this._zIndexFix();
   };
 
-  private _onScrollThumbMouseDown(event: MouseEvent) {
+  private _handleScrollThumbMouseDown(event: MouseEvent) {
     const cmpCr = this.getBoundingClientRect();
     const thCr = this._scrollThumbElement.getBoundingClientRect();
 
@@ -185,11 +185,11 @@ export class VscodeScrollable extends VscElement {
     this._isDragging = true;
     this._thumbActive = true;
 
-    document.addEventListener('mousemove', this._onScrollThumbMouseMoveBound);
-    document.addEventListener('mouseup', this._onScrollThumbMouseUpBound);
+    document.addEventListener('mousemove', this._handleScrollThumbMouseMove);
+    document.addEventListener('mouseup', this._handleScrollThumbMouseUp);
   }
 
-  private _onScrollThumbMouseMove(event: MouseEvent) {
+  private _handleScrollThumbMouseMove = (event: MouseEvent) => {
     const predictedPos =
       this._scrollThumbStartY + (event.screenY - this._mouseStartY);
     let nextPos = 0;
@@ -208,12 +208,9 @@ export class VscodeScrollable extends VscElement {
     this._thumbY = nextPos;
     this._scrollableContainer.scrollTop =
       (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
-  }
+  };
 
-  private _onScrollThumbMouseMoveBound =
-    this._onScrollThumbMouseMove.bind(this);
-
-  private _onScrollThumbMouseUp(event: MouseEvent) {
+  private _handleScrollThumbMouseUp = (event: MouseEvent) => {
     this._isDragging = false;
     this._thumbActive = false;
 
@@ -226,14 +223,9 @@ export class VscodeScrollable extends VscElement {
       this._thumbVisible = false;
     }
 
-    document.removeEventListener(
-      'mousemove',
-      this._onScrollThumbMouseMoveBound
-    );
-    document.removeEventListener('mouseup', this._onScrollThumbMouseUpBound);
+    document.removeEventListener('mousemove', this._handleScrollThumbMouseMove);
+    document.removeEventListener('mouseup', this._handleScrollThumbMouseUp);
   }
-
-  private _onScrollThumbMouseUpBound = this._onScrollThumbMouseUp.bind(this);
 
   private _handleScrollableContainerScroll = () => {
     this._updateThumb();
@@ -288,11 +280,11 @@ export class VscodeScrollable extends VscElement {
               height: `${this._thumbHeight}px`,
               top: `${this._thumbY}px`,
             })}
-            @mousedown=${this._onScrollThumbMouseDown}
+            @mousedown=${this._handleScrollThumbMouseDown}
           ></div>
         </div>
         <div class="content">
-          <slot @slotchange=${this._onSlotChange}></slot>
+          <slot @slotchange=${this._handleSlotChange}></slot>
         </div>
       </div>
     `;
