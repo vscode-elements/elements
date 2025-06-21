@@ -759,6 +759,7 @@ export class VscodeSelectBase extends VscElement {
         <vscode-scrollable
           always-visible
           class="scrollable"
+          tabindex="-1"
           @scroll=${this._onOptionListScroll}
           .scrollPos=${this._optionListScrollPos}
           .style=${stylePropertyMap({height: `${scrollPaneHeight}px`})}
