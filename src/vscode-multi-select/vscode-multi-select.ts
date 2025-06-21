@@ -295,7 +295,11 @@ export class VscodeMultiSelect
       this._opts.filterPattern = '';
       this.open = true;
     } else {
-      this._opts.toggleActiveMultiselectOption();
+      if (this._isPlaceholderOptionActive) {
+        this._createAndSelectSuggestedOption();
+      } else {
+        this._opts.toggleActiveMultiselectOption();
+      }
     }
 
     // TODO: dispatch change + set value
