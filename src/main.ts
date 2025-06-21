@@ -20,6 +20,7 @@ export {VscodeRadioGroup} from './vscode-radio-group/index.js';
 export {VscodeSingleSelect} from './vscode-single-select/index.js';
 export {VscodeScrollable} from './vscode-scrollable/index.js';
 export {VscodeSplitLayout} from './vscode-split-layout/index.js';
+export {VscodeSwitchButton} from './vscode-switch-button//index.js';
 export {VscodeTabHeader} from './vscode-tab-header/index.js';
 export {VscodeTabPanel} from './vscode-tab-panel/index.js';
 export {VscodeTableBody} from './vscode-table-body/index.js';
