@@ -102,7 +102,7 @@ export class VscodeScrollable extends VscElement {
     this.updateComplete.then(() => {
       this._scrollableContainer.addEventListener(
         'scroll',
-        this._onScrollableContainerScroll.bind(this)
+        this._handleScrollableContainerScroll
       );
       this._hostResizeObserver.observe(this);
       this._contentResizeObserver.observe(this._contentElement);
@@ -235,9 +235,9 @@ export class VscodeScrollable extends VscElement {
 
   private _onScrollThumbMouseUpBound = this._onScrollThumbMouseUp.bind(this);
 
-  private _onScrollableContainerScroll() {
+  private _handleScrollableContainerScroll = () => {
     this._updateThumb();
-  }
+  };
 
   private _handleComponentMouseOver = () => {
     this._updateThumb();
