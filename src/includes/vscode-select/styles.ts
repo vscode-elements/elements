@@ -313,37 +313,29 @@ export default [
     }
 
     .checkbox-icon {
-      background-color: var(--vscode-settings-checkboxBackground, #313131);
-      border: 1px solid currentColor;
+      align-items: center;
+      background-color: var(--vscode-checkbox-background, #313131);
+      border: 1px solid var(--vscode-checkbox-border);
       border-radius: 2px;
       box-sizing: border-box;
-      height: 14px;
+      color: var(--vscode-checkbox-foreground);
+      display: inline-flex;
+      height: 15px;
+      justify-content: center;
       margin-right: 5px;
       overflow: hidden;
       position: relative;
-      width: 14px;
+      width: 15px;
     }
 
-    .checkbox-icon.checked:before,
-    .checkbox-icon.checked:after {
-      content: '';
+    .checkbox-icon svg {
+      display: none;
+      height: 13px;
+      width: 13px;
+    }
+
+    .checkbox-icon.checked svg {
       display: block;
-      height: 5px;
-      position: absolute;
-      transform: rotate(-45deg);
-      width: 10px;
-    }
-
-    .checkbox-icon.checked:before {
-      background-color: var(--vscode-foreground, #cccccc);
-      left: 1px;
-      top: 2.5px;
-    }
-
-    .checkbox-icon.checked:after {
-      background-color: var(--vscode-settings-checkboxBackground, #313131);
-      left: 1px;
-      top: -0.5px;
     }
 
     .dropdown-controls {

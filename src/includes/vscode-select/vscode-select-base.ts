@@ -8,6 +8,7 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {repeat} from 'lit/directives/repeat.js';
+import {when} from 'lit/directives/when.js';
 import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
@@ -15,6 +16,7 @@ import {VscElement} from '../VscElement.js';
 import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import type {InternalOption, Option, FilterMethod} from './types.js';
 import {OptionListController} from './OptionListController.js';
+import {checkIcon} from './template-elements.js';
 
 export const VISIBLE_OPTS = 10;
 export const OPT_HEIGHT = 22;
@@ -604,6 +606,19 @@ export class VscodeSelectBase extends VscElement {
   //#endregion
 
   //#region render functions
+  private _renderCheckbox(
+    checked: boolean,
+    label: string | TemplateResult | TemplateResult[]
+  ) {
+    const checkboxClasses = {
+      'checkbox-icon': true,
+      checked,
+    };
+
+    return html`<span class=${classMap(checkboxClasses)}>${checkIcon}</span
+      ><span class="option-label">${label}</span>`;
+  }
+
   protected _renderOptions(): TemplateResult | TemplateResult[] {
     const list = this._opts.options;
 
@@ -640,11 +655,6 @@ export class VscodeSelectBase extends VscElement {
               selected,
             };
 
-            const checkboxClasses = {
-              'checkbox-icon': true,
-              checked: selected,
-            };
-
             const labelText =
               (op.ranges?.length ?? 0 > 0)
                 ? highlightRanges(op.label, op.ranges ?? [])
@@ -660,10 +670,11 @@ export class VscodeSelectBase extends VscElement {
                 role="option"
                 tabindex="-1"
               >
-                ${this._opts.multiSelect
-                  ? html`<span class=${classMap(checkboxClasses)}></span
-                      ><span class="option-label">${labelText}</span>`
-                  : labelText}
+                ${when(
+                  this._opts.multiSelect,
+                  () => this._renderCheckbox(selected, labelText),
+                  () => labelText
+                )}
               </li>
             `;
           }
