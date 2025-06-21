@@ -18,6 +18,9 @@ import styles from './vscode-scrollable.styles.js';
 export class VscodeScrollable extends VscElement {
   static override styles = styles;
 
+  @property({type: Boolean, reflect: true, attribute: 'always-visible'})
+  alwaysVisible = false;
+
   @property({type: Boolean, reflect: true})
   shadow = true;
 
@@ -277,8 +280,8 @@ export class VscodeScrollable extends VscElement {
           <div
             class=${classMap({
               'scrollbar-thumb': true,
-              visible: this._thumbVisible,
-              fade: this._thumbFade,
+              visible: this.alwaysVisible ? true : this._thumbVisible,
+              fade: this.alwaysVisible ? false : this._thumbFade,
               active: this._thumbActive,
             })}
             .style=${stylePropertyMap({
