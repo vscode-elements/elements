@@ -224,14 +224,8 @@
           <vscode-option>Zimbabwe</vscode-option>
         </vscode-multi-select>
         <script type="module">
-          const sl = document.querySelector('vscode-multi-select');
-          sl.addEventListener('change', () => {
-            console.log(sl.value);
-          });
-
-          sl.addEventListener('vsc-multi-select-create-option', (ev) => {
-            console.log(ev);
-          });
+          logEvents('vscode-multi-select', 'change');
+          logEvents('vscode-multi-select', 'vsc-multi-select-create-option');
         </script>
       </vscode-demo>
     </main>
