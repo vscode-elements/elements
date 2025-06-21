@@ -12,11 +12,13 @@ import {when} from 'lit/directives/when.js';
 import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
+import {stylePropertyMap} from '../style-property-map.js';
 import {VscElement} from '../VscElement.js';
 import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import type {InternalOption, Option, FilterMethod} from './types.js';
 import {OptionListController} from './OptionListController.js';
 import {checkIcon} from './template-elements.js';
+import '../../vscode-scrollable/vscode-scrollable.js';
 
 export const VISIBLE_OPTS = 10;
 export const OPT_HEIGHT = 22;
@@ -634,8 +636,6 @@ export class VscodeSelectBase extends VscElement {
         tabindex="-1"
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
-        @scroll=${this._onOptionListScroll}
-        .scrollTop=${this._optionListScrollPos}
       >
         ${repeat(
           list,
@@ -748,10 +748,23 @@ export class VscodeSelectBase extends VscElement {
       open: this.open,
     };
 
+    const scrollPaneHeight = Math.min(
+      this._opts.numOfVisibleOptions * OPT_HEIGHT + 2,
+      VISIBLE_OPTS * OPT_HEIGHT + 2
+    );
+
     return html`
       <div class=${classMap(classes)}>
         ${this.position === 'above' ? this._renderDescription() : nothing}
-        ${this._renderOptions()} ${this._renderDropdownControls()}
+        <vscode-scrollable
+          always-visible
+          class="scrollable"
+          @scroll=${this._onOptionListScroll}
+          .scrollPos=${this._optionListScrollPos}
+          .style=${stylePropertyMap({height: `${scrollPaneHeight}px`})}
+        >
+          ${this._renderOptions()} ${this._renderDropdownControls()}
+        </vscode-scrollable>
         ${this.position === 'below' ? this._renderDescription() : nothing}
       </div>
     `;
