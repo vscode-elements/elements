@@ -266,6 +266,11 @@ export class OptionListController implements ReactiveController {
 
   toggleActiveMultiselectOption() {
     const activeOption = this._options[this._activeIndex] ?? null;
+
+    if (!activeOption) {
+      return;
+    }
+
     const checked = this._selectedIndexes.has(activeOption.index);
 
     if (checked) {
