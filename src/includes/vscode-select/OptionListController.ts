@@ -386,7 +386,7 @@ export class OptionListController implements ReactiveController {
       if (this._selectedIndex > -1) {
         this._activeIndex = this._selectedIndex;
       } else {
-        this._activeIndex = 0;
+        this._activeIndex = -1;
       }
     }
 
