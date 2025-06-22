@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import {html, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
@@ -30,6 +30,8 @@ export class VscodeScrollable extends VscElement {
   @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
     this._scrollPos = val;
+    this._updateThumbPosition();
+    this.requestUpdate();
   }
   get scrollPos(): number {
     return this._scrollPos;
@@ -106,6 +108,7 @@ export class VscodeScrollable extends VscElement {
       );
       this._hostResizeObserver.observe(this);
       this._contentResizeObserver.observe(this._contentElement);
+      this._updateThumbPosition();
     });
   }
 
@@ -116,6 +119,10 @@ export class VscodeScrollable extends VscElement {
     this._hostResizeObserver.disconnect();
     this._contentResizeObserver.unobserve(this._contentElement);
     this._contentResizeObserver.disconnect();
+  }
+
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    this._updateThumbPosition();
   }
 
   private _resizeObserverCallback = () => {
@@ -158,17 +165,22 @@ export class VscodeScrollable extends VscElement {
   }
 
   private _updateThumbPosition() {
-    const scrollTop = this._scrollableContainer.scrollTop;
+    if (!this._scrollableContainer) {
+      return;
+    }
+
+    const scrollTop = this._scrollPos;
     this.scrolled = scrollTop > 0;
 
     const componentH = this.offsetHeight;
-    const thumbH = this._scrollThumbElement.offsetHeight;
+    const thumbH = this._thumbHeight;
     const contentH = this._contentElement.offsetHeight;
 
     const overflown = contentH - componentH;
     const ratio = scrollTop / overflown;
+    const thumbYMax = componentH - thumbH;
 
-    this._thumbY = ratio * (componentH - thumbH);
+    this._thumbY = Math.min(ratio * (componentH - thumbH), thumbYMax);
   }
 
   //#region event handlers
@@ -232,8 +244,6 @@ export class VscodeScrollable extends VscElement {
   };
 
   private _handleComponentMouseOver = () => {
-    this._updateThumbPosition();
-
     this._thumbVisible = true;
     this._thumbFade = false;
   };
@@ -243,6 +253,15 @@ export class VscodeScrollable extends VscElement {
       this._thumbVisible = false;
       this._thumbFade = true;
     }
+  };
+
+  private _handleScroll = () => {
+    this._scrollPos = this._scrollableContainer.scrollTop;
+    this.dispatchEvent(
+      new CustomEvent('vsc-scrollable-change', {
+        detail: this._scrollPos,
+      })
+    );
   };
 
   //#endregion
@@ -255,6 +274,7 @@ export class VscodeScrollable extends VscElement {
           userSelect: this._isDragging ? 'none' : 'auto',
         })}
         .scrollTop=${this._scrollPos}
+        @scroll=${this._handleScroll}
       >
         <div
           class=${classMap({shadow: true, visible: this.scrolled})}

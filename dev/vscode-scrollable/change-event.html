@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+      nonce="abc123"
+    >
+    <style nonce="abc123">
+      vscode-scrollable {
+        width: 200px;
+        height: 200px;
+      }
+
+      vscode-scrollable div {
+        z-index: 200;
+      }
+    </style>
+    <script nonce="abc123">
+      window.vscodeWebviewPlaygroundNonce = 'abc123';
+    </script>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+      nonce="abc123"
+    ></script>
+    <script type="module" src="/dist/main.js" nonce="abc123"></script>
+    <script nonce="abc123">
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-scrollable always-visible>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+            volutpat ex sit amet venenatis auctor. Nunc semper consequat diam
+            sit amet eleifend. Ut a viverra nulla. Fusce vel sapien quis metus
+            vestibulum dignissim in sit amet orci. Sed lorem diam, scelerisque
+            non urna ac, egestas suscipit eros. Donec consequat tristique
+            lectus, quis placerat metus venenatis a. Nam fringilla lectus
+            finibus iaculis dictum. Maecenas in risus velit. Vestibulum ante
+            ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+            curae;
+          </p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <div>aaa</div>
+        </vscode-scrollable>
+      </vscode-demo>
+      <div style="width: 200px; height: 200px; overflow: auto">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam volutpat
+          ex sit amet venenatis auctor. Nunc semper consequat diam sit amet
+          eleifend. Ut a viverra nulla. Fusce vel sapien quis metus vestibulum
+          dignissim in sit amet orci. Sed lorem diam, scelerisque non urna ac,
+          egestas suscipit eros. Donec consequat tristique lectus, quis placerat
+          metus venenatis a. Nam fringilla lectus finibus iaculis dictum.
+          Maecenas in risus velit. Vestibulum ante ipsum primis in faucibus orci
+          luctus et ultrices posuere cubilia curae;
+        </p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <div>aaa</div>
+      </div>
+    </main>
+    <script type="module">
+      logEvents('vscode-scrollable', 'vsc-scrollable-change');
+    </script>
+  </body>
+</html>
