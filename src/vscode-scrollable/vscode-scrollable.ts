@@ -29,7 +29,7 @@ export class VscodeScrollable extends VscElement {
 
   @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
-    this._scrollPos = val;
+    this._scrollPos = this._limitScrollPos(val);
     this._updateThumbPosition();
     this.requestUpdate();
   }
@@ -128,6 +128,21 @@ export class VscodeScrollable extends VscElement {
   private _resizeObserverCallback = () => {
     this._updateScrollbar();
   };
+
+  private _limitScrollPos(pos: number) {
+    const minValue = 0;
+    let maxValue: number;
+
+    if (this?.offsetHeight ?? 0 >= (this._contentElement?.offsetHeight ?? 0)) {
+      maxValue = 0;
+    } else {
+      maxValue = Math.max(0, this.offsetHeight - this._thumbHeight);
+    }
+
+    console.log(minValue, maxValue);
+
+    return Math.max(minValue, Math.min(maxValue, pos));
+  }
 
   private _updateScrollbar() {
     const contentHeight = this._contentElement.offsetHeight;
