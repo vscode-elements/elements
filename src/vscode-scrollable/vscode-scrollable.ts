@@ -21,6 +21,9 @@ export class VscodeScrollable extends VscElement {
   @property({type: Boolean, reflect: true, attribute: 'always-visible'})
   alwaysVisible = false;
 
+  @property({type: Number, attribute: 'min-thumb-size'})
+  minThumbSize = 40;
+
   @property({type: Boolean, reflect: true})
   shadow = true;
 
@@ -29,7 +32,8 @@ export class VscodeScrollable extends VscElement {
 
   @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
-    this._scrollPos = this._limitScrollPos(val);
+    this._scrollPos = val;
+    this._updateScrollbar();
     this._updateThumbPosition();
     this.requestUpdate();
   }
@@ -127,32 +131,26 @@ export class VscodeScrollable extends VscElement {
 
   private _resizeObserverCallback = () => {
     this._updateScrollbar();
+    this._updateThumbPosition();
   };
 
-  private _limitScrollPos(pos: number) {
-    const minValue = 0;
-    let maxValue: number;
+  private _calcThumbHeight() {
+    const componentHeight = this.offsetHeight;
+    const contentHeight = this._contentElement?.offsetHeight ?? 0;
+    const proposedSize = componentHeight * (componentHeight / contentHeight);
 
-    if (this?.offsetHeight ?? 0 >= (this._contentElement?.offsetHeight ?? 0)) {
-      maxValue = 0;
-    } else {
-      maxValue = Math.max(0, this.offsetHeight - this._thumbHeight);
-    }
-
-    console.log(minValue, maxValue);
-
-    return Math.max(minValue, Math.min(maxValue, pos));
+    return Math.max(this.minThumbSize, proposedSize);
   }
 
   private _updateScrollbar() {
-    const contentHeight = this._contentElement.offsetHeight;
+    const contentHeight = this._contentElement?.offsetHeight ?? 0;
     const componentHeight = this.offsetHeight;
 
     if (componentHeight >= contentHeight) {
       this._scrollbarVisible = false;
     } else {
       this._scrollbarVisible = true;
-      this._thumbHeight = componentHeight * (componentHeight / contentHeight);
+      this._thumbHeight = this._calcThumbHeight();
     }
 
     this.requestUpdate();
@@ -200,6 +198,7 @@ export class VscodeScrollable extends VscElement {
 
   //#region event handlers
   private _handleSlotChange = () => {
+    this._updateScrollbar();
     this._updateThumbPosition();
     this._zIndexFix();
   };
