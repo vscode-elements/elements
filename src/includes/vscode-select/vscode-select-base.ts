@@ -742,8 +742,13 @@ export class VscodeSelectBase extends VscElement {
       open: this.open,
     };
 
+    const visibleOptions =
+      this._isSuggestedOptionVisible || this._opts.numOfVisibleOptions === 0
+        ? this._opts.numOfVisibleOptions + 1
+        : this._opts.numOfVisibleOptions;
+
     const scrollPaneHeight = Math.min(
-      this._opts.numOfVisibleOptions * OPT_HEIGHT,
+      visibleOptions * OPT_HEIGHT,
       VISIBLE_OPTS * OPT_HEIGHT
     );
 
@@ -756,7 +761,9 @@ export class VscodeSelectBase extends VscElement {
           tabindex="-1"
           @vsc-scrollable-change=${this._onOptionListScroll}
           .scrollPos=${this._optionListScrollPos}
-          .style=${stylePropertyMap({height: `${scrollPaneHeight}px`})}
+          .style=${stylePropertyMap({
+            height: `${scrollPaneHeight}px`,
+          })}
         >
           ${this._renderOptions()} ${this._renderDropdownControls()}
         </vscode-scrollable>
