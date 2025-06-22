@@ -1,10 +1,5 @@
 import {html, render, nothing, TemplateResult, PropertyValues} from 'lit';
-import {
-  eventOptions,
-  property,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {repeat} from 'lit/directives/repeat.js';
@@ -411,10 +406,9 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
-  @eventOptions({passive: true})
-  protected _onOptionListScroll(ev: Event) {
-    this._optionListScrollPos = (ev.target as HTMLUListElement).scrollTop;
-  }
+  private _onOptionListScroll = (ev: CustomEvent<number>) => {
+    this._optionListScrollPos = ev.detail;
+  };
 
   protected _onOptionMouseOver(ev: MouseEvent): void {
     if (this._isHoverForbidden) {
@@ -749,8 +743,8 @@ export class VscodeSelectBase extends VscElement {
     };
 
     const scrollPaneHeight = Math.min(
-      this._opts.numOfVisibleOptions * OPT_HEIGHT + 2,
-      VISIBLE_OPTS * OPT_HEIGHT + 2
+      this._opts.numOfVisibleOptions * OPT_HEIGHT,
+      VISIBLE_OPTS * OPT_HEIGHT
     );
 
     return html`
@@ -760,7 +754,7 @@ export class VscodeSelectBase extends VscElement {
           always-visible
           class="scrollable"
           tabindex="-1"
-          @scroll=${this._onOptionListScroll}
+          @vsc-scrollable-change=${this._onOptionListScroll}
           .scrollPos=${this._optionListScrollPos}
           .style=${stylePropertyMap({height: `${scrollPaneHeight}px`})}
         >
