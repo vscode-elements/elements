@@ -22,7 +22,7 @@ export class VscodeScrollable extends VscElement {
   alwaysVisible = false;
 
   @property({type: Number, attribute: 'min-thumb-size'})
-  minThumbSize = 40;
+  minThumbSize = 20;
 
   @property({type: Boolean, reflect: true})
   shadow = true;
