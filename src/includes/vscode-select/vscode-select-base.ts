@@ -758,6 +758,7 @@ export class VscodeSelectBase extends VscElement {
         <vscode-scrollable
           always-visible
           class="scrollable"
+          min-thumb-size="40"
           tabindex="-1"
           @vsc-scrollable-change=${this._onOptionListScroll}
           .scrollPos=${this._optionListScrollPos}
