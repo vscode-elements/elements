@@ -4,6 +4,7 @@ import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
+import { VscodeScrollable } from '../main.js';
 
 const ignoredAttributes = [
   'aria-label',
@@ -266,8 +267,8 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
       await sendKeys({press: 'Enter'});
 
-      const options = el.shadowRoot?.querySelector('.options');
-      expect(options?.scrollTop).to.eq(220);
+      const scrollable = el.shadowRoot?.querySelector<VscodeScrollable>('.scrollable');
+      expect(scrollable?.scrollPos).to.eq(220);
     });
 
     //#region keyboard interactions
@@ -418,8 +419,9 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const scrollable = el.shadowRoot?.querySelector('.scrollable');
 
-      expect(dropdown).lightDom.to.eq(
+      expect(scrollable).lightDom.to.eq(
         `
         <ul class="options">
           <li class="option">
@@ -624,9 +626,9 @@ describe('vscode-single-select', () => {
       await clickOnElement(el);
       await sendKeys({type: 'Test'});
 
-      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const scrollable = el.shadowRoot?.querySelector('.scrollable');
 
-      expect(dropdown).lightDom.to.eq(
+      expect(scrollable).lightDom.to.eq(
         `
         <ul class="options">
           <li class="no-options">
@@ -651,9 +653,9 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
       await sendKeys({type: 'lo'});
 
-      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const scrollable = el.shadowRoot?.querySelector('.scrollable');
 
-      expect(dropdown).lightDom.to.eq(
+      expect(scrollable).lightDom.to.eq(
         `
         <ul class="options">
           <li class="option">
@@ -684,9 +686,9 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
       await sendKeys({type: 'Sit'});
 
-      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const scrollable = el.shadowRoot?.querySelector('.scrollable');
 
-      expect(dropdown).lightDom.to.eq(
+      expect(scrollable).lightDom.to.eq(
         `
           <ul class="options">
             <li class="option placeholder">Add "Sit"</li>
@@ -714,9 +716,9 @@ describe('vscode-single-select', () => {
       await sendKeys({down: 'ArrowDown'});
       await sendKeys({down: 'ArrowDown'});
 
-      const dropdown = el.shadowRoot?.querySelector('.dropdown');
+      const scrollable = el.shadowRoot?.querySelector('.scrollable');
 
-      expect(dropdown).lightDom.to.eq(
+      expect(scrollable).lightDom.to.eq(
         `
         <ul class="options">
           <li class="option"><b>D</b><b>o</b><b>l</b>or</li>
