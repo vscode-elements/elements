@@ -93,6 +93,7 @@ export class VscodeScrollable extends VscElement {
     super();
     this.addEventListener('mouseover', this._handleComponentMouseOver);
     this.addEventListener('mouseout', this._handleComponentMouseOut);
+    this.addEventListener('wheel', this._handleComponentWheel);
   }
 
   override connectedCallback(): void {
@@ -234,6 +235,12 @@ export class VscodeScrollable extends VscElement {
 
     this._thumbY = nextPos;
     this._scrollPos = (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
+
+    this.dispatchEvent(
+      new CustomEvent('vsc-scrollable-change', {
+        detail: this.scrollPos,
+      })
+    );
   };
 
   private _handleScrollThumbMouseUp = (event: MouseEvent) => {
@@ -269,11 +276,23 @@ export class VscodeScrollable extends VscElement {
     }
   };
 
-  private _handleScroll = () => {
-    this._scrollPos = this._scrollableContainer.scrollTop;
+  private _handleComponentWheel = (ev: WheelEvent) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    const calculatedNewPos = this.scrollPos + ev.deltaY;
+
+    if (calculatedNewPos < 0) {
+      this.scrollPos = 0;
+    } else if (calculatedNewPos > this.scrollMax) {
+      this.scrollPos = this.scrollMax;
+    } else {
+      this.scrollPos = calculatedNewPos;
+    }
+
     this.dispatchEvent(
       new CustomEvent('vsc-scrollable-change', {
-        detail: this._scrollPos,
+        detail: this.scrollPos,
       })
     );
   };
@@ -288,7 +307,6 @@ export class VscodeScrollable extends VscElement {
           userSelect: this._isDragging ? 'none' : 'auto',
         })}
         .scrollTop=${this._scrollPos}
-        @scroll=${this._handleScroll}
       >
         <div
           class=${classMap({shadow: true, visible: this.scrolled})}
