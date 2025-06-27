@@ -275,10 +275,6 @@ export class VscodeScrollable extends VscElement {
     document.removeEventListener('mouseup', this._handleScrollThumbMouseUp);
   };
 
-  private _handleScrollableContainerScroll = () => {
-    this._updateThumbPosition();
-  };
-
   private _handleComponentMouseOver = () => {
     this._thumbVisible = true;
     this._thumbFade = false;
@@ -310,6 +306,12 @@ export class VscodeScrollable extends VscElement {
     this._thumbY = ev.offsetY - this._thumbHeight / 2;
     this.scrollPos = this._calculateScrollPosFromThumbPos(this._thumbY);
   }
+
+  private _handleScrollableContainerScroll = (ev: Event) => {
+    if (ev.currentTarget) {
+      this.scrollPos = (ev.currentTarget as HTMLDivElement).scrollTop;
+    }
+  };
 
   //#endregion
 
