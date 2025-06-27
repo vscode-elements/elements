@@ -193,6 +193,7 @@ export default [
       display: block;
       max-height: 222px;
       margin: 1px 0;
+      outline: none;
       overflow: hidden;
     }
 
