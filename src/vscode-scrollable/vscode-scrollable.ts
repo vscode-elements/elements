@@ -21,8 +21,25 @@ export class VscodeScrollable extends VscElement {
   @property({type: Boolean, reflect: true, attribute: 'always-visible'})
   alwaysVisible = false;
 
+  /**
+   * Scrolling speed multiplier when pressing `Alt`. This property is designed to use the value of
+   * `editor.fastScrollSensitivity`, `workbench.list.fastScrollSensitivity` or
+   * `terminal.integrated.fastScrollSensitivity` depending on the context.
+   */
+  @property({type: Number, attribute: 'fast-scroll-sensitivity'})
+  fastScrollSensitivity = 5;
+
   @property({type: Number, attribute: 'min-thumb-size'})
   minThumbSize = 20;
+
+  /**
+   * A multiplier to be used on the `deltaY` of the mouse wheel scroll events. This property is
+   * designed to use the value of `editor.mouseWheelScrollSensitivity`,
+   * `workbench.list.mouseWheelScrollSensitivity` or
+   * `terminal.integrated.mouseWheelScrollSensitivity` depending on the context.
+   */
+  @property({type: Number, attribute: 'mouse-wheel-scroll-sensitivity'})
+  mouseWheelScrollSensitivity = 1;
 
   @property({type: Boolean, reflect: true})
   shadow = true;
@@ -290,7 +307,13 @@ export class VscodeScrollable extends VscElement {
   private _handleComponentWheel = (ev: WheelEvent) => {
     ev.preventDefault();
 
-    this.scrollPos = this._limitScrollPos(this.scrollPos + ev.deltaY);
+    const multiplier = ev.altKey
+      ? this.mouseWheelScrollSensitivity * this.fastScrollSensitivity
+      : this.mouseWheelScrollSensitivity;
+
+    this.scrollPos = this._limitScrollPos(
+      this.scrollPos + ev.deltaY * multiplier
+    );
     this.dispatchEvent(
       new CustomEvent('vsc-scrollable-change', {
         detail: this.scrollPos,
