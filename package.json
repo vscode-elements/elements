@@ -165,7 +165,7 @@
     "concurrently": "^9.1.2",
     "custom-element-vs-code-integration": "^1.5.0",
     "deepmerge": "^4.3.1",
-    "dotenv": "^16.4.7",
+    "dotenv": "^17.0.0",
     "eslint-plugin-lit": "^2.0.0",
     "eslint-plugin-wc": "^3.0.0",
     "mocha": "^11.1.0",
