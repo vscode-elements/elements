@@ -107,10 +107,6 @@ export class VscodeScrollable extends VscElement {
     this.requestUpdate();
 
     this.updateComplete.then(() => {
-      this._scrollableContainer.addEventListener(
-        'scroll',
-        this._handleScrollableContainerScroll
-      );
       this._hostResizeObserver.observe(this);
       this._contentResizeObserver.observe(this._contentElement);
       this._updateThumbPosition();
@@ -197,6 +193,38 @@ export class VscodeScrollable extends VscElement {
     this._thumbY = Math.min(ratio * (componentH - thumbH), thumbYMax);
   }
 
+  private _calculateScrollPosFromThumbPos(scrollPos: number) {
+    const cmpH = this.getBoundingClientRect().height;
+    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
+    const contentH = this._contentElement.getBoundingClientRect().height;
+    const rawScrollPos = (scrollPos / (cmpH - thumbH)) * (contentH - cmpH);
+
+    return this._limitScrollPos(rawScrollPos);
+  }
+
+  private _limitScrollPos(newPos: number) {
+    if (newPos < 0) {
+      return 0;
+    } else if (newPos > this.scrollMax) {
+      return this.scrollMax;
+    } else {
+      return newPos;
+    }
+  }
+
+  private _limitThumbPos(newPos: number) {
+    const cmpH = this.getBoundingClientRect().height;
+    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
+
+    if (newPos < 0) {
+      return 0;
+    } else if (newPos > cmpH - thumbH) {
+      return cmpH - thumbH;
+    } else {
+      return newPos;
+    }
+  }
+
   //#region event handlers
   private _handleSlotChange = () => {
     this._updateScrollbar();
@@ -218,23 +246,10 @@ export class VscodeScrollable extends VscElement {
   }
 
   private _handleScrollThumbMouseMove = (event: MouseEvent) => {
-    const predictedPos =
+    const rawThumbPos =
       this._scrollThumbStartY + (event.screenY - this._mouseStartY);
-    let nextPos = 0;
-    const cmpH = this.getBoundingClientRect().height;
-    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
-    const contentH = this._contentElement.getBoundingClientRect().height;
-
-    if (predictedPos < 0) {
-      nextPos = 0;
-    } else if (predictedPos > cmpH - thumbH) {
-      nextPos = cmpH - thumbH;
-    } else {
-      nextPos = predictedPos;
-    }
-
-    this._thumbY = nextPos;
-    this._scrollPos = (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
+    this._thumbY = this._limitThumbPos(rawThumbPos);
+    this.scrollPos = this._calculateScrollPosFromThumbPos(this._thumbY);
 
     this.dispatchEvent(
       new CustomEvent('vsc-scrollable-change', {
@@ -277,25 +292,24 @@ export class VscodeScrollable extends VscElement {
   };
 
   private _handleComponentWheel = (ev: WheelEvent) => {
-    ev.stopPropagation();
     ev.preventDefault();
 
-    const calculatedNewPos = this.scrollPos + ev.deltaY;
-
-    if (calculatedNewPos < 0) {
-      this.scrollPos = 0;
-    } else if (calculatedNewPos > this.scrollMax) {
-      this.scrollPos = this.scrollMax;
-    } else {
-      this.scrollPos = calculatedNewPos;
-    }
-
+    this.scrollPos = this._limitScrollPos(this.scrollPos + ev.deltaY);
     this.dispatchEvent(
       new CustomEvent('vsc-scrollable-change', {
         detail: this.scrollPos,
       })
     );
   };
+
+  private _handleScrollbarTrackPress(ev: PointerEvent) {
+    if (ev.target !== ev.currentTarget) {
+      return;
+    }
+
+    this._thumbY = ev.offsetY - this._thumbHeight / 2;
+    this.scrollPos = this._calculateScrollPosFromThumbPos(this._thumbY);
+  }
 
   //#endregion
 
@@ -307,6 +321,7 @@ export class VscodeScrollable extends VscElement {
           userSelect: this._isDragging ? 'none' : 'auto',
         })}
         .scrollTop=${this._scrollPos}
+        @scroll=${this._handleScrollableContainerScroll}
       >
         <div
           class=${classMap({shadow: true, visible: this.scrolled})}
@@ -322,6 +337,7 @@ export class VscodeScrollable extends VscElement {
             'scrollbar-track': true,
             hidden: !this._scrollbarVisible,
           })}
+          @mousedown=${this._handleScrollbarTrackPress}
         >
           <div
             class=${classMap({
