@@ -1,10 +1,5 @@
 import {html, render, nothing, TemplateResult, PropertyValues} from 'lit';
-import {
-  eventOptions,
-  property,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {repeat} from 'lit/directives/repeat.js';
@@ -12,11 +7,13 @@ import {when} from 'lit/directives/when.js';
 import '../../vscode-button/index.js';
 import '../../vscode-option/index.js';
 import {VscodeOption} from '../../vscode-option/index.js';
+import {stylePropertyMap} from '../style-property-map.js';
 import {VscElement} from '../VscElement.js';
 import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import type {InternalOption, Option, FilterMethod} from './types.js';
 import {OptionListController} from './OptionListController.js';
 import {checkIcon} from './template-elements.js';
+import '../../vscode-scrollable/vscode-scrollable.js';
 
 export const VISIBLE_OPTS = 10;
 export const OPT_HEIGHT = 22;
@@ -409,10 +406,9 @@ export class VscodeSelectBase extends VscElement {
     }
   }
 
-  @eventOptions({passive: true})
-  protected _onOptionListScroll(ev: Event) {
-    this._optionListScrollPos = (ev.target as HTMLUListElement).scrollTop;
-  }
+  private _onOptionListScroll = (ev: CustomEvent<number>) => {
+    this._optionListScrollPos = ev.detail;
+  };
 
   protected _onOptionMouseOver(ev: MouseEvent): void {
     if (this._isHoverForbidden) {
@@ -634,8 +630,6 @@ export class VscodeSelectBase extends VscElement {
         tabindex="-1"
         @click=${this._onOptionClick}
         @mouseover=${this._onOptionMouseOver}
-        @scroll=${this._onOptionListScroll}
-        .scrollTop=${this._optionListScrollPos}
       >
         ${repeat(
           list,
@@ -748,10 +742,32 @@ export class VscodeSelectBase extends VscElement {
       open: this.open,
     };
 
+    const visibleOptions =
+      this._isSuggestedOptionVisible || this._opts.numOfVisibleOptions === 0
+        ? this._opts.numOfVisibleOptions + 1
+        : this._opts.numOfVisibleOptions;
+
+    const scrollPaneHeight = Math.min(
+      visibleOptions * OPT_HEIGHT,
+      VISIBLE_OPTS * OPT_HEIGHT
+    );
+
     return html`
       <div class=${classMap(classes)}>
         ${this.position === 'above' ? this._renderDescription() : nothing}
-        ${this._renderOptions()} ${this._renderDropdownControls()}
+        <vscode-scrollable
+          always-visible
+          class="scrollable"
+          min-thumb-size="40"
+          tabindex="-1"
+          @vsc-scrollable-change=${this._onOptionListScroll}
+          .scrollPos=${this._optionListScrollPos}
+          .style=${stylePropertyMap({
+            height: `${scrollPaneHeight}px`,
+          })}
+        >
+          ${this._renderOptions()} ${this._renderDropdownControls()}
+        </vscode-scrollable>
         ${this.position === 'below' ? this._renderDescription() : nothing}
       </div>
     `;

@@ -189,14 +189,20 @@ export default [
       border-color: var(--vscode-focusBorder, #0078d4);
     }
 
+    .scrollable {
+      display: block;
+      max-height: 222px;
+      margin: 1px 0;
+      outline: none;
+      overflow: hidden;
+    }
+
     .options {
       box-sizing: border-box;
       cursor: pointer;
       list-style: none;
       margin: 0;
-      max-height: 222px;
-      overflow: auto;
-      padding: 1px;
+      padding: 0 1px;
     }
 
     .option {

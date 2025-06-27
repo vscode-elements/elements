@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import {html, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
@@ -18,6 +18,29 @@ import styles from './vscode-scrollable.styles.js';
 export class VscodeScrollable extends VscElement {
   static override styles = styles;
 
+  @property({type: Boolean, reflect: true, attribute: 'always-visible'})
+  alwaysVisible = false;
+
+  /**
+   * Scrolling speed multiplier when pressing `Alt`. This property is designed to use the value of
+   * `editor.fastScrollSensitivity`, `workbench.list.fastScrollSensitivity` or
+   * `terminal.integrated.fastScrollSensitivity` depending on the context.
+   */
+  @property({type: Number, attribute: 'fast-scroll-sensitivity'})
+  fastScrollSensitivity = 5;
+
+  @property({type: Number, attribute: 'min-thumb-size'})
+  minThumbSize = 20;
+
+  /**
+   * A multiplier to be used on the `deltaY` of the mouse wheel scroll events. This property is
+   * designed to use the value of `editor.mouseWheelScrollSensitivity`,
+   * `workbench.list.mouseWheelScrollSensitivity` or
+   * `terminal.integrated.mouseWheelScrollSensitivity` depending on the context.
+   */
+  @property({type: Number, attribute: 'mouse-wheel-scroll-sensitivity'})
+  mouseWheelScrollSensitivity = 1;
+
   @property({type: Boolean, reflect: true})
   shadow = true;
 
@@ -26,15 +49,16 @@ export class VscodeScrollable extends VscElement {
 
   @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
-    this._scrollableContainer.scrollTop = val;
+    this._scrollPos = val;
+    this._updateScrollbar();
+    this._updateThumbPosition();
+    this.requestUpdate();
   }
   get scrollPos(): number {
-    if (!this._scrollableContainer) {
-      return 0;
-    }
-
-    return this._scrollableContainer.scrollTop;
+    return this._scrollPos;
   }
+
+  private _scrollPos = 0;
 
   @property({type: Number, attribute: 'scroll-max'})
   get scrollMax(): number {
@@ -82,6 +106,13 @@ export class VscodeScrollable extends VscElement {
   private _scrollbarVisible = true;
   private _scrollbarTrackZ = 0;
 
+  constructor() {
+    super();
+    this.addEventListener('mouseover', this._handleComponentMouseOver);
+    this.addEventListener('mouseout', this._handleComponentMouseOut);
+    this.addEventListener('wheel', this._handleComponentWheel);
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -93,16 +124,10 @@ export class VscodeScrollable extends VscElement {
     this.requestUpdate();
 
     this.updateComplete.then(() => {
-      this._scrollableContainer.addEventListener(
-        'scroll',
-        this._onScrollableContainerScroll.bind(this)
-      );
       this._hostResizeObserver.observe(this);
       this._contentResizeObserver.observe(this._contentElement);
+      this._updateThumbPosition();
     });
-
-    this.addEventListener('mouseover', this._onComponentMouseOverBound);
-    this.addEventListener('mouseout', this._onComponentMouseOutBound);
   }
 
   override disconnectedCallback(): void {
@@ -112,24 +137,34 @@ export class VscodeScrollable extends VscElement {
     this._hostResizeObserver.disconnect();
     this._contentResizeObserver.unobserve(this._contentElement);
     this._contentResizeObserver.disconnect();
+  }
 
-    this.removeEventListener('mouseover', this._onComponentMouseOverBound);
-    this.removeEventListener('mouseout', this._onComponentMouseOutBound);
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    this._updateThumbPosition();
   }
 
   private _resizeObserverCallback = () => {
     this._updateScrollbar();
+    this._updateThumbPosition();
   };
 
-  private _updateScrollbar() {
-    const compCr = this.getBoundingClientRect();
-    const contentCr = this._contentElement.getBoundingClientRect();
+  private _calcThumbHeight() {
+    const componentHeight = this.offsetHeight;
+    const contentHeight = this._contentElement?.offsetHeight ?? 0;
+    const proposedSize = componentHeight * (componentHeight / contentHeight);
 
-    if (compCr.height >= contentCr.height) {
+    return Math.max(this.minThumbSize, proposedSize);
+  }
+
+  private _updateScrollbar() {
+    const contentHeight = this._contentElement?.offsetHeight ?? 0;
+    const componentHeight = this.offsetHeight;
+
+    if (componentHeight >= contentHeight) {
       this._scrollbarVisible = false;
     } else {
       this._scrollbarVisible = true;
-      this._thumbHeight = compCr.height * (compCr.height / contentCr.height);
+      this._thumbHeight = this._calcThumbHeight();
     }
 
     this.requestUpdate();
@@ -156,11 +191,65 @@ export class VscodeScrollable extends VscElement {
     this.requestUpdate();
   }
 
-  private _onSlotChange = () => {
+  private _updateThumbPosition() {
+    if (!this._scrollableContainer) {
+      return;
+    }
+
+    const scrollTop = this._scrollPos;
+    this.scrolled = scrollTop > 0;
+
+    const componentH = this.offsetHeight;
+    const thumbH = this._thumbHeight;
+    const contentH = this._contentElement.offsetHeight;
+
+    const overflown = contentH - componentH;
+    const ratio = scrollTop / overflown;
+    const thumbYMax = componentH - thumbH;
+
+    this._thumbY = Math.min(ratio * (componentH - thumbH), thumbYMax);
+  }
+
+  private _calculateScrollPosFromThumbPos(scrollPos: number) {
+    const cmpH = this.getBoundingClientRect().height;
+    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
+    const contentH = this._contentElement.getBoundingClientRect().height;
+    const rawScrollPos = (scrollPos / (cmpH - thumbH)) * (contentH - cmpH);
+
+    return this._limitScrollPos(rawScrollPos);
+  }
+
+  private _limitScrollPos(newPos: number) {
+    if (newPos < 0) {
+      return 0;
+    } else if (newPos > this.scrollMax) {
+      return this.scrollMax;
+    } else {
+      return newPos;
+    }
+  }
+
+  private _limitThumbPos(newPos: number) {
+    const cmpH = this.getBoundingClientRect().height;
+    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
+
+    if (newPos < 0) {
+      return 0;
+    } else if (newPos > cmpH - thumbH) {
+      return cmpH - thumbH;
+    } else {
+      return newPos;
+    }
+  }
+
+  //#region event handlers
+  private _handleSlotChange = () => {
+    this._updateScrollbar();
+    this._updateThumbPosition();
     this._zIndexFix();
   };
 
-  private _onScrollThumbMouseDown(event: MouseEvent) {
+  private _handleScrollThumbMouseDown(event: MouseEvent) {
     const cmpCr = this.getBoundingClientRect();
     const thCr = this._scrollThumbElement.getBoundingClientRect();
 
@@ -169,35 +258,24 @@ export class VscodeScrollable extends VscElement {
     this._isDragging = true;
     this._thumbActive = true;
 
-    document.addEventListener('mousemove', this._onScrollThumbMouseMoveBound);
-    document.addEventListener('mouseup', this._onScrollThumbMouseUpBound);
+    document.addEventListener('mousemove', this._handleScrollThumbMouseMove);
+    document.addEventListener('mouseup', this._handleScrollThumbMouseUp);
   }
 
-  private _onScrollThumbMouseMove(event: MouseEvent) {
-    const predictedPos =
+  private _handleScrollThumbMouseMove = (event: MouseEvent) => {
+    const rawThumbPos =
       this._scrollThumbStartY + (event.screenY - this._mouseStartY);
-    let nextPos = 0;
-    const cmpH = this.getBoundingClientRect().height;
-    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
-    const contentH = this._contentElement.getBoundingClientRect().height;
+    this._thumbY = this._limitThumbPos(rawThumbPos);
+    this.scrollPos = this._calculateScrollPosFromThumbPos(this._thumbY);
 
-    if (predictedPos < 0) {
-      nextPos = 0;
-    } else if (predictedPos > cmpH - thumbH) {
-      nextPos = cmpH - thumbH;
-    } else {
-      nextPos = predictedPos;
-    }
+    this.dispatchEvent(
+      new CustomEvent('vsc-scrollable-change', {
+        detail: this.scrollPos,
+      })
+    );
+  };
 
-    this._thumbY = nextPos;
-    this._scrollableContainer.scrollTop =
-      (nextPos / (cmpH - thumbH)) * (contentH - cmpH);
-  }
-
-  private _onScrollThumbMouseMoveBound =
-    this._onScrollThumbMouseMove.bind(this);
-
-  private _onScrollThumbMouseUp(event: MouseEvent) {
+  private _handleScrollThumbMouseUp = (event: MouseEvent) => {
     this._isDragging = false;
     this._thumbActive = false;
 
@@ -210,44 +288,55 @@ export class VscodeScrollable extends VscElement {
       this._thumbVisible = false;
     }
 
-    document.removeEventListener(
-      'mousemove',
-      this._onScrollThumbMouseMoveBound
-    );
-    document.removeEventListener('mouseup', this._onScrollThumbMouseUpBound);
-  }
+    document.removeEventListener('mousemove', this._handleScrollThumbMouseMove);
+    document.removeEventListener('mouseup', this._handleScrollThumbMouseUp);
+  };
 
-  private _onScrollThumbMouseUpBound = this._onScrollThumbMouseUp.bind(this);
-
-  private _onScrollableContainerScroll() {
-    const scrollTop = this._scrollableContainer.scrollTop;
-    this.scrolled = scrollTop > 0;
-
-    const cmpH = this.getBoundingClientRect().height;
-    const thumbH = this._scrollThumbElement.getBoundingClientRect().height;
-    const contentH = this._contentElement.getBoundingClientRect().height;
-
-    const overflown = contentH - cmpH;
-    const ratio = scrollTop / overflown;
-
-    this._thumbY = ratio * (cmpH - thumbH);
-  }
-
-  private _onComponentMouseOver() {
+  private _handleComponentMouseOver = () => {
     this._thumbVisible = true;
     this._thumbFade = false;
-  }
+  };
 
-  private _onComponentMouseOverBound = this._onComponentMouseOver.bind(this);
-
-  private _onComponentMouseOut() {
+  private _handleComponentMouseOut = () => {
     if (!this._thumbActive) {
       this._thumbVisible = false;
       this._thumbFade = true;
     }
+  };
+
+  private _handleComponentWheel = (ev: WheelEvent) => {
+    ev.preventDefault();
+
+    const multiplier = ev.altKey
+      ? this.mouseWheelScrollSensitivity * this.fastScrollSensitivity
+      : this.mouseWheelScrollSensitivity;
+
+    this.scrollPos = this._limitScrollPos(
+      this.scrollPos + ev.deltaY * multiplier
+    );
+    this.dispatchEvent(
+      new CustomEvent('vsc-scrollable-change', {
+        detail: this.scrollPos,
+      })
+    );
+  };
+
+  private _handleScrollbarTrackPress(ev: PointerEvent) {
+    if (ev.target !== ev.currentTarget) {
+      return;
+    }
+
+    this._thumbY = ev.offsetY - this._thumbHeight / 2;
+    this.scrollPos = this._calculateScrollPosFromThumbPos(this._thumbY);
   }
 
-  private _onComponentMouseOutBound = this._onComponentMouseOut.bind(this);
+  private _handleScrollableContainerScroll = (ev: Event) => {
+    if (ev.currentTarget) {
+      this.scrollPos = (ev.currentTarget as HTMLDivElement).scrollTop;
+    }
+  };
+
+  //#endregion
 
   override render(): TemplateResult {
     return html`
@@ -256,6 +345,8 @@ export class VscodeScrollable extends VscElement {
         .style=${stylePropertyMap({
           userSelect: this._isDragging ? 'none' : 'auto',
         })}
+        .scrollTop=${this._scrollPos}
+        @scroll=${this._handleScrollableContainerScroll}
       >
         <div
           class=${classMap({shadow: true, visible: this.scrolled})}
@@ -271,23 +362,24 @@ export class VscodeScrollable extends VscElement {
             'scrollbar-track': true,
             hidden: !this._scrollbarVisible,
           })}
+          @mousedown=${this._handleScrollbarTrackPress}
         >
           <div
             class=${classMap({
               'scrollbar-thumb': true,
-              visible: this._thumbVisible,
-              fade: this._thumbFade,
+              visible: this.alwaysVisible ? true : this._thumbVisible,
+              fade: this.alwaysVisible ? false : this._thumbFade,
               active: this._thumbActive,
             })}
             .style=${stylePropertyMap({
               height: `${this._thumbHeight}px`,
               top: `${this._thumbY}px`,
             })}
-            @mousedown=${this._onScrollThumbMouseDown}
+            @mousedown=${this._handleScrollThumbMouseDown}
           ></div>
         </div>
         <div class="content">
-          <slot @slotchange=${this._onSlotChange}></slot>
+          <slot @slotchange=${this._handleSlotChange}></slot>
         </div>
       </div>
     `;
