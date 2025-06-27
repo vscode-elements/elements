@@ -4,7 +4,7 @@ import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
-import { VscodeScrollable } from '../main.js';
+import {VscodeScrollable} from '../main.js';
 
 const ignoredAttributes = [
   'aria-label',
@@ -267,7 +267,8 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
       await sendKeys({press: 'Enter'});
 
-      const scrollable = el.shadowRoot?.querySelector<VscodeScrollable>('.scrollable');
+      const scrollable =
+        el.shadowRoot?.querySelector<VscodeScrollable>('.scrollable');
       expect(scrollable?.scrollPos).to.eq(220);
     });
 
