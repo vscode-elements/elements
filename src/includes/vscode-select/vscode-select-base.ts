@@ -760,7 +760,7 @@ export class VscodeSelectBase extends VscElement {
           class="scrollable"
           min-thumb-size="40"
           tabindex="-1"
-          @vsc-scrollable-change=${this._onOptionListScroll}
+          @vsc-scrollable-scroll=${this._onOptionListScroll}
           .scrollPos=${this._optionListScrollPos}
           .style=${stylePropertyMap({
             height: `${scrollPaneHeight}px`,
