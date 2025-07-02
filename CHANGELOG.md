@@ -6,9 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
-## Added
+### Added
 
-- Added `alwaysVisible` property to **Scrollable**.
+- Added `alwaysVisible`, `scrollSensitivity`, `fastScrollSensitivity` and `minThumbSize` property to **Scrollable**.
+- **Scrollable** now dispatches the `vsc-scrollable-scroll` event.
+- Added nicer checkboxes to **MultiSelect**.
+- Added `selectAll()` and `selectNone()` methods to **MultiSelect**.
+- Added a themed scrollbar to the **SingleSelect** and **MultiSelect**.
+
+### Changed
+
+- **ButtonGroup** can now shrink inside a flex container.
+- **SingleSelect** and **MultiSelect** accessibility has been improved.
+- **MultiSelect**: The badge displaying the number of selected options is now more compact.
+- The 'Select all', 'Select none', and 'Accept' buttons have been removed from the **MultiSelect** dropdown for improved accessibility and better maintainability.
+
+### Fixed
+
+- **Label** can now be associated with **SingleSelect** and **MultiSelect**.
 
 ## [1.16.1] - 2025-05-22
 
