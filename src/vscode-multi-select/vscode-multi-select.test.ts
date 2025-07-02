@@ -1,9 +1,10 @@
-import {VscodeMultiSelect} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
+import {sendKeys} from '@web/test-runner-commands';
 import sinon from 'sinon';
 import '../vscode-option/index.js';
 import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
 import {VscodeOption} from '../vscode-option/index.js';
+import {VscodeMultiSelect} from './index.js';
 
 describe('vscode-multi-select', () => {
   it('is defined', () => {
@@ -351,9 +352,35 @@ describe('vscode-multi-select', () => {
     expect(isValidAfter).to.be.false;
   });
 
+  it('creates and select suggested option', async () => {
+    const el = await fixture<VscodeMultiSelect>(
+      html`<vscode-multi-select combobox creatable
+        ><vscode-option>Lorem</vscode-option></vscode-multi-select
+      >`
+    );
+    const createOptionHandlerSpy = sinon.spy();
+    el.addEventListener(
+      'vsc-multi-select-create-option',
+      createOptionHandlerSpy
+    );
+    const changeHandlerSpy = sinon.spy();
+    el.addEventListener('change', changeHandlerSpy);
+
+    el.focus();
+    await el.updateComplete;
+    await sendKeys({type: 'asdf'});
+    await sendKeys({down: 'ArrowDown'});
+    await sendKeys({down: 'Enter'});
+
+    expect(createOptionHandlerSpy.getCalls()[0].args[0].detail.value).to.eq(
+      'asdf'
+    );
+    expect(changeHandlerSpy.called).to.be.true;
+    expect(el.value).to.eql(['asdf']);
+  });
+
   it('selects multiple options with keyboard');
   it('selectedIndexes sync with values');
-  it('creates and select suggested option (enter key press)');
   it(
     'dispatch change event, set form value, manage required state (enter key press)'
   );

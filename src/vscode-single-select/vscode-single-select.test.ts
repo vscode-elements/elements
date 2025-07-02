@@ -1157,6 +1157,33 @@ describe('vscode-single-select', () => {
     it('End is pressed');
   });
 
+  it('creates and select suggested option', async () => {
+    const el = await fixture<VscodeSingleSelect>(
+      html`<vscode-single-select combobox creatable
+        ><vscode-option>Lorem</vscode-option></vscode-single-select
+      >`
+    );
+    const createOptionHandlerSpy = sinon.spy();
+    el.addEventListener(
+      'vsc-single-select-create-option',
+      createOptionHandlerSpy
+    );
+    const changeHandlerSpy = sinon.spy();
+    el.addEventListener('change', changeHandlerSpy);
+
+    el.focus();
+    await el.updateComplete;
+    await sendKeys({type: 'asdf'});
+    await sendKeys({down: 'ArrowDown'});
+    await sendKeys({down: 'Enter'});
+
+    expect(createOptionHandlerSpy.getCalls()[0].args[0].detail.value).to.eq(
+      'asdf'
+    );
+    expect(changeHandlerSpy.called).to.be.true;
+    expect(el.value).to.eql('asdf');
+  });
+
   //keyboard navigation
   it('selects previous option with keyboard');
   it('selects next option with keyboard');
