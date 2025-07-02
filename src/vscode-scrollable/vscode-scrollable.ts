@@ -10,7 +10,7 @@ export type VscScrollableScrollEvent = CustomEvent<number>;
 /**
  * @tag vscode-scrollable
  *
- * @cssprop [--min-thumb-height=20px] - Scrollbar thumb minimum height
+ * @cssprop --min-thumb-height - (@deprecated) This css property is deprecated. Use the `minThumbSize` property instead.
  * @cssprop [--vscode-scrollbar-shadow=#000000]
  * @cssprop [--vscode-scrollbarSlider-background=rgba(121, 121, 121, 0.4)]
  * @cssprop [--vscode-scrollbarSlider-hoverBackground=rgba(100, 100, 100, 0.7)]
@@ -20,6 +20,10 @@ export type VscScrollableScrollEvent = CustomEvent<number>;
 export class VscodeScrollable extends VscElement {
   static override styles = styles;
 
+  /**
+   * By default, the scrollbar appears only when the cursor hovers over the
+   * component. With this option, the scrollbar will always be visible.
+   */
   @property({type: Boolean, reflect: true, attribute: 'always-visible'})
   alwaysVisible = false;
 
@@ -31,6 +35,9 @@ export class VscodeScrollable extends VscElement {
   @property({type: Number, attribute: 'fast-scroll-sensitivity'})
   fastScrollSensitivity = 5;
 
+  /**
+   * This setting defines the scrollbar's minimum size when the component contains a large amount of content.
+   */
   @property({type: Number, attribute: 'min-thumb-size'})
   minThumbSize = 20;
 
@@ -43,12 +50,21 @@ export class VscodeScrollable extends VscElement {
   @property({type: Number, attribute: 'mouse-wheel-scroll-sensitivity'})
   mouseWheelScrollSensitivity = 1;
 
+  /**
+   * Controls shadow visibility when content overflows.
+   */
   @property({type: Boolean, reflect: true})
   shadow = true;
 
+  /**
+   * It's true when `scrollPos` greater than 0
+   */
   @property({type: Boolean, reflect: true})
   scrolled = false;
 
+  /**
+   * Scroll position.
+   */
   @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
     this._scrollPos = val;
@@ -62,6 +78,9 @@ export class VscodeScrollable extends VscElement {
 
   private _scrollPos = 0;
 
+  /**
+   * The maximum amount of the `scrollPos`.
+   */
   @property({type: Number, attribute: 'scroll-max'})
   get scrollMax(): number {
     if (!this._scrollableContainer) {
