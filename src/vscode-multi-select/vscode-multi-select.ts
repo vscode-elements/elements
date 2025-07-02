@@ -237,7 +237,7 @@ export class VscodeMultiSelect
     this._dispatchChangeEvent();
     const opCreateEvent: VscMultiSelectCreateOptionEvent = new CustomEvent(
       'vsc-multi-select-create-option',
-      {detail: {value: this._options[nextIndex]?.value ?? ''}}
+      {detail: {value: this._opts.getOptionByIndex(nextIndex)?.value ?? ''}}
     );
     this.dispatchEvent(opCreateEvent);
     this.open = false;
