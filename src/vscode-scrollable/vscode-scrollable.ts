@@ -5,6 +5,8 @@ import {customElement, VscElement} from '../includes/VscElement.js';
 import {stylePropertyMap} from '../includes/style-property-map.js';
 import styles from './vscode-scrollable.styles.js';
 
+export type VscScrollableScrollEvent = CustomEvent<number>;
+
 /**
  * @tag vscode-scrollable
  *
@@ -269,7 +271,7 @@ export class VscodeScrollable extends VscElement {
     this.scrollPos = this._calculateScrollPosFromThumbPos(this._thumbY);
 
     this.dispatchEvent(
-      new CustomEvent('vsc-scrollable-change', {
+      new CustomEvent('vsc-scrollable-scroll', {
         detail: this.scrollPos,
       })
     );
@@ -315,7 +317,7 @@ export class VscodeScrollable extends VscElement {
       this.scrollPos + ev.deltaY * multiplier
     );
     this.dispatchEvent(
-      new CustomEvent('vsc-scrollable-change', {
+      new CustomEvent('vsc-scrollable-scroll', {
         detail: this.scrollPos,
       })
     );
@@ -389,5 +391,9 @@ export class VscodeScrollable extends VscElement {
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-scrollable': VscodeScrollable;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-scrollable-scroll': VscScrollableScrollEvent;
   }
 }

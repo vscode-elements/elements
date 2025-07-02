@@ -192,7 +192,7 @@ export default [
     .scrollable {
       display: block;
       max-height: 222px;
-      margin: 1px 0;
+      margin: 1px;
       outline: none;
       overflow: hidden;
     }
@@ -202,7 +202,7 @@ export default [
       cursor: pointer;
       list-style: none;
       margin: 0;
-      padding: 0 1px;
+      padding: 0;
     }
 
     .option {
