@@ -164,6 +164,7 @@
     "chokidar": "^4.0.3",
     "concurrently": "^9.1.2",
     "custom-element-vs-code-integration": "^1.5.0",
+    "custom-elements-manifest-deprecator": "^1.2.0",
     "deepmerge": "^4.3.1",
     "dotenv": "^16.4.7",
     "eslint-plugin-lit": "^2.0.0",
