@@ -11,7 +11,6 @@ export const initPathTrackerProps = (
   parentElement: VscodeList | VscodeListItem,
   items: VscodeListItem[]
 ): void => {
-  console.log('initTrackerProps');
   const numChildren = items.length;
   const parentElementLevel = isListRoot(parentElement)
     ? -1
@@ -24,15 +23,19 @@ export const initPathTrackerProps = (
   parentElement.dataset.numChildren = numChildren.toString();
 
   items.forEach((item, i) => {
+    const level = parentElementLevel + 1;
+    const index = i.toString();
+
     item.level = parentElementLevel + 1;
     item.dataset.level = (parentElementLevel + 1).toString();
     item.dataset.index = i.toString();
     item.dataset.last = i === numChildren - 1 ? 'true' : 'false';
+    item.dataset.id = `${level}_${index}`;
   });
 };
 
 export const findLastChildItem = (item: VscodeListItem): VscodeListItem => {
-  const children = item.querySelectorAll<VscodeListItem>('vscode-list-item');
+  const children = item.querySelectorAll<VscodeListItem>(':scope > vscode-list-item');
 
   if (children.length < 1) {
     return item;
@@ -120,7 +123,7 @@ export const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
   }
 
   const prevSibling = parentElement.querySelector<VscodeListItem>(
-    `vscode-list-item[data-index="${index - 1}"]`
+    `:scope vscode-list-item[data-index="${index - 1}"]`
   );
 
   if (!prevSibling) {
@@ -130,7 +133,9 @@ export const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
   }
 
   if (prevSibling && prevSibling.branch && prevSibling.open) {
-    return findLastChildItem(prevSibling);
+    const lastChild = findLastChildItem(prevSibling);
+
+    return lastChild;
   }
 
   return prevSibling;
@@ -140,7 +145,6 @@ export const findAncestorOnSpecificLevel = (
   item: VscodeListItem,
   level: number
 ): VscodeListItem | null => {
-  console.log(level);
   if (
     !item.parentElement ||
     item.parentElement.tagName.toUpperCase() !== 'VSCODE-LIST-ITEM'
