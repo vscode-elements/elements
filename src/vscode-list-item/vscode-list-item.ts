@@ -1,4 +1,4 @@
-import {PropertyValues, TemplateResult, html, nothing} from 'lit';
+import {TemplateResult, html, nothing} from 'lit';
 import {consume} from '@lit/context';
 import {
   customElement,
@@ -10,11 +10,7 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {listContext, type ListContext} from '../vscode-list/list-context';
-import {
-  findAncestorOnSpecificLevel,
-  initPathTrackerProps,
-  selectItemAndAllVisibleDescendants,
-} from '../vscode-list/helpers';
+import {initPathTrackerProps} from '../vscode-list/helpers';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -167,8 +163,6 @@ export class VscodeListItem extends VscElement {
         }
       }
     }
-
-    console.log(i);
 
     return i;
   }
