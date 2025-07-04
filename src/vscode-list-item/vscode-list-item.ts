@@ -32,6 +32,16 @@ const arrowIcon = html`<svg
 export class VscodeListItem extends VscElement {
   static override styles = styles;
 
+  @property({type: Boolean, attribute: false})
+  set active(isActive: boolean) {
+    this._active = isActive;
+    this.tabIndex = isActive ? 0 : -1;
+  }
+  get active(): boolean {
+    return this._active;
+  }
+  private _active = false;
+
   @property({type: Boolean, reflect: true})
   branch = false;
 
@@ -51,9 +61,6 @@ export class VscodeListItem extends VscElement {
   }
   private _selected = false;
 
-  @property({type: Number, reflect: true})
-  override tabIndex = -1;
-
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
     arrows: false,
@@ -64,9 +71,6 @@ export class VscodeListItem extends VscElement {
     itemListUpToDate: false,
     focusedItem: null,
     prevFocusedItem: null,
-    focusItem: () => {
-      return;
-    },
     hasBranchItem: false,
     rootElement: null,
   };
@@ -186,12 +190,12 @@ export class VscodeListItem extends VscElement {
     this._listContextState.itemListUpToDate = false;
   };
 
+  // TODO: Will be replace with "activate" logic
   private _handleComponentFocus = () => {
     if (
       this._listContextState.focusedItem &&
       this._listContextState.focusedItem !== this
     ) {
-      this._listContextState.focusedItem.tabIndex = -1;
       this._listContextState.prevFocusedItem =
         this._listContextState.focusedItem;
       this._listContextState.focusedItem = null;
@@ -244,9 +248,14 @@ export class VscodeListItem extends VscElement {
       indentation += ARROW_CONTAINER_WIDTH;
     }
 
+    const contentClasses = {
+      content: true,
+      active: this.active,
+    };
+
     return html` <div class="wrapper">
       <div
-        class="content"
+        class=${classMap(contentClasses)}
         @click=${this._handleContentClick}
         style=${styleMap({paddingLeft: `${indentation}px`})}
       >
