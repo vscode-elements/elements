@@ -50,7 +50,7 @@ const styles: CSSResultGroup = [
       outline: none;
     }
 
-    :host(:focus) .content {
+    :host(:focus) .content.active {
       outline-color: var(--vscode-list-focusAndSelectionOutline, var(--vscode-list-focusOutline));
       outline-style: solid;
       outline-width: 1px;

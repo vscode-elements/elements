@@ -60,7 +60,6 @@ export class VscodeList extends VscElement {
     prevFocusedItem: null,
     hasBranchItem: false,
     rootElement: this,
-    focusItem: this._focusItem,
   };
 
   /**
@@ -73,12 +72,10 @@ export class VscodeList extends VscElement {
     this._listContextState = {...this._listContextState, hasBranchItem};
   }
 
-  private _originalTabIndex = 0;
-
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _assignedListItems!: VscodeListItem[];
 
-  private _focusPrevItem() {
+  private _activatePrevItem() {
     if (this._listContextState.focusedItem) {
       const item = findPrevItem(this._listContextState.focusedItem);
 
@@ -87,12 +84,12 @@ export class VscodeList extends VscElement {
         // this._listContextState.focusedItem = item;
         // item.focused = true;
         // item.focus();
-        this._focusItem(item);
+        this._activateItem(item);
       }
     }
   }
 
-  private _focusNextItem() {
+  private _activateNextItem() {
     if (this._listContextState.focusedItem) {
       const item = findNextItem(this._listContextState.focusedItem);
 
@@ -101,20 +98,23 @@ export class VscodeList extends VscElement {
         // this._listContextState.focusedItem = item;
         // item.focused = true;
         // item.focus();
-        this._focusItem(item);
+        this._activateItem(item);
       }
     }
   }
 
-  private _focusItem(item: VscodeListItem) {
-    const {focusedItem} = this._listContextState;
-
-    if (focusedItem) {
+  private _activateItem(item: VscodeListItem) {
+    if (this._listContextState.focusedItem) {
+      this._listContextState.focusedItem.active = false;
       this._listContextState.focusedItem = null;
     }
 
-    item.focus();
+    item.active = true;
     this._listContextState.focusedItem = item;
+
+    this.updateComplete.then(() => {
+      this._listContextState.focusedItem?.focus();
+    });
   }
 
   private _handleComponentKeyDown = (ev: KeyboardEvent) => {
@@ -128,14 +128,14 @@ export class VscodeList extends VscElement {
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       if (this._listContextState.focusedItem) {
         if (key === 'ArrowDown') {
-          this._focusNextItem();
+          this._activateNextItem();
         }
 
         if (key === 'ArrowUp') {
-          this._focusPrevItem();
+          this._activatePrevItem();
         }
       } else {
-        this._focusItem(this._assignedListItems[0]);
+        this._activateItem(this._assignedListItems[0]);
       }
     }
 
@@ -163,7 +163,7 @@ export class VscodeList extends VscElement {
     const firstChild = this.querySelector('vscode-list-item');
 
     if (firstChild) {
-      firstChild.tabIndex = 0;
+      firstChild.active = true;
     }
   };
 
@@ -179,14 +179,9 @@ export class VscodeList extends VscElement {
     }
   }
 
-  setOriginalTabIndex() {
-    this.tabIndex = this._originalTabIndex;
-  }
-
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this._originalTabIndex = this.tabIndex;
     this.addEventListener('keydown', this._handleComponentKeyDown);
   }
 
