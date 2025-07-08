@@ -26,11 +26,18 @@ export const initPathTrackerProps = (
     const level = parentElementLevel + 1;
     const index = i.toString();
 
+    if ('path' in parentElement) {
+      item.path = [...parentElement.path, i];
+    } else {
+      item.path = [i];
+    }
+
     item.level = parentElementLevel + 1;
     item.dataset.level = (parentElementLevel + 1).toString();
     item.dataset.index = i.toString();
     item.dataset.last = i === numChildren - 1 ? 'true' : 'false';
     item.dataset.id = `${level}_${index}`;
+    item.dataset.path = item.path.join('.');
   });
 };
 

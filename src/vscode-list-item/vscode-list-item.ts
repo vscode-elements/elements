@@ -61,6 +61,15 @@ export class VscodeListItem extends VscElement {
   }
   private _selected = false;
 
+  set path(newPath: number[]) {
+    this._path = newPath;
+  }
+  get path(): number[] {
+    return this._path;
+  }
+
+  private _path: number[] = [];
+
   protected override willUpdate(changedProperties: PropertyValues): void {
     if (changedProperties.has('active')) {
       if (this.active) {
