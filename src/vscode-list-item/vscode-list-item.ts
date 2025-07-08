@@ -239,7 +239,7 @@ export class VscodeListItem extends VscElement {
       }
     }
 
-    this._focusItem(this);
+    this.active = true;
 
     if (!isShiftDown) {
       this._listContextState.prevFocusedItem = this;
