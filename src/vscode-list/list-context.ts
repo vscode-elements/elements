@@ -1,6 +1,7 @@
 import {createContext} from '@lit/context';
 import type {VscodeListItem} from '../vscode-list-item';
 import type {VscodeList} from './vscode-list';
+import {ListController} from './ListController';
 
 export interface ListContext {
   indent: number;
@@ -19,3 +20,7 @@ export interface ListContext {
 }
 
 export const listContext = createContext<ListContext>('vscode-list');
+
+export const listControllerContext = createContext<ListController>(
+  Symbol('listControllerContext')
+);

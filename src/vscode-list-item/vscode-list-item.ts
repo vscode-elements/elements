@@ -1,4 +1,4 @@
-import {TemplateResult, html, nothing} from 'lit';
+import {PropertyValues, TemplateResult, html, nothing} from 'lit';
 import {consume} from '@lit/context';
 import {
   customElement,
@@ -9,8 +9,13 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
-import {listContext, type ListContext} from '../vscode-list/list-context';
+import {
+  listContext,
+  listControllerContext,
+  type ListContext,
+} from '../vscode-list/list-context';
 import {initPathTrackerProps} from '../vscode-list/helpers';
+import {ListController} from '../vscode-list/ListController';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -32,15 +37,8 @@ const arrowIcon = html`<svg
 export class VscodeListItem extends VscElement {
   static override styles = styles;
 
-  @property({type: Boolean, attribute: false})
-  set active(isActive: boolean) {
-    this._active = isActive;
-    this.tabIndex = isActive ? 0 : -1;
-  }
-  get active(): boolean {
-    return this._active;
-  }
-  private _active = false;
+  @property({type: Boolean})
+  active = false;
 
   @property({type: Boolean, reflect: true})
   branch = false;
@@ -61,6 +59,25 @@ export class VscodeListItem extends VscElement {
   }
   private _selected = false;
 
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    if (changedProperties.has('active')) {
+      if (this.active) {
+        if (this._listController.activeItem) {
+          this._listController.activeItem.active = false;
+        }
+
+        this._listController.activeItem = this;
+        this.tabIndex = 0;
+      } else {
+        if (this._listController.activeItem === this) {
+          this._listController.activeItem = null;
+        }
+
+        this.tabIndex = -1;
+      }
+    }
+  }
+
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
     arrows: false,
@@ -74,6 +91,9 @@ export class VscodeListItem extends VscElement {
     hasBranchItem: false,
     rootElement: null,
   };
+
+  @consume({context: listControllerContext})
+  private _listController!: ListController;
 
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _initiallyAssignedListItems!: VscodeListItem[];
@@ -144,7 +164,6 @@ export class VscodeListItem extends VscElement {
     this._listContextState.selectedItems.clear();
 
     this._selectItemsAndAllVisibleDescendants(from, to);
-    // console.log(from, to);
   }
 
   private _selectItemsAndAllVisibleDescendants(from: number, to: number) {
