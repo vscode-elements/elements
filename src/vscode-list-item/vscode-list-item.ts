@@ -10,6 +10,8 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {
+  Config,
+  configContext,
   listContext,
   listControllerContext,
   type ListContext,
@@ -94,6 +96,9 @@ export class VscodeListItem extends VscElement {
 
   @consume({context: listControllerContext})
   private _listController!: ListController;
+
+  @consume({context: configContext, subscribe: true})
+  private _configContext!: Config;
 
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _initiallyAssignedListItems!: VscodeListItem[];
@@ -260,7 +265,8 @@ export class VscodeListItem extends VscElement {
   }
 
   override render(): TemplateResult {
-    const {arrows, indent, hasBranchItem} = this._listContextState;
+    const {arrows, indent} = this._configContext;
+    const {hasBranchItem} = this._listContextState;
     let indentation = BASE_INDENT + this.level * indent;
 
     if (!this.branch && arrows && hasBranchItem) {

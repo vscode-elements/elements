@@ -9,6 +9,8 @@ import {VscElement} from '../includes/VscElement';
 import type {VscodeListItem} from '../vscode-list-item';
 import styles from './vscode-list.styles';
 import {
+  Config,
+  configContext,
   listContext,
   listControllerContext,
   type ListContext,
@@ -25,16 +27,22 @@ const listenedKeys: ListenedKey[] = [
   'Enter',
   'Escape',
 ];
+const DEFAULT_ARROWS = false;
+const DEFAULT_INDENT = 8;
+const DEFAULT_INDENT_GUIDES = false;
 
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
   static override styles = styles;
 
   @property({type: Boolean, reflect: true})
-  arrows = false;
+  arrows = DEFAULT_ARROWS;
 
   @property({type: Number, reflect: true})
-  indent = 8;
+  indent = DEFAULT_INDENT;
+
+  @property({type: Boolean, attribute: 'indent-guides', reflect: true})
+  indentGuides = DEFAULT_INDENT_GUIDES;
 
   @property({type: Boolean, reflect: true, attribute: 'multi-select'})
   set multiSelect(val: boolean) {
@@ -69,6 +77,13 @@ export class VscodeList extends VscElement {
 
   @provide({context: listControllerContext})
   private _listController = new ListController();
+
+  @provide({context: configContext})
+  private _configContext: Config = {
+    arrows: DEFAULT_ARROWS,
+    indent: DEFAULT_INDENT,
+    indentGuides: DEFAULT_INDENT_GUIDES,
+  };
 
   /**
    * @internal
@@ -182,16 +197,24 @@ export class VscodeList extends VscElement {
     });
   };
 
-  protected override willUpdate(changedProperties: PropertyValues<this>): void {
-    const {arrows, indent} = this;
+  private _updateConfigContext(changedProperties: PropertyValues) {
+    const {arrows, indent, indentGuides} = this;
 
     if (changedProperties.has('arrows')) {
-      this._listContextState = {...this._listContextState, arrows};
+      this._configContext = {...this._configContext, arrows};
     }
 
     if (changedProperties.has('indent')) {
-      this._listContextState = {...this._listContextState, indent};
+      this._configContext = {...this._configContext, indent};
     }
+
+    if (changedProperties.has('indentGuides')) {
+      this._configContext = {...this._configContext, indentGuides};
+    }
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    this._updateConfigContext(changedProperties);
   }
 
   override connectedCallback(): void {
