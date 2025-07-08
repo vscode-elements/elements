@@ -8,8 +8,13 @@ import {
 import {VscElement} from '../includes/VscElement';
 import type {VscodeListItem} from '../vscode-list-item';
 import styles from './vscode-list.styles';
-import {listContext, type ListContext} from './list-context';
+import {
+  listContext,
+  listControllerContext,
+  type ListContext,
+} from './list-context';
 import {findNextItem, findPrevItem, initPathTrackerProps} from './helpers';
+import {ListController} from './ListController';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
@@ -61,6 +66,9 @@ export class VscodeList extends VscElement {
     hasBranchItem: false,
     rootElement: this,
   };
+
+  @provide({context: listControllerContext})
+  private _listController = new ListController();
 
   /**
    * @internal
@@ -160,11 +168,18 @@ export class VscodeList extends VscElement {
     this._listContextState.itemListUpToDate = false;
     initPathTrackerProps(this, this._assignedListItems);
 
-    const firstChild = this.querySelector('vscode-list-item');
+    this.updateComplete.then(() => {
+      if (this._listController.activeItem === null) {
+        const firstChild = this.querySelector<VscodeListItem>(
+          ':scope > vscode-list-item'
+        );
 
-    if (firstChild) {
-      firstChild.active = true;
-    }
+        if (firstChild) {
+          firstChild.active = true;
+          this._listController.activeItem = firstChild;
+        }
+      }
+    });
   };
 
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
