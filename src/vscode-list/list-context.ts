@@ -19,7 +19,17 @@ export interface ListContext {
   rootElement: VscodeList | null;
 }
 
+export interface Config {
+  arrows: boolean;
+  indent: number;
+  indentGuides: boolean;
+}
+
 export const listContext = createContext<ListContext>('vscode-list');
+
+export const configContext = createContext<Config>(
+  Symbol('configContext')
+);
 
 export const listControllerContext = createContext<ListController>(
   Symbol('listControllerContext')
