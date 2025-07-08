@@ -115,17 +115,6 @@ export class VscodeListItem extends VscElement {
   @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
   private _childrenListItems!: VscodeListItem[];
 
-  private _focusItem(item: VscodeListItem) {
-    const {focusedItem} = this._listContextState;
-
-    if (focusedItem) {
-      this._listContextState.focusedItem = null;
-    }
-
-    item.focus();
-    this._listContextState.focusedItem = item;
-  }
-
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems, multiSelect} = this._listContextState;
 
