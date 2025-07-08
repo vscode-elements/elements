@@ -58,9 +58,6 @@ export class VscodeList extends VscElement {
   @property({type: String, reflect: true})
   override role = 'tree';
 
-  @property({type: Number, reflect: true})
-  numChildren = 0;
-
   @provide({context: listContext})
   private _listContextState: ListContext = {
     arrows: false,
