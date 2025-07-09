@@ -39,6 +39,8 @@ const arrowIcon = html`<svg
 export class VscodeListItem extends VscElement {
   static override styles = styles;
 
+  //#region properties
+
   @property({type: Boolean})
   active = false;
 
@@ -68,26 +70,11 @@ export class VscodeListItem extends VscElement {
     return this._path;
   }
 
+  //#endregion
+
+  //#region private variables
+
   private _path: number[] = [];
-
-  protected override willUpdate(changedProperties: PropertyValues): void {
-    if (changedProperties.has('active')) {
-      if (this.active) {
-        if (this._listController.activeItem) {
-          this._listController.activeItem.active = false;
-        }
-
-        this._listController.activeItem = this;
-        this.tabIndex = 0;
-      } else {
-        if (this._listController.activeItem === this) {
-          this._listController.activeItem = null;
-        }
-
-        this.tabIndex = -1;
-      }
-    }
-  }
 
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
@@ -114,6 +101,46 @@ export class VscodeListItem extends VscElement {
 
   @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
   private _childrenListItems!: VscodeListItem[];
+
+  //#endregion
+
+  //#region lifecycle methods
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this._mainSlotChange();
+
+    this.addEventListener('focus', this._handleComponentFocus);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener('focus', this._handleComponentFocus);
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    if (changedProperties.has('active')) {
+      if (this.active) {
+        if (this._listController.activeItem) {
+          this._listController.activeItem.active = false;
+        }
+
+        this._listController.activeItem = this;
+        this.tabIndex = 0;
+      } else {
+        if (this._listController.activeItem === this) {
+          this._listController.activeItem = null;
+        }
+
+        this.tabIndex = -1;
+      }
+    }
+  }
+
+  //#endregion
+
+  //#region private methods
 
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems, multiSelect} = this._listContextState;
@@ -199,6 +226,10 @@ export class VscodeListItem extends VscElement {
     });
   }
 
+  //#endregion
+
+  //#region event handlers
+
   private _handleChildrenSlotChange() {
     initPathTrackerProps(this, this._childrenListItems);
 
@@ -249,18 +280,7 @@ export class VscodeListItem extends VscElement {
     }
   };
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this._mainSlotChange();
-
-    this.addEventListener('focus', this._handleComponentFocus);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener('focus', this._handleComponentFocus);
-  }
+  //#endregion
 
   override render(): TemplateResult {
     const {arrows, indent} = this._configContext;
