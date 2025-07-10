@@ -143,6 +143,14 @@ export class VscodeList extends VscElement {
     }
   }
 
+  private _focusItem(item: VscodeListItem) {
+    item.active = true;
+
+    item.updateComplete.then(() => {
+      item.focus();
+    });
+  }
+
   private _focusPrevItem() {
     if (this._listContextState.focusedItem) {
       const item = findPrevItem(this._listContextState.focusedItem);
@@ -150,7 +158,7 @@ export class VscodeList extends VscElement {
       if (item) {
         this._focusItem(item);
 
-        if (this._listContextState.isShiftPressed) {
+        if (this._listContextState.isShiftPressed && this.multiSelect) {
           item.selected = !item.selected;
         }
       }
@@ -164,19 +172,11 @@ export class VscodeList extends VscElement {
       if (item) {
         this._focusItem(item);
 
-        if (this._listContextState.isShiftPressed) {
+        if (this._listContextState.isShiftPressed && this.multiSelect) {
           item.selected = !item.selected;
         }
       }
     }
-  }
-
-  private _focusItem(item: VscodeListItem) {
-    item.active = true;
-
-    item.updateComplete.then(() => {
-      item.focus();
-    });
   }
 
   //#endregion
