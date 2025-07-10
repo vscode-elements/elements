@@ -136,7 +136,8 @@ export class VscodeListItem extends VscElement {
   //#region private methods
 
   private _selectItem(isCtrlDown: boolean) {
-    const {selectedItems, multiSelect} = this._listContextState;
+    const {selectedItems} = this._listContextState;
+    const {multiSelect} = this._configContext;
 
     if (multiSelect && isCtrlDown) {
       if (this.selected) {
