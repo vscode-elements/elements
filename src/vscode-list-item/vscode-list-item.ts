@@ -10,14 +10,12 @@ import {VscElement} from '../includes/VscElement';
 import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
 import {
-  Config,
+  ConfigContext,
   configContext,
   listContext,
-  listControllerContext,
   type ListContext,
 } from '../vscode-list/list-context';
 import {initPathTrackerProps} from '../vscode-list/helpers';
-import {ListController} from '../vscode-list/ListController';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -78,9 +76,6 @@ export class VscodeListItem extends VscElement {
 
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
-    arrows: false,
-    indent: 8,
-    multiSelect: false,
     selectedItems: new Set(),
     allItems: null,
     itemListUpToDate: false,
@@ -88,13 +83,11 @@ export class VscodeListItem extends VscElement {
     prevFocusedItem: null,
     hasBranchItem: false,
     rootElement: null,
+    activeItem: null,
   };
 
-  @consume({context: listControllerContext})
-  private _listController!: ListController;
-
   @consume({context: configContext, subscribe: true})
-  private _configContext!: Config;
+  private _configContext!: ConfigContext;
 
   @queryAssignedElements({selector: 'vscode-list-item'})
   private _initiallyAssignedListItems!: VscodeListItem[];
@@ -122,15 +115,15 @@ export class VscodeListItem extends VscElement {
   protected override willUpdate(changedProperties: PropertyValues): void {
     if (changedProperties.has('active')) {
       if (this.active) {
-        if (this._listController.activeItem) {
-          this._listController.activeItem.active = false;
+        if (this._listContextState.activeItem) {
+          this._listContextState.activeItem.active = false;
         }
 
-        this._listController.activeItem = this;
+        this._listContextState.activeItem = this;
         this.tabIndex = 0;
       } else {
-        if (this._listController.activeItem === this) {
-          this._listController.activeItem = null;
+        if (this._listContextState.activeItem === this) {
+          this._listContextState.activeItem = null;
         }
 
         this.tabIndex = -1;
@@ -268,7 +261,7 @@ export class VscodeListItem extends VscElement {
     } else {
       this._selectItem(isCtrlDown);
 
-      if (this.branch && !(this._listContextState.multiSelect && isCtrlDown)) {
+      if (this.branch && !(this._configContext.multiSelect && isCtrlDown)) {
         this.open = !this.open;
       }
     }

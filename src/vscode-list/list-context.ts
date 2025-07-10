@@ -1,12 +1,8 @@
 import {createContext} from '@lit/context';
 import type {VscodeListItem} from '../vscode-list-item';
 import type {VscodeList} from './vscode-list';
-import {ListController} from './ListController';
 
 export interface ListContext {
-  indent: number;
-  arrows: boolean;
-  multiSelect: boolean;
   selectedItems: Set<VscodeListItem>;
   allItems: NodeListOf<VscodeListItem> | null;
   itemListUpToDate: boolean;
@@ -17,20 +13,19 @@ export interface ListContext {
    */
   hasBranchItem: boolean;
   rootElement: VscodeList | null;
-}
-
-export interface Config {
-  arrows: boolean;
-  indent: number;
-  indentGuides: boolean;
+  activeItem: VscodeListItem | null;
 }
 
 export const listContext = createContext<ListContext>('vscode-list');
 
-export const configContext = createContext<Config>(
-  Symbol('configContext')
-);
+export interface ConfigContext {
+  readonly arrows: boolean;
+  readonly indent: number;
+  readonly indentGuides: boolean;
+  readonly multiSelect: boolean;
+}
 
-export const listControllerContext = createContext<ListController>(
-  Symbol('listControllerContext')
+
+export const configContext = createContext<ConfigContext>(
+  Symbol('configContext')
 );
