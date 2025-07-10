@@ -104,7 +104,7 @@ export class VscodeList extends VscElement {
         // this._listContextState.focusedItem = item;
         // item.focused = true;
         // item.focus();
-        this._activateItem(item);
+        this._focusItem(item);
       }
     }
   }
@@ -118,22 +118,16 @@ export class VscodeList extends VscElement {
         // this._listContextState.focusedItem = item;
         // item.focused = true;
         // item.focus();
-        this._activateItem(item);
+        this._focusItem(item);
       }
     }
   }
 
-  private _activateItem(item: VscodeListItem) {
-    if (this._listContextState.focusedItem) {
-      this._listContextState.focusedItem.active = false;
-      this._listContextState.focusedItem = null;
-    }
-
+  private _focusItem(item: VscodeListItem) {
     item.active = true;
-    this._listContextState.focusedItem = item;
 
-    this.updateComplete.then(() => {
-      this._listContextState.focusedItem?.focus();
+    item.updateComplete.then(() => {
+      item.focus();
     });
   }
 
@@ -155,7 +149,7 @@ export class VscodeList extends VscElement {
           this._activatePrevItem();
         }
       } else {
-        this._activateItem(this._assignedListItems[0]);
+        this._focusItem(this._assignedListItems[0]);
       }
     }
 
