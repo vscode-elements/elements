@@ -182,7 +182,6 @@ export class VscodeList extends VscElement {
 
         if (firstChild) {
           firstChild.active = true;
-          this._listController.activeItem = firstChild;
         }
       }
     });
