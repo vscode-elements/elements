@@ -9,14 +9,12 @@ import {VscElement} from '../includes/VscElement';
 import type {VscodeListItem} from '../vscode-list-item';
 import styles from './vscode-list.styles';
 import {
-  Config,
+  ConfigContext,
   configContext,
   listContext,
-  listControllerContext,
   type ListContext,
 } from './list-context';
 import {findNextItem, findPrevItem, initPathTrackerProps} from './helpers';
-import {ListController} from './ListController';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
 
@@ -30,6 +28,7 @@ const listenedKeys: ListenedKey[] = [
 const DEFAULT_ARROWS = false;
 const DEFAULT_INDENT = 8;
 const DEFAULT_INDENT_GUIDES = false;
+const DEFAULT_MULTI_SELECT = false;
 
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
@@ -45,14 +44,7 @@ export class VscodeList extends VscElement {
   indentGuides = DEFAULT_INDENT_GUIDES;
 
   @property({type: Boolean, reflect: true, attribute: 'multi-select'})
-  set multiSelect(val: boolean) {
-    this._multiSelect = val;
-    this._listContextState.multiSelect = val;
-  }
-  get multiSelect(): boolean {
-    return this._multiSelect;
-  }
-  private _multiSelect = false;
+  multiSelect = DEFAULT_MULTI_SELECT;
 
   /** @internal */
   @property({type: String, reflect: true})
@@ -60,9 +52,7 @@ export class VscodeList extends VscElement {
 
   @provide({context: listContext})
   private _listContextState: ListContext = {
-    arrows: false,
-    indent: 8,
-    multiSelect: false,
+    activeItem: null,
     selectedItems: new Set(),
     allItems: null,
     itemListUpToDate: false,
@@ -72,14 +62,12 @@ export class VscodeList extends VscElement {
     rootElement: this,
   };
 
-  @provide({context: listControllerContext})
-  private _listController = new ListController();
-
   @provide({context: configContext})
-  private _configContext: Config = {
+  private _configContext: ConfigContext = {
     arrows: DEFAULT_ARROWS,
     indent: DEFAULT_INDENT,
     indentGuides: DEFAULT_INDENT_GUIDES,
+    multiSelect: DEFAULT_MULTI_SELECT,
   };
 
   /**
@@ -175,7 +163,7 @@ export class VscodeList extends VscElement {
     initPathTrackerProps(this, this._assignedListItems);
 
     this.updateComplete.then(() => {
-      if (this._listController.activeItem === null) {
+      if (this._listContextState.activeItem === null) {
         const firstChild = this.querySelector<VscodeListItem>(
           ':scope > vscode-list-item'
         );
@@ -188,7 +176,7 @@ export class VscodeList extends VscElement {
   };
 
   private _updateConfigContext(changedProperties: PropertyValues) {
-    const {arrows, indent, indentGuides} = this;
+    const {arrows, indent, indentGuides, multiSelect} = this;
 
     if (changedProperties.has('arrows')) {
       this._configContext = {...this._configContext, arrows};
@@ -200,6 +188,10 @@ export class VscodeList extends VscElement {
 
     if (changedProperties.has('indentGuides')) {
       this._configContext = {...this._configContext, indentGuides};
+    }
+
+    if (changedProperties.has('multiSelect')) {
+      this._configContext = {...this._configContext, multiSelect};
     }
   }
 
