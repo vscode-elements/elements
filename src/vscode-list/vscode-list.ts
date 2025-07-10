@@ -143,29 +143,21 @@ export class VscodeList extends VscElement {
     }
   }
 
-  private _activatePrevItem() {
+  private _focusPrevItem() {
     if (this._listContextState.focusedItem) {
       const item = findPrevItem(this._listContextState.focusedItem);
 
       if (item) {
-        // this._listContextState.focusedItem.focused = false;
-        // this._listContextState.focusedItem = item;
-        // item.focused = true;
-        // item.focus();
         this._focusItem(item);
       }
     }
   }
 
-  private _activateNextItem() {
+  private _focusNextItem() {
     if (this._listContextState.focusedItem) {
       const item = findNextItem(this._listContextState.focusedItem);
 
       if (item) {
-        // this._listContextState.focusedItem.focused = false;
-        // this._listContextState.focusedItem = item;
-        // item.focused = true;
-        // item.focus();
         this._focusItem(item);
       }
     }
@@ -198,11 +190,11 @@ export class VscodeList extends VscElement {
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       if (this._listContextState.focusedItem) {
         if (key === 'ArrowDown') {
-          this._activateNextItem();
+          this._focusNextItem();
         }
 
         if (key === 'ArrowUp') {
-          this._activatePrevItem();
+          this._focusPrevItem();
         }
       } else {
         this._focusItem(this._assignedListItems[0]);
