@@ -3,6 +3,7 @@ import type {VscodeListItem} from '../vscode-list-item';
 import type {VscodeList} from './vscode-list';
 
 export interface ListContext {
+  isShiftPressed: boolean;
   selectedItems: Set<VscodeListItem>;
   allItems: NodeListOf<VscodeListItem> | null;
   itemListUpToDate: boolean;
