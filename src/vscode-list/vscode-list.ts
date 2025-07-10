@@ -149,6 +149,10 @@ export class VscodeList extends VscElement {
 
       if (item) {
         this._focusItem(item);
+
+        if (this._listContextState.isShiftPressed) {
+          item.selected = !item.selected;
+        }
       }
     }
   }
@@ -159,6 +163,10 @@ export class VscodeList extends VscElement {
 
       if (item) {
         this._focusItem(item);
+
+        if (this._listContextState.isShiftPressed) {
+          item.selected = !item.selected;
+        }
       }
     }
   }
