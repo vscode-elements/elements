@@ -16,7 +16,7 @@ import {
 } from './list-context';
 import {findNextItem, findPrevItem, initPathTrackerProps} from './helpers';
 
-type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | ' ';
+type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | 'Shift' | ' ';
 
 const listenedKeys: ListenedKey[] = [
   ' ',
@@ -24,6 +24,7 @@ const listenedKeys: ListenedKey[] = [
   'ArrowUp',
   'Enter',
   'Escape',
+  'Shift',
 ];
 const DEFAULT_ARROWS = false;
 const DEFAULT_INDENT = 8;
@@ -58,6 +59,7 @@ export class VscodeList extends VscElement {
 
   @provide({context: listContext})
   private _listContextState: ListContext = {
+    isShiftPressed: false,
     activeItem: null,
     selectedItems: new Set(),
     allItems: null,
@@ -80,6 +82,12 @@ export class VscodeList extends VscElement {
   private _assignedListItems!: VscodeListItem[];
 
   //#region lifecycle methods
+
+  constructor() {
+    super();
+
+    this.addEventListener('keyup', this._handleComponentKeyUp);
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -183,6 +191,10 @@ export class VscodeList extends VscElement {
       ev.preventDefault();
     }
 
+    if (key === 'Shift') {
+      this._listContextState.isShiftPressed = true;
+    }
+
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       if (this._listContextState.focusedItem) {
         if (key === 'ArrowDown') {
@@ -211,6 +223,12 @@ export class VscodeList extends VscElement {
           focusedItem.open = !focusedItem.open;
         }
       }
+    }
+  };
+
+  private _handleComponentKeyUp = (ev: KeyboardEvent) => {
+    if (ev.key === 'Shift') {
+      this._listContextState.isShiftPressed = false;
     }
   };
 

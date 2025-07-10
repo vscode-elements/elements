@@ -76,6 +76,7 @@ export class VscodeListItem extends VscElement {
 
   @consume({context: listContext, subscribe: true})
   private _listContextState: ListContext = {
+    isShiftPressed: false,
     selectedItems: new Set(),
     allItems: null,
     itemListUpToDate: false,
@@ -243,8 +244,11 @@ export class VscodeListItem extends VscElement {
       this._listContextState.focusedItem &&
       this._listContextState.focusedItem !== this
     ) {
-      this._listContextState.prevFocusedItem =
-        this._listContextState.focusedItem;
+      if (!this._listContextState.isShiftPressed) {
+        this._listContextState.prevFocusedItem =
+          this._listContextState.focusedItem;
+      }
+
       this._listContextState.focusedItem = null;
     }
 
