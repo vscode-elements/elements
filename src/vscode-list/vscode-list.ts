@@ -34,6 +34,8 @@ const DEFAULT_MULTI_SELECT = false;
 export class VscodeList extends VscElement {
   static override styles = styles;
 
+  //#region properties
+
   @property({type: Boolean, reflect: true})
   arrows = DEFAULT_ARROWS;
 
@@ -49,6 +51,10 @@ export class VscodeList extends VscElement {
   /** @internal */
   @property({type: String, reflect: true})
   override role = 'tree';
+
+  //#endregion
+
+  //#region private variables
 
   @provide({context: listContext})
   private _listContextState: ListContext = {
@@ -70,6 +76,31 @@ export class VscodeList extends VscElement {
     multiSelect: DEFAULT_MULTI_SELECT,
   };
 
+  @queryAssignedElements({selector: 'vscode-list-item'})
+  private _assignedListItems!: VscodeListItem[];
+
+  //#region lifecycle methods
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.addEventListener('keydown', this._handleComponentKeyDown);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener('keydown', this._handleComponentKeyDown);
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    this._updateConfigContext(changedProperties);
+  }
+
+  //#endregion
+
+  //#region public methods
+
   /**
    * @internal
    * Updates `hasBranchItem` property in the context state in order to removing
@@ -80,8 +111,29 @@ export class VscodeList extends VscElement {
     this._listContextState = {...this._listContextState, hasBranchItem};
   }
 
-  @queryAssignedElements({selector: 'vscode-list-item'})
-  private _assignedListItems!: VscodeListItem[];
+  //#endregion
+
+  //#region private methods
+
+  private _updateConfigContext(changedProperties: PropertyValues) {
+    const {arrows, indent, indentGuides, multiSelect} = this;
+
+    if (changedProperties.has('arrows')) {
+      this._configContext = {...this._configContext, arrows};
+    }
+
+    if (changedProperties.has('indent')) {
+      this._configContext = {...this._configContext, indent};
+    }
+
+    if (changedProperties.has('indentGuides')) {
+      this._configContext = {...this._configContext, indentGuides};
+    }
+
+    if (changedProperties.has('multiSelect')) {
+      this._configContext = {...this._configContext, multiSelect};
+    }
+  }
 
   private _activatePrevItem() {
     if (this._listContextState.focusedItem) {
@@ -118,6 +170,10 @@ export class VscodeList extends VscElement {
       item.focus();
     });
   }
+
+  //#endregion
+
+  //#region event handlers
 
   private _handleComponentKeyDown = (ev: KeyboardEvent) => {
     const key = ev.key as ListenedKey;
@@ -175,41 +231,7 @@ export class VscodeList extends VscElement {
     });
   };
 
-  private _updateConfigContext(changedProperties: PropertyValues) {
-    const {arrows, indent, indentGuides, multiSelect} = this;
-
-    if (changedProperties.has('arrows')) {
-      this._configContext = {...this._configContext, arrows};
-    }
-
-    if (changedProperties.has('indent')) {
-      this._configContext = {...this._configContext, indent};
-    }
-
-    if (changedProperties.has('indentGuides')) {
-      this._configContext = {...this._configContext, indentGuides};
-    }
-
-    if (changedProperties.has('multiSelect')) {
-      this._configContext = {...this._configContext, multiSelect};
-    }
-  }
-
-  protected override willUpdate(changedProperties: PropertyValues<this>): void {
-    this._updateConfigContext(changedProperties);
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    this.addEventListener('keydown', this._handleComponentKeyDown);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener('keydown', this._handleComponentKeyDown);
-  }
+  //#endregion
 
   override render(): TemplateResult {
     return html`<div>
