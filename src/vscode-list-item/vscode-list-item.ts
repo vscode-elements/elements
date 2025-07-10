@@ -238,7 +238,6 @@ export class VscodeListItem extends VscElement {
     this._listContextState.itemListUpToDate = false;
   };
 
-  // TODO: Will be replace with "activate" logic
   private _handleComponentFocus = () => {
     if (
       this._listContextState.focusedItem &&
@@ -261,7 +260,7 @@ export class VscodeListItem extends VscElement {
     const isCtrlDown = ev.ctrlKey;
     const isShiftDown = ev.shiftKey;
 
-    if (isShiftDown) {
+    if (isShiftDown && this._configContext.multiSelect) {
       this._selectRange();
     } else {
       this._selectItem(isCtrlDown);
