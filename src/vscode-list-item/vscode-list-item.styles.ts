@@ -86,6 +86,22 @@ const styles: CSSResultGroup = [
       margin-right: 6px;
     }
 
+    .children {
+      position: relative;
+    }
+
+    .children.guides:before {
+      background-color: var(--vscode-tree-inactiveIndentGuidesStroke);
+      content: '';
+      display: block;
+      height: 100%;
+      left: var(--indentation-guide-left);
+      pointer-events: none;
+      position: absolute;
+      width: 1px;
+      z-index: 1;
+    }
+
     .text-content {
       line-height: 22px;
       overflow: hidden;
