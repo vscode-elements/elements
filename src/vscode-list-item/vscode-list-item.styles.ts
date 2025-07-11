@@ -102,6 +102,10 @@ const styles: CSSResultGroup = [
       z-index: 1;
     }
 
+    .children.guides.active-guides:before {
+      background-color: var(--vscode-tree-indentGuidesStroke);
+    }
+
     .text-content {
       line-height: 22px;
       overflow: hidden;
