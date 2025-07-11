@@ -16,6 +16,7 @@ import {
 } from '../vscode-list/list-context';
 import {initPathTrackerProps} from '../vscode-list/helpers';
 import styles from './vscode-list-item.styles';
+import {getParentItem} from './helpers';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -44,6 +45,12 @@ export class VscodeListItem extends VscElement {
 
   @property({type: Boolean, reflect: true})
   branch = false;
+
+  @property({type: Boolean})
+  hasActiveItem = false;
+
+  @property({type: Boolean})
+  hasSelectedItem = false;
 
   @property({type: Boolean, reflect: true})
   open = false;
@@ -115,26 +122,47 @@ export class VscodeListItem extends VscElement {
 
   protected override willUpdate(changedProperties: PropertyValues): void {
     if (changedProperties.has('active')) {
-      if (this.active) {
-        if (this._listContextState.activeItem) {
-          this._listContextState.activeItem.active = false;
-        }
-
-        this._listContextState.activeItem = this;
-        this.tabIndex = 0;
-      } else {
-        if (this._listContextState.activeItem === this) {
-          this._listContextState.activeItem = null;
-        }
-
-        this.tabIndex = -1;
-      }
+      this._toggleActiveState();
     }
   }
 
   //#endregion
 
   //#region private methods
+
+  private _setHasActiveItemFlagOnParent(
+    childItem: VscodeListItem,
+    value: boolean
+  ) {
+    const parent = getParentItem(childItem);
+
+    if (parent) {
+      parent.hasActiveItem = value;
+    }
+  }
+
+  private _toggleActiveState() {
+    if (this.active) {
+      if (this._listContextState.activeItem) {
+        this._listContextState.activeItem.active = false;
+        this._setHasActiveItemFlagOnParent(
+          this._listContextState.activeItem,
+          false
+        );
+      }
+
+      this._listContextState.activeItem = this;
+      this._setHasActiveItemFlagOnParent(this, true);
+      this.tabIndex = 0;
+    } else {
+      if (this._listContextState.activeItem === this) {
+        this._listContextState.activeItem = null;
+        this._setHasActiveItemFlagOnParent(this, false);
+      }
+
+      this.tabIndex = -1;
+    }
+  }
 
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems} = this._listContextState;
@@ -297,8 +325,9 @@ export class VscodeListItem extends VscElement {
 
     const childrenClasses = {
       children: true,
-      'guides': this.branch && indentGuides,
-    }
+      guides: this.branch && indentGuides,
+      'active-guides': this.hasActiveItem || this.hasSelectedItem,
+    };
 
     return html` <div class="wrapper">
       <div
