@@ -5,10 +5,9 @@ import {
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
-import {styleMap} from 'lit/directives/style-map.js';
-import {VscElement} from '../includes/VscElement';
-import styles from './vscode-list-item.styles';
 import {classMap} from 'lit/directives/class-map.js';
+import {VscElement} from '../includes/VscElement';
+import {stylePropertyMap} from '../includes/style-property-map';
 import {
   ConfigContext,
   configContext,
@@ -16,6 +15,7 @@ import {
   type ListContext,
 } from '../vscode-list/list-context';
 import {initPathTrackerProps} from '../vscode-list/helpers';
+import styles from './vscode-list-item.styles';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -280,9 +280,11 @@ export class VscodeListItem extends VscElement {
   //#endregion
 
   override render(): TemplateResult {
-    const {arrows, indent} = this._configContext;
+    const {arrows, indent, indentGuides} = this._configContext;
     const {hasBranchItem} = this._listContextState;
     let indentation = BASE_INDENT + this.level * indent;
+    const guideOffset = arrows ? 13 : 3;
+    const indentGuideX = BASE_INDENT + this.level * indent + guideOffset;
 
     if (!this.branch && arrows && hasBranchItem) {
       indentation += ARROW_CONTAINER_WIDTH;
@@ -293,11 +295,16 @@ export class VscodeListItem extends VscElement {
       active: this.active,
     };
 
+    const childrenClasses = {
+      children: true,
+      'guides': this.branch && indentGuides,
+    }
+
     return html` <div class="wrapper">
       <div
         class=${classMap(contentClasses)}
         @click=${this._handleContentClick}
-        style=${styleMap({paddingLeft: `${indentation}px`})}
+        .style=${stylePropertyMap({paddingLeft: `${indentation}px`})}
       >
         ${this.branch && arrows
           ? html`<div
@@ -334,7 +341,12 @@ export class VscodeListItem extends VscElement {
           <div class="actions" part="actions"><slot name="actions"></slot></div>
         </div>
       </div>
-      <div class="children">
+      <div
+        class=${classMap(childrenClasses)}
+        .style=${stylePropertyMap({
+          '--indentation-guide-left': `${indentGuideX}px`,
+        })}
+      >
         <slot
           name="children"
           @slotchange=${this._handleChildrenSlotChange}
