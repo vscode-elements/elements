@@ -42,6 +42,8 @@ const listenedKeys: ListenedKey[] = [
   ' ',
   'ArrowDown',
   'ArrowUp',
+  'ArrowLeft',
+  'ArrowRight',
   'Enter',
   'Escape',
   'Shift',
@@ -72,10 +74,6 @@ export class VscodeList extends VscElement {
 
   @property({type: Boolean, reflect: true, attribute: 'multi-select'})
   multiSelect = DEFAULT_MULTI_SELECT;
-
-  /** @internal */
-  @property({type: String, reflect: true})
-  override role = 'tree';
 
   //#endregion
 
@@ -116,18 +114,13 @@ export class VscodeList extends VscElement {
     super();
 
     this.addEventListener('keyup', this._handleComponentKeyUp);
+    this.addEventListener('keydown', this._handleComponentKeyDown);
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.addEventListener('keydown', this._handleComponentKeyDown);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener('keydown', this._handleComponentKeyDown);
+    this.role = 'tree';
   }
 
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
