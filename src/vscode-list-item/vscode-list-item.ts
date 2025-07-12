@@ -66,7 +66,7 @@ export class VscodeListItem extends VscElement {
   set selected(selected: boolean) {
     this._selected = selected;
     this._listContextState.selectedItems.add(this);
-    this.ariaSelected = selected ? "true" : "false";
+    this.ariaSelected = selected ? 'true' : 'false';
   }
   get selected(): boolean {
     return this._selected;
@@ -116,6 +116,8 @@ export class VscodeListItem extends VscElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this._mainSlotChange();
+    this.role = 'treeitem';
+    this.ariaDisabled = 'false';
 
     this.addEventListener('focus', this._handleComponentFocus);
   }
