@@ -21,6 +21,13 @@ import {
   initPathTrackerProps,
 } from './helpers.js';
 
+export const EXPAND_MODE = {
+  SINGLE_CLICK: 'singleClick',
+  DOUBLE_CLICK: 'doubleClick',
+} as const;
+
+export type ExpandMode = (typeof EXPAND_MODE)[keyof typeof EXPAND_MODE];
+
 type ListenedKey =
   | 'ArrowDown'
   | 'ArrowUp'
@@ -43,6 +50,7 @@ const DEFAULT_ARROWS = false;
 const DEFAULT_INDENT = 8;
 const DEFAULT_INDENT_GUIDES = false;
 const DEFAULT_MULTI_SELECT = false;
+const DEFAULT_EXPAND_MODE = EXPAND_MODE.SINGLE_CLICK;
 
 @customElement('vscode-list')
 export class VscodeList extends VscElement {
@@ -52,6 +60,9 @@ export class VscodeList extends VscElement {
 
   @property({type: Boolean, reflect: true})
   arrows = DEFAULT_ARROWS;
+
+  @property({type: String, attribute: 'expand-mode'})
+  expandMode: ExpandMode = DEFAULT_EXPAND_MODE;
 
   @property({type: Number, reflect: true})
   indent = DEFAULT_INDENT;
@@ -90,6 +101,7 @@ export class VscodeList extends VscElement {
   @provide({context: configContext})
   private _configContext: ConfigContext = {
     arrows: DEFAULT_ARROWS,
+    expandMode: DEFAULT_EXPAND_MODE,
     indent: DEFAULT_INDENT,
     indentGuides: DEFAULT_INDENT_GUIDES,
     multiSelect: DEFAULT_MULTI_SELECT,
@@ -204,10 +216,14 @@ export class VscodeList extends VscElement {
   }
 
   private _updateConfigContext(changedProperties: PropertyValues) {
-    const {arrows, indent, indentGuides, multiSelect} = this;
+    const {arrows, expandMode, indent, indentGuides, multiSelect} = this;
 
     if (changedProperties.has('arrows')) {
       this._configContext = {...this._configContext, arrows};
+    }
+
+    if (changedProperties.has('expandMode')) {
+      this._configContext = {...this._configContext, expandMode};
     }
 
     if (changedProperties.has('indent')) {
