@@ -42,7 +42,9 @@ export const initPathTrackerProps = (
 };
 
 export const findLastChildItem = (item: VscodeListItem): VscodeListItem => {
-  const children = item.querySelectorAll<VscodeListItem>(':scope > vscode-list-item');
+  const children = item.querySelectorAll<VscodeListItem>(
+    ':scope > vscode-list-item'
+  );
 
   if (children.length < 1) {
     return item;

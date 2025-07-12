@@ -52,6 +52,7 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean})
   hasSelectedItem = false;
 
+  /** @internal */
   @property({type: Boolean})
   highlightedGuides = false;
 
