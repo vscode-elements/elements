@@ -190,3 +190,15 @@ export const selectItemAndAllVisibleDescendants = (item: VscodeListItem) => {
     });
   }
 };
+
+export function getParentItem(childItem: VscodeListItem) {
+  if (!childItem.parentElement) {
+    return null;
+  }
+
+  if (!isListItem(childItem.parentElement)) {
+    return null;
+  }
+
+  return childItem.parentElement;
+}

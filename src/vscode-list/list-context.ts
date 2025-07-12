@@ -15,6 +15,8 @@ export interface ListContext {
   hasBranchItem: boolean;
   rootElement: VscodeList | null;
   activeItem: VscodeListItem | null;
+  highlightedItems: VscodeListItem[];
+  highlightGuides?: () => void;
 }
 
 export const listContext = createContext<ListContext>('vscode-list');
@@ -25,7 +27,6 @@ export interface ConfigContext {
   readonly indentGuides: boolean;
   readonly multiSelect: boolean;
 }
-
 
 export const configContext = createContext<ConfigContext>(
   Symbol('configContext')

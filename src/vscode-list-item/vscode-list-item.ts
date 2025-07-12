@@ -95,6 +95,7 @@ export class VscodeListItem extends VscElement {
     hasBranchItem: false,
     rootElement: null,
     activeItem: null,
+    highlightedItems: [],
   };
 
   @consume({context: configContext, subscribe: true})
@@ -306,6 +307,10 @@ export class VscodeListItem extends VscElement {
     if (!isShiftDown) {
       this._listContextState.prevFocusedItem = this;
     }
+
+    this.updateComplete.then(() => {
+      this._listContextState.highlightGuides?.();
+    });
   };
 
   //#endregion
