@@ -52,6 +52,9 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean})
   hasSelectedItem = false;
 
+  @property({type: Boolean})
+  highlightedGuides = false;
+
   @property({type: Boolean, reflect: true})
   open = false;
 
@@ -326,7 +329,7 @@ export class VscodeListItem extends VscElement {
     const childrenClasses = {
       children: true,
       guides: this.branch && indentGuides,
-      'active-guides': this.hasActiveItem || this.hasSelectedItem,
+      'highlighted-guides': this.highlightedGuides,
     };
 
     return html` <div class="wrapper">
