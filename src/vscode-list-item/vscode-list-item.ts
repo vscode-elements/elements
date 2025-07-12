@@ -17,6 +17,7 @@ import {
 import {initPathTrackerProps} from '../vscode-list/helpers';
 import styles from './vscode-list-item.styles';
 import {getParentItem} from './helpers';
+import {EXPAND_MODE} from '../vscode-list/vscode-list';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -302,7 +303,7 @@ export class VscodeListItem extends VscElement {
     this._listContextState.focusedItem = this;
   };
 
-  private _handleContentClick = (ev: MouseEvent) => {
+  private _handleContentClick(ev: MouseEvent) {
     ev.stopPropagation();
 
     const isCtrlDown = ev.ctrlKey;
@@ -313,8 +314,10 @@ export class VscodeListItem extends VscElement {
     } else {
       this._selectItem(isCtrlDown);
 
-      if (this.branch && !(this._configContext.multiSelect && isCtrlDown)) {
-        this.open = !this.open;
+      if (this._configContext.expandMode === EXPAND_MODE.SINGLE_CLICK) {
+        if (this.branch && !(this._configContext.multiSelect && isCtrlDown)) {
+          this.open = !this.open;
+        }
       }
     }
 
@@ -327,7 +330,15 @@ export class VscodeListItem extends VscElement {
     this.updateComplete.then(() => {
       this._listContextState.highlightGuides?.();
     });
-  };
+  }
+
+  private _handleDoubleClick(ev: MouseEvent) {
+    if (this._configContext.expandMode === EXPAND_MODE.DOUBLE_CLICK) {
+      if (this.branch && !(this._configContext.multiSelect && ev.ctrlKey)) {
+        this.open = !this.open;
+      }
+    }
+  }
 
   //#endregion
 
@@ -357,6 +368,7 @@ export class VscodeListItem extends VscElement {
       <div
         class=${classMap(contentClasses)}
         @click=${this._handleContentClick}
+        @dblclick=${this._handleDoubleClick}
         .style=${stylePropertyMap({paddingLeft: `${indentation}px`})}
       >
         ${this.branch && arrows

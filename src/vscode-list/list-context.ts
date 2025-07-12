@@ -1,6 +1,6 @@
 import {createContext} from '@lit/context';
 import type {VscodeListItem} from '../vscode-list-item';
-import type {VscodeList} from './vscode-list';
+import type {ExpandMode, VscodeList} from './vscode-list';
 
 export interface ListContext {
   isShiftPressed: boolean;
@@ -23,6 +23,7 @@ export const listContext = createContext<ListContext>('vscode-list');
 
 export interface ConfigContext {
   readonly arrows: boolean;
+  readonly expandMode: ExpandMode;
   readonly indent: number;
   readonly indentGuides: boolean;
   readonly multiSelect: boolean;
