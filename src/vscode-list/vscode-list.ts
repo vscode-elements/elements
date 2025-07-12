@@ -279,6 +279,46 @@ export class VscodeList extends VscElement {
     }
   }
 
+  private _handleArrowLeftPress() {
+
+  }
+
+  private _handleArrowDownPress() {
+    if (this._listContextState.focusedItem) {
+      this._focusNextItem();
+    } else {
+      this._focusItem(this._assignedListItems[0]);
+    }
+  }
+
+  private _handleArrowUpPress() {
+    if (this._listContextState.focusedItem) {
+      this._focusPrevItem();
+    } else {
+      this._focusItem(this._assignedListItems[0]);
+    }
+  }
+
+  private _handleEnterPress() {
+    const {focusedItem} = this._listContextState;
+
+    if (focusedItem) {
+      this._listContextState.selectedItems.forEach(
+        (li) => (li.selected = false)
+      );
+
+      focusedItem.selected = true;
+
+      if (focusedItem.branch) {
+        focusedItem.open = !focusedItem.open;
+      }
+    }
+  }
+
+  private _handleShiftPress() {
+    this._listContextState.isShiftPressed = true;
+  }
+
   private _handleComponentKeyDown = (ev: KeyboardEvent) => {
     const key = ev.key as ListenedKey;
 
@@ -287,42 +327,27 @@ export class VscodeList extends VscElement {
       ev.preventDefault();
     }
 
-    if (key === 'Shift') {
-      this._listContextState.isShiftPressed = true;
-    }
-
-    if (key === 'ArrowDown' || key === 'ArrowUp') {
-      if (this._listContextState.focusedItem) {
-        if (key === 'ArrowDown') {
-          this._focusNextItem();
-        }
-
-        if (key === 'ArrowUp') {
-          this._focusPrevItem();
-        }
-      } else {
-        this._focusItem(this._assignedListItems[0]);
-      }
-    }
-
-    if (key === 'ArrowRight') {
-      this._handleArrowRightPress();
-    }
-
-    if (key === 'Enter' || key === ' ') {
-      const {focusedItem} = this._listContextState;
-
-      if (focusedItem) {
-        this._listContextState.selectedItems.forEach(
-          (li) => (li.selected = false)
-        );
-
-        focusedItem.selected = true;
-
-        if (focusedItem.branch) {
-          focusedItem.open = !focusedItem.open;
-        }
-      }
+    switch (key) {
+      case ' ':
+      case 'Enter':
+        this._handleEnterPress();
+        break;
+      case 'ArrowDown':
+        this._handleArrowDownPress();
+        break;
+      case 'ArrowLeft':
+        this._handleArrowLeftPress();
+        break;
+      case 'ArrowRight':
+        this._handleArrowRightPress();
+        break ;
+      case 'ArrowUp':
+        this._handleArrowUpPress();
+        break;
+      case 'Shift':
+        this._handleShiftPress();
+        break;
+      default:
     }
   };
 
