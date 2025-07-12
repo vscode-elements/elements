@@ -21,7 +21,15 @@ import {
   initPathTrackerProps,
 } from './helpers.js';
 
-type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | 'Shift' | ' ';
+type ListenedKey =
+  | 'ArrowDown'
+  | 'ArrowUp'
+  | 'ArrowLeft'
+  | 'ArrowRight'
+  | 'Enter'
+  | 'Escape'
+  | 'Shift'
+  | ' ';
 
 const listenedKeys: ListenedKey[] = [
   ' ',
@@ -255,6 +263,22 @@ export class VscodeList extends VscElement {
 
   //#region event handlers
 
+  private _handleArrowRightPress() {
+    if (!this._listContextState.focusedItem) {
+      return;
+    }
+
+    const {focusedItem} = this._listContextState;
+
+    if (focusedItem.branch) {
+      if (focusedItem.open) {
+        this._focusNextItem();
+      } else {
+        focusedItem.open = true;
+      }
+    }
+  }
+
   private _handleComponentKeyDown = (ev: KeyboardEvent) => {
     const key = ev.key as ListenedKey;
 
@@ -279,6 +303,10 @@ export class VscodeList extends VscElement {
       } else {
         this._focusItem(this._assignedListItems[0]);
       }
+    }
+
+    if (key === 'ArrowRight') {
+      this._handleArrowRightPress();
     }
 
     if (key === 'Enter' || key === ' ') {
