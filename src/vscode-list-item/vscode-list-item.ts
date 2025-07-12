@@ -130,11 +130,23 @@ export class VscodeListItem extends VscElement {
     if (changedProperties.has('active')) {
       this._toggleActiveState();
     }
+
+    if (changedProperties.has('open') || changedProperties.has('branch')) {
+      this._setAriaExpanded();
+    }
   }
 
   //#endregion
 
   //#region private methods
+
+  private _setAriaExpanded() {
+    if (!this.branch) {
+      this.ariaExpanded = null;
+    } else {
+      this.ariaExpanded = this.open ? 'true' : 'false';
+    }
+  }
 
   private _setHasActiveItemFlagOnParent(
     childItem: VscodeListItem,
@@ -385,6 +397,7 @@ export class VscodeListItem extends VscElement {
         .style=${stylePropertyMap({
           '--indentation-guide-left': `${indentGuideX}px`,
         })}
+        role="group"
       >
         <slot
           name="children"
