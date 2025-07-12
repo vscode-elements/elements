@@ -12,6 +12,8 @@ export {VscodeFormGroup} from './vscode-form-group/index.js';
 export {VscodeFormHelper} from './vscode-form-helper/index.js';
 export {VscodeIcon} from './vscode-icon/index.js';
 export {VscodeLabel} from './vscode-label/index.js';
+export {VscodeList} from './vscode-list/index.js';
+export {VscodeListItem} from './vscode-list-item/index.js';
 export {VscodeMultiSelect} from './vscode-multi-select/index.js';
 export {VscodeOption} from './vscode-option/index.js';
 export {VscodeProgressRing} from './vscode-progress-ring/index.js';
