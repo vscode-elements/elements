@@ -14,7 +14,12 @@ import {
   listContext,
   type ListContext,
 } from './list-context';
-import {findNextItem, findPrevItem, initPathTrackerProps} from './helpers';
+import {
+  findNextItem,
+  findPrevItem,
+  getParentItem,
+  initPathTrackerProps,
+} from './helpers.js';
 
 type ListenedKey = 'ArrowDown' | 'ArrowUp' | 'Enter' | 'Escape' | 'Shift' | ' ';
 
@@ -68,6 +73,10 @@ export class VscodeList extends VscElement {
     prevFocusedItem: null,
     hasBranchItem: false,
     rootElement: this,
+    highlightedItems: [],
+    highlightGuides: () => {
+      this._highlightGuides();
+    },
   };
 
   @provide({context: configContext})
@@ -122,6 +131,27 @@ export class VscodeList extends VscElement {
   //#endregion
 
   //#region private methods
+
+  private _highlightGuides() {
+    const {activeItem, highlightedItems} = this._listContextState;
+
+    if (activeItem) {
+      highlightedItems.forEach((i) => (i.highlightedGuides = false));
+      this._listContextState.highlightedItems = [];
+
+      if (activeItem.branch && activeItem.open) {
+        activeItem.highlightedGuides = true;
+        this._listContextState.highlightedItems.push(activeItem);
+      } else {
+        const parent = getParentItem(activeItem);
+
+        if (parent) {
+          parent.highlightedGuides = true;
+          this._listContextState.highlightedItems.push(parent);
+        }
+      }
+    }
+  }
 
   private _updateConfigContext(changedProperties: PropertyValues) {
     const {arrows, indent, indentGuides, multiSelect} = this;
@@ -246,6 +276,8 @@ export class VscodeList extends VscElement {
           firstChild.active = true;
         }
       }
+
+      this._highlightGuides();
     });
   };
 
