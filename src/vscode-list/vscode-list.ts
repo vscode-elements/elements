@@ -279,8 +279,32 @@ export class VscodeList extends VscElement {
     }
   }
 
-  private _handleArrowLeftPress() {
+  private _handleArrowLeftPress(ev: KeyboardEvent) {
+    if (ev.ctrlKey) {
+      this.collapseAll();
+      return;
+    }
 
+    if (!this._listContextState.focusedItem) {
+      return;
+    }
+
+    const {focusedItem} = this._listContextState;
+    const parent = getParentItem(focusedItem);
+
+    if (!focusedItem.branch) {
+      if (parent && parent.branch) {
+        this._focusItem(parent);
+      }
+    } else {
+      if (focusedItem.open) {
+        focusedItem.open = false;
+      } else {
+        if (parent && parent.branch) {
+          this._focusItem(parent);
+        }
+      }
+    }
   }
 
   private _handleArrowDownPress() {
@@ -336,11 +360,11 @@ export class VscodeList extends VscElement {
         this._handleArrowDownPress();
         break;
       case 'ArrowLeft':
-        this._handleArrowLeftPress();
+        this._handleArrowLeftPress(ev);
         break;
       case 'ArrowRight':
         this._handleArrowRightPress();
-        break ;
+        break;
       case 'ArrowUp':
         this._handleArrowUpPress();
         break;
