@@ -112,6 +112,10 @@ export class VscodeList extends VscElement {
 
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
     this._updateConfigContext(changedProperties);
+
+    if (changedProperties.has('multiSelect')) {
+      this.ariaMultiSelectable = this.multiSelect ? 'true' : 'false';
+    }
   }
 
   //#endregion
