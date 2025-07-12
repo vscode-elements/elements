@@ -133,10 +133,12 @@ export class VscodeList extends VscElement {
   //#region private methods
 
   private _highlightGuides() {
-    const {activeItem, highlightedItems} = this._listContextState;
+    const {activeItem, highlightedItems, selectedItems} =
+      this._listContextState;
+
+    highlightedItems.forEach((i) => (i.highlightedGuides = false));
 
     if (activeItem) {
-      highlightedItems.forEach((i) => (i.highlightedGuides = false));
       this._listContextState.highlightedItems = [];
 
       if (activeItem.branch && activeItem.open) {
@@ -145,11 +147,27 @@ export class VscodeList extends VscElement {
       } else {
         const parent = getParentItem(activeItem);
 
-        if (parent) {
+        if (parent && parent.branch) {
           parent.highlightedGuides = true;
           this._listContextState.highlightedItems.push(parent);
         }
       }
+    }
+
+    if (selectedItems) {
+      selectedItems.forEach((item) => {
+        if (item.branch && item.open) {
+          item.highlightedGuides = true;
+          this._listContextState.highlightedItems.push(item);
+        } else {
+          const parent = getParentItem(item);
+
+          if (parent && parent.branch) {
+            parent.highlightedGuides = true;
+            this._listContextState.highlightedItems.push(item);
+          }
+        }
+      });
     }
   }
 
