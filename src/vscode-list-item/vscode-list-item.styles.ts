@@ -102,7 +102,7 @@ const styles: CSSResultGroup = [
       z-index: 1;
     }
 
-    .children.guides.active-guides:before {
+    .children.guides.highlighted-guides:before {
       background-color: var(--vscode-tree-indentGuidesStroke);
     }
 
