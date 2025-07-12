@@ -118,6 +118,26 @@ export class VscodeList extends VscElement {
 
   //#region public methods
 
+  expandAll() {
+    const children = this.querySelectorAll<VscodeListItem>('vscode-list-item');
+
+    children.forEach((item) => {
+      if (item.branch) {
+        item.open = true;
+      }
+    });
+  }
+
+  collapseAll() {
+    const children = this.querySelectorAll<VscodeListItem>('vscode-list-item');
+
+    children.forEach((item) => {
+      if (item.branch) {
+        item.open = false;
+      }
+    });
+  }
+
   /**
    * @internal
    * Updates `hasBranchItem` property in the context state in order to removing
