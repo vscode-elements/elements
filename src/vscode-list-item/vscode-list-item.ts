@@ -63,9 +63,10 @@ export class VscodeListItem extends VscElement {
   level = 0;
 
   @property({type: Boolean, reflect: true})
-  set selected(val: boolean) {
-    this._selected = val;
+  set selected(selected: boolean) {
+    this._selected = selected;
     this._listContextState.selectedItems.add(this);
+    this.ariaSelected = selected ? "true" : "false";
   }
   get selected(): boolean {
     return this._selected;
