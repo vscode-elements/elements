@@ -114,19 +114,17 @@ export class VscodeListItem extends VscElement {
 
   //#region lifecycle methods
 
+  constructor() {
+    super();
+
+    this.addEventListener('focus', this._handleComponentFocus);
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
     this._mainSlotChange();
     this.role = 'treeitem';
     this.ariaDisabled = 'false';
-
-    this.addEventListener('focus', this._handleComponentFocus);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener('focus', this._handleComponentFocus);
   }
 
   protected override willUpdate(changedProperties: PropertyValues): void {
