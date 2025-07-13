@@ -58,7 +58,7 @@ describe('vscode-list', () => {
     await sendKeys({press: 'ArrowDown'});
     await el.updateComplete;
 
-    const items = el.querySelectorAll<VscodeListItem>('vscode-list-item')!
+    const items = el.querySelectorAll<VscodeListItem>('vscode-list-item')!;
 
     expect(items[0].tabIndex).to.eq(-1);
     expect(items[0].active).to.be.false;
@@ -71,7 +71,11 @@ describe('vscode-list', () => {
   it('opens and selects branch item with Enter key press');
   it('opens and selects branch item with click on it');
   it('selecting multiple items upwards with the mouse and the Shift key');
-  it('expands selection of multiple items upwards with the mouse and the Shift key');
+  it(
+    'expands selection of multiple items upwards with the mouse and the Shift key'
+  );
   it('selecting multiple items downwards with the mouse and the Shift key');
-  it('expands selection of multiple items downwards with the mouse and the Shift key');
+  it(
+    'expands selection of multiple items downwards with the mouse and the Shift key'
+  );
 });
