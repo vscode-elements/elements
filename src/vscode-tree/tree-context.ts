@@ -23,7 +23,7 @@ export interface TreeContext {
 export const treeContext = createContext<TreeContext>('vscode-list');
 
 export interface ConfigContext {
-  readonly arrows: boolean;
+  readonly hideArrows: boolean;
   readonly expandMode: ExpandMode;
   readonly indent: number;
   readonly indentGuides: IndentGuideDisplay;
