@@ -30,6 +30,15 @@ export const EXPAND_MODE = {
 
 export type ExpandMode = (typeof EXPAND_MODE)[keyof typeof EXPAND_MODE];
 
+export const INDENT_GUIDE_DISPLAY = {
+  NONE: 'none',
+  ON_HOVER: 'onHover',
+  ALWAYS: 'always',
+} as const;
+
+export type IndentGuideDisplay =
+  (typeof INDENT_GUIDE_DISPLAY)[keyof typeof INDENT_GUIDE_DISPLAY];
+
 type ListenedKey =
   | 'ArrowDown'
   | 'ArrowUp'
@@ -52,9 +61,12 @@ const listenedKeys: ListenedKey[] = [
 ];
 const DEFAULT_ARROWS = false;
 const DEFAULT_INDENT = 8;
-const DEFAULT_INDENT_GUIDES = false;
 const DEFAULT_MULTI_SELECT = false;
 const DEFAULT_EXPAND_MODE = EXPAND_MODE.SINGLE_CLICK;
+const DEFAULT_INDENT_GUIDE_DISPLAY: IndentGuideDisplay =
+  INDENT_GUIDE_DISPLAY.ON_HOVER;
+const CSS_PROP_DEFAULT_GUIDE_DISPLAY = '--default-guide-display';
+const CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY = '--highlighted-guide-display';
 
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
@@ -71,8 +83,8 @@ export class VscodeTree extends VscElement {
   @property({type: Number, reflect: true})
   indent = DEFAULT_INDENT;
 
-  @property({type: Boolean, attribute: 'indent-guides', reflect: true})
-  indentGuides = DEFAULT_INDENT_GUIDES;
+  @property({type: String, attribute: 'indent-guides'})
+  indentGuides: IndentGuideDisplay = DEFAULT_INDENT_GUIDE_DISPLAY;
 
   @property({type: Boolean, reflect: true, attribute: 'multi-select'})
   multiSelect = DEFAULT_MULTI_SELECT;
@@ -106,7 +118,7 @@ export class VscodeTree extends VscElement {
     arrows: DEFAULT_ARROWS,
     expandMode: DEFAULT_EXPAND_MODE,
     indent: DEFAULT_INDENT,
-    indentGuides: DEFAULT_INDENT_GUIDES,
+    indentGuides: DEFAULT_INDENT_GUIDE_DISPLAY,
     multiSelect: DEFAULT_MULTI_SELECT,
   };
 
@@ -120,6 +132,8 @@ export class VscodeTree extends VscElement {
 
     this.addEventListener('keyup', this._handleComponentKeyUp);
     this.addEventListener('keydown', this._handleComponentKeyDown);
+    this.addEventListener('mouseenter', this._handleComponentMouseEnter);
+    this.addEventListener('mouseleave', this._handleComponentMouseLeave);
   }
 
   override connectedCallback(): void {
@@ -133,6 +147,10 @@ export class VscodeTree extends VscElement {
 
     if (changedProperties.has('multiSelect')) {
       this.ariaMultiSelectable = this.multiSelect ? 'true' : 'false';
+    }
+
+    if (changedProperties.has('indentGuides')) {
+      this._updateIndentGuidesDefaultVisibility();
     }
   }
 
@@ -283,6 +301,33 @@ export class VscodeTree extends VscElement {
     }
   }
 
+  private _updateIndentGuidesDefaultVisibility() {
+    const isDefaultVisible = this.indentGuides === 'always';
+    const isHighlightedVisible =
+      this.indentGuides === 'always' || this.indentGuides === 'onHover';
+    this.style.setProperty(
+      CSS_PROP_DEFAULT_GUIDE_DISPLAY,
+      isDefaultVisible ? 'block' : 'none'
+    );
+    this.style.setProperty(
+      CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY,
+      isHighlightedVisible ? 'block' : 'none'
+    );
+  }
+
+  private _updateIndentGuidesHoverVisibility() {
+    const isGuidesVisible =
+      this.indentGuides === 'always' || this.indentGuides === 'onHover';
+    this.style.setProperty(
+      CSS_PROP_DEFAULT_GUIDE_DISPLAY,
+      isGuidesVisible ? 'block' : 'none'
+    );
+    this.style.setProperty(
+      CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY,
+      isGuidesVisible ? 'block' : 'none'
+    );
+  }
+
   //#endregion
 
   //#region event handlers
@@ -404,6 +449,14 @@ export class VscodeTree extends VscElement {
     if (ev.key === 'Shift') {
       this._treeContextState.isShiftPressed = false;
     }
+  };
+
+  private _handleComponentMouseEnter = () => {
+    this._updateIndentGuidesHoverVisibility();
+  };
+
+  private _handleComponentMouseLeave = () => {
+    this._updateIndentGuidesDefaultVisibility();
   };
 
   private _handleSlotChange = () => {

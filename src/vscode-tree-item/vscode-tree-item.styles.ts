@@ -93,10 +93,10 @@ const styles: CSSResultGroup = [
       position: relative;
     }
 
-    .children.guides:before {
+    .children.guide:before {
       background-color: var(--vscode-tree-inactiveIndentGuidesStroke);
       content: '';
-      display: block;
+      display: none;
       height: 100%;
       left: var(--indentation-guide-left);
       pointer-events: none;
@@ -105,7 +105,12 @@ const styles: CSSResultGroup = [
       z-index: 1;
     }
 
-    .children.guides.highlighted-guides:before {
+    .children.guide.default-guide:before {
+      display: var(--default-guide-display);
+    }
+
+    .children.guide.highlighted-guide:before {
+      display: var(--highlighted-guide-display);
       background-color: var(--vscode-tree-indentGuidesStroke);
     }
 
