@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en, lorem, lorem-ipsum",
+  "words": [
+    "activedescendant",
+    "csspart",
+    "cssprop",
+    "haspopup",
+    "labelledby",
+    "listbox",
+    "multiselectable",
+    "nextmajor",
+    "radiogroup",
+    "rgba",
+    "rowgroup",
+    "slotchange",
+    "unfocusable",
+    "wireit"
+  ]
+}
