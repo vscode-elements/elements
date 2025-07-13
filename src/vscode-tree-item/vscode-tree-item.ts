@@ -371,8 +371,9 @@ export class VscodeTreeItem extends VscElement {
 
     const childrenClasses = {
       children: true,
-      guides: this.branch && indentGuides,
-      'highlighted-guides': this.highlightedGuides,
+      guide: indentGuides !== 'none',
+      'default-guide': indentGuides !== 'none',
+      'highlighted-guide': this.highlightedGuides,
     };
 
     return html` <div class="wrapper">
