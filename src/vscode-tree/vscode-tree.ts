@@ -59,7 +59,7 @@ const listenedKeys: ListenedKey[] = [
   'Escape',
   'Shift',
 ];
-const DEFAULT_ARROWS = false;
+const DEFAULT_HIDE_ARROWS = false;
 const DEFAULT_INDENT = 8;
 const DEFAULT_MULTI_SELECT = false;
 const DEFAULT_EXPAND_MODE = ExpandMode.singleClick;
@@ -74,7 +74,7 @@ export class VscodeTree extends VscElement {
   //#region properties
 
   @property({type: Boolean, reflect: true})
-  arrows = DEFAULT_ARROWS;
+  hideArrows = DEFAULT_HIDE_ARROWS;
 
   @property({type: String, attribute: 'expand-mode'})
   expandMode: ExpandMode = DEFAULT_EXPAND_MODE;
@@ -114,7 +114,7 @@ export class VscodeTree extends VscElement {
 
   @provide({context: configContext})
   private _configContext: ConfigContext = {
-    arrows: DEFAULT_ARROWS,
+    hideArrows: DEFAULT_HIDE_ARROWS,
     expandMode: DEFAULT_EXPAND_MODE,
     indent: DEFAULT_INDENT,
     indentGuides: DEFAULT_INDENT_GUIDE_DISPLAY,
@@ -239,10 +239,10 @@ export class VscodeTree extends VscElement {
   }
 
   private _updateConfigContext(changedProperties: PropertyValues) {
-    const {arrows, expandMode, indent, indentGuides, multiSelect} = this;
+    const {hideArrows, expandMode, indent, indentGuides, multiSelect} = this;
 
-    if (changedProperties.has('arrows')) {
-      this._configContext = {...this._configContext, arrows};
+    if (changedProperties.has('hideArrows')) {
+      this._configContext = {...this._configContext, hideArrows};
     }
 
     if (changedProperties.has('expandMode')) {

@@ -354,13 +354,13 @@ export class VscodeTreeItem extends VscElement {
   //#endregion
 
   override render(): TemplateResult {
-    const {arrows, indent, indentGuides} = this._configContext;
+    const {hideArrows, indent, indentGuides} = this._configContext;
     const {hasBranchItem} = this._treeContextState;
     let indentation = BASE_INDENT + this.level * indent;
-    const guideOffset = arrows ? 13 : 3;
+    const guideOffset = !hideArrows ? 13 : 3;
     const indentGuideX = BASE_INDENT + this.level * indent + guideOffset;
 
-    if (!this.branch && arrows && hasBranchItem) {
+    if (!this.branch && !hideArrows && hasBranchItem) {
       indentation += ARROW_CONTAINER_WIDTH;
     }
 
@@ -383,7 +383,7 @@ export class VscodeTreeItem extends VscElement {
         @dblclick=${this._handleDoubleClick}
         .style=${stylePropertyMap({paddingLeft: `${indentation}px`})}
       >
-        ${this.branch && arrows
+        ${this.branch && !hideArrows
           ? html`<div
               class=${classMap({
                 'arrow-container': true,
