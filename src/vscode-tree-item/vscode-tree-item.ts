@@ -16,7 +16,7 @@ import {
 } from '../vscode-tree/tree-context';
 import {initPathTrackerProps} from '../vscode-tree/helpers.js';
 import styles from './vscode-tree-item.styles.js';
-import {EXPAND_MODE} from '../vscode-tree/vscode-tree.js';
+import {ExpandMode, IndentGuides} from '../vscode-tree/vscode-tree.js';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -325,7 +325,7 @@ export class VscodeTreeItem extends VscElement {
       this._selectItem(isCtrlDown);
       this._treeContextState.emitSelectEvent?.();
 
-      if (this._configContext.expandMode === EXPAND_MODE.SINGLE_CLICK) {
+      if (this._configContext.expandMode === ExpandMode.singleClick) {
         if (this.branch && !(this._configContext.multiSelect && isCtrlDown)) {
           this.open = !this.open;
         }
@@ -344,7 +344,7 @@ export class VscodeTreeItem extends VscElement {
   }
 
   private _handleDoubleClick(ev: MouseEvent) {
-    if (this._configContext.expandMode === EXPAND_MODE.DOUBLE_CLICK) {
+    if (this._configContext.expandMode === ExpandMode.doubleClick) {
       if (this.branch && !(this._configContext.multiSelect && ev.ctrlKey)) {
         this.open = !this.open;
       }
@@ -371,8 +371,8 @@ export class VscodeTreeItem extends VscElement {
 
     const childrenClasses = {
       children: true,
-      guide: indentGuides !== 'none',
-      'default-guide': indentGuides !== 'none',
+      guide: indentGuides !== IndentGuides.none,
+      'default-guide': indentGuides !== IndentGuides.none,
       'highlighted-guide': this.highlightedGuides,
     };
 
