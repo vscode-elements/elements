@@ -311,8 +311,10 @@ export class VscodeListItem extends VscElement {
 
     if (isShiftDown && this._configContext.multiSelect) {
       this._selectRange();
+      this._listContextState.emitSelectEvent?.();
     } else {
       this._selectItem(isCtrlDown);
+      this._listContextState.emitSelectEvent?.();
 
       if (this._configContext.expandMode === EXPAND_MODE.SINGLE_CLICK) {
         if (this.branch && !(this._configContext.multiSelect && isCtrlDown)) {

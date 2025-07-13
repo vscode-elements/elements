@@ -21,6 +21,8 @@ import {
   initPathTrackerProps,
 } from './helpers.js';
 
+export type VscListSelectEvent = CustomEvent<{selectedItems: VscodeListItem[]}>;
+
 export const EXPAND_MODE = {
   SINGLE_CLICK: 'singleClick',
   DOUBLE_CLICK: 'doubleClick',
@@ -93,6 +95,9 @@ export class VscodeList extends VscElement {
     highlightedItems: [],
     highlightGuides: () => {
       this._highlightGuides();
+    },
+    emitSelectEvent: () => {
+      this._emitSelectEvent();
     },
   };
 
@@ -168,6 +173,14 @@ export class VscodeList extends VscElement {
   //#endregion
 
   //#region private methods
+
+  private _emitSelectEvent() {
+    const ev = new CustomEvent('vsc-list-select', {
+      detail: Array.from(this._listContextState.selectedItems),
+    });
+
+    this.dispatchEvent(ev);
+  }
 
   private _highlightGuides() {
     const {activeItem, highlightedItems, selectedItems} =
@@ -249,6 +262,7 @@ export class VscodeList extends VscElement {
 
         if (this._listContextState.isShiftPressed && this.multiSelect) {
           item.selected = !item.selected;
+          this._emitSelectEvent();
         }
       }
     }
@@ -263,6 +277,7 @@ export class VscodeList extends VscElement {
 
         if (this._listContextState.isShiftPressed && this.multiSelect) {
           item.selected = !item.selected;
+          this._emitSelectEvent();
         }
       }
     }
@@ -341,6 +356,7 @@ export class VscodeList extends VscElement {
       );
 
       focusedItem.selected = true;
+      this._emitSelectEvent();
 
       if (focusedItem.branch) {
         focusedItem.open = !focusedItem.open;
@@ -421,5 +437,9 @@ export class VscodeList extends VscElement {
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-list': VscodeList;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-list-select': VscListSelectEvent;
   }
 }

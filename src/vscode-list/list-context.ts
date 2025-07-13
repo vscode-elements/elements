@@ -17,6 +17,7 @@ export interface ListContext {
   activeItem: VscodeListItem | null;
   highlightedItems: VscodeListItem[];
   highlightGuides?: () => void;
+  emitSelectEvent?: () => void;
 }
 
 export const listContext = createContext<ListContext>('vscode-list');
