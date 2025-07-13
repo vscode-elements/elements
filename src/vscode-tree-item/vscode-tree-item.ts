@@ -11,13 +11,13 @@ import {stylePropertyMap} from '../includes/style-property-map';
 import {
   ConfigContext,
   configContext,
-  listContext,
-  type ListContext,
-} from '../vscode-list/list-context';
-import {initPathTrackerProps} from '../vscode-list/helpers';
-import styles from './vscode-list-item.styles';
+  treeContext,
+  type TreeContext,
+} from '../vscode-tree/tree-context';
+import {initPathTrackerProps} from '../vscode-tree/helpers';
+import styles from './vscode-tree-item.styles';
 import {getParentItem} from './helpers';
-import {EXPAND_MODE} from '../vscode-list/vscode-list';
+import {EXPAND_MODE} from '../vscode-tree/vscode-tree';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -35,8 +35,8 @@ const arrowIcon = html`<svg
   />
 </svg>`;
 
-@customElement('vscode-list-item')
-export class VscodeListItem extends VscElement {
+@customElement('vscode-tree-item')
+export class VscodeTreeItem extends VscElement {
   static override styles = styles;
 
   //#region properties
@@ -66,7 +66,7 @@ export class VscodeListItem extends VscElement {
   @property({type: Boolean, reflect: true})
   set selected(selected: boolean) {
     this._selected = selected;
-    this._listContextState.selectedItems.add(this);
+    this._treeContextState.selectedItems.add(this);
     this.ariaSelected = selected ? 'true' : 'false';
   }
   get selected(): boolean {
@@ -87,8 +87,8 @@ export class VscodeListItem extends VscElement {
 
   private _path: number[] = [];
 
-  @consume({context: listContext, subscribe: true})
-  private _listContextState: ListContext = {
+  @consume({context: treeContext, subscribe: true})
+  private _treeContextState: TreeContext = {
     isShiftPressed: false,
     selectedItems: new Set(),
     allItems: null,
@@ -104,11 +104,11 @@ export class VscodeListItem extends VscElement {
   @consume({context: configContext, subscribe: true})
   private _configContext!: ConfigContext;
 
-  @queryAssignedElements({selector: 'vscode-list-item'})
-  private _initiallyAssignedListItems!: VscodeListItem[];
+  @queryAssignedElements({selector: 'vscode-tree-item'})
+  private _initiallyAssignedTreeItems!: VscodeTreeItem[];
 
-  @queryAssignedElements({selector: 'vscode-list-item', slot: 'children'})
-  private _childrenListItems!: VscodeListItem[];
+  @queryAssignedElements({selector: 'vscode-tree-item', slot: 'children'})
+  private _childrenTreeItems!: VscodeTreeItem[];
 
   //#endregion
 
@@ -150,7 +150,7 @@ export class VscodeListItem extends VscElement {
   }
 
   private _setHasActiveItemFlagOnParent(
-    childItem: VscodeListItem,
+    childItem: VscodeTreeItem,
     value: boolean
   ) {
     const parent = getParentItem(childItem);
@@ -162,20 +162,20 @@ export class VscodeListItem extends VscElement {
 
   private _toggleActiveState() {
     if (this.active) {
-      if (this._listContextState.activeItem) {
-        this._listContextState.activeItem.active = false;
+      if (this._treeContextState.activeItem) {
+        this._treeContextState.activeItem.active = false;
         this._setHasActiveItemFlagOnParent(
-          this._listContextState.activeItem,
+          this._treeContextState.activeItem,
           false
         );
       }
 
-      this._listContextState.activeItem = this;
+      this._treeContextState.activeItem = this;
       this._setHasActiveItemFlagOnParent(this, true);
       this.tabIndex = 0;
     } else {
-      if (this._listContextState.activeItem === this) {
-        this._listContextState.activeItem = null;
+      if (this._treeContextState.activeItem === this) {
+        this._treeContextState.activeItem = null;
         this._setHasActiveItemFlagOnParent(this, false);
       }
 
@@ -184,7 +184,7 @@ export class VscodeListItem extends VscElement {
   }
 
   private _selectItem(isCtrlDown: boolean) {
-    const {selectedItems} = this._listContextState;
+    const {selectedItems} = this._treeContextState;
     const {multiSelect} = this._configContext;
 
     if (multiSelect && isCtrlDown) {
@@ -204,25 +204,25 @@ export class VscodeListItem extends VscElement {
   }
 
   private _selectRange() {
-    const prevFocused = this._listContextState.prevFocusedItem;
+    const prevFocused = this._treeContextState.prevFocusedItem;
 
     if (!prevFocused || prevFocused === this) {
       return;
     }
 
-    if (!this._listContextState.itemListUpToDate) {
-      this._listContextState.allItems =
-        this._listContextState.rootElement!.querySelectorAll(
-          'vscode-list-item'
+    if (!this._treeContextState.itemListUpToDate) {
+      this._treeContextState.allItems =
+        this._treeContextState.rootElement!.querySelectorAll(
+          'vscode-tree-item'
         );
 
-      if (this._listContextState.allItems) {
-        this._listContextState.allItems.forEach((li, i) => {
+      if (this._treeContextState.allItems) {
+        this._treeContextState.allItems.forEach((li, i) => {
           li.dataset.score = i.toString();
         });
       }
 
-      this._listContextState.itemListUpToDate = true;
+      this._treeContextState.itemListUpToDate = true;
     }
 
     let from = +(prevFocused.dataset.score ?? -1);
@@ -232,8 +232,8 @@ export class VscodeListItem extends VscElement {
       [from, to] = [to, from];
     }
 
-    this._listContextState.selectedItems.forEach((li) => (li.selected = false));
-    this._listContextState.selectedItems.clear();
+    this._treeContextState.selectedItems.forEach((li) => (li.selected = false));
+    this._treeContextState.selectedItems.clear();
 
     this._selectItemsAndAllVisibleDescendants(from, to);
   }
@@ -242,12 +242,12 @@ export class VscodeListItem extends VscElement {
     let i = from;
 
     while (i <= to) {
-      if (this._listContextState.allItems) {
-        const item = this._listContextState.allItems[i];
+      if (this._treeContextState.allItems) {
+        const item = this._treeContextState.allItems[i];
 
         if (item.branch && !item.open) {
           item.selected = true;
-          const numChildren = item.querySelectorAll('vscode-list-item').length;
+          const numChildren = item.querySelectorAll('vscode-tree-item').length;
           i += numChildren;
         } else if (item.branch && item.open) {
           item.selected = true;
@@ -263,7 +263,7 @@ export class VscodeListItem extends VscElement {
   }
 
   private _mainSlotChange() {
-    this._initiallyAssignedListItems.forEach((li) => {
+    this._initiallyAssignedTreeItems.forEach((li) => {
       li.setAttribute('slot', 'children');
     });
   }
@@ -273,32 +273,32 @@ export class VscodeListItem extends VscElement {
   //#region event handlers
 
   private _handleChildrenSlotChange() {
-    initPathTrackerProps(this, this._childrenListItems);
+    initPathTrackerProps(this, this._childrenTreeItems);
 
-    if (this._listContextState.rootElement) {
-      this._listContextState.rootElement.updateHasBranchItemFlag();
+    if (this._treeContextState.rootElement) {
+      this._treeContextState.rootElement.updateHasBranchItemFlag();
     }
   }
 
   private _handleMainSlotChange = () => {
     this._mainSlotChange();
-    this._listContextState.itemListUpToDate = false;
+    this._treeContextState.itemListUpToDate = false;
   };
 
   private _handleComponentFocus = () => {
     if (
-      this._listContextState.focusedItem &&
-      this._listContextState.focusedItem !== this
+      this._treeContextState.focusedItem &&
+      this._treeContextState.focusedItem !== this
     ) {
-      if (!this._listContextState.isShiftPressed) {
-        this._listContextState.prevFocusedItem =
-          this._listContextState.focusedItem;
+      if (!this._treeContextState.isShiftPressed) {
+        this._treeContextState.prevFocusedItem =
+          this._treeContextState.focusedItem;
       }
 
-      this._listContextState.focusedItem = null;
+      this._treeContextState.focusedItem = null;
     }
 
-    this._listContextState.focusedItem = this;
+    this._treeContextState.focusedItem = this;
   };
 
   private _handleContentClick(ev: MouseEvent) {
@@ -309,10 +309,10 @@ export class VscodeListItem extends VscElement {
 
     if (isShiftDown && this._configContext.multiSelect) {
       this._selectRange();
-      this._listContextState.emitSelectEvent?.();
+      this._treeContextState.emitSelectEvent?.();
     } else {
       this._selectItem(isCtrlDown);
-      this._listContextState.emitSelectEvent?.();
+      this._treeContextState.emitSelectEvent?.();
 
       if (this._configContext.expandMode === EXPAND_MODE.SINGLE_CLICK) {
         if (this.branch && !(this._configContext.multiSelect && isCtrlDown)) {
@@ -324,11 +324,11 @@ export class VscodeListItem extends VscElement {
     this.active = true;
 
     if (!isShiftDown) {
-      this._listContextState.prevFocusedItem = this;
+      this._treeContextState.prevFocusedItem = this;
     }
 
     this.updateComplete.then(() => {
-      this._listContextState.highlightGuides?.();
+      this._treeContextState.highlightGuides?.();
     });
   }
 
@@ -344,7 +344,7 @@ export class VscodeListItem extends VscElement {
 
   override render(): TemplateResult {
     const {arrows, indent, indentGuides} = this._configContext;
-    const {hasBranchItem} = this._listContextState;
+    const {hasBranchItem} = this._treeContextState;
     let indentation = BASE_INDENT + this.level * indent;
     const guideOffset = arrows ? 13 : 3;
     const indentGuideX = BASE_INDENT + this.level * indent + guideOffset;
@@ -424,6 +424,6 @@ export class VscodeListItem extends VscElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vscode-list-item': VscodeListItem;
+    'vscode-tree-item': VscodeTreeItem;
   }
 }

@@ -1,20 +1,20 @@
-import {VscodeListItem} from '../vscode-list-item';
-import type {VscodeList} from './vscode-list';
+import {VscodeTreeItem} from '../vscode-tree-item';
+import type {VscodeTree} from './vscode-tree';
 
-const isListItem = (item: HTMLElement): item is VscodeListItem =>
+const isListItem = (item: HTMLElement): item is VscodeTreeItem =>
   item.tagName.toUpperCase() === 'VSCODE-LIST-ITEM';
 
-const isListRoot = (item: HTMLElement): item is VscodeList =>
+const isListRoot = (item: HTMLElement): item is VscodeTree =>
   item.tagName.toUpperCase() === 'VSCODE-LIST';
 
 export const initPathTrackerProps = (
-  parentElement: VscodeList | VscodeListItem,
-  items: VscodeListItem[]
+  parentElement: VscodeTree | VscodeTreeItem,
+  items: VscodeTreeItem[]
 ): void => {
   const numChildren = items.length;
   const parentElementLevel = isListRoot(parentElement)
     ? -1
-    : (parentElement as VscodeListItem).level;
+    : (parentElement as VscodeTreeItem).level;
 
   if ('branch' in parentElement) {
     parentElement.branch = numChildren > 0;
@@ -41,8 +41,8 @@ export const initPathTrackerProps = (
   });
 };
 
-export const findLastChildItem = (item: VscodeListItem): VscodeListItem => {
-  const children = item.querySelectorAll<VscodeListItem>(
+export const findLastChildItem = (item: VscodeTreeItem): VscodeTreeItem => {
+  const children = item.querySelectorAll<VscodeTreeItem>(
     ':scope > vscode-list-item'
   );
 
@@ -60,8 +60,8 @@ export const findLastChildItem = (item: VscodeListItem): VscodeListItem => {
 };
 
 export const findClosestParentHasNextSibling = (
-  item: VscodeListItem
-): VscodeListItem | null => {
+  item: VscodeTreeItem
+): VscodeTreeItem | null => {
   if (!item.parentElement) {
     return null;
   }
@@ -79,9 +79,9 @@ export const findClosestParentHasNextSibling = (
   }
 };
 
-export const findNextItem = (item: VscodeListItem): VscodeListItem | null => {
+export const findNextItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
   if (item.branch && item.open) {
-    return item.querySelector<VscodeListItem>('vscode-list-item');
+    return item.querySelector<VscodeTreeItem>('vscode-list-item');
   }
 
   const {parentElement} = item;
@@ -118,12 +118,12 @@ export const findNextItem = (item: VscodeListItem): VscodeListItem | null => {
 
   const nextElementIndex = Math.min(numSiblings - 1, index + 1);
 
-  return parentElement.querySelector<VscodeListItem>(
+  return parentElement.querySelector<VscodeTreeItem>(
     `vscode-list-item[level="${level}"][data-index="${nextElementIndex}"]`
   );
 };
 
-export const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
+export const findPrevItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
   const {parentElement} = item;
   const index = parseInt(item.dataset.index ?? '-1', 10);
 
@@ -131,13 +131,13 @@ export const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
     return null;
   }
 
-  const prevSibling = parentElement.querySelector<VscodeListItem>(
+  const prevSibling = parentElement.querySelector<VscodeTreeItem>(
     `:scope vscode-list-item[data-index="${index - 1}"]`
   );
 
   if (!prevSibling) {
     if (parentElement.tagName.toUpperCase() === 'VSCODE-LIST-ITEM') {
-      return parentElement as VscodeListItem;
+      return parentElement as VscodeTreeItem;
     }
   }
 
@@ -151,9 +151,9 @@ export const findPrevItem = (item: VscodeListItem): VscodeListItem | null => {
 };
 
 export const findAncestorOnSpecificLevel = (
-  item: VscodeListItem,
+  item: VscodeTreeItem,
   level: number
-): VscodeListItem | null => {
+): VscodeTreeItem | null => {
   if (
     !item.parentElement ||
     item.parentElement.tagName.toUpperCase() !== 'VSCODE-LIST-ITEM'
@@ -161,7 +161,7 @@ export const findAncestorOnSpecificLevel = (
     return null;
   }
 
-  const parent = item.parentElement as VscodeListItem;
+  const parent = item.parentElement as VscodeTreeItem;
   const itemLevel = +(item.dataset.level ?? '');
 
   if (itemLevel > level) {
@@ -175,7 +175,7 @@ export const findAncestorOnSpecificLevel = (
   return null;
 };
 
-export const selectItemAndAllVisibleDescendants = (item: VscodeListItem) => {
+export const selectItemAndAllVisibleDescendants = (item: VscodeTreeItem) => {
   if (!item) {
     return;
   }
@@ -183,7 +183,7 @@ export const selectItemAndAllVisibleDescendants = (item: VscodeListItem) => {
   item.selected = true;
 
   if (item.branch && item.open) {
-    const children = item.querySelectorAll<VscodeListItem>(
+    const children = item.querySelectorAll<VscodeTreeItem>(
       ':scope > vscode-list-item'
     );
 
@@ -193,7 +193,7 @@ export const selectItemAndAllVisibleDescendants = (item: VscodeListItem) => {
   }
 };
 
-export function getParentItem(childItem: VscodeListItem) {
+export function getParentItem(childItem: VscodeTreeItem) {
   if (!childItem.parentElement) {
     return null;
   }

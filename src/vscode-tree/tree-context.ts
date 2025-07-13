@@ -1,26 +1,26 @@
 import {createContext} from '@lit/context';
-import type {VscodeListItem} from '../vscode-list-item';
-import type {ExpandMode, VscodeList} from './vscode-list';
+import type {VscodeTreeItem} from '../vscode-tree-item';
+import type {ExpandMode, VscodeTree} from './vscode-tree';
 
-export interface ListContext {
+export interface TreeContext {
   isShiftPressed: boolean;
-  selectedItems: Set<VscodeListItem>;
-  allItems: NodeListOf<VscodeListItem> | null;
+  selectedItems: Set<VscodeTreeItem>;
+  allItems: NodeListOf<VscodeTreeItem> | null;
   itemListUpToDate: boolean;
-  focusedItem: VscodeListItem | null;
-  prevFocusedItem: VscodeListItem | null;
+  focusedItem: VscodeTreeItem | null;
+  prevFocusedItem: VscodeTreeItem | null;
   /** If arrows are visible and `List` component has not any branch item, the
    * extra padding should be removed in the leaf elements before the content
    */
   hasBranchItem: boolean;
-  rootElement: VscodeList | null;
-  activeItem: VscodeListItem | null;
-  highlightedItems: VscodeListItem[];
+  rootElement: VscodeTree | null;
+  activeItem: VscodeTreeItem | null;
+  highlightedItems: VscodeTreeItem[];
   highlightGuides?: () => void;
   emitSelectEvent?: () => void;
 }
 
-export const listContext = createContext<ListContext>('vscode-list');
+export const treeContext = createContext<TreeContext>('vscode-list');
 
 export interface ConfigContext {
   readonly arrows: boolean;
