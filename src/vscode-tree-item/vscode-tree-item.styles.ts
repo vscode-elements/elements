@@ -79,7 +79,7 @@ const styles: CSSResultGroup = [
     }
 
     :host([selected]) .arrow-container svg {
-      fill: var(--vscode-list-activeSelectionForeground);
+      fill: var(--vscode-list-activeSelectionIconForeground);
     }
 
     .icon-container {
