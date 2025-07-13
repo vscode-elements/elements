@@ -23,21 +23,21 @@ import {
 
 export type VscTreeSelectEvent = CustomEvent<{selectedItems: VscodeTreeItem[]}>;
 
-export const EXPAND_MODE = {
-  SINGLE_CLICK: 'singleClick',
-  DOUBLE_CLICK: 'doubleClick',
+export const ExpandMode = {
+  singleClick: 'singleClick',
+  doubleClick: 'doubleClick',
 } as const;
 
-export type ExpandMode = (typeof EXPAND_MODE)[keyof typeof EXPAND_MODE];
+export type ExpandMode = (typeof ExpandMode)[keyof typeof ExpandMode];
 
-export const INDENT_GUIDE_DISPLAY = {
-  NONE: 'none',
-  ON_HOVER: 'onHover',
-  ALWAYS: 'always',
+export const IndentGuides = {
+  none: 'none',
+  onHover: 'onHover',
+  always: 'always',
 } as const;
 
 export type IndentGuideDisplay =
-  (typeof INDENT_GUIDE_DISPLAY)[keyof typeof INDENT_GUIDE_DISPLAY];
+  (typeof IndentGuides)[keyof typeof IndentGuides];
 
 type ListenedKey =
   | 'ArrowDown'
@@ -62,9 +62,8 @@ const listenedKeys: ListenedKey[] = [
 const DEFAULT_ARROWS = false;
 const DEFAULT_INDENT = 8;
 const DEFAULT_MULTI_SELECT = false;
-const DEFAULT_EXPAND_MODE = EXPAND_MODE.SINGLE_CLICK;
-const DEFAULT_INDENT_GUIDE_DISPLAY: IndentGuideDisplay =
-  INDENT_GUIDE_DISPLAY.ON_HOVER;
+const DEFAULT_EXPAND_MODE = ExpandMode.singleClick;
+const DEFAULT_INDENT_GUIDE_DISPLAY = IndentGuides.onHover;
 const CSS_PROP_DEFAULT_GUIDE_DISPLAY = '--default-guide-display';
 const CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY = '--highlighted-guide-display';
 
@@ -302,9 +301,10 @@ export class VscodeTree extends VscElement {
   }
 
   private _updateIndentGuidesDefaultVisibility() {
-    const isDefaultVisible = this.indentGuides === 'always';
+    const isDefaultVisible = this.indentGuides === IndentGuides.always;
     const isHighlightedVisible =
-      this.indentGuides === 'always' || this.indentGuides === 'onHover';
+      this.indentGuides === IndentGuides.always ||
+      this.indentGuides === IndentGuides.onHover;
     this.style.setProperty(
       CSS_PROP_DEFAULT_GUIDE_DISPLAY,
       isDefaultVisible ? 'block' : 'none'
@@ -317,7 +317,8 @@ export class VscodeTree extends VscElement {
 
   private _updateIndentGuidesHoverVisibility() {
     const isGuidesVisible =
-      this.indentGuides === 'always' || this.indentGuides === 'onHover';
+      this.indentGuides === IndentGuides.always ||
+      this.indentGuides === IndentGuides.onHover;
     this.style.setProperty(
       CSS_PROP_DEFAULT_GUIDE_DISPLAY,
       isGuidesVisible ? 'block' : 'none'
