@@ -24,13 +24,22 @@
   </head>
 
   <body>
-    <h1>Basic example</h1>
+    <h1>Expand/Collapse all</h1>
     <main>
       <vscode-demo>
-        <div style="background-color: var(--vscode-sideBar-background)">
-          <input type="text">
-          <vscode-list arrows indent="16" id="basic-example">
-            <vscode-list-item>
+        <p>
+          <button type="button" id="bt-expand">Expand all</button>
+          <button type="button" id="bt-collapse">Collapse all</button>
+        </p>
+        <div>
+          <vscode-tree
+            arrows
+            indent="16"
+            id="basic-example"
+            multi-select
+            indent-guides
+          >
+            <vscode-tree-item>
               <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
               <vscode-icon
                 name="folder-opened"
@@ -39,7 +48,7 @@
               <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
               lorem
             </vscode-list-item>
-            <vscode-list-item open>
+            <vscode-tree-item open>
               <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
               <vscode-icon
                 name="folder-opened"
@@ -47,7 +56,7 @@
               ></vscode-icon>
               <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
               ipsum
-              <vscode-list-item>
+              <vscode-tree-item>
                 <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                 <vscode-icon
                   name="folder-opened"
@@ -56,7 +65,7 @@
                 <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                 lorem
               </vscode-list-item>
-              <vscode-list-item>
+              <vscode-tree-item>
                 <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                 <vscode-icon
                   name="folder-opened"
@@ -65,7 +74,7 @@
                 <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                 ipsum
               </vscode-list-item>
-              <vscode-list-item>
+              <vscode-tree-item>
                 <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                 <vscode-icon
                   name="folder-opened"
@@ -73,7 +82,7 @@
                 ></vscode-icon>
                 <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                 dolor
-                <vscode-list-item>
+                <vscode-tree-item>
                   <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                   <vscode-icon
                     name="folder-opened"
@@ -82,7 +91,7 @@
                   <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                   lorem
                 </vscode-list-item>
-                <vscode-list-item>
+                <vscode-tree-item>
                   <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                   <vscode-icon
                     name="folder-opened"
@@ -90,7 +99,7 @@
                   ></vscode-icon>
                   <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                   ipsum
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -99,7 +108,7 @@
                     <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                     lorem
                   </vscode-list-item>
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -110,7 +119,7 @@
                   </vscode-list-item>
                 </vscode-list-item>
               </vscode-list-item>
-              <vscode-list-item open>
+              <vscode-tree-item open>
                 <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                 <vscode-icon
                   name="folder-opened"
@@ -118,7 +127,7 @@
                 ></vscode-icon>
                 <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                 dolor
-                <vscode-list-item>
+                <vscode-tree-item>
                   <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                   <vscode-icon
                     name="folder-opened"
@@ -127,7 +136,7 @@
                   <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                   lorem
                 </vscode-list-item>
-                <vscode-list-item>
+                <vscode-tree-item>
                   <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                   <vscode-icon
                     name="folder-opened"
@@ -135,7 +144,7 @@
                   ></vscode-icon>
                   <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                   ipsum
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -144,7 +153,7 @@
                     <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                     lorem
                   </vscode-list-item>
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -153,7 +162,7 @@
                     <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                     lorem
                   </vscode-list-item>
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -162,7 +171,7 @@
                     <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                     lorem
                   </vscode-list-item>
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -171,7 +180,7 @@
                     <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                     lorem
                   </vscode-list-item>
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -180,7 +189,7 @@
                     <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                     lorem
                   </vscode-list-item>
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -189,7 +198,7 @@
                     <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
                     lorem
                   </vscode-list-item>
-                  <vscode-list-item>
+                  <vscode-tree-item>
                     <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                     <vscode-icon
                       name="folder-opened"
@@ -200,7 +209,7 @@
                   </vscode-list-item>
                 </vscode-list-item>
               </vscode-list-item>
-              <vscode-list-item>
+              <vscode-tree-item>
                 <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
                 <vscode-icon
                   name="folder-opened"
@@ -210,7 +219,7 @@
                 lorem
               </vscode-list-item>
             </vscode-list-item>
-            <vscode-list-item active>
+            <vscode-tree-item active>
               <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
               <vscode-icon
                 name="folder-opened"
@@ -220,16 +229,17 @@
               dolor
             </vscode-list-item>
           </vscode-list>
-          <input type="text">
-          <button type="button" id="bt-set-active">Set active</button>
           <script type="module">
-            const bt = document.querySelector('#bt-set-active');
-            bt.addEventListener('click', () => {
-              const li = document.querySelector('[data-path="1.1"]');
-              li.active = true;
-              li.updateComplete.then(() => {
-                li.focus();
-              });
+            const btExpand = document.querySelector('#bt-expand');
+            const btCollapse = document.querySelector('#bt-collapse');
+            const tree = document.querySelector('vscode-list');
+
+            btExpand.addEventListener('click', () => {
+              tree.expandAll();
+            });
+
+            btCollapse.addEventListener('click', () => {
+              tree.collapseAll();
             });
           </script>
         </div>
