@@ -5,13 +5,13 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      --vsc-list-item-arrow-display: none;
+      --vsc-tree-item-arrow-display: none;
 
       display: block;
     }
 
     :host([arrows]) {
-      --vsc-list-item-arrow-display: flex;
+      --vsc-tree-item-arrow-display: flex;
     }
   `,
 ];

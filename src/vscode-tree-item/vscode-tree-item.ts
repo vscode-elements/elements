@@ -14,10 +14,9 @@ import {
   treeContext,
   type TreeContext,
 } from '../vscode-tree/tree-context';
-import {initPathTrackerProps} from '../vscode-tree/helpers';
-import styles from './vscode-tree-item.styles';
-import {getParentItem} from './helpers';
-import {EXPAND_MODE} from '../vscode-tree/vscode-tree';
+import {initPathTrackerProps} from '../vscode-tree/helpers.js';
+import styles from './vscode-tree-item.styles.js';
+import {EXPAND_MODE} from '../vscode-tree/vscode-tree.js';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
@@ -34,6 +33,18 @@ const arrowIcon = html`<svg
     d="M10.072 8.024L5.715 3.667l.618-.62L11 7.716v.618L6.333 13l-.618-.619 4.357-4.357z"
   />
 </svg>`;
+
+function getParentItem(childItem: VscodeTreeItem) {
+  if (!childItem.parentElement) {
+    return null;
+  }
+
+  if (!(childItem.parentElement instanceof VscodeTreeItem)) {
+    return null;
+  }
+
+  return childItem.parentElement;
+}
 
 @customElement('vscode-tree-item')
 export class VscodeTreeItem extends VscElement {

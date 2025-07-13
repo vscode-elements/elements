@@ -1,18 +1,18 @@
 import {VscodeTreeItem} from '../vscode-tree-item';
 import type {VscodeTree} from './vscode-tree';
 
-const isListItem = (item: HTMLElement): item is VscodeTreeItem =>
-  item.tagName.toUpperCase() === 'VSCODE-LIST-ITEM';
+const isTreeItem = (item: HTMLElement): item is VscodeTreeItem =>
+  item.tagName.toLowerCase() === 'vscode-tree-item';
 
-const isListRoot = (item: HTMLElement): item is VscodeTree =>
-  item.tagName.toUpperCase() === 'VSCODE-LIST';
+const isTreeRoot = (item: HTMLElement): item is VscodeTree =>
+  item.tagName.toLowerCase() === 'vscode-tree';
 
 export const initPathTrackerProps = (
   parentElement: VscodeTree | VscodeTreeItem,
   items: VscodeTreeItem[]
 ): void => {
   const numChildren = items.length;
-  const parentElementLevel = isListRoot(parentElement)
+  const parentElementLevel = isTreeRoot(parentElement)
     ? -1
     : (parentElement as VscodeTreeItem).level;
 
@@ -43,7 +43,7 @@ export const initPathTrackerProps = (
 
 export const findLastChildItem = (item: VscodeTreeItem): VscodeTreeItem => {
   const children = item.querySelectorAll<VscodeTreeItem>(
-    ':scope > vscode-list-item'
+    ':scope > vscode-tree-item'
   );
 
   if (children.length < 1) {
@@ -66,7 +66,7 @@ export const findClosestParentHasNextSibling = (
     return null;
   }
 
-  if (!isListItem(item.parentElement)) {
+  if (!isTreeItem(item.parentElement)) {
     return null;
   }
 
@@ -81,7 +81,7 @@ export const findClosestParentHasNextSibling = (
 
 export const findNextItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
   if (item.branch && item.open) {
-    return item.querySelector<VscodeTreeItem>('vscode-list-item');
+    return item.querySelector<VscodeTreeItem>('vscode-tree-item');
   }
 
   const {parentElement} = item;
@@ -108,7 +108,7 @@ export const findNextItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
 
       return (
         closestParent.parentElement?.querySelector(
-          `vscode-list-item[level="${cpLevel}"][data-index="${cpIndex}"]`
+          `vscode-tree-item[level="${cpLevel}"][data-index="${cpIndex}"]`
         ) ?? null
       );
     } else {
@@ -119,7 +119,7 @@ export const findNextItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
   const nextElementIndex = Math.min(numSiblings - 1, index + 1);
 
   return parentElement.querySelector<VscodeTreeItem>(
-    `vscode-list-item[level="${level}"][data-index="${nextElementIndex}"]`
+    `vscode-tree-item[level="${level}"][data-index="${nextElementIndex}"]`
   );
 };
 
@@ -132,11 +132,11 @@ export const findPrevItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
   }
 
   const prevSibling = parentElement.querySelector<VscodeTreeItem>(
-    `:scope vscode-list-item[data-index="${index - 1}"]`
+    `:scope vscode-tree-item[data-index="${index - 1}"]`
   );
 
   if (!prevSibling) {
-    if (parentElement.tagName.toUpperCase() === 'VSCODE-LIST-ITEM') {
+    if (parentElement.tagName.toLowerCase() === 'vscode-tree-item') {
       return parentElement as VscodeTreeItem;
     }
   }
@@ -156,7 +156,7 @@ export const findAncestorOnSpecificLevel = (
 ): VscodeTreeItem | null => {
   if (
     !item.parentElement ||
-    item.parentElement.tagName.toUpperCase() !== 'VSCODE-LIST-ITEM'
+    item.parentElement.tagName.toLowerCase() !== 'vscode-tree-item'
   ) {
     return null;
   }
@@ -184,7 +184,7 @@ export const selectItemAndAllVisibleDescendants = (item: VscodeTreeItem) => {
 
   if (item.branch && item.open) {
     const children = item.querySelectorAll<VscodeTreeItem>(
-      ':scope > vscode-list-item'
+      ':scope > vscode-tree-item'
     );
 
     children.forEach((c) => {
@@ -198,7 +198,7 @@ export function getParentItem(childItem: VscodeTreeItem) {
     return null;
   }
 
-  if (!isListItem(childItem.parentElement)) {
+  if (!isTreeItem(childItem.parentElement)) {
     return null;
   }
 
