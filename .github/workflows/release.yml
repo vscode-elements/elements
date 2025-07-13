@@ -4,22 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       releaseType:
-        description: 'Release Type'
+        description: "Release Type"
         required: true
         type: choice
-        default: 'patch'
+        default: "patch"
         options:
           - patch
           - minor
           - major
       releaseChannel:
-        description: 'Release Channel'
+        description: "Release Channel"
         required: true
         type: choice
-        default: pre
+        default: next
         options:
           - stable
-          - pre
+          - next
+          - nextmajor
 
 jobs:
   release:
@@ -47,22 +48,22 @@ jobs:
       - name: Setup Node version
         uses: actions/setup-node@v4
         with:
-          scope: '@vscode-elements'
+          scope: "@vscode-elements"
           node-version: 22
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
           cache-dependency-path: |
             package-lock.json
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Bump version (Pre)
+      - name: Bump version (Next)
         run: |
           RELEASE_VERSION=$(npx semver -i prerelease --preid=pre $CURRENT_VERSION)
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
           npm version $RELEASE_VERSION --git-tag-version=false
-        if: ${{ github.event.inputs.releaseChannel == 'pre' }}
+        if: ${{ github.event.inputs.releaseChannel == 'next' || github.event.inputs.releaseChannel == 'nextmajor' }}
 
       - name: Bump version (Stable)
         run: |
@@ -100,11 +101,17 @@ jobs:
           export GIT_TAG=$(git describe --tags --abbrev=0)
           echo "GIT_TAG=$GIT_TAG" >> $GITHUB_ENV
 
-      - name: Publish to Npmjs.com (Pre)
+      - name: Publish to Npmjs.com (Next)
         run: npm publish --access=public --tag=next vscode-elements-elements-${{ env.RELEASE_VERSION }}.tgz
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
-        if: ${{ github.event.inputs.releaseChannel == 'pre' }}
+        if: ${{ github.event.inputs.releaseChannel == 'next' }}
+
+      - name: Publish to Npmjs.com (Next Major)
+        run: npm publish --access=public --tag=nextmajor vscode-elements-elements-${{ env.RELEASE_VERSION }}.tgz
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
+        if: ${{ github.event.inputs.releaseChannel == 'nextmajor' }}
 
       - name: Publish to Npmjs.com (Stable)
         run: npm publish --access=public vscode-elements-elements-${{ env.RELEASE_VERSION }}.tgz
@@ -112,11 +119,11 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
 
-      - name: Github Release (Pre)
+      - name: Github Release (Next)
         uses: ncipollo/release-action@v1
-        if: ${{ github.event.inputs.releaseChannel == 'pre' }}
+        if: ${{ github.event.inputs.releaseChannel == 'next' || github.event.inputs.releaseChannel == 'nextmajor' }}
         with:
-          artifacts: './vscode-elements-elements-*'
+          artifacts: "./vscode-elements-elements-*"
           prerelease: true
           draft: true
           tag: ${{ env.GIT_TAG }}
@@ -126,7 +133,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event.inputs.releaseChannel == 'stable' }}
         with:
-          artifacts: './vscode-elements-elements-*'
+          artifacts: "./vscode-elements-elements-*"
           prerelease: false
           draft: true
           tag: ${{ env.GIT_TAG }}
