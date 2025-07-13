@@ -1,6 +1,6 @@
 import {createContext} from '@lit/context';
 import type {VscodeTreeItem} from '../vscode-tree-item';
-import type {ExpandMode, VscodeTree} from './vscode-tree';
+import type {ExpandMode, IndentGuideDisplay, VscodeTree} from './vscode-tree';
 
 export interface TreeContext {
   isShiftPressed: boolean;
@@ -26,7 +26,7 @@ export interface ConfigContext {
   readonly arrows: boolean;
   readonly expandMode: ExpandMode;
   readonly indent: number;
-  readonly indentGuides: boolean;
+  readonly indentGuides: IndentGuideDisplay;
   readonly multiSelect: boolean;
 }
 
