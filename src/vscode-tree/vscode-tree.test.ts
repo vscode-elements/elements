@@ -4,23 +4,23 @@ import '../vscode-tree-item/vscode-tree-item.js';
 import {VscodeTreeItem} from '../vscode-tree-item/vscode-tree-item.js';
 import {VscodeTree} from './index.js';
 
-describe('vscode-list', () => {
+describe('vscode-tree', () => {
   it('is defined', () => {
-    const el = document.createElement('vscode-list');
+    const el = document.createElement('vscode-tree');
     expect(el).to.instanceOf(VscodeTree);
   });
 
   it('focuses first item by default', async () => {
     const el = await fixture<VscodeTree>(html`
-      <vscode-list>
-        <vscode-list-item>Item 1</vscode-list-item>
-        <vscode-list-item>Item 2</vscode-list-item>
-      </vscode-list>
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>
     `);
     const firstItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-list-item')[0]!;
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
     const secondItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-list-item')[1]!;
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
 
     expect(firstItem.tabIndex).to.eq(0);
     expect(firstItem.active).to.be.true;
@@ -30,15 +30,15 @@ describe('vscode-list', () => {
 
   it('focuses active item on load', async () => {
     const el = await fixture<VscodeTree>(html`
-      <vscode-list>
-        <vscode-list-item>Item 1</vscode-list-item>
-        <vscode-list-item active>Item 2</vscode-list-item>
-      </vscode-list>
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item active>Item 2</vscode-tree-item>
+      </vscode-tree>
     `);
     const firstItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-list-item')[0]!;
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
     const secondItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-list-item')[1]!;
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
 
     expect(firstItem.tabIndex).to.eq(-1);
     expect(firstItem.active).to.be.false;
@@ -48,17 +48,17 @@ describe('vscode-list', () => {
 
   it('focuses next item when arrow down key is pressed', async () => {
     const el = await fixture<VscodeTree>(html`
-      <vscode-list>
-        <vscode-list-item>Item 1</vscode-list-item>
-        <vscode-list-item>Item 2</vscode-list-item>
-      </vscode-list>
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>
     `);
 
-    el.querySelector<VscodeTreeItem>('vscode-list-item')?.focus();
+    el.querySelector<VscodeTreeItem>('vscode-tree-item')?.focus();
     await sendKeys({press: 'ArrowDown'});
     await el.updateComplete;
 
-    const items = el.querySelectorAll<VscodeTreeItem>('vscode-list-item')!;
+    const items = el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')!;
 
     expect(items[0].tabIndex).to.eq(-1);
     expect(items[0].active).to.be.false;

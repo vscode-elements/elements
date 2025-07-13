@@ -61,7 +61,7 @@ const styles: CSSResultGroup = [
 
     .arrow-container {
       align-items: center;
-      display: var(--vsc-list-item-arrow-display);
+      display: var(--vsc-tree-item-arrow-display);
       height: 22px;
       justify-content: center;
       padding-left: 8px;
@@ -153,11 +153,11 @@ const styles: CSSResultGroup = [
       margin-left: 4px;
     }
 
-    :host([branch]) ::slotted(vscode-list-item) {
+    :host([branch]) ::slotted(vscode-tree-item) {
       display: none;
     }
 
-    :host([branch][open]) ::slotted(vscode-list-item) {
+    :host([branch][open]) ::slotted(vscode-tree-item) {
       display: block;
     }
   `,
