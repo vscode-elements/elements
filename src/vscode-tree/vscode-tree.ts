@@ -67,26 +67,51 @@ const DEFAULT_INDENT_GUIDE_DISPLAY = IndentGuides.onHover;
 const CSS_PROP_DEFAULT_GUIDE_DISPLAY = '--default-guide-display';
 const CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY = '--highlighted-guide-display';
 
+/**
+ * @tag vscode-tree
+ *
+ * @prop {'singleClick' | 'doubleClick'} expandMode
+ */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
   static override styles = styles;
 
   //#region properties
 
+  /**
+   * Although arrows are always visible in the Tree component by default in VSCode, some icon sets
+   * (e.g., Material Icon Theme) allow disabling them in the file explorer view. This flag makes it
+   * possible to mimic that behavior.
+   */
   @property({type: Boolean, reflect: true})
-  hideArrows = DEFAULT_HIDE_ARROWS;
+  hideArrows = false;
 
+  /**
+   * Controls how tree folders are expanded when clicked. This property is designed to use
+   * the `workbench.tree.expandMode` setting.
+   */
   @property({type: String, attribute: 'expand-mode'})
-  expandMode: ExpandMode = DEFAULT_EXPAND_MODE;
+  expandMode: ExpandMode = 'singleClick';
 
+  /**
+   * Controls the indentation in pixels. This property is designed to use the
+   * `workbench.tree.indent` setting.
+   */
   @property({type: Number, reflect: true})
-  indent = DEFAULT_INDENT;
+  indent = 8;
 
+  /**
+   * Controls whether the tree should render indent guides. This property is
+   * designed to use the `workbench.tree.renderIndentGuides` setting.
+   */
   @property({type: String, attribute: 'indent-guides'})
-  indentGuides: IndentGuideDisplay = DEFAULT_INDENT_GUIDE_DISPLAY;
+  indentGuides: IndentGuideDisplay = 'onHover';
 
+  /**
+   * Allows selecting multiple items.
+   */
   @property({type: Boolean, reflect: true, attribute: 'multi-select'})
-  multiSelect = DEFAULT_MULTI_SELECT;
+  multiSelect = false;
 
   //#endregion
 
@@ -157,6 +182,9 @@ export class VscodeTree extends VscElement {
 
   //#region public methods
 
+  /**
+   * Expands all folders.
+   */
   expandAll() {
     const children = this.querySelectorAll<VscodeTreeItem>('vscode-tree-item');
 
@@ -167,6 +195,9 @@ export class VscodeTree extends VscElement {
     });
   }
 
+  /**
+   * Collapses all folders.
+   */
   collapseAll() {
     const children = this.querySelectorAll<VscodeTreeItem>('vscode-tree-item');
 
