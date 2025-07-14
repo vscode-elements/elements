@@ -86,7 +86,14 @@ const styles: CSSResultGroup = [
       align-items: center;
       display: flex;
       height: 22px;
+    }
+
+    .icon-container slot {
       margin-right: 6px;
+    }
+
+    slot[name='icon']:empty {
+      display: none;
     }
 
     .children {
