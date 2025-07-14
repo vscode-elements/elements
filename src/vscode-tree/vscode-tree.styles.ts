@@ -5,7 +5,7 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      --vsc-tree-item-arrow-display: none;
+      --vsc-tree-item-arrow-display: flex;
       --internal-selectionBackground: var(--vscode-list-inactiveSelectionBackground);
       --internal-selectionForeground: var(--vscode-foreground);
       --internal-selectionIconForeground: var(--vscode-icon-foreground);
@@ -26,8 +26,8 @@ const styles: CSSResultGroup = [
       --internal-selectionIconForeground: var(--vscode-list-activeSelectionIconForeground);
     }
 
-    :host([arrows]) {
-      --vsc-tree-item-arrow-display: flex;
+    :host([hide-arrows]) {
+      --vsc-tree-item-arrow-display: none;
     }
 
     :host([indent-guides="none"]),
