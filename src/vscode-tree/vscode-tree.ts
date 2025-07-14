@@ -81,7 +81,7 @@ export class VscodeTree extends VscElement {
    * (e.g., Material Icon Theme) allow disabling them in the file explorer view. This flag makes it
    * possible to mimic that behavior.
    */
-  @property({type: Boolean, reflect: true})
+  @property({type: Boolean, reflect: true, attribute: 'hide-arrows'})
   hideArrows = false;
 
   /**
