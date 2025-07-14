@@ -106,11 +106,11 @@ const styles: CSSResultGroup = [
     }
 
     .children.guide.default-guide:before {
-      display: var(--default-guide-display);
+      display: var(--default-indent-guide-display);
     }
 
     .children.guide.highlighted-guide:before {
-      display: var(--highlighted-guide-display);
+      display: var(--highlighted-indent-guide-display);
       background-color: var(--vscode-tree-indentGuidesStroke);
     }
 
