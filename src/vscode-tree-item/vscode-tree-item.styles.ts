@@ -38,12 +38,12 @@ const styles: CSSResultGroup = [
     }
 
     :host([selected]) .content {
-      color: var(--vscode-list-activeSelectionForeground);
+      color: var(--selection-foreground);
       background-color: var(--selection-background);
     }
 
     :host([selected]) ::slotted(vscode-icon) {
-      color: var(--vscode-list-activeSelectionForeground);
+      color: var(--selection-foreground);
     }
 
     :host(:focus) {
@@ -79,7 +79,7 @@ const styles: CSSResultGroup = [
     }
 
     :host([selected]) .arrow-container svg {
-      fill: var(--vscode-list-activeSelectionIconForeground);
+      fill: var(--selection-icon-foreground);
     }
 
     .icon-container {
