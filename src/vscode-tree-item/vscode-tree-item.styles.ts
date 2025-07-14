@@ -39,7 +39,7 @@ const styles: CSSResultGroup = [
 
     :host([selected]) .content {
       color: var(--vscode-list-activeSelectionForeground);
-      background-color: var(--vscode-list-activeSelectionBackground);
+      background-color: var(--selection-background);
     }
 
     :host([selected]) ::slotted(vscode-icon) {

@@ -6,8 +6,12 @@ const styles: CSSResultGroup = [
   css`
     :host {
       --vsc-tree-item-arrow-display: none;
-
+      --selection-background: var(--vscode-list-inactiveSelectionBackground);
       display: block;
+    }
+
+    :host(:focus-within) {
+      --selection-background: var(--vscode-list-activeSelectionBackground);
     }
 
     :host([arrows]) {
