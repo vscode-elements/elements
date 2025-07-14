@@ -18,11 +18,11 @@ const styles: CSSResultGroup = [
       user-select: none;
     }
 
-    .wrapper {
+    .root {
       display: block;
     }
 
-    .content {
+    .wrapper {
       align-items: flex-start;
       display: flex;
       font-family: var(--vscode-font-family);
@@ -32,12 +32,12 @@ const styles: CSSResultGroup = [
       padding-right: 12px;
     }
 
-    .content:hover {
+    .wrapper:hover {
       background-color: var(--vscode-list-hoverBackground);
       color: var(--vscode-list-hoverForeground);
     }
 
-    :host([selected]) .content {
+    :host([selected]) .wrapper {
       color: var(--internal-selectionForeground);
       background-color: var(--internal-selectionBackground);
     }
@@ -50,7 +50,7 @@ const styles: CSSResultGroup = [
       outline: none;
     }
 
-    :host(:focus) .content.active {
+    :host(:focus) .wrapper.active {
       outline-color: var(
         --vscode-list-focusAndSelectionOutline,
         var(--vscode-list-focusOutline)
@@ -121,48 +121,11 @@ const styles: CSSResultGroup = [
       background-color: var(--vscode-tree-indentGuidesStroke);
     }
 
-    .text-content {
+    .content {
       line-height: 22px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-    }
-
-    .description {
-      font-size: 0.9em;
-      margin-left: 0.5em;
-      opacity: 0.95;
-    }
-
-    .additional-content {
-      display: flex;
-      margin-left: auto;
-    }
-
-    .decorations {
-      align-items: center;
-      display: flex;
-      height: 22px;
-    }
-
-    .actions {
-      align-items: center;
-      display: none;
-      height: 22px;
-    }
-
-    .content:hover .actions {
-      display: flex;
-    }
-
-    .actions ::slotted(vscode-icon),
-    .actions ::slotted(vscode-badge) {
-      margin-left: 4px;
-    }
-
-    .decorations ::slotted(vscode-icon),
-    .decorations ::slotted(vscode-badge) {
-      margin-left: 4px;
     }
 
     :host([branch]) ::slotted(vscode-tree-item) {
