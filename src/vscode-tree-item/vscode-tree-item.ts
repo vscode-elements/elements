@@ -4,6 +4,7 @@ import {
   customElement,
   property,
   queryAssignedElements,
+  state,
 } from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {VscElement} from '../includes/VscElement';
@@ -97,6 +98,15 @@ export class VscodeTreeItem extends VscElement {
   //#region private variables
 
   private _path: number[] = [];
+
+  @state()
+  private _hasBranchIcon = false;
+
+  @state()
+  private _hasBranchOpenedIcon = false;
+
+  @state()
+  private _hasLeafIcon = false;
 
   @consume({context: treeContext, subscribe: true})
   private _treeContextState: TreeContext = {
@@ -351,6 +361,24 @@ export class VscodeTreeItem extends VscElement {
     }
   }
 
+  private _handleIconSlotChange(ev: Event) {
+    const slot = ev.target as HTMLSlotElement;
+    const hasContent = slot.assignedElements().length > 0;
+
+    switch (slot.name) {
+      case 'icon-branch':
+        this._hasBranchIcon = hasContent;
+        break;
+      case 'icon-branch-opened':
+        this._hasBranchOpenedIcon = hasContent;
+        break;
+      case 'icon-leaf':
+        this._hasLeafIcon = hasContent;
+        break;
+      default:
+    }
+  }
+
   //#endregion
 
   override render(): TemplateResult {
@@ -364,6 +392,11 @@ export class VscodeTreeItem extends VscElement {
       indentation += ARROW_CONTAINER_WIDTH;
     }
 
+    const hasVisibleIcon =
+      (this._hasBranchIcon && this.branch) ||
+      (this._hasBranchOpenedIcon && this.branch && this.open) ||
+      (this._hasLeafIcon && !this.branch);
+
     const contentClasses = {
       content: true,
       active: this.active,
@@ -374,6 +407,11 @@ export class VscodeTreeItem extends VscElement {
       guide: indentGuides !== IndentGuides.none,
       'default-guide': indentGuides !== IndentGuides.none,
       'highlighted-guide': this.highlightedGuides,
+    };
+
+    const iconContainerClasses = {
+      'icon-container': true,
+      'has-icon': hasVisibleIcon,
     };
 
     return html` <div class="wrapper">
@@ -393,15 +431,26 @@ export class VscodeTreeItem extends VscElement {
               ${arrowIcon}
             </div>`
           : nothing}
-        <div class="icon-container">
+        <div class=${classMap(iconContainerClasses)}>
           <slot name="icon"></slot>
           ${this.branch && !this.open
-            ? html`<slot name="icon-branch"></slot>`
+            ? html`<slot
+                name="icon-branch"
+                @slotchange=${this._handleIconSlotChange}
+              ></slot>`
             : nothing}
           ${this.branch && this.open
-            ? html`<slot name="icon-branch-opened"></slot>`
+            ? html`<slot
+                name="icon-branch-opened"
+                @slotchange=${this._handleIconSlotChange}
+              ></slot>`
             : nothing}
-          ${!this.branch ? html`<slot name="icon-leaf"></slot>` : nothing}
+          ${!this.branch
+            ? html`<slot
+                name="icon-leaf"
+                @slotchange=${this._handleIconSlotChange}
+              ></slot>`
+            : nothing}
         </div>
         <div class="text-content" part="text-content">
           <span class="label" part="label"

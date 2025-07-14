@@ -89,11 +89,11 @@ const styles: CSSResultGroup = [
     }
 
     .icon-container slot {
-      margin-right: 6px;
+      display: block;
     }
 
-    slot[name='icon']:empty {
-      display: none;
+    .icon-container.has-icon {
+      margin-right: 6px;
     }
 
     .children {
