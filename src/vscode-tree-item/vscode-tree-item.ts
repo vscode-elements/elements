@@ -397,8 +397,8 @@ export class VscodeTreeItem extends VscElement {
       (this._hasBranchOpenedIcon && this.branch && this.open) ||
       (this._hasLeafIcon && !this.branch);
 
-    const contentClasses = {
-      content: true,
+    const wrapperClasses = {
+      wrapper: true,
       active: this.active,
     };
 
@@ -414,9 +414,9 @@ export class VscodeTreeItem extends VscElement {
       'has-icon': hasVisibleIcon,
     };
 
-    return html` <div class="wrapper">
+    return html` <div class="root">
       <div
-        class=${classMap(contentClasses)}
+        class=${classMap(wrapperClasses)}
         @click=${this._handleContentClick}
         @dblclick=${this._handleDoubleClick}
         .style=${stylePropertyMap({paddingLeft: `${indentation}px`})}
@@ -432,7 +432,6 @@ export class VscodeTreeItem extends VscElement {
             </div>`
           : nothing}
         <div class=${classMap(iconContainerClasses)}>
-          <slot name="icon"></slot>
           ${this.branch && !this.open
             ? html`<slot
                 name="icon-branch"
@@ -452,19 +451,8 @@ export class VscodeTreeItem extends VscElement {
               ></slot>`
             : nothing}
         </div>
-        <div class="text-content" part="text-content">
-          <span class="label" part="label"
-            ><slot @slotchange=${this._handleMainSlotChange}></slot
-          ></span>
-          <span class="description" part="description"
-            ><slot name="description"></slot
-          ></span>
-        </div>
-        <div class="additional-content" part="additional-content">
-          <div class="decorations" part="decorations">
-            <slot name="decorations"></slot>
-          </div>
-          <div class="actions" part="actions"><slot name="actions"></slot></div>
+        <div class="content" part="content">
+          <slot @slotchange=${this._handleMainSlotChange}></slot>
         </div>
       </div>
       <div
@@ -473,6 +461,7 @@ export class VscodeTreeItem extends VscElement {
           '--indentation-guide-left': `${indentGuideX}px`,
         })}
         role="group"
+        part="children"
       >
         <slot
           name="children"
