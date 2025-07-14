@@ -64,8 +64,6 @@ const DEFAULT_INDENT = 8;
 const DEFAULT_MULTI_SELECT = false;
 const DEFAULT_EXPAND_MODE = ExpandMode.singleClick;
 const DEFAULT_INDENT_GUIDE_DISPLAY = IndentGuides.onHover;
-const CSS_PROP_DEFAULT_GUIDE_DISPLAY = '--default-guide-display';
-const CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY = '--highlighted-guide-display';
 
 /**
  * @tag vscode-tree
@@ -104,7 +102,12 @@ export class VscodeTree extends VscElement {
    * Controls whether the tree should render indent guides. This property is
    * designed to use the `workbench.tree.renderIndentGuides` setting.
    */
-  @property({type: String, attribute: 'indent-guides'})
+  @property({
+    type: String,
+    attribute: 'indent-guides',
+    useDefault: true,
+    reflect: true,
+  })
   indentGuides: IndentGuideDisplay = 'onHover';
 
   /**
@@ -156,8 +159,6 @@ export class VscodeTree extends VscElement {
 
     this.addEventListener('keyup', this._handleComponentKeyUp);
     this.addEventListener('keydown', this._handleComponentKeyDown);
-    this.addEventListener('mouseenter', this._handleComponentMouseEnter);
-    this.addEventListener('mouseleave', this._handleComponentMouseLeave);
   }
 
   override connectedCallback(): void {
@@ -171,10 +172,6 @@ export class VscodeTree extends VscElement {
 
     if (changedProperties.has('multiSelect')) {
       this.ariaMultiSelectable = this.multiSelect ? 'true' : 'false';
-    }
-
-    if (changedProperties.has('indentGuides')) {
-      this._updateIndentGuidesDefaultVisibility();
     }
   }
 
@@ -331,35 +328,6 @@ export class VscodeTree extends VscElement {
     }
   }
 
-  private _updateIndentGuidesDefaultVisibility() {
-    const isDefaultVisible = this.indentGuides === IndentGuides.always;
-    const isHighlightedVisible =
-      this.indentGuides === IndentGuides.always ||
-      this.indentGuides === IndentGuides.onHover;
-    this.style.setProperty(
-      CSS_PROP_DEFAULT_GUIDE_DISPLAY,
-      isDefaultVisible ? 'block' : 'none'
-    );
-    this.style.setProperty(
-      CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY,
-      isHighlightedVisible ? 'block' : 'none'
-    );
-  }
-
-  private _updateIndentGuidesHoverVisibility() {
-    const isGuidesVisible =
-      this.indentGuides === IndentGuides.always ||
-      this.indentGuides === IndentGuides.onHover;
-    this.style.setProperty(
-      CSS_PROP_DEFAULT_GUIDE_DISPLAY,
-      isGuidesVisible ? 'block' : 'none'
-    );
-    this.style.setProperty(
-      CSS_PROP_HIGHLIGHTED_GUIDE_DISPLAY,
-      isGuidesVisible ? 'block' : 'none'
-    );
-  }
-
   //#endregion
 
   //#region event handlers
@@ -481,14 +449,6 @@ export class VscodeTree extends VscElement {
     if (ev.key === 'Shift') {
       this._treeContextState.isShiftPressed = false;
     }
-  };
-
-  private _handleComponentMouseEnter = () => {
-    this._updateIndentGuidesHoverVisibility();
-  };
-
-  private _handleComponentMouseLeave = () => {
-    this._updateIndentGuidesDefaultVisibility();
   };
 
   private _handleSlotChange = () => {
