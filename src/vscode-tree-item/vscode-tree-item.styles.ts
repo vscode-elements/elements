@@ -38,12 +38,12 @@ const styles: CSSResultGroup = [
     }
 
     :host([selected]) .content {
-      color: var(--selection-foreground);
-      background-color: var(--selection-background);
+      color: var(--internal-selectionForeground);
+      background-color: var(--internal-selectionBackground);
     }
 
     :host([selected]) ::slotted(vscode-icon) {
-      color: var(--selection-foreground);
+      color: var(--internal-selectionForeground);
     }
 
     :host(:focus) {
@@ -79,7 +79,7 @@ const styles: CSSResultGroup = [
     }
 
     :host([selected]) .arrow-container svg {
-      fill: var(--selection-icon-foreground);
+      fill: var(--internal-selectionIconForeground);
     }
 
     .icon-container {
@@ -106,11 +106,11 @@ const styles: CSSResultGroup = [
     }
 
     .children.guide.default-guide:before {
-      display: var(--default-indent-guide-display);
+      display: var(--internal-defaultIndentGuideDisplay);
     }
 
     .children.guide.highlighted-guide:before {
-      display: var(--highlighted-indent-guide-display);
+      display: var(--internal-highlightedIndentGuideDisplay);
       background-color: var(--vscode-tree-indentGuidesStroke);
     }
 
