@@ -1,11 +1,11 @@
-import {VscodeTreeItem} from '../vscode-tree-item';
-import type {VscodeTree} from './vscode-tree';
+import type {VscodeTreeItem} from '../vscode-tree-item/vscode-tree-item.js';
+import type {VscodeTree} from './vscode-tree.js';
 
-const isTreeItem = (item: HTMLElement): item is VscodeTreeItem =>
-  item.tagName.toLowerCase() === 'vscode-tree-item';
+const isTreeItem = (item: Element | null | undefined): item is VscodeTreeItem =>
+  item instanceof Element && item.matches('vscode-tree-item');
 
-const isTreeRoot = (item: HTMLElement): item is VscodeTree =>
-  item.tagName.toLowerCase() === 'vscode-tree';
+const isTreeRoot = (item: Element | null | undefined): item is VscodeTree =>
+  item instanceof Element && item.matches('vscode-tree');
 
 export const initPathTrackerProps = (
   parentElement: VscodeTree | VscodeTreeItem,
@@ -42,15 +42,11 @@ export const initPathTrackerProps = (
 };
 
 export const findLastChildItem = (item: VscodeTreeItem): VscodeTreeItem => {
-  const children = item.querySelectorAll<VscodeTreeItem>(
-    ':scope > vscode-tree-item'
-  );
+  const lastItem = item.lastElementChild;
 
-  if (children.length < 1) {
+  if (!lastItem || !isTreeItem(lastItem)) {
     return item;
   }
-
-  const lastItem = children[children.length - 1];
 
   if (lastItem.branch && lastItem.open) {
     return findLastChildItem(lastItem);
@@ -125,19 +121,20 @@ export const findNextItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
 
 export const findPrevItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
   const {parentElement} = item;
-  const index = parseInt(item.dataset.index ?? '-1', 10);
 
-  if (!parentElement) {
+  if (!parentElement || !isTreeItem(item)) {
     return null;
   }
 
-  const prevSibling = parentElement.querySelector<VscodeTreeItem>(
-    `:scope vscode-tree-item[data-index="${index - 1}"]`
-  );
+  let prevSibling: Element | null = item.previousElementSibling;
+
+  while (prevSibling && !isTreeItem(prevSibling)) {
+    prevSibling = prevSibling.previousElementSibling;
+  }
 
   if (!prevSibling) {
-    if (parentElement.tagName.toLowerCase() === 'vscode-tree-item') {
-      return parentElement as VscodeTreeItem;
+    if (isTreeItem(parentElement)) {
+      return parentElement;
     }
   }
 
