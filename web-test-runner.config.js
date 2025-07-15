@@ -5,6 +5,7 @@ export default {
   nodeResolve: true,
   preserveSymlinks: true,
   browsers: [playwrightLauncher({product: 'chromium'})],
+  testsFinishTimeout: 3000,
   filterBrowserLogs: ({args}) =>
     !(
       typeof args[0] === 'string' &&
