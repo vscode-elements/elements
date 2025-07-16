@@ -98,6 +98,7 @@ export class VscodeTreeItem extends VscElement {
   //#region private variables
 
   private _path: number[] = [];
+  private _internals: ElementInternals;
 
   @state()
   private _hasBranchIcon = false;
@@ -138,6 +139,7 @@ export class VscodeTreeItem extends VscElement {
   constructor() {
     super();
 
+    this._internals = this.attachInternals();
     this.addEventListener('focus', this._handleComponentFocus);
   }
 
@@ -194,6 +196,7 @@ export class VscodeTreeItem extends VscElement {
       this._treeContextState.activeItem = this;
       this._setHasActiveItemFlagOnParent(this, true);
       this.tabIndex = 0;
+      this._internals.states.add('active');
     } else {
       if (this._treeContextState.activeItem === this) {
         this._treeContextState.activeItem = null;
@@ -201,6 +204,7 @@ export class VscodeTreeItem extends VscElement {
       }
 
       this.tabIndex = -1;
+      this._internals.states.delete('active');
     }
   }
 
