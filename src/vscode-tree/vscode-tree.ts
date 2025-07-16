@@ -67,8 +67,6 @@ const DEFAULT_INDENT_GUIDE_DISPLAY = IndentGuides.onHover;
 
 /**
  * @tag vscode-tree
- *
- * @prop {'singleClick' | 'doubleClick'} expandMode
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
@@ -80,27 +78,55 @@ export class VscodeTree extends VscElement {
    * Although arrows are always visible in the Tree component by default in VSCode, some icon sets
    * (e.g., Material Icon Theme) allow disabling them in the file explorer view. This flag makes it
    * possible to mimic that behavior.
+   *
+   * @type {boolean}
+   * @default false
    */
   @property({type: Boolean, reflect: true, attribute: 'hide-arrows'})
-  hideArrows = false;
+  hideArrows: boolean = DEFAULT_HIDE_ARROWS;
 
   /**
    * Controls how tree folders are expanded when clicked. This property is designed to use
    * the `workbench.tree.expandMode` setting.
+   *
+   * Valid options are available as constants.
+   *
+   * ```javascript
+   * import {ExpandMode} from '@vscode-elements/elements/dist/vscode-tree/vscode-tree.js';
+   *
+   * document.querySelector('vscode-tree').expandMode = ExpandMode.singleClick;
+   * ```
+   *
+   * @type {'singleClick' | 'doubleClick'}
+   * @default 'singleClick'
    */
   @property({type: String, attribute: 'expand-mode'})
-  expandMode: ExpandMode = 'singleClick';
+  expandMode: ExpandMode = DEFAULT_EXPAND_MODE;
 
   /**
    * Controls the indentation in pixels. This property is designed to use the
    * `workbench.tree.indent` setting.
+   *
+   * @type {number}
+   * @default 8
    */
   @property({type: Number, reflect: true})
-  indent = 8;
+  indent: number = DEFAULT_INDENT;
 
   /**
    * Controls whether the tree should render indent guides. This property is
    * designed to use the `workbench.tree.renderIndentGuides` setting.
+   *
+   * Valid options are available as constants.
+   *
+   * ```javascript
+   * import {IndentGuides} from '@vscode-elements/elements/dist/vscode-tree/vscode-tree.js';
+   *
+   * document.querySelector('vscode-tree').expandMode = IndentGuides.onHover;
+   * ```
+   *
+   * @type {'none' | 'onHover' | 'always'}
+   * @default 'onHover'
    */
   @property({
     type: String,
@@ -108,13 +134,16 @@ export class VscodeTree extends VscElement {
     useDefault: true,
     reflect: true,
   })
-  indentGuides: IndentGuideDisplay = 'onHover';
+  indentGuides: IndentGuideDisplay = DEFAULT_INDENT_GUIDE_DISPLAY;
 
   /**
    * Allows selecting multiple items.
+   *
+   * @type {boolean}
+   * @default false
    */
   @property({type: Boolean, reflect: true, attribute: 'multi-select'})
-  multiSelect = false;
+  multiSelect: boolean = DEFAULT_MULTI_SELECT;
 
   //#endregion
 
