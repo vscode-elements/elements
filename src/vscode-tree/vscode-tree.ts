@@ -181,6 +181,8 @@ export class VscodeTree extends VscElement {
   @queryAssignedElements({selector: 'vscode-tree-item'})
   private _assignedTreeItems!: VscodeTreeItem[];
 
+  //#endregion
+
   //#region lifecycle methods
 
   constructor() {
