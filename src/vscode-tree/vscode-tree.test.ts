@@ -1,25 +1,8 @@
 import {expect, fixture, html} from '@open-wc/testing';
-import {VscodeTree} from './vscode-tree.js';
-
-const createSimpleTreeData = () => [
-  {
-    label: 'Branch 1',
-    subItems: [
-      {
-        label: 'Leaf 1.1',
-      },
-    ],
-  },
-  {
-    label: 'Branch 2',
-    open: true,
-    subItems: [
-      {
-        label: 'Leaf 2.1',
-      },
-    ],
-  },
-];
+import {sendKeys} from '@web/test-runner-commands';
+import '../vscode-tree-item/vscode-tree-item.js';
+import {VscodeTreeItem} from '../vscode-tree-item/vscode-tree-item.js';
+import {VscodeTree} from './index.js';
 
 describe('vscode-tree', () => {
   it('is defined', () => {
@@ -27,65 +10,72 @@ describe('vscode-tree', () => {
     expect(el).to.instanceOf(VscodeTree);
   });
 
-  it('renders without options', async () => {
-    const el = await fixture(html`<vscode-tree></vscode-tree>`);
-
-    expect(el).shadowDom.to.eq(`
-      <div class="has-not-focused-item selection-none single wrapper">
-        <ul></ul>
-      </div>
+  it('focuses first item by default', async () => {
+    const el = await fixture<VscodeTree>(html`
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>
     `);
+    const firstItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
+    const secondItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
+
+    expect(firstItem.tabIndex).to.eq(0);
+    expect(firstItem.active).to.be.true;
+    expect(secondItem.tabIndex).to.eq(-1);
+    expect(secondItem.active).to.be.false;
   });
 
-  it('renders simple tree', async () => {
-    const data = createSimpleTreeData();
-
-    const el = await fixture(html`<vscode-tree .data=${data}></vscode-tree>`);
-
-    expect(el).shadowDom.to.eq(`
-      <div class="has-not-focused-item selection-none single wrapper">
-        <ul>
-          <li class="branch" data-path="0">
-            <div class="contents" style="padding-left: 3px;">
-              <span class="text-content" part="text-content"> Branch 1 </span>
-            </div>
-          </li>
-          <li class="branch open" data-path="1">
-            <div class="contents" style="padding-left: 3px;">
-              <span class="text-content" part="text-content"> Branch 2 </span>
-            </div>
-            <ul style="--indent-guide-pos: 3px;">
-              <li class="leaf" data-path="1/0">
-                <div class="contents" style="padding-left: 11px;">
-                  <span class="text-content" part="text-content"> Leaf 2.1 </span>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+  it('focuses active item on load', async () => {
+    const el = await fixture<VscodeTree>(html`
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item active>Item 2</vscode-tree-item>
+      </vscode-tree>
     `);
+    const firstItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
+    const secondItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
+
+    expect(firstItem.tabIndex).to.eq(-1);
+    expect(firstItem.active).to.be.false;
+    expect(secondItem.tabIndex).to.eq(0);
+    expect(secondItem.active).to.be.true;
   });
 
-  it('renders arrows', async () => {
-    const data = createSimpleTreeData();
+  it('focuses next item when arrow down key is pressed', async () => {
+    const el = await fixture<VscodeTree>(html`
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>
+    `);
 
-    const el = await fixture(
-      html`<vscode-tree .data=${data} arrows></vscode-tree>`
-    );
+    el.querySelector<VscodeTreeItem>('vscode-tree-item')?.focus();
+    await sendKeys({press: 'ArrowDown'});
+    await el.updateComplete;
 
-    expect(
-      el.shadowRoot?.querySelector(
-        'ul li:nth-child(1) vscode-icon[name="chevron-right"]'
-      )
-    ).to.be.ok;
-    expect(
-      el.shadowRoot?.querySelector(
-        'ul li:nth-child(2) vscode-icon[name="chevron-down"]'
-      )
-    ).to.be.ok;
+    const items = el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')!;
+
+    expect(items[0].tabIndex).to.eq(-1);
+    expect(items[0].active).to.be.false;
+    expect(items[1].tabIndex).to.eq(0);
+    expect(items[1].active).to.be.true;
   });
 
-  it('indents elements');
-  it('renders indent guides');
+  it('selects item with Enter key press');
+  it('selects item with click on it');
+  it('opens and selects branch item with Enter key press');
+  it('opens and selects branch item with click on it');
+  it('selecting multiple items upwards with the mouse and the Shift key');
+  it(
+    'expands selection of multiple items upwards with the mouse and the Shift key'
+  );
+  it('selecting multiple items downwards with the mouse and the Shift key');
+  it(
+    'expands selection of multiple items downwards with the mouse and the Shift key'
+  );
 });

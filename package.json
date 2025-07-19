@@ -1,7 +1,7 @@
 {
   "name": "@vscode-elements/elements",
-  "version": "1.17.0",
-  "description": "Webcomponents for creating Visual Studio Code extensions",
+  "version": "2.0.0-pre.2",
+  "description": "Web components for creating Visual Studio Code extensions",
   "main": "dist/main.js",
   "module": "dist/main.js",
   "type": "module",
@@ -132,6 +132,7 @@
   },
   "homepage": "https://vscode-elements.github.io",
   "dependencies": {
+    "@lit/context": "^1.1.3",
     "lit": "^3.2.1"
   },
   "devDependencies": {
