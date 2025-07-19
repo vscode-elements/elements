@@ -230,9 +230,7 @@ describe('vscode-tree helpers', () => {
             1
             <vscode-tree-item>
               1.1
-              <vscode-tree-item id="item1_1_1">
-                1.1.1
-              </vscode-tree-item>
+              <vscode-tree-item id="item1_1_1"> 1.1.1 </vscode-tree-item>
             </vscode-tree-item>
           </vscode-tree-item>
           <vscode-tree-item id="item2">2</vscode-tree-item>
