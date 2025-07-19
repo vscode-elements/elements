@@ -273,6 +273,10 @@ export class VscodeTree extends VscElement {
   }
 
   private _highlightIndentGuides() {
+    if (this.indentGuides === IndentGuides.none) {
+      return;
+    }
+
     this._treeContextState.highlightedItems?.forEach(
       (i) => (i.highlightedGuides = false)
     );
