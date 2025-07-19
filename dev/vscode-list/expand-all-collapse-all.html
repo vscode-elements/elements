@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Expand/Collapse all</h1>
+    <main>
+      <vscode-demo>
+        <p>
+          <button type="button" id="bt-expand">Expand all</button>
+          <button type="button" id="bt-collapse">Collapse all</button>
+        </p>
+        <div>
+          <vscode-list
+            arrows
+            indent="16"
+            id="basic-example"
+            multi-select
+            indent-guides
+          >
+            <vscode-list-item>
+              <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+              <vscode-icon
+                name="folder-opened"
+                slot="icon-branch-opened"
+              ></vscode-icon>
+              <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+              lorem
+            </vscode-list-item>
+            <vscode-list-item open>
+              <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+              <vscode-icon
+                name="folder-opened"
+                slot="icon-branch-opened"
+              ></vscode-icon>
+              <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+              ipsum
+              <vscode-list-item>
+                <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                <vscode-icon
+                  name="folder-opened"
+                  slot="icon-branch-opened"
+                ></vscode-icon>
+                <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                lorem
+              </vscode-list-item>
+              <vscode-list-item>
+                <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                <vscode-icon
+                  name="folder-opened"
+                  slot="icon-branch-opened"
+                ></vscode-icon>
+                <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                ipsum
+              </vscode-list-item>
+              <vscode-list-item>
+                <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                <vscode-icon
+                  name="folder-opened"
+                  slot="icon-branch-opened"
+                ></vscode-icon>
+                <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                dolor
+                <vscode-list-item>
+                  <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                  <vscode-icon
+                    name="folder-opened"
+                    slot="icon-branch-opened"
+                  ></vscode-icon>
+                  <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                  lorem
+                </vscode-list-item>
+                <vscode-list-item>
+                  <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                  <vscode-icon
+                    name="folder-opened"
+                    slot="icon-branch-opened"
+                  ></vscode-icon>
+                  <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                  ipsum
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                </vscode-list-item>
+              </vscode-list-item>
+              <vscode-list-item open>
+                <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                <vscode-icon
+                  name="folder-opened"
+                  slot="icon-branch-opened"
+                ></vscode-icon>
+                <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                dolor
+                <vscode-list-item>
+                  <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                  <vscode-icon
+                    name="folder-opened"
+                    slot="icon-branch-opened"
+                  ></vscode-icon>
+                  <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                  lorem
+                </vscode-list-item>
+                <vscode-list-item>
+                  <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                  <vscode-icon
+                    name="folder-opened"
+                    slot="icon-branch-opened"
+                  ></vscode-icon>
+                  <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                  ipsum
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                  <vscode-list-item>
+                    <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                    <vscode-icon
+                      name="folder-opened"
+                      slot="icon-branch-opened"
+                    ></vscode-icon>
+                    <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                    lorem
+                  </vscode-list-item>
+                </vscode-list-item>
+              </vscode-list-item>
+              <vscode-list-item>
+                <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+                <vscode-icon
+                  name="folder-opened"
+                  slot="icon-branch-opened"
+                ></vscode-icon>
+                <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+                lorem
+              </vscode-list-item>
+            </vscode-list-item>
+            <vscode-list-item active>
+              <vscode-icon name="folder" slot="icon-branch"></vscode-icon>
+              <vscode-icon
+                name="folder-opened"
+                slot="icon-branch-opened"
+              ></vscode-icon>
+              <vscode-icon name="file" slot="icon-leaf"></vscode-icon>
+              dolor
+            </vscode-list-item>
+          </vscode-list>
+          <script type="module">
+            const btExpand = document.querySelector('#bt-expand');
+            const btCollapse = document.querySelector('#bt-collapse');
+            const tree = document.querySelector('vscode-list');
+
+            btExpand.addEventListener('click', () => {
+              tree.expandAll();
+            });
+
+            btCollapse.addEventListener('click', () => {
+              tree.collapseAll();
+            });
+          </script>
+        </div>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
