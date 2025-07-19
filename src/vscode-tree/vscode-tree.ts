@@ -493,8 +493,6 @@ export class VscodeTree extends VscElement {
           firstChild.active = true;
         }
       }
-
-      // this._highlightGuides();
     });
   };
 
