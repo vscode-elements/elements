@@ -160,9 +160,9 @@ export class VscodeTree extends VscElement {
     prevFocusedItem: null,
     hasBranchItem: false,
     rootElement: this,
-    highlightedItems: [],
-    highlightGuides: () => {
-      this._highlightGuides();
+    highlightedItems: new Set(),
+    highlightIndentGuides: () => {
+      this._highlightIndentGuides();
     },
     emitSelectEvent: () => {
       this._emitSelectEvent();
@@ -258,43 +258,33 @@ export class VscodeTree extends VscElement {
     this.dispatchEvent(ev);
   }
 
-  private _highlightGuides() {
-    const {activeItem, highlightedItems, selectedItems} =
-      this._treeContextState;
+  private _highlightIndentGuideOfItem(item: VscodeTreeItem) {
+    if (item.branch && item.open) {
+      item.highlightedGuides = true;
+      this._treeContextState.highlightedItems?.add(item);
+    } else {
+      const parent = findParentItem(item);
 
-    highlightedItems.forEach((i) => (i.highlightedGuides = false));
-
-    if (activeItem) {
-      this._treeContextState.highlightedItems = [];
-
-      if (activeItem.branch && activeItem.open) {
-        activeItem.highlightedGuides = true;
-        this._treeContextState.highlightedItems.push(activeItem);
-      } else {
-        const parent = findParentItem(activeItem);
-
-        if (parent && parent.branch) {
-          parent.highlightedGuides = true;
-          this._treeContextState.highlightedItems.push(parent);
-        }
+      if (parent) {
+        parent.highlightedGuides = true;
+        this._treeContextState.highlightedItems?.add(parent);
       }
     }
+  }
 
-    if (selectedItems) {
-      selectedItems.forEach((item) => {
-        if (item.branch && item.open) {
-          item.highlightedGuides = true;
-          this._treeContextState.highlightedItems.push(item);
-        } else {
-          const parent = findParentItem(item);
+  private _highlightIndentGuides() {
+    this._treeContextState.highlightedItems?.forEach(
+      (i) => (i.highlightedGuides = false)
+    );
+    this._treeContextState.highlightedItems?.clear();
 
-          if (parent && parent.branch) {
-            parent.highlightedGuides = true;
-            this._treeContextState.highlightedItems.push(item);
-          }
-        }
-      });
+    if (this._treeContextState.activeItem) {
+      this._highlightIndentGuideOfItem(this._treeContextState.activeItem);
     }
+
+    this._treeContextState.selectedItems.forEach((item) => {
+      this._highlightIndentGuideOfItem(item);
+    });
   }
 
   private _updateConfigContext(changedProperties: PropertyValues) {
@@ -326,6 +316,7 @@ export class VscodeTree extends VscElement {
 
     item.updateComplete.then(() => {
       item.focus();
+      this._highlightIndentGuides();
     });
   }
 
@@ -430,6 +421,8 @@ export class VscodeTree extends VscElement {
       this._treeContextState.selectedItems.forEach(
         (li) => (li.selected = false)
       );
+      this._treeContextState.selectedItems.clear();
+      this._highlightIndentGuides();
 
       focusedItem.selected = true;
       this._emitSelectEvent();
@@ -497,7 +490,7 @@ export class VscodeTree extends VscElement {
         }
       }
 
-      this._highlightGuides();
+      // this._highlightGuides();
     });
   };
 
