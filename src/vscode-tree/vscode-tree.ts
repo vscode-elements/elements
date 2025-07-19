@@ -17,7 +17,7 @@ import {
 import {
   findNextItem,
   findPrevItem,
-  getParentItem,
+  findParentItem,
   initPathTrackerProps,
 } from './helpers.js';
 
@@ -271,7 +271,7 @@ export class VscodeTree extends VscElement {
         activeItem.highlightedGuides = true;
         this._treeContextState.highlightedItems.push(activeItem);
       } else {
-        const parent = getParentItem(activeItem);
+        const parent = findParentItem(activeItem);
 
         if (parent && parent.branch) {
           parent.highlightedGuides = true;
@@ -286,7 +286,7 @@ export class VscodeTree extends VscElement {
           item.highlightedGuides = true;
           this._treeContextState.highlightedItems.push(item);
         } else {
-          const parent = getParentItem(item);
+          const parent = findParentItem(item);
 
           if (parent && parent.branch) {
             parent.highlightedGuides = true;
@@ -390,7 +390,7 @@ export class VscodeTree extends VscElement {
     }
 
     const {focusedItem} = this._treeContextState;
-    const parent = getParentItem(focusedItem);
+    const parent = findParentItem(focusedItem);
 
     if (!focusedItem.branch) {
       if (parent && parent.branch) {
