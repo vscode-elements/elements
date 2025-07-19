@@ -15,8 +15,8 @@ export interface TreeContext {
   hasBranchItem: boolean;
   rootElement: VscodeTree | null;
   activeItem: VscodeTreeItem | null;
-  highlightedItems: VscodeTreeItem[];
-  highlightGuides?: () => void;
+  highlightedItems?: Set<VscodeTreeItem>;
+  highlightIndentGuides?: () => void;
   emitSelectEvent?: () => void;
 }
 
