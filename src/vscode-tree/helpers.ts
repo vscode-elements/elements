@@ -142,7 +142,7 @@ export const findPrevItem = (item: VscodeTreeItem): VscodeTreeItem | null => {
   return prevSibling;
 };
 
-export function getParentItem(childItem: VscodeTreeItem) {
+export function findParentItem(childItem: VscodeTreeItem) {
   if (!childItem.parentElement) {
     return null;
   }
