@@ -120,7 +120,6 @@ export class VscodeTreeItem extends VscElement {
     hasBranchItem: false,
     rootElement: null,
     activeItem: null,
-    highlightedItems: [],
   };
 
   @consume({context: configContext, subscribe: true})
@@ -335,9 +334,16 @@ export class VscodeTreeItem extends VscElement {
     if (isShiftDown && this._configContext.multiSelect) {
       this._selectRange();
       this._treeContextState.emitSelectEvent?.();
+
+      this.updateComplete.then(() => {
+        this._treeContextState.highlightIndentGuides?.();
+      });
     } else {
       this._selectItem(isCtrlDown);
       this._treeContextState.emitSelectEvent?.();
+      this.updateComplete.then(() => {
+        this._treeContextState.highlightIndentGuides?.();
+      });
 
       if (this._configContext.expandMode === ExpandMode.singleClick) {
         if (this.branch && !(this._configContext.multiSelect && isCtrlDown)) {
@@ -351,10 +357,6 @@ export class VscodeTreeItem extends VscElement {
     if (!isShiftDown) {
       this._treeContextState.prevFocusedItem = this;
     }
-
-    this.updateComplete.then(() => {
-      this._treeContextState.highlightGuides?.();
-    });
   }
 
   private _handleDoubleClick(ev: MouseEvent) {
