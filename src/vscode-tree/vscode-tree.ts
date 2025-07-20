@@ -59,11 +59,6 @@ const listenedKeys: ListenedKey[] = [
   'Escape',
   'Shift',
 ];
-const DEFAULT_HIDE_ARROWS = false;
-const DEFAULT_INDENT = 8;
-const DEFAULT_MULTI_SELECT = false;
-const DEFAULT_EXPAND_MODE = ExpandMode.singleClick;
-const DEFAULT_INDENT_GUIDE_DISPLAY = IndentGuides.onHover;
 
 /**
  * @tag vscode-tree
@@ -78,12 +73,9 @@ export class VscodeTree extends VscElement {
    * Although arrows are always visible in the Tree component by default in VSCode, some icon sets
    * (e.g., Material Icon Theme) allow disabling them in the file explorer view. This flag makes it
    * possible to mimic that behavior.
-   *
-   * @type {boolean}
-   * @default false
    */
   @property({type: Boolean, reflect: true, attribute: 'hide-arrows'})
-  hideArrows: boolean = DEFAULT_HIDE_ARROWS;
+  hideArrows: boolean = false;
 
   /**
    * Controls how tree folders are expanded when clicked. This property is designed to use
@@ -98,20 +90,16 @@ export class VscodeTree extends VscElement {
    * ```
    *
    * @type {'singleClick' | 'doubleClick'}
-   * @default 'singleClick'
    */
   @property({type: String, attribute: 'expand-mode'})
-  expandMode: ExpandMode = DEFAULT_EXPAND_MODE;
+  expandMode: ExpandMode = 'singleClick';
 
   /**
    * Controls the indentation in pixels. This property is designed to use the
    * `workbench.tree.indent` setting.
-   *
-   * @type {number}
-   * @default 8
    */
   @property({type: Number, reflect: true})
-  indent: number = DEFAULT_INDENT;
+  indent: number = 8;
 
   /**
    * Controls whether the tree should render indent guides. This property is
@@ -126,7 +114,6 @@ export class VscodeTree extends VscElement {
    * ```
    *
    * @type {'none' | 'onHover' | 'always'}
-   * @default 'onHover'
    */
   @property({
     type: String,
@@ -134,16 +121,13 @@ export class VscodeTree extends VscElement {
     useDefault: true,
     reflect: true,
   })
-  indentGuides: IndentGuideDisplay = DEFAULT_INDENT_GUIDE_DISPLAY;
+  indentGuides: IndentGuideDisplay = 'onHover';
 
   /**
    * Allows selecting multiple items.
-   *
-   * @type {boolean}
-   * @default false
    */
   @property({type: Boolean, reflect: true, attribute: 'multi-select'})
-  multiSelect: boolean = DEFAULT_MULTI_SELECT;
+  multiSelect: boolean = false;
 
   //#endregion
 
@@ -171,11 +155,11 @@ export class VscodeTree extends VscElement {
 
   @provide({context: configContext})
   private _configContext: ConfigContext = {
-    hideArrows: DEFAULT_HIDE_ARROWS,
-    expandMode: DEFAULT_EXPAND_MODE,
-    indent: DEFAULT_INDENT,
-    indentGuides: DEFAULT_INDENT_GUIDE_DISPLAY,
-    multiSelect: DEFAULT_MULTI_SELECT,
+    hideArrows: this.hideArrows,
+    expandMode: this.expandMode,
+    indent: this.indent,
+    indentGuides: this.indentGuides,
+    multiSelect: this.multiSelect,
   };
 
   @queryAssignedElements({selector: 'vscode-tree-item'})
