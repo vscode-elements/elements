@@ -70,14 +70,6 @@ export class VscodeTree extends VscElement {
   //#region properties
 
   /**
-   * Although arrows are always visible in the Tree component by default in VSCode, some icon sets
-   * (e.g., Material Icon Theme) allow disabling them in the file explorer view. This flag makes it
-   * possible to mimic that behavior.
-   */
-  @property({type: Boolean, reflect: true, attribute: 'hide-arrows'})
-  hideArrows: boolean = false;
-
-  /**
    * Controls how tree folders are expanded when clicked. This property is designed to use
    * the `workbench.tree.expandMode` setting.
    *
@@ -93,6 +85,14 @@ export class VscodeTree extends VscElement {
    */
   @property({type: String, attribute: 'expand-mode'})
   expandMode: ExpandMode = 'singleClick';
+
+  /**
+   * Although arrows are always visible in the Tree component by default in VSCode, some icon sets
+   * (e.g., Material Icon Theme) allow disabling them in the file explorer view. This flag makes it
+   * possible to mimic that behavior.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'hide-arrows'})
+  hideArrows: boolean = false;
 
   /**
    * Controls the indentation in pixels. This property is designed to use the
