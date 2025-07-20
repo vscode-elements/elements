@@ -18,6 +18,10 @@ const styles: CSSResultGroup = [
       user-select: none;
     }
 
+    ::slotted(vscode-icon) {
+      display: block;
+    }
+
     .root {
       display: block;
     }
@@ -85,7 +89,11 @@ const styles: CSSResultGroup = [
     .icon-container {
       align-items: center;
       display: flex;
-      height: 22px;
+      height: 16px;
+      margin-bottom: 3px;
+      margin-top: 3px;
+      overflow: hidden;
+      width: 16px;
     }
 
     .icon-container slot {
