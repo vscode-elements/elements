@@ -40,6 +40,42 @@ describe('vscode-tree', () => {
     expect(el).to.be.accessible;
   });
 
+  it('focuses first item by default', async () => {
+    const el = await fixture<VscodeTree>(html`
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>
+    `);
+    const firstItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
+    const secondItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
+
+    expect(firstItem.tabIndex).to.eq(0);
+    expect(firstItem.active).to.be.true;
+    expect(secondItem.tabIndex).to.eq(-1);
+    expect(secondItem.active).to.be.false;
+  });
+
+  it('focuses active item on load', async () => {
+    const el = await fixture<VscodeTree>(html`
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item active>Item 2</vscode-tree-item>
+      </vscode-tree>
+    `);
+    const firstItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
+    const secondItem =
+      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
+
+    expect(firstItem.tabIndex).to.eq(-1);
+    expect(firstItem.active).to.be.false;
+    expect(secondItem.tabIndex).to.eq(0);
+    expect(secondItem.active).to.be.true;
+  });
+
   describe('default values', () => {
     it('expandMode', () => {
       const el = document.createElement('vscode-tree');
@@ -298,40 +334,10 @@ describe('vscode-tree', () => {
     });
   });
 
-  it('focuses first item by default', async () => {
-    const el = await fixture<VscodeTree>(html`
-      <vscode-tree>
-        <vscode-tree-item>Item 1</vscode-tree-item>
-        <vscode-tree-item>Item 2</vscode-tree-item>
-      </vscode-tree>
-    `);
-    const firstItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
-    const secondItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
+  describe('hide arrows', () => {
+    it('hide arrows');
 
-    expect(firstItem.tabIndex).to.eq(0);
-    expect(firstItem.active).to.be.true;
-    expect(secondItem.tabIndex).to.eq(-1);
-    expect(secondItem.active).to.be.false;
-  });
-
-  it('focuses active item on load', async () => {
-    const el = await fixture<VscodeTree>(html`
-      <vscode-tree>
-        <vscode-tree-item>Item 1</vscode-tree-item>
-        <vscode-tree-item active>Item 2</vscode-tree-item>
-      </vscode-tree>
-    `);
-    const firstItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[0]!;
-    const secondItem =
-      el.querySelectorAll<VscodeTreeItem>('vscode-tree-item')[1]!;
-
-    expect(firstItem.tabIndex).to.eq(-1);
-    expect(firstItem.active).to.be.false;
-    expect(secondItem.tabIndex).to.eq(0);
-    expect(secondItem.active).to.be.true;
+    it('show arrows');
   });
 
   it('focuses next item when arrow down key is pressed', async () => {
