@@ -10,6 +10,294 @@ describe('vscode-tree', () => {
     expect(el).to.instanceOf(VscodeTree);
   });
 
+  it('is accessible', async () => {
+    const el = await fixture<VscodeTree>(html`
+      <vscode-tree>
+        <vscode-tree-item open>
+          Item 1
+          <vscode-tree-item open>
+            Item 1.1
+            <vscode-tree-item>Item 1.1.1</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree-item>
+        <vscode-tree-item open>
+          Item 2
+          <vscode-tree-item open>
+            Item 2.1
+            <vscode-tree-item>Item 2.1.1</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree-item>
+        <vscode-tree-item open>
+          Item 3
+          <vscode-tree-item open>
+            Item 3.1
+            <vscode-tree-item>Item 3.1.1</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>
+    `);
+
+    expect(el).to.be.accessible;
+  });
+
+  describe('default values', () => {
+    it('expandMode', () => {
+      const el = document.createElement('vscode-tree');
+      expect(el.expandMode).to.eq('singleClick');
+    });
+
+    it('hideArrows', () => {
+      const el = document.createElement('vscode-tree');
+      expect(el.hideArrows).to.be.false;
+    });
+
+    it('indent', () => {
+      const el = document.createElement('vscode-tree');
+      expect(el.indent).to.eq(8);
+    });
+
+    it('indentGuides', () => {
+      const el = document.createElement('vscode-tree');
+      expect(el.indentGuides).to.eq('onHover');
+    });
+  });
+
+  describe('public methods', () => {
+    it('expands all', async () => {
+      const el = await fixture<VscodeTree>(html`
+        <vscode-tree>
+          <vscode-tree-item>
+            Item 1
+            <vscode-tree-item>
+              Item 1.1
+              <vscode-tree-item>Item 1.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+          <vscode-tree-item>
+            Item 2
+            <vscode-tree-item>
+              Item 2.1
+              <vscode-tree-item>Item 2.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+          <vscode-tree-item>
+            Item 3
+            <vscode-tree-item>
+              Item 3.1
+              <vscode-tree-item>Item 3.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+
+      el.expandAll();
+      await el.updateComplete;
+
+      expect(el).lightDom.to.eq(
+        `
+      <vscode-tree-item aria-expanded="true" branch open>
+        Item 1
+        <vscode-tree-item aria-expanded="true" branch open>
+          Item 1.1
+          <vscode-tree-item> Item 1.1.1 </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree-item>
+      <vscode-tree-item aria-expanded="true" branch open>
+        Item 2
+        <vscode-tree-item aria-expanded="true" branch open>
+          Item 2.1
+          <vscode-tree-item> Item 2.1.1 </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree-item>
+      <vscode-tree-item aria-expanded="true" branch open>
+        Item 3
+        <vscode-tree-item aria-expanded="true" branch open>
+          Item 3.1
+          <vscode-tree-item> Item 3.1.1 </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree-item>
+    `,
+        {
+          ignoreAttributes: [
+            'aria-disabled',
+            'data-path',
+            'level',
+            'role',
+            'slot',
+            'tabindex',
+          ],
+        }
+      );
+    });
+
+    it('closes all', async () => {
+      const el = await fixture<VscodeTree>(html`
+        <vscode-tree>
+          <vscode-tree-item open>
+            Item 1
+            <vscode-tree-item open>
+              Item 1.1
+              <vscode-tree-item>Item 1.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+          <vscode-tree-item open>
+            Item 2
+            <vscode-tree-item open>
+              Item 2.1
+              <vscode-tree-item>Item 2.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+          <vscode-tree-item open>
+            Item 3
+            <vscode-tree-item open>
+              Item 3.1
+              <vscode-tree-item>Item 3.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+
+      el.collapseAll();
+      await el.updateComplete;
+
+      expect(el).lightDom.to.eq(
+        `
+      <vscode-tree-item aria-expanded="false" branch>
+        Item 1
+        <vscode-tree-item aria-expanded="false" branch>
+          Item 1.1
+          <vscode-tree-item> Item 1.1.1 </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree-item>
+      <vscode-tree-item aria-expanded="false" branch>
+        Item 2
+        <vscode-tree-item aria-expanded="false" branch>
+          Item 2.1
+          <vscode-tree-item> Item 2.1.1 </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree-item>
+      <vscode-tree-item aria-expanded="false" branch>
+        Item 3
+        <vscode-tree-item aria-expanded="false" branch>
+          Item 3.1
+          <vscode-tree-item> Item 3.1.1 </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree-item>
+    `,
+        {
+          ignoreAttributes: [
+            'aria-disabled',
+            'data-path',
+            'level',
+            'role',
+            'slot',
+            'tabindex',
+          ],
+        }
+      );
+    });
+  });
+
+  describe('expand mode', () => {
+    it('singleClick', async () => {
+      const el = await fixture<VscodeTree>(html`
+        <vscode-tree expand-mode="singleClick">
+          <vscode-tree-item>
+            Item 1
+            <vscode-tree-item>
+              Item 1.1
+              <vscode-tree-item>Item 1.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+      const branch = el.querySelector('vscode-tree-item')!;
+
+      branch.shadowRoot
+        ?.querySelector('.wrapper')
+        ?.dispatchEvent(new PointerEvent('click'));
+
+      expect(branch.open).to.be.true;
+    });
+
+    it('doubleClick', async () => {
+      const el = await fixture<VscodeTree>(html`
+        <vscode-tree expand-mode="doubleClick">
+          <vscode-tree-item>
+            Item 1
+            <vscode-tree-item>
+              Item 1.1
+              <vscode-tree-item>Item 1.1.1</vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+      const branch = el.querySelector('vscode-tree-item')!;
+
+      branch.shadowRoot
+        ?.querySelector('.wrapper')
+        ?.dispatchEvent(new PointerEvent('dblclick'));
+
+      expect(branch.open).to.be.true;
+    });
+  });
+
+  describe('indent guides', () => {
+    it('indentGuides onHover', async () => {
+      const el = await fixture<VscodeTree>(html`
+        <vscode-tree indent-guides="onHover">
+          <vscode-tree-item open>
+            Item 1
+            <vscode-tree-item>Item 1.1</vscode-tree-item>
+            <vscode-tree-item>Item 1.2</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+      const branch = el.querySelector('vscode-tree-item')!;
+      const childrenWrapper =
+        branch.shadowRoot!.querySelector<HTMLDivElement>('.children')!;
+
+      expect(childrenWrapper.classList.contains('guide')).to.be.true;
+      expect(childrenWrapper.classList.contains('default-guide')).to.be.true;
+    });
+
+    it('indentGuides always', async () => {
+      const el = await fixture<VscodeTree>(html`
+        <vscode-tree indent-guides="always">
+          <vscode-tree-item open>
+            Item 1
+            <vscode-tree-item>Item 1.1</vscode-tree-item>
+            <vscode-tree-item>Item 1.2</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+      const branch = el.querySelector('vscode-tree-item')!;
+      const childrenWrapper =
+        branch.shadowRoot!.querySelector<HTMLDivElement>('.children')!;
+
+      expect(childrenWrapper.classList.contains('guide')).to.be.true;
+      expect(childrenWrapper.classList.contains('default-guide')).to.be.true;
+    });
+
+    it('indentGuides none', async () => {
+      const el = await fixture<VscodeTree>(html`
+        <vscode-tree indent-guides="none">
+          <vscode-tree-item open>
+            Item 1
+            <vscode-tree-item>Item 1.1</vscode-tree-item>
+            <vscode-tree-item>Item 1.2</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+      const branch = el.querySelector('vscode-tree-item')!;
+      const childrenWrapper =
+        branch.shadowRoot!.querySelector<HTMLDivElement>('.children')!;
+
+      expect(childrenWrapper.classList.contains('guide')).to.be.false;
+      expect(childrenWrapper.classList.contains('default-guide')).to.be.false;
+    });
+  });
+
   it('focuses first item by default', async () => {
     const el = await fixture<VscodeTree>(html`
       <vscode-tree>
