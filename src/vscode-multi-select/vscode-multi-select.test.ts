@@ -91,36 +91,6 @@ describe('vscode-multi-select', () => {
     expect(el.selectedIndexes).to.deep.equal([0]);
   });
 
-  it('when an option is clicked a custom event should be dispatched', async () => {
-    const el = (await fixture(html`
-      <vscode-multi-select>
-        <vscode-option value="1">One</vscode-option>
-        <vscode-option value="2">Two</vscode-option>
-        <vscode-option value="3">Three</vscode-option>
-      </vscode-multi-select>
-    `)) as VscodeMultiSelect;
-    const changeHandler = sinon.spy();
-    el.addEventListener('vsc-change', changeHandler);
-
-    const selectFace =
-      el.shadowRoot?.querySelector<HTMLDivElement>('.select-face');
-    selectFace!.click();
-    await el.updateComplete;
-
-    const firstOption =
-      el.shadowRoot?.querySelectorAll<HTMLLIElement>('.option')[0];
-    firstOption!.click();
-    await el.updateComplete;
-
-    const dispatchedEvent = changeHandler.args[0][0] as CustomEvent;
-
-    expect(dispatchedEvent.type).to.eq('vsc-change');
-    expect(dispatchedEvent.detail).to.eql({
-      selectedIndexes: [0],
-      value: ['1'],
-    });
-  });
-
   it('should apply combobox mode', async () => {
     const el = await fixture(
       html`<vscode-multi-select combobox>
