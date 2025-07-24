@@ -3,6 +3,8 @@ import {sendKeys} from '@web/test-runner-commands';
 import '../vscode-tree-item/vscode-tree-item.js';
 import {VscodeTreeItem} from '../vscode-tree-item/vscode-tree-item.js';
 import {VscodeTree} from './index.js';
+import sinon from 'sinon';
+import { clickOnElement } from '../includes/test-helpers.js';
 
 describe('vscode-tree', () => {
   it('is defined', () => {
@@ -335,9 +337,37 @@ describe('vscode-tree', () => {
   });
 
   describe('hide arrows', () => {
-    it('hide arrows');
+    it('show arrows', async () => {
+      const el = await fixture(
+        html`<vscode-tree>
+          <vscode-tree-item open>
+            Item 1
+            <vscode-tree-item>Item 1.1</vscode-tree-item>
+            <vscode-tree-item>Item 1.2</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>`
+      );
 
-    it('show arrows');
+      const branch = el.querySelector('vscode-tree-item[open]')!;
+
+      expect(branch.shadowRoot?.querySelector('.arrow-container')).to.be.ok;
+    });
+
+    it('hide arrows', async () => {
+      const el = await fixture(
+        html`<vscode-tree hide-arrows>
+          <vscode-tree-item open>
+            Item 1
+            <vscode-tree-item>Item 1.1</vscode-tree-item>
+            <vscode-tree-item>Item 1.2</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>`
+      );
+
+      const branch = el.querySelector('vscode-tree-item[open]')!;
+
+      expect(branch.shadowRoot?.querySelector('.arrow-container')).to.be.null;
+    });
   });
 
   it('focuses next item when arrow down key is pressed', async () => {
@@ -360,15 +390,57 @@ describe('vscode-tree', () => {
     expect(items[1].active).to.be.true;
   });
 
-  it('selects item with Enter key press');
-  it('selects item with click on it');
+  it('selects item with Enter key press', async () => {
+    const el = await fixture<VscodeTree>(
+      html`<vscode-tree hide-arrows>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>`
+    );
+    const spy = sinon.spy();
+
+    el.addEventListener('vsc-tree-select', spy);
+
+    const firstChild = el.querySelector('vscode-tree-item')!;
+    firstChild.active = true;
+    firstChild.focus();
+    await sendKeys({down: 'Enter'});
+
+    expect(firstChild.selected).to.be.true;
+    expect(spy.getCalls()[0].args[0].type).to.eq('vsc-tree-select');
+  });
+
+  it('selects item with click on it', async () => {
+    const el = await fixture<VscodeTree>(
+      html`<vscode-tree hide-arrows>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>`
+    );
+    const spy = sinon.spy();
+
+    el.addEventListener('vsc-tree-select', spy);
+
+    const firstChild = el.querySelector('vscode-tree-item')!;
+    await clickOnElement(firstChild);
+
+    expect(firstChild.selected).to.be.true;
+    expect(spy.getCalls()[0].args[0].type).to.eq('vsc-tree-select');
+  });
+
   it('opens and selects branch item with Enter key press');
   it('opens and selects branch item with click on it');
+
   it('selecting multiple items upwards with the mouse and the Shift key');
+
   it(
     'expands selection of multiple items upwards with the mouse and the Shift key'
   );
-  it('selecting multiple items downwards with the mouse and the Shift key');
+
+  it('selecting multiple items downwards with the mouse and the Shift key', async () => {
+    
+  });
+
   it(
     'expands selection of multiple items downwards with the mouse and the Shift key'
   );
