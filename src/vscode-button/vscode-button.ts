@@ -184,20 +184,6 @@ export class VscodeButton extends VscElement {
       (event.key === 'Enter' || event.key === ' ') &&
       !this.hasAttribute('disabled')
     ) {
-      /**
-       * @deprecated
-       * Please use the standard `click` event.
-       */
-      this.dispatchEvent(
-        new CustomEvent<{
-          originalEvent: MouseEvent;
-        }>('vsc-click', {
-          detail: {
-            originalEvent: new MouseEvent('click'),
-          },
-        })
-      );
-
       const syntheticClick = new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
