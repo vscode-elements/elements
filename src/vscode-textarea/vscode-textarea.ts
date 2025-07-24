@@ -252,13 +252,13 @@ export class VscodeTextarea
     this._internals.setFormValue(this._textareaEl.value);
   }
 
-  private _handleChange(ev: Event) {
+  private _handleChange() {
     this._dataChanged();
     this._setValidityFromInput();
     this.dispatchEvent(new Event('change'));
   }
 
-  private _handleInput(ev: InputEvent) {
+  private _handleInput() {
     this._dataChanged();
     this._setValidityFromInput();
   }

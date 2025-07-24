@@ -324,7 +324,7 @@ export class VscodeTextfield
     }
   }
 
-  private _onInput(ev: InputEvent) {
+  private _onInput() {
     this._dataChanged();
     this._setValidityFromInput();
 
