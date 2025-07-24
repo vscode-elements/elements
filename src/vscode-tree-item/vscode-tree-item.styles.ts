@@ -89,11 +89,9 @@ const styles: CSSResultGroup = [
     .icon-container {
       align-items: center;
       display: flex;
-      height: 16px;
       margin-bottom: 3px;
       margin-top: 3px;
       overflow: hidden;
-      width: 16px;
     }
 
     .icon-container slot {
@@ -101,7 +99,9 @@ const styles: CSSResultGroup = [
     }
 
     .icon-container.has-icon {
+      height: 16px;
       margin-right: 6px;
+      width: 16px;
     }
 
     .children {
