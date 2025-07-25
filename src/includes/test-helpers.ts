@@ -112,14 +112,22 @@ export async function dragElement(
 type AllTagNames = keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap;
 
 type TagNameToElement<K extends AllTagNames> =
-  K extends keyof HTMLElementTagNameMap ? HTMLElementTagNameMap[K] :
-  K extends keyof SVGElementTagNameMap ? SVGElementTagNameMap[K] :
-  Element;
+  K extends keyof HTMLElementTagNameMap
+    ? HTMLElementTagNameMap[K]
+    : K extends keyof SVGElementTagNameMap
+      ? SVGElementTagNameMap[K]
+      : Element;
 
 export function $<K extends AllTagNames>(selector: K): TagNameToElement<K>;
-export function $<K extends AllTagNames>(root: Element, selector: K): TagNameToElement<K>;
+export function $<K extends AllTagNames>(
+  root: Element,
+  selector: K
+): TagNameToElement<K>;
 export function $<T extends Element = Element>(selector: string): T;
-export function $<T extends Element = Element>(root: Element, selector: string): T;
+export function $<T extends Element = Element>(
+  root: Element,
+  selector: string
+): T;
 export function $<T extends Element = Element>(
   arg1: string | Element,
   arg2?: string
@@ -143,10 +151,20 @@ export function $<T extends Element = Element>(
   return result as T;
 }
 
-export function $$<K extends AllTagNames>(selector: K): NodeListOf<TagNameToElement<K>>;
-export function $$<K extends AllTagNames>(root: Element, selector: K): NodeListOf<TagNameToElement<K>>;
-export function $$<T extends Element = Element>(selector: string): NodeListOf<T>;
-export function $$<T extends Element = Element>(root: Element, selector: string): NodeListOf<T>;
+export function $$<K extends AllTagNames>(
+  selector: K
+): NodeListOf<TagNameToElement<K>>;
+export function $$<K extends AllTagNames>(
+  root: Element,
+  selector: K
+): NodeListOf<TagNameToElement<K>>;
+export function $$<T extends Element = Element>(
+  selector: string
+): NodeListOf<T>;
+export function $$<T extends Element = Element>(
+  root: Element,
+  selector: string
+): NodeListOf<T>;
 export function $$<T extends Element = Element>(
   arg1: string | Element,
   arg2?: string
