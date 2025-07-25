@@ -576,6 +576,42 @@ describe('vscode-tree', () => {
     }
   });
 
+  it('toggle selection upwards with ArrowUp + Shift', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree multi-select>
+        <vscode-tree-item selected>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    const items = $$('vscode-tree-item');
+    items[1].active;
+    items[1].focus();
+    await sendKeys({down: 'Shift'});
+    await sendKeys({down: 'ArrowUp'});
+    await sendKeys({up: 'Shift'});
+
+    expect($('vscode-tree-item').selected).to.be.false;
+  });
+
+  it('toggle selection downwards with ArrowDown + Shift', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree multi-select>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item selected>Item 2</vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    const items = $$('vscode-tree-item');
+    items[0].active;
+    items[0].focus();
+    await sendKeys({down: 'Shift'});
+    await sendKeys({down: 'ArrowDown'});
+    await sendKeys({up: 'Shift'});
+
+    expect($$('vscode-tree-item')[1].selected).to.be.false;
+  });
+
   it('selecting multiple items with the mouse and the Ctrl key', async () => {
     await fixture<VscodeTree>(
       html`<vscode-tree multi-select>
@@ -649,7 +685,7 @@ describe('vscode-tree', () => {
     expect($('vscode-tree-item').open).to.be.false;
   });
 
-  it('selects the parent branch if the ArrowLeft key is pressed on a leaf', async () => {
+  it('pressing ArrowLeft on a leaf selects its parent branch', async () => {
     await fixture<VscodeTree>(
       html`<vscode-tree>
         <vscode-tree-item open>
@@ -666,7 +702,7 @@ describe('vscode-tree', () => {
     expect($('vscode-tree-item').active).to.be.true;
   });
 
-  it('selects the parent branch if the ArrowLeft key is pressed on a closed branch', async () => {
+  it('pressing ArrowLeft on a collapsed branch selects its parent', async () => {
     await fixture<VscodeTree>(
       html`<vscode-tree>
         <vscode-tree-item open>
@@ -684,5 +720,28 @@ describe('vscode-tree', () => {
     await sendKeys({down: 'ArrowLeft'});
 
     expect($('vscode-tree-item').active).to.be.true;
+  });
+
+  it('Ctrl + ArrowLeft collapses all branches', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item open>
+          Item 1
+          <vscode-tree-item open>
+            Item 1.1
+            <vscode-tree-item>Item 1.1.1</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    $('vscode-tree-item').active = true;
+    $('vscode-tree-item').focus();
+    await sendKeys({down: 'Control'});
+    await sendKeys({down: 'ArrowLeft'});
+
+    $$('vscode-tree-item').forEach((i) => {
+      expect(i.open).to.be.false;
+    });
   });
 });
