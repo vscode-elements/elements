@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+    <style>
+      vscode-tree {
+        --vscode-list-activeSelectionBackground: transparent;
+        --vscode-list-inactiveSelectionBackground: transparent;
+        --vscode-list-hoverBackground: transparent;
+      }
+
+      vscode-tree-item:state(active) > span {
+        font-weight: bold;
+      }
+
+      vscode-tree-item:hover > span {
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Custom styles</h1>
+    <main>
+      <vscode-demo>
+        <vscode-tree indent-guides="none">
+          <vscode-tree-item><span>Home</span></vscode-tree-item>
+          <vscode-tree-item>
+            <span>About</span>
+            <vscode-tree-item><span>Overview</span></vscode-tree-item>
+            <vscode-tree-item><span>Administration</span></vscode-tree-item>
+            <vscode-tree-item>
+              <span>Facts</span>
+              <vscode-tree-item><span>History</span></vscode-tree-item>
+              <vscode-tree-item
+                ><span>Current Statistics</span></vscode-tree-item
+              >
+              <vscode-tree-item><span>Awards</span></vscode-tree-item>
+            </vscode-tree-item>
+            <vscode-tree-item>
+              <span>Campus Tours</span>
+              <vscode-tree-item
+                ><span>For Prospective Students</span></vscode-tree-item
+              >
+              <vscode-tree-item><span>For Alumni</span></vscode-tree-item>
+              <vscode-tree-item><span>For Visitors</span></vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+          <vscode-tree-item>
+            <span>Admissions</span>
+            <vscode-tree-item><span>Apply</span></vscode-tree-item>
+            <vscode-tree-item>
+              <span>Tuition</span>
+              <vscode-tree-item><span>Undergraduate</span></vscode-tree-item>
+              <vscode-tree-item><span>Graduate</span></vscode-tree-item>
+              <vscode-tree-item
+                ><span>Professional Schools</span></vscode-tree-item
+              >
+            </vscode-tree-item>
+            <vscode-tree-item><span>Sign Up</span></vscode-tree-item>
+            <vscode-tree-item><span>Visit</span></vscode-tree-item>
+            <vscode-tree-item><span>Photo Tour</span></vscode-tree-item>
+            <vscode-tree-item><span>Connect</span></vscode-tree-item>
+          </vscode-tree-item>
+          <vscode-tree-item>
+            <span>Academics</span>
+            <vscode-tree-item
+              ><span>Colleges &amp; Schools</span></vscode-tree-item
+            >
+            <vscode-tree-item><span>Programs of Study</span></vscode-tree-item>
+            <vscode-tree-item><span>Honors Programs</span></vscode-tree-item>
+            <vscode-tree-item><span>Online Courses</span></vscode-tree-item>
+            <vscode-tree-item><span>Course Explorer</span></vscode-tree-item>
+            <vscode-tree-item
+              ><span>Register for Classes</span></vscode-tree-item
+            >
+            <vscode-tree-item><span>Academic Calendar</span></vscode-tree-item>
+            <vscode-tree-item><span>Transcripts</span></vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
