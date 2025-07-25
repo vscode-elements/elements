@@ -1,10 +1,12 @@
 import {expect, fixture, html} from '@open-wc/testing';
 import {sendKeys} from '@web/test-runner-commands';
+import sinon from 'sinon';
+import {$$, clickOnElement} from '../includes/test-helpers.js';
+import {$} from '../includes/test-helpers.js';
+
 import '../vscode-tree-item/vscode-tree-item.js';
 import {VscodeTreeItem} from '../vscode-tree-item/vscode-tree-item.js';
 import {VscodeTree} from './index.js';
-import sinon from 'sinon';
-import { clickOnElement } from '../includes/test-helpers.js';
 
 describe('vscode-tree', () => {
   it('is defined', () => {
@@ -390,6 +392,26 @@ describe('vscode-tree', () => {
     expect(items[1].active).to.be.true;
   });
 
+  it('focuses previous item when arrow up key is pressed', async () => {
+    const el = await fixture<VscodeTree>(html`
+      <vscode-tree>
+        <vscode-tree-item>Item 1</vscode-tree-item>
+        <vscode-tree-item>Item 2</vscode-tree-item>
+      </vscode-tree>
+    `);
+
+    const items = $$('vscode-tree-item');
+
+    items[1].focus();
+    await sendKeys({press: 'ArrowUp'});
+    await el.updateComplete;
+
+    expect(items[0].tabIndex).to.eq(0);
+    expect(items[0].active).to.be.true;
+    expect(items[1].tabIndex).to.eq(-1);
+    expect(items[1].active).to.be.false;
+  });
+
   it('selects item with Enter key press', async () => {
     const el = await fixture<VscodeTree>(
       html`<vscode-tree hide-arrows>
@@ -401,7 +423,7 @@ describe('vscode-tree', () => {
 
     el.addEventListener('vsc-tree-select', spy);
 
-    const firstChild = el.querySelector('vscode-tree-item')!;
+    const firstChild = $(el, 'vscode-tree-item')!;
     firstChild.active = true;
     firstChild.focus();
     await sendKeys({down: 'Enter'});
@@ -412,7 +434,7 @@ describe('vscode-tree', () => {
 
   it('selects item with click on it', async () => {
     const el = await fixture<VscodeTree>(
-      html`<vscode-tree hide-arrows>
+      html`<vscode-tree>
         <vscode-tree-item>Item 1</vscode-tree-item>
         <vscode-tree-item>Item 2</vscode-tree-item>
       </vscode-tree>`
@@ -428,20 +450,239 @@ describe('vscode-tree', () => {
     expect(spy.getCalls()[0].args[0].type).to.eq('vsc-tree-select');
   });
 
-  it('opens and selects branch item with Enter key press');
-  it('opens and selects branch item with click on it');
+  it('opens and selects branch item with Enter key press', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item id="item1">Item 1</vscode-tree-item>
+        <vscode-tree-item id="item2">
+          Item 2
+          <vscode-tree-item>Item 2.1</vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
 
-  it('selecting multiple items upwards with the mouse and the Shift key');
+    $('vscode-tree-item').focus();
+    await sendKeys({down: 'ArrowDown'});
+    await sendKeys({down: 'Enter'});
 
-  it(
-    'expands selection of multiple items upwards with the mouse and the Shift key'
-  );
-
-  it('selecting multiple items downwards with the mouse and the Shift key', async () => {
-    
+    expect($<VscodeTreeItem>('#item2').open).to.be.true;
+    expect($<VscodeTreeItem>('#item2').selected).to.be.true;
   });
 
-  it(
-    'expands selection of multiple items downwards with the mouse and the Shift key'
-  );
+  it('opens and selects branch item with click on it', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item id="item1">Item 1</vscode-tree-item>
+        <vscode-tree-item id="item2">
+          Item 2
+          <vscode-tree-item>Item 2.1</vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    await clickOnElement($('#item2'));
+
+    expect($<VscodeTreeItem>('#item2').open).to.be.true;
+    expect($<VscodeTreeItem>('#item2').selected).to.be.true;
+  });
+
+  it('selecting multiple items upwards with the mouse and the Shift key', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree multi-select>
+        <vscode-tree-item id="item1">Item 1</vscode-tree-item>
+        <vscode-tree-item id="item2">Item 2</vscode-tree-item>
+        <vscode-tree-item id="item3">Item 3</vscode-tree-item>
+        <vscode-tree-item id="item4">Item 4</vscode-tree-item>
+        <vscode-tree-item id="item5">Item 5</vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    await clickOnElement($('#item5'));
+
+    await sendKeys({down: 'Shift'});
+    await clickOnElement($('#item1'));
+    await sendKeys({up: 'Shift'});
+
+    for (let i = 1; i <= 5; i++) {
+      expect($<VscodeTreeItem>(`#item${i}`).selected).to.be.true;
+    }
+  });
+
+  it('expands selection of multiple items upwards with the mouse and the Shift key', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree multi-select>
+        <vscode-tree-item id="item1">Item 1</vscode-tree-item>
+        <vscode-tree-item id="item2">Item 2</vscode-tree-item>
+        <vscode-tree-item id="item3">Item 3</vscode-tree-item>
+        <vscode-tree-item id="item4">Item 4</vscode-tree-item>
+        <vscode-tree-item id="item5">Item 5</vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    await clickOnElement($('#item5'));
+
+    await sendKeys({down: 'Shift'});
+    await clickOnElement($('#item3'));
+    await clickOnElement($('#item1'));
+    await sendKeys({up: 'Shift'});
+
+    for (let i = 1; i <= 5; i++) {
+      expect($<VscodeTreeItem>(`#item${i}`).selected).to.be.true;
+    }
+  });
+
+  it('selecting multiple items downwards with the mouse and the Shift key', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree multi-select>
+        <vscode-tree-item id="item1">Item 1</vscode-tree-item>
+        <vscode-tree-item id="item2">Item 2</vscode-tree-item>
+        <vscode-tree-item id="item3">Item 3</vscode-tree-item>
+        <vscode-tree-item id="item4">Item 4</vscode-tree-item>
+        <vscode-tree-item id="item5">Item 5</vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    await clickOnElement($('#item1'));
+
+    await sendKeys({down: 'Shift'});
+    await clickOnElement($('#item5'));
+    await sendKeys({up: 'Shift'});
+
+    for (let i = 1; i <= 5; i++) {
+      expect($<VscodeTreeItem>(`#item${i}`).selected).to.be.true;
+    }
+  });
+
+  it('expands selection of multiple items downwards with the mouse and the Shift key', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree multi-select>
+        <vscode-tree-item id="item1">Item 1</vscode-tree-item>
+        <vscode-tree-item id="item2">Item 2</vscode-tree-item>
+        <vscode-tree-item id="item3">Item 3</vscode-tree-item>
+        <vscode-tree-item id="item4">Item 4</vscode-tree-item>
+        <vscode-tree-item id="item5">Item 5</vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    await clickOnElement($('#item1'));
+
+    await sendKeys({down: 'Shift'});
+    await clickOnElement($('#item3'));
+    await clickOnElement($('#item5'));
+    await sendKeys({up: 'Shift'});
+
+    for (let i = 1; i <= 5; i++) {
+      expect($<VscodeTreeItem>(`#item${i}`).selected).to.be.true;
+    }
+  });
+
+  it('selecting multiple items with the mouse and the Ctrl key', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree multi-select>
+        <vscode-tree-item id="item1">Item 1</vscode-tree-item>
+        <vscode-tree-item id="item2">Item 2</vscode-tree-item>
+        <vscode-tree-item id="item3">Item 3</vscode-tree-item>
+        <vscode-tree-item id="item4">Item 4</vscode-tree-item>
+        <vscode-tree-item id="item5">Item 5</vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    await clickOnElement($('#item1'));
+    await sendKeys({down: 'Control'});
+    await clickOnElement($('#item3'));
+    await clickOnElement($('#item5'));
+    await sendKeys({up: 'Control'});
+
+    expect($<VscodeTreeItem>('#item1').selected).to.be.true;
+    expect($<VscodeTreeItem>('#item2').selected).to.be.false;
+    expect($<VscodeTreeItem>('#item3').selected).to.be.true;
+    expect($<VscodeTreeItem>('#item4').selected).to.be.false;
+    expect($<VscodeTreeItem>('#item5').selected).to.be.true;
+  });
+
+  it('opens closed branch if the ArrowRight key is pressed', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item>
+          Item 1
+          <vscode-tree-item>Item 1.1</vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    $('vscode-tree-item').focus();
+    await sendKeys({down: 'ArrowRight'});
+
+    expect($('vscode-tree-item').open).to.be.true;
+  });
+
+  it('select the first child when the ArrowRight key is pressed on an opened branch', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item open>
+          Item 1
+          <vscode-tree-item id="item1_1">Item 1.1</vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    $('vscode-tree-item').active = true;
+    $('vscode-tree-item').focus();
+    await sendKeys({down: 'ArrowRight'});
+
+    expect($<VscodeTreeItem>('#item1_1').active).to.be.true;
+  });
+
+  it('closes the opened branch if the ArrowLeft key is pressed', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item open>
+          Item 1
+          <vscode-tree-item>Item 1.1</vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    $('vscode-tree-item').focus();
+    await sendKeys({down: 'ArrowLeft'});
+
+    expect($('vscode-tree-item').open).to.be.false;
+  });
+
+  it('selects the parent branch if the ArrowLeft key is pressed on a leaf', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item open>
+          Item 1
+          <vscode-tree-item id="item1_1">Item 1.1</vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    $<VscodeTreeItem>('#item1_1').active = true;
+    $<VscodeTreeItem>('#item1_1').focus();
+    await sendKeys({down: 'ArrowLeft'});
+
+    expect($('vscode-tree-item').active).to.be.true;
+  });
+
+  it('selects the parent branch if the ArrowLeft key is pressed on a closed branch', async () => {
+    await fixture<VscodeTree>(
+      html`<vscode-tree>
+        <vscode-tree-item open>
+          Item 1
+          <vscode-tree-item id="item1_1">
+            Item 1.1
+            <vscode-tree-item>Item 1.1.1</vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree-item>
+      </vscode-tree>`
+    );
+
+    $<VscodeTreeItem>('#item1_1').active = true;
+    $<VscodeTreeItem>('#item1_1').focus();
+    await sendKeys({down: 'ArrowLeft'});
+
+    expect($('vscode-tree-item').active).to.be.true;
+  });
 });

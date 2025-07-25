@@ -108,3 +108,64 @@ export async function dragElement(
 
   await sendMouse({type: 'up'});
 }
+
+type AllTagNames = keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap;
+
+type TagNameToElement<K extends AllTagNames> =
+  K extends keyof HTMLElementTagNameMap ? HTMLElementTagNameMap[K] :
+  K extends keyof SVGElementTagNameMap ? SVGElementTagNameMap[K] :
+  Element;
+
+export function $<K extends AllTagNames>(selector: K): TagNameToElement<K>;
+export function $<K extends AllTagNames>(root: Element, selector: K): TagNameToElement<K>;
+export function $<T extends Element = Element>(selector: string): T;
+export function $<T extends Element = Element>(root: Element, selector: string): T;
+export function $<T extends Element = Element>(
+  arg1: string | Element,
+  arg2?: string
+): T {
+  let result: Element | null;
+
+  if (typeof arg1 === 'string') {
+    result = document.querySelector(arg1);
+  } else if (arg1 instanceof Element && typeof arg2 === 'string') {
+    result = arg1.querySelector(arg2);
+  } else {
+    throw new Error('Invalid arguments passed to $()');
+  }
+
+  if (!result) {
+    const selector = typeof arg1 === 'string' ? arg1 : arg2!;
+    const context = typeof arg1 === 'string' ? 'document' : 'root element';
+    throw new Error(`No match for selector: ${selector} in ${context}`);
+  }
+
+  return result as T;
+}
+
+export function $$<K extends AllTagNames>(selector: K): NodeListOf<TagNameToElement<K>>;
+export function $$<K extends AllTagNames>(root: Element, selector: K): NodeListOf<TagNameToElement<K>>;
+export function $$<T extends Element = Element>(selector: string): NodeListOf<T>;
+export function $$<T extends Element = Element>(root: Element, selector: string): NodeListOf<T>;
+export function $$<T extends Element = Element>(
+  arg1: string | Element,
+  arg2?: string
+): NodeListOf<T> {
+  let result: NodeListOf<Element>;
+
+  if (typeof arg1 === 'string') {
+    result = document.querySelectorAll(arg1);
+  } else if (arg1 instanceof Element && typeof arg2 === 'string') {
+    result = arg1.querySelectorAll(arg2);
+  } else {
+    throw new Error('Invalid arguments passed to $$()');
+  }
+
+  if (result.length === 0) {
+    const selector = typeof arg1 === 'string' ? arg1 : arg2!;
+    const context = typeof arg1 === 'string' ? 'document' : 'root element';
+    throw new Error(`No matches for selector: ${selector} in ${context}`);
+  }
+
+  return result as NodeListOf<T>;
+}
