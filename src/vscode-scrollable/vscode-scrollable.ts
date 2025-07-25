@@ -10,7 +10,6 @@ export type VscScrollableScrollEvent = CustomEvent<number>;
 /**
  * @tag vscode-scrollable
  *
- * @cssprop --min-thumb-height - (@deprecated) This css property is deprecated. Use the `minThumbSize` property instead.
  * @cssprop [--vscode-scrollbar-shadow=#000000]
  * @cssprop [--vscode-scrollbarSlider-background=rgba(121, 121, 121, 0.4)]
  * @cssprop [--vscode-scrollbarSlider-hoverBackground=rgba(100, 100, 100, 0.7)]

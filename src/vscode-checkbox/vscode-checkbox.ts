@@ -224,18 +224,6 @@ export class VscodeCheckbox
     this._setActualFormValue();
     this._manageRequired();
     this.dispatchEvent(new Event('change', {bubbles: true}));
-    /** @deprecated */
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {
-          checked: this.checked,
-          label: this.label,
-          value: this.value,
-        },
-        bubbles: true,
-        composed: true,
-      })
-    );
   }
 
   private _handleClick = (ev: MouseEvent): void => {
