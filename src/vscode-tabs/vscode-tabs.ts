@@ -33,10 +33,6 @@ export class VscodeTabs extends VscElement {
   @property({type: Boolean, reflect: true})
   panel = false;
 
-  /** @internal */
-  @property({reflect: true})
-  override role = 'tablist';
-
   @property({type: Number, reflect: true, attribute: 'selected-index'})
   selectedIndex = 0;
 
@@ -205,7 +201,9 @@ export class VscodeTabs extends VscElement {
         @click=${this._onHeaderClick}
         @keydown=${this._onHeaderKeyDown}
       >
-        <slot name="header" @slotchange=${this._onHeaderSlotChange}></slot>
+        <div role="tablist" class="tablist">
+          <slot name="header" @slotchange=${this._onHeaderSlotChange} role="tablist"></slot>
+        </div>
         <slot name="addons"></slot>
       </div>
       <slot @slotchange=${this._onMainSlotChange}></slot>
