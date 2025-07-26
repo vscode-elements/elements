@@ -31,6 +31,10 @@ const styles: CSSResultGroup = [
       padding-right: 8px;
     }
 
+    .tablist {
+      display: flex;
+    }
+
     slot[name='addons'] {
       display: block;
       margin-left: auto;
