@@ -202,7 +202,11 @@ export class VscodeTabs extends VscElement {
         @keydown=${this._onHeaderKeyDown}
       >
         <div role="tablist" class="tablist">
-          <slot name="header" @slotchange=${this._onHeaderSlotChange} role="tablist"></slot>
+          <slot
+            name="header"
+            @slotchange=${this._onHeaderSlotChange}
+            role="tablist"
+          ></slot>
         </div>
         <slot name="addons"></slot>
       </div>
