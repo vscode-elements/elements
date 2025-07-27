@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - Made **Tabs** accessible
+- Fixed clipped focus outline in the **ButtonGroup**.
 
 ## [1.17.0] - 2025-07-02
 
