@@ -1,10 +1,7 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
-import type {
-  VscClickEventDetail,
-  VscodeContextMenuItem,
-} from '../vscode-context-menu-item/vscode-context-menu-item.js';
+import type {VscodeContextMenuItem} from '../vscode-context-menu-item/vscode-context-menu-item.js';
 import '../vscode-context-menu-item/index.js';
 import styles from './vscode-context-menu.styles.js';
 
@@ -197,26 +194,6 @@ export class VscodeContextMenu extends VscElement {
     );
   }
 
-  private _dispatchLegacySelectEvent(selectedOption: VscodeContextMenuItem) {
-    const {keybinding, label, value, separator, tabindex} = selectedOption;
-    const detail: VscClickEventDetail = {
-      keybinding,
-      label,
-      value,
-      separator,
-      tabindex,
-    };
-
-    /** @deprecated - Renamed to `vsc-context-menu-select` */
-    this.dispatchEvent(
-      new CustomEvent('vsc-select', {
-        detail,
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
-
   private _handleEnter() {
     if (this._selectedClickableItemIndex === -1) {
       return;
@@ -229,7 +206,6 @@ export class VscodeContextMenu extends VscElement {
     );
     const selectedOption = options[realItemIndex];
 
-    this._dispatchLegacySelectEvent(selectedOption);
     this._dispatchSelectEvent(selectedOption);
 
     if (!this.preventClose) {
@@ -241,7 +217,6 @@ export class VscodeContextMenu extends VscElement {
   private _onItemClick(event: CustomEvent) {
     const et = event.currentTarget as VscodeContextMenuItem;
 
-    this._dispatchLegacySelectEvent(et);
     this._dispatchSelectEvent(et);
 
     if (!this.preventClose) {

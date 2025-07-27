@@ -177,16 +177,6 @@ export class VscodeMultiSelect
   }
 
   protected override _dispatchChangeEvent(): void {
-    /** @deprecated */
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {
-          selectedIndexes: this._opts.selectedIndexes,
-          value: this._opts.multiSelectValue,
-        },
-      })
-    );
-
     super._dispatchChangeEvent();
   }
 

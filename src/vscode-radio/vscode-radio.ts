@@ -179,24 +179,6 @@ export class VscodeRadio
     }
   }
 
-  private _dispatchCustomEvent() {
-    /** @deprecated - Use the native `change` event instead. */
-    this.dispatchEvent(
-      new CustomEvent<{checked: boolean; label: string; value: string}>(
-        'vsc-change',
-        {
-          detail: {
-            checked: this.checked,
-            label: this.label,
-            value: this.value,
-          },
-          bubbles: true,
-          composed: true,
-        }
-      )
-    );
-  }
-
   private _getRadios(): VscodeRadio[] {
     const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
 
@@ -294,7 +276,6 @@ export class VscodeRadio
     if (!this.checked) {
       this._checkButton();
       this._handleValueChange();
-      this._dispatchCustomEvent();
       this.dispatchEvent(new Event('change', {bubbles: true}));
     }
   };
@@ -306,7 +287,6 @@ export class VscodeRadio
       if (ev.key === ' ' && !this.checked) {
         this.checked = true;
         this._handleValueChange();
-        this._dispatchCustomEvent();
         this.dispatchEvent(new Event('change', {bubbles: true}));
       }
 

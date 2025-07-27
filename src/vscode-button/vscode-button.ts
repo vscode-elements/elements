@@ -11,8 +11,6 @@ import {ifDefined} from 'lit/directives/if-defined.js';
  *
  * @tag vscode-button
  *
- * @fires vsc-click Dispatched only when button is not in disabled state.
- *
  * @cssprop [--vscode-button-background=#0078d4]
  * @cssprop [--vscode-button-foreground=#ffffff]
  * @cssprop [--vscode-button-border=var(--vscode-button-background, rgba(255, 255, 255, 0.07))]
@@ -184,20 +182,6 @@ export class VscodeButton extends VscElement {
       (event.key === 'Enter' || event.key === ' ') &&
       !this.hasAttribute('disabled')
     ) {
-      /**
-       * @deprecated
-       * Please use the standard `click` event.
-       */
-      this.dispatchEvent(
-        new CustomEvent<{
-          originalEvent: MouseEvent;
-        }>('vsc-click', {
-          detail: {
-            originalEvent: new MouseEvent('click'),
-          },
-        })
-      );
-
       const syntheticClick = new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
@@ -215,16 +199,6 @@ export class VscodeButton extends VscElement {
       return;
     }
     if (!this.hasAttribute('disabled')) {
-      this.dispatchEvent(
-        new CustomEvent<{
-          originalEvent: MouseEvent;
-        }>('vsc-click', {
-          detail: {
-            originalEvent: event,
-          },
-        })
-      );
-
       this._executeAction();
     }
   }

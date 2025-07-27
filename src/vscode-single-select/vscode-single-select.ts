@@ -218,20 +218,6 @@ export class VscodeSingleSelect
     this._isPlaceholderOptionActive = false;
   }
 
-  protected override _dispatchChangeEvent(): void {
-    /** @deprecated */
-    this.dispatchEvent(
-      new CustomEvent('vsc-change', {
-        detail: {
-          selectedIndex: this._opts.selectedIndex,
-          value: this._value,
-        },
-      })
-    );
-
-    super._dispatchChangeEvent();
-  }
-
   protected override _setStateFromSlottedElements(): void {
     super._setStateFromSlottedElements();
 
