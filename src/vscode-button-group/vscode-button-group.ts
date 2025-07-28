@@ -1,6 +1,5 @@
 import {html, TemplateResult} from 'lit';
-import {customElement} from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement.js';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-button-group.styles.js';
 
 /**

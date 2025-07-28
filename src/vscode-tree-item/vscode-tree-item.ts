@@ -1,13 +1,8 @@
 import {PropertyValues, TemplateResult, html, nothing} from 'lit';
 import {consume} from '@lit/context';
-import {
-  customElement,
-  property,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {VscElement} from '../includes/VscElement';
+import {customElement, VscElement} from '../includes/VscElement';
 import {stylePropertyMap} from '../includes/style-property-map';
 import {
   ConfigContext,

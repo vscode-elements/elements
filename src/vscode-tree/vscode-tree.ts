@@ -1,11 +1,10 @@
 import {PropertyValues, TemplateResult, html} from 'lit';
 import {provide} from '@lit/context';
 import {
-  customElement,
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
-import {VscElement} from '../includes/VscElement';
+import {customElement, VscElement} from '../includes/VscElement';
 import type {VscodeTreeItem} from '../vscode-tree-item';
 import styles from './vscode-tree.styles';
 import {
