@@ -214,8 +214,8 @@ export class VscodeButton extends VscElement {
   override render(): TemplateResult {
     const hasIcon = this.icon !== '';
     const hasIconAfter = this.iconAfter !== '';
-    const wrapperClasses = {
-      wrapper: true,
+    const contentClasses = {
+      content: true,
       'has-icon-before': hasIcon,
       'has-icon-after': hasIconAfter,
       'icon-only': this.iconOnly,
@@ -240,12 +240,14 @@ export class VscodeButton extends VscElement {
       : nothing;
 
     return html`
-      <span class=${classMap(wrapperClasses)}>
-        ${iconElem}
-        <slot></slot>
-        ${iconAfterElem}
-      </span>
-      <div class="divider"><div></div></div>
+      <div class="root">
+        <div class=${classMap(contentClasses)}>
+          ${iconElem}
+          <slot></slot>
+          ${iconAfterElem}
+        </div>
+        <div class="divider"><div></div></div>
+      </div>
     `;
   }
 }

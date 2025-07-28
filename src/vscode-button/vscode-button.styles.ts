@@ -8,13 +8,25 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      background-color: var(--vscode-button-background, #0078d4);
-      border-color: var(--vscode-button-border, transparent);
-      border-style: solid;
-      border-radius: 2px;
-      border-width: 1px;
-      color: var(--vscode-button-foreground, #ffffff);
       cursor: pointer;
+      display: inline-block;
+      width: auto;
+    }
+
+    .root {
+      background-color: var(--vscode-button-background, #0078d4);
+      border-bottom-left-radius: var(--private-border-left-radius, 2px);
+      border-bottom-right-radius: var(--private-border-right-radius, 2px);
+      border-bottom-width: 1px;
+      border-color: var(--vscode-button-border, transparent);
+      border-left-width: var(--private-border-left-width, 1px);
+      border-right-width: var(--private-border-right-width, 1px);
+      border-style: solid;
+      border-top-left-radius: var(--private-border-left-radius, 2px);
+      border-top-right-radius: var(--private-border-right-radius, 2px);
+      border-top-width: 1px;
+      box-sizing: border-box;
+      color: var(--vscode-button-foreground, #ffffff);
       display: inline-flex;
       font-family: var(--vscode-font-family, ${defaultFontStack});
       font-size: var(--vscode-font-size, 13px);
@@ -24,9 +36,10 @@ const styles: CSSResultGroup = [
       padding: 0;
       user-select: none;
       white-space: nowrap;
+      width: 100%;
     }
 
-    :host([secondary]) {
+    :host([secondary]) .root {
       color: var(--vscode-button-secondaryForeground, #cccccc);
       background-color: var(--vscode-button-secondaryBackground, #313131);
       border-color: var(
@@ -41,19 +54,19 @@ const styles: CSSResultGroup = [
       pointer-events: none;
     }
 
-    :host(:hover) {
+    :host(:hover) .root {
       background-color: var(--vscode-button-hoverBackground, #026ec1);
     }
 
-    :host([disabled]:hover) {
+    :host([disabled]:hover) .root {
       background-color: var(--vscode-button-background, #0078d4);
     }
 
-    :host([secondary]:hover) {
+    :host([secondary]:hover) .root {
       background-color: var(--vscode-button-secondaryHoverBackground, #3c3c3c);
     }
 
-    :host([secondary][disabled]:hover) {
+    :host([secondary][disabled]:hover) .root {
       background-color: var(--vscode-button-secondaryBackground, #313131);
     }
 
@@ -62,22 +75,22 @@ const styles: CSSResultGroup = [
       outline: none;
     }
 
-    :host(:focus) {
+    :host(:focus) .root {
       background-color: var(--vscode-button-hoverBackground, #026ec1);
       outline: 1px solid var(--vscode-focusBorder, #0078d4);
       outline-offset: 2px;
     }
 
-    :host([disabled]:focus) {
+    :host([disabled]:focus) .root {
       background-color: var(--vscode-button-background, #0078d4);
       outline: 0;
     }
 
-    :host([secondary]:focus) {
+    :host([secondary]:focus) .root {
       background-color: var(--vscode-button-secondaryHoverBackground, #3c3c3c);
     }
 
-    :host([secondary][disabled]:focus) {
+    :host([secondary][disabled]:focus) .root {
       background-color: var(--vscode-button-secondaryBackground, #313131);
     }
 
@@ -99,7 +112,7 @@ const styles: CSSResultGroup = [
       color: inherit;
     }
 
-    .wrapper {
+    .content {
       align-items: center;
       box-sizing: border-box;
       display: flex;
@@ -110,11 +123,11 @@ const styles: CSSResultGroup = [
       padding: 1px 13px;
     }
 
-    :host(:empty) .wrapper,
-    :host([icon-only]) .wrapper {
+    :host(:empty) .content,
+    :host([icon-only]) .content {
       min-height: 24px;
       min-width: 16px;
-      padding: 1px 5px;
+      padding: 1px 4px;
     }
 
     slot {
@@ -139,7 +152,7 @@ const styles: CSSResultGroup = [
     }
 
     .divider {
-      display: var(--divider-display, none);
+      display: var(--private-divider-display, none);
       background-color: transparent;
       padding: 4px 0;
       box-sizing: border-box;
