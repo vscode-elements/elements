@@ -27,7 +27,7 @@ export class VscodeBadge extends VscElement {
     | 'tab-header-counter' = 'default';
 
   override render(): TemplateResult {
-    return html` <slot></slot> `;
+    return html`<div class="root"><slot></slot></div>`;
   }
 }
 
