@@ -38,11 +38,6 @@ export const customElement = (tagName: string) => {
     let message = '';
 
     if (!anotherVersion) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        tagName,
-        'is already registered by an unknown custom element handler class.'
-      );
       message +=
         'is already registered by an unknown custom element handler class.';
     } else if (anotherVersion !== VERSION) {
@@ -50,8 +45,7 @@ export const customElement = (tagName: string) => {
         'is already registered by a different version of VSCode Elements. ';
       message += `This version is "${VERSION}", while the other one is "${anotherVersion}".`;
     } else {
-      message +=
-        'is already registered by the same version of VSCode Elements. ';
+      message += `is already registered by the same version of VSCode Elements (${VERSION}).`;
     }
 
     // eslint-disable-next-line no-console
