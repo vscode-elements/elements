@@ -6,10 +6,13 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      display: inline-flex;
+      display: inline-block;
+    }
+
+    .root {
       align-items: stretch;
-      padding: 0;
-      border: none;
+      display: flex;
+      width: 100%;
     }
 
     ::slotted(vscode-button:not(:first-child)) {
@@ -27,6 +30,10 @@ const styles: CSSResultGroup = [
 
     ::slotted(vscode-button:focus) {
       z-index: 1;
+    }
+
+    ::slotted(vscode-button:not(:empty)) {
+      width: 100%;
     }
   `,
 ];
