@@ -5,6 +5,10 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
+      display: block;
+    }
+
+    div {
       gap: 4px;
       display: flex;
       align-items: center;

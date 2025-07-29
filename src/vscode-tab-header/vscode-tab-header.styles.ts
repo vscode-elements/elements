@@ -5,23 +5,30 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      border-bottom: 1px solid transparent;
       cursor: pointer;
       display: block;
-      margin-bottom: -1px;
+      user-select: none;
+    }
+
+    .wrapper {
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      color: var(--vscode-foreground);
+      display: flex;
+      min-height: 20px;
       overflow: hidden;
       padding: 7px 8px;
+      position: relative;
       text-overflow: ellipsis;
-      user-select: none;
       white-space: nowrap;
     }
 
-    :host([active]) {
+    :host([active]) .wrapper {
       border-bottom-color: var(--vscode-panelTitle-activeForeground);
       color: var(--vscode-panelTitle-activeForeground);
     }
 
-    :host([panel]) {
+    :host([panel]) .wrapper {
       border-bottom: 0;
       margin-bottom: 0;
       padding: 0;

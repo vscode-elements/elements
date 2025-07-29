@@ -12,7 +12,7 @@ export class VscodeToolbarContainer extends VscElement {
   static override styles = styles;
 
   override render(): TemplateResult {
-    return html` <slot></slot> `;
+    return html`<div><slot></slot></div>`;
   }
 }
 

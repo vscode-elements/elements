@@ -5,7 +5,6 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      align-items: center;
       display: block;
       height: 28px;
       margin: 0;
