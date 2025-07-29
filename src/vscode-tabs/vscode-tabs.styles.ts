@@ -33,6 +33,7 @@ const styles: CSSResultGroup = [
 
     .tablist {
       display: flex;
+      margin-bottom: -1px;
     }
 
     slot[name='addons'] {

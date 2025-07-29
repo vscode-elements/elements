@@ -8,6 +8,11 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
+      display: inline-block;
+      width: 320px;
+    }
+
+    .root {
       align-items: center;
       background-color: var(--vscode-settings-textInputBackground, #313131);
       border-color: var(
@@ -19,10 +24,10 @@ const styles: CSSResultGroup = [
       border-width: 1px;
       box-sizing: border-box;
       color: var(--vscode-settings-textInputForeground, #cccccc);
-      display: inline-flex;
+      display: flex;
       max-width: 100%;
       position: relative;
-      width: 320px;
+      width: 100%;
     }
 
     :host([focused]) {

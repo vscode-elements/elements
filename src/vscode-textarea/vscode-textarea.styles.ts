@@ -6,7 +6,7 @@ const styles: CSSResultGroup = [
   css`
     :host {
       display: inline-block;
-      height: 40px;
+      height: auto;
       position: relative;
       width: 320px;
     }

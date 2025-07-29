@@ -16,7 +16,7 @@ export class VscodeDivider extends VscElement {
   override role: 'separator' | 'presentation' = 'separator';
 
   override render(): TemplateResult {
-    return html``;
+    return html`<div></div>`;
   }
 }
 

@@ -352,33 +352,35 @@ export class VscodeTextfield
 
   override render(): TemplateResult {
     return html`
-      <slot name="content-before"></slot>
-      <input
-        id="input"
-        type=${this.type}
-        ?autofocus=${this.autofocus}
-        autocomplete=${ifDefined(this.autocomplete)}
-        aria-label=${this.label}
-        ?disabled=${this.disabled}
-        max=${ifDefined(this.max)}
-        maxlength=${ifDefined(this.maxLength)}
-        min=${ifDefined(this.min)}
-        minlength=${ifDefined(this.minLength)}
-        ?multiple=${this.multiple}
-        name=${ifDefined(this.name)}
-        pattern=${ifDefined(this.pattern)}
-        placeholder=${ifDefined(this.placeholder)}
-        ?readonly=${this.readonly}
-        ?required=${this.required}
-        step=${ifDefined(this.step)}
-        .value=${this._value}
-        @blur=${this._onBlur}
-        @change=${this._onChange}
-        @focus=${this._onFocus}
-        @input=${this._onInput}
-        @keydown=${this._onKeyDown}
-      >
-      <slot name="content-after"></slot>
+      <div class="root">
+        <slot name="content-before"></slot>
+        <input
+          id="input"
+          type=${this.type}
+          ?autofocus=${this.autofocus}
+          autocomplete=${ifDefined(this.autocomplete)}
+          aria-label=${this.label}
+          ?disabled=${this.disabled}
+          max=${ifDefined(this.max)}
+          maxlength=${ifDefined(this.maxLength)}
+          min=${ifDefined(this.min)}
+          minlength=${ifDefined(this.minLength)}
+          ?multiple=${this.multiple}
+          name=${ifDefined(this.name)}
+          pattern=${ifDefined(this.pattern)}
+          placeholder=${ifDefined(this.placeholder)}
+          ?readonly=${this.readonly}
+          ?required=${this.required}
+          step=${ifDefined(this.step)}
+          .value=${this._value}
+          @blur=${this._onBlur}
+          @change=${this._onChange}
+          @focus=${this._onFocus}
+          @input=${this._onInput}
+          @keydown=${this._onKeyDown}
+        >
+        <slot name="content-after"></slot>
+      </div>
     `;
   }
 }

@@ -6,10 +6,6 @@ const styles: CSSResultGroup = [
   css`
     :host {
       display: block;
-      font-family: var(--vscode-font-family, sans-serif);
-      font-size: var(--vscode-font-size, 13px);
-      font-weight: var(--vscode-font-weight, normal);
-      line-height: 1.4em;
       position: relative;
     }
 
@@ -21,6 +17,10 @@ const styles: CSSResultGroup = [
       border-width: 1px;
       box-shadow: 0 2px 8px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36));
       color: var(--vscode-menu-foreground, #cccccc);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
+      line-height: 1.4em;
       padding: 4px 0;
       white-space: nowrap;
     }

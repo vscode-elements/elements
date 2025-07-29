@@ -3,12 +3,7 @@ import {css} from 'lit';
 export default [
   css`
     :host {
-      color: var(--vscode-foreground, #cccccc);
       display: inline-block;
-      font-family: var(--vscode-font-family, sans-serif);
-      font-size: var(--vscode-font-size, 13px);
-      font-weight: var(--vscode-font-weight, normal);
-      line-height: 18px;
     }
 
     :host(:focus) {
@@ -20,9 +15,13 @@ export default [
     }
 
     .wrapper {
+      color: var(--vscode-foreground, #cccccc);
       cursor: pointer;
       display: block;
+      font-family: var(--vscode-font-family, sans-serif);
       font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
+      line-height: 18px;
       margin-bottom: 4px;
       margin-top: 4px;
       min-height: 18px;
@@ -35,15 +34,15 @@ export default [
     }
 
     input {
-      position: absolute;
+      clip: rect(1px, 1px, 1px, 1px);
       height: 1px;
       left: 9px;
       margin: 0;
-      top: 17px;
-      width: 1px;
       overflow: hidden;
-      clip: rect(1px, 1px, 1px, 1px);
+      position: absolute;
+      top: 17px;
       white-space: nowrap;
+      width: 1px;
     }
 
     .icon {
