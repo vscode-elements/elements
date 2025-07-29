@@ -15,15 +15,15 @@ const styles: CSSResultGroup = [
 
     .root {
       background-color: var(--vscode-button-background, #0078d4);
-      border-bottom-left-radius: var(--private-border-left-radius, 2px);
-      border-bottom-right-radius: var(--private-border-right-radius, 2px);
+      border-bottom-left-radius: var(--vsc-border-left-radius, 2px);
+      border-bottom-right-radius: var(--vsc-border-right-radius, 2px);
       border-bottom-width: 1px;
       border-color: var(--vscode-button-border, transparent);
-      border-left-width: var(--private-border-left-width, 1px);
-      border-right-width: var(--private-border-right-width, 1px);
+      border-left-width: var(--vsc-border-left-width, 1px);
+      border-right-width: var(--vsc-border-right-width, 1px);
       border-style: solid;
-      border-top-left-radius: var(--private-border-left-radius, 2px);
-      border-top-right-radius: var(--private-border-right-radius, 2px);
+      border-top-left-radius: var(--vsc-border-left-radius, 2px);
+      border-top-right-radius: var(--vsc-border-right-radius, 2px);
       border-top-width: 1px;
       box-sizing: border-box;
       color: var(--vscode-button-foreground, #ffffff);
@@ -152,7 +152,7 @@ const styles: CSSResultGroup = [
     }
 
     .divider {
-      display: var(--private-divider-display, none);
+      display: var(--vsc-divider-display, none);
       background-color: transparent;
       padding: 4px 0;
       box-sizing: border-box;

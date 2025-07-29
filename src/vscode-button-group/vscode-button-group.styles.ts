@@ -13,16 +13,16 @@ const styles: CSSResultGroup = [
     }
 
     ::slotted(vscode-button:not(:first-child)) {
-      --private-border-left-width: 0;
-      --private-border-left-radius: 0;
-      --private-border-left-width: 0;
+      --vsc-border-left-width: 0;
+      --vsc-border-left-radius: 0;
+      --vsc-border-left-width: 0;
     }
 
     ::slotted(vscode-button:not(:last-child)) {
-      --private-divider-display: block;
-      --private-border-right-width: 0;
-      --private-border-right-radius: 0;
-      --private-border-right-width: 0;
+      --vsc-divider-display: block;
+      --vsc-border-right-width: 0;
+      --vsc-border-right-radius: 0;
+      --vsc-border-right-width: 0;
     }
 
     ::slotted(vscode-button:focus) {
