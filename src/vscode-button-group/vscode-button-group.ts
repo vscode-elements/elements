@@ -24,7 +24,7 @@ export class VscodeButtonGroup extends VscElement {
   static override styles = styles;
 
   override render(): TemplateResult {
-    return html` <slot></slot> `;
+    return html`<div class="root"><slot></slot></div>`;
   }
 }
 
