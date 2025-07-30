@@ -6,18 +6,18 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
+      display: block;
+    }
+
+    .wrapper {
       color: var(--vscode-foreground, #cccccc);
+      cursor: default;
+      display: block;
       font-family: var(--vscode-font-family, sans-serif);
       font-size: var(--vscode-font-size, 13px);
       font-weight: 600;
       line-height: ${INPUT_LINE_HEIGHT_RATIO};
-      cursor: default;
-      display: block;
       padding: 5px 0;
-    }
-
-    .wrapper {
-      display: block;
     }
 
     .wrapper.required:after {
