@@ -30,7 +30,7 @@ const styles: CSSResultGroup = [
       width: 100%;
     }
 
-    :host([focused]) {
+    :host([focused]) .root {
       border-color: var(--vscode-focusBorder, #0078d4);
     }
 
