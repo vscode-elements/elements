@@ -3,22 +3,24 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>VSCode Webview Elements demo page</title>
+    <title>VSCode Elements</title>
     <link
       rel="stylesheet"
-      href="../node_modules/@vscode/codicons/dist/codicon.css"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
     >
     <script
       type="module"
       src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
     ></script>
-    <script type="module" src="../dist/vscode-icon/index.js"></script>
-    <script type="module" src="../dist/vscode-badge/index.js"></script>
-    <script type="module" src="../dist/vscode-collapsible/index.js"></script>
-    <script type="module" src="../dist/vscode-single-select/index.js"></script>
-    <script type="module" src="../dist/vscode-option/index.js"></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
   </head>
 
   <body class="vscode-light">
@@ -32,7 +34,7 @@
         </style>
         <vscode-demo>
           <vscode-collapsible
-            title="Lorem"
+            heading="Lorem"
             description="Ipsum Dolor sit"
             open
             class="collapsible1"
@@ -87,7 +89,7 @@
             </vscode-single-select>
             <p>lorem ipsum dolor sit</p>
           </vscode-collapsible>
-          <vscode-collapsible title="Ipsum">
+          <vscode-collapsible heading="Ipsum">
             <div slot="actions">
               <vscode-icon
                 name="account"
@@ -135,10 +137,6 @@
                 console.log(event);
               }
             });
-          });
-
-          collapsible.addEventListener('vsc-collapsible-toggle', (e) => {
-            console.log(e.detail);
           });
         </script>
       </div>
