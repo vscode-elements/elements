@@ -30,11 +30,22 @@ export type VscCollapsibleToggleEvent = CustomEvent<{open: boolean}>;
 export class VscodeCollapsible extends VscElement {
   static override styles = styles;
 
-  /** Component heading text */
+  /**
+   * Component heading text
+   *
+   * @deprecated The `title` is a global HTML attribute and will unintentionally trigger a native
+   * tooltip on the component. Use the `heading` property instead.
+   */
   @property({type: String})
-  override title = '';
+  override title: string = '';
 
-  /** Less prominent text than the title in the header */
+  /**
+   * Heading text.
+   */
+  @property()
+  heading = '';
+
+  /** Less prominent text in the header. */
   @property()
   description = '';
 
@@ -63,6 +74,7 @@ export class VscodeCollapsible extends VscElement {
 
   override render(): TemplateResult {
     const classes = classMap({collapsible: true, open: this.open});
+    const heading = this.heading ? this.heading : this.title;
 
     const icon = html`<svg
       width="16"
@@ -88,12 +100,11 @@ export class VscodeCollapsible extends VscElement {
         <div
           class="collapsible-header"
           tabindex="0"
-          title=${this.title}
           @click=${this._onHeaderClick}
           @keydown=${this._onHeaderKeyDown}
         >
           ${icon}
-          <h3 class="title">${this.title}${descriptionMarkup}</h3>
+          <h3 class="title">${heading}${descriptionMarkup}</h3>
           <div class="header-slots">
             <div class="actions"><slot name="actions"></slot></div>
             <div class="decorations"><slot name="decorations"></slot></div>
