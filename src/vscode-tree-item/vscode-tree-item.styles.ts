@@ -28,17 +28,18 @@ const styles: CSSResultGroup = [
 
     .wrapper {
       align-items: flex-start;
+      color: var(--vscode-foreground, #cccccc);
       display: flex;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
-      font-weight: var(--vscode-font-weight);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
+      font-weight: var(--vscode-font-weight, normal);
       outline-offset: -1px;
       padding-right: 12px;
     }
 
     .wrapper:hover {
-      background-color: var(--vscode-list-hoverBackground);
-      color: var(--vscode-list-hoverForeground);
+      background-color: var(--vscode-list-hoverBackground, #2a2d2e);
+      color: var(--vscode-list-hoverForeground, #cccccc);
     }
 
     :host([selected]) .wrapper {
@@ -57,7 +58,7 @@ const styles: CSSResultGroup = [
     :host(:focus) .wrapper.active {
       outline-color: var(
         --vscode-list-focusAndSelectionOutline,
-        var(--vscode-list-focusOutline)
+        var(--vscode-list-focusOutline, #0078d4)
       );
       outline-style: solid;
       outline-width: 1px;
@@ -75,7 +76,7 @@ const styles: CSSResultGroup = [
 
     .arrow-container svg {
       display: block;
-      fill: var(--vscode-icon-foreground);
+      fill: var(--vscode-icon-foreground, #cccccc);
     }
 
     .arrow-container.icon-rotated svg {
@@ -109,7 +110,10 @@ const styles: CSSResultGroup = [
     }
 
     .children.guide:before {
-      background-color: var(--vscode-tree-inactiveIndentGuidesStroke);
+      background-color: var(
+        --vscode-tree-inactiveIndentGuidesStroke,
+        rgba(88, 88, 88, 0.4)
+      );
       content: '';
       display: none;
       height: 100%;
@@ -126,7 +130,7 @@ const styles: CSSResultGroup = [
 
     .children.guide.highlighted-guide:before {
       display: var(--internal-highlightedIndentGuideDisplay);
-      background-color: var(--vscode-tree-indentGuidesStroke);
+      background-color: var(--vscode-tree-indentGuidesStroke, #585858);
     }
 
     .content {

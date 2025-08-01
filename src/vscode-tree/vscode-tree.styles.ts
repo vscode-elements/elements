@@ -7,10 +7,14 @@ const styles: CSSResultGroup = [
     :host {
       --vsc-tree-item-arrow-display: flex;
       --internal-selectionBackground: var(
-        --vscode-list-inactiveSelectionBackground
+        --vscode-list-inactiveSelectionBackground,
+        #37373d
       );
-      --internal-selectionForeground: var(--vscode-foreground);
-      --internal-selectionIconForeground: var(--vscode-icon-foreground);
+      --internal-selectionForeground: var(--vscode-foreground, #cccccc);
+      --internal-selectionIconForeground: var(
+        --vscode-icon-foreground,
+        #cccccc
+      );
       --internal-defaultIndentGuideDisplay: none;
       --internal-highlightedIndentGuideDisplay: block;
 
@@ -24,13 +28,16 @@ const styles: CSSResultGroup = [
 
     :host(:focus-within) {
       --internal-selectionBackground: var(
-        --vscode-list-activeSelectionBackground
+        --vscode-list-activeSelectionBackground,
+        #04395e
       );
       --internal-selectionForeground: var(
-        --vscode-list-activeSelectionForeground
+        --vscode-list-activeSelectionForeground,
+        #ffffff
       );
       --internal-selectionIconForeground: var(
-        --vscode-list-activeSelectionIconForeground
+        --vscode-list-activeSelectionIconForeground,
+        #ffffff
       );
     }
 
