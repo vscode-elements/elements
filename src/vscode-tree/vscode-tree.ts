@@ -58,6 +58,18 @@ const listenedKeys: ListenedKey[] = [
 
 /**
  * @tag vscode-tree
+ *
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-foreground=#cccccc]
+ * @cssprop [--vscode-icon-foreground=#cccccc]
+ * @cssprop [--vscode-list-focusAndSelectionOutline=#0078d4]
+ * @cssprop [--vscode-list-focusOutline=#0078d4]
+ * @cssprop [--vscode-list-hoverBackground=#2a2d2e]
+ * @cssprop [--vscode-list-hoverForeground=#cccccc]
+ * @cssprop [--vscode-tree-inactiveIndentGuidesStroke=rgba(88, 88, 88, 0.4)]
+ * @cssprop [--vscode-tree-indentGuidesStroke=#585858]
  */
 @customElement('vscode-tree')
 export class VscodeTree extends VscElement {
