@@ -86,7 +86,10 @@ export class VscodeScrollable extends VscElement {
       return 0;
     }
 
-    return this._scrollableContainer.scrollHeight;
+    return (
+      this._scrollableContainer.scrollHeight -
+      this._scrollableContainer.clientHeight
+    );
   }
 
   @state()
