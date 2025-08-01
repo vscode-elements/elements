@@ -206,15 +206,14 @@ export default [
     }
 
     .option {
-      align-items: center;
       box-sizing: border-box;
       color: var(--vscode-foreground, #cccccc);
       cursor: pointer;
-      display: flex;
       font-family: var(--vscode-font-family, sans-serif);
       font-size: var(--vscode-font-size, 13px);
       font-weight: var(--vscode-font-weight, normal);
-      line-height: 18px;
+      height: 22px;
+      line-height: 20px;
       min-height: calc(var(--vscode-font-size) * 1.3);
       padding: 1px 3px;
       user-select: none;
@@ -222,6 +221,9 @@ export default [
       outline-offset: -1px;
       outline-style: solid;
       outline-width: 1px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .option b {
