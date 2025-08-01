@@ -128,6 +128,8 @@ export class VscodeScrollable extends VscElement {
   private _scrollbarVisible = true;
   private _scrollbarTrackZ = 0;
 
+  //#region lifecycle methods
+
   constructor() {
     super();
     this.addEventListener('mouseover', this._handleComponentMouseOver);
@@ -164,6 +166,8 @@ export class VscodeScrollable extends VscElement {
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     this._updateThumbPosition();
   }
+
+  //#endregion
 
   private _resizeObserverCallback = () => {
     this._updateScrollbar();
@@ -218,15 +222,14 @@ export class VscodeScrollable extends VscElement {
       return;
     }
 
-    const scrollTop = this._scrollPos;
-    this.scrolled = scrollTop > 0;
+    this.scrolled = this.scrollPos > 0;
 
     const componentH = this.offsetHeight;
     const thumbH = this._thumbHeight;
     const contentH = this._contentElement.offsetHeight;
 
     const overflown = contentH - componentH;
-    const ratio = scrollTop / overflown;
+    const ratio = this.scrollPos / overflown;
     const thumbYMax = componentH - thumbH;
 
     this._thumbY = Math.min(ratio * (componentH - thumbH), thumbYMax);
@@ -367,7 +370,7 @@ export class VscodeScrollable extends VscElement {
         .style=${stylePropertyMap({
           userSelect: this._isDragging ? 'none' : 'auto',
         })}
-        .scrollTop=${this._scrollPos}
+        .scrollTop=${this.scrollPos}
         @scroll=${this._handleScrollableContainerScroll}
       >
         <div
