@@ -214,7 +214,6 @@ export default [
       font-family: var(--vscode-font-family, sans-serif);
       font-size: var(--vscode-font-size, 13px);
       font-weight: var(--vscode-font-weight, normal);
-      height: 22px;
       line-height: 18px;
       min-height: calc(var(--vscode-font-size) * 1.3);
       padding: 1px 3px;
