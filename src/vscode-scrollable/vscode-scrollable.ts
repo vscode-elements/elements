@@ -80,7 +80,6 @@ export class VscodeScrollable extends VscElement {
   /**
    * The maximum amount of the `scrollPos`.
    */
-  @property({type: Number, attribute: 'scroll-max'})
   get scrollMax(): number {
     if (!this._scrollableContainer) {
       return 0;
