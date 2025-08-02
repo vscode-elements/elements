@@ -29,11 +29,17 @@ const styles: CSSResultGroup = [
     }
 
     :host([zebra]) {
-      --vsc-row-even-background: var(--vscode-keybindingTable-rowsBackground);
+      --vsc-row-even-background: var(
+        --vscode-keybindingTable-rowsBackground,
+        rgba(204, 204, 204, 0.04)
+      );
     }
 
     :host([zebra-odd]) {
-      --vsc-row-odd-background: var(--vscode-keybindingTable-rowsBackground);
+      --vsc-row-odd-background: var(
+        --vscode-keybindingTable-rowsBackground,
+        rgba(204, 204, 204, 0.04)
+      );
     }
 
     ::slotted(vscode-table-row) {
@@ -75,7 +81,10 @@ const styles: CSSResultGroup = [
     }
 
     .wrapper:not(.compact-view) .scrollable:not([scrolled]):before {
-      background-color: var(--vscode-editorGroup-border);
+      background-color: var(
+        --vscode-editorGroup-border,
+        rgba(255, 255, 255, 0.09)
+      );
     }
 
     .sash {
@@ -107,7 +116,10 @@ const styles: CSSResultGroup = [
     }
 
     .sash-visible {
-      background-color: var(--vscode-editorGroup-border);
+      background-color: var(
+        --vscode-editorGroup-border,
+        rgba(255, 255, 255, 0.09)
+      );
       height: 100%;
       position: absolute;
       top: 30px;
@@ -115,7 +127,7 @@ const styles: CSSResultGroup = [
     }
 
     .sash.hover .sash-visible {
-      background-color: var(--vscode-sash-hoverBorder);
+      background-color: var(--vscode-sash-hoverBorder, #0078d4);
       transition: background-color 50ms linear 300ms;
     }
 

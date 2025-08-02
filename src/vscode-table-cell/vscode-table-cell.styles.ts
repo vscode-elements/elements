@@ -5,14 +5,17 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      border-bottom-color: var(--vscode-editorGroup-border);
+      border-bottom-color: var(
+        --vscode-editorGroup-border,
+        rgba(255, 255, 255, 0.09)
+      );
       border-bottom-style: solid;
       border-bottom-width: var(--vsc-row-border-bottom-width);
       box-sizing: border-box;
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       display: table-cell;
-      font-family: var(--vscode-font-family);
-      font-size: var(--vscode-font-size);
+      font-family: var(--vscode-font-family, sans-serif);
+      font-size: var(--vscode-font-size, 13px);
       height: 24px;
       overflow: hidden;
       padding-left: 10px;

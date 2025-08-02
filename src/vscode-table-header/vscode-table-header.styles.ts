@@ -5,7 +5,10 @@ const styles: CSSResultGroup = [
   defaultStyles,
   css`
     :host {
-      background-color: var(--vscode-keybindingTable-headerBackground);
+      background-color: var(
+        --vscode-keybindingTable-headerBackground,
+        rgba(204, 204, 204, 0.04)
+      );
       display: table;
       table-layout: fixed;
       width: 100%;

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <style>
+      .table {
+        width: 500px;
+        height: 300px;
+      }
+    </style>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body style="background-color: #1f1f1f">
+    <main>
+      <vscode-demo>
+        <vscode-table>
+          <vscode-table-header>
+            <vscode-table-header-cell>id</vscode-table-header-cell>
+            <vscode-table-header-cell>firstname</vscode-table-header-cell>
+            <vscode-table-header-cell>lastname</vscode-table-header-cell>
+            <vscode-table-header-cell>email</vscode-table-header-cell>
+            <vscode-table-header-cell>company</vscode-table-header-cell>
+          </vscode-table-header>
+          <vscode-table-body>
+            <vscode-table-row>
+              <vscode-table-cell
+                >30b1851f-393a-4462-ba28-133df9951cae</vscode-table-cell
+              >
+              <vscode-table-cell>Leonel</vscode-table-cell>
+              <vscode-table-cell>Feeney</vscode-table-cell>
+              <vscode-table-cell>Jarrod.Beatty@hotmail.com</vscode-table-cell>
+              <vscode-table-cell>Adams, Kozey and Dooley</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >a7deaa18-0475-468f-a4e3-046df5ad2878</vscode-table-cell
+              >
+              <vscode-table-cell>Emerson</vscode-table-cell>
+              <vscode-table-cell>Collins</vscode-table-cell>
+              <vscode-table-cell>Kiarra_Predovic@hotmail.com</vscode-table-cell>
+              <vscode-table-cell>Yost LLC</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >31b666d3-765d-45c9-bbbc-9d2cb64b9ff0</vscode-table-cell
+              >
+              <vscode-table-cell>Damien</vscode-table-cell>
+              <vscode-table-cell>Bednar</vscode-table-cell>
+              <vscode-table-cell>Clement57@yahoo.com</vscode-table-cell>
+              <vscode-table-cell>Welch and Sons</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >72c76b94-c878-4046-85d6-28f4ebbca913</vscode-table-cell
+              >
+              <vscode-table-cell>Filomena</vscode-table-cell>
+              <vscode-table-cell>Dach</vscode-table-cell>
+              <vscode-table-cell>Morton_Nienow26@gmail.com</vscode-table-cell>
+              <vscode-table-cell>Rosenbaum - Wilkinson</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >bf23708e-a0ca-4ec7-8cb9-f7e84bdef04e</vscode-table-cell
+              >
+              <vscode-table-cell>Nikki</vscode-table-cell>
+              <vscode-table-cell>Ankunding</vscode-table-cell>
+              <vscode-table-cell
+                >Magdalen.Kilback36@hotmail.com</vscode-table-cell
+              >
+              <vscode-table-cell>Schaden - Waters</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >0be9bab8-3347-4105-8f97-d3e8cdb58fcb</vscode-table-cell
+              >
+              <vscode-table-cell>Tyrel</vscode-table-cell>
+              <vscode-table-cell>Satterfield</vscode-table-cell>
+              <vscode-table-cell>Norberto6@gmail.com</vscode-table-cell>
+              <vscode-table-cell>Beer - Kohler</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >f1cd7245-90c2-48d6-a3b7-c0dfda14faa1</vscode-table-cell
+              >
+              <vscode-table-cell>Percival</vscode-table-cell>
+              <vscode-table-cell>Okuneva</vscode-table-cell>
+              <vscode-table-cell>Kasandra80@hotmail.com</vscode-table-cell>
+              <vscode-table-cell>Padberg - Ward</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >6f4f19e2-626f-49c9-b7b0-98cf9bd8821f</vscode-table-cell
+              >
+              <vscode-table-cell>Una</vscode-table-cell>
+              <vscode-table-cell>Gusikowski</vscode-table-cell>
+              <vscode-table-cell>Maegan.Friesen@gmail.com</vscode-table-cell>
+              <vscode-table-cell>Kunde - Treutel</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >7038aded-48d4-45ae-852a-89e5890ab187</vscode-table-cell
+              >
+              <vscode-table-cell>Estell</vscode-table-cell>
+              <vscode-table-cell>Kub</vscode-table-cell>
+              <vscode-table-cell
+                >Robin.Shanahan54@hotmail.com</vscode-table-cell
+              >
+              <vscode-table-cell>Price, Strosin and Bayer</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell
+                >70d088d9-0e55-4d66-a4f2-cb432997e816</vscode-table-cell
+              >
+              <vscode-table-cell>Helen</vscode-table-cell>
+              <vscode-table-cell>Hills</vscode-table-cell>
+              <vscode-table-cell>Mack36@hotmail.com</vscode-table-cell>
+              <vscode-table-cell>Romaguera - Rogahn</vscode-table-cell>
+            </vscode-table-row>
+          </vscode-table-body>
+        </vscode-table>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
