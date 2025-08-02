@@ -23,13 +23,9 @@ const COMPONENT_WIDTH_PERCENTAGE = 100;
 /**
  * @tag vscode-table
  *
- * @cssprop [--border=var(--vscode-editorGroup-border)]
- * @cssprop [--foreground=var(--vscode-foreground)]
- * @cssprop [--resize-hover-border=var(--vscode-sash-hoverBorder)]
- * @cssprop [--tinted-row-background=var(--vscode-keybindingTable-rowsBackground)]
- * @cssprop [--header-background=var(--vscode-keybindingTable-headerBackground)]
- * @cssprop [--font-size=var(--vscode-font-size)]
- * @cssprop [--font-family=var(--vscode-font-family)]
+ * @cssprop [--vscode-editorGroup-border=rgba(255, 255, 255, 0.09)]
+ * @cssprop [--vscode-keybindingTable-rowsBackground=rgba(204, 204, 204, 0.04)]
+ * @cssprop [--vscode-sash-hoverBorder=#0078d4]
  */
 @customElement('vscode-table')
 export class VscodeTable extends VscElement {
