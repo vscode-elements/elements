@@ -7,12 +7,11 @@ import styles from './vscode-tab-header.styles.js';
 /**
  * @tag vscode-tab-header
  *
- * @cssprop --vscode-foreground
- * @cssprop --vscode-panelTitle-inactiveForeground
- * @cssprop --vscode-panelTitle-activeForeground
- * @cssprop --vscode-panelTitle-activeBorder
- * @cssprop --vscode-focusBorder
- * @cssprop --vscode-settings-headerForeground
+ * @cssprop [--vscode-focusBorder=#0078d4]
+ * @cssprop [--vscode-foreground=#cccccc]
+ * @cssprop [--vscode-panelTitle-activeBorder=#0078d4]
+ * @cssprop [--vscode-panelTitle-activeForeground=#cccccc]
+ * @cssprop [--vscode-panelTitle-inactiveForeground=#9d9d9d]
  */
 @customElement('vscode-tab-header')
 export class VscodeTabHeader extends VscElement {

@@ -18,11 +18,11 @@ export type VscTabsSelectEvent = CustomEvent<{selectedIndex: number}>;
  *
  * @fires {VscTabSelectEvent} vsc-tabs-select - Dispatched when the active tab is changed
  *
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
- * @cssprop --vscode-font-weight
- * @cssprop --vscode-settings-headerBorder
- * @cssprop --vscode-panel-background
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
+ * @cssprop [--vscode-font-weight=normal]
+ * @cssprop [--vscode-settings-headerBorder=#2b2b2b]
+ * @cssprop [--vscode-panel-background=#181818]
  */
 @customElement('vscode-tabs')
 export class VscodeTabs extends VscElement {

@@ -6,8 +6,8 @@ import styles from './vscode-tab-panel.styles.js';
 /**
  * @tag vscode-tab-panel
  *
- * @cssprop --vscode-panel--background
- * @cssprop --vscode-focusBorder
+ * @cssprop [--vscode-focusBorder=#0078d4]
+ * @cssprop [--vscode-panel--background=#181818]
  */
 @customElement('vscode-tab-panel')
 export class VscodeTabPanel extends VscElement {

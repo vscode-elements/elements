@@ -10,14 +10,14 @@ const styles: CSSResultGroup = [
     }
 
     :host(:focus-visible) {
-      outline-color: var(--vscode-focusBorder);
+      outline-color: var(--vscode-focusBorder, #0078d4);
       outline-offset: 3px;
       outline-style: solid;
       outline-width: 1px;
     }
 
     :host([panel]) {
-      background-color: var(--vscode-panel-background);
+      background-color: var(--vscode-panel-background, #181818);
     }
   `,
 ];
