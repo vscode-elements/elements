@@ -9,10 +9,6 @@
       href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
     >
-    <script
-      type="module"
-      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
-    ></script>
     <script type="module" src="/dist/main.js"></script>
     <script>
       const logEvents = (selector, eventType) => {
@@ -23,8 +19,39 @@
     </script>
   </head>
 
-  <body>
+  <body style="background-color: #1f1f1f">
     <main>
+      <vscode-demo>
+        <vscode-tabs panel>
+          <vscode-icon
+            label="Maximize Panel Size"
+            title="Maximize Panel Size"
+            name="chevron-up"
+            slot="addons"
+            action-icon
+          ></vscode-icon>
+          <vscode-icon
+            label="Close Panel"
+            title="Close Panel"
+            name="close"
+            slot="addons"
+            action-icon
+          ></vscode-icon>
+          <!-- display:block -->
+          <vscode-tab-header slot="header">
+            Output<vscode-badge
+              variant="tab-header-counter"
+              slot="content-after"
+              >2</vscode-badge
+            >
+          </vscode-tab-header>
+          <vscode-tab-panel> panel 1 </vscode-tab-panel>
+          <!-- display:block -->
+          <vscode-tab-header slot="header">Panel 2</vscode-tab-header>
+          <vscode-tab-panel> panel 2 </vscode-tab-panel>
+        </vscode-tabs>
+      </vscode-demo>
+      <p>&nbsp;</p>
       <vscode-demo>
         <vscode-tabs>
           <vscode-tab-header>Tab 1</vscode-tab-header>

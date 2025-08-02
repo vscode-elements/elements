@@ -13,7 +13,7 @@ const styles: CSSResultGroup = [
     .wrapper {
       align-items: center;
       border-bottom: 1px solid transparent;
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       display: flex;
       min-height: 20px;
       overflow: hidden;
@@ -24,8 +24,8 @@ const styles: CSSResultGroup = [
     }
 
     :host([active]) .wrapper {
-      border-bottom-color: var(--vscode-panelTitle-activeForeground);
-      color: var(--vscode-panelTitle-activeForeground);
+      border-bottom-color: var(--vscode-panelTitle-activeForeground, #cccccc);
+      color: var(--vscode-panelTitle-activeForeground, #cccccc);
     }
 
     :host([panel]) .wrapper {
@@ -40,7 +40,7 @@ const styles: CSSResultGroup = [
 
     .wrapper {
       align-items: center;
-      color: var(--vscode-foreground);
+      color: var(--vscode-foreground, #cccccc);
       display: flex;
       min-height: 20px;
       overflow: inherit;
@@ -49,12 +49,12 @@ const styles: CSSResultGroup = [
     }
 
     .wrapper.panel {
-      color: var(--vscode-panelTitle-inactiveForeground);
+      color: var(--vscode-panelTitle-inactiveForeground, #9d9d9d);
     }
 
     .wrapper.panel.active,
     .wrapper.panel:hover {
-      color: var(--vscode-panelTitle-activeForeground);
+      color: var(--vscode-panelTitle-activeForeground, #cccccc);
     }
 
     :host([panel]) .wrapper {
@@ -75,7 +75,7 @@ const styles: CSSResultGroup = [
     }
 
     .active-indicator.panel.active {
-      border-top: 1px solid var(--vscode-panelTitle-activeBorder);
+      border-top: 1px solid var(--vscode-panelTitle-activeBorder, #0078d4);
       bottom: 4px;
       display: block;
       left: 8px;
@@ -85,7 +85,7 @@ const styles: CSSResultGroup = [
     }
 
     :host(:focus-visible) .wrapper {
-      outline-color: var(--vscode-focusBorder);
+      outline-color: var(--vscode-focusBorder, #0078d4);
       outline-offset: 3px;
       outline-style: solid;
       outline-width: 1px;
