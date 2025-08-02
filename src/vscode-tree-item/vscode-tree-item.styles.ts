@@ -39,7 +39,10 @@ const styles: CSSResultGroup = [
 
     .wrapper:hover {
       background-color: var(--vscode-list-hoverBackground, #2a2d2e);
-      color: var(--vscode-list-hoverForeground, #cccccc);
+      color: var(
+        --vscode-list-hoverForeground,
+        var(--vscode-foreground, #cccccc)
+      );
     }
 
     :host([selected]) .wrapper {
