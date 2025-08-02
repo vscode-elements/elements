@@ -6,9 +6,9 @@ import styles from './vscode-table-header-cell.styles.js';
 /**
  * @tag vscode-table-header-cell
  *
- * @cssprop --vscode-foreground
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
+ * @cssprop [--vscode-foreground=#cccccc]
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
  */
 @customElement('vscode-table-header-cell')
 export class VscodeTableHeaderCell extends VscElement {

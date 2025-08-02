@@ -6,10 +6,10 @@ import styles from './vscode-table-cell.styles.js';
 /**
  * @tag vscode-table-cell
  *
- * @cssprop --vscode-editorGroup-border
- * @cssprop --vscode-foreground
- * @cssprop --vscode-font-family
- * @cssprop --vscode-font-size
+ * @cssprop [--vscode-editorGroup-border=rgba(255, 255, 255, 0.09)]
+ * @cssprop [--vscode-foreground=#cccccc]
+ * @cssprop [--vscode-font-family=sans-serif]
+ * @cssprop [--vscode-font-size=13px]
  */
 @customElement('vscode-table-cell')
 export class VscodeTableCell extends VscElement {

@@ -6,7 +6,7 @@ import styles from './vscode-table-row.styles.js';
 /**
  * @tag vscode-table-row
  *
- * @cssprop --vscode-editorGroup-border
+ * @cssprop [--vscode-editorGroup-border=rgba(255, 255, 255, 0.09)]
  */
 @customElement('vscode-table-row')
 export class VscodeTableRow extends VscElement {
