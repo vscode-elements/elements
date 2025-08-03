@@ -6,10 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Breaking changes
+
+- The **Tree** component has been completely rewritten. The most significant change is that the tree structure can now be described using plain HTML markup, instead of the previously complex and rigid configuration object.
+  See the [docs](https://vscode-elements.github.io/components/tree/) for details.
+- The `:host` styles have been minimized to reduce CSS leakage into the component.
+- Deprecated APIs has been removed.
+
+### Added
+
+- Added fallback styles for all components.
+
 ### Fixed
 
-- Made **Tabs** accessible
+- Made **Tabs** accessible.
 - Fixed clipped focus outline in the **ButtonGroup**.
+- Prevent drop shadow from appearing unnecessarily in **Scrollable**.
 
 ## [1.17.0] - 2025-07-02
 
