@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+    <style>
+      .file {
+        align-items: center;
+        display: flex;
+      }
+
+      .file vscode-icon {
+        margin-right: 6px;
+      }
+
+      .filename {
+        display: block;
+      }
+
+      vscode-badge[variant='counter'] {
+        display: block;
+        margin-left: 10px;
+      }
+
+      .message {
+        display: flex;
+      }
+
+      .actions {
+        align-items: center;
+        display: flex;
+        height: 22px;
+        margin: 0 6px;
+      }
+
+      .actions vscode-icon {
+        color: var(--vscode-problemsErrorIcon-foreground);
+      }
+
+      .message-details {
+        overflow: hidden;
+      }
+
+      .toggleable {
+        display: none;
+      }
+
+      .toggleable.open {
+        display: block;
+      }
+
+      .message-line {
+        display: flex;
+        white-space: nowrap;
+      }
+
+      .message-raw {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .message-error-code {
+        margin-left: 6px;
+        opacity: 0.7;
+      }
+
+      .message-location {
+        margin-left: 6px;
+        opacity: 0.7;
+      }
+
+      .action-bar {
+        margin-left: 6px;
+      }
+
+      .action-bar vscode-toolbar-button {
+        display: block;
+      }
+
+      .action-bar vscode-toolbar-button.open {
+        transform: rotate(180deg);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-tree indent="16">
+          <vscode-tree-item open>
+            <div class="file">
+              <vscode-icon name="file"></vscode-icon>
+              <div class="filename">tsconfig.json</div>
+              <vscode-badge variant="counter">2</vscode-badge>
+            </div>
+            <vscode-tree-item>
+              <div class="message">
+                <div class="actions">
+                  <vscode-icon name="error"></vscode-icon>
+                </div>
+                <div class="message-details">
+                  <div class="message-line">
+                    <span class="message-raw"
+                      >Cannot find type definition file for 'mocha'.</span
+                    >
+                    <div class="message-error-code">ts</div>
+                    <div class="message-location">[Ln 1, Col 1]</div>
+                    <div class="action-bar">
+                      <vscode-toolbar-button
+                        icon="chevron-down"
+                        class="toggle-button open"
+                      ></vscode-toolbar-button>
+                    </div>
+                  </div>
+                  <div class="toggleable open">
+                    <div class="message-line">
+                      <span class="message-raw"
+                        >&nbsp;&nbsp;The file is in the program because:</span
+                      >
+                    </div>
+                    <div class="message-line">
+                      <span class="message-raw"
+                        >&nbsp;&nbsp;&nbsp;&nbsp;Entry point of type library
+                        'mocha' specified in compilerOptions</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </vscode-tree-item>
+            <vscode-tree-item>
+              <div class="message">
+                <div class="actions">
+                  <vscode-icon name="error"></vscode-icon>
+                </div>
+                <div class="message-details">
+                  <div class="message-line">
+                    <span class="message-raw"
+                      >Cannot find type definition file for 'user-agent-data-types'.</span
+                    >
+                    <div class="message-error-code">ts</div>
+                    <div class="message-location">[Ln 1, Col 1]</div>
+                    <div class="action-bar">
+                      <vscode-toolbar-button
+                        icon="chevron-down"
+                        class="toggle-button open"
+                      ></vscode-toolbar-button>
+                    </div>
+                  </div>
+                  <div class="toggleable open">
+                    <div class="message-line">
+                      <span class="message-raw"
+                        >&nbsp;&nbsp;The file is in the program because:</span
+                      >
+                    </div>
+                    <div class="message-line">
+                      <span class="message-raw"
+                        >&nbsp;&nbsp;&nbsp;&nbsp;Entry point of type library 'user-agent-data-types' specified in compilerOptions</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+        <script type="module">
+          const toggleButtons = document.querySelectorAll('.toggle-button');
+
+          toggleButtons.forEach((bt) => {
+            bt.addEventListener('click', () => {
+              const message = bt.closest('.message');
+              const toggleableSection = message.querySelector('.toggleable');
+
+              bt.classList.toggle('open');
+              toggleableSection.classList.toggle('open');
+            });
+          });
+        </script>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
