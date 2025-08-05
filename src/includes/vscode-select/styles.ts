@@ -52,6 +52,9 @@ export default [
       display: block;
       height: 18px;
       overflow: hidden;
+      padding-right: 20px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .select-face.multiselect {
@@ -226,6 +229,18 @@ export default [
       text-overflow: ellipsis;
     }
 
+    .option.single-select {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .option.multi-select {
+      align-items: center;
+      display: flex;
+    }
+
     .option b {
       color: var(--vscode-list-highlightForeground, #2aaaff);
     }
@@ -304,7 +319,10 @@ export default [
 
     .option-label {
       display: block;
+      overflow: hidden;
       pointer-events: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       width: 100%;
     }
 
@@ -322,11 +340,13 @@ export default [
     .checkbox-icon {
       align-items: center;
       background-color: var(--vscode-checkbox-background, #313131);
-      border: 1px solid var(--vscode-checkbox-border);
       border-radius: 2px;
+      border: 1px solid var(--vscode-checkbox-border);
       box-sizing: border-box;
       color: var(--vscode-checkbox-foreground);
-      display: inline-flex;
+      display: flex;
+      flex-basis: 15px;
+      flex-shrink: 0;
       height: 15px;
       justify-content: center;
       margin-right: 5px;
