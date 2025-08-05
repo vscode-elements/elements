@@ -646,6 +646,8 @@ export class VscodeSelectBase extends VscElement {
               active,
               disabled: op.disabled,
               option: true,
+              'single-select': !this._opts.multiSelect,
+              'multi-select': this._opts.multiSelect,
               selected,
             };
 
