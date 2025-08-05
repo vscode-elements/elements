@@ -66,7 +66,7 @@ export class VscodeScrollable extends VscElement {
    */
   @property({type: Number, attribute: 'scroll-pos'})
   set scrollPos(val: number) {
-    this._scrollPos = val;
+    this._scrollPos = this._limitScrollPos(val);
     this._updateScrollbar();
     this._updateThumbPosition();
     this.requestUpdate();
