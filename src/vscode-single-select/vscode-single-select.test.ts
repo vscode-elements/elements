@@ -425,13 +425,13 @@ describe('vscode-single-select', () => {
       expect(scrollable).lightDom.to.eq(
         `
         <ul class="options">
-          <li class="option">
+          <li class="option single-select">
             <b>A</b>ntig<b>u</b>a and Barbuda
           </li>
-          <li class="option">
+          <li class="option single-select">
             <b>A</b><b>u</b>stralia
           </li>
-          <li class="option">
+          <li class="option single-select">
             <b>A</b><b>u</b>stria
           </li>
         </ul>
@@ -465,8 +465,8 @@ describe('vscode-single-select', () => {
 
       expect(options).lightDom.to.eq(
         `
-        <li class="option">App<b>l</b><b>e</b></li>
-        <li class="option active"><b>L</b><b>e</b>mon</li>
+        <li class="option single-select">App<b>l</b><b>e</b></li>
+        <li class="option single-select active"><b>L</b><b>e</b>mon</li>
       `,
         {ignoreAttributes: ignoredAttributes}
       );
@@ -659,10 +659,10 @@ describe('vscode-single-select', () => {
       expect(scrollable).lightDom.to.eq(
         `
         <ul class="options">
-          <li class="option">
+          <li class="option single-select">
             <b>L</b><b>o</b>rem
           </li>
-          <li class="option">
+          <li class="option single-select">
             Do<b>l</b><b>o</b>r
           </li>
           <li class="option placeholder">Add "lo"</li>
@@ -722,7 +722,7 @@ describe('vscode-single-select', () => {
       expect(scrollable).lightDom.to.eq(
         `
         <ul class="options">
-          <li class="option"><b>D</b><b>o</b><b>l</b>or</li>
+          <li class="option single-select"><b>D</b><b>o</b><b>l</b>or</li>
           <li class="active option placeholder">Add "dol"</li>
         </ul>
         `,
