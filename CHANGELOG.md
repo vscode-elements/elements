@@ -16,12 +16,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - Added fallback styles for all components.
+- Added `heading` property to **Collapsible**.
 
 ### Fixed
 
 - Made **Tabs** accessible.
 - Fixed clipped focus outline in the **ButtonGroup**.
 - Prevent drop shadow from appearing unnecessarily in **Scrollable**.
+
+### Deprecated
+
+- Deprecated the `title` property on **Scrollable**.
 
 ## [1.17.0] - 2025-07-02
 
