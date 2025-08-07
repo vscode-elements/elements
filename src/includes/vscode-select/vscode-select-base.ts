@@ -1,5 +1,5 @@
 import {html, render, nothing, TemplateResult, PropertyValues} from 'lit';
-import {property, queryAssignedElements, state} from 'lit/decorators.js';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {repeat} from 'lit/directives/repeat.js';
@@ -18,9 +18,6 @@ import '../../vscode-scrollable/vscode-scrollable.js';
 export const VISIBLE_OPTS = 10;
 export const OPT_HEIGHT = 22;
 
-/**
- * @cssprop --dropdown-z-index - workaround for dropdown z-index issues
- */
 export class VscodeSelectBase extends VscElement {
   @property({type: Boolean, reflect: true})
   creatable = false;
@@ -156,7 +153,12 @@ export class VscodeSelectBase extends VscElement {
   })
   private _assignedOptions!: VscodeOption[];
 
+  @query('.dropdown', true)
+  private _dropdownEl!: HTMLDivElement;
+
   protected _opts = new OptionListController(this);
+
+  //#region lifecycle callbacks
 
   constructor() {
     super();
@@ -201,13 +203,14 @@ export class VscodeSelectBase extends VscElement {
       if (this.open) {
         this._opts.activateDefault();
         this._scrollActiveElementToTop();
-
-        window.addEventListener('click', this._onClickOutside);
+        this._dropdownEl.showPopover();
       } else {
-        window.removeEventListener('click', this._onClickOutside);
+        this._dropdownEl.hidePopover();
       }
     }
   }
+
+  //#endregion
 
   @state()
   protected _currentDescription = '';
@@ -382,14 +385,9 @@ export class VscodeSelectBase extends VscElement {
     this.open = !this.open;
   }
 
-  private _onClickOutside = (event: MouseEvent): void => {
-    const path = event.composedPath();
-    const found = path.findIndex((et) => et === this);
-
-    if (found === -1) {
-      this.open = false;
-    }
-  };
+  private _handleDropdownToggle(event: ToggleEvent) {
+    this.open = event.newState === 'open';
+  }
 
   private _onMouseMove = () => {
     this._isHoverForbidden = false;
@@ -754,8 +752,21 @@ export class VscodeSelectBase extends VscElement {
       VISIBLE_OPTS * OPT_HEIGHT
     );
 
+    const cr = this.getBoundingClientRect();
+
+    const dropdownStyles: Partial<CSSStyleDeclaration> = {
+      width: `${cr.width}px`,
+      left: `${cr.left}px`,
+      top: `${cr.top + cr.height}px`,
+    };
+
     return html`
-      <div class=${classMap(classes)}>
+      <div
+        class=${classMap(classes)}
+        popover="auto"
+        @toggle=${this._handleDropdownToggle}
+        .style=${stylePropertyMap(dropdownStyles)}
+      >
         ${this.position === 'above' ? this._renderDescription() : nothing}
         <vscode-scrollable
           always-visible
