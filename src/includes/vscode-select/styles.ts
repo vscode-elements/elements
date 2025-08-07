@@ -165,14 +165,14 @@ export default [
       border-radius: 0 0 3px 3px;
       border-style: solid;
       border-width: 1px;
+      bottom: unset;
       box-sizing: border-box;
       display: none;
-      left: 0;
       padding-bottom: 2px;
-      position: absolute;
-      top: 100%;
-      width: 100%;
-      z-index: var(--dropdown-z-index, 2);
+      padding-left: 0;
+      padding-right: 0;
+      padding-top: 0;
+      right: unset;
     }
 
     .dropdown.open {
