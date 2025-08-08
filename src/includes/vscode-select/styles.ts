@@ -184,7 +184,7 @@ export default [
       bottom: 26px;
       padding-bottom: 0;
       padding-top: 2px;
-      top: auto;
+      top: unset;
     }
 
     :host(:focus) .dropdown,
