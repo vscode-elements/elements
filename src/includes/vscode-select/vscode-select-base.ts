@@ -757,7 +757,11 @@ export class VscodeSelectBase extends VscElement {
     const dropdownStyles: Partial<CSSStyleDeclaration> = {
       width: `${cr.width}px`,
       left: `${cr.left}px`,
-      top: `${cr.top + cr.height}px`,
+      top: this.position === 'below' ? `${cr.top + cr.height}px` : 'unset',
+      bottom:
+        this.position === 'below'
+          ? 'unset'
+          : `${document.documentElement.clientHeight - cr.top}px`,
     };
 
     return html`
