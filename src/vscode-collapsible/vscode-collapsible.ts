@@ -35,7 +35,11 @@ export class VscodeCollapsible extends VscElement {
    * hovers over the component. Actions are shown only when the Collapsible component is open. This
    * property is designed to use the `workbench.view.alwaysShowHeaderActions` setting.
    */
-  @property({type: Boolean, reflect: true, attribute: 'always-show-header-actions'})
+  @property({
+    type: Boolean,
+    reflect: true,
+    attribute: 'always-show-header-actions',
+  })
   alwaysShowHeaderActions = false;
 
   /**
