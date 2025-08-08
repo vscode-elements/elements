@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Changed
+
+- The dropdown logic in **SingleSelect** and **MultiSelect** has been rewritten using the 
+  [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API). This prevents issues 
+  such as an element overlapping the dropdown or its overflowing parts being clipped (e.g., in the
+  Collapsible component).
+
 ## [2.0.1] - 2025-08-05
 
 ### Fixed
