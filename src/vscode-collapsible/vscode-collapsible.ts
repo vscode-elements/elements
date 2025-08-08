@@ -31,6 +31,14 @@ export class VscodeCollapsible extends VscElement {
   static override styles = styles;
 
   /**
+   * When enabled, header actions are always visible; otherwise, they appear only when the cursor
+   * hovers over the component. Actions are shown only when the Collapsible component is open. This
+   * property is designed to use the `workbench.view.alwaysShowHeaderActions` setting.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'always-show-header-actions'})
+  alwaysShowHeaderActions = false;
+
+  /**
    * Component heading text
    *
    * @deprecated The `title` is a global HTML attribute and will unintentionally trigger a native
@@ -73,7 +81,11 @@ export class VscodeCollapsible extends VscElement {
   }
 
   override render(): TemplateResult {
-    const classes = classMap({collapsible: true, open: this.open});
+    const classes = {collapsible: true, open: this.open};
+    const actionsClasses = {
+      actions: true,
+      'always-visible': this.alwaysShowHeaderActions,
+    };
     const heading = this.heading ? this.heading : this.title;
 
     const icon = html`<svg
@@ -96,7 +108,7 @@ export class VscodeCollapsible extends VscElement {
       : nothing;
 
     return html`
-      <div class=${classes}>
+      <div class=${classMap(classes)}>
         <div
           class="collapsible-header"
           tabindex="0"
@@ -106,7 +118,9 @@ export class VscodeCollapsible extends VscElement {
           ${icon}
           <h3 class="title">${heading}${descriptionMarkup}</h3>
           <div class="header-slots">
-            <div class="actions"><slot name="actions"></slot></div>
+            <div class=${classMap(actionsClasses)}>
+              <slot name="actions"></slot>
+            </div>
             <div class="decorations"><slot name="decorations"></slot></div>
           </div>
         </div>
