@@ -69,7 +69,8 @@ const styles: CSSResultGroup = [
       display: none;
     }
 
-    .collapsible.open .actions {
+    .collapsible.open .actions.always-visible,
+    .collapsible.open:hover .actions {
       display: block;
     }
 

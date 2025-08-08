@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body class="vscode-light">
+    <div class="story">
+      <h2 class="story-title">Basic example</h2>
+      <div class="story-content">
+        <style>
+          .collapsible1::part(body) {
+            overflow: visible;
+          }
+        </style>
+        <vscode-demo>
+          <vscode-collapsible
+            heading="Lorem"
+            description="Ipsum Dolor sit"
+            open
+            class="collapsible1"
+            always-show-header-actions
+          >
+            <vscode-icon
+              name="account"
+              action-icon
+              title="Account"
+              tabindex="0"
+              slot="actions"
+            ></vscode-icon>
+            <vscode-icon
+              name="git-compare"
+              action-icon
+              title="Git compare"
+              tabindex="0"
+              slot="actions"
+            ></vscode-icon>
+            <vscode-icon
+              name="add"
+              action-icon
+              title="Add"
+              tabindex="0"
+              slot="actions"
+            ></vscode-icon>
+            <vscode-badge slot="decorators" variant="counter">9</vscode-badge>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <vscode-single-select position="above">
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+              <vscode-option>Lorem Ipsum</vscode-option>
+            </vscode-single-select>
+            <p>lorem ipsum dolor sit</p>
+          </vscode-collapsible>
+          <vscode-collapsible heading="Ipsum">
+            <div slot="actions">
+              <vscode-icon
+                name="account"
+                action-icon
+                title="Account"
+                tabindex="0"
+              ></vscode-icon>
+              <vscode-icon
+                name="add"
+                action-icon
+                title="Add"
+                tabindex="0"
+              ></vscode-icon>
+              <vscode-icon
+                name="git-compare"
+                action-icon
+                title="Git compare"
+                tabindex="0"
+              ></vscode-icon>
+            </div>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+            <p>lorem ipsum dolor sit</p>
+          </vscode-collapsible>
+          <vscode-collapsible title="Dolor"></vscode-collapsible>
+        </vscode-demo>
+        <script type="module">
+          const icons = document.querySelectorAll('vscode-icon[action-icon]');
+
+          icons.forEach((i) => {
+            i.addEventListener('click', (event) => {
+              event.stopPropagation();
+
+              console.log(event);
+            });
+
+            i.addEventListener('keydown', (event) => {
+              event.stopPropagation();
+
+              if (event.key === 'Enter') {
+                console.log(event);
+              }
+            });
+          });
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
