@@ -401,7 +401,7 @@ describe('vscode-single-select', () => {
     });
 
     it('filtered list', async () => {
-      const el = (await fixture(html`
+      const el = await fixture<VscodeSingleSelect>(html`
         <vscode-single-select combobox>
           <vscode-option>Antigua and Barbuda</vscode-option>
           <vscode-option>Argentina</vscode-option>
@@ -409,14 +409,11 @@ describe('vscode-single-select', () => {
           <vscode-option>Australia</vscode-option>
           <vscode-option>Austria</vscode-option>
         </vscode-single-select>
-      `)) as VscodeSingleSelect;
+      `);
       await el.updateComplete;
 
-      const input = el.shadowRoot?.querySelector(
-        '.combobox-input'
-      ) as HTMLInputElement;
-      input.value = 'au';
-      input.dispatchEvent(new InputEvent('input'));
+      el.focus();
+      await sendKeys({type: 'au'});
       await el.updateComplete;
 
       const dropdown = el.shadowRoot?.querySelector('.dropdown');
