@@ -194,18 +194,21 @@ export class VscodeSelectBase extends VscElement {
     if (changedProperties.has('required') && this._firstUpdateCompleted) {
       this._manageRequired();
     }
-  }
 
-  protected override update(changedProperties: PropertyValues) {
-    super.update(changedProperties);
-
-    if (changedProperties.has('open')) {
+    if (changedProperties.has('open') && this._firstUpdateCompleted) {
       if (this.open) {
+        this._dropdownEl.showPopover();
+
+        window.addEventListener('scroll', this._handleWindowScroll, {
+          capture: true,
+        });
+
         this._opts.activateDefault();
         this._scrollActiveElementToTop();
-        this._dropdownEl.showPopover();
       } else {
         this._dropdownEl.hidePopover();
+
+        window.removeEventListener('scroll', this._handleWindowScroll);
       }
     }
   }
@@ -597,6 +600,10 @@ export class VscodeSelectBase extends VscElement {
     this._isBeingFiltered = false;
     return;
   }
+
+  private _handleWindowScroll = () => {
+    this.open = false;
+  };
   //#endregion
 
   //#region render functions
