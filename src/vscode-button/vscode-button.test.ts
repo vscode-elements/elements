@@ -76,7 +76,7 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root">
+      <div class="root" part="base">
         <div class="has-icon-before content">
           <vscode-icon name="account" class="icon"></vscode-icon>
           <slot></slot>
@@ -97,7 +97,7 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root">
+      <div class="root" part="base">
         <div class="has-icon-before content">
           <vscode-icon name="account" spin class="icon"></vscode-icon>
           <slot></slot>
@@ -121,7 +121,7 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root">
+      <div class="root" part="base">
         <div class="has-icon-before content">
           <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
           <slot></slot>
@@ -142,7 +142,7 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root">
+      <div class="root" part="base">
         <div class="has-icon-after content">
           <slot></slot>
           <vscode-icon name="account" class="icon-after"></vscode-icon>
@@ -163,7 +163,7 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root">
+      <div class="root" part="base">
         <div class="has-icon-after content">
           <slot></slot>
           <vscode-icon name="account" class="icon-after" spin></vscode-icon>
@@ -187,7 +187,7 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root">
+      <div class="root" part="base">
         <div class="has-icon-after content">
           <slot></slot>
           <vscode-icon name="account" class="icon-after" spin-duration="5"></vscode-icon>
