@@ -240,7 +240,7 @@ export class VscodeButton extends VscElement {
       : nothing;
 
     return html`
-      <div class="root">
+      <div class="root" part="base">
         <div class=${classMap(contentClasses)}>
           ${iconElem}
           <slot></slot>
