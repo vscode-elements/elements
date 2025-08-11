@@ -18,16 +18,6 @@
   <body>
     <main>
       <vscode-demo>
-        <vscode-single-select combobox label="Baseline (static options)">
-          <vscode-option>express</vscode-option>
-          <vscode-option>react</vscode-option>
-          <vscode-option>vue</vscode-option>
-          <vscode-option>lit</vscode-option>
-          <vscode-option>lodash</vscode-option>
-        </vscode-single-select>
-      </vscode-demo>
-
-      <vscode-demo>
         <vscode-single-select-npm combobox label="npm packages (live search)">
           <vscode-option disabled>Type at least 2 characters…</vscode-option>
         </vscode-single-select-npm>
@@ -49,12 +39,11 @@
         class NpmOptionListController extends OptionListController {
           constructor(host) {
             super(host);
-            this._debouncedFetch = debounce(this._fetchAndPopulate.bind(this), 300);
             this._abort = null;
-            // Keep a host reference for slot injection and track busy state
             this._hostEl = host;
             this._busyCount = 0;
             this._spinnerEl = null;
+            this._debouncedFetch = debounce((q) => this._fetchAndPopulate(q), 300);
           }
 
           // Prefer a friendlier default in combobox mode
@@ -66,10 +55,8 @@
           get filterPattern() {
             return super.filterPattern ?? '';
           }
-
-          // React to user input in the combobox
           set filterPattern(val) {
-            const pattern = (val ?? '');
+            const pattern = val ?? '';
             super.filterPattern = pattern;
             const q = pattern.trim();
 
@@ -84,8 +71,6 @@
           }
 
           async _fetchAndPopulate(query) {
-            console.log(`Fetching npm packages for query: "${query}"`);
-
             // Cancel any in-flight request
             if (this._abort) this._abort.abort();
             this._abort = new AbortController();
@@ -133,7 +118,6 @@
                 { label: 'Error loading results', value: '', description: '', disabled: true, selected: false },
               ]);
               this.activeIndex = -1;
-              // Optional: console.error(err);
             } finally {
               // clear busy and hide spinner if no more requests
               this._busyCount = Math.max(0, this._busyCount - 1);
@@ -166,12 +150,12 @@
         class VscodeSingleSelectNpm extends VscodeSingleSelect {
           constructor() {
             super();
-            // Ensure our custom controller is used even if the base factory
-            // hasn't been picked up in the built dist yet.
+            // Ensure our custom controller is used even if the base factory hasn't been picked up in the built dist yet.
             try { this.removeController(this._opts); } catch {}
             this._opts = new NpmOptionListController(this);
-            // Sync combobox mode with attribute/property
-            this._opts.comboboxMode = this.combobox;
+            // Sync combobox mode reliably at construction time (attribute is reliable before property upgrade)
+            const initialCombobox = this.hasAttribute('combobox') || this.combobox;
+            this._opts.comboboxMode = initialCombobox;
             // Ensure initial state doesn't propagate undefined values to the input
             this._isBeingFiltered = false;
             this._opts.filterPattern = '';

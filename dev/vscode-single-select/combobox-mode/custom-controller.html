@@ -43,6 +43,9 @@
 
         class MyOptionListController extends OptionListController {
           // Prefer startsWithPerTerm as a default filter when in combobox mode
+          get filterMethod() {
+            return super.filterMethod ?? 'startsWithPerTerm';
+          }
           set filterMethod(val) {
             super.filterMethod = val ?? 'startsWithPerTerm';
           }
