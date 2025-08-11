@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VSCode Elements — Single Select — Combobox — npm Search (Custom Controller)</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+  </head>
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-single-select combobox label="Baseline (static options)">
+          <vscode-option>express</vscode-option>
+          <vscode-option>react</vscode-option>
+          <vscode-option>vue</vscode-option>
+          <vscode-option>lit</vscode-option>
+          <vscode-option>lodash</vscode-option>
+        </vscode-single-select>
+      </vscode-demo>
+
+      <vscode-demo>
+        <vscode-single-select-npm combobox label="npm packages (live search)">
+          <vscode-option disabled>Type at least 2 characters…</vscode-option>
+        </vscode-single-select-npm>
+      </vscode-demo>
+
+      <script type="module">
+        import { VscodeSingleSelect } from '/dist/vscode-single-select/vscode-single-select.js';
+        import { OptionListController } from '/dist/includes/vscode-select/OptionListController.js';
+
+        // Simple debounce helper
+        function debounce(fn, delay = 300) {
+          let t;
+          return (...args) => {
+            clearTimeout(t);
+            t = setTimeout(() => fn(...args), delay);
+          };
+        }
+
+        class NpmOptionListController extends OptionListController {
+          constructor(host) {
+            super(host);
+            this._debouncedFetch = debounce(this._fetchAndPopulate.bind(this), 300);
+            this._abort = null;
+            // Keep a host reference for slot injection and track busy state
+            this._hostEl = host;
+            this._busyCount = 0;
+            this._spinnerEl = null;
+          }
+
+          // Prefer a friendlier default in combobox mode
+          set filterMethod(val) {
+            super.filterMethod = val ?? 'startsWithPerTerm';
+          }
+
+          // Always present a string to the host; prevents accidental 'undefined' propagation
+          get filterPattern() {
+            return super.filterPattern ?? '';
+          }
+
+          // React to user input in the combobox
+          set filterPattern(val) {
+            const pattern = (val ?? '');
+            super.filterPattern = pattern;
+            const q = pattern.trim();
+
+            if (q.length >= 2) {
+              this._debouncedFetch(q);
+            } else {
+              this.populate([
+                { label: 'Type at least 2 characters…', value: '', description: '', disabled: true, selected: false },
+              ]);
+              this.activeIndex = -1;
+            }
+          }
+
+          async _fetchAndPopulate(query) {
+            console.log(`Fetching npm packages for query: "${query}"`);
+
+            // Cancel any in-flight request
+            if (this._abort) this._abort.abort();
+            this._abort = new AbortController();
+
+            // mark busy and show spinner
+            this._busyCount++;
+            this._updateSpinner();
+
+            try {
+              const url = `https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(query)}&size=10`;
+              const res = await fetch(url, { signal: this._abort.signal });
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              const data = await res.json();
+
+              const objects = Array.isArray(data?.objects) ? data.objects : [];
+
+              if (objects.length === 0) {
+                this.populate([
+                  { label: 'No results', value: '', description: '', disabled: true, selected: false },
+                ]);
+                this.activeIndex = -1;
+                return;
+              }
+
+              const options = objects.map((o) => {
+                const pkg = o.package ?? {};
+                const name = pkg.name ?? '';
+                const version = pkg.version ? `@${pkg.version}` : '';
+                const desc = (pkg.description ?? '').toString().trim();
+                return {
+                  label: name,
+                  value: name,
+                  description: [version, desc].filter(Boolean).join(' '),
+                  disabled: false,
+                  selected: false,
+                };
+              });
+
+              this.populate(options);
+              this.activeIndex = options.length > 0 ? 0 : -1;
+            } catch (err) {
+              if (err?.name === 'AbortError') return; // ignore canceled request
+              // Fallback UI state on errors
+              this.populate([
+                { label: 'Error loading results', value: '', description: '', disabled: true, selected: false },
+              ]);
+              this.activeIndex = -1;
+              // Optional: console.error(err);
+            } finally {
+              // clear busy and hide spinner if no more requests
+              this._busyCount = Math.max(0, this._busyCount - 1);
+              this._updateSpinner();
+            }
+          }
+
+          _updateSpinner() {
+            const host = this._hostEl;
+            if (!host) return;
+            if (this._busyCount > 0) {
+              if (!this._spinnerEl) {
+                const sp = document.createElement('span');
+                sp.slot = 'iconAfter';
+                sp.className = 'codicon codicon-loading codicon-modifier-spin';
+                sp.setAttribute('aria-label', 'Loading');
+                this._spinnerEl = sp;
+              }
+              if (!host.contains(this._spinnerEl)) {
+                host.appendChild(this._spinnerEl);
+              }
+            } else {
+              if (this._spinnerEl && this._spinnerEl.parentElement === host) {
+                host.removeChild(this._spinnerEl);
+              }
+            }
+          }
+        }
+
+        class VscodeSingleSelectNpm extends VscodeSingleSelect {
+          constructor() {
+            super();
+            // Ensure our custom controller is used even if the base factory
+            // hasn't been picked up in the built dist yet.
+            try { this.removeController(this._opts); } catch {}
+            this._opts = new NpmOptionListController(this);
+            // Sync combobox mode with attribute/property
+            this._opts.comboboxMode = this.combobox;
+            // Ensure initial state doesn't propagate undefined values to the input
+            this._isBeingFiltered = false;
+            this._opts.filterPattern = '';
+          }
+
+          // Defensive: ensure the input never shows the literal 'undefined'
+          _onComboboxInputFocus(ev) {
+            super._onComboboxInputFocus?.(ev);
+            const input = this.renderRoot?.querySelector('.combobox-input');
+            if (input && (input.value === undefined || input.value === 'undefined')) {
+              input.value = '';
+            }
+          }
+
+          // Keep factory override for when the base (dist) includes the factory hook
+          createOptionListController() {
+            return new NpmOptionListController(this);
+          }
+        }
+
+        customElements.define('vscode-single-select-npm', VscodeSingleSelectNpm);
+      </script>
+    </main>
+  </body>
+</html>

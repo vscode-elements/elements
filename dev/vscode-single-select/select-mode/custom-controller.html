@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VSCode Elements — Single Select — Custom Controller</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+  </head>
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-single-select label="Default controller (baseline)">
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+          <vscode-option disabled>Sit (disabled)</vscode-option>
+          <vscode-option>Amet</vscode-option>
+        </vscode-single-select>
+      </vscode-demo>
+
+      <vscode-demo>
+        <vscode-single-select-custom label="Custom controller (wrap navigation)">
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+          <vscode-option disabled>Sit (disabled)</vscode-option>
+          <vscode-option>Amet</vscode-option>
+        </vscode-single-select-custom>
+      </vscode-demo>
+
+      <script type="module">
+        // Import the base single-select and option list controller from the built output.
+        import { VscodeSingleSelect } from '/dist/vscode-single-select/vscode-single-select.js';
+        import { OptionListController } from '/dist/includes/vscode-select/OptionListController.js';
+
+        // A simple custom controller that wraps around on ArrowDown/ArrowUp
+        class MyOptionListController extends OptionListController {
+          next(fromIndex) {
+            const res = super.next(fromIndex);
+            if (res) return res;
+            // wrap to first visible option if any
+            const first = this.next(-1);
+            return first ?? null;
+          }
+          prev(fromIndex) {
+            const res = super.prev(fromIndex);
+            if (res) return res;
+            // wrap to last visible option if any
+            // Find the last visible, enabled option by scanning backwards from the end
+            const len = this.numOptions;
+            for (let i = len; i >= 0; i--) {
+              const p = super.prev(i + 1);
+              if (p) return p;
+            }
+            return null;
+          }
+        }
+
+        // Subclass the shipped element and override the controller factory
+        class VscodeSingleSelectCustom extends VscodeSingleSelect {
+          createOptionListController() {
+            return new MyOptionListController(this);
+          }
+        }
+
+        customElements.define('vscode-single-select-custom', VscodeSingleSelectCustom);
+      </script>
+    </main>
+  </body>
+</html>
