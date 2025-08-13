@@ -349,4 +349,43 @@ describe('vscode-checkbox', () => {
 
     expect(spy).to.have.been.calledOnce;
   });
+
+  describe('toggle mode', () => {
+    it('renders a toggle thumb instead of a check icon', async () => {
+      const el = await fixture<VscodeCheckbox>(
+        html`<vscode-checkbox toggle></vscode-checkbox>`
+      );
+
+      const thumb = el.shadowRoot?.querySelector('.thumb');
+      const checkIcon = el.shadowRoot?.querySelector('.check-icon');
+
+      expect(thumb).to.exist;
+      expect(checkIcon).to.not.exist;
+    });
+
+    it('toggles checked state on click', async () => {
+      const el = await fixture<VscodeCheckbox>(
+        html`<vscode-checkbox toggle>Toggle me</vscode-checkbox>`
+      );
+
+      const label = el.shadowRoot?.querySelector('label');
+      label?.click();
+      await el.updateComplete;
+
+      expect(el.checked).to.be.true;
+    });
+
+    it('sets role="switch" for accessibility', async () => {
+      const el = await fixture<VscodeCheckbox>(
+        html`<vscode-checkbox toggle></vscode-checkbox>`
+      );
+
+      const input = el.shadowRoot?.querySelector('input');
+      expect(input?.getAttribute('role')).to.eq('switch');
+      expect(input?.getAttribute('aria-checked')).to.be.oneOf([
+        'true',
+        'false',
+      ]);
+    });
+  });
 });

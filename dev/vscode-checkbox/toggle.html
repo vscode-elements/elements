@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VSCode Webview Elements — Checkbox Toggle Demo</title>
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script src="/dist/vscode-checkbox/index.js" type="module"></script>
+  </head>
+
+  <body>
+    <main>
+      <h2>Toggle switch mode</h2>
+      <vscode-demo>
+        <vscode-checkbox toggle label="Toggle (off)" id="toggle-off"></vscode-checkbox>
+        <vscode-checkbox toggle label="Toggle (on)" checked id="toggle-on"></vscode-checkbox>
+        <vscode-checkbox toggle label="Toggle (disabled)" disabled id="toggle-disabled"></vscode-checkbox>
+        <vscode-checkbox toggle label="Toggle (required)" required id="toggle-required"></vscode-checkbox>
+
+        <script type="module">
+          const log = (selector, type) => {
+            document.querySelector(selector)?.addEventListener(type, (ev) => {
+              console.log(`[${selector}] ${type}`, {
+                checked: ev.currentTarget.checked,
+              });
+            });
+          };
+
+          ['#toggle-off', '#toggle-on', '#toggle-disabled', '#toggle-required']
+            .forEach((sel) => {
+              log(sel, 'change');
+              log(sel, 'invalid');
+            });
+        </script>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
