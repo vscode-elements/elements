@@ -1,4 +1,5 @@
 import {html, render, nothing, TemplateResult, PropertyValues} from 'lit';
+import type {ReactiveController} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
@@ -156,7 +157,59 @@ export class VscodeSelectBase extends VscElement {
   @query('.dropdown', true)
   private _dropdownEl!: HTMLDivElement;
 
-  protected _opts = new OptionListController(this);
+  protected _opts: OptionListController = this.createOptionListController();
+
+  /**
+   * Factory method to create the option list controller. Subclasses can override
+   * this to provide a custom controller implementation that maintains the same API.
+   */
+  protected createOptionListController(): OptionListController {
+    return new OptionListController(this);
+  }
+
+  /**
+   * Replace the current OptionListController with a new instance. Detaches the
+   * previous controller and optionally transfers common state to the new one.
+   */
+  protected replaceOptionListController(
+    next: OptionListController,
+    {transferState = true}: {transferState?: boolean} = {}
+  ) {
+    const prev = this._opts;
+
+    if (prev === next) return;
+
+    // Detach the previous controller to avoid duplicate lifecycle hooks
+    try {
+      this.removeController(prev as ReactiveController);
+    } catch {
+      // Ignore if prev was not registered as a controller
+    }
+
+    if (transferState) {
+      // Best-effort transfer of options and key fields
+      const prevOptions = this.options;
+      try {
+        next.clear();
+        next.populate(prevOptions);
+      } catch {
+        // Ignore if custom controller uses different API
+      }
+
+      try {
+        // Propagate common fields used by the component logic
+        next.comboboxMode = prev.comboboxMode ?? next.comboboxMode;
+        next.filterMethod = prev.filterMethod ?? next.filterMethod;
+        next.filterPattern = prev.filterPattern ?? next.filterPattern;
+        next.activeIndex = prev.activeIndex ?? next.activeIndex;
+      } catch {
+        // Ignore if setters are guarded
+      }
+    }
+
+    this._opts = next;
+    this.requestUpdate();
+  }
 
   //#region lifecycle callbacks
 
@@ -534,24 +587,22 @@ export class VscodeSelectBase extends VscElement {
       event.preventDefault();
     }
 
-    if (event.key === 'Enter') {
-      this._onEnterKeyDown(event);
-    }
-
-    if (event.key === ' ') {
-      this._onSpaceKeyDown();
-    }
-
-    if (event.key === 'Escape') {
-      this._onEscapeKeyDown();
-    }
-
-    if (event.key === 'ArrowUp') {
-      this._onArrowUpKeyDown();
-    }
-
-    if (event.key === 'ArrowDown') {
-      this._onArrowDownKeyDown();
+    switch (event.key) {
+      case 'Enter':
+        this._onEnterKeyDown(event);
+        break;
+      case ' ':
+        this._onSpaceKeyDown();
+        break;
+      case 'Escape':
+        this._onEscapeKeyDown();
+        break;
+      case 'ArrowUp':
+        this._onArrowUpKeyDown();
+        break;
+      case 'ArrowDown':
+        this._onArrowDownKeyDown();
+        break;
     }
   };
 
