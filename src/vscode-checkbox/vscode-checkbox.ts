@@ -1,4 +1,5 @@
-import {html, LitElement, nothing, PropertyValueMap, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement} from '../includes/VscElement.js';
@@ -81,6 +82,12 @@ export class VscodeCheckbox
 
   @property({reflect: true})
   name: string | undefined = undefined;
+
+  /**
+   * When true, renders as a toggle switch instead of a checkbox.
+   */
+  @property({type: Boolean, reflect: true})
+  toggle = false;
 
   /**
    * Associate a value to the checkbox. According to the native checkbox [specification](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value_2), If the component participates in a form:
@@ -168,17 +175,6 @@ export class VscodeCheckbox
 
   override disconnectedCallback(): void {
     this.removeEventListener('keydown', this._handleKeyDown);
-  }
-
-  override update(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    super.update(changedProperties);
-
-    if (changedProperties.has('checked')) {
-      this.ariaChecked = this.checked ? 'true' : 'false';
-    }
   }
 
   /** @internal */
@@ -293,6 +289,10 @@ export class VscodeCheckbox
       ? html`<span class="indeterminate-icon"></span>`
       : nothing;
 
+    const iconContent = this.toggle
+      ? html`<span class="thumb"></span>`
+      : html`${indeterminate}${check}`;
+
     return html`
       <div class="wrapper">
         <input
@@ -301,9 +301,11 @@ export class VscodeCheckbox
           class="checkbox"
           type="checkbox"
           ?checked=${this.checked}
+          role=${ifDefined(this.toggle ? 'switch' : undefined)}
+          aria-checked=${ifDefined(this.toggle ? (this.checked ? 'true' : 'false') : undefined)}
           value=${this.value}
         >
-        <div class=${iconClasses}>${indeterminate}${check}</div>
+        <div class=${iconClasses}>${iconContent}</div>
         <label for="input" class="label" @click=${this._handleClick}>
           <span class=${labelInnerClasses}>
             ${this._renderLabelAttribute()}

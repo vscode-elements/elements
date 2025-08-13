@@ -27,6 +27,64 @@ const styles: CSSResultGroup = [
       outline: 1px solid var(--vscode-focusBorder, #0078d4);
       outline-offset: -1px;
     }
+
+    /* Toggle appearance */
+    :host([toggle]) .icon {
+      /* Track */
+      width: 36px;
+      height: 20px;
+      border-radius: 999px;
+      background-color: var(--vscode-settings-checkboxBackground, #313131);
+      border-color: var(--vscode-settings-checkboxBorder, #3c3c3c);
+      justify-content: flex-start;
+      position: absolute;
+    }
+
+    /* Reserve space for the wider toggle track so text doesn't overlap */
+    :host([toggle]) .label-inner {
+      padding-left: 45px; /* 36px track + 9px spacing */
+    }
+
+    :host([toggle]) .label {
+      min-height: 20px;
+    }
+
+    :host([toggle]) .wrapper {
+      min-height: 20px;
+      line-height: 20px;
+    }
+
+    :host([toggle]) .thumb {
+      /* Thumb */
+      box-sizing: border-box;
+      display: block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--vscode-settings-checkboxForeground, #cccccc);
+      margin-left: 1px;
+      transition: transform 120ms ease-in-out;
+    }
+
+    :host([toggle][checked]) .icon {
+      background-color: var(--vscode-list-activeSelectionBackground, #04395e);
+      border-color: var(--vscode-list-activeSelectionBackground, #04395e);
+    }
+
+    :host([toggle][checked]) .thumb {
+      transform: translateX(16px);
+      background-color: var(--vscode-list-activeSelectionForeground, #ffffff);
+    }
+
+    :host([toggle]) .check-icon,
+    :host([toggle]) .indeterminate-icon {
+      display: none;
+    }
+
+    :host([toggle]:focus):host(:not([disabled])) .icon {
+      outline: 1px solid var(--vscode-focusBorder, #0078d4);
+      outline-offset: -1px;
+    }
   `,
 ];
 
