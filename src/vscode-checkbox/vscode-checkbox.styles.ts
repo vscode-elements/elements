@@ -34,10 +34,14 @@ const styles: CSSResultGroup = [
       width: 36px;
       height: 20px;
       border-radius: 999px;
-      background-color: var(--vscode-settings-checkboxBackground, #313131);
-      border-color: var(--vscode-settings-checkboxBorder, #3c3c3c);
+      background-color: var(--vscode-button-secondaryBackground, #313131);
+      border-color: var(--vscode-button-border, transparent);
       justify-content: flex-start;
       position: absolute;
+    }
+
+    :host(:focus):host([toggle]):host(:not([disabled])) .icon {
+      outline-offset: 2px;
     }
 
     /* Reserve space for the wider toggle track so text doesn't overlap */
@@ -61,19 +65,28 @@ const styles: CSSResultGroup = [
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background-color: var(--vscode-settings-checkboxForeground, #cccccc);
+      background-color: var(--vscode-button-secondaryForeground, #cccccc);
       margin-left: 1px;
       transition: transform 120ms ease-in-out;
     }
 
     :host([toggle][checked]) .icon {
-      background-color: var(--vscode-list-activeSelectionBackground, #04395e);
-      border-color: var(--vscode-list-activeSelectionBackground, #04395e);
+      background-color: var(--vscode-button-background, #04395e);
+      border-color: var(--vscode-button-border, transparent);
     }
 
     :host([toggle][checked]) .thumb {
       transform: translateX(16px);
-      background-color: var(--vscode-list-activeSelectionForeground, #ffffff);
+      background-color: var(--vscode-button-foreground, #ffffff);
+    }
+
+    :host([toggle]):host(:invalid) .icon {
+      background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d);
+      border-color: var(--vscode-inputValidation-errorBorder, #be1100);
+    }
+
+    :host([toggle]):host(:invalid) .thumb {
+      background-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
     :host([toggle]) .check-icon,
