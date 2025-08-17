@@ -16,10 +16,29 @@
     <main>
       <h2>Toggle switch mode</h2>
       <vscode-demo>
-        <vscode-checkbox toggle label="Toggle (off)" id="toggle-off"></vscode-checkbox>
-        <vscode-checkbox toggle label="Toggle (on)" checked id="toggle-on"></vscode-checkbox>
-        <vscode-checkbox toggle label="Toggle (disabled)" disabled id="toggle-disabled"></vscode-checkbox>
-        <vscode-checkbox toggle label="Toggle (required)" required id="toggle-required"></vscode-checkbox>
+        <vscode-checkbox
+          toggle
+          label="Toggle (off)"
+          id="toggle-off"
+        ></vscode-checkbox>
+        <vscode-checkbox
+          toggle
+          label="Toggle (on)"
+          checked
+          id="toggle-on"
+        ></vscode-checkbox>
+        <vscode-checkbox
+          toggle
+          label="Toggle (disabled)"
+          disabled
+          id="toggle-disabled"
+        ></vscode-checkbox>
+        <vscode-checkbox
+          toggle
+          label="Toggle (required)"
+          required
+          id="toggle-required"
+        ></vscode-checkbox>
 
         <script type="module">
           const log = (selector, type) => {
@@ -30,11 +49,15 @@
             });
           };
 
-          ['#toggle-off', '#toggle-on', '#toggle-disabled', '#toggle-required']
-            .forEach((sel) => {
-              log(sel, 'change');
-              log(sel, 'invalid');
-            });
+          [
+            '#toggle-off',
+            '#toggle-on',
+            '#toggle-disabled',
+            '#toggle-required',
+          ].forEach((sel) => {
+            log(sel, 'change');
+            log(sel, 'invalid');
+          });
         </script>
       </vscode-demo>
     </main>
