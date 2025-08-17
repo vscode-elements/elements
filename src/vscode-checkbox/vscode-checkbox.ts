@@ -302,7 +302,9 @@ export class VscodeCheckbox
           type="checkbox"
           ?checked=${this.checked}
           role=${ifDefined(this.toggle ? 'switch' : undefined)}
-          aria-checked=${ifDefined(this.toggle ? (this.checked ? 'true' : 'false') : undefined)}
+          aria-checked=${ifDefined(
+            this.toggle ? (this.checked ? 'true' : 'false') : undefined
+          )}
           value=${this.value}
         >
         <div class=${iconClasses}>${iconContent}</div>
