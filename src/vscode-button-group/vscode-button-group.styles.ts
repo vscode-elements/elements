@@ -24,7 +24,7 @@ const styles: CSSResultGroup = [
     ::slotted(vscode-button:not(:last-child)) {
       --vsc-divider-display: block;
       --vsc-base-additional-right-padding: 1px;
-      --vsc-base-after-content: "";
+      --vsc-base-after-content: '';
       --vsc-border-right-width: 0;
       --vsc-border-right-radius: 0;
       --vsc-border-right-width: 0;
