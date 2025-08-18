@@ -133,7 +133,7 @@ export class VscodeRadio
   }
 
   /** @internal */
-  @property()
+  @property({reflect: true})
   type = 'radio';
 
   get validity(): ValidityState {

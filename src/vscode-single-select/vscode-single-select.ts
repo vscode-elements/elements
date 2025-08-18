@@ -118,6 +118,10 @@ export class VscodeSingleSelect
   @property({type: Boolean, reflect: true})
   required = false;
 
+  /** @internal */
+  @property({reflect: true})
+  type = 'select-one';
+
   get validity(): ValidityState {
     return this._internals.validity;
   }
@@ -185,11 +189,6 @@ export class VscodeSingleSelect
     this.updateComplete.then(() => {
       this.value = state;
     });
-  }
-
-  /** @internal */
-  get type(): 'select-one' {
-    return 'select-one';
   }
 
   get form(): HTMLFormElement | null {

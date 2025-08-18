@@ -76,6 +76,10 @@ export class VscodeMultiSelect
     return this._opts.selectedIndexes;
   }
 
+  /** @internal */
+  @property({reflect: true})
+  type = 'select-multiple';
+
   @property({type: Array})
   set value(val: string[]) {
     this._opts.multiSelectValue = val;
@@ -95,11 +99,6 @@ export class VscodeMultiSelect
 
   get form() {
     return this._internals.form;
-  }
-
-  /** @internal */
-  get type() {
-    return 'select-multiple';
   }
 
   get validity(): ValidityState {

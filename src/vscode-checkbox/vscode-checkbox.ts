@@ -121,7 +121,7 @@ export class VscodeCheckbox
   }
 
   /** @internal */
-  @property()
+  @property({reflect: true})
   type = 'checkbox';
 
   get validity(): ValidityState {
