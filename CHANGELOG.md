@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Added `base` css part to **Button**.
 - Added `content-before` and `content-after` slot to **Button**.
+- Added `toggle` property to **Checkbox**.
 
 ## [2.1.0] - 2025-08-08
 
