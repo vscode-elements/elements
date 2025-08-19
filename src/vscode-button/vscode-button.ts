@@ -1,5 +1,5 @@
 import {html, nothing, PropertyValueMap, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
+import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import '../vscode-icon/index.js';
@@ -108,6 +108,12 @@ export class VscodeButton extends VscElement {
   private _prevTabindex = 0;
   private _internals: ElementInternals;
 
+  @state()
+  private _hasContentBefore = false;
+
+  @state()
+  private _hasContentAfter = false;
+
   get form(): HTMLFormElement | null {
     return this._internals.form;
   }
@@ -211,12 +217,26 @@ export class VscodeButton extends VscElement {
     this.focused = false;
   };
 
+  private _handleSlotChange(ev: Event) {
+    const slot = ev.target as HTMLSlotElement;
+
+    if (slot.name === 'content-before') {
+      this._hasContentBefore = slot.assignedElements().length > 0;
+    }
+
+    if (slot.name === 'content-after') {
+      this._hasContentAfter = slot.assignedElements().length > 0;
+    }
+  }
+
   override render(): TemplateResult {
     const hasIcon = this.icon !== '';
     const hasIconAfter = this.iconAfter !== '';
     const baseClasses = {
       base: true,
       'icon-only': this.iconOnly,
+      'has-content-before': this._hasContentBefore,
+      'has-content-after': this._hasContentAfter,
     };
 
     const iconElem = hasIcon
@@ -238,10 +258,16 @@ export class VscodeButton extends VscElement {
       : nothing;
 
     return html`
-      <div class=${classMap(baseClasses)} part="base">
+      <div
+        class=${classMap(baseClasses)}
+        part="base"
+        @slotchange=${this._handleSlotChange}
+      >
+        <slot name="content-before"></slot>
         ${iconElem}
         <slot></slot>
         ${iconAfterElem}
+        <slot name="content-after"></slot>
       </div>
     `;
   }

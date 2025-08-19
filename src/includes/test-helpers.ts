@@ -120,23 +120,26 @@ type TagNameToElement<K extends AllTagNames> =
 
 export function $<K extends AllTagNames>(selector: K): TagNameToElement<K>;
 export function $<K extends AllTagNames>(
-  root: Element,
+  root: Element | ShadowRoot,
   selector: K
 ): TagNameToElement<K>;
 export function $<T extends Element = Element>(selector: string): T;
 export function $<T extends Element = Element>(
-  root: Element,
+  root: Element | ShadowRoot,
   selector: string
 ): T;
 export function $<T extends Element = Element>(
-  arg1: string | Element,
+  arg1: string | Element | ShadowRoot,
   arg2?: string
 ): T {
   let result: Element | null;
 
   if (typeof arg1 === 'string') {
     result = document.querySelector(arg1);
-  } else if (arg1 instanceof Element && typeof arg2 === 'string') {
+  } else if (
+    (arg1 instanceof Element || arg1 instanceof ShadowRoot) &&
+    typeof arg2 === 'string'
+  ) {
     result = arg1.querySelector(arg2);
   } else {
     throw new Error('Invalid arguments passed to $()');
