@@ -22,6 +22,11 @@ import {ifDefined} from 'lit/directives/if-defined.js';
  * @cssprop [--vscode-button-secondaryBackground=#313131]
  * @cssprop [--vscode-button-secondaryHoverBackground=#3c3c3c]
  * @cssprop [--vscode-focusBorder=#0078d4]
+ *
+ * @csspart base - The main content area of the component.
+ *
+ * @slot content-before - Slot before the main content.
+ * @slot content-after - Slot after the main content.
  */
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {
