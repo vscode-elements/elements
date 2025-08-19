@@ -157,6 +157,14 @@ const styles: CSSResultGroup = [
       height: 100%;
     }
 
+    .has-content-before slot[name='content-before'] {
+      margin-right: 4px;
+    }
+
+    .has-content-after slot[name='content-after'] {
+      margin-left: 4px;
+    }
+
     .icon,
     .icon-after {
       color: inherit;
