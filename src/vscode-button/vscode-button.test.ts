@@ -78,8 +78,8 @@ describe('vscode-button', () => {
     expect(el).shadowDom.to.eq(
       `
       <div class="base" part="base">
-        <vscode-icon name="account" class="icon"></vscode-icon>
         <slot name="content-before"></slot>
+        <vscode-icon name="account" class="icon"></vscode-icon>
         <slot></slot>
         <slot name="content-after"></slot>
       </div>
@@ -95,8 +95,8 @@ describe('vscode-button', () => {
     expect(el).shadowDom.to.eq(
       `
       <div class="base" part="base">
-        <vscode-icon name="account" spin class="icon"></vscode-icon>
         <slot name="content-before"></slot>
+        <vscode-icon name="account" spin class="icon"></vscode-icon>
         <slot></slot>
         <slot name="content-after"></slot>
       </div>
@@ -115,8 +115,8 @@ describe('vscode-button', () => {
     expect(el).shadowDom.to.eq(
       `
       <div class="base" part="base">
-        <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
         <slot name="content-before"></slot>
+        <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
         <slot></slot>
         <slot name="content-after"></slot>
       </div>
@@ -134,8 +134,8 @@ describe('vscode-button', () => {
       <div class="base" part="base">
         <slot name="content-before"></slot>
         <slot></slot>
-        <slot name="content-after"></slot>
         <vscode-icon name="account" class="icon-after"></vscode-icon>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -151,8 +151,8 @@ describe('vscode-button', () => {
       <div class="base" part="base">
         <slot name="content-before"></slot>
         <slot></slot>
-        <slot name="content-after"></slot>
         <vscode-icon name="account" class="icon-after" spin></vscode-icon>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -171,8 +171,8 @@ describe('vscode-button', () => {
       <div class="base" part="base">
         <slot name="content-before"></slot>
         <slot></slot>
-        <slot name="content-after"></slot>
         <vscode-icon name="account" class="icon-after" spin-duration="5"></vscode-icon>
+        <slot name="content-after"></slot>
       </div>
     `
     );
