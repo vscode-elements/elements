@@ -76,7 +76,9 @@ describe('vscode-breadcrumbs', () => {
     expect(el.getAttribute('aria-label')).to.equal('Breadcrumb');
 
     // Last item should have aria-current="page"
-    expect((items[2] as HTMLElement).getAttribute('aria-current')).to.equal('page');
+    expect((items[2] as HTMLElement).getAttribute('aria-current')).to.equal(
+      'page'
+    );
     // Other items should not have aria-current
     expect((items[0] as HTMLElement).hasAttribute('aria-current')).to.be.false;
   });

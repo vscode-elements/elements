@@ -85,7 +85,10 @@ export class VscodeBreadcrumbs extends VscElement {
       }
     });
     // Ensure focused is scrolled into view
-    items[this._focusedIndex]?.scrollIntoView({block: 'nearest', inline: 'nearest'});
+    items[this._focusedIndex]?.scrollIntoView({
+      block: 'nearest',
+      inline: 'nearest',
+    });
   }
 
   private onClick(ev: MouseEvent) {
@@ -143,10 +146,7 @@ export class VscodeBreadcrumbs extends VscElement {
   }
 
   override render(): TemplateResult {
-    return html`<div
-      class="container"
-      part="container"
-    >
+    return html`<div class="container" part="container">
       <slot @slotchange=${this.refreshItems}></slot>
     </div>`;
   }
