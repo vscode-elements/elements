@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&lt;vscode-progress-bar&gt; Demo</title>
-    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css" />
+    <link rel="stylesheet" href="../dev-assets/default-webview-styles.css">
     <link
       rel="stylesheet"
       href="../node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
-    />
+    >
     <script type="module" src="../dev-assets/component-preview.js"></script>
     <!-- Components -->
     <script type="module" src="../dist/vscode-progress-bar/index.js"></script>
@@ -24,14 +24,18 @@
         <h2 class="story-title">Basic examples</h2>
         <div class="story-content">
           <component-preview>
-            <div style="display: grid; gap: 12px; align-items: center;">
+            <div style="display: grid; gap: 12px; align-items: center">
               <div>
                 <label>Indeterminate</label>
                 <vscode-progress-bar aria-label="Loading"></vscode-progress-bar>
               </div>
               <div>
                 <label>Determinate (value=60, max=100)</label>
-                <vscode-progress-bar aria-label="Progress" value="60" max="100"></vscode-progress-bar>
+                <vscode-progress-bar
+                  aria-label="Progress"
+                  value="60"
+                  max="100"
+                ></vscode-progress-bar>
               </div>
             </div>
           </component-preview>
@@ -45,15 +49,22 @@
             <vscode-tabs class="panel-example" panel>
               <vscode-tab-header slot="header">Build</vscode-tab-header>
               <vscode-tab-panel>
-                <div style="padding: 8px;">
-                  <vscode-progress-bar id="build-progress" aria-label="Building" value="0" max="100"></vscode-progress-bar>
+                <div style="padding: 8px">
+                  <vscode-progress-bar
+                    id="build-progress"
+                    aria-label="Building"
+                    value="0"
+                    max="100"
+                  ></vscode-progress-bar>
                 </div>
               </vscode-tab-panel>
 
               <vscode-tab-header slot="header">Tasks</vscode-tab-header>
               <vscode-tab-panel>
-                <div style="padding: 8px;">
-                  <vscode-progress-bar aria-label="Fetching tasks"></vscode-progress-bar>
+                <div style="padding: 8px">
+                  <vscode-progress-bar
+                    aria-label="Fetching tasks"
+                  ></vscode-progress-bar>
                 </div>
               </vscode-tab-panel>
             </vscode-tabs>

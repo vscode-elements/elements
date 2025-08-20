@@ -21,7 +21,8 @@ describe('vscode-progress-bar', () => {
       await el.updateComplete;
 
       const container = el.shadowRoot?.querySelector('.container');
-      expect(container?.classList.contains('infinite-long-running')).to.be.false;
+      expect(container?.classList.contains('infinite-long-running')).to.be
+        .false;
     } finally {
       clock.restore();
     }
@@ -50,7 +51,11 @@ describe('vscode-progress-bar', () => {
     const clock = sinon.useFakeTimers();
     try {
       const el = (await fixture(html`
-        <vscode-progress-bar value="10" max="100" longRunningThreshold="10"></vscode-progress-bar>
+        <vscode-progress-bar
+          value="10"
+          max="100"
+          longRunningThreshold="10"
+        ></vscode-progress-bar>
       `)) as VscodeProgressBar;
 
       await el.updateComplete;
@@ -58,7 +63,8 @@ describe('vscode-progress-bar', () => {
       await el.updateComplete;
 
       const container = el.shadowRoot?.querySelector('.container');
-      expect(container?.classList.contains('infinite-long-running')).to.be.false;
+      expect(container?.classList.contains('infinite-long-running')).to.be
+        .false;
     } finally {
       clock.restore();
     }
@@ -79,7 +85,8 @@ describe('vscode-progress-bar', () => {
 
       // Re-attach check: since removed, class should not toggle
       const container = el.shadowRoot?.querySelector('.container');
-      expect(container?.classList.contains('infinite-long-running')).to.be.false;
+      expect(container?.classList.contains('infinite-long-running')).to.be
+        .false;
     } finally {
       clock.restore();
     }
