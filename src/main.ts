@@ -15,6 +15,7 @@ export {VscodeLabel} from './vscode-label/index.js';
 export {VscodeMultiSelect} from './vscode-multi-select/index.js';
 export {VscodeOption} from './vscode-option/index.js';
 export {VscodeProgressRing} from './vscode-progress-ring/index.js';
+export {VscodeProgressBar} from './vscode-progress-bar/index.js';
 export {VscodeRadio} from './vscode-radio/index.js';
 export {VscodeRadioGroup} from './vscode-radio-group/index.js';
 export {VscodeSingleSelect} from './vscode-single-select/index.js';
