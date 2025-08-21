@@ -49,16 +49,16 @@ export class VscodeProgressBar extends VscElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.maybeStartLongRunningTimer();
+    this._maybeStartLongRunningTimer();
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.clearLongRunningTimer();
+    this._clearLongRunningTimer();
   }
 
   protected override willUpdate(): void {
-    this.maybeStartLongRunningTimer();
+    this._maybeStartLongRunningTimer();
   }
 
   override render(): TemplateResult {
@@ -99,11 +99,11 @@ export class VscodeProgressBar extends VscElement {
     `;
   }
 
-  private maybeStartLongRunningTimer(): void {
+  private _maybeStartLongRunningTimer(): void {
     const shouldRun =
       !this._isDeterminate && this.longRunningThreshold > 0 && this.isConnected;
     if (!shouldRun) {
-      this.clearLongRunningTimer();
+      this._clearLongRunningTimer();
       this._longRunning = false;
       return;
     }
@@ -119,7 +119,7 @@ export class VscodeProgressBar extends VscElement {
     }, this.longRunningThreshold);
   }
 
-  private clearLongRunningTimer(): void {
+  private _clearLongRunningTimer(): void {
     if (this._longRunningHandle) {
       clearTimeout(this._longRunningHandle);
       this._longRunningHandle = undefined;
