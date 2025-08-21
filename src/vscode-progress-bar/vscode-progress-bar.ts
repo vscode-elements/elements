@@ -3,8 +3,8 @@ import {property, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-progress-bar.styles.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { stylePropertyMap } from '../includes/style-property-map.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 
 /**
  * @tag vscode-progress-bar
@@ -92,7 +92,7 @@ export class VscodeProgressBar extends VscElement {
           class="indicator"
           part="indicator"
           .style=${stylePropertyMap({
-            width: this._isDeterminate ? `${percent}%` : undefined
+            width: this._isDeterminate ? `${percent}%` : undefined,
           })}
         ></div>
       </div>
