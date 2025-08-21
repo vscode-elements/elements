@@ -3,6 +3,8 @@ import {property, state} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-progress-bar.styles.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { stylePropertyMap } from '../includes/style-property-map.js';
 
 /**
  * @tag vscode-progress-bar
@@ -47,16 +49,16 @@ export class VscodeProgressBar extends VscElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.#maybeStartLongRunningTimer();
+    this.maybeStartLongRunningTimer();
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.#clearLongRunningTimer();
+    this.clearLongRunningTimer();
   }
 
   protected override willUpdate(): void {
-    this.#maybeStartLongRunningTimer();
+    this.maybeStartLongRunningTimer();
   }
 
   override render(): TemplateResult {
@@ -66,13 +68,16 @@ export class VscodeProgressBar extends VscElement {
       : 0;
     const percent = this._isDeterminate ? (clamped / max) * 100 : 0;
 
-    const containerClasses = `container ${this._isDeterminate ? 'discrete' : 'infinite'} ${
-      this._longRunning && !this._isDeterminate ? 'infinite-long-running' : ''
-    }`;
+    const containerClasses = {
+      container: true,
+      discrete: this._isDeterminate,
+      infinite: !this._isDeterminate,
+      'infinite-long-running': this._longRunning && !this._isDeterminate,
+    };
 
     return html`
       <div
-        class=${containerClasses}
+        class=${classMap(containerClasses)}
         part="container"
         role="progressbar"
         aria-label=${this.ariaLabel}
@@ -86,17 +91,19 @@ export class VscodeProgressBar extends VscElement {
         <div
           class="indicator"
           part="indicator"
-          style=${this._isDeterminate ? `width: ${percent}%;` : ''}
+          .style=${stylePropertyMap({
+            width: this._isDeterminate ? `${percent}%` : undefined
+          })}
         ></div>
       </div>
     `;
   }
 
-  #maybeStartLongRunningTimer(): void {
+  private maybeStartLongRunningTimer(): void {
     const shouldRun =
       !this._isDeterminate && this.longRunningThreshold > 0 && this.isConnected;
     if (!shouldRun) {
-      this.#clearLongRunningTimer();
+      this.clearLongRunningTimer();
       this._longRunning = false;
       return;
     }
@@ -112,7 +119,7 @@ export class VscodeProgressBar extends VscElement {
     }, this.longRunningThreshold);
   }
 
-  #clearLongRunningTimer(): void {
+  private clearLongRunningTimer(): void {
     if (this._longRunningHandle) {
       clearTimeout(this._longRunningHandle);
       this._longRunningHandle = undefined;
