@@ -11,15 +11,15 @@ const styles: CSSResultGroup = [
     }
 
     .container {
-      position: relative;
-      display: flex;
+      -ms-overflow-style: none; /* IE 10+ */
       align-items: center;
-      gap: 6px;
+      background: var(--vscode-breadcrumb-background, transparent);
+      display: flex;
+      height: 22px;
       overflow-x: auto;
       overflow-y: hidden;
+      position: relative;
       scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE 10+ */
-      background: var(--vscode-breadcrumb-background, transparent);
     }
 
     .container::-webkit-scrollbar {
