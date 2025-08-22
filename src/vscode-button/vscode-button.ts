@@ -1,5 +1,5 @@
 import {html, nothing, PropertyValueMap, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
+import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import '../vscode-icon/index.js';
@@ -22,6 +22,11 @@ import {ifDefined} from 'lit/directives/if-defined.js';
  * @cssprop [--vscode-button-secondaryBackground=#313131]
  * @cssprop [--vscode-button-secondaryHoverBackground=#3c3c3c]
  * @cssprop [--vscode-focusBorder=#0078d4]
+ *
+ * @csspart base - The main content area of the component.
+ *
+ * @slot content-before - Slot before the main content.
+ * @slot content-after - Slot after the main content.
  */
 @customElement('vscode-button')
 export class VscodeButton extends VscElement {
@@ -107,6 +112,12 @@ export class VscodeButton extends VscElement {
 
   private _prevTabindex = 0;
   private _internals: ElementInternals;
+
+  @state()
+  private _hasContentBefore = false;
+
+  @state()
+  private _hasContentAfter = false;
 
   get form(): HTMLFormElement | null {
     return this._internals.form;
@@ -211,14 +222,26 @@ export class VscodeButton extends VscElement {
     this.focused = false;
   };
 
+  private _handleSlotChange(ev: Event) {
+    const slot = ev.target as HTMLSlotElement;
+
+    if (slot.name === 'content-before') {
+      this._hasContentBefore = slot.assignedElements().length > 0;
+    }
+
+    if (slot.name === 'content-after') {
+      this._hasContentAfter = slot.assignedElements().length > 0;
+    }
+  }
+
   override render(): TemplateResult {
     const hasIcon = this.icon !== '';
     const hasIconAfter = this.iconAfter !== '';
-    const contentClasses = {
-      content: true,
-      'has-icon-before': hasIcon,
-      'has-icon-after': hasIconAfter,
+    const baseClasses = {
+      base: true,
       'icon-only': this.iconOnly,
+      'has-content-before': this._hasContentBefore,
+      'has-content-after': this._hasContentAfter,
     };
 
     const iconElem = hasIcon
@@ -240,13 +263,16 @@ export class VscodeButton extends VscElement {
       : nothing;
 
     return html`
-      <div class="root" part="base">
-        <div class=${classMap(contentClasses)}>
-          ${iconElem}
-          <slot></slot>
-          ${iconAfterElem}
-        </div>
-        <div class="divider"><div></div></div>
+      <div
+        class=${classMap(baseClasses)}
+        part="base"
+        @slotchange=${this._handleSlotChange}
+      >
+        <slot name="content-before"></slot>
+        ${iconElem}
+        <slot></slot>
+        ${iconAfterElem}
+        <slot name="content-after"></slot>
       </div>
     `;
   }

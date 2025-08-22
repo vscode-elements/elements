@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <div style="display: flex; flex-wrap: wrap; gap: 4px; width: 100%">
+          <vscode-button>Primary Button</vscode-button
+          ><vscode-button secondary>Secondary Button</vscode-button
+          ><vscode-button icon="account">Icon</vscode-button
+          ><vscode-button icon-after="chevron-right">Icon after</vscode-button
+          ><vscode-button icon="account" icon-after="chevron-right"
+            >Icon after</vscode-button
+          >
+          <vscode-button icon-only>
+            <img
+              src="/dev/assets/html.svg"
+              alt="HTML logo"
+              width="16"
+              height="16"
+            >
+          </vscode-button>
+          <vscode-button icon-only></vscode-button>
+          <vscode-button-group>
+            <vscode-button>Split button</vscode-button>
+            <vscode-button icon="chevron-down"></vscode-button>
+          </vscode-button-group>
+          <vscode-button-group>
+            <vscode-button icon="account"></vscode-button>
+            <vscode-button>Split button</vscode-button>
+            <vscode-button icon="chevron-down"></vscode-button>
+          </vscode-button-group>
+          <vscode-button-group>
+            <vscode-button secondary>Split button</vscode-button>
+            <vscode-button secondary icon="chevron-down"></vscode-button>
+          </vscode-button-group>
+          <vscode-button-group>
+            <vscode-button secondary icon="account"></vscode-button>
+            <vscode-button secondary>Split button</vscode-button>
+            <vscode-button secondary icon="chevron-down"></vscode-button>
+          </vscode-button-group>
+          <vscode-button-group>
+            <vscode-button secondary icon="account" disabled></vscode-button>
+            <vscode-button secondary disabled>Split button</vscode-button>
+            <vscode-button
+              secondary
+              icon="chevron-down"
+              disabled
+            ></vscode-button>
+          </vscode-button-group>
+        </div>
+      </vscode-demo>
+    </main>
+  </body>
+</html>

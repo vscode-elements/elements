@@ -1,6 +1,7 @@
 import sinon from 'sinon';
 import {VscodeButton} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
+import {$} from '../includes/test-helpers.js';
 
 describe('vscode-button', () => {
   it('is defined', () => {
@@ -76,15 +77,11 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root" part="base">
-        <div class="has-icon-before content">
-          <vscode-icon name="account" class="icon"></vscode-icon>
-          <slot></slot>
-        </div>
-        <div class="divider">
-          <div>
-          </div>
-        </div>
+      <div class="base" part="base">
+        <slot name="content-before"></slot>
+        <vscode-icon name="account" class="icon"></vscode-icon>
+        <slot></slot>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -97,15 +94,11 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root" part="base">
-        <div class="has-icon-before content">
-          <vscode-icon name="account" spin class="icon"></vscode-icon>
-          <slot></slot>
-        </div>
-        <div class="divider">
-          <div>
-          </div>
-        </div>
+      <div class="base" part="base">
+        <slot name="content-before"></slot>
+        <vscode-icon name="account" spin class="icon"></vscode-icon>
+        <slot></slot>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -121,15 +114,11 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root" part="base">
-        <div class="has-icon-before content">
-          <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
-          <slot></slot>
-        </div>
-        <div class="divider">
-          <div>
-          </div>
-        </div>
+      <div class="base" part="base">
+        <slot name="content-before"></slot>
+        <vscode-icon name="account" class="icon" spin-duration="5"></vscode-icon>
+        <slot></slot>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -142,15 +131,11 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root" part="base">
-        <div class="has-icon-after content">
-          <slot></slot>
-          <vscode-icon name="account" class="icon-after"></vscode-icon>
-        </div>
-        <div class="divider">
-          <div>
-          </div>
-        </div>
+      <div class="base" part="base">
+        <slot name="content-before"></slot>
+        <slot></slot>
+        <vscode-icon name="account" class="icon-after"></vscode-icon>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -163,15 +148,11 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root" part="base">
-        <div class="has-icon-after content">
-          <slot></slot>
-          <vscode-icon name="account" class="icon-after" spin></vscode-icon>
-        </div>
-        <div class="divider">
-          <div>
-          </div>
-        </div>
+      <div class="base" part="base">
+        <slot name="content-before"></slot>
+        <slot></slot>
+        <vscode-icon name="account" class="icon-after" spin></vscode-icon>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -187,15 +168,11 @@ describe('vscode-button', () => {
 
     expect(el).shadowDom.to.eq(
       `
-      <div class="root" part="base">
-        <div class="has-icon-after content">
-          <slot></slot>
-          <vscode-icon name="account" class="icon-after" spin-duration="5"></vscode-icon>
-        </div>
-        <div class="divider">
-          <div>
-          </div>
-        </div>
+      <div class="base" part="base">
+        <slot name="content-before"></slot>
+        <slot></slot>
+        <vscode-icon name="account" class="icon-after" spin-duration="5"></vscode-icon>
+        <slot name="content-after"></slot>
       </div>
     `
     );
@@ -233,6 +210,26 @@ describe('vscode-button', () => {
     el.dispatchEvent(new MouseEvent('click'));
 
     expect(submitSpy.called).to.be.true;
+  });
+
+  it('adds custom class to wrapper if content-before slot is not empty', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button><b slot="content-before">b</b></vscode-button>`
+    );
+
+    const base = $(el.shadowRoot!, '.base');
+
+    expect(base.classList.contains('has-content-before')).to.be.true;
+  });
+
+  it('adds custom class to wrapper if content-after slot is not empty', async () => {
+    const el = await fixture<VscodeButton>(
+      html`<vscode-button><b slot="content-after">b</b></vscode-button>`
+    );
+
+    const base = $(el.shadowRoot!, '.base');
+
+    expect(base.classList.contains('has-content-after')).to.be.true;
   });
 
   it('sets the form value');

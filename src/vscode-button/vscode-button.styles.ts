@@ -13,7 +13,8 @@ const styles: CSSResultGroup = [
       width: auto;
     }
 
-    .root {
+    .base {
+      align-items: center;
       background-color: var(--vscode-button-background, #0078d4);
       border-bottom-left-radius: var(--vsc-border-left-radius, 2px);
       border-bottom-right-radius: var(--vsc-border-right-radius, 2px);
@@ -27,19 +28,42 @@ const styles: CSSResultGroup = [
       border-top-width: 1px;
       box-sizing: border-box;
       color: var(--vscode-button-foreground, #ffffff);
-      display: inline-flex;
+      display: flex;
       font-family: var(--vscode-font-family, ${defaultFontStack});
       font-size: var(--vscode-font-size, 13px);
       font-weight: var(--vscode-font-weight, normal);
+      height: 100%;
+      justify-content: center;
       line-height: 22px;
       overflow: hidden;
-      padding: 0;
+      padding: 1px calc(13px + var(--vsc-base-additional-right-padding, 0px))
+        1px 13px;
+      position: relative;
       user-select: none;
       white-space: nowrap;
       width: 100%;
     }
 
-    :host([secondary]) .root {
+    .base:after {
+      background-color: var(
+        --vscode-button-separator,
+        rgba(255, 255, 255, 0.4)
+      );
+      content: var(--vsc-base-after-content);
+      display: var(--vsc-divider-display, none);
+      position: absolute;
+      right: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 1px;
+    }
+
+    :host([secondary]) .base:after {
+      background-color: var(--vscode-button-secondaryForeground, #cccccc);
+      opacity: 0.4;
+    }
+
+    :host([secondary]) .base {
       color: var(--vscode-button-secondaryForeground, #cccccc);
       background-color: var(--vscode-button-secondaryBackground, #313131);
       border-color: var(
@@ -54,19 +78,19 @@ const styles: CSSResultGroup = [
       pointer-events: none;
     }
 
-    :host(:hover) .root {
+    :host(:hover) .base {
       background-color: var(--vscode-button-hoverBackground, #026ec1);
     }
 
-    :host([disabled]:hover) .root {
+    :host([disabled]:hover) .base {
       background-color: var(--vscode-button-background, #0078d4);
     }
 
-    :host([secondary]:hover) .root {
+    :host([secondary]:hover) .base {
       background-color: var(--vscode-button-secondaryHoverBackground, #3c3c3c);
     }
 
-    :host([secondary][disabled]:hover) .root {
+    :host([secondary][disabled]:hover) .base {
       background-color: var(--vscode-button-secondaryBackground, #313131);
     }
 
@@ -75,22 +99,22 @@ const styles: CSSResultGroup = [
       outline: none;
     }
 
-    :host(:focus) .root {
+    :host(:focus) .base {
       background-color: var(--vscode-button-hoverBackground, #026ec1);
       outline: 1px solid var(--vscode-focusBorder, #0078d4);
       outline-offset: 2px;
     }
 
-    :host([disabled]:focus) .root {
+    :host([disabled]:focus) .base {
       background-color: var(--vscode-button-background, #0078d4);
       outline: 0;
     }
 
-    :host([secondary]:focus) .root {
+    :host([secondary]:focus) .base {
       background-color: var(--vscode-button-secondaryHoverBackground, #3c3c3c);
     }
 
-    :host([secondary][disabled]:focus) .root {
+    :host([secondary][disabled]:focus) .base {
       background-color: var(--vscode-button-secondaryBackground, #313131);
     }
 
@@ -113,20 +137,17 @@ const styles: CSSResultGroup = [
     }
 
     .content {
-      align-items: center;
-      box-sizing: border-box;
       display: flex;
-      justify-content: center;
       position: relative;
       width: 100%;
       height: 100%;
       padding: 1px 13px;
     }
 
-    :host(:empty) .content,
-    :host([icon-only]) .content {
+    :host(:empty) .base,
+    .base.icon-only {
       min-height: 24px;
-      min-width: 16px;
+      min-width: 26px;
       padding: 1px 4px;
     }
 
@@ -134,6 +155,14 @@ const styles: CSSResultGroup = [
       align-items: center;
       display: flex;
       height: 100%;
+    }
+
+    .has-content-before slot[name='content-before'] {
+      margin-right: 4px;
+    }
+
+    .has-content-after slot[name='content-after'] {
+      margin-left: 4px;
     }
 
     .icon,
@@ -149,42 +178,6 @@ const styles: CSSResultGroup = [
     :host(:not(:empty)) .icon-after,
     :host([icon]) .icon-after {
       margin-left: 3px;
-    }
-
-    .divider {
-      display: var(--vsc-divider-display, none);
-      background-color: transparent;
-      padding: 4px 0;
-      box-sizing: border-box;
-    }
-
-    :host(:hover) .divider,
-    :host(:focus) .divider {
-      background-color: var(--vscode-button-hoverBackground, #026ec1);
-    }
-
-    :host([secondary]) .divider {
-      background-color: var(--vscode-button-secondaryBackground, #313131);
-    }
-
-    :host([secondary]:hover) .divider,
-    :host([secondary]:focus) .divider {
-      background-color: var(--vscode-button-secondaryHoverBackground, #3c3c3c);
-    }
-
-    .divider > div {
-      background-color: var(
-        --vscode-button-separator,
-        rgba(255, 255, 255, 0.4)
-      );
-      height: 100%;
-      width: 1px;
-      margin: 0;
-    }
-
-    :host([secondary]) .divider > div {
-      background-color: var(--vscode-button-secondaryForeground, #cccccc);
-      opacity: 0.4;
     }
   `,
 ];
