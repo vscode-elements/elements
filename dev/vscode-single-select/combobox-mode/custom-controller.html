@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VSCode Elements — Single Select — Combobox — Custom Controller</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      VSCode Elements — Single Select — Combobox — Custom Controller
+    </title>
     <link
       rel="stylesheet"
       href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
-    />
+    >
     <script
       type="module"
       src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
@@ -28,7 +30,10 @@
       </vscode-demo>
 
       <vscode-demo>
-        <vscode-single-select-custom combobox label="Custom controller (wrap navigation + default filter)">
+        <vscode-single-select-custom
+          combobox
+          label="Custom controller (wrap navigation + default filter)"
+        >
           <vscode-option>Lorem</vscode-option>
           <vscode-option>Ipsum</vscode-option>
           <vscode-option>Dolor</vscode-option>
@@ -38,8 +43,8 @@
       </vscode-demo>
 
       <script type="module">
-        import { VscodeSingleSelect } from '/dist/vscode-single-select/vscode-single-select.js';
-        import { OptionListController } from '/dist/includes/vscode-select/OptionListController.js';
+        import {VscodeSingleSelect} from '/dist/vscode-single-select/vscode-single-select.js';
+        import {OptionListController} from '/dist/includes/vscode-select/OptionListController.js';
 
         class MyOptionListController extends OptionListController {
           // Prefer startsWithPerTerm as a default filter when in combobox mode
@@ -73,7 +78,10 @@
           }
         }
 
-        customElements.define('vscode-single-select-custom', VscodeSingleSelectCustom);
+        customElements.define(
+          'vscode-single-select-custom',
+          VscodeSingleSelectCustom
+        );
       </script>
     </main>
   </body>

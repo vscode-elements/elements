@@ -1,14 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VSCode Elements — Single Select — Combobox — npm Search (Custom Controller)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      VSCode Elements — Single Select — Combobox — npm Search (Custom
+      Controller)
+    </title>
     <link
       rel="stylesheet"
       href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
-    />
+    >
     <script
       type="module"
       src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
@@ -24,8 +27,8 @@
       </vscode-demo>
 
       <script type="module">
-        import { VscodeSingleSelect } from '/dist/vscode-single-select/vscode-single-select.js';
-        import { OptionListController } from '/dist/includes/vscode-select/OptionListController.js';
+        import {VscodeSingleSelect} from '/dist/vscode-single-select/vscode-single-select.js';
+        import {OptionListController} from '/dist/includes/vscode-select/OptionListController.js';
 
         // Simple debounce helper
         function debounce(fn, delay = 300) {
@@ -43,7 +46,10 @@
             this._hostEl = host;
             this._busyCount = 0;
             this._spinnerEl = null;
-            this._debouncedFetch = debounce((q) => this._fetchAndPopulate(q), 300);
+            this._debouncedFetch = debounce(
+              (q) => this._fetchAndPopulate(q),
+              300
+            );
           }
 
           // Prefer a friendlier default in combobox mode
@@ -64,7 +70,13 @@
               this._debouncedFetch(q);
             } else {
               this.populate([
-                { label: 'Type at least 2 characters…', value: '', description: '', disabled: true, selected: false },
+                {
+                  label: 'Type at least 2 characters…',
+                  value: '',
+                  description: '',
+                  disabled: true,
+                  selected: false,
+                },
               ]);
               this.activeIndex = -1;
             }
@@ -81,7 +93,7 @@
 
             try {
               const url = `https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(query)}&size=10`;
-              const res = await fetch(url, { signal: this._abort.signal });
+              const res = await fetch(url, {signal: this._abort.signal});
               if (!res.ok) throw new Error(`HTTP ${res.status}`);
               const data = await res.json();
 
@@ -89,7 +101,13 @@
 
               if (objects.length === 0) {
                 this.populate([
-                  { label: 'No results', value: '', description: '', disabled: true, selected: false },
+                  {
+                    label: 'No results',
+                    value: '',
+                    description: '',
+                    disabled: true,
+                    selected: false,
+                  },
                 ]);
                 this.activeIndex = -1;
                 return;
@@ -115,7 +133,13 @@
               if (err?.name === 'AbortError') return; // ignore canceled request
               // Fallback UI state on errors
               this.populate([
-                { label: 'Error loading results', value: '', description: '', disabled: true, selected: false },
+                {
+                  label: 'Error loading results',
+                  value: '',
+                  description: '',
+                  disabled: true,
+                  selected: false,
+                },
               ]);
               this.activeIndex = -1;
             } finally {
@@ -151,10 +175,13 @@
           constructor() {
             super();
             // Ensure our custom controller is used even if the base factory hasn't been picked up in the built dist yet.
-            try { this.removeController(this._opts); } catch {}
+            try {
+              this.removeController(this._opts);
+            } catch {}
             this._opts = new NpmOptionListController(this);
             // Sync combobox mode reliably at construction time (attribute is reliable before property upgrade)
-            const initialCombobox = this.hasAttribute('combobox') || this.combobox;
+            const initialCombobox =
+              this.hasAttribute('combobox') || this.combobox;
             this._opts.comboboxMode = initialCombobox;
             // Ensure initial state doesn't propagate undefined values to the input
             this._isBeingFiltered = false;
@@ -165,7 +192,10 @@
           _onComboboxInputFocus(ev) {
             super._onComboboxInputFocus?.(ev);
             const input = this.renderRoot?.querySelector('.combobox-input');
-            if (input && (input.value === undefined || input.value === 'undefined')) {
+            if (
+              input &&
+              (input.value === undefined || input.value === 'undefined')
+            ) {
               input.value = '';
             }
           }
@@ -176,7 +206,10 @@
           }
         }
 
-        customElements.define('vscode-single-select-npm', VscodeSingleSelectNpm);
+        customElements.define(
+          'vscode-single-select-npm',
+          VscodeSingleSelectNpm
+        );
       </script>
     </main>
   </body>
