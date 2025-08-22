@@ -2,7 +2,7 @@ import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {customElement} from '../includes/VscElement.js';
-import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
+import {chevronDownIcon} from '../includes/icons.js';
 import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-multi-select.styles.js';
 import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';

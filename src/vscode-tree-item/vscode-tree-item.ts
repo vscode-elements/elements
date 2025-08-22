@@ -4,6 +4,7 @@ import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import {stylePropertyMap} from '../includes/style-property-map.js';
+import {chevronRightIcon} from '../includes/icons.js';
 import {
   ConfigContext,
   configContext,
@@ -16,19 +17,6 @@ import {ExpandMode, IndentGuides} from '../vscode-tree/vscode-tree.js';
 
 const BASE_INDENT = 3;
 const ARROW_CONTAINER_WIDTH = 30;
-
-const arrowIcon = html`<svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M10.072 8.024L5.715 3.667l.618-.62L11 7.716v.618L6.333 13l-.618-.619 4.357-4.357z"
-  />
-</svg>`;
 
 function getParentItem(childItem: VscodeTreeItem) {
   if (!childItem.parentElement) {
@@ -432,7 +420,7 @@ export class VscodeTreeItem extends VscElement {
                 'icon-rotated': this.open,
               })}
             >
-              ${arrowIcon}
+              ${chevronRightIcon}
             </div>`
           : nothing}
         <div class=${classMap(iconContainerClasses)}>
