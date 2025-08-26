@@ -15,22 +15,33 @@ import {stylePropertyMap} from '../includes/style-property-map.js';
 export class VscodeProgressBar extends VscElement {
   static override styles = styles;
 
+  /**
+   * @internal
+   */
   @property({reflect: true, attribute: 'aria-label'})
   override ariaLabel = 'Loading';
 
-  // Current value for determinate mode. If undefined/NaN, the bar is indeterminate.
+  /**
+   * Current value for determinate mode. If undefined/NaN, the bar is indeterminate.
+   */
   @property({type: Number, reflect: true})
   value?: number;
 
-  // Maximum value for determinate mode.
+  /**
+   * Maximum value for determinate mode.
+   */
   @property({type: Number, reflect: true})
   max = 100;
 
-  // Force indeterminate mode even if value is set.
+  /**
+   * Force indeterminate mode even if value is set.
+   */
   @property({type: Boolean, reflect: true})
   indeterminate = false;
 
-  // Switch to a gentler animation after this many ms in indeterminate mode.
+  /**
+   * Switch to a gentler animation after this many ms in indeterminate mode.
+   */
   @property({type: Number})
   longRunningThreshold = 15000;
 
