@@ -1,6 +1,6 @@
 # VSCode Elements
 
-For the end-user documentation, [click here](https://vscode-elements.github.io).
+For the end-user documentation, [click here](https://vscode-elements.github.io). This site is also mirrored at [https://vscode-elements.netlify.app](https://vscode-elements.netlify.app), where users behind the [GFW](https://en.wikipedia.org/wiki/Great_Firewall) can access it more quickly.
 
 This documentation is intended for developers who would like to contribute to or modify the code on their own.
 
