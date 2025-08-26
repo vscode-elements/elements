@@ -32,7 +32,9 @@ describe('vscode-progress-bar', () => {
     const clock = sinon.useFakeTimers();
     try {
       const el = (await fixture(html`
-        <vscode-progress-bar longRunningThreshold="1000"></vscode-progress-bar>
+        <vscode-progress-bar
+          long-running-threshold="1000"
+        ></vscode-progress-bar>
       `)) as VscodeProgressBar;
 
       await el.updateComplete;
