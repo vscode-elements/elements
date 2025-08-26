@@ -602,7 +602,7 @@ export class VscodeTable extends VscElement {
       this._headerCellsToResize[1].style.width = nextColCss;
     }
 
-    if (resizeBodyCells) {
+    if (resizeBodyCells && this._cellsToResize[0]) {
       this._cellsToResize[0].style.width = prevColCss;
 
       if (this._cellsToResize[1]) {
