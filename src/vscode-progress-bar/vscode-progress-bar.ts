@@ -42,7 +42,7 @@ export class VscodeProgressBar extends VscElement {
   /**
    * Switch to a gentler animation after this many ms in indeterminate mode.
    */
-  @property({type: Number})
+  @property({type: Number, attribute: 'long-running-threshold'})
   longRunningThreshold = 15000;
 
   @state()
