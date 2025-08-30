@@ -159,7 +159,7 @@ export class VscodeRadioGroup extends VscElement {
       <div class="wrapper">
         <slot
           @slotchange=${this._onSlotChange}
-          @vsc-change=${this._onChange}
+          @change=${this._onChange}
         ></slot>
       </div>
     `;
