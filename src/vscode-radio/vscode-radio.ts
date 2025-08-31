@@ -95,22 +95,15 @@ export class VscodeRadio
   constructor() {
     super();
     this._internals = this.attachInternals();
+
+    this.addEventListener('keydown', this._handleKeyDown);
+    this.addEventListener('click', this._handleClick);
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.addEventListener('keydown', this._handleKeyDown);
-    this.addEventListener('click', this._handleClick);
-
     this._handleValueChange();
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener('keydown', this._handleKeyDown);
-    this.removeEventListener('click', this._handleClick);
   }
 
   override update(
