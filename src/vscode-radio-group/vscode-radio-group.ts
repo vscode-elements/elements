@@ -23,7 +23,7 @@ export class VscodeRadioGroup extends VscElement {
   constructor() {
     super();
 
-    this.addEventListener('keydown', this._onKeyDown);
+    this.addEventListener('keydown', this._handleKeyDown);
   }
 
   @queryAssignedElements({selector: 'vscode-radio'})
@@ -90,7 +90,7 @@ export class VscodeRadioGroup extends VscElement {
     this._afterCheck();
   }
 
-  private _onKeyDown = (ev: KeyboardEvent) => {
+  private _handleKeyDown = (ev: KeyboardEvent) => {
     const {key} = ev;
     const listenedKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
 
@@ -107,7 +107,7 @@ export class VscodeRadioGroup extends VscElement {
     }
   };
 
-  private _onChange(ev: CustomEvent) {
+  private _handleChange(ev: CustomEvent) {
     const clickedIndex = this._radios.findIndex((r) => r === ev.target);
 
     if (clickedIndex !== -1) {
@@ -125,7 +125,7 @@ export class VscodeRadioGroup extends VscElement {
     }
   }
 
-  private _onSlotChange() {
+  private _handleSlotChange() {
     if (!this._firstContentLoaded) {
       const autoFocusedRadio = this._radios.findIndex((r) => r.autofocus);
 
@@ -164,8 +164,8 @@ export class VscodeRadioGroup extends VscElement {
     return html`
       <div class="wrapper">
         <slot
-          @slotchange=${this._onSlotChange}
-          @change=${this._onChange}
+          @slotchange=${this._handleSlotChange}
+          @change=${this._handleChange}
         ></slot>
       </div>
     `;
