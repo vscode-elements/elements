@@ -20,16 +20,10 @@ export class VscodeRadioGroup extends VscElement {
   @property({reflect: true})
   override role = 'radiogroup';
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  constructor() {
+    super();
 
-    this.addEventListener('keydown', this._onKeyDownBound);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener('keydown', this._onKeyDownBound);
+    this.addEventListener('keydown', this._onKeyDown);
   }
 
   @queryAssignedElements({selector: 'vscode-radio'})
@@ -96,7 +90,7 @@ export class VscodeRadioGroup extends VscElement {
     this._afterCheck();
   }
 
-  private _onKeyDown(ev: KeyboardEvent) {
+  private _onKeyDown = (ev: KeyboardEvent) => {
     const {key} = ev;
     const listenedKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
 
@@ -111,9 +105,7 @@ export class VscodeRadioGroup extends VscElement {
     if (key === 'ArrowLeft' || key === 'ArrowUp') {
       this._checkPrev();
     }
-  }
-
-  private _onKeyDownBound = this._onKeyDown.bind(this);
+  };
 
   private _onChange(ev: CustomEvent) {
     const clickedIndex = this._radios.findIndex((r) => r === ev.target);
@@ -144,6 +136,8 @@ export class VscodeRadioGroup extends VscElement {
       this._firstContentLoaded = true;
     }
 
+    let indexOfDefaultCheckedRadio = -1;
+
     this._radios.forEach((r, i) => {
       // if _focusedRadio is not set, the first radio should be focusable
       if (this._focusedRadio > -1) {
@@ -151,7 +145,19 @@ export class VscodeRadioGroup extends VscElement {
       } else {
         r.tabIndex = i === 0 ? 0 : -1;
       }
+
+      if (r.defaultChecked) {
+        if (indexOfDefaultCheckedRadio > -1) {
+          this._radios[indexOfDefaultCheckedRadio].defaultChecked = false;
+        }
+
+        indexOfDefaultCheckedRadio = i;
+      }
     });
+
+    if (indexOfDefaultCheckedRadio > -1) {
+      this._radios[indexOfDefaultCheckedRadio].checked = true;
+    }
   }
 
   override render(): TemplateResult {

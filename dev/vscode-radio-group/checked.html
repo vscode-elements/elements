@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Component demo</h1>
+    <main>
+      <vscode-demo>
+        <form action="/">
+          <vscode-radio-group>
+            <vscode-radio name="radio-example" value="1">Lorem</vscode-radio>
+            <vscode-radio name="radio-example" value="2" default-checked
+              >Ipsum</vscode-radio
+            >
+            <vscode-radio name="radio-example" value="3" default-checked>Dolor</vscode-radio>
+          </vscode-radio-group>
+          <button type="reset">Reset</button>
+          <button type="submit">Submit</button>
+        </form>
+        <script type="module">
+          const form = document.querySelector('form');
+
+          form.addEventListener('submit', (ev) => {
+            ev.preventDefault();
+
+            const fd = new FormData(form);
+
+            console.log(Array.from(fd.entries));
+          });
+        </script>
+      </vscode-demo>
+
+      <form action="/">
+        <p>
+          <input type="radio" name="radio-example-2" value="1" id="rb-1">
+          <label for="rb-1">Lorem</label>
+        </p>
+        <p>
+          <input
+            type="radio"
+            name="radio-example-2"
+            value="2"
+            id="rb-2"
+            checked
+          >
+          <label for="rb-2">Ipsum</label>
+        </p>
+        <p>
+          <input
+            type="radio"
+            name="radio-example-2"
+            value="3"
+            id="rb-3"
+            checked
+          >
+          <label for="rb-3">Dolor</label>
+        </p>
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+  </body>
+</html>
