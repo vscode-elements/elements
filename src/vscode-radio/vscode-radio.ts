@@ -49,6 +49,8 @@ export class VscodeRadio
     delegatesFocus: true,
   };
 
+  //#region properties
+
   @property({type: Boolean, reflect: true})
   override autofocus = false;
 
@@ -67,6 +69,10 @@ export class VscodeRadio
   @property({reflect: true})
   name = '';
 
+  /** @internal */
+  @property()
+  type = 'radio';
+
   @property()
   value = '';
 
@@ -84,6 +90,26 @@ export class VscodeRadio
   @property({type: Number, reflect: true})
   override tabIndex = 0;
 
+  get form(): HTMLFormElement | null {
+    return this._internals.form;
+  }
+
+  get validity(): ValidityState {
+    return this._internals.validity;
+  }
+
+  get validationMessage(): string {
+    return this._internals.validationMessage;
+  }
+
+  get willValidate(): boolean {
+    return this._internals.willValidate;
+  }
+
+  //#endregion
+
+  //#region private variables
+
   @state()
   private _slottedText = '';
 
@@ -91,6 +117,10 @@ export class VscodeRadio
   private _inputEl!: HTMLInputElement;
 
   private _internals: ElementInternals;
+
+  //#endregion
+
+  //#region lifecycle methods
 
   constructor() {
     super();
@@ -121,25 +151,9 @@ export class VscodeRadio
     }
   }
 
-  get form(): HTMLFormElement | null {
-    return this._internals.form;
-  }
+  //#endregion
 
-  /** @internal */
-  @property()
-  type = 'radio';
-
-  get validity(): ValidityState {
-    return this._internals.validity;
-  }
-
-  get validationMessage(): string {
-    return this._internals.validationMessage;
-  }
-
-  get willValidate(): boolean {
-    return this._internals.willValidate;
-  }
+  //#region public methods
 
   checkValidity(): boolean {
     return this._internals.checkValidity();
@@ -171,6 +185,27 @@ export class VscodeRadio
       this.checked = true;
     }
   }
+
+  /**
+   * @internal
+   */
+  setComponentValidity(isValid: boolean) {
+    if (isValid) {
+      this._internals.setValidity({});
+    } else {
+      this._internals.setValidity(
+        {
+          valueMissing: true,
+        },
+        'Please select one of these options.',
+        this._inputEl
+      );
+    }
+  }
+
+  //#endregion
+
+  //#region private methods
 
   private _getRadios(): VscodeRadio[] {
     const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
@@ -205,23 +240,6 @@ export class VscodeRadio
     });
   }
 
-  /**
-   * @internal
-   */
-  setComponentValidity(isValid: boolean) {
-    if (isValid) {
-      this._internals.setValidity({});
-    } else {
-      this._internals.setValidity(
-        {
-          valueMissing: true,
-        },
-        'Please select one of these options.',
-        this._inputEl
-      );
-    }
-  }
-
   private _setGroupValidity(radios: VscodeRadio[], isValid: boolean) {
     this.updateComplete.then(() => {
       radios.forEach((r) => {
@@ -241,6 +259,10 @@ export class VscodeRadio
 
     this._internals.setFormValue(actualValue);
   }
+
+  //#endregion
+
+  //#region  event handlers
 
   private _handleValueChange() {
     const radios = this._getRadios();
@@ -288,6 +310,8 @@ export class VscodeRadio
       }
     }
   };
+
+  //#endregion
 
   override render(): TemplateResult {
     const iconClasses = classMap({
