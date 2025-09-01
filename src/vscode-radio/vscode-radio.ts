@@ -1,10 +1,4 @@
-import {
-  html,
-  LitElement,
-  PropertyValueMap,
-  PropertyValues,
-  TemplateResult,
-} from 'lit';
+import {html, LitElement, PropertyValueMap, TemplateResult} from 'lit';
 import {property, state, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement} from '../includes/VscElement.js';
