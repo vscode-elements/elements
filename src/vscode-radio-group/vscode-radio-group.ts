@@ -13,6 +13,8 @@ import styles from './vscode-radio-group.styles.js';
 export class VscodeRadioGroup extends VscElement {
   static override styles = styles;
 
+  //#region properties
+
   @property({reflect: true})
   variant: 'horizontal' | 'vertical' = 'horizontal';
 
@@ -20,11 +22,9 @@ export class VscodeRadioGroup extends VscElement {
   @property({reflect: true})
   override role = 'radiogroup';
 
-  constructor() {
-    super();
+  //#endregion
 
-    this.addEventListener('keydown', this._handleKeyDown);
-  }
+  //#region private variables
 
   @queryAssignedElements({selector: 'vscode-radio'})
   private _radios!: VscodeRadio[];
@@ -36,6 +36,20 @@ export class VscodeRadioGroup extends VscElement {
   private _checkedRadio = -1;
 
   private _firstContentLoaded = false;
+
+  //#endregion
+
+  //#region lifecycle methods
+
+  constructor() {
+    super();
+
+    this.addEventListener('keydown', this._handleKeyDown);
+  }
+
+  //#endregion
+
+  //#region private methods
 
   private _uncheckPreviousChecked(prevChecked: number, prevFocused: number) {
     if (prevChecked !== -1) {
@@ -89,6 +103,10 @@ export class VscodeRadioGroup extends VscElement {
 
     this._afterCheck();
   }
+
+  //#endregion
+
+  //#region event handlers
 
   private _handleKeyDown = (ev: KeyboardEvent) => {
     const {key} = ev;
@@ -159,6 +177,8 @@ export class VscodeRadioGroup extends VscElement {
       this._radios[indexOfDefaultCheckedRadio].checked = true;
     }
   }
+
+  //#endregion
 
   override render(): TemplateResult {
     return html`
