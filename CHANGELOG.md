@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 
-- Fixed the default selected **Radio**.
+- Fixed the `checked` state of the default selected **Radio**.
 
 ## [2.3.0] - 2025-08-26
 
