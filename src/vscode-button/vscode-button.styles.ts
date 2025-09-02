@@ -11,6 +11,7 @@ const styles: CSSResultGroup = [
       cursor: pointer;
       display: inline-block;
       width: auto;
+      min-width: 0;
     }
 
     .base {
@@ -147,8 +148,7 @@ const styles: CSSResultGroup = [
     :host(:empty) .base,
     .base.icon-only {
       min-height: 24px;
-      min-width: 26px;
-      padding: 1px 4px;
+      padding: 1px 7px;
     }
 
     slot {
