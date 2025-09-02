@@ -175,6 +175,7 @@ export class VscodeRadioGroup extends VscElement {
 
     if (indexOfDefaultCheckedRadio > -1) {
       this._radios[indexOfDefaultCheckedRadio].checked = true;
+      this._checkedRadio = indexOfDefaultCheckedRadio;
     }
   }
 
