@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+    <script type="module">
+      class DemoElement extends HTMLElement {
+        static template = (() => {
+          const t = document.createElement('template');
+          t.innerHTML = `
+            <vscode-radio-group>
+              <vscode-radio value="1">Option 1</vscode-radio>
+              <vscode-radio value="2">Option 2</vscode-radio>
+              <vscode-radio value="3" default-checked>Option 3</vscode-radio>
+            </vscode-radio-group>
+          `;
+
+          return t;
+        })();
+
+        constructor() {
+          super();
+
+          const shadow = this.attachShadow({mode: 'open'});
+          shadow.appendChild(DemoElement.template.content.cloneNode(true));
+
+          const sheet = new CSSStyleSheet();
+          sheet.replaceSync(`
+            :host {
+              display: block;
+              padding: 16px;
+            }
+          `);
+
+          shadow.adoptedStyleSheets = [sheet];
+        }
+      }
+
+      customElements.define('demo-element', DemoElement);
+    </script>
+  </head>
+
+  <body>
+    <h1>Component demo</h1>
+    <main>
+      <vscode-demo>
+        <demo-element></demo-element>
+      </vscode-demo>
+    </main>
+  </body>
+</html>

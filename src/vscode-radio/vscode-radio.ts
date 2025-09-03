@@ -204,7 +204,7 @@ export class VscodeRadio
   //#region private methods
 
   private _getRadios(): VscodeRadio[] {
-    const root = this.getRootNode({composed: true}) as Document | ShadowRoot;
+    const root = this.getRootNode({composed: false}) as Document | ShadowRoot;
 
     if (!root) {
       return [];
