@@ -158,25 +158,28 @@ export function $$<K extends AllTagNames>(
   selector: K
 ): NodeListOf<TagNameToElement<K>>;
 export function $$<K extends AllTagNames>(
-  root: Element,
+  root: Element | ShadowRoot,
   selector: K
 ): NodeListOf<TagNameToElement<K>>;
 export function $$<T extends Element = Element>(
   selector: string
 ): NodeListOf<T>;
 export function $$<T extends Element = Element>(
-  root: Element,
+  root: Element | ShadowRoot,
   selector: string
 ): NodeListOf<T>;
 export function $$<T extends Element = Element>(
-  arg1: string | Element,
+  arg1: string | Element | ShadowRoot,
   arg2?: string
 ): NodeListOf<T> {
   let result: NodeListOf<Element>;
 
   if (typeof arg1 === 'string') {
     result = document.querySelectorAll(arg1);
-  } else if (arg1 instanceof Element && typeof arg2 === 'string') {
+  } else if (
+    (arg1 instanceof Element || arg1 instanceof ShadowRoot) &&
+    typeof arg2 === 'string'
+  ) {
     result = arg1.querySelectorAll(arg2);
   } else {
     throw new Error('Invalid arguments passed to $$()');
