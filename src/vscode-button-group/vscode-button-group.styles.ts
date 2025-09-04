@@ -7,7 +7,6 @@ const styles: CSSResultGroup = [
   css`
     :host {
       display: inline-block;
-      min-width: 0;
     }
 
     .root {
@@ -19,6 +18,7 @@ const styles: CSSResultGroup = [
     ::slotted(vscode-button:not(:first-child)) {
       --vsc-border-left-width: 0;
       --vsc-border-left-radius: 0;
+      --vsc-border-left-width: 0;
     }
 
     ::slotted(vscode-button:not(:last-child)) {
@@ -27,6 +27,7 @@ const styles: CSSResultGroup = [
       --vsc-base-after-content: '';
       --vsc-border-right-width: 0;
       --vsc-border-right-radius: 0;
+      --vsc-border-right-width: 0;
     }
 
     ::slotted(vscode-button:focus) {
@@ -34,7 +35,7 @@ const styles: CSSResultGroup = [
     }
 
     ::slotted(vscode-button:not(:empty)) {
-      width: calc(100% - 1px);
+      width: 100%;
     }
   `,
 ];
