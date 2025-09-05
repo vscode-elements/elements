@@ -321,6 +321,11 @@ export class VscodeMultiSelect
     this._setFormValue();
     this._manageRequired();
   }
+
+  protected override _onComboboxInputBlur(): void {
+    super._onComboboxInputBlur();
+    this._opts.filterPattern = '';
+  }
   //#endregion
 
   //#region render functions
@@ -336,15 +341,6 @@ export class VscodeMultiSelect
   }
 
   protected override _renderComboboxFace(): TemplateResult {
-    let inputVal = '';
-
-    if (this._isBeingFiltered) {
-      inputVal = this._opts.filterPattern;
-    } else {
-      const op = this._opts.getSelectedOption();
-      inputVal = op?.label ?? '';
-    }
-
     const activeDescendant =
       this._opts.activeIndex > -1 ? `op-${this._opts.activeIndex}` : '';
     const expanded = this.open ? 'true' : 'false';
@@ -364,7 +360,7 @@ export class VscodeMultiSelect
           spellcheck="false"
           type="text"
           autocomplete="off"
-          .value=${inputVal}
+          .value=${this._opts.filterPattern}
           @focus=${this._onComboboxInputFocus}
           @blur=${this._onComboboxInputBlur}
           @input=${this._onComboboxInputInput}
