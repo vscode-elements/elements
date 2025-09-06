@@ -353,7 +353,10 @@ export class VscodeSingleSelect
         role="combobox"
         tabindex="0"
       >
-        <span class="text">${label}</span> ${chevronDownIcon}
+        <slot name="iconBefore"></slot>
+        <span class="text">${label}</span>
+        <slot name="iconAfter"></slot>
+        ${chevronDownIcon}
       </div>
     `;
   }
@@ -374,6 +377,7 @@ export class VscodeSingleSelect
 
     return html`
       <div class="combobox-face face">
+        <slot name="iconBefore"></slot>
         <input
           aria-activedescendant=${activeDescendant}
           aria-autocomplete="list"
@@ -393,6 +397,7 @@ export class VscodeSingleSelect
           @click=${this._onComboboxInputClick}
           @keydown=${this._onComboboxInputSpaceKeyDown}
         >
+        <slot name="iconAfter"></slot>
         <button
           aria-label="Open the list of options"
           class="combobox-button"

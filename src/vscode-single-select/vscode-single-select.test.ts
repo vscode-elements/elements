@@ -182,9 +182,11 @@ describe('vscode-single-select', () => {
       await el.updateComplete;
 
       expect(face).lightDom.to.eq(`
+        <slot name="iconBefore"></slot>
         <span class="text">
           Ipsum
         </span>
+        <slot name="iconAfter"></slot>
         <span class="icon">
         </span>
       `);
