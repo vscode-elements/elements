@@ -156,6 +156,9 @@ export class VscodeSelectBase extends VscElement {
   @query('.dropdown', true)
   private _dropdownEl!: HTMLDivElement;
 
+  private _prevXPos = 0;
+  private _prevYPos = 0;
+
   protected _opts = new OptionListController(this);
 
   //#region lifecycle callbacks
@@ -198,6 +201,10 @@ export class VscodeSelectBase extends VscElement {
     if (changedProperties.has('open') && this._firstUpdateCompleted) {
       if (this.open) {
         this._dropdownEl.showPopover();
+
+        const {x, y} = this.getBoundingClientRect();
+        this._prevXPos = x;
+        this._prevYPos = y;
 
         window.addEventListener('scroll', this._handleWindowScroll, {
           capture: true,
@@ -602,7 +609,11 @@ export class VscodeSelectBase extends VscElement {
   }
 
   private _handleWindowScroll = () => {
-    this.open = false;
+    const {x, y} = this.getBoundingClientRect();
+
+    if (x !== this._prevXPos || y !== this._prevYPos) {
+      this.open = false;
+    }
   };
   //#endregion
 
