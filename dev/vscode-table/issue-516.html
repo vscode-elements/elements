@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Component demo</h1>
+    <main>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <vscode-demo>
+        <vscode-table zebra bordered-rows>
+          <vscode-table-header slot="header">
+            <vscode-table-header-cell>First name</vscode-table-header-cell>
+            <vscode-table-header-cell>Last name</vscode-table-header-cell>
+            <vscode-table-header-cell>Email</vscode-table-header-cell>
+          </vscode-table-header>
+          <vscode-table-body slot="body">
+            <vscode-table-row>
+              <vscode-table-cell>Vincenza</vscode-table-cell>
+              <vscode-table-cell>Lindgren</vscode-table-cell>
+              <vscode-table-cell>Delia21@yahoo.com</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell>Clark</vscode-table-cell>
+              <vscode-table-cell>Breitenberg</vscode-table-cell>
+              <vscode-table-cell>Nat_Moore@gmail.com</vscode-table-cell>
+            </vscode-table-row>
+            <vscode-table-row>
+              <vscode-table-cell>Fiona</vscode-table-cell>
+              <vscode-table-cell>Wintheiser</vscode-table-cell>
+              <vscode-table-cell>Asa30@gmail.com</vscode-table-cell>
+            </vscode-table-row>
+          </vscode-table-body>
+        </vscode-table>
+      </vscode-demo>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+    </main>
+  </body>
+</html>
