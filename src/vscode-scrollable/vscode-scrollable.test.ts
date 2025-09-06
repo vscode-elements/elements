@@ -1,5 +1,5 @@
 import {resetMouse} from '@web/test-runner-commands';
-import {dragElement} from '../includes/test-helpers.js';
+import {clickOnElement, dragElement} from '../includes/test-helpers.js';
 import {VscodeScrollable} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';
@@ -54,6 +54,7 @@ describe('vscode-scrollable', () => {
     const scrollEventSpy = sinon.spy();
     el.addEventListener('vsc-scrollable-scroll', scrollEventSpy);
 
+    await clickOnElement(el);
     const wheelEvent = new WheelEvent('wheel', {deltaY: 55});
     el.dispatchEvent(wheelEvent);
     await el.updateComplete;
