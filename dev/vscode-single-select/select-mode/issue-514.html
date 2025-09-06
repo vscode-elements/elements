@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <vscode-dev-toolbar></vscode-dev-toolbar>
+    <h1>Component demo</h1>
+    <main>
+      <p>line</p>
+      <p>line</p>
+      <p>line</p>
+      <p>line</p>
+      <p>line</p>
+      <p>line</p>
+      <p>line</p>
+      <p>line</p>
+      <p>line</p>
+      <vscode-single-select>
+        <vscode-option>Option 1</vscode-option>
+        <vscode-option>Option 2</vscode-option>
+        <vscode-option>Option 3</vscode-option>
+        <vscode-option>Option 4</vscode-option>
+      </vscode-single-select>
+      <div id="lines">
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+        <p>line</p>
+      </div>
+      <script type="module">
+        let counter = 1;
+        setInterval(() => {
+          const line = document.createElement('p');
+          line.innerHTML = counter;
+          counter++;
+          document.getElementById('lines').appendChild(line);
+        }, 700);
+      </script>
+    </main>
+  </body>
+</html>
