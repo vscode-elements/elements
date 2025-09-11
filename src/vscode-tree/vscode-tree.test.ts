@@ -623,11 +623,13 @@ describe('vscode-tree', () => {
       </vscode-tree>`
     );
 
+    const isMac = window.navigator.userAgent.includes('Mac');
+    const downKey = isMac ? 'Meta' : 'Control';
     await clickOnElement($('#item1'));
-    await sendKeys({down: 'Control'});
+    await sendKeys({down: downKey});
     await clickOnElement($('#item3'));
     await clickOnElement($('#item5'));
-    await sendKeys({up: 'Control'});
+    await sendKeys({up: downKey});
 
     expect($<VscodeTreeItem>('#item1').selected).to.be.true;
     expect($<VscodeTreeItem>('#item2').selected).to.be.false;
