@@ -323,7 +323,7 @@ export class VscodeTreeItem extends VscElement {
   private _handleContentClick(ev: MouseEvent) {
     ev.stopPropagation();
 
-    const isCtrlDown = ev.ctrlKey;
+    const isCtrlDown = ev.ctrlKey || ev.metaKey;
     const isShiftDown = ev.shiftKey;
 
     if (isShiftDown && this._configContext.multiSelect) {
@@ -356,7 +356,10 @@ export class VscodeTreeItem extends VscElement {
 
   private _handleDoubleClick(ev: MouseEvent) {
     if (this._configContext.expandMode === ExpandMode.doubleClick) {
-      if (this.branch && !(this._configContext.multiSelect && ev.ctrlKey)) {
+      if (
+        this.branch &&
+        !(this._configContext.multiSelect && (ev.ctrlKey || ev.metaKey))
+      ) {
         this.open = !this.open;
       }
     }
