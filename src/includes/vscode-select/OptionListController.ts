@@ -68,7 +68,7 @@ export class OptionListController implements ReactiveController {
   }
 
   set selectedIndex(index: number) {
-    if (this._selectedIndex !== -1) {
+    if (this._selectedIndex !== -1 && this._options[this._selectedIndex]) {
       this._options[this._selectedIndex].selected ??= false;
     }
 
@@ -114,10 +114,12 @@ export class OptionListController implements ReactiveController {
   get value(): string | string[] {
     if (this._multiSelect) {
       return this._selectedIndexes.size > 0
-        ? Array.from(this._selectedIndexes).map((v) => this._options[v].value)
+        ? Array.from(this._selectedIndexes)
+            .filter((i) => i >= 0 && i < this._options.length)
+            .map((v) => this._options[v].value)
         : [];
     } else {
-      return this._selectedIndex > -1
+      return this._selectedIndex > -1 && this._selectedIndex < this._options.length
         ? this._options[this._selectedIndex].value
         : '';
     }
@@ -242,6 +244,9 @@ export class OptionListController implements ReactiveController {
     this._indexByValue.clear();
     this._indexByLabel.clear();
     this._numOfVisibleOptions = 0;
+    this._selectedIndex = -1;
+    this._selectedIndexes.clear();
+    this._activeIndex = -1;
   }
 
   getIsIndexSelected(index: number) {

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vscode-single-select stale index repro</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    />
+    <script type="module" src="/dist/main.js"></script>
+    <style>
+      body { font-family: sans-serif; padding: 16px; }
+      .row { margin: 8px 0; }
+      pre { background: #222; color: #ddd; padding: 8px; }
+      button { margin-right: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>vscode-single-select stale index repro</h1>
+    <div class="row">
+      <vscode-single-select id="sel" combobox></vscode-single-select>
+    </div>
+    <div class="row">
+      <button id="mount">Mount options</button>
+      <button id="select-two">Select "two"</button>
+      <button id="shrink">Shrink to placeholder</button>
+      <button id="read-value">Read value</button>
+    </div>
+    <pre id="out"></pre>
+
+    <script type="module">
+      const sel = document.getElementById('sel');
+      const out = document.getElementById('out');
+      const log = (m) => (out.textContent += m + "\n");
+
+      function mountOptions() {
+        sel.innerHTML = '';
+        const ph = document.createElement('vscode-option');
+        ph.value = '';
+        ph.textContent = 'placeholder';
+        const one = document.createElement('vscode-option');
+        one.value = 'one';
+        one.textContent = 'one';
+        const two = document.createElement('vscode-option');
+        two.value = 'two';
+        two.textContent = 'two';
+        sel.append(ph, one, two);
+      }
+
+      document.getElementById('mount').onclick = async () => {
+        mountOptions();
+        await sel.updateComplete;
+        log('Mounted options: placeholder, one, two');
+      };
+
+      document.getElementById('select-two').onclick = async () => {
+        sel.value = 'two';
+        await sel.updateComplete;
+        log(`selectedIndex=${sel.selectedIndex} value=${sel.value}`);
+      };
+
+      document.getElementById('shrink').onclick = async () => {
+        // React-like rerender: only placeholder remains
+        sel.innerHTML = '';
+        const only = document.createElement('vscode-option');
+        only.value = '';
+        only.textContent = 'placeholder';
+        sel.appendChild(only);
+        await sel.updateComplete;
+        log(`After shrink: selectedIndex=${sel.selectedIndex}`);
+      };
+
+      document.getElementById('read-value').onclick = () => {
+        try {
+          log(`value read: "${sel.value}"`);
+        } catch (e) {
+          log('ERROR reading value: ' + (e && e.stack ? e.stack : e));
+          throw e;
+        }
+      };
+    </script>
+  </body>
+</html>
