@@ -400,6 +400,51 @@ describe('vscode-single-select', () => {
       expect(el.shadowRoot?.querySelector('.combobox-face')).to.be.ok;
     });
 
+    it('clamps selection when options shrink (fixed)', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select combobox></vscode-single-select>
+      `);
+
+      // Append options dynamically to mimic React rendering
+      const placeholder = document.createElement('vscode-option') as VscodeOption;
+      placeholder.value = '';
+      placeholder.textContent = 'placeholder';
+      el.appendChild(placeholder);
+
+      const op1 = document.createElement('vscode-option') as VscodeOption;
+      op1.value = 'one';
+      op1.textContent = 'one';
+      el.appendChild(op1);
+
+      const op2 = document.createElement('vscode-option') as VscodeOption;
+      op2.value = 'two';
+      op2.textContent = 'two';
+      el.appendChild(op2);
+
+      await aTimeout(0);
+      await el.updateComplete;
+
+      // Select "two"
+      el.value = 'two';
+      expect(el.selectedIndex).to.eq(2);
+      await el.updateComplete;
+
+      // Shrink options to only the placeholder (React-like rerender)
+      el.innerHTML = '';
+      await aTimeout(0);
+      await el.updateComplete;
+
+      const onlyPlaceholder = document.createElement('vscode-option') as VscodeOption;
+      onlyPlaceholder.value = '';
+      onlyPlaceholder.textContent = 'placeholder';
+      el.appendChild(onlyPlaceholder);
+      await aTimeout(0);
+      await el.updateComplete;
+
+      expect(el.selectedIndex).to.eq(-1);
+      expect(el.value).to.eq('');
+    });
+
     it('filtered list', async () => {
       const el = await fixture<VscodeSingleSelect>(html`
         <vscode-single-select combobox>
