@@ -1,0 +1,32 @@
+# Auto detect text files and enforce LF line endings
+* text=auto eol=lf
+
+# Source code
+*.js text eol=lf
+*.mjs text eol=lf
+*.ts text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+
+# Documentation
+*.md text eol=lf
+
+# Config files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.config text eol=lf
+*.lock text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.editorconfig text eol=lf
+.ncurc text eol=lf
+.mailmap text eol=lf
+
+# Graphics
+*.svg text eol=lf
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.ico binary
