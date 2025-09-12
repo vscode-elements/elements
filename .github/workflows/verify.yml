@@ -4,7 +4,12 @@ on: pull_request
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    name: Verify (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
     steps:
       - name: Clone Repository
         uses: actions/checkout@v5
@@ -12,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Node version
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           scope: '@vscode-elements'
           node-version: 22
