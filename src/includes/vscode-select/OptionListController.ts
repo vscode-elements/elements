@@ -1,12 +1,12 @@
 import {ReactiveController, ReactiveControllerHost} from 'lit';
-import {FilterMethod, InternalOption, Option} from './types';
+import {FilterMethod, InternalOption, Option} from './types.js';
 import {
   containsSearch,
   fuzzySearch,
   SearchResult,
   startsWithPerTermSearch,
   startsWithSearch,
-} from './helpers';
+} from './helpers.js';
 
 export class OptionListController implements ReactiveController {
   private _activeIndex = -1;
