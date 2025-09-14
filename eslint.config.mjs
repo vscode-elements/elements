@@ -6,6 +6,7 @@ import js from '@eslint/js';
 import {FlatCompat} from '@eslint/eslintrc';
 import {configs as litPluginConfigs} from 'eslint-plugin-lit';
 import {configs as wcPluginConfigs} from 'eslint-plugin-wc';
+import importPlugin from 'eslint-plugin-import';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +30,7 @@ export default [
   {
     plugins: {
       '@typescript-eslint': typescriptEslint,
+      import: importPlugin,
     },
 
     languageOptions: {
@@ -46,11 +48,25 @@ export default [
       '@typescript-eslint/no-use-before-define': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'lit/quoted-expressions': 'error',
+
+      'import/extensions': [
+        'error',
+        'always',
+        {
+          js: 'always',
+          ts: 'always',
+        },
+      ],
     },
 
     settings: {
       wc: {
-        elementBaseClasses: ['LitElement'], // Recognize `LitElement` as a Custom Element base class
+        elementBaseClasses: ['LitElement'],
+      },
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.ts'],
+        },
       },
     },
   },
