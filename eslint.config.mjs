@@ -19,9 +19,6 @@ const compat = new FlatCompat({
 export default [
   litPluginConfigs['flat/recommended'],
   wcPluginConfigs['flat/recommended'],
-  {
-    ignores: ['dist/', 'docs-src/', '**/*.test.ts'],
-  },
   ...compat.extends(
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
