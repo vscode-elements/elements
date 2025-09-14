@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {$, dragElement} from '../includes/test-helpers.js';
 import {VscodeTable} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';

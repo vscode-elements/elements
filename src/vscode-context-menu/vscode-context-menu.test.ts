@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import {clickOnElement} from '../includes/test-helpers.js';
 import type {VscodeContextMenuItem} from '../main.js';
 import {VscodeContextMenu} from './index.js';

@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {expect, fixture, html} from '@open-wc/testing';
-import {findLastChildItem, findNextItem, findPrevItem} from './helpers';
-import {VscodeTreeItem} from '../vscode-tree-item';
+import {findLastChildItem, findNextItem, findPrevItem} from './helpers.js';
+import {VscodeTreeItem} from '../vscode-tree-item/vscode-tree-item.js';
 import '../vscode-tree-item/vscode-tree-item.js';
-import {VscodeTree} from './vscode-tree';
+import {VscodeTree} from './vscode-tree.js';
 import './vscode-tree.js';
 
 describe('vscode-tree helpers', () => {

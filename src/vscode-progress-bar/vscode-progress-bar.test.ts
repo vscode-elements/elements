@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {VscodeProgressBar} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import sinon from 'sinon';

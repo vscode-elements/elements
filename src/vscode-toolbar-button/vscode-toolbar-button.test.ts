@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import sinon from 'sinon';
 import {VscodeToolbarButton} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import sinon from 'sinon';
 import {VscodeTextarea} from './vscode-textarea.js';
 import './vscode-textarea.js';

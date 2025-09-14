@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import {VscodeSplitLayout} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import {resetMouse} from '@web/test-runner-commands';
@@ -45,7 +47,7 @@ describe('vscode-split-layout', () => {
     });
 
     it('should handle null input value correctly', () => {
-      // @ts-expect-error
+      // @ts-expect-error test with an invalid type
       expect(parseValue(null)).to.deep.equal({unit: 'pixel', value: 0});
     });
   });
