@@ -18,7 +18,7 @@
     "build:ts": "wireit",
     "build:watch": "wireit",
     "clean": "rimraf -g .wireit coverage dist custom-elements.json stats.html vscode.*-custom-data.json tsconfig.tsbuildinfo",
-    "lint": "eslint src/**/*.ts --no-warn-ignored",
+    "lint": "eslint \"./src/**/*.ts\" --no-warn-ignored",
     "lint:fix": "eslint src/**/*.ts --fix",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
