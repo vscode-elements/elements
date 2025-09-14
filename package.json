@@ -168,6 +168,7 @@
     "custom-elements-manifest-deprecator": "^1.2.0",
     "deepmerge": "^4.3.1",
     "dotenv": "^17.0.0",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-lit": "^2.0.0",
     "eslint-plugin-wc": "^3.0.0",
     "mocha": "^11.1.0",
