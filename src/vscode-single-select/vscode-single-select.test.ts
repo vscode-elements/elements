@@ -406,7 +406,9 @@ describe('vscode-single-select', () => {
       `);
 
       // Append options dynamically to mimic React rendering
-      const placeholder = document.createElement('vscode-option') as VscodeOption;
+      const placeholder = document.createElement(
+        'vscode-option'
+      ) as VscodeOption;
       placeholder.value = '';
       placeholder.textContent = 'placeholder';
       el.appendChild(placeholder);
@@ -434,7 +436,9 @@ describe('vscode-single-select', () => {
       await aTimeout(0);
       await el.updateComplete;
 
-      const onlyPlaceholder = document.createElement('vscode-option') as VscodeOption;
+      const onlyPlaceholder = document.createElement(
+        'vscode-option'
+      ) as VscodeOption;
       onlyPlaceholder.value = '';
       onlyPlaceholder.textContent = 'placeholder';
       el.appendChild(onlyPlaceholder);

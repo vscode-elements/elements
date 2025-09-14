@@ -119,7 +119,8 @@ export class OptionListController implements ReactiveController {
             .map((v) => this._options[v].value)
         : [];
     } else {
-      return this._selectedIndex > -1 && this._selectedIndex < this._options.length
+      return this._selectedIndex > -1 &&
+        this._selectedIndex < this._options.length
         ? this._options[this._selectedIndex].value
         : '';
     }

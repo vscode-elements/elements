@@ -1,20 +1,31 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vscode-single-select stale index repro</title>
     <link
       rel="stylesheet"
       href="/node_modules/@vscode/codicons/dist/codicon.css"
       id="vscode-codicon-stylesheet"
-    />
+    >
     <script type="module" src="/dist/main.js"></script>
     <style>
-      body { font-family: sans-serif; padding: 16px; }
-      .row { margin: 8px 0; }
-      pre { background: #222; color: #ddd; padding: 8px; }
-      button { margin-right: 8px; }
+      body {
+        font-family: sans-serif;
+        padding: 16px;
+      }
+      .row {
+        margin: 8px 0;
+      }
+      pre {
+        background: #222;
+        color: #ddd;
+        padding: 8px;
+      }
+      button {
+        margin-right: 8px;
+      }
     </style>
   </head>
   <body>
@@ -33,7 +44,7 @@
     <script type="module">
       const sel = document.getElementById('sel');
       const out = document.getElementById('out');
-      const log = (m) => (out.textContent += m + "\n");
+      const log = (m) => (out.textContent += m + '\n');
 
       function mountOptions() {
         sel.innerHTML = '';
