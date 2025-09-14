@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {sendKeys} from '@web/test-runner-commands';
 import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
 import type {VscodeOption} from '../vscode-option/vscode-option.js';

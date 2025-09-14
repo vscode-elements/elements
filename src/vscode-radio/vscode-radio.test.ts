@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import './index.js';
 import {VscodeRadio} from './index.js';
 import '../vscode-radio-group/index.js';

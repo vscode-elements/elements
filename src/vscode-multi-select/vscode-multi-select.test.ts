@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {expect, fixture, html} from '@open-wc/testing';
 import {sendKeys} from '@web/test-runner-commands';
 import sinon from 'sinon';

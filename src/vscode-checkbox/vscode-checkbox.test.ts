@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {VscodeCheckbox} from './index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 import {sendKeys} from '@web/test-runner-commands';

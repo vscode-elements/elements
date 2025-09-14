@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {resetMouse} from '@web/test-runner-commands';
 import {clickOnElement, dragElement} from '../includes/test-helpers.js';
 import {VscodeScrollable} from './index.js';
