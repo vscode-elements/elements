@@ -1,15 +1,15 @@
 import {PropertyValues, TemplateResult, html} from 'lit';
 import {provide} from '@lit/context';
 import {property, queryAssignedElements} from 'lit/decorators.js';
-import {customElement, VscElement} from '../includes/VscElement';
+import {customElement, VscElement} from '../includes/VscElement.js';
 import type {VscodeTreeItem} from '../vscode-tree-item';
-import styles from './vscode-tree.styles';
+import styles from './vscode-tree.styles.js';
 import {
   ConfigContext,
   configContext,
   treeContext,
   type TreeContext,
-} from './tree-context';
+} from './tree-context.js';
 import {
   findNextItem,
   findPrevItem,

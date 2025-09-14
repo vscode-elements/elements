@@ -2,14 +2,14 @@ import {PropertyValues, TemplateResult, html, nothing} from 'lit';
 import {consume} from '@lit/context';
 import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {customElement, VscElement} from '../includes/VscElement';
-import {stylePropertyMap} from '../includes/style-property-map';
+import {customElement, VscElement} from '../includes/VscElement.js';
+import {stylePropertyMap} from '../includes/style-property-map.js';
 import {
   ConfigContext,
   configContext,
   treeContext,
   type TreeContext,
-} from '../vscode-tree/tree-context';
+} from '../vscode-tree/tree-context.js';
 import {initPathTrackerProps} from '../vscode-tree/helpers.js';
 import styles from './vscode-tree-item.styles.js';
 import {ExpandMode, IndentGuides} from '../vscode-tree/vscode-tree.js';
