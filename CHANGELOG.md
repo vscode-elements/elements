@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Fixed the `checked` state of the default selected **Radio**.
 - Fixed **RadioGroup** behavior in the shadow DOM.
+- Fixed an issue where selected option labels were shown in **MultiSelect**.
+- Fixed selecting items with the Meta key on macOS in the **Tree** component.
+- Fixed an issue where the table body prevented page scrolling.
+- Fixed an issue in **SingleSelect** and **MultiSelect** where reading selectedIndex threw an error after options were removed programmatically.
 
 ## [2.3.0] - 2025-08-26
 
