@@ -277,4 +277,30 @@ describe('vscode-textfield', () => {
 
     expect(el.checkValidity()).to.eq(false);
   });
+
+  it('mirrors a non-empty value into a file input and triggers unhandledrejection (current bug)', async () => {
+    const el = await fixture<VscodeTextfield>(
+      html`<vscode-textfield type="file"></vscode-textfield>`
+    );
+
+    const rejection = new Promise<unknown>((resolve) => {
+      const handler = (ev: PromiseRejectionEvent) => {
+        window.removeEventListener('unhandledrejection', handler);
+        resolve(ev.reason);
+      };
+      window.addEventListener('unhandledrejection', handler);
+    });
+
+    // mimic the behavior of a file input
+    el['_value'] = 'C:\\fakepath\\file.txt';
+
+    el.requestUpdate();
+
+    const result = await Promise.race([
+      rejection,
+      el.updateComplete.then(() => 'update-completed'),
+    ]);
+
+    expect(result).to.equal('update-completed');
+  });
 });

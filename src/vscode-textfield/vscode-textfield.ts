@@ -303,15 +303,17 @@ export class VscodeTextfield
   private _internals: ElementInternals;
 
   private _dataChanged() {
-    this._value = this._inputEl.value;
-
-    if (this.type === 'file' && this._inputEl.files) {
-      for (const f of this._inputEl.files) {
-        this._internals.setFormValue(f);
+    if (this.type === 'file') {
+      if (this._inputEl.files) {
+        for (const f of this._inputEl.files) {
+          this._internals.setFormValue(f);
+        }
       }
-    } else {
-      this._internals.setFormValue(this._inputEl.value);
+      return;
     }
+
+    this._value = this._inputEl.value;
+    this._internals.setFormValue(this._inputEl.value);
   }
 
   private _setValidityFromInput() {
@@ -354,31 +356,60 @@ export class VscodeTextfield
     return html`
       <div class="root">
         <slot name="content-before"></slot>
-        <input
-          id="input"
-          type=${this.type}
-          ?autofocus=${this.autofocus}
-          autocomplete=${ifDefined(this.autocomplete)}
-          aria-label=${this.label}
-          ?disabled=${this.disabled}
-          max=${ifDefined(this.max)}
-          maxlength=${ifDefined(this.maxLength)}
-          min=${ifDefined(this.min)}
-          minlength=${ifDefined(this.minLength)}
-          ?multiple=${this.multiple}
-          name=${ifDefined(this.name)}
-          pattern=${ifDefined(this.pattern)}
-          placeholder=${ifDefined(this.placeholder)}
-          ?readonly=${this.readonly}
-          ?required=${this.required}
-          step=${ifDefined(this.step)}
-          .value=${this._value}
-          @blur=${this._onBlur}
-          @change=${this._onChange}
-          @focus=${this._onFocus}
-          @input=${this._onInput}
-          @keydown=${this._onKeyDown}
-        >
+        ${this._type === 'file'
+          ? html`
+              <input
+                id="input"
+                type="file"
+                ?autofocus=${this.autofocus}
+                autocomplete=${ifDefined(this.autocomplete)}
+                aria-label=${this.label}
+                ?disabled=${this.disabled}
+                max=${ifDefined(this.max)}
+                maxlength=${ifDefined(this.maxLength)}
+                min=${ifDefined(this.min)}
+                minlength=${ifDefined(this.minLength)}
+                ?multiple=${this.multiple}
+                name=${ifDefined(this.name)}
+                pattern=${ifDefined(this.pattern)}
+                placeholder=${ifDefined(this.placeholder)}
+                ?readonly=${this.readonly}
+                ?required=${this.required}
+                step=${ifDefined(this.step)}
+                @blur=${this._onBlur}
+                @change=${this._onChange}
+                @focus=${this._onFocus}
+                @input=${this._onInput}
+                @keydown=${this._onKeyDown}
+              >
+            `
+          : html`
+              <input
+                id="input"
+                type=${this.type}
+                ?autofocus=${this.autofocus}
+                autocomplete=${ifDefined(this.autocomplete)}
+                aria-label=${this.label}
+                ?disabled=${this.disabled}
+                max=${ifDefined(this.max)}
+                maxlength=${ifDefined(this.maxLength)}
+                min=${ifDefined(this.min)}
+                minlength=${ifDefined(this.minLength)}
+                ?multiple=${this.multiple}
+                name=${ifDefined(this.name)}
+                pattern=${ifDefined(this.pattern)}
+                placeholder=${ifDefined(this.placeholder)}
+                ?readonly=${this.readonly}
+                ?required=${this.required}
+                step=${ifDefined(this.step)}
+                .value=${this._value}
+                @blur=${this._onBlur}
+                @change=${this._onChange}
+                @focus=${this._onFocus}
+                @input=${this._onInput}
+                @keydown=${this._onKeyDown}
+              >
+            `}
         <slot name="content-after"></slot>
       </div>
     `;
