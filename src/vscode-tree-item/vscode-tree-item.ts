@@ -1,6 +1,6 @@
 import {PropertyValues, TemplateResult, html, nothing} from 'lit';
 import {consume} from '@lit/context';
-import {property, queryAssignedElements, state} from 'lit/decorators.js';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import {stylePropertyMap} from '../includes/style-property-map.js';
@@ -73,8 +73,13 @@ export class VscodeTreeItem extends VscElement {
   @property({type: Boolean, reflect: true})
   set selected(selected: boolean) {
     this._selected = selected;
-    this._treeContextState.selectedItems.add(this);
+    if (selected) {
+      this._treeContextState.selectedItems.add(this);
+    } else {
+      this._treeContextState.selectedItems.delete(this);
+    }
     this.ariaSelected = selected ? 'true' : 'false';
+    this._updateActionsVisibility();
   }
   get selected(): boolean {
     return this._selected;
@@ -104,10 +109,20 @@ export class VscodeTreeItem extends VscElement {
   @state()
   private _hasLeafIcon = false;
 
+  @state()
+  private _hasDescriptionSlotContent = false;
+
+  @state()
+  private _hasActionsSlotContent = false;
+
+  @state()
+  private _hasDecorationSlotContent = false;
+
   @consume({context: treeContext, subscribe: true})
   private _treeContextState: TreeContext = {
     isShiftPressed: false,
     selectedItems: new Set(),
+    hoveredItem: null,
     allItems: null,
     itemListUpToDate: false,
     focusedItem: null,
@@ -126,6 +141,22 @@ export class VscodeTreeItem extends VscElement {
   @queryAssignedElements({selector: 'vscode-tree-item', slot: 'children'})
   private _childrenTreeItems!: VscodeTreeItem[];
 
+  @query('slot[name="description"]')
+  private _descriptionSlotElement!: HTMLSlotElement;
+
+  @query('slot[name="actions"]')
+  private _actionsSlotElement!: HTMLSlotElement;
+
+  @query('slot[name="decoration"]')
+  private _decorationSlotElement!: HTMLSlotElement;
+
+  //#endregion
+
+  //#region derived state
+
+  private _isPointerInside = false;
+  private _hasKeyboardFocus = false;
+
   //#endregion
 
   //#region lifecycle methods
@@ -142,6 +173,31 @@ export class VscodeTreeItem extends VscElement {
     this._mainSlotChange();
     this.role = 'treeitem';
     this.ariaDisabled = 'false';
+    this.addEventListener('pointerenter', this._handlePointerEnter);
+    this.addEventListener('pointerleave', this._handlePointerLeave);
+    this.addEventListener('focusin', this._handleFocusIn);
+    this.addEventListener('focusout', this._handleFocusOut);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('pointerenter', this._handlePointerEnter);
+    this.removeEventListener('pointerleave', this._handlePointerLeave);
+    this.removeEventListener('focusin', this._handleFocusIn);
+    this.removeEventListener('focusout', this._handleFocusOut);
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this._refreshDescriptionSlotState();
+    this._refreshActionsSlotState();
+    this._refreshDecorationSlotState();
+    if (this.matches(':hover')) {
+      this._isPointerInside = true;
+      this._claimHover();
+    } else {
+      this._updateActionsVisibility();
+    }
   }
 
   protected override willUpdate(changedProperties: PropertyValues): void {
@@ -177,6 +233,155 @@ export class VscodeTreeItem extends VscElement {
     }
   }
 
+  private _refreshDescriptionSlotState(slot?: HTMLSlotElement) {
+    const descriptionSlot = slot ?? this._descriptionSlotElement;
+
+    if (!descriptionSlot) {
+      return;
+    }
+
+    const assignedNodes = descriptionSlot
+      .assignedNodes({flatten: true})
+      .filter((node) => {
+        if (node.nodeType !== Node.TEXT_NODE) {
+          return true;
+        }
+
+        return node.textContent?.trim();
+      });
+
+    const hasContent = assignedNodes.length > 0;
+
+    this._hasDescriptionSlotContent = hasContent;
+    this.toggleAttribute('has-description', hasContent);
+  }
+
+  private _refreshActionsSlotState(slot?: HTMLSlotElement) {
+    const actionsSlot = slot ?? this._actionsSlotElement;
+
+    if (!actionsSlot) {
+      return;
+    }
+
+    const assignedNodes = actionsSlot.assignedNodes({flatten: true});
+    const hasContent = assignedNodes.length > 0;
+
+    this._hasActionsSlotContent = hasContent;
+    this.toggleAttribute('has-actions', hasContent);
+    this._updateActionsVisibility();
+  }
+
+  private _refreshDecorationSlotState(slot?: HTMLSlotElement) {
+    const decorationSlot = slot ?? this._decorationSlotElement;
+
+    if (!decorationSlot) {
+      return;
+    }
+
+    const assignedNodes = decorationSlot
+      .assignedNodes({flatten: true})
+      .filter((node) => {
+        if (node.nodeType !== Node.TEXT_NODE) {
+          return true;
+        }
+
+        return node.textContent?.trim();
+      });
+
+    const hasContent = assignedNodes.length > 0;
+
+    const prevHasDecoration = this._hasDecorationSlotContent;
+    this._hasDecorationSlotContent = hasContent;
+    this.toggleAttribute('has-decoration', hasContent);
+    if (prevHasDecoration !== hasContent) {
+      this.requestUpdate();
+    }
+  }
+
+  private _getActiveElement(): Element | null {
+    const root = this.getRootNode({composed: true});
+
+    if (root instanceof Document) {
+      return root.activeElement instanceof Element ? root.activeElement : null;
+    }
+
+    if (root instanceof ShadowRoot) {
+      return root.activeElement instanceof Element ? root.activeElement : null;
+    }
+
+    return null;
+  }
+
+  private _isActiveElementInActions(activeElement: Element | null): boolean {
+    if (!activeElement || !this._actionsSlotElement) {
+      return false;
+    }
+
+    const assigned = this._actionsSlotElement.assignedElements({flatten: true});
+
+    return assigned.some(
+      (element) => element === activeElement || element.contains(activeElement)
+    );
+  }
+
+  private _updateActionsVisibility() {
+    if (!this._hasActionsSlotContent) {
+      this.toggleAttribute('show-actions', false);
+      return;
+    }
+
+    const activeElement = this._getActiveElement();
+    const isActionsFocused = this._isActiveElementInActions(activeElement);
+
+    const shouldShow =
+      this.selected ||
+      this._isPointerInside ||
+      this._hasKeyboardFocus ||
+      isActionsFocused;
+
+    this.toggleAttribute('show-actions', shouldShow);
+  }
+
+  private _updateFocusState() {
+    requestAnimationFrame(() => {
+      const hostFocusVisible = this.matches(':focus-visible');
+      this.toggleAttribute('focus-visible', hostFocusVisible);
+
+      const activeElement = this._getActiveElement();
+      const hasKeyboardFocus =
+        !!activeElement &&
+        this.contains(activeElement) &&
+        typeof activeElement.matches === 'function' &&
+        activeElement.matches(':focus-visible');
+
+      this._hasKeyboardFocus = hasKeyboardFocus;
+      this.toggleAttribute('keyboard-focus', hasKeyboardFocus);
+      this._updateActionsVisibility();
+    });
+  }
+
+  private _clearHoverState() {
+    this._isPointerInside = false;
+    this.toggleAttribute('hover', false);
+    this._updateActionsVisibility();
+  }
+
+  private _adoptHoverFromSibling() {
+    this._isPointerInside = true;
+    this._claimHover();
+  }
+
+  private _claimHover() {
+    const treeState = this._treeContextState;
+    if (treeState.hoveredItem && treeState.hoveredItem !== this) {
+      treeState.hoveredItem._clearHoverState();
+    }
+
+    treeState.hoveredItem = this;
+    this.toggleAttribute('hover', true);
+    this._updateActionsVisibility();
+  }
+
   private _toggleActiveState() {
     if (this.active) {
       if (this._treeContextState.activeItem) {
@@ -205,21 +410,28 @@ export class VscodeTreeItem extends VscElement {
   private _selectItem(isCtrlDown: boolean) {
     const {selectedItems} = this._treeContextState;
     const {multiSelect} = this._configContext;
+    const prevSelected = new Set(selectedItems);
 
     if (multiSelect && isCtrlDown) {
-      if (this.selected) {
-        this.selected = false;
-        selectedItems.delete(this);
-      } else {
-        this.selected = true;
-        selectedItems.add(this);
-      }
+      this.selected = !this.selected;
     } else {
-      selectedItems.forEach((li) => (li.selected = false));
+      Array.from(selectedItems).forEach((li) => {
+        if (li !== this) {
+          li.selected = false;
+        }
+      });
       selectedItems.clear();
       this.selected = true;
-      selectedItems.add(this);
     }
+
+    const affected = new Set<VscodeTreeItem>([
+      ...prevSelected,
+      ...selectedItems,
+    ]);
+
+    affected.add(this);
+
+    affected.forEach((li) => li._updateActionsVisibility());
   }
 
   private _selectRange() {
@@ -228,6 +440,8 @@ export class VscodeTreeItem extends VscElement {
     if (!prevFocused || prevFocused === this) {
       return;
     }
+
+    const prevSelected = new Set(this._treeContextState.selectedItems);
 
     if (!this._treeContextState.itemListUpToDate) {
       this._treeContextState.allItems =
@@ -251,10 +465,19 @@ export class VscodeTreeItem extends VscElement {
       [from, to] = [to, from];
     }
 
-    this._treeContextState.selectedItems.forEach((li) => (li.selected = false));
+    Array.from(this._treeContextState.selectedItems).forEach(
+      (li) => (li.selected = false)
+    );
     this._treeContextState.selectedItems.clear();
 
     this._selectItemsAndAllVisibleDescendants(from, to);
+
+    const affected = new Set<VscodeTreeItem>([
+      ...prevSelected,
+      ...this._treeContextState.selectedItems,
+    ]);
+    affected.add(this);
+    affected.forEach((li) => li._updateActionsVisibility());
   }
 
   private _selectItemsAndAllVisibleDescendants(from: number, to: number) {
@@ -299,6 +522,18 @@ export class VscodeTreeItem extends VscElement {
     }
   }
 
+  private _handleDescriptionSlotChange(ev: Event) {
+    this._refreshDescriptionSlotState(ev.target as HTMLSlotElement);
+  }
+
+  private _handleActionsSlotChange(ev: Event) {
+    this._refreshActionsSlotState(ev.target as HTMLSlotElement);
+  }
+
+  private _handleDecorationSlotChange(ev: Event) {
+    this._refreshDecorationSlotState(ev.target as HTMLSlotElement);
+  }
+
   private _handleMainSlotChange = () => {
     this._mainSlotChange();
     this._treeContextState.itemListUpToDate = false;
@@ -318,6 +553,36 @@ export class VscodeTreeItem extends VscElement {
     }
 
     this._treeContextState.focusedItem = this;
+  };
+
+  private _handlePointerEnter = () => {
+    this._isPointerInside = true;
+    this._claimHover();
+  };
+
+  private _handlePointerLeave = (ev: PointerEvent) => {
+    this._isPointerInside = false;
+    if (this._treeContextState.hoveredItem === this) {
+      this._treeContextState.hoveredItem = null;
+    }
+    this._clearHoverState();
+
+    const relatedTarget = ev.relatedTarget;
+    if (relatedTarget instanceof Element) {
+      const nextItem =
+        relatedTarget.closest<VscodeTreeItem>('vscode-tree-item');
+      if (nextItem && nextItem !== this && nextItem.isConnected) {
+        nextItem._adoptHoverFromSibling();
+      }
+    }
+  };
+
+  private _handleFocusIn = () => {
+    this._updateFocusState();
+  };
+
+  private _handleFocusOut = () => {
+    this._updateFocusState();
   };
 
   private _handleContentClick(ev: MouseEvent) {
@@ -404,6 +669,9 @@ export class VscodeTreeItem extends VscElement {
     const wrapperClasses = {
       wrapper: true,
       active: this.active,
+      'has-description': this._hasDescriptionSlotContent,
+      'has-actions': this._hasActionsSlotContent,
+      'has-decoration': this._hasDecorationSlotContent,
     };
 
     const childrenClasses = {
@@ -418,9 +686,16 @@ export class VscodeTreeItem extends VscElement {
       'has-icon': hasVisibleIcon,
     };
 
+    const contentClasses = {
+      content: true,
+      'has-description': this._hasDescriptionSlotContent,
+      'has-decoration': this._hasDecorationSlotContent,
+    };
+
     return html` <div class="root">
       <div
         class=${classMap(wrapperClasses)}
+        part="wrapper"
         @click=${this._handleContentClick}
         @dblclick=${this._handleDoubleClick}
         .style=${stylePropertyMap({paddingLeft: `${indentation}px`})}
@@ -431,11 +706,12 @@ export class VscodeTreeItem extends VscElement {
                 'arrow-container': true,
                 'icon-rotated': this.open,
               })}
+              part="head expando"
             >
               ${arrowIcon}
             </div>`
           : nothing}
-        <div class=${classMap(iconContainerClasses)}>
+        <div class=${classMap(iconContainerClasses)} part="head icon">
           ${this.branch && !this.open
             ? html`<slot
                 name="icon-branch"
@@ -455,8 +731,32 @@ export class VscodeTreeItem extends VscElement {
               ></slot>`
             : nothing}
         </div>
-        <div class="content" part="content">
-          <slot @slotchange=${this._handleMainSlotChange}></slot>
+        <div class=${classMap(contentClasses)} part="content">
+          <span class="label" part="label">
+            <slot @slotchange=${this._handleMainSlotChange}></slot>
+          </span>
+          <span
+            class="description"
+            part="description"
+            ?hidden=${!this._hasDescriptionSlotContent}
+          >
+            <slot
+              name="description"
+              @slotchange=${this._handleDescriptionSlotChange}
+            ></slot>
+          </span>
+          <div class="actions" part="actions">
+            <slot
+              name="actions"
+              @slotchange=${this._handleActionsSlotChange}
+            ></slot>
+          </div>
+          <div class="decoration" part="decoration">
+            <slot
+              name="decoration"
+              @slotchange=${this._handleDecorationSlotChange}
+            ></slot>
+          </div>
         </div>
       </div>
       <div

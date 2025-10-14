@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <style>
+      main {
+        max-width: 640px;
+      }
+
+      .demo-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .demo-controls .range-control {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1 1 260px;
+        min-width: 240px;
+      }
+
+      .demo-controls .range-control label {
+        white-space: nowrap;
+      }
+
+      .demo-controls .range-control input[type='range'] {
+        flex: 1 1 auto;
+      }
+
+      .actions-demo-frame {
+        width: var(--demo-tree-width, 520px);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .scm-section-label,
+      .scm-item-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+      }
+
+      .scm-label-text {
+        display: inline-block;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .status-badge {
+        font-size: 90%;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        background: none;
+        border: none;
+        opacity: 0.75;
+        margin: auto 4px 0 0;
+        text-align: center;
+      }
+
+      .status-badge--deleted {
+        color: var(--vscode-gitDecoration-deletedResourceForeground, #ad0707);
+      }
+
+      .status-badge--modified {
+        color: var(--vscode-gitDecoration-modifiedResourceForeground, #895503);
+      }
+
+      .status-badge--untracked {
+        color: var(--vscode-gitDecoration-untrackedResourceForeground, #007100);
+      }
+
+      .status-counter {
+        font-weight: 600;
+        text-transform: none;
+      }
+
+      .scm-tree vscode-tree-item[selected][keyboard-focus] .status-badge,
+      .scm-tree vscode-tree-item[selected][focus-visible] .status-badge,
+      .scm-tree vscode-tree-item[selected]:focus-within .status-badge {
+        color: inherit !important;
+      }
+
+      .scm-item-label.deleted .scm-label-text,
+      .scm-description.deleted {
+        text-decoration-line: line-through;
+      }
+
+      .toolbar-group {
+        display: inline-flex;
+        align-items: center;
+        color: inherit;
+        --vscode-toolbar-foreground: currentColor;
+        --vscode-toolbar-hoverForeground: currentColor;
+        --vscode-icon-foreground: currentColor;
+        --vscode-foreground: currentColor;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Decoration lane</h1>
+    <main>
+      <div class="demo-controls">
+        <div class="range-control">
+          <label for="tree-width">Width</label>
+          <input id="tree-width" type="range" min="280" max="640" value="500">
+          <span id="tree-width-value">500px</span>
+        </div>
+      </div>
+      <vscode-demo class="actions-demo-frame">
+        <vscode-tree class="scm-tree">
+          <vscode-tree-item
+            class="scm-node"
+            branch
+            open
+            data-node="Staged Changes"
+          >
+            <span class="scm-section-label">
+              <span class="scm-label-text">Staged Changes</span>
+            </span>
+            <vscode-badge slot="decoration" variant="counter" aria-hidden="true"
+              >1</vscode-badge
+            >
+            <div slot="actions" class="toolbar-group">
+              <vscode-toolbar-button
+                icon="comment"
+                aria-label="Code Review - Staged Changes"
+                data-action="code-review-staged-changes"
+              ></vscode-toolbar-button>
+              <vscode-toolbar-button
+                icon="request-changes"
+                aria-label="Open Staged Changes"
+                data-action="open-staged-changes"
+              ></vscode-toolbar-button>
+              <vscode-toolbar-button
+                icon="remove"
+                aria-label="Unstage All Changes"
+                data-action="unstage-all-changes"
+              ></vscode-toolbar-button>
+            </div>
+            <vscode-tree-item
+              class="scm-node"
+              data-node="src/hooks/useClient.js"
+            >
+              <vscode-icon slot="icon-leaf" name="file-text"></vscode-icon>
+              <span class="scm-item-label deleted">
+                <span class="scm-label-text">useClient.js</span>
+              </span>
+              <span slot="description" class="scm-description deleted"
+                >src/hooks</span
+              >
+              <span
+                slot="decoration"
+                class="badge status-badge status-badge--deleted"
+                aria-hidden="true"
+                >D</span
+              >
+              <div slot="actions" class="toolbar-group">
+                <vscode-toolbar-button
+                  icon="go-to-file"
+                  aria-label="Open File"
+                  data-action="open-file"
+                ></vscode-toolbar-button>
+                <vscode-toolbar-button
+                  icon="remove"
+                  aria-label="Unstage Changes"
+                  data-action="unstage-file"
+                ></vscode-toolbar-button>
+              </div>
+            </vscode-tree-item>
+          </vscode-tree-item>
+          <vscode-tree-item class="scm-node" branch open data-node="Changes">
+            <span class="scm-section-label">
+              <span class="scm-label-text">Changes</span>
+            </span>
+            <vscode-badge slot="decoration" variant="counter" aria-hidden="true"
+              >2</vscode-badge
+            >
+            <div slot="actions" class="toolbar-group">
+              <vscode-toolbar-button
+                icon="comment"
+                aria-label="Code Review - Unstaged Changes"
+                data-action="code-review-unstaged-changes"
+              ></vscode-toolbar-button>
+              <vscode-toolbar-button
+                icon="request-changes"
+                aria-label="Open Changes"
+                data-action="open-changes"
+              ></vscode-toolbar-button>
+              <vscode-toolbar-button
+                icon="discard"
+                aria-label="Discard All Changes"
+                data-action="discard-all"
+              ></vscode-toolbar-button>
+              <vscode-toolbar-button
+                icon="plus"
+                aria-label="Stage All Changes"
+                data-action="stage-all"
+              ></vscode-toolbar-button>
+            </div>
+            <vscode-tree-item class="scm-node" data-node="src/utils/strings.js">
+              <vscode-icon slot="icon-leaf" name="file-text"></vscode-icon>
+              <span class="scm-item-label">
+                <span class="scm-label-text">strings.js</span>
+              </span>
+              <span slot="description">src/utils</span>
+              <span
+                slot="decoration"
+                class="badge status-badge status-badge--modified"
+                aria-hidden="true"
+                >M</span
+              >
+              <div slot="actions" class="toolbar-group">
+                <vscode-toolbar-button
+                  icon="go-to-file"
+                  aria-label="Open File"
+                  data-action="open-file"
+                ></vscode-toolbar-button>
+                <vscode-toolbar-button
+                  icon="discard"
+                  aria-label="Discard Changes"
+                  data-action="discard-file"
+                ></vscode-toolbar-button>
+                <vscode-toolbar-button
+                  icon="plus"
+                  aria-label="Stage Changes"
+                  data-action="stage-file"
+                ></vscode-toolbar-button>
+              </div>
+            </vscode-tree-item>
+            <vscode-tree-item
+              class="scm-node"
+              data-node="src/nested/deep/inside/somewhere/longLongLongLongModule.js"
+            >
+              <vscode-icon slot="icon-leaf" name="file-text"></vscode-icon>
+              <span class="scm-item-label">
+                <span class="scm-label-text">longLongLongLongModule.js</span>
+              </span>
+              <span slot="description">src/nested/deep/inside/somewhere</span>
+              <span
+                slot="decoration"
+                class="badge status-badge status-badge--untracked"
+                aria-hidden="true"
+                >U</span
+              >
+              <div slot="actions" class="toolbar-group">
+                <vscode-toolbar-button
+                  icon="go-to-file"
+                  aria-label="Open File"
+                  data-action="open-file"
+                ></vscode-toolbar-button>
+                <vscode-toolbar-button
+                  icon="discard"
+                  aria-label="Discard Changes"
+                  data-action="discard-file"
+                ></vscode-toolbar-button>
+                <vscode-toolbar-button
+                  icon="plus"
+                  aria-label="Stage Changes"
+                  data-action="stage-file"
+                ></vscode-toolbar-button>
+              </div>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      </vscode-demo>
+    </main>
+    <script type="module">
+      const demoFrame = document.querySelector('.actions-demo-frame');
+      const widthInput = document.getElementById('tree-width');
+      const widthValue = document.getElementById('tree-width-value');
+
+      const setupActionGuards = () => {
+        if (!demoFrame) {
+          return;
+        }
+
+        const groups = demoFrame.querySelectorAll('.scm-tree .toolbar-group');
+
+        groups.forEach((group) => {
+          if (!(group instanceof HTMLElement)) {
+            return;
+          }
+
+          if (group.dataset.guardAttached) {
+            return;
+          }
+
+          group.addEventListener(
+            'click',
+            (ev) => {
+              ev.preventDefault();
+              ev.stopPropagation();
+
+              const target =
+                ev.target instanceof HTMLElement ? ev.target : null;
+              const button = target?.closest('vscode-toolbar-button');
+
+              if (!button) {
+                return;
+              }
+
+              const action =
+                button.dataset.action ??
+                button.getAttribute('icon') ??
+                'action';
+              const treeItem = button.closest('vscode-tree-item');
+              const label = treeItem?.dataset.node ?? 'tree-item';
+              console.log(`Action "${action}" on ${label}`);
+
+              button.blur();
+              treeItem?.focus();
+            },
+            {capture: true}
+          );
+
+          group.dataset.guardAttached = 'true';
+        });
+      };
+
+      const syncWidth = () => {
+        if (!(widthInput instanceof HTMLInputElement) || !demoFrame) {
+          return;
+        }
+
+        const width = `${widthInput.value}px`;
+        demoFrame.style.setProperty('--demo-tree-width', width);
+        if (widthValue) {
+          widthValue.textContent = width;
+        }
+      };
+
+      setupActionGuards();
+      syncWidth();
+
+      window.addEventListener('load', setupActionGuards);
+      widthInput?.addEventListener('input', syncWidth);
+    </script>
+  </body>
+</html>

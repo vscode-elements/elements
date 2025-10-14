@@ -30,9 +30,12 @@ const styles: CSSResultGroup = [
       align-items: flex-start;
       color: var(--vscode-foreground, #cccccc);
       display: flex;
+      flex-wrap: nowrap;
       font-family: var(--vscode-font-family, sans-serif);
       font-size: var(--vscode-font-size, 13px);
       font-weight: var(--vscode-font-weight, normal);
+      height: 22px;
+      line-height: 22px;
       outline-offset: -1px;
       padding-right: 12px;
     }
@@ -105,7 +108,7 @@ const styles: CSSResultGroup = [
     .icon-container.has-icon {
       height: 16px;
       margin-right: 6px;
-      width: 16px;
+      min-width: 16px;
     }
 
     .children {
@@ -137,10 +140,137 @@ const styles: CSSResultGroup = [
     }
 
     .content {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap; /* prevent wrapping; allow ellipses via min-width: 0 */
+      min-width: 0;
+      width: 100%;
       line-height: 22px;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex: 0 1 auto;
+      min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .description {
+      color: var(--vscode-descriptionForeground, #cccccc);
+      opacity: 0.7;
+      display: none;
+      flex: 0 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .content.has-description .description {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 1 1 0%; /* description takes remaining space, yields first when shrinking */
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-right: calc(var(--vscode-sash-size, 4px) * 1);
+    }
+
+    .content.has-description .label {
+      flex: 0 1 auto; /* label only grows when description missing */
+      margin-right: calc(var(--vscode-sash-size, 4px) * 1.5);
+    }
+
+    .content:not(.has-description) .label {
+      flex: 1 1 auto;
+    }
+
+    .label ::slotted(*) {
+      display: inline-block;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .description ::slotted(*) {
+      display: inline-block;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .actions {
+      align-items: center;
+      align-self: center;
+      display: none;
+      flex: 0 0 auto;
+      gap: 2px;
+      margin-left: auto;
+      padding-left: calc(var(--vscode-sash-size, 4px) * 1.5);
+      min-height: 22px;
+      color: inherit;
+    }
+
+    .actions ::slotted(*) {
+      align-items: center;
+      display: inline-flex;
+      height: 22px;
+    }
+
+    .actions ::slotted(button) {
+      cursor: pointer;
+    }
+
+    .actions ::slotted([hidden]) {
+      display: none !important;
+    }
+
+    :host([has-actions][show-actions]) .actions {
+      display: inline-flex;
+    }
+
+    .decoration {
+      align-items: center;
+      align-self: center;
+      color: inherit;
+      display: none;
+      flex: 0 0 auto;
+      gap: 4px;
+      margin-left: auto;
+      min-height: 22px;
+    }
+
+    :host([has-decoration]) .decoration {
+      display: inline-flex;
+    }
+
+    :host([show-actions]) .decoration {
+      margin-left: calc(var(--vscode-sash-size, 4px) * 1.5);
+    }
+
+    :host([selected]) ::slotted([slot='decoration']),
+    :host([selected]) ::slotted([slot='decoration']) * {
+      color: inherit !important;
+    }
+
+    :host([selected]) .description {
+      color: var(--internal-selectionForeground, #ffffff);
+      opacity: 0.8;
+    }
+
+    :host([selected][focus-visible]) .description,
+    :host([selected]:focus-within) .description {
+      opacity: 0.95;
     }
 
     :host([branch]) ::slotted(vscode-tree-item) {
