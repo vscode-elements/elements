@@ -46,7 +46,7 @@ jobs:
           echo $CURRENT_VERSION
 
       - name: Setup Node version
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           scope: '@vscode-elements'
           node-version: 22
