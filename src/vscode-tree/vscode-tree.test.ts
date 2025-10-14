@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import {expect, fixture, html} from '@open-wc/testing';
+import {expect, fixture, html, aTimeout} from '@open-wc/testing';
 import {sendKeys} from '@web/test-runner-commands';
 import sinon from 'sinon';
 import {$$, clickOnElement} from '../includes/test-helpers.js';
@@ -79,6 +79,199 @@ describe('vscode-tree', () => {
     expect(firstItem.active).to.be.false;
     expect(secondItem.tabIndex).to.eq(0);
     expect(secondItem.active).to.be.true;
+  });
+
+  describe('actions visibility', () => {
+    const getWrapper = (item: VscodeTreeItem) =>
+      item.shadowRoot!.querySelector<HTMLElement>('.wrapper')!;
+
+    const renderActionsTree = async (options?: {multiSelect?: boolean}) => {
+      return fixture<VscodeTree>(html`
+        <vscode-tree ?multi-select=${options?.multiSelect ?? false}>
+          <vscode-tree-item id="workspace" branch open>
+            Workspace
+            <button slot="actions" id="workspace-action">foo</button>
+            <vscode-tree-item id="src" branch open>
+              src
+              <button slot="actions" id="src-action">bar</button>
+              <vscode-tree-item id="components">
+                components
+                <button slot="actions" id="components-action">baz</button>
+              </vscode-tree-item>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+    };
+
+    it('shows actions for hovered item and clears previous hover', async () => {
+      const tree = await renderActionsTree();
+      const workspace = tree.querySelector<VscodeTreeItem>('#workspace')!;
+      const src = tree.querySelector<VscodeTreeItem>('#src')!;
+      const components = tree.querySelector<VscodeTreeItem>('#components')!;
+
+      workspace.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+      expect(workspace.hasAttribute('show-actions')).to.be.true;
+
+      src.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+      expect(src.hasAttribute('show-actions')).to.be.true;
+      expect(workspace.hasAttribute('show-actions')).to.be.false;
+
+      components.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+      expect(components.hasAttribute('show-actions')).to.be.true;
+      expect(src.hasAttribute('show-actions')).to.be.false;
+    });
+
+    it('reclaims hover when moving from child to parent sibling', async () => {
+      const tree = await renderActionsTree();
+      const src = tree.querySelector<VscodeTreeItem>('#src')!;
+      const components = tree.querySelector<VscodeTreeItem>('#components')!;
+
+      components.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+      expect(components.hasAttribute('show-actions')).to.be.true;
+
+      components.dispatchEvent(
+        new PointerEvent('pointerleave', {
+          bubbles: false,
+          composed: false,
+          relatedTarget: getWrapper(src),
+        })
+      );
+      await aTimeout(0);
+
+      expect(components.hasAttribute('show-actions')).to.be.false;
+      expect(src.hasAttribute('show-actions')).to.be.true;
+    });
+
+    it('keeps actions visible for selected item while hovering siblings', async () => {
+      const tree = await renderActionsTree();
+      const workspace = tree.querySelector<VscodeTreeItem>('#workspace')!;
+      const src = tree.querySelector<VscodeTreeItem>('#src')!;
+      const components = tree.querySelector<VscodeTreeItem>('#components')!;
+
+      getWrapper(workspace).click();
+      await aTimeout(0);
+      expect(workspace.selected).to.be.true;
+      expect(workspace.hasAttribute('show-actions')).to.be.true;
+
+      src.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+      expect(src.hasAttribute('show-actions')).to.be.true;
+      expect(workspace.hasAttribute('show-actions')).to.be.true;
+
+      components.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+      expect(components.hasAttribute('show-actions')).to.be.true;
+      expect(workspace.hasAttribute('show-actions')).to.be.true;
+      expect(src.hasAttribute('show-actions')).to.be.false;
+    });
+
+    it('clears previous selection actions when a new item is selected', async () => {
+      const tree = await renderActionsTree();
+      const workspace = tree.querySelector<VscodeTreeItem>('#workspace')!;
+      const src = tree.querySelector<VscodeTreeItem>('#src')!;
+
+      getWrapper(workspace).click();
+      await aTimeout(0);
+      expect(workspace.selected).to.be.true;
+      expect(workspace.hasAttribute('show-actions')).to.be.true;
+
+      src.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+      expect(src.hasAttribute('show-actions')).to.be.true;
+
+      getWrapper(src).click();
+      await aTimeout(0);
+      expect(src.selected).to.be.true;
+      expect(src.hasAttribute('show-actions')).to.be.true;
+      expect(workspace.hasAttribute('show-actions')).to.be.false;
+    });
+
+    it('shows actions for all selected items in multi-select mode', async () => {
+      const tree = await renderActionsTree({multiSelect: true});
+      const workspace = tree.querySelector<VscodeTreeItem>('#workspace')!;
+      const src = tree.querySelector<VscodeTreeItem>('#src')!;
+      const workspaceWrapper = getWrapper(workspace);
+      const srcWrapper = getWrapper(src);
+
+      workspaceWrapper.dispatchEvent(
+        new MouseEvent('click', {bubbles: true, composed: true})
+      );
+      await aTimeout(0);
+      expect(workspace.selected).to.be.true;
+      srcWrapper.dispatchEvent(
+        new MouseEvent('click', {bubbles: true, composed: true, ctrlKey: true})
+      );
+      await aTimeout(0);
+      expect(src.selected).to.be.true;
+
+      expect(workspace.hasAttribute('show-actions')).to.be.true;
+      expect(src.hasAttribute('show-actions')).to.be.true;
+
+      workspaceWrapper.dispatchEvent(
+        new MouseEvent('click', {bubbles: true, composed: true, ctrlKey: true})
+      );
+      await aTimeout(0);
+      expect(workspace.selected).to.be.false;
+
+      expect(workspace.hasAttribute('show-actions')).to.be.false;
+      expect(src.hasAttribute('show-actions')).to.be.true;
+    });
+
+    it('shows actions when pointer is already hovering on first render', async () => {
+      const tree = document.createElement('vscode-tree');
+      const item = document.createElement('vscode-tree-item');
+      const action = document.createElement('span');
+      action.slot = 'actions';
+      action.textContent = 'action';
+
+      const originalMatches = item.matches.bind(item);
+      Object.defineProperty(item, 'matches', {
+        value: (selector: string) =>
+          selector === ':hover' ? true : originalMatches(selector),
+      });
+
+      item.append(action);
+      tree.append(item);
+      document.body.append(tree);
+
+      await (tree as VscodeTree).updateComplete;
+      await aTimeout(0);
+
+      expect(item.hasAttribute('show-actions')).to.be.true;
+
+      tree.remove();
+    });
+  });
+
+  describe('description slot', () => {
+    it('keeps description visible when selected', async () => {
+      const tree = await fixture<VscodeTree>(html`
+        <vscode-tree>
+          <vscode-tree-item id="with-desc">
+            Item
+            <span slot="description">Details</span>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+
+      const item = tree.querySelector<VscodeTreeItem>('#with-desc')!;
+      const wrapper = item.shadowRoot!.querySelector<HTMLElement>('.wrapper')!;
+
+      wrapper.click();
+      await aTimeout(0);
+
+      const description =
+        item.shadowRoot!.querySelector<HTMLElement>('.description')!;
+
+      expect(description.hidden).to.be.false;
+      const display = getComputedStyle(description).display;
+      expect(display).to.not.equal('none');
+    });
   });
 
   describe('default values', () => {

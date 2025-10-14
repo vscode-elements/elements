@@ -18,6 +18,7 @@ export interface TreeContext {
   highlightedItems?: Set<VscodeTreeItem>;
   highlightIndentGuides?: () => void;
   emitSelectEvent?: () => void;
+  hoveredItem?: VscodeTreeItem | null;
 }
 
 export const treeContext = createContext<TreeContext>('vscode-list');
