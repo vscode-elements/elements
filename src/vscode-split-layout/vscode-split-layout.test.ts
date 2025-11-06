@@ -389,6 +389,142 @@ describe('vscode-split-layout', () => {
     });
   });
 
+  describe('min size constraints', () => {
+    it('prevents dragging the start pane below the configured pixel minimum', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 300px;"
+          initial-handle-position="400px"
+          min-start="240px"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const startPane = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const endPane = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      await dragElement(handle, -300);
+
+      expect(startPane.offsetWidth).to.eq(240);
+      expect(endPane.offsetWidth).to.eq(260);
+    });
+
+    it('prevents dragging the end pane below the configured pixel minimum', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 500px; height: 300px;"
+          initial-handle-position="200px"
+          min-end="180px"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const startPane = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const endPane = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      await dragElement(handle, 300);
+
+      expect(startPane.offsetWidth).to.eq(320);
+      expect(endPane.offsetWidth).to.eq(180);
+    });
+
+    it('applies percentage-based minimums when handlePosition changes programmatically', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 600px; height: 300px;"
+          initial-handle-position="50%"
+          min-start="30%"
+          min-end="25%"
+        ></vscode-split-layout>`
+      );
+
+      const startPane = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const endPane = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      el.handlePosition = '0px';
+      await el.updateComplete;
+
+      expect(startPane.offsetWidth).to.eq(180);
+      expect(endPane.offsetWidth).to.eq(420);
+
+      el.handlePosition = '100%';
+      await el.updateComplete;
+
+      expect(startPane.offsetWidth).to.eq(450);
+      expect(endPane.offsetWidth).to.eq(150);
+    });
+
+    it('respects minimum sizes in horizontal layouts', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 400px; height: 400px;"
+          split="horizontal"
+          initial-handle-position="300px"
+          min-start="150px"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const startPane = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const endPane = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      await dragElement(handle, 0, -250);
+
+      expect(startPane.offsetHeight).to.eq(150);
+      expect(endPane.offsetHeight).to.eq(250);
+    });
+
+    it('handles overlapping minimums without crashing', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 400px; height: 300px;"
+          min-start="110%"
+          min-end="110%"
+        ></vscode-split-layout>`
+      );
+
+      const startPane = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const endPane = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      expect(startPane.offsetWidth).to.be.closeTo(400, 1);
+      expect(endPane.offsetWidth).to.be.closeTo(0, 1);
+    });
+
+    it('accepts zero minimum values', async () => {
+      const el = await fixture<VscodeSplitLayout>(
+        html`<vscode-split-layout
+          style="width: 400px; height: 300px;"
+          min-start="0px"
+          min-end="0%"
+        ></vscode-split-layout>`
+      );
+
+      const handle = el.shadowRoot?.querySelector('.handle') as HTMLDivElement;
+      const startPane = el.shadowRoot?.querySelector(
+        '.start'
+      ) as HTMLDivElement;
+      const endPane = el.shadowRoot?.querySelector('.end') as HTMLDivElement;
+
+      await dragElement(handle, -400);
+      expect(startPane.offsetWidth).to.be.closeTo(0, 1);
+      expect(endPane.offsetWidth).to.be.closeTo(400, 1);
+
+      await dragElement(handle, 400);
+      expect(startPane.offsetWidth).to.be.closeTo(400, 1);
+      expect(endPane.offsetWidth).to.be.closeTo(0, 1);
+    });
+  });
+
   describe('interactions', () => {
     it('should panes resize in vertical mode', async () => {
       const el = await fixture<VscodeSplitLayout>(

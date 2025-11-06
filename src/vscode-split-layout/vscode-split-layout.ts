@@ -56,6 +56,8 @@ export type VscSplitLayoutChangeEvent = CustomEvent<{
  * @tag vscode-split-layout
  *
  * @prop {'start' | 'end' | 'none'} fixedPane
+ * @prop {string} minStart - Minimum size of the start pane expressed in `px` or `%`.
+ * @prop {string} minEnd - Minimum size of the end pane expressed in `px` or `%`.
  *
  * @cssprop [--separator-border=#454545]
  * @cssprop [--vscode-editorWidget-border=#454545]
@@ -130,6 +132,44 @@ export class VscodeSplitLayout extends VscElement {
   }
   private _fixedPane: FixedPaneType = 'none';
 
+  /**
+   * Sets the minimum size of the start pane. Accepts pixel or percentage values.
+   */
+  @property({attribute: 'min-start'})
+  set minStart(newVal: string | null | undefined) {
+    const normalized = newVal ?? undefined;
+
+    if (this._minStart === normalized) {
+      return;
+    }
+
+    this._minStart = normalized;
+    this._applyMinSizeConstraints();
+  }
+  get minStart(): string | undefined {
+    return this._minStart;
+  }
+  private _minStart?: string;
+
+  /**
+   * Sets the minimum size of the end pane. Accepts pixel or percentage values.
+   */
+  @property({attribute: 'min-end'})
+  set minEnd(newVal: string | null | undefined) {
+    const normalized = newVal ?? undefined;
+
+    if (this._minEnd === normalized) {
+      return;
+    }
+
+    this._minEnd = normalized;
+    this._applyMinSizeConstraints();
+  }
+  get minEnd(): string | undefined {
+    return this._minEnd;
+  }
+  private _minEnd?: string;
+
   @state()
   private _handlePosition = 0;
 
@@ -181,11 +221,9 @@ export class VscodeSplitLayout extends VscElement {
       this.initialHandlePosition ?? DEFAULT_INITIAL_POSITION
     );
 
-    if (unit === 'percent') {
-      this._handlePosition = percentToPx(value, max);
-    } else {
-      this._handlePosition = value;
-    }
+    const nextValue = unit === 'percent' ? percentToPx(value, max) : value;
+    this._handlePosition = this._clampHandlePosition(nextValue, max);
+    this._updateFixedPaneSize(max);
   }
 
   override connectedCallback(): void {
@@ -246,6 +284,59 @@ export class VscodeSplitLayout extends VscElement {
     }
   }
 
+  private _applyMinSizeConstraints() {
+    if (!this._wrapperEl) {
+      return;
+    }
+
+    this._boundRect = this._wrapperEl.getBoundingClientRect();
+    const {width, height} = this._boundRect;
+    const max = this.split === 'vertical' ? width : height;
+
+    this._handlePosition = this._clampHandlePosition(this._handlePosition, max);
+    this._updateFixedPaneSize(max);
+  }
+
+  private _resolveMinSizePx(value: string | undefined, max: number): number {
+    if (!value) {
+      return 0;
+    }
+
+    const {unit, value: parsedValue} = parseValue(value);
+    const resolved =
+      unit === 'percent' ? percentToPx(parsedValue, max) : parsedValue;
+
+    if (!isFinite(resolved)) {
+      return 0;
+    }
+
+    return Math.max(0, Math.min(resolved, max));
+  }
+
+  private _clampHandlePosition(value: number, max: number): number {
+    if (!isFinite(max) || max <= 0) {
+      return 0;
+    }
+
+    const minStartPx = this._resolveMinSizePx(this._minStart, max);
+    const minEndPx = this._resolveMinSizePx(this._minEnd, max);
+
+    const lowerBound = Math.min(minStartPx, max);
+    const upperBound = Math.max(lowerBound, max - minEndPx);
+
+    const boundedValue = Math.max(lowerBound, Math.min(value, upperBound));
+
+    return Math.max(0, Math.min(boundedValue, max));
+  }
+
+  private _updateFixedPaneSize(max: number) {
+    if (this.fixedPane === 'start') {
+      this._fixedPaneSize = this._handlePosition;
+    } else if (this.fixedPane === 'end') {
+      this._fixedPaneSize = max - this._handlePosition;
+    }
+  }
+
   private _handleResize = (entries: ResizeObserverEntry[]) => {
     const rect = entries[0].contentRect;
     const {width, height} = rect;
@@ -259,13 +350,19 @@ export class VscodeSplitLayout extends VscElement {
     if (this.fixedPane === 'end') {
       this._handlePosition = max - this._fixedPaneSize;
     }
+
+    this._handlePosition = this._clampHandlePosition(this._handlePosition, max);
+    this._updateFixedPaneSize(max);
   };
 
   private _setPosition(value: number, unit: PositionUnit) {
     const {width, height} = this._boundRect;
     const max = this.split === 'vertical' ? width : height;
 
-    this._handlePosition = unit === 'percent' ? percentToPx(value, max) : value;
+    const nextValue = unit === 'percent' ? percentToPx(value, max) : value;
+
+    this._handlePosition = this._clampHandlePosition(nextValue, max);
+    this._updateFixedPaneSize(max);
   }
 
   private _handleMouseOver() {
@@ -339,18 +436,10 @@ export class VscodeSplitLayout extends VscElement {
     const maxPos = vert ? width : height;
     const mousePos = vert ? clientX - left : clientY - top;
 
-    this._handlePosition = Math.max(
-      0,
-      Math.min(mousePos - this._handleOffset + this.handleSize / 2, maxPos)
-    );
+    const rawPosition = mousePos - this._handleOffset + this.handleSize / 2;
 
-    if (this.fixedPane === 'start') {
-      this._fixedPaneSize = this._handlePosition;
-    }
-
-    if (this.fixedPane === 'end') {
-      this._fixedPaneSize = maxPos - this._handlePosition;
-    }
+    this._handlePosition = this._clampHandlePosition(rawPosition, maxPos);
+    this._updateFixedPaneSize(maxPos);
   };
 
   private _handleDblClick() {
