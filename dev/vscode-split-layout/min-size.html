@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Layout - Min Size</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/vscode-split-layout/index.js"></script>
+    <script type="module" src="/dist/vscode-scrollable/index.js"></script>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.4;
+        margin: 24px;
+      }
+
+      vscode-demo {
+        display: block;
+        margin-bottom: 32px;
+      }
+
+      .pane {
+        border: 1px solid #555;
+        box-sizing: border-box;
+        padding: 12px;
+      }
+
+      .pane.start {
+        background: #252526;
+        color: #f0f0f0;
+      }
+
+      .pane.end {
+        background: #1e1e1e;
+        color: #d0d0d0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Split Layout - Min Size Examples</h1>
+    <p>
+      These demos show how <code>min-start</code> and <code>min-end</code> clamp
+      the sash so panes never collapse below sensible limits. Pixels and
+      percentages can be combined to match your layout.
+    </p>
+
+    <h2>Vertical mix: 240px start, 25% end</h2>
+    <p>
+      Drag the handle and notice how the master pane refuses to shrink past
+      <strong>240px</strong> while the detail pane keeps <strong>25%</strong> of
+      the width.
+    </p>
+    <vscode-demo>
+      <vscode-split-layout
+        style="width: 520px; height: 280px"
+        min-start="240px"
+        min-end="25%"
+      >
+        <div slot="start" class="pane start">
+          <h3>Sources</h3>
+          <p>This slot refuses to shrink past 240px.</p>
+          <p>
+            Try dragging the handle all the way left—the clamp keeps the list
+            readable.
+          </p>
+        </div>
+        <div slot="end" class="pane end">
+          <h3>Details</h3>
+          <p>
+            This pane holds onto 25% of the available width for preview content.
+          </p>
+        </div>
+      </vscode-split-layout>
+    </vscode-demo>
+
+    <h2>Horizontal ratio clamp (30%)</h2>
+    <p>
+      Here both panes use percentage-based minimums to keep toolbars usable in a
+      horizontal split.
+    </p>
+    <vscode-demo>
+      <vscode-split-layout
+        split="horizontal"
+        style="width: 520px; height: 320px"
+        initial-handle-position="40%"
+        min-start="30%"
+        min-end="30%"
+      >
+        <div slot="start" class="pane start">
+          <h3>Console</h3>
+          <p>The console keeps at least 30% height so filters don’t vanish.</p>
+        </div>
+        <div slot="end" class="pane end">
+          <h3>Inspector</h3>
+          <p>The inspector pane also clamps at 30% to preserve actions.</p>
+        </div>
+      </vscode-split-layout>
+    </vscode-demo>
+  </body>
+</html>
