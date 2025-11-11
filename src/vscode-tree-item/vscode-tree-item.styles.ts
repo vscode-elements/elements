@@ -13,6 +13,8 @@ const styles: CSSResultGroup = [
       --selected-outline-style: solid;
       --selected-outline-width: 0;
 
+      --tree-actions-gap: 6px;
+
       cursor: pointer;
       display: block;
       user-select: none;
@@ -179,12 +181,11 @@ const styles: CSSResultGroup = [
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-right: calc(var(--vscode-sash-size, 4px) * 1);
+      margin-left: var(--tree-actions-gap, 6px);
     }
 
     .content.has-description .label {
       flex: 0 1 auto; /* label only grows when description missing */
-      margin-right: calc(var(--vscode-sash-size, 4px) * 1.5);
     }
 
     .content:not(.has-description) .label {
@@ -216,7 +217,6 @@ const styles: CSSResultGroup = [
       flex: 0 0 auto;
       gap: 2px;
       margin-left: auto;
-      padding-left: calc(var(--vscode-sash-size, 4px) * 1.5);
       min-height: 22px;
       color: inherit;
     }
@@ -250,12 +250,17 @@ const styles: CSSResultGroup = [
       min-height: 22px;
     }
 
-    :host([has-decoration]) .decoration {
+    :host([has-decoration]) .decoration,
+    /* Electron v31+ (VS Code 1.95+) on Chromium 125 supports :state():
+       https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:state#browser_compatibility
+       Update to Chromium to 126.0.6445.0: https://github.com/electron/electron/releases/tag/v31.0.0-beta.1
+       https://github.com/microsoft/vscode/blob/1.95.0/package.json#L155 */
+    :host(:state(has-decoration)) .decoration {
       display: inline-flex;
     }
 
     :host([show-actions]) .decoration {
-      margin-left: calc(var(--vscode-sash-size, 4px) * 1.5);
+      margin-left: var(--tree-actions-gap);
     }
 
     :host([selected]) ::slotted([slot='decoration']),
