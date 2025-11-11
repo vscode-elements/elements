@@ -96,8 +96,9 @@ const styles: CSSResultGroup = [
     .icon-container {
       align-items: center;
       display: flex;
-      margin-bottom: 3px;
-      margin-top: 3px;
+      justify-content: center;
+      margin-right: 3px;
+      min-height: 22px;
       overflow: hidden;
     }
 
@@ -106,9 +107,13 @@ const styles: CSSResultGroup = [
     }
 
     .icon-container.has-icon {
-      height: 16px;
-      margin-right: 6px;
-      min-width: 16px;
+      min-width: 22px;
+      max-width: 22px;
+      max-height: 22px;
+    }
+
+    :host(:is(:--show-actions, :state(show-actions))) .icon-container {
+      overflow: visible;
     }
 
     .children {
@@ -160,7 +165,7 @@ const styles: CSSResultGroup = [
     }
 
     .description {
-      color: var(--vscode-descriptionForeground, #cccccc);
+      color: var(--vscode-foreground, #cccccc);
       opacity: 0.7;
       display: none;
       flex: 0 1 auto;
@@ -179,12 +184,11 @@ const styles: CSSResultGroup = [
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-right: calc(var(--vscode-sash-size, 4px) * 1);
+      margin-left: 0.5em;
     }
 
     .content.has-description .label {
       flex: 0 1 auto; /* label only grows when description missing */
-      margin-right: calc(var(--vscode-sash-size, 4px) * 1.5);
     }
 
     .content:not(.has-description) .label {
@@ -216,7 +220,6 @@ const styles: CSSResultGroup = [
       flex: 0 0 auto;
       gap: 2px;
       margin-left: auto;
-      padding-left: calc(var(--vscode-sash-size, 4px) * 1.5);
       min-height: 22px;
       color: inherit;
     }
@@ -235,7 +238,15 @@ const styles: CSSResultGroup = [
       display: none !important;
     }
 
-    :host([has-actions][show-actions]) .actions {
+    :host(
+        :is(
+          :--has-actions:--show-actions,
+          :--has-actions:state(show-actions),
+          :state(has-actions):--show-actions,
+          :state(has-actions):state(show-actions)
+        )
+      )
+      .actions {
       display: inline-flex;
     }
 
@@ -250,12 +261,12 @@ const styles: CSSResultGroup = [
       min-height: 22px;
     }
 
-    :host([has-decoration]) .decoration {
+    :host(:is(:--has-decoration, :state(has-decoration))) .decoration {
       display: inline-flex;
     }
 
-    :host([show-actions]) .decoration {
-      margin-left: calc(var(--vscode-sash-size, 4px) * 1.5);
+    :host(:is(:--show-actions, :state(show-actions))) .decoration {
+      margin-left: 6px;
     }
 
     :host([selected]) ::slotted([slot='decoration']),
@@ -268,7 +279,7 @@ const styles: CSSResultGroup = [
       opacity: 0.8;
     }
 
-    :host([selected][focus-visible]) .description,
+    :host([selected]) :is(:state(focus-visible), :--focus-visible) .description,
     :host([selected]:focus-within) .description {
       opacity: 0.95;
     }
