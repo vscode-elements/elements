@@ -121,7 +121,7 @@
   </head>
 
   <body>
-    <h1>Decoration lane</h1>
+    <h1>SCM (Demo)</h1>
     <main>
       <div class="demo-controls">
         <div class="range-control">
@@ -293,6 +293,17 @@
       const widthInput = document.getElementById('tree-width');
       const widthValue = document.getElementById('tree-width-value');
 
+      const selectTreeItem = (treeItem) => {
+        const wrapper = treeItem.shadowRoot?.querySelector('.wrapper');
+        if (wrapper) {
+          wrapper.dispatchEvent(
+            new MouseEvent('click', {bubbles: true, composed: true})
+          );
+        } else {
+          treeItem.selected = true;
+        }
+      };
+
       const setupActionGuards = () => {
         if (!demoFrame) {
           return;
@@ -312,9 +323,6 @@
           group.addEventListener(
             'click',
             (ev) => {
-              ev.preventDefault();
-              ev.stopPropagation();
-
               const target =
                 ev.target instanceof HTMLElement ? ev.target : null;
               const button = target?.closest('vscode-toolbar-button');
@@ -323,11 +331,24 @@
                 return;
               }
 
+              const treeItem = button.closest('vscode-tree-item');
+              if (!treeItem) {
+                return;
+              }
+
+              if (!treeItem.hasAttribute('selected')) {
+                ev.preventDefault();
+                ev.stopImmediatePropagation();
+                selectTreeItem(treeItem);
+                return;
+              }
+
+              ev.stopPropagation();
+
               const action =
                 button.dataset.action ??
                 button.getAttribute('icon') ??
                 'action';
-              const treeItem = button.closest('vscode-tree-item');
               const label = treeItem?.dataset.node ?? 'tree-item';
               console.log(`Action "${action}" on ${label}`);
 

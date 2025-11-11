@@ -1,6 +1,6 @@
 import {PropertyValues, TemplateResult, html, nothing} from 'lit';
 import {consume} from '@lit/context';
-import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import {stylePropertyMap} from '../includes/style-property-map.js';
@@ -141,14 +141,14 @@ export class VscodeTreeItem extends VscElement {
   @queryAssignedElements({selector: 'vscode-tree-item', slot: 'children'})
   private _childrenTreeItems!: VscodeTreeItem[];
 
-  @query('slot[name="description"]')
-  private _descriptionSlotElement!: HTMLSlotElement;
+  @queryAssignedElements({slot: 'description', flatten: true})
+  private _descriptionSlotElements!: Element[];
 
-  @query('slot[name="actions"]')
-  private _actionsSlotElement!: HTMLSlotElement;
+  @queryAssignedElements({slot: 'actions', flatten: true})
+  private _actionsSlotElements!: Element[];
 
-  @query('slot[name="decoration"]')
-  private _decorationSlotElement!: HTMLSlotElement;
+  @queryAssignedElements({slot: 'decoration', flatten: true})
+  private _decorationSlotElements!: Element[];
 
   //#endregion
 
@@ -166,6 +166,10 @@ export class VscodeTreeItem extends VscElement {
 
     this._internals = this.attachInternals();
     this.addEventListener('focus', this._handleComponentFocus);
+    this.addEventListener('pointerenter', this._handlePointerEnter);
+    this.addEventListener('pointerleave', this._handlePointerLeave);
+    this.addEventListener('focusin', this._handleFocusIn);
+    this.addEventListener('focusout', this._handleFocusOut);
   }
 
   override connectedCallback(): void {
@@ -173,18 +177,6 @@ export class VscodeTreeItem extends VscElement {
     this._mainSlotChange();
     this.role = 'treeitem';
     this.ariaDisabled = 'false';
-    this.addEventListener('pointerenter', this._handlePointerEnter);
-    this.addEventListener('pointerleave', this._handlePointerLeave);
-    this.addEventListener('focusin', this._handleFocusIn);
-    this.addEventListener('focusout', this._handleFocusOut);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener('pointerenter', this._handlePointerEnter);
-    this.removeEventListener('pointerleave', this._handlePointerLeave);
-    this.removeEventListener('focusin', this._handleFocusIn);
-    this.removeEventListener('focusout', this._handleFocusOut);
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -233,68 +225,50 @@ export class VscodeTreeItem extends VscElement {
     }
   }
 
-  private _refreshDescriptionSlotState(slot?: HTMLSlotElement) {
-    const descriptionSlot = slot ?? this._descriptionSlotElement;
-
-    if (!descriptionSlot) {
-      return;
-    }
-
-    const assignedNodes = descriptionSlot
-      .assignedNodes({flatten: true})
-      .filter((node) => {
-        if (node.nodeType !== Node.TEXT_NODE) {
-          return true;
-        }
-
-        return node.textContent?.trim();
-      });
-
-    const hasContent = assignedNodes.length > 0;
+  private _refreshDescriptionSlotState() {
+    const hasContent = (this._descriptionSlotElements?.length ?? 0) > 0;
 
     this._hasDescriptionSlotContent = hasContent;
-    this.toggleAttribute('has-description', hasContent);
+    this._setCustomState('has-description', hasContent);
   }
 
-  private _refreshActionsSlotState(slot?: HTMLSlotElement) {
-    const actionsSlot = slot ?? this._actionsSlotElement;
-
-    if (!actionsSlot) {
-      return;
-    }
-
-    const assignedNodes = actionsSlot.assignedNodes({flatten: true});
-    const hasContent = assignedNodes.length > 0;
+  private _refreshActionsSlotState() {
+    const hasContent = (this._actionsSlotElements?.length ?? 0) > 0;
 
     this._hasActionsSlotContent = hasContent;
-    this.toggleAttribute('has-actions', hasContent);
+    this._setCustomState('has-actions', hasContent);
     this._updateActionsVisibility();
   }
 
-  private _refreshDecorationSlotState(slot?: HTMLSlotElement) {
-    const decorationSlot = slot ?? this._decorationSlotElement;
-
-    if (!decorationSlot) {
-      return;
-    }
-
-    const assignedNodes = decorationSlot
-      .assignedNodes({flatten: true})
-      .filter((node) => {
-        if (node.nodeType !== Node.TEXT_NODE) {
-          return true;
-        }
-
-        return node.textContent?.trim();
-      });
-
-    const hasContent = assignedNodes.length > 0;
+  private _refreshDecorationSlotState() {
+    const hasContent = (this._decorationSlotElements?.length ?? 0) > 0;
 
     const prevHasDecoration = this._hasDecorationSlotContent;
     this._hasDecorationSlotContent = hasContent;
-    this.toggleAttribute('has-decoration', hasContent);
+    this._setCustomState('has-decoration', hasContent);
     if (prevHasDecoration !== hasContent) {
       this.requestUpdate();
+    }
+  }
+
+  private _setCustomState(stateName: string, present: boolean) {
+    if (!this._internals?.states) {
+      return;
+    }
+
+    try {
+      if (present) {
+        this._internals.states.add(stateName);
+      } else {
+        this._internals.states.delete(stateName);
+      }
+    } catch {
+      // https://developer.mozilla.org/en-US/docs/Web/API/CustomStateSet#compatibility_with_dashed-ident_syntax
+      if (present) {
+        this._internals.states.add(`--${stateName}`);
+      } else {
+        this._internals.states.delete(`--${stateName}`);
+      }
     }
   }
 
@@ -313,20 +287,18 @@ export class VscodeTreeItem extends VscElement {
   }
 
   private _isActiveElementInActions(activeElement: Element | null): boolean {
-    if (!activeElement || !this._actionsSlotElement) {
+    if (!activeElement) {
       return false;
     }
 
-    const assigned = this._actionsSlotElement.assignedElements({flatten: true});
-
-    return assigned.some(
+    return (this._actionsSlotElements ?? []).some(
       (element) => element === activeElement || element.contains(activeElement)
     );
   }
 
   private _updateActionsVisibility() {
     if (!this._hasActionsSlotContent) {
-      this.toggleAttribute('show-actions', false);
+      this._setCustomState('show-actions', false);
       return;
     }
 
@@ -339,30 +311,36 @@ export class VscodeTreeItem extends VscElement {
       this._hasKeyboardFocus ||
       isActionsFocused;
 
-    this.toggleAttribute('show-actions', shouldShow);
+    this._setCustomState('show-actions', shouldShow);
   }
 
   private _updateFocusState() {
-    requestAnimationFrame(() => {
-      const hostFocusVisible = this.matches(':focus-visible');
-      this.toggleAttribute('focus-visible', hostFocusVisible);
+    const hostFocusVisible = this.matches(':focus-visible');
+    this._setCustomState('focus-visible', hostFocusVisible);
 
-      const activeElement = this._getActiveElement();
-      const hasKeyboardFocus =
-        !!activeElement &&
-        this.contains(activeElement) &&
-        typeof activeElement.matches === 'function' &&
-        activeElement.matches(':focus-visible');
+    const activeElement = this._getActiveElement();
+    let owner: VscodeTreeItem | null = null;
+    if (activeElement instanceof Element) {
+      owner = activeElement.closest('vscode-tree-item');
 
-      this._hasKeyboardFocus = hasKeyboardFocus;
-      this.toggleAttribute('keyboard-focus', hasKeyboardFocus);
-      this._updateActionsVisibility();
-    });
+      if (!owner) {
+        const root = activeElement.getRootNode();
+        if (root instanceof ShadowRoot && root.host instanceof VscodeTreeItem) {
+          owner = root.host;
+        }
+      }
+    }
+
+    const hasKeyboardFocus = owner === this;
+
+    this._hasKeyboardFocus = hasKeyboardFocus;
+    this._setCustomState('keyboard-focus', hasKeyboardFocus);
+    this._updateActionsVisibility();
   }
 
   private _clearHoverState() {
     this._isPointerInside = false;
-    this.toggleAttribute('hover', false);
+    this._setCustomState('hover', false);
     this._updateActionsVisibility();
   }
 
@@ -378,7 +356,7 @@ export class VscodeTreeItem extends VscElement {
     }
 
     treeState.hoveredItem = this;
-    this.toggleAttribute('hover', true);
+    this._setCustomState('hover', true);
     this._updateActionsVisibility();
   }
 
@@ -395,7 +373,7 @@ export class VscodeTreeItem extends VscElement {
       this._treeContextState.activeItem = this;
       this._setHasActiveItemFlagOnParent(this, true);
       this.tabIndex = 0;
-      this._internals.states.add('active');
+      this._setCustomState('active', true);
     } else {
       if (this._treeContextState.activeItem === this) {
         this._treeContextState.activeItem = null;
@@ -403,7 +381,7 @@ export class VscodeTreeItem extends VscElement {
       }
 
       this.tabIndex = -1;
-      this._internals.states.delete('active');
+      this._setCustomState('active', false);
     }
   }
 
@@ -428,9 +406,7 @@ export class VscodeTreeItem extends VscElement {
       ...prevSelected,
       ...selectedItems,
     ]);
-
     affected.add(this);
-
     affected.forEach((li) => li._updateActionsVisibility());
   }
 
@@ -522,16 +498,16 @@ export class VscodeTreeItem extends VscElement {
     }
   }
 
-  private _handleDescriptionSlotChange(ev: Event) {
-    this._refreshDescriptionSlotState(ev.target as HTMLSlotElement);
+  private _handleDescriptionSlotChange() {
+    this._refreshDescriptionSlotState();
   }
 
-  private _handleActionsSlotChange(ev: Event) {
-    this._refreshActionsSlotState(ev.target as HTMLSlotElement);
+  private _handleActionsSlotChange() {
+    this._refreshActionsSlotState();
   }
 
-  private _handleDecorationSlotChange(ev: Event) {
-    this._refreshDecorationSlotState(ev.target as HTMLSlotElement);
+  private _handleDecorationSlotChange() {
+    this._refreshDecorationSlotState();
   }
 
   private _handleMainSlotChange = () => {
