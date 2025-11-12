@@ -253,8 +253,12 @@ const styles: CSSResultGroup = [
     /* Electron v31+ (VS Code 1.95+) on Chromium 125 supports :state():
        https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:state#browser_compatibility
        Update to Chromium to 126.0.6445.0: https://github.com/electron/electron/releases/tag/v31.0.0-beta.1
-       https://github.com/microsoft/vscode/blob/1.95.0/package.json#L155 */
-    :host(:state(has-decoration)) .decoration {
+       https://github.com/microsoft/vscode/blob/1.95.0/package.json#L155
+       Back-compat: older Chromium builds only understand the :--state form, so we
+       mirror the state under --has-decoration as well. */
+    :host(:--has-decoration) .decoration,
+    :host(:state(has-decoration)) .decoration,
+    :host(:state(--has-decoration)) .decoration {
       display: inline-flex;
     }
 

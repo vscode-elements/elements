@@ -253,21 +253,24 @@ export class VscodeTreeItem extends VscElement {
   }
 
   private _setCustomState(stateName: string, present: boolean) {
-    const identifiers = stateName.startsWith('--')
-      ? [stateName]
-      : [stateName, `--${stateName}`];
+    if (!this._internals?.states) {
+      return;
+    }
 
-    identifiers.forEach((identifier) => {
-      try {
-        if (present) {
-          this._internals.states.add(identifier);
-        } else {
-          this._internals.states.delete(identifier);
-        }
-      } catch {
-        // Older runtimes that only support :--state throw; ignore silently.
+    try {
+      if (present) {
+        this._internals.states.add(stateName);
+      } else {
+        this._internals.states.delete(stateName);
       }
-    });
+    } catch {
+      // https://developer.mozilla.org/en-US/docs/Web/API/CustomStateSet#compatibility_with_dashed-ident_syntax
+      if (present) {
+        this._internals.states.add(`--${stateName}`);
+      } else {
+        this._internals.states.delete(`--${stateName}`);
+      }
+    }
   }
 
   private _getActiveElement(): Element | null {
