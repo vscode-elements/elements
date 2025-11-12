@@ -82,10 +82,26 @@
         display: none;
         color: var(--vscode-editorLightBulb-foreground, #ddb100);
       }
-      .problems-tree .problem-icon-wrap:hover .sev {
+      .problems-tree .problem-icon-wrap.problem-icon-action:hover .sev,
+      .problems-tree
+        vscode-tree-item[data-problem-action]:hover
+        .problem-icon-wrap.problem-icon-action
+        .sev,
+      .problems-tree
+        vscode-tree-item[data-problem-action][selected]
+        .problem-icon-wrap.problem-icon-action
+        .sev {
         display: none;
       }
-      .problems-tree .problem-icon-wrap:hover .bulb {
+      .problems-tree .problem-icon-wrap.problem-icon-action:hover .bulb,
+      .problems-tree
+        vscode-tree-item[data-problem-action]:hover
+        .problem-icon-wrap.problem-icon-action
+        .bulb,
+      .problems-tree
+        vscode-tree-item[data-problem-action][selected]
+        .problem-icon-wrap.problem-icon-action
+        .bulb {
         display: inline-flex;
       }
 
@@ -96,6 +112,29 @@
         gap: 6px;
         min-width: 0;
       }
+
+      .problem-details {
+        display: flex;
+        gap: 6px;
+      }
+
+      .problem-link {
+        color: var(--vscode-textLink-foreground);
+        cursor: pointer;
+        text-decoration: none;
+        margin-left: 0;
+      }
+
+      .problem-link:hover {
+        color: var(--vscode-textLink-activeForeground);
+        text-decoration: underline;
+      }
+
+      /* Preserve the original color when the tree node is selected */
+      .problems-tree:focus-within vscode-tree-item[selected] .problem-link {
+        color: inherit !important;
+      }
+
       .tree-label-text {
         display: inline-block;
         min-width: 0;
@@ -108,6 +147,11 @@
   </head>
   <body>
     <h1>Problems (demo)</h1>
+    <p>
+      Hover and click the error icon to open the quick-fix menu, and notice how
+      the row doesn't steal focus. The faux <code>(no-console)</code>
+      link behaves the same way—no selection changes, just logging.
+    </p>
     <main>
       <vscode-demo class="frame">
         <vscode-tree class="problems-tree">
@@ -117,56 +161,26 @@
               <span class="tree-label-text">Problems</span>
             </span>
             <vscode-badge slot="decoration" variant="counter" aria-hidden="true"
-              >4</vscode-badge
+              >3</vscode-badge
             >
 
-            <!-- Error #1 -->
-            <vscode-tree-item data-node="p-error-1">
-              <span slot="icon-leaf" class="problem-icon-wrap">
+            <!-- Error -->
+            <vscode-tree-item
+              data-node="p-error-2"
+              data-problem-action
+              data-problem-id="no-console"
+              data-problem-severity="error"
+              data-fix-label="Remove the console.error(). (no-console)"
+            >
+              <span
+                slot="icon-leaf"
+                class="problem-icon-wrap problem-icon-action"
+                tabindex="0"
+                role="button"
+                aria-haspopup="menu"
+                aria-controls="problem-context-menu"
+              >
                 <vscode-icon name="error" class="sev error"></vscode-icon>
-                <vscode-icon name="lightbulb" class="bulb"></vscode-icon>
-              </span>
-              <span class="tree-label">
-                <span class="tree-label-text"
-                  >All platforms must either specify a version or none</span
-                >
-              </span>
-              <span slot="description">[Ln 4, Col 5]</span>
-            </vscode-tree-item>
-
-            <!-- Error #2 -->
-            <vscode-tree-item data-node="p-error-2">
-              <span slot="icon-leaf" class="problem-icon-wrap">
-                <vscode-icon name="error" class="sev error"></vscode-icon>
-                <vscode-icon name="lightbulb" class="bulb"></vscode-icon>
-              </span>
-              <span class="tree-label">
-                <span class="tree-label-text"
-                  >Unknown FQBN option 'FlashFreqx'</span
-                >
-              </span>
-              <span slot="description">[Ln 6, Col 12]</span>
-            </vscode-tree-item>
-
-            <!-- Warning -->
-            <vscode-tree-item data-node="p-warning-1">
-              <span slot="icon-leaf" class="problem-icon-wrap">
-                <vscode-icon name="warning" class="sev warning"></vscode-icon>
-                <vscode-icon name="lightbulb" class="bulb"></vscode-icon>
-              </span>
-              <span class="tree-label">
-                <span class="tree-label-text"
-                  >Library 'FTDebouncer' installed 1.3.1, profile requires
-                  1.3.3</span
-                >
-              </span>
-              <span slot="description">[Ln 8, Col 3]</span>
-            </vscode-tree-item>
-
-            <!-- Info -->
-            <vscode-tree-item data-node="p-info-1">
-              <span slot="icon-leaf" class="problem-icon-wrap">
-                <vscode-icon name="info" class="sev info"></vscode-icon>
                 <vscode-icon
                   name="lightbulb"
                   class="bulb"
@@ -174,13 +188,172 @@
                 ></vscode-icon>
               </span>
               <span class="tree-label">
-                <span class="tree-label-text">Profiles validated</span>
+                <span class="tree-label-text"
+                  >Unexpected console statement.</span
+                >
               </span>
-              <span slot="description">[Ln 1, Col 1]</span>
+              <span slot="description">
+                <div class="problem-details">
+                  <span>
+                    eslint
+                    <span
+                      class="problem-link"
+                      data-doc-url="https://eslint.org/docs/latest/rules/no-console"
+                      data-problem-id="no-console"
+                      data-problem-severity="error"
+                      >(no-console)</span
+                    >
+                  </span>
+                  <span>[Ln 20, Col 7]</span>
+                </div>
+              </span>
+            </vscode-tree-item>
+
+            <!-- Warning -->
+            <vscode-tree-item data-node="p-warning-1">
+              <span slot="icon-leaf" class="problem-icon-wrap">
+                <vscode-icon name="warning" class="sev warning"></vscode-icon>
+              </span>
+              <span class="tree-label">
+                <span class="tree-label-text"
+                  >Library 'FTDebouncer' installed 1.3.1, profile requires
+                  1.3.3</span
+                >
+              </span>
+              <span slot="description">
+                <div class="problem-details">
+                  <span>boardlab</span>
+                  <span>[Ln 8, Col 3]</span>
+                </div>
+              </span>
+            </vscode-tree-item>
+
+            <!-- Info -->
+            <vscode-tree-item data-node="p-info-1">
+              <span slot="icon-leaf" class="problem-icon-wrap">
+                <vscode-icon name="info" class="sev info"></vscode-icon>
+              </span>
+              <span class="tree-label">
+                <span class="tree-label-text"
+                  >"pointerdown": Unknown word.</span
+                >
+              </span>
+              <span slot="description">
+                <div class="problem-details">
+                  <span>cSpell</span>
+                  <span>[Ln 117, Col 22]</span>
+                </div>
+              </span>
             </vscode-tree-item>
           </vscode-tree-item>
         </vscode-tree>
+        <vscode-context-menu
+          id="problem-context-menu"
+          class="problem-context-menu"
+        ></vscode-context-menu>
       </vscode-demo>
     </main>
+    <script type="module">
+      const contextMenu = document.getElementById('problem-context-menu');
+      const actionItems = document.querySelectorAll(
+        'vscode-tree-item[data-problem-action]'
+      );
+
+      if (contextMenu) {
+        contextMenu.addEventListener('vsc-context-menu-select', (event) => {
+          const {value} = event.detail ?? {};
+          const problemId = contextMenu.dataset.problemId ?? 'unknown';
+          const severity = contextMenu.dataset.problemSeverity ?? 'unknown';
+          if (value === 'apply-fix') {
+            console.log(
+              `Problem clicked: ${problemId} (severity: ${severity})`
+            );
+          } else if (value === 'ignore-problem') {
+            console.log(`Ignoring ${problemId} (${severity})`);
+          }
+          contextMenu.show = false;
+        });
+      }
+
+      const showMenu = (ev, target) => {
+        if (!contextMenu || !target) {
+          return;
+        }
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        const fixLabel = target.dataset.fixLabel ?? 'Quick Fix';
+
+        contextMenu.data = [
+          {
+            label: fixLabel,
+            value: 'apply-fix',
+          },
+          {separator: true},
+          {
+            label: 'Ignore problem',
+            value: 'ignore-problem',
+          },
+        ];
+
+        const rect = target.getBoundingClientRect();
+        const offsetX =
+          ev instanceof MouseEvent ? ev.clientX - rect.left : rect.width;
+        const offsetY =
+          ev instanceof MouseEvent ? ev.clientY - rect.top : rect.height / 2;
+        contextMenu.style.position = 'absolute';
+        contextMenu.style.left = `${rect.left + offsetX + 8}px`;
+        contextMenu.style.top = `${rect.top + offsetY}px`;
+        contextMenu.dataset.problemId = target.dataset.problemId ?? 'unknown';
+        contextMenu.dataset.problemSeverity =
+          target.dataset.problemSeverity ?? 'unknown';
+        contextMenu.show = true;
+      };
+
+      actionItems.forEach((item) => {
+        const trigger = item.querySelector('.problem-icon-action') ?? item;
+        const handler = (event) => showMenu(event, item);
+
+        trigger?.addEventListener('click', handler);
+        trigger?.addEventListener('contextmenu', handler);
+      });
+
+      const findProblemLink = (event) =>
+        event.target instanceof HTMLElement
+          ? event.target.closest('.problem-link')
+          : null;
+
+      document.addEventListener(
+        'pointerdown',
+        (event) => {
+          const candidate = findProblemLink(event);
+          if (candidate) {
+            event.preventDefault();
+          }
+
+          if (contextMenu && !contextMenu.contains(event.target)) {
+            contextMenu.show = false;
+          }
+        },
+        {capture: true}
+      );
+
+      const problemsTree = document.querySelector('.problems-tree');
+      problemsTree?.addEventListener(
+        'click',
+        (event) => {
+          const link = findProblemLink(event);
+
+          if (link) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log(
+              `Documentation link clicked: ${link.dataset.problemId ?? 'unknown'}`
+            );
+          }
+        },
+        {capture: true}
+      );
+    </script>
   </body>
 </html>
