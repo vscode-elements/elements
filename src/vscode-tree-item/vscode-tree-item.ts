@@ -229,14 +229,14 @@ export class VscodeTreeItem extends VscElement {
     const hasContent = (this._descriptionSlotElements?.length ?? 0) > 0;
 
     this._hasDescriptionSlotContent = hasContent;
-    this.toggleAttribute('has-description', hasContent);
+    this._setCustomState('has-description', hasContent);
   }
 
   private _refreshActionsSlotState() {
     const hasContent = (this._actionsSlotElements?.length ?? 0) > 0;
 
     this._hasActionsSlotContent = hasContent;
-    this.toggleAttribute('has-actions', hasContent);
+    this._setCustomState('has-actions', hasContent);
     this._updateActionsVisibility();
   }
 
@@ -245,7 +245,6 @@ export class VscodeTreeItem extends VscElement {
 
     const prevHasDecoration = this._hasDecorationSlotContent;
     this._hasDecorationSlotContent = hasContent;
-    this.toggleAttribute('has-decoration', hasContent);
     this._setCustomState('has-decoration', hasContent);
     if (prevHasDecoration !== hasContent) {
       this.requestUpdate();
@@ -299,7 +298,7 @@ export class VscodeTreeItem extends VscElement {
 
   private _updateActionsVisibility() {
     if (!this._hasActionsSlotContent) {
-      this.toggleAttribute('show-actions', false);
+      this._setCustomState('show-actions', false);
       return;
     }
 
@@ -312,13 +311,13 @@ export class VscodeTreeItem extends VscElement {
       this._hasKeyboardFocus ||
       isActionsFocused;
 
-    this.toggleAttribute('show-actions', shouldShow);
+    this._setCustomState('show-actions', shouldShow);
   }
 
   private _updateFocusState() {
     requestAnimationFrame(() => {
       const hostFocusVisible = this.matches(':focus-visible');
-      this.toggleAttribute('focus-visible', hostFocusVisible);
+      this._setCustomState('focus-visible', hostFocusVisible);
 
       const activeElement = this._getActiveElement();
       const hasKeyboardFocus =
@@ -328,14 +327,14 @@ export class VscodeTreeItem extends VscElement {
         activeElement.matches(':focus-visible');
 
       this._hasKeyboardFocus = hasKeyboardFocus;
-      this.toggleAttribute('keyboard-focus', hasKeyboardFocus);
+      this._setCustomState('keyboard-focus', hasKeyboardFocus);
       this._updateActionsVisibility();
     });
   }
 
   private _clearHoverState() {
     this._isPointerInside = false;
-    this.toggleAttribute('hover', false);
+    this._setCustomState('hover', false);
     this._updateActionsVisibility();
   }
 
@@ -351,7 +350,7 @@ export class VscodeTreeItem extends VscElement {
     }
 
     treeState.hoveredItem = this;
-    this.toggleAttribute('hover', true);
+    this._setCustomState('hover', true);
     this._updateActionsVisibility();
   }
 
