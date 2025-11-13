@@ -315,17 +315,27 @@ export class VscodeTreeItem extends VscElement {
   }
 
   private _updateFocusState() {
-    requestAnimationFrame(() => {
-      const hostFocusVisible = this.matches(':focus-visible');
-      this._setCustomState('focus-visible', hostFocusVisible);
+    const hostFocusVisible = this.matches(':focus-visible');
+    this._setCustomState('focus-visible', hostFocusVisible);
 
-      const activeElement = this._getActiveElement();
-      const hasKeyboardFocus = !!activeElement && activeElement === this;
+    const activeElement = this._getActiveElement();
+    let owner: VscodeTreeItem | null = null;
+    if (activeElement instanceof Element) {
+      owner = activeElement.closest('vscode-tree-item');
 
-      this._hasKeyboardFocus = hasKeyboardFocus;
-      this._setCustomState('keyboard-focus', hasKeyboardFocus);
-      this._updateActionsVisibility();
-    });
+      if (!owner) {
+        const root = activeElement.getRootNode();
+        if (root instanceof ShadowRoot && root.host instanceof VscodeTreeItem) {
+          owner = root.host;
+        }
+      }
+    }
+
+    const hasKeyboardFocus = owner === this;
+
+    this._hasKeyboardFocus = hasKeyboardFocus;
+    this._setCustomState('keyboard-focus', hasKeyboardFocus);
+    this._updateActionsVisibility();
   }
 
   private _clearHoverState() {

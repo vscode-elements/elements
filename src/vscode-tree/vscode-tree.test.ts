@@ -264,20 +264,39 @@ describe('vscode-tree', () => {
 
     it('moves actions state along with keyboard focus', async () => {
       const tree = await renderActionsTree();
+      await tree.updateComplete;
+      await aTimeout(0);
+
       const workspace = tree.querySelector<VscodeTreeItem>('#workspace')!;
       const src = tree.querySelector<VscodeTreeItem>('#src')!;
 
-      workspace.active = true;
-      workspace.focus();
+      const before = document.createElement('button');
+      before.textContent = 'Before tree';
+      tree.parentNode?.insertBefore(before, tree);
+
+      before.focus();
+      await sendKeys({press: 'Tab'});
       await aTimeout(0);
 
+      if (document.activeElement !== workspace) {
+        workspace.focus();
+        await aTimeout(0);
+      }
+
+      await aTimeout(0);
+
+      expect(document.activeElement).to.equal(workspace);
+      expect(hasCustomState(workspace, 'keyboard-focus')).to.be.true;
       expect(hasShowActionsState(workspace)).to.be.true;
 
       await sendKeys({press: 'ArrowDown'});
       await aTimeout(0);
 
+      expect(document.activeElement).to.equal(src);
       expect(hasShowActionsState(src)).to.be.true;
       expect(hasShowActionsState(workspace)).to.be.false;
+
+      before.remove();
     });
   });
 
