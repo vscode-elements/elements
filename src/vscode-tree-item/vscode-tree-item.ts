@@ -396,9 +396,7 @@ export class VscodeTreeItem extends VscElement {
       ...prevSelected,
       ...selectedItems,
     ]);
-
     affected.add(this);
-
     affected.forEach((li) => li._updateActionsVisibility());
   }
 
