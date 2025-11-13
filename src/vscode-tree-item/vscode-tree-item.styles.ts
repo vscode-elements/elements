@@ -101,7 +101,7 @@ const styles: CSSResultGroup = [
       justify-content: center;
       margin-right: 3px;
       min-height: 22px;
-      overflow: visible;
+      overflow: hidden;
     }
 
     .icon-container slot {
@@ -110,6 +110,12 @@ const styles: CSSResultGroup = [
 
     .icon-container.has-icon {
       min-width: 22px;
+      max-width: 22px;
+      max-height: 22px;
+    }
+
+    :host(:is(:--show-actions, :state(show-actions))) .icon-container {
+      overflow: visible;
     }
 
     .children {
