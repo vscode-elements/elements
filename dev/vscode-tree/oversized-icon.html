@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements — Oversized Icon</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <style>
+      main {
+        max-width: 480px;
+      }
+
+      .frame {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .oversized-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        background: rgba(0, 122, 204, 0.15);
+        color: #61dafb;
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.03em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+
+      .oversized-icon.small {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+        border-radius: 4px;
+        background: var(--vscode-inputValidation-errorBorder, #094771);
+        color: var(--vscode-list-activeSelectionForeground, #ffffff);
+      }
+
+      .oversized-icon.xxl {
+        width: 64px;
+        height: 64px;
+        font-size: 18px;
+        background: rgba(255, 87, 51, 0.18);
+        color: #ffb347;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Oversized Icon</h1>
+    <p>
+      This demo renders three tree items with 16×16, 32×32, and 64×64 icons so
+      you can quickly verify how different sizes behave.
+    </p>
+    <main>
+      <vscode-demo class="frame">
+        <vscode-tree>
+          <vscode-tree-item>
+            <span slot="icon-leaf" class="oversized-icon small">SM</span>
+            Standard icon (16×16)
+          </vscode-tree-item>
+          <vscode-tree-item>
+            <span slot="icon-leaf" class="oversized-icon">XL</span>
+            Oversized icon (32x32)
+          </vscode-tree-item>
+          <vscode-tree-item>
+            <span slot="icon-leaf" class="oversized-icon xxl">XXL</span>
+            Bud Spencer tribute (64x64)
+          </vscode-tree-item>
+        </vscode-tree>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
