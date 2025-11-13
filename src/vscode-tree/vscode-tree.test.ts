@@ -262,6 +262,29 @@ describe('vscode-tree', () => {
       tree.remove();
     });
 
+    it('adds a margin between actions and decoration when actions are visible', async () => {
+      const tree = await fixture<VscodeTree>(html`
+        <vscode-tree>
+          <vscode-tree-item id="item">
+            Item
+            <span slot="decoration">D</span>
+            <button slot="actions">A</button>
+          </vscode-tree-item>
+        </vscode-tree>
+      `);
+
+      const item = tree.querySelector<VscodeTreeItem>('#item')!;
+      const decoration = item.shadowRoot!.querySelector(
+        '.decoration'
+      ) as HTMLElement;
+
+      item.dispatchEvent(new PointerEvent('pointerenter'));
+      await aTimeout(0);
+
+      const margin = parseFloat(getComputedStyle(decoration).marginLeft);
+      expect(margin).to.be.greaterThan(0);
+    });
+
     it('moves actions state along with keyboard focus', async () => {
       const tree = await renderActionsTree();
       await tree.updateComplete;
