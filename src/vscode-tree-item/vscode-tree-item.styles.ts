@@ -261,7 +261,7 @@ const styles: CSSResultGroup = [
       display: inline-flex;
     }
 
-    :host([show-actions]) .decoration {
+    :host(:is(:--show-actions, :state(show-actions))) .decoration {
       margin-left: var(--tree-actions-gap);
     }
 
@@ -275,7 +275,7 @@ const styles: CSSResultGroup = [
       opacity: 0.8;
     }
 
-    :host([selected][focus-visible]) .description,
+    :host([selected]) :is(:state(focus-visible), :--focus-visible) .description,
     :host([selected]:focus-within) .description {
       opacity: 0.95;
     }
