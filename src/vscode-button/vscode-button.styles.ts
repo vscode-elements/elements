@@ -13,6 +13,11 @@ const styles: CSSResultGroup = [
       width: auto;
     }
 
+    :host([block]) {
+      display: block;
+      width: 100%;
+    }
+
     .base {
       align-items: center;
       background-color: var(--vscode-button-background, #0078d4);
@@ -34,13 +39,19 @@ const styles: CSSResultGroup = [
       font-weight: var(--vscode-font-weight, normal);
       height: 100%;
       justify-content: center;
-      line-height: 18px;
+      line-height: 22px;
       overflow: hidden;
-      padding: 4px calc(13px + var(--vsc-base-additional-right-padding, 0px))
-        4px 13px;
+      padding: 1px calc(13px + var(--vsc-base-additional-right-padding, 0px))
+        1px 13px;
       position: relative;
       user-select: none;
       white-space: nowrap;
+      width: 100%;
+    }
+
+    :host([block]) .base {
+      min-height: 28px;
+      text-align: center;
       width: 100%;
     }
 
@@ -146,8 +157,9 @@ const styles: CSSResultGroup = [
 
     :host(:empty) .base,
     .base.icon-only {
+      min-height: 24px;
       min-width: 26px;
-      padding: 4px 4px;
+      padding: 1px 4px;
     }
 
     slot {
