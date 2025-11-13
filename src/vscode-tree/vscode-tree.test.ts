@@ -261,6 +261,24 @@ describe('vscode-tree', () => {
 
       tree.remove();
     });
+
+    it('moves actions state along with keyboard focus', async () => {
+      const tree = await renderActionsTree();
+      const workspace = tree.querySelector<VscodeTreeItem>('#workspace')!;
+      const src = tree.querySelector<VscodeTreeItem>('#src')!;
+
+      workspace.active = true;
+      workspace.focus();
+      await aTimeout(0);
+
+      expect(hasShowActionsState(workspace)).to.be.true;
+
+      await sendKeys({press: 'ArrowDown'});
+      await aTimeout(0);
+
+      expect(hasShowActionsState(src)).to.be.true;
+      expect(hasShowActionsState(workspace)).to.be.false;
+    });
   });
 
   describe('decoration visibility', () => {

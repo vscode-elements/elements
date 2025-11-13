@@ -320,11 +320,7 @@ export class VscodeTreeItem extends VscElement {
       this._setCustomState('focus-visible', hostFocusVisible);
 
       const activeElement = this._getActiveElement();
-      const hasKeyboardFocus =
-        !!activeElement &&
-        this.contains(activeElement) &&
-        typeof activeElement.matches === 'function' &&
-        activeElement.matches(':focus-visible');
+      const hasKeyboardFocus = !!activeElement && activeElement === this;
 
       this._hasKeyboardFocus = hasKeyboardFocus;
       this._setCustomState('keyboard-focus', hasKeyboardFocus);
