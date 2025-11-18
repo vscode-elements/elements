@@ -113,7 +113,9 @@ Displays the file size of the bundled library (dist/bundled.js) in bytes.
 
 ### icons
 
-Generates icon list for the documentation site
+Generates icon list for the documentation site. The output of this script should
+replace the `List of icons` section inside
+the `vscode-elements.github.io/src/content/docs/components/icon.mdx` so the docs stay in sync with the latest Codicon set.
 
 ### vscode-data
 
