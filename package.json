@@ -162,7 +162,7 @@
     "@web/test-runner-mocha": "^0.9.0",
     "@web/test-runner-playwright": "^0.11.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "concurrently": "^9.1.2",
     "custom-element-vs-code-integration": "^1.5.0",
     "custom-elements-manifest-deprecator": "^1.2.0",
