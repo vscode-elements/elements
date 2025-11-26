@@ -196,6 +196,7 @@ export class OptionListController implements ReactiveController {
         filteredIndex: index,
         ranges: [],
         visible: true,
+        action: op.action
       };
     });
 
@@ -233,6 +234,7 @@ export class OptionListController implements ReactiveController {
       value: value ?? '',
       visible,
       ranges,
+      action: option.action
     });
 
     if (visible) {

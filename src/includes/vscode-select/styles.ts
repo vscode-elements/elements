@@ -231,9 +231,6 @@ export default [
 
     .option.single-select {
       display: block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
 
     .option.multi-select {
@@ -412,6 +409,17 @@ export default [
 
     :host([position='above']) .description {
       border-width: 0 0 1px;
+    }
+
+    .option .label {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .option.with-action {
+      display: flex;
     }
   `,
 ];

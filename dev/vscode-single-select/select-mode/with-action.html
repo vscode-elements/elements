@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <vscode-demo>
+        <vscode-single-select label="Single Select with Actions">
+          <vscode-option action='{ "icon": "add", "title": "Add", "type": "add" }'>Lorem</vscode-option>
+          <vscode-option action='{ "icon": "trash", "title": "Delete", "type": "delete" }'>Ipsum</vscode-option>
+          <vscode-option action='{ "icon": "link-external", "title": "Open", "type": "open" }'>Dolor</vscode-option>
+        </vscode-single-select>
+        <button type="button">focus</button>
+      </vscode-demo>
+      <script type="module">
+        const sl = document.querySelector('vscode-single-select');
+        const bt = document.querySelector('button');
+
+        bt.addEventListener('click', () => {
+          sl.focus();
+        });
+
+        sl.addEventListener('action', (event) => console.log(event.detail));
+      </script>
+    </main>
+  </body>
+</html>
