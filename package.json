@@ -138,7 +138,7 @@
   "devDependencies": {
     "@awmottaz/prettier-plugin-void-html": "^1.8.0",
     "@bendera/wds-plugin-directory-index": "^0.5.0",
-    "@custom-elements-manifest/analyzer": "^0.10.4",
+    "@custom-elements-manifest/analyzer": "^0.11.0",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
     "@esm-bundle/chai": "^4.3.4-fix.0",
@@ -152,7 +152,7 @@
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
     "@vscode-elements/webview-playground": "^1.6.0",
-    "@vscode/codicons": "^0.0.40",
+    "@vscode/codicons": "^0.0.43",
     "@web/dev-server": "^0.4.6",
     "@web/dev-server-esbuild": "^1.0.4",
     "@web/dev-server-legacy": "^2.1.1",
