@@ -14,6 +14,7 @@ import type {InternalOption, Option, FilterMethod} from './types.js';
 import {OptionListController} from './OptionListController.js';
 import {checkIcon} from './template-elements.js';
 import '../../vscode-scrollable/vscode-scrollable.js';
+import '../../vscode-icon/vscode-icon.js';
 
 export const VISIBLE_OPTS = 10;
 export const OPT_HEIGHT = 22;
@@ -131,12 +132,13 @@ export class VscodeSelectBase extends VscElement {
   }
   get options(): Option[] {
     return this._opts.options.map(
-      ({label, value, description, selected, disabled}) => ({
+      ({label, value, description, selected, disabled, action}) => ({
         label,
         value,
         description,
         selected,
         disabled,
+        action
       })
     );
   }
@@ -315,6 +317,7 @@ export class VscodeSelectBase extends VscElement {
         description,
         selected,
         disabled,
+        action: el.action
       };
 
       this._opts.add(op);
@@ -615,6 +618,19 @@ export class VscodeSelectBase extends VscElement {
       this.open = false;
     }
   };
+
+  protected _onActionClick(op: Option) {
+    return (ev: MouseEvent) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      this.dispatchEvent(new CustomEvent('action', {
+      detail: {
+        type: op.action?.type,
+        value: op.value
+      }
+    }))
+    }
+  }
   //#endregion
 
   //#region render functions
@@ -664,6 +680,7 @@ export class VscodeSelectBase extends VscElement {
               option: true,
               'single-select': !this._opts.multiSelect,
               'multi-select': this._opts.multiSelect,
+              'with-action': !!op.action,
               selected,
             };
 
@@ -682,10 +699,20 @@ export class VscodeSelectBase extends VscElement {
                 role="option"
                 tabindex="-1"
               >
+                <span class="label">
                 ${when(
                   this._opts.multiSelect,
                   () => this._renderCheckbox(selected, labelText),
                   () => labelText
+                )}
+                </span>
+                ${when(
+                  op.action,
+                  () => html`<vscode-icon
+                    @click=${this._onActionClick(op)}
+                    class="action"
+                    action-icon name=${op.action?.icon} title=${op.action?.title} size="12"></vscode-icon>
+                  `
                 )}
               </li>
             `;

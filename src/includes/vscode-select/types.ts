@@ -4,6 +4,7 @@ export interface Option {
   description?: string;
   selected?: boolean;
   disabled?: boolean;
+  action: { icon: string; title?: string; type: string; } | undefined;
 }
 
 export interface InternalOption extends Required<Option> {

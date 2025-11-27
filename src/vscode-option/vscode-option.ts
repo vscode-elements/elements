@@ -22,6 +22,9 @@ export class VscodeOption extends VscElement {
   @property({type: Boolean, reflect: true})
   disabled = false;
 
+  @property({ type: Object})
+  action?: { icon: string; title?: string; type: string; } | undefined;
+
   private _initialized = false;
 
   override connectedCallback(): void {
