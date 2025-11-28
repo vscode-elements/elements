@@ -146,6 +146,7 @@ export class VscodeTree extends VscElement {
     isShiftPressed: false,
     activeItem: null,
     selectedItems: new Set(),
+    hoveredItem: null,
     allItems: null,
     itemListUpToDate: false,
     focusedItem: null,

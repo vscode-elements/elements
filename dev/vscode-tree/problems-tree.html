@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements — Problems Tree</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <style>
+      main {
+        max-width: 640px;
+      }
+
+      .frame {
+        width: var(--demo-tree-width, 520px);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .problems-tree .problem-icon-wrap {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      /* Severity colors */
+      .problems-tree .sev.error {
+        color: var(--vscode-problemsErrorIcon-foreground);
+      }
+      .problems-tree .sev.info,
+      .problems-tree .sev.hint {
+        color: var(--vscode-problemsInfoIcon-foreground);
+      }
+
+      /* Inherit when the tree is focused (active) and the row is selected (severity icon + bulb) */
+      .problems-tree:focus-within
+        vscode-tree-item[selected]
+        > [slot='icon-leaf'].problem-icon-wrap
+        .sev,
+      .problems-tree:focus-within
+        vscode-tree-item[selected]
+        > [slot='icon-leaf'].problem-icon-wrap
+        .bulb,
+      .problems-tree:focus-within
+        vscode-tree-item[selected]
+        > [slot='icon-branch'].problem-icon-wrap
+        .sev,
+      .problems-tree:focus-within
+        vscode-tree-item[selected]
+        > [slot='icon-branch'].problem-icon-wrap
+        .bulb,
+      .problems-tree:focus-within
+        vscode-tree-item[selected]
+        > [slot='icon-branch-opened'].problem-icon-wrap
+        .sev,
+      .problems-tree:focus-within
+        vscode-tree-item[selected]
+        > [slot='icon-branch-opened'].problem-icon-wrap
+        .bulb {
+        color: inherit !important;
+      }
+
+      /* Center items */
+      .problems-tree .problem-icon-wrap {
+        display: flex;
+      }
+
+      /* Hover: swap severity icon -> lightbulb */
+      .problems-tree .problem-icon-wrap .bulb {
+        display: none;
+        color: var(--vscode-editorLightBulb-foreground, #ddb100);
+      }
+      .problems-tree .problem-icon-wrap.problem-icon-action:hover .sev,
+      .problems-tree
+        vscode-tree-item[data-problem-action]:hover
+        .problem-icon-wrap.problem-icon-action
+        .sev,
+      .problems-tree
+        vscode-tree-item[data-problem-action][selected]
+        .problem-icon-wrap.problem-icon-action
+        .sev {
+        display: none;
+      }
+      .problems-tree .problem-icon-wrap.problem-icon-action:hover .bulb,
+      .problems-tree
+        vscode-tree-item[data-problem-action]:hover
+        .problem-icon-wrap.problem-icon-action
+        .bulb,
+      .problems-tree
+        vscode-tree-item[data-problem-action][selected]
+        .problem-icon-wrap.problem-icon-action
+        .bulb {
+        display: inline-flex;
+      }
+
+      /* Keep icons aligned like label text */
+      .tree-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+      }
+
+      .problem-details {
+        display: flex;
+        gap: 6px;
+      }
+
+      .problem-details .code {
+        display: flex;
+        gap: 0px;
+      }
+
+      .problem-link {
+        color: var(--vscode-textLink-foreground);
+        cursor: pointer;
+        text-decoration: none;
+        margin-left: 0;
+      }
+
+      .problem-link:hover {
+        color: var(--vscode-textLink-activeForeground);
+        text-decoration: underline;
+      }
+
+      /* Preserve the original color when the tree node is selected */
+      .problems-tree:focus-within vscode-tree-item[selected] .problem-link {
+        color: inherit !important;
+      }
+
+      .tree-label-text {
+        display: inline-block;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Problems (demo)</h1>
+    <p>
+      Hover and click the error icon to open the quick-fix menu, and notice how
+      the row doesn't steal focus. The faux <code>(no-console)</code>
+      link behaves the same way—no selection changes, just logging.
+    </p>
+    <main>
+      <vscode-demo class="frame">
+        <vscode-tree class="problems-tree">
+          <!-- Root -->
+          <vscode-tree-item branch open data-node="problems-root">
+            <span class="tree-label">
+              <span class="tree-label-text">rollup.config.js</span>
+            </span>
+            <vscode-badge slot="decoration" variant="counter" aria-hidden="true"
+              >3</vscode-badge
+            >
+
+            <!-- Error -->
+            <vscode-tree-item
+              data-node="p-error-1"
+              data-problem-action
+              data-problem-id="no-undef"
+              data-problem-severity="error"
+              data-fix-label="Remove the console.error(). (no-console)"
+            >
+              <span
+                slot="icon-leaf"
+                class="problem-icon-wrap problem-icon-action"
+                tabindex="0"
+                role="button"
+                aria-haspopup="menu"
+                aria-controls="problem-context-menu"
+              >
+                <vscode-icon name="error" class="sev error"></vscode-icon>
+                <vscode-icon
+                  name="lightbulb"
+                  class="bulb"
+                  action-icon
+                ></vscode-icon>
+              </span>
+              <span class="tree-label">
+                <span class="tree-label-text">'console' is not defined</span>
+              </span>
+              <span slot="description">
+                <div class="problem-details">
+                  <span class="code">
+                    <span> eslint </span>
+                    <span
+                      class="problem-link"
+                      data-doc-url="https://eslint.org/docs/latest/rules/no-undef"
+                      data-problem-id="no-undef"
+                      data-problem-severity="error"
+                      >(no-undef)</span
+                    >
+                  </span>
+                  <span>[Ln 20, Col 7]</span>
+                </div>
+              </span>
+            </vscode-tree-item>
+
+            <vscode-tree-item
+              data-node="p-error-2"
+              data-problem-action
+              data-problem-id="no-console"
+              data-problem-severity="error"
+              data-fix-label="Remove the console.error(). (no-console)"
+            >
+              <span
+                slot="icon-leaf"
+                class="problem-icon-wrap problem-icon-action"
+                tabindex="0"
+                role="button"
+                aria-haspopup="menu"
+                aria-controls="problem-context-menu"
+              >
+                <vscode-icon name="error" class="sev error"></vscode-icon>
+                <vscode-icon
+                  name="lightbulb"
+                  class="bulb"
+                  action-icon
+                ></vscode-icon>
+              </span>
+              <span class="tree-label">
+                <span class="tree-label-text"
+                  >Unexpected console statement.</span
+                >
+              </span>
+              <span slot="description">
+                <div class="problem-details">
+                  <span class="code">
+                    <span> eslint </span>
+                    <span
+                      class="problem-link"
+                      data-doc-url="https://eslint.org/docs/latest/rules/no-console"
+                      data-problem-id="no-console"
+                      data-problem-severity="error"
+                      >(no-console)</span
+                    >
+                  </span>
+                  <span>[Ln 20, Col 7]</span>
+                </div>
+              </span>
+            </vscode-tree-item>
+
+            <!-- Info -->
+            <vscode-tree-item data-node="p-info-1">
+              <span slot="icon-leaf" class="problem-icon-wrap">
+                <vscode-icon name="info" class="sev info"></vscode-icon>
+              </span>
+              <span class="tree-label">
+                <span class="tree-label-text">"onwarn": Unknown word.</span>
+              </span>
+              <span slot="description">
+                <div class="problem-details">
+                  <span>cSpell</span>
+                  <span>[Ln 18, Col 3]</span>
+                </div>
+              </span>
+            </vscode-tree-item>
+          </vscode-tree-item>
+        </vscode-tree>
+        <vscode-context-menu
+          id="problem-context-menu"
+          class="problem-context-menu"
+        ></vscode-context-menu>
+      </vscode-demo>
+    </main>
+    <script type="module">
+      const contextMenu = document.getElementById('problem-context-menu');
+      const actionItems = document.querySelectorAll(
+        'vscode-tree-item[data-problem-action]'
+      );
+
+      if (contextMenu) {
+        contextMenu.addEventListener('vsc-context-menu-select', (event) => {
+          const {value} = event.detail ?? {};
+          const problemId = contextMenu.dataset.problemId ?? 'unknown';
+          const severity = contextMenu.dataset.problemSeverity ?? 'unknown';
+          if (value === 'apply-fix') {
+            console.log(
+              `Problem clicked: ${problemId} (severity: ${severity})`
+            );
+          } else if (value === 'ignore-problem') {
+            console.log(`Ignoring ${problemId} (${severity})`);
+          }
+          contextMenu.show = false;
+        });
+      }
+
+      const showMenu = (ev, target) => {
+        if (!contextMenu || !target) {
+          return;
+        }
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        const fixLabel = target.dataset.fixLabel ?? 'Quick Fix';
+
+        contextMenu.data = [
+          {
+            label: fixLabel,
+            value: 'apply-fix',
+          },
+          {separator: true},
+          {
+            label: 'Ignore problem',
+            value: 'ignore-problem',
+          },
+        ];
+
+        const rect = target.getBoundingClientRect();
+        const offsetX =
+          ev instanceof MouseEvent ? ev.clientX - rect.left : rect.width;
+        const offsetY =
+          ev instanceof MouseEvent ? ev.clientY - rect.top : rect.height / 2;
+        contextMenu.style.position = 'absolute';
+        contextMenu.style.left = `${rect.left + offsetX + 8}px`;
+        contextMenu.style.top = `${rect.top + offsetY}px`;
+        contextMenu.dataset.problemId = target.dataset.problemId ?? 'unknown';
+        contextMenu.dataset.problemSeverity =
+          target.dataset.problemSeverity ?? 'unknown';
+        contextMenu.show = true;
+      };
+
+      actionItems.forEach((item) => {
+        const trigger = item.querySelector('.problem-icon-action') ?? item;
+        const handler = (event) => showMenu(event, item);
+
+        trigger?.addEventListener('click', handler);
+        trigger?.addEventListener('contextmenu', handler);
+      });
+
+      const findProblemLink = (event) =>
+        event.target instanceof HTMLElement
+          ? event.target.closest('.problem-link')
+          : null;
+
+      document.addEventListener(
+        'pointerdown',
+        (event) => {
+          const candidate = findProblemLink(event);
+          if (candidate) {
+            event.preventDefault();
+          }
+
+          if (contextMenu && !contextMenu.contains(event.target)) {
+            contextMenu.show = false;
+          }
+        },
+        {capture: true}
+      );
+
+      const problemsTree = document.querySelector('.problems-tree');
+      problemsTree?.addEventListener(
+        'click',
+        (event) => {
+          const link = findProblemLink(event);
+
+          if (link) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log(
+              `Documentation link clicked: ${link.dataset.problemId ?? 'unknown'}`
+            );
+          }
+        },
+        {capture: true}
+      );
+    </script>
+  </body>
+</html>
