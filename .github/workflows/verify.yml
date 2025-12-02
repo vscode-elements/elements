@@ -12,12 +12,12 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup Node version
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           scope: '@vscode-elements'
           node-version: 22
