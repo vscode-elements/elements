@@ -294,6 +294,9 @@ export class VscodeTextfield
   @query('#input')
   private _inputEl!: HTMLInputElement;
 
+  @query('#error-message')
+  private _errorMessageEl!: HTMLDivElement;
+
   @state()
   private _value = '';
 
@@ -322,6 +325,7 @@ export class VscodeTextfield
         this._inputEl
       );
     }
+    this._errorMessageEl.innerText = this._inputEl.validationMessage;
   }
 
   private _onInput() {
@@ -353,34 +357,37 @@ export class VscodeTextfield
   override render(): TemplateResult {
     return html`
       <div class="root">
-        <slot name="content-before"></slot>
-        <input
-          id="input"
-          type=${this.type}
-          ?autofocus=${this.autofocus}
-          autocomplete=${ifDefined(this.autocomplete)}
-          aria-label=${this.label}
-          ?disabled=${this.disabled}
-          max=${ifDefined(this.max)}
-          maxlength=${ifDefined(this.maxLength)}
-          min=${ifDefined(this.min)}
-          minlength=${ifDefined(this.minLength)}
-          ?multiple=${this.multiple}
-          name=${ifDefined(this.name)}
-          pattern=${ifDefined(this.pattern)}
-          placeholder=${ifDefined(this.placeholder)}
-          ?readonly=${this.readonly}
-          ?required=${this.required}
-          step=${ifDefined(this.step)}
-          .value=${this._value}
-          @blur=${this._onBlur}
-          @change=${this._onChange}
-          @focus=${this._onFocus}
-          @input=${this._onInput}
-          @keydown=${this._onKeyDown}
-        >
-        <slot name="content-after"></slot>
+        <div class="container">
+          <slot name="content-before"></slot>
+          <input
+            id="input"
+            type=${this.type}
+            ?autofocus=${this.autofocus}
+            autocomplete=${ifDefined(this.autocomplete)}
+            aria-label=${this.label}
+            ?disabled=${this.disabled}
+            max=${ifDefined(this.max)}
+            maxlength=${ifDefined(this.maxLength)}
+            min=${ifDefined(this.min)}
+            minlength=${ifDefined(this.minLength)}
+            ?multiple=${this.multiple}
+            name=${ifDefined(this.name)}
+            pattern=${ifDefined(this.pattern)}
+            placeholder=${ifDefined(this.placeholder)}
+            ?readonly=${this.readonly}
+            ?required=${this.required}
+            step=${ifDefined(this.step)}
+            .value=${this._value}
+            @blur=${this._onBlur}
+            @change=${this._onChange}
+            @focus=${this._onFocus}
+            @input=${this._onInput}
+            @keydown=${this._onKeyDown}
+          >
+          <slot name="content-after"></slot>
+        </div>
       </div>
+      <div id="error-message">${this.validationMessage}</div>
     `;
   }
 }
