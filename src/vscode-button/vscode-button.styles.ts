@@ -13,6 +13,11 @@ const styles: CSSResultGroup = [
       width: auto;
     }
 
+    :host([block]) {
+      display: block;
+      width: 100%;
+    }
+
     .base {
       align-items: center;
       background-color: var(--vscode-button-background, #0078d4);
@@ -41,6 +46,12 @@ const styles: CSSResultGroup = [
       position: relative;
       user-select: none;
       white-space: nowrap;
+      width: 100%;
+    }
+
+    :host([block]) .base {
+      min-height: 28px;
+      text-align: center;
       width: 100%;
     }
 

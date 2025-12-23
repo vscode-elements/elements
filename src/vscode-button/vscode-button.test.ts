@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import sinon from 'sinon';
 import {VscodeButton} from './index.js';
-import {expect, fixture, html} from '@open-wc/testing';
+import {expect, fixture, html, aTimeout} from '@open-wc/testing';
 import {$} from '../includes/test-helpers.js';
 
 describe('vscode-button', () => {
@@ -231,6 +231,25 @@ describe('vscode-button', () => {
     const base = $(el.shadowRoot!, '.base');
 
     expect(base.classList.contains('has-content-after')).to.be.true;
+  });
+
+  it('renders block buttons as full-width controls', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div style="width: 320px">
+        <vscode-button block>Commit</vscode-button>
+      </div>
+    `);
+    const el = wrapper.querySelector('vscode-button') as VscodeButton;
+
+    await el.updateComplete;
+    await aTimeout(0);
+
+    const base = $(el.shadowRoot!, '.base') as HTMLElement;
+    const rect = base.getBoundingClientRect();
+
+    expect(rect.width).to.be.closeTo(320, 0.5);
+    expect(rect.height).to.be.closeTo(28, 0.5);
+    expect(window.getComputedStyle(el).display).to.eq('block');
   });
 
   it('sets the form value');

@@ -48,6 +48,13 @@ export class VscodeButton extends VscElement {
   @property({type: Boolean, reflect: true})
   secondary = false;
 
+  /**
+   * Makes the button fill its container and use VS Code's block sizing,
+   * similar to the Source Control "Commit" action.
+   */
+  @property({type: Boolean, reflect: true})
+  block = false;
+
   /** @internal */
   @property({reflect: true})
   override role = 'button';
