@@ -20,9 +20,7 @@ export default [
     .combobox-face {
       background-color: var(--vscode-settings-dropdownBackground, #313131);
       border-color: var(--vscode-settings-dropdownBorder, #3c3c3c);
-      border-radius: 2px;
       border-style: solid;
-      border-width: 1px;
       box-sizing: border-box;
       color: var(--vscode-settings-dropdownForeground, #cccccc);
       font-family: var(--vscode-font-family, sans-serif);
@@ -32,6 +30,12 @@ export default [
       position: relative;
       user-select: none;
       width: 100%;
+      border-bottom-left-radius: var(--vsc-border-left-radius, 2px);
+      border-bottom-right-radius: var(--vsc-border-right-radius, 2px);
+      border-left-width: var(--vsc-border-left-width, 1px);
+      border-right-width: var(--vsc-border-right-width, 1px);
+      border-top-left-radius: var(--vsc-border-left-radius, 2px);
+      border-top-right-radius: var(--vsc-border-right-radius, 2px);
     }
 
     :host([invalid]) .select-face,
