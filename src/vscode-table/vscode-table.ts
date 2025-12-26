@@ -74,6 +74,13 @@ export class VscodeTable extends VscElement {
    */
   @property({type: Array})
   set columns(val: string[]) {
+    if (!Array.isArray(val)) {
+      this.warn('Invalid value for "columns": expected an array.');
+      this._columns = [];
+
+      return;
+    }
+
     this._columns = val;
 
     if (this.isConnected) {
