@@ -682,12 +682,12 @@ export class VscodeTreeItem extends VscElement {
                 'arrow-container': true,
                 'icon-rotated': this.open,
               })}
-              part="head expando"
+              part="arrow-icon-container"
             >
               ${arrowIcon}
             </div>`
           : nothing}
-        <div class=${classMap(iconContainerClasses)} part="head icon">
+        <div class=${classMap(iconContainerClasses)} part="icon-container">
           ${this.branch && !this.open
             ? html`<slot
                 name="icon-branch"
