@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Fixed
+
+- Fixed import paths to prevent bundler error.
+- Prevents the select dropdown from closing unless the component actually moves.
+- Set the default CSS display value of **Collapsible** to `block`.
+
+### Added
+
+- Added `minStart` and `minEnd` property to **SplitLayout**.
+- Added `block` property to **Button**.
+- Added new slots to **TreeItem**: `description`, `actions`, `decoration`.
+
+### Changed
+
+- Declared `@vscode/codicons` as a peer dependency. This allows consumers to use their own version of Codicons.
+
 ## [2.3.1] - 2025-09-14
 
 ### Fixed
