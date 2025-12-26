@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import {$, clickOnElement} from '../includes/test-helpers.js';
 import {VscodeCollapsible} from './index.js';
+import '../vscode-icon/index.js';
 import {expect, fixture, html} from '@open-wc/testing';
 
 describe('vscode-collapsible', () => {
@@ -103,5 +106,18 @@ describe('vscode-collapsible', () => {
     await el.updateComplete;
 
     expect(detail).to.deep.equal({open: true});
+  });
+
+  it('prevents collapse on action icon click', async () => {
+    const el = await fixture<VscodeCollapsible>(html`
+      <vscode-collapsible always-show-header-actions open
+        ><vscode-icon name="file" slot="actions" id="action-icon"></vscode-icon>
+      </vscode-collapsible>
+    `);
+
+    const actionIcon = $('#action-icon');
+    await clickOnElement(actionIcon);
+
+    expect(el.open).to.be.true;
   });
 });
