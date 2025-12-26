@@ -86,12 +86,11 @@ export class VscodeIcon extends VscElement {
 
     if (!linkElement) {
       let msg =
-        '[VSCode Elements] To use the Icon component, the codicons.css file must be included in the page with the id `vscode-codicon-stylesheet`! ';
+        'To use the Icon component, the codicons.css file must be included in the page with the id "vscode-codicon-stylesheet"! ';
       msg +=
         'See https://vscode-elements.github.io/components/icon/ for more details.';
 
-      // eslint-disable-next-line no-console
-      console.warn(msg);
+      this.warn(msg);
     }
 
     return {nonce, href};

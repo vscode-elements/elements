@@ -3,10 +3,26 @@ import {LitElement} from 'lit';
 const VERSION = '2.4.0';
 const CONFIG_KEY = '__vscodeElements_disableRegistryWarning__';
 
+const warn = (message: string, componentInstance?: VscElement) => {
+  const prefix = '[VSCode Elements] ';
+
+  if (componentInstance) {
+    // eslint-disable-next-line no-console
+    console.warn(`${prefix}${message}\n%o`, componentInstance);
+  } else {
+    // eslint-disable-next-line no-console
+    console.warn(`${message}\n%o`, componentInstance);
+  }
+};
+
 export class VscElement extends LitElement {
   /** VSCode Elements version */
   get version(): string {
     return VERSION;
+  }
+
+  warn(message: string) {
+    warn(message, this);
   }
 }
 
@@ -48,9 +64,8 @@ export const customElement = (tagName: string) => {
       message += `is already registered by the same version of VSCode Elements (${VERSION}).`;
     }
 
-    // eslint-disable-next-line no-console
-    console.warn(
-      `[VSCode Elements] ${tagName} ${message}\nTo suppress this warning, set window.${CONFIG_KEY} to true`
+    warn(
+      `The custom element "${tagName}" ${message}\nTo suppress this warning, set window.${CONFIG_KEY} to true`
     );
   };
 };
