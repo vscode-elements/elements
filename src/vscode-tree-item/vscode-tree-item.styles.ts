@@ -34,8 +34,8 @@ const styles: CSSResultGroup = [
       font-family: var(--vscode-font-family, sans-serif);
       font-size: var(--vscode-font-size, 13px);
       font-weight: var(--vscode-font-weight, normal);
-      height: 22px;
       line-height: 22px;
+      min-height: 22px;
       outline-offset: -1px;
       padding-right: 12px;
     }
