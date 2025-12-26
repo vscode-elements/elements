@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Component demo</h1>
+    <main>
+      <vscode-demo>
+        <vscode-collapsible
+          always-show-header-actions
+          heading="Test"
+          style="display: block; width: 500px"
+        >
+          <vscode-icon
+            name="file-add"
+            action-icon
+            aria-role="button"
+            id="btn-file-add"
+            title="New File"
+            slot="actions"
+          ></vscode-icon>
+          <vscode-icon
+            name="refresh"
+            action-icon
+            aria-role="button"
+            id="btn-refresh"
+            title="Refresh"
+            slot="actions"
+          ></vscode-icon>
+          <p>Lorem ipsum</p>
+          <p>Lorem ipsum</p>
+          <p>Lorem ipsum</p>
+          <p>Lorem ipsum</p>
+          <p>Lorem ipsum</p>
+        </vscode-collapsible>
+      </vscode-demo>
+      <script>
+        logEvents('#btn-file-add', 'click');
+        logEvents('#btn-refresh', 'click');
+      </script>
+    </main>
+  </body>
+</html>

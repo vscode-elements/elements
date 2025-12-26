@@ -84,6 +84,10 @@ export class VscodeCollapsible extends VscElement {
     }
   }
 
+  private _onActionClick(event: PointerEvent) {
+    event.stopPropagation();
+  }
+
   override render(): TemplateResult {
     const classes = {collapsible: true, open: this.open};
     const actionsClasses = {
@@ -123,7 +127,7 @@ export class VscodeCollapsible extends VscElement {
           <h3 class="title">${heading}${descriptionMarkup}</h3>
           <div class="header-slots">
             <div class=${classMap(actionsClasses)}>
-              <slot name="actions"></slot>
+              <slot name="actions" @click=${this._onActionClick}></slot>
             </div>
             <div class="decorations"><slot name="decorations"></slot></div>
           </div>
