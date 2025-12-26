@@ -4,6 +4,10 @@ import defaultStyles from '../includes/default.styles.js';
 const styles: CSSResultGroup = [
   defaultStyles,
   css`
+    :host {
+      display: block;
+    }
+
     .collapsible {
       background-color: var(--vscode-sideBar-background, #181818);
     }
