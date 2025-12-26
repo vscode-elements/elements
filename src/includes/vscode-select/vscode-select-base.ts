@@ -91,14 +91,10 @@ export class VscodeSelectBase extends VscElement {
     let fm: FilterMethod;
 
     if (validValues.includes(val as FilterMethod)) {
-      // this._filter = val as FilterMethod;
       fm = val;
     } else {
-      // this._filter = 'fuzzy';
-      // eslint-disable-next-line no-console
-      console.warn(
-        `[VSCode Webview Elements] Invalid filter: "${val}", fallback to default. Valid values are: "contains", "fuzzy", "startsWith", "startsWithPerm".`,
-        this
+      this.warn(
+        `Invalid filter: "${val}", fallback to default. Valid values are: "contains", "fuzzy", "startsWith", "startsWithPerm".`
       );
       fm = 'fuzzy';
     }

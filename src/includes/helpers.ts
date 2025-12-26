@@ -28,3 +28,7 @@ export function getDefaultEditorFontStack() {
     return 'monospace';
   }
 }
+
+export function logMessage(msg: string) {
+  return `[VSCode Elements] ${msg}`;
+}
