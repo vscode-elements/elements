@@ -140,7 +140,7 @@
   },
   "devDependencies": {
     "@awmottaz/prettier-plugin-void-html": "^2.0.0",
-    "@bendera/wds-plugin-directory-index": "^0.5.0",
+    "@bendera/wds-plugin-directory-index": "^0.7.0",
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
