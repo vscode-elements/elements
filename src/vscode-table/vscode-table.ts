@@ -325,7 +325,7 @@ export class VscodeTable extends VscElement {
     this._resizeTableBody();
   };
 
-  private _calcColWidthPercentages(): number[] {
+  private _calculateInitialColumnWidths(): number[] {
     const numCols = this._getHeaderCells().length;
     let cols: (string | number)[] = this.columns.slice(0, numCols);
     const numAutoCols =
@@ -389,7 +389,7 @@ export class VscodeTable extends VscElement {
   }
 
   private _initDefaultColumnSizes() {
-    const colWidths = this._calcColWidthPercentages();
+    const colWidths = this._calculateInitialColumnWidths();
 
     this._initHeaderCellSizes(colWidths);
     this._initBodyColumnSizes(colWidths);
