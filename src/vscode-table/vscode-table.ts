@@ -213,7 +213,6 @@ export class VscodeTable extends VscElement {
 
   protected override willUpdate(changedProperties: PropertyValues): void {
     if (changedProperties.has('minColumnWidth')) {
-      console.log(rawValueToPercentage(this.minColumnWidth, this._componentW));
       const value = percent(
         rawValueToPercentage(this.minColumnWidth, this._componentW) ?? 0
       );
@@ -463,6 +462,32 @@ export class VscodeTable extends VscElement {
     }
   }
 
+  private _stopDrag(event: PointerEvent) {
+    const activeSplitter = this._columnResizeController.getActiveSplitter();
+
+    if (activeSplitter) {
+      activeSplitter.removeEventListener(
+        'pointermove',
+        this._handleSplitterPointerMove
+      );
+      activeSplitter.removeEventListener(
+        'pointerup',
+        this._handleSplitterPointerUp
+      );
+      activeSplitter.removeEventListener(
+        'pointercancel',
+        this._handleSplitterPointerCancel
+      );
+    }
+
+    this._columnResizeController.stopDrag(event);
+    this._resizeColumns(true);
+
+    this._sashHovers[this._activeSashElementIndex] = false;
+    this._isDragging = false;
+    this._activeSashElementIndex = -1;
+  }
+
   private _onDefaultSlotChange() {
     this._assignedElements.forEach((el) => {
       if (el.tagName.toLowerCase() === 'vscode-table-header') {
@@ -522,7 +547,7 @@ export class VscodeTable extends VscElement {
     this.requestUpdate();
   }
 
-  private _onSashPointerDown(event: PointerEvent) {
+  /* private _onSashPointerDown(event: PointerEvent) {
     event.stopPropagation();
 
     const activeSplitter = event.currentTarget as HTMLDivElement;
@@ -530,13 +555,12 @@ export class VscodeTable extends VscElement {
     activeSplitter.setPointerCapture(this._activePointerId);
 
     this._columnResizeController.saveHostDimensions();
-    this._columnResizeController.setActiveSplitter(activeSplitter);
     this._columnResizeController.startDrag(event);
 
     activeSplitter.addEventListener('pointermove', this._onResizingMouseMove);
     activeSplitter.addEventListener('pointerup', this._onResizingMouseUp);
     activeSplitter.addEventListener('pointercancel', this._onResizingMouseUp);
-  }
+  } */
 
   private _resizeColumns(resizeBodyCells = true) {
     const widths = this._columnResizeController.columnWidths;
@@ -550,7 +574,7 @@ export class VscodeTable extends VscElement {
     }
   }
 
-  private _onResizingMouseMove = (event: PointerEvent) => {
+  /* private _onResizingMouseMove = (event: PointerEvent) => {
     console.log('pointermove');
     event.stopPropagation();
 
@@ -565,20 +589,54 @@ export class VscodeTable extends VscElement {
 
   private _onResizingMouseUp = (event: PointerEvent) => {
     console.log('event type', event.type);
-    const activeSplitter = this._columnResizeController.getActiveSplitter();
-    activeSplitter?.releasePointerCapture?.(event.pointerId);
-    this._columnResizeController.stopDrag();
+    this._columnResizeController.stopDrag(event);
 
     this._resizeColumns(true);
     this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
     this._activeSashElementIndex = -1;
+  }; */
 
-    activeSplitter?.removeEventListener?.(
+  private _handleSplitterPointerDown(event: PointerEvent) {
+    event.stopPropagation();
+
+    const activeSplitter = event.currentTarget as HTMLElement;
+
+    this._columnResizeController
+      .saveHostDimensions()
+      .setActiveSplitter(activeSplitter)
+      .startDrag(event);
+
+    activeSplitter.addEventListener(
       'pointermove',
-      this._onResizingMouseMove
+      this._handleSplitterPointerMove
     );
-    activeSplitter?.removeEventListener?.('pointerup', this._onResizingMouseUp);
+    activeSplitter.addEventListener('pointerup', this._handleSplitterPointerUp);
+    activeSplitter.addEventListener(
+      'pointercancel',
+      this._handleSplitterPointerCancel
+    );
+  }
+
+  private _handleSplitterPointerMove = (event: PointerEvent) => {
+    if (!this._columnResizeController.shouldDrag(event)) {
+      return;
+    }
+
+    this._columnResizeController.drag(event);
+    if (!this.delayedResizing) {
+      this._resizeColumns(true);
+    } else {
+      this._resizeColumns(false);
+    }
+  };
+
+  private _handleSplitterPointerUp = (event: PointerEvent) => {
+    this._stopDrag(event);
+  };
+
+  private _handleSplitterPointerCancel = (event: PointerEvent) => {
+    this._stopDrag(event);
   };
 
   override render(): TemplateResult {
@@ -599,7 +657,7 @@ export class VscodeTable extends VscElement {
               class=${classes}
               data-index=${index}
               .style=${stylePropertyMap({left})}
-              @pointerdown=${this._onSashPointerDown}
+              @pointerdown=${this._handleSplitterPointerDown}
               @mouseover=${this._onSashMouseOver}
               @mouseout=${this._onSashMouseOut}
             >
@@ -618,8 +676,8 @@ export class VscodeTable extends VscElement {
 
     const wrapperClasses = classMap({
       wrapper: true,
-      'select-disabled': this._isDragging,
-      'resize-cursor': this._isDragging,
+      'select-disabled': this._columnResizeController.isDragging,
+      'resize-cursor': this._columnResizeController.isDragging,
       'compact-view': this.compact,
     });
 
