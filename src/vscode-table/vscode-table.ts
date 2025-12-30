@@ -1,4 +1,4 @@
-import {html, TemplateResult} from 'lit';
+import {html, PropertyValues, TemplateResult} from 'lit';
 import {
   property,
   query,
@@ -17,6 +17,7 @@ import {VscodeTableHeader} from '../vscode-table-header/index.js';
 import {VscodeTableHeaderCell} from '../vscode-table-header-cell/index.js';
 import {rawValueToPercentage} from './helpers.js';
 import styles from './vscode-table.styles.js';
+import {ColumnResizeController, percent} from './ColumnResizeController.js';
 
 const COMPONENT_WIDTH_PERCENTAGE = 100;
 
@@ -193,6 +194,8 @@ export class VscodeTable extends VscElement {
   private _prevHeaderHeight = 0;
   private _prevComponentHeight = 0;
 
+  private _columnResizeController = new ColumnResizeController(this);
+
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -205,6 +208,16 @@ export class VscodeTable extends VscElement {
     this._componentResizeObserver?.unobserve(this);
     this._componentResizeObserver?.disconnect();
     this._bodyResizeObserver?.disconnect();
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    if (changedProperties.has('minColumnWidth')) {
+      console.log(rawValueToPercentage(this.minColumnWidth, this._componentW));
+      const value = percent(
+        rawValueToPercentage(this.minColumnWidth, this._componentW) ?? 0
+      );
+      this._columnResizeController.setMinColumnWidth(value);
+    }
   }
 
   private _px2Percent(px: number) {
@@ -390,6 +403,9 @@ export class VscodeTable extends VscElement {
 
   private _initDefaultColumnSizes() {
     const colWidths = this._calculateInitialColumnWidths();
+    this._columnResizeController.setColumWidths(
+      colWidths.map((c) => percent(c))
+    );
 
     this._initHeaderCellSizes(colWidths);
     this._initBodyColumnSizes(colWidths);
@@ -513,8 +529,14 @@ export class VscodeTable extends VscElement {
     this.requestUpdate();
   }
 
-  private _onSashMouseDown(event: MouseEvent) {
+  private _onSashMouseDown(event: PointerEvent) {
     event.stopPropagation();
+
+    this._columnResizeController.saveHostDimensions();
+    this._columnResizeController.setActiveSplitter(
+      event.currentTarget as HTMLDivElement
+    );
+    this._columnResizeController.startDrag(event);
 
     const {pageX, currentTarget} = event;
     const el = currentTarget as HTMLDivElement;
@@ -606,7 +628,7 @@ export class VscodeTable extends VscElement {
     this._headerCellsToResize[0].style.width = prevColCss;
 
     if (this._headerCellsToResize[1]) {
-      this._headerCellsToResize[1].style.width = nextColCss;
+      // this._headerCellsToResize[1].style.width = nextColCss;
     }
 
     if (resizeBodyCells && this._cellsToResize[0]) {
@@ -616,10 +638,21 @@ export class VscodeTable extends VscElement {
         this._cellsToResize[1].style.width = nextColCss;
       }
     }
+
+    const widths = this._columnResizeController.columnWidths;
+
+    const headerCells = this._getHeaderCells();
+    headerCells.forEach((h, i) => (h.style.width = `${widths[i]}%`));
+
+    const firstRowCells = this._getCellsOfFirstRow();
+    firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
   }
 
   private _onResizingMouseMove = (event: MouseEvent) => {
     event.stopPropagation();
+
+    this._columnResizeController.drag(event);
+
     this._updateActiveSashPosition(event.pageX);
 
     if (!this.delayedResizing) {
@@ -641,7 +674,9 @@ export class VscodeTable extends VscElement {
   };
 
   override render(): TemplateResult {
-    const sashes = this._sashPositions.map((val, index) => {
+    const splitterPositions = this._columnResizeController.splitterPositions;
+
+    const sashes = splitterPositions.map((val, index) => {
       const classes = classMap({
         sash: true,
         hover: this._sashHovers[index],
