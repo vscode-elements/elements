@@ -1,6 +1,9 @@
 import {css, CSSResultGroup} from 'lit';
 import baseStyles from '../includes/default.styles.js';
 
+export const SPLITTER_HIT_WIDTH = 21;
+export const SPLITTER_VISIBLE_WIDTH = 1;
+
 const styles: CSSResultGroup = [
   baseStyles,
   css`
@@ -88,7 +91,7 @@ const styles: CSSResultGroup = [
     }
 
     .sash {
-      visibility: hidden;
+      visibility: visible;
     }
 
     :host([bordered-columns]) .sash,
@@ -120,10 +123,10 @@ const styles: CSSResultGroup = [
         --vscode-editorGroup-border,
         rgba(255, 255, 255, 0.09)
       );
-      height: 100%;
+      height: calc(100% - 30px);
       position: absolute;
       top: 30px;
-      width: 1px;
+      width: ${SPLITTER_VISIBLE_WIDTH}px;
     }
 
     .sash.hover .sash-visible {
@@ -132,11 +135,11 @@ const styles: CSSResultGroup = [
     }
 
     .sash .sash-clickable {
-      background-color: transparent;
+      background-color: rgba(255, 0, 0, 0.2);
       height: 100%;
-      left: -2px;
+      left: ${0 - (SPLITTER_HIT_WIDTH - SPLITTER_VISIBLE_WIDTH) / 2}px;
       position: absolute;
-      width: 5px;
+      width: ${SPLITTER_HIT_WIDTH}px;
     }
   `,
 ];
