@@ -15,11 +15,10 @@ import {VscodeTableBody} from '../vscode-table-body/index.js';
 import {VscodeTableCell} from '../vscode-table-cell/index.js';
 import {VscodeTableHeader} from '../vscode-table-header/index.js';
 import {VscodeTableHeaderCell} from '../vscode-table-header-cell/index.js';
-import {rawValueToPercentage} from './helpers.js';
+import {rawValueToPercentage} from './calculations.js';
 import styles from './vscode-table.styles.js';
-import {ColumnResizeController, percent} from './ColumnResizeController.js';
-
-const COMPONENT_WIDTH_PERCENTAGE = 100;
+import {ColumnResizeController} from './ColumnResizeController.js';
+import {percent} from './calculations.js';
 
 /**
  * @tag vscode-table
@@ -196,6 +195,8 @@ export class VscodeTable extends VscElement {
 
   private _columnResizeController = new ColumnResizeController(this);
 
+  private _activePointerId = 0;
+
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -218,14 +219,6 @@ export class VscodeTable extends VscElement {
       );
       this._columnResizeController.setMinColumnWidth(value);
     }
-  }
-
-  private _px2Percent(px: number) {
-    return (px / this._componentW) * 100;
-  }
-
-  private _percent2Px(percent: number) {
-    return (this._componentW * percent) / 100;
   }
 
   private _memoizeComponentDimensions() {
@@ -529,131 +522,39 @@ export class VscodeTable extends VscElement {
     this.requestUpdate();
   }
 
-  private _onSashMouseDown(event: PointerEvent) {
+  private _onSashPointerDown(event: PointerEvent) {
     event.stopPropagation();
 
+    const activeSplitter = event.currentTarget as HTMLDivElement;
+    this._activePointerId = event.pointerId;
+    activeSplitter.setPointerCapture(this._activePointerId);
+
     this._columnResizeController.saveHostDimensions();
-    this._columnResizeController.setActiveSplitter(
-      event.currentTarget as HTMLDivElement
-    );
+    this._columnResizeController.setActiveSplitter(activeSplitter);
     this._columnResizeController.startDrag(event);
 
-    const {pageX, currentTarget} = event;
-    const el = currentTarget as HTMLDivElement;
-    const index = Number(el.dataset.index);
-    const cr = el.getBoundingClientRect();
-    const elX = cr.x;
-
-    this._isDragging = true;
-    this._activeSashElementIndex = index;
-    this._sashHovers[this._activeSashElementIndex] = true;
-    this._activeSashCursorOffset = this._px2Percent(pageX - elX);
-
-    const headerCells = this._getHeaderCells();
-    this._headerCellsToResize = [];
-    this._headerCellsToResize.push(headerCells[index]);
-
-    if (headerCells[index + 1]) {
-      this._headerCellsToResize[1] = headerCells[index + 1];
-    }
-
-    const tbody = this._bodySlot.assignedElements()[0];
-    const cells = tbody.querySelectorAll<VscodeTableCell>(
-      'vscode-table-row:first-child > vscode-table-cell'
-    );
-    this._cellsToResize = [];
-    this._cellsToResize.push(cells[index]);
-
-    if (cells[index + 1]) {
-      this._cellsToResize.push(cells[index + 1]);
-    }
-
-    document.addEventListener('mousemove', this._onResizingMouseMove);
-    document.addEventListener('mouseup', this._onResizingMouseUp);
-  }
-
-  private _updateActiveSashPosition(mouseX: number) {
-    const {prevSashPos, nextSashPos} = this._getSashPositions();
-    let minColumnWidth = rawValueToPercentage(
-      this.minColumnWidth,
-      this._componentW
-    );
-
-    if (minColumnWidth === null) {
-      minColumnWidth = 0;
-    }
-
-    const minX = prevSashPos ? prevSashPos + minColumnWidth : minColumnWidth;
-    const maxX = nextSashPos
-      ? nextSashPos - minColumnWidth
-      : COMPONENT_WIDTH_PERCENTAGE - minColumnWidth;
-    let newX = this._px2Percent(
-      mouseX - this._componentX - this._percent2Px(this._activeSashCursorOffset)
-    );
-
-    newX = Math.max(newX, minX);
-    newX = Math.min(newX, maxX);
-
-    this._sashPositions[this._activeSashElementIndex] = newX;
-    this.requestUpdate();
-  }
-
-  private _getSashPositions(): {
-    sashPos: number;
-    prevSashPos: number;
-    nextSashPos: number;
-  } {
-    const sashPos = this._sashPositions[this._activeSashElementIndex];
-    const prevSashPos =
-      this._sashPositions[this._activeSashElementIndex - 1] || 0;
-    const nextSashPos =
-      this._sashPositions[this._activeSashElementIndex + 1] ||
-      COMPONENT_WIDTH_PERCENTAGE;
-
-    return {
-      sashPos,
-      prevSashPos,
-      nextSashPos,
-    };
+    activeSplitter.addEventListener('pointermove', this._onResizingMouseMove);
+    activeSplitter.addEventListener('pointerup', this._onResizingMouseUp);
+    activeSplitter.addEventListener('pointercancel', this._onResizingMouseUp);
   }
 
   private _resizeColumns(resizeBodyCells = true) {
-    const {sashPos, prevSashPos, nextSashPos} = this._getSashPositions();
-
-    const prevColW = sashPos - prevSashPos;
-    const nextColW = nextSashPos - sashPos;
-    const prevColCss = `${prevColW}%`;
-    const nextColCss = `${nextColW}%`;
-
-    this._headerCellsToResize[0].style.width = prevColCss;
-
-    if (this._headerCellsToResize[1]) {
-      // this._headerCellsToResize[1].style.width = nextColCss;
-    }
-
-    if (resizeBodyCells && this._cellsToResize[0]) {
-      this._cellsToResize[0].style.width = prevColCss;
-
-      if (this._cellsToResize[1]) {
-        this._cellsToResize[1].style.width = nextColCss;
-      }
-    }
-
     const widths = this._columnResizeController.columnWidths;
 
     const headerCells = this._getHeaderCells();
     headerCells.forEach((h, i) => (h.style.width = `${widths[i]}%`));
 
-    const firstRowCells = this._getCellsOfFirstRow();
-    firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
+    if (resizeBodyCells) {
+      const firstRowCells = this._getCellsOfFirstRow();
+      firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
+    }
   }
 
-  private _onResizingMouseMove = (event: MouseEvent) => {
+  private _onResizingMouseMove = (event: PointerEvent) => {
+    console.log('pointermove');
     event.stopPropagation();
 
     this._columnResizeController.drag(event);
-
-    this._updateActiveSashPosition(event.pageX);
 
     if (!this.delayedResizing) {
       this._resizeColumns(true);
@@ -662,15 +563,22 @@ export class VscodeTable extends VscElement {
     }
   };
 
-  private _onResizingMouseUp = (event: MouseEvent) => {
+  private _onResizingMouseUp = (event: PointerEvent) => {
+    console.log('event type', event.type);
+    const activeSplitter = this._columnResizeController.getActiveSplitter();
+    activeSplitter?.releasePointerCapture?.(event.pointerId);
+    this._columnResizeController.stopDrag();
+
     this._resizeColumns(true);
-    this._updateActiveSashPosition(event.pageX);
     this._sashHovers[this._activeSashElementIndex] = false;
     this._isDragging = false;
     this._activeSashElementIndex = -1;
 
-    document.removeEventListener('mousemove', this._onResizingMouseMove);
-    document.removeEventListener('mouseup', this._onResizingMouseUp);
+    activeSplitter?.removeEventListener?.(
+      'pointermove',
+      this._onResizingMouseMove
+    );
+    activeSplitter?.removeEventListener?.('pointerup', this._onResizingMouseUp);
   };
 
   override render(): TemplateResult {
@@ -691,7 +599,7 @@ export class VscodeTable extends VscElement {
               class=${classes}
               data-index=${index}
               .style=${stylePropertyMap({left})}
-              @mousedown=${this._onSashMouseDown}
+              @pointerdown=${this._onSashPointerDown}
               @mouseover=${this._onSashMouseOver}
               @mouseout=${this._onSashMouseOut}
             >

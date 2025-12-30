@@ -2,87 +2,25 @@ import {ReactiveController} from 'lit';
 import {VscodeTableHeaderCell} from '../vscode-table-header-cell/vscode-table-header-cell.js';
 import {VscodeTableCell} from '../vscode-table-cell/vscode-table-cell.js';
 import {VscodeTable} from './vscode-table.js';
+import {
+  calculateColumnWidths,
+  Percent,
+  percent,
+  Px,
+  px,
+  toPercent,
+  toPx,
+} from './calculations.js';
+import {
+  SPLITTER_HIT_WIDTH,
+  SPLITTER_VISIBLE_WIDTH,
+} from './vscode-table.styles.js';
 
-type Px = number & {readonly __unit: 'px'};
-type Percent = number & {readonly __unit: '%'};
-
-export const px = (value: number): Px => value as Px;
-export const percent = (value: number): Percent => value as Percent;
-
-const toPercent = (px: Px, container: Px): Percent =>
-  percent((px / container) * 100);
-
-const toPx = (p: Percent, container: Px): Px => px((p / 100) * container);
-
-function calculateColumnWidths(
-  widths: Percent[],
-  splitterIndex: number,
-  delta: Percent,
-  minWidth: Percent
-): Percent[] {
-  const result = [...widths];
-
-  if (delta === 0 || splitterIndex < 0 || splitterIndex >= widths.length - 1) {
-    return result;
-  }
-
-  const absDelta = Math.abs(delta);
-  let remaining: Percent = percent(absDelta);
-
-  const leftIndices: number[] = [];
-  const rightIndices: number[] = [];
-
-  // Bal oldal (splitterIndex-től balra)
-  for (let i = splitterIndex; i >= 0; i--) {
-    leftIndices.push(i);
-  }
-
-  // Jobb oldal (splitterIndex+1-től jobbra)
-  for (let i = splitterIndex + 1; i < widths.length; i++) {
-    rightIndices.push(i);
-  }
-
-  // Meghatározzuk, melyik oldalról VESZÜNK el
-  const shrinkingSide = delta > 0 ? rightIndices : leftIndices;
-
-  // És melyik NŐ
-  const growingSide = delta > 0 ? leftIndices : rightIndices;
-
-  // Van-e elég hely az elvonáshoz?
-  let totalAvailable: Percent = percent(0);
-
-  for (const i of shrinkingSide) {
-    const available = Math.max(0, result[i] - minWidth);
-    totalAvailable = percent(totalAvailable + available);
-  }
-
-  if (totalAvailable < remaining) {
-    return result; // nincs elég hely
-  }
-
-  // Elvonás láncszerűen
-  for (const i of shrinkingSide) {
-    if (remaining === 0) break;
-
-    const available = Math.max(0, result[i] - minWidth);
-    const take = Math.min(available, remaining);
-
-    result[i] = percent(result[i] - take);
-    remaining = percent(remaining - take);
-  }
-
-  // Növelés a másik oldalon (pont ugyanennyivel)
-  let toAdd: Percent = percent(absDelta);
-
-  for (const i of growingSide) {
-    if (toAdd === 0) break;
-
-    result[i] = percent(result[i] + toAdd);
-    toAdd = percent(0); // az egész az első oszlopba megy
-  }
-
-  return result;
-}
+const calculateOffset = (mouseX: number, splitterX: number) => {
+  const centerLineRelativeX =
+    SPLITTER_HIT_WIDTH / 2 - SPLITTER_VISIBLE_WIDTH / 2;
+  const relativeX = mouseX - splitterX;
+};
 
 export class ColumnResizeController implements ReactiveController {
   private _host: VscodeTable;
@@ -151,6 +89,10 @@ export class ColumnResizeController implements ReactiveController {
     return this;
   }
 
+  getActiveSplitter() {
+    return this._activeSplitter;
+  }
+
   setSplitters(splitterElements: HTMLDivElement[]) {
     this._splitters = splitterElements;
     return this;
@@ -178,25 +120,28 @@ export class ColumnResizeController implements ReactiveController {
   }
 
   startDrag(event: PointerEvent) {
-    const {pageX} = event;
-    const cr = this._activeSplitter!.getBoundingClientRect();
+    const mouseX = event.pageX;
+    const splitterX = this._activeSplitter!.getBoundingClientRect().x;
+    const xOffset = px(mouseX - splitterX);
 
-    this._dragStartX = px(pageX);
-    this._startColumnWidths = [...this._columnWidths];
-    this._prevColumnWidths = [...this._columnWidths];
-    this._activeSplitterCursorOffset = px(pageX - cr.x);
-    this._prevX = px(pageX);
+    this._isDragging = true;
+    this._dragStartX = px(mouseX - xOffset);
+    this._activeSplitterCursorOffset = px(xOffset);
+    this._prevX = this._dragStartX;
   }
 
-  drag(event: MouseEvent) {
-    const {pageX} = event;
-    // const deltaPx = px(
-    //   pageX - this._dragStartX - this._activeSplitterCursorOffset
-    // );
-    const deltaPx = px(pageX - this._prevX);
-    this._prevX = px(pageX);
-    // const deltaPx = px(pageX - this._hostX - this._activeSplitterCursorOffset);
+  drag(event: PointerEvent) {
+    const mouseX = event.pageX;
+
+    if (mouseX > this._hostX + this._hostWidth) {
+      return;
+    }
+
+    const x = px(mouseX - this._activeSplitterCursorOffset);
+    const deltaPx = px(x - this._prevX);
+    this._prevX = x;
     const delta = this._toPercent(deltaPx);
+
     this._columnWidths = calculateColumnWidths(
       this._columnWidths,
       this._activeSplitterIndex,
@@ -204,12 +149,12 @@ export class ColumnResizeController implements ReactiveController {
       this._minColumnWidth
     );
 
-    // this._prevColumnWidths = [...this._columnWidths];
-
     this._host.requestUpdate();
   }
 
-  stopDrag() {}
+  stopDrag() {
+    this._isDragging = false;
+  }
 
   private _toPercent(px: Px) {
     return toPercent(px, this._hostWidth);

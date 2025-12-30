@@ -1,5 +1,5 @@
 import {expect} from '@open-wc/testing';
-import {rawValueToPercentage} from './helpers.js';
+import {rawValueToPercentage} from './calculations.js';
 
 describe('vscode-table helpers', () => {
   it('input type is number', () => {
