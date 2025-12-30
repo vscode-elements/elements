@@ -1,7 +1,5 @@
 import {ReactiveController} from 'lit';
-import {VscodeTableHeaderCell} from '../vscode-table-header-cell/vscode-table-header-cell.js';
-import {VscodeTableCell} from '../vscode-table-cell/vscode-table-cell.js';
-import {VscodeTable} from './vscode-table.js';
+import {type VscodeTable} from './vscode-table.js';
 import {
   calculateColumnWidths,
   Percent,
@@ -9,37 +7,30 @@ import {
   Px,
   px,
   toPercent,
-  toPx,
 } from './calculations.js';
-import {
-  SPLITTER_HIT_WIDTH,
-  SPLITTER_VISIBLE_WIDTH,
-} from './vscode-table.styles.js';
 
-const calculateOffset = (mouseX: number, splitterX: number) => {
-  const centerLineRelativeX =
-    SPLITTER_HIT_WIDTH / 2 - SPLITTER_VISIBLE_WIDTH / 2;
-  const relativeX = mouseX - splitterX;
+type SplitterElement = HTMLDivElement & {
+  dataset: DOMStringMap & {
+    index: string;
+  };
 };
 
 export class ColumnResizeController implements ReactiveController {
   private _host: VscodeTable;
-  private _hostHeight = px(0);
   private _hostWidth = px(0);
   private _hostX = px(0);
-  private _activeSplitter: HTMLDivElement | null = null;
-  private _activeSplitterIndex: number = -1;
-  private _splitters: HTMLDivElement[] = [];
-  private _headerCells: VscodeTableHeaderCell[] = [];
-  private _firstRowCells: VscodeTableCell[] = [];
+  private _activeSplitter: SplitterElement | null = null;
   private _minColumnWidth = percent(0);
-  private _isDragging = false;
-  private _startColumnWidths: Percent[] = [];
-  private _prevColumnWidths: Percent[] = [];
   private _columnWidths: Percent[] = [];
   private _dragStartX = px(0);
   private _prevX = px(0);
   private _activeSplitterCursorOffset = px(0);
+  private _dragState: {
+    splitterIndex: number;
+    pointerId: number;
+    startX: Px;
+    dragOffset: Px;
+  } | null = null;
 
   constructor(host: VscodeTable) {
     (this._host = host).addController(this);
@@ -50,11 +41,7 @@ export class ColumnResizeController implements ReactiveController {
   }
 
   get isDragging(): boolean {
-    return this._isDragging;
-  }
-
-  set isDragging(newValue: boolean) {
-    this._isDragging = newValue;
+    return this._dragState !== null;
   }
 
   get splitterPositions(): Percent[] {
@@ -76,36 +63,19 @@ export class ColumnResizeController implements ReactiveController {
 
   saveHostDimensions() {
     const cr = this._host.getBoundingClientRect();
-    const {height, width, x} = cr;
-    this._hostHeight = px(height);
+    const {width, x} = cr;
     this._hostWidth = px(width);
     this._hostX = px(x);
+    return this;
   }
 
-  setActiveSplitter(splitterElement: HTMLDivElement) {
-    this._activeSplitter = splitterElement;
-    const index = +(splitterElement.dataset?.index ?? '');
-    this._activeSplitterIndex = index > -1 ? index : -1;
+  setActiveSplitter(splitter: HTMLElement) {
+    this._activeSplitter = splitter as SplitterElement;
     return this;
   }
 
   getActiveSplitter() {
     return this._activeSplitter;
-  }
-
-  setSplitters(splitterElements: HTMLDivElement[]) {
-    this._splitters = splitterElements;
-    return this;
-  }
-
-  setHeaderCells(cells: VscodeTableHeaderCell[]) {
-    this._headerCells = cells;
-    return this;
-  }
-
-  setFirstRowCells(cells: VscodeTableCell[]) {
-    this._firstRowCells = cells;
-    return this;
   }
 
   setMinColumnWidth(width: Percent) {
@@ -119,23 +89,66 @@ export class ColumnResizeController implements ReactiveController {
     return this;
   }
 
+  shouldDrag(event: PointerEvent) {
+    return (
+      +(event.currentTarget as SplitterElement).dataset.index ===
+      this._dragState?.splitterIndex
+    );
+  }
+
   startDrag(event: PointerEvent) {
+    event.stopPropagation();
+
+    if (this._dragState) {
+      return;
+    }
+
+    this._activeSplitter?.setPointerCapture(event.pointerId);
+
     const mouseX = event.pageX;
-    const splitterX = this._activeSplitter!.getBoundingClientRect().x;
+    const splitter = event.currentTarget as SplitterElement;
+    const splitterX = splitter!.getBoundingClientRect().x;
     const xOffset = px(mouseX - splitterX);
 
-    this._isDragging = true;
+    this._dragState = {
+      dragOffset: px(xOffset),
+      pointerId: event.pointerId,
+      splitterIndex: +splitter.dataset.index,
+      startX: px(mouseX - xOffset),
+    };
+
+    console.log(event.currentTarget);
+
     this._dragStartX = px(mouseX - xOffset);
     this._activeSplitterCursorOffset = px(xOffset);
     this._prevX = this._dragStartX;
+    this._host.requestUpdate();
   }
 
   drag(event: PointerEvent) {
-    const mouseX = event.pageX;
+    event.stopPropagation();
 
-    if (mouseX > this._hostX + this._hostWidth) {
+    if (
+      !(event?.currentTarget as SplitterElement)?.hasPointerCapture?.(
+        event.pointerId
+      )
+    ) {
       return;
     }
+
+    if (!this._dragState) {
+      return;
+    }
+
+    if (event.pointerId !== this._dragState.pointerId) {
+      return;
+    }
+
+    if (!this.shouldDrag(event)) {
+      return;
+    }
+
+    const mouseX = event.pageX;
 
     const x = px(mouseX - this._activeSplitterCursorOffset);
     const deltaPx = px(x - this._prevX);
@@ -144,7 +157,7 @@ export class ColumnResizeController implements ReactiveController {
 
     this._columnWidths = calculateColumnWidths(
       this._columnWidths,
-      this._activeSplitterIndex,
+      this._dragState.splitterIndex,
       delta,
       this._minColumnWidth
     );
@@ -152,15 +165,27 @@ export class ColumnResizeController implements ReactiveController {
     this._host.requestUpdate();
   }
 
-  stopDrag() {
-    this._isDragging = false;
+  stopDrag(event: PointerEvent) {
+    event.stopPropagation();
+
+    if (!this._dragState) {
+      return;
+    }
+
+    const el = event.currentTarget as SplitterElement;
+
+    try {
+      el.releasePointerCapture(this._dragState.pointerId);
+    } catch (e) {
+      // ignore
+    }
+
+    this._dragState = null;
+    this._activeSplitter = null;
+    this._host.requestUpdate();
   }
 
   private _toPercent(px: Px) {
     return toPercent(px, this._hostWidth);
-  }
-
-  private _toPx(percent: Percent) {
-    return toPx(percent, this._hostWidth);
   }
 }
