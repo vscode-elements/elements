@@ -32,11 +32,11 @@ jobs:
       - name: Transpile files
         run: npm run build:ts
 
-      - name: Prettier
-        run: npm run prettier
-
       - name: ESLint
         run: npm run lint
+
+      - name: Prettier
+        run: npm run prettier
 
       - name: Test
         run: npm run test
