@@ -29,6 +29,7 @@ export class ColumnResizeController implements ReactiveController {
     prevX: Px;
     dragOffset: Px;
   } | null = null;
+  private _cachedSplitterPositions: Percent[] | null = null;
 
   constructor(host: VscodeTable) {
     (this._host = host).addController(this);
@@ -43,6 +44,10 @@ export class ColumnResizeController implements ReactiveController {
   }
 
   get splitterPositions(): Percent[] {
+    if (this._cachedSplitterPositions) {
+      return this._cachedSplitterPositions;
+    }
+
     const result: Percent[] = [];
 
     let acc = percent(0);
@@ -51,6 +56,8 @@ export class ColumnResizeController implements ReactiveController {
       acc = percent(acc + this._columnWidths[i]);
       result.push(acc);
     }
+
+    this._cachedSplitterPositions = result;
 
     return result;
   }
@@ -96,6 +103,7 @@ export class ColumnResizeController implements ReactiveController {
 
   setColumWidths(widths: Percent[]) {
     this._columnWidths = widths;
+    this._cachedSplitterPositions = null;
     this._host.requestUpdate();
     return this;
   }
@@ -175,6 +183,7 @@ export class ColumnResizeController implements ReactiveController {
       delta,
       this._minColumnWidth
     );
+    this._cachedSplitterPositions = null;
 
     this._host.requestUpdate();
   }
