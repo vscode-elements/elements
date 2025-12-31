@@ -1,6 +1,20 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:5",
+  "name": "VSCode Elements Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {}
-  }
+    "node": "24"
+  },
+  "postCreateCommand": "npm ci",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "google.wireit",
+        "runem.lit-plugin"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
 }
