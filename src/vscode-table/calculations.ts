@@ -84,21 +84,40 @@ export function calculateColumnWidths(
   return result;
 }
 
+type Parser = {
+  test: (value: string) => boolean;
+  parse: (value: string, base: number) => number;
+};
+
+const parsers: Parser[] = [
+  {
+    test: (v) => /^-?\d+(\.\d+)?%$/.test(v),
+    parse: (v) => Number(v.slice(0, -1)),
+  },
+  {
+    test: (v) => /^-?\d+(\.\d+)?px$/.test(v),
+    parse: (v, base) => (Number(v.slice(0, -2)) / base) * 100,
+  },
+  {
+    test: (v) => /^-?\d+(\.\d+)?$/.test(v),
+    parse: (v, base) => (Number(v) / base) * 100,
+  },
+];
+
 export const parseSizeAttributeToPercent = (
   raw: string | number,
   base: number
 ): number | null => {
-  if (typeof raw === 'number' && !Number.isNaN(raw)) {
-    return (raw / base) * 100;
-  } else if (typeof raw === 'string' && /^[0-9.]+$/.test(raw)) {
-    const val = Number(raw);
-    return (val / base) * 100;
-  } else if (typeof raw === 'string' && /^[0-9.]+%$/.test(raw)) {
-    return Number(raw.substring(0, raw.length - 1));
-  } else if (typeof raw === 'string' && /^[0-9.]+px$/.test(raw)) {
-    const val = Number(raw.substring(0, raw.length - 2));
-    return (val / base) * 100;
-  } else {
+  if (!Number.isFinite(base) || base === 0) {
     return null;
   }
+
+  if (typeof raw === 'number') {
+    return Number.isFinite(raw) ? (raw / base) * 100 : null;
+  }
+
+  const value = raw.trim();
+  const parser = parsers.find((p) => p.test(value));
+
+  return parser ? parser.parse(value, base) : null;
 };
