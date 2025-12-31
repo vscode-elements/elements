@@ -1,29 +1,29 @@
 import {expect} from '@open-wc/testing';
-import {rawValueToPercentage} from './calculations.js';
+import {parseSizeAttributeToPercent} from './calculations.js';
 
-describe('vscode-table helpers', () => {
+describe('parseSizeAttributeToPercent', () => {
   it('input type is number', () => {
-    expect(rawValueToPercentage(50, 200)).to.eq(25);
-    expect(rawValueToPercentage(10.5, 200)).to.eq(5.25);
+    expect(parseSizeAttributeToPercent(50, 200)).to.eq(25);
+    expect(parseSizeAttributeToPercent(10.5, 200)).to.eq(5.25);
   });
 
   it('input type is string', () => {
-    expect(rawValueToPercentage('50', 200)).to.eq(25);
-    expect(rawValueToPercentage('10.5', 200)).to.eq(5.25);
+    expect(parseSizeAttributeToPercent('50', 200)).to.eq(25);
+    expect(parseSizeAttributeToPercent('10.5', 200)).to.eq(5.25);
   });
 
   it('input type is percentage', () => {
-    expect(rawValueToPercentage('50%', 200)).to.eq(50);
-    expect(rawValueToPercentage('10.5%', 200)).to.eq(10.5);
+    expect(parseSizeAttributeToPercent('50%', 200)).to.eq(50);
+    expect(parseSizeAttributeToPercent('10.5%', 200)).to.eq(10.5);
   });
 
   it('input type is pixel', () => {
-    expect(rawValueToPercentage('50px', 200)).to.eq(25);
-    expect(rawValueToPercentage('10.5px', 200)).to.eq(5.25);
+    expect(parseSizeAttributeToPercent('50px', 200)).to.eq(25);
+    expect(parseSizeAttributeToPercent('10.5px', 200)).to.eq(5.25);
   });
 
   it('input type is invalid value', () => {
-    expect(rawValueToPercentage('-50%', 200)).to.eq(null);
-    expect(rawValueToPercentage('auto', 200)).to.eq(null);
+    expect(parseSizeAttributeToPercent('-50%', 200)).to.eq(null);
+    expect(parseSizeAttributeToPercent('auto', 200)).to.eq(null);
   });
 });

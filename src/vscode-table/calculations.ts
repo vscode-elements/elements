@@ -84,7 +84,7 @@ export function calculateColumnWidths(
   return result;
 }
 
-export const rawValueToPercentage = (
+export const parseSizeAttributeToPercent = (
   raw: string | number,
   base: number
 ): number | null => {

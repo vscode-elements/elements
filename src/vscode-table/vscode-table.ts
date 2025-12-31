@@ -15,7 +15,7 @@ import {VscodeTableBody} from '../vscode-table-body/index.js';
 import {VscodeTableCell} from '../vscode-table-cell/index.js';
 import {VscodeTableHeader} from '../vscode-table-header/index.js';
 import {VscodeTableHeaderCell} from '../vscode-table-header-cell/index.js';
-import {rawValueToPercentage} from './calculations.js';
+import {parseSizeAttributeToPercent} from './calculations.js';
 import styles from './vscode-table.styles.js';
 import {ColumnResizeController} from './ColumnResizeController.js';
 import {percent} from './calculations.js';
@@ -205,7 +205,7 @@ export class VscodeTable extends VscElement {
   protected override willUpdate(changedProperties: PropertyValues): void {
     if (changedProperties.has('minColumnWidth')) {
       const value = percent(
-        rawValueToPercentage(this.minColumnWidth, this._componentW) ?? 0
+        parseSizeAttributeToPercent(this.minColumnWidth, this._componentW) ?? 0
       );
       this._columnResizeController.setMinColumnWidth(value);
     }
@@ -328,7 +328,7 @@ export class VscodeTable extends VscElement {
     let availablePercent = 100;
 
     cols = cols.map((col) => {
-      const percentage = rawValueToPercentage(col, this._componentW);
+      const percentage = parseSizeAttributeToPercent(col, this._componentW);
 
       if (percentage === null) {
         return 'auto';
