@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import {expect} from '@open-wc/testing';
-import {parseSizeAttributeToPercent} from './calculations.js';
+import {
+  calculateColumnWidths,
+  parseSizeAttributeToPercent,
+  Percent,
+  percent,
+} from './calculations.js';
 
 describe('parseSizeAttributeToPercent', () => {
   const base = 200;
@@ -83,5 +88,92 @@ describe('parseSizeAttributeToPercent', () => {
     expect(parseSizeAttributeToPercent('50', NaN)).to.be.null;
     expect(parseSizeAttributeToPercent('50', Infinity)).to.be.null;
     expect(parseSizeAttributeToPercent(50, 0)).to.be.null;
+  });
+});
+
+describe('calculateColumnWidths', () => {
+  it('returns unchanged widths when delta is 0', () => {
+    const widths = [percent(25), percent(25), percent(50)];
+
+    const result = calculateColumnWidths(widths, 1, percent(0), percent(10));
+
+    expect(result).to.deep.equal(widths);
+  });
+
+  it('returns unchanged widths for invalid splitter index', () => {
+    const widths = [percent(30), percent(30), percent(40)];
+
+    expect(
+      calculateColumnWidths(widths, -1, percent(10), percent(10))
+    ).to.deep.equal(widths);
+    expect(
+      calculateColumnWidths(widths, 2, percent(10), percent(10))
+    ).to.deep.equal(widths);
+  });
+
+  it('shrinks right column and grows left column when dragging right (delta > 0)', () => {
+    const widths = [percent(30), percent(30), percent(40)];
+
+    const result = calculateColumnWidths(widths, 1, percent(10), percent(10));
+
+    expect(result).to.deep.equal([percent(30), percent(40), percent(30)]);
+  });
+
+  it('shrinks left column and grows right column when dragging left (delta < 0)', () => {
+    const widths = [percent(30), percent(30), percent(40)];
+
+    const result = calculateColumnWidths(widths, 1, percent(-10), percent(10));
+
+    expect(result).to.deep.equal([percent(30), percent(20), percent(50)]);
+  });
+
+  it('respects minWidth when shrinking', () => {
+    const widths = [percent(30), percent(20), percent(50)];
+
+    const result = calculateColumnWidths(widths, 0, percent(15), percent(20));
+
+    // right side shrinks, left side grows
+    expect(result).to.deep.equal([percent(45), percent(20), percent(35)]);
+  });
+
+  it('shrinks multiple columns sequentially when needed', () => {
+    const widths = [percent(40), percent(30), percent(30)];
+
+    const result = calculateColumnWidths(widths, 0, percent(25), percent(10));
+
+    expect(result).to.deep.equal([percent(65), percent(10), percent(25)]);
+  });
+
+  it('aborts if total available shrink space is insufficient', () => {
+    const widths = [percent(40), percent(15), percent(45)];
+
+    const result = calculateColumnWidths(widths, 0, percent(20), percent(10));
+    expect(result).to.not.deep.equal(widths);
+
+    const impossible = calculateColumnWidths(
+      widths,
+      0,
+      percent(50),
+      percent(10)
+    );
+    expect(impossible).to.deep.equal(widths);
+  });
+
+  it('only grows the nearest column on the growing side', () => {
+    const widths = [percent(20), percent(40), percent(40)];
+
+    const result = calculateColumnWidths(widths, 1, percent(10), percent(10));
+
+    expect(result).to.deep.equal([percent(20), percent(50), percent(30)]);
+  });
+
+  it('preserves total width sum', () => {
+    const widths = [percent(25), percent(25), percent(50)];
+
+    const result = calculateColumnWidths(widths, 0, percent(15), percent(10));
+
+    const sum = (arr: Percent[]) => arr.reduce((a, b) => a + b, 0);
+
+    expect(sum(result)).to.equal(sum(widths));
   });
 });
