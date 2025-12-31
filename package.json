@@ -151,7 +151,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@types/chai": "4.3.20",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.14.0",
+    "@types/node": "^24.0.0",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
     "@vscode-elements/webview-playground": "^1.6.0",
