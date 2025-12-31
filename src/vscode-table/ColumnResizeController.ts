@@ -26,7 +26,6 @@ export class ColumnResizeController implements ReactiveController {
   private _dragState: {
     splitterIndex: number;
     pointerId: number;
-    startX: Px;
     prevX: Px;
     dragOffset: Px;
   } | null = null;
@@ -126,7 +125,6 @@ export class ColumnResizeController implements ReactiveController {
       dragOffset: px(xOffset),
       pointerId: event.pointerId,
       splitterIndex: +splitter.dataset.index,
-      startX: px(mouseX - xOffset),
       prevX: px(mouseX - xOffset),
     };
 
