@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+- **Table**: The column resizing algorithm has been rewritten. Columns can now push each other.
+
 ## [2.4.0] - 2025-12-26
 
 ### Fixed
