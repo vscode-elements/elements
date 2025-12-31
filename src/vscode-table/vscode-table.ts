@@ -124,9 +124,6 @@ export class VscodeTable extends VscElement {
   @property({type: Boolean, reflect: true, attribute: 'zebra-odd'})
   zebraOdd = false;
 
-  @query('slot[name="body"]')
-  private _bodySlot!: HTMLSlotElement;
-
   @query('.header')
   private _headerElement!: HTMLDivElement;
 
@@ -174,8 +171,6 @@ export class VscodeTable extends VscElement {
   private _headerResizeObserver?: ResizeObserver;
   private _bodyResizeObserver?: ResizeObserver;
   private _activeSashElementIndex = -1;
-  private _activeSashCursorOffset = 0;
-  private _componentX = 0;
   private _componentH = 0;
   private _componentW = 0;
   /**
@@ -188,14 +183,10 @@ export class VscodeTable extends VscElement {
    * It shouldn't be used directly, check the "_getCellsOfFirstRow" function.
    */
   private _cellsOfFirstRow: VscodeTableCell[] = [];
-  private _cellsToResize!: VscodeTableCell[];
-  private _headerCellsToResize!: VscodeTableHeaderCell[];
   private _prevHeaderHeight = 0;
   private _prevComponentHeight = 0;
 
   private _columnResizeController = new ColumnResizeController(this);
-
-  private _activePointerId = 0;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -225,7 +216,6 @@ export class VscodeTable extends VscElement {
 
     this._componentH = cr.height;
     this._componentW = cr.width;
-    this._componentX = cr.x;
   }
 
   private _queryHeaderCells() {
@@ -547,21 +537,6 @@ export class VscodeTable extends VscElement {
     this.requestUpdate();
   }
 
-  /* private _onSashPointerDown(event: PointerEvent) {
-    event.stopPropagation();
-
-    const activeSplitter = event.currentTarget as HTMLDivElement;
-    this._activePointerId = event.pointerId;
-    activeSplitter.setPointerCapture(this._activePointerId);
-
-    this._columnResizeController.saveHostDimensions();
-    this._columnResizeController.startDrag(event);
-
-    activeSplitter.addEventListener('pointermove', this._onResizingMouseMove);
-    activeSplitter.addEventListener('pointerup', this._onResizingMouseUp);
-    activeSplitter.addEventListener('pointercancel', this._onResizingMouseUp);
-  } */
-
   private _resizeColumns(resizeBodyCells = true) {
     const widths = this._columnResizeController.columnWidths;
 
@@ -573,29 +548,6 @@ export class VscodeTable extends VscElement {
       firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
     }
   }
-
-  /* private _onResizingMouseMove = (event: PointerEvent) => {
-    console.log('pointermove');
-    event.stopPropagation();
-
-    this._columnResizeController.drag(event);
-
-    if (!this.delayedResizing) {
-      this._resizeColumns(true);
-    } else {
-      this._resizeColumns(false);
-    }
-  };
-
-  private _onResizingMouseUp = (event: PointerEvent) => {
-    console.log('event type', event.type);
-    this._columnResizeController.stopDrag(event);
-
-    this._resizeColumns(true);
-    this._sashHovers[this._activeSashElementIndex] = false;
-    this._isDragging = false;
-    this._activeSashElementIndex = -1;
-  }; */
 
   private _handleSplitterPointerDown(event: PointerEvent) {
     event.stopPropagation();
