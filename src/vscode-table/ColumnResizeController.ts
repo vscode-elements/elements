@@ -7,7 +7,9 @@ import {
   Px,
   px,
   toPercent,
+  toPx,
 } from './calculations.js';
+import {SPLITTER_HIT_WIDTH} from './vscode-table.styles.js';
 
 type SplitterElement = HTMLDivElement & {
   dataset: DOMStringMap & {
@@ -22,6 +24,7 @@ export class ColumnResizeController implements ReactiveController {
   private _activeSplitter: SplitterElement | null = null;
   private _minColumnWidth = percent(0);
   private _columnWidths: Percent[] = [];
+  private _startColumnWidths: Percent[] = [];
   private _dragStartX = px(0);
   private _prevX = px(0);
   private _activeSplitterCursorOffset = px(0);
@@ -29,6 +32,7 @@ export class ColumnResizeController implements ReactiveController {
     splitterIndex: number;
     pointerId: number;
     startX: Px;
+    prevX: Px;
     dragOffset: Px;
   } | null = null;
 
@@ -55,6 +59,19 @@ export class ColumnResizeController implements ReactiveController {
     }
 
     return result;
+  }
+
+  getActiveSplitterCalculatedPosition() {
+    const splitterPositions = this.splitterPositions;
+
+    if (!this._dragState) {
+      return px(0);
+    }
+
+    const activeSplitterPos = splitterPositions[this._dragState.splitterIndex];
+    const activeSplitterPosPx = this._toPx(activeSplitterPos);
+
+    return activeSplitterPosPx;
   }
 
   get columnWidths() {
@@ -115,9 +132,9 @@ export class ColumnResizeController implements ReactiveController {
       pointerId: event.pointerId,
       splitterIndex: +splitter.dataset.index,
       startX: px(mouseX - xOffset),
+      prevX: px(mouseX - xOffset),
     };
-
-    console.log(event.currentTarget);
+    this._startColumnWidths = this._columnWidths;
 
     this._dragStartX = px(mouseX - xOffset);
     this._activeSplitterCursorOffset = px(xOffset);
@@ -150,10 +167,22 @@ export class ColumnResizeController implements ReactiveController {
 
     const mouseX = event.pageX;
 
-    const x = px(mouseX - this._activeSplitterCursorOffset);
+    const x = px(mouseX - this._dragState.dragOffset);
     const deltaPx = px(x - this._prevX);
+
     this._prevX = x;
     const delta = this._toPercent(deltaPx);
+
+    ///
+    const splitterPos = this.getActiveSplitterCalculatedPosition();
+
+    if (
+      (deltaPx <= 0 && mouseX > splitterPos + this._hostX) ||
+      (deltaPx > 0 && mouseX < splitterPos + this._hostX)
+    ) {
+      return;
+    }
+    ///
 
     this._columnWidths = calculateColumnWidths(
       this._columnWidths,
@@ -187,5 +216,19 @@ export class ColumnResizeController implements ReactiveController {
 
   private _toPercent(px: Px) {
     return toPercent(px, this._hostWidth);
+  }
+
+  private _toPx(percent: Percent) {
+    return toPx(percent, this._hostWidth);
+  }
+
+  private _isCursorOverTheActiveSplitter(event: PointerEvent) {
+    const localMouseX = event.pageX - this._hostX;
+    const localSplitterX = this.getActiveSplitterCalculatedPosition();
+
+    return (
+      localMouseX >= localSplitterX - SPLITTER_HIT_WIDTH / 2 &&
+      localMouseX <= localSplitterX + SPLITTER_HIT_WIDTH / 2
+    );
   }
 }
