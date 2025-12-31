@@ -1,7 +1,7 @@
 import {css, CSSResultGroup} from 'lit';
 import baseStyles from '../includes/default.styles.js';
 
-export const SPLITTER_HIT_WIDTH = 21;
+export const SPLITTER_HIT_WIDTH = 5;
 export const SPLITTER_VISIBLE_WIDTH = 1;
 
 const styles: CSSResultGroup = [
@@ -135,7 +135,6 @@ const styles: CSSResultGroup = [
     }
 
     .sash .sash-clickable {
-      background-color: rgba(255, 0, 0, 0.2);
       height: 100%;
       left: ${0 - (SPLITTER_HIT_WIDTH - SPLITTER_VISIBLE_WIDTH) / 2}px;
       position: absolute;
