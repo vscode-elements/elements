@@ -9,7 +9,6 @@ import {
   toPercent,
   toPx,
 } from './calculations.js';
-import {SPLITTER_HIT_WIDTH} from './vscode-table.styles.js';
 
 type SplitterElement = HTMLDivElement & {
   dataset: DOMStringMap & {
@@ -24,10 +23,6 @@ export class ColumnResizeController implements ReactiveController {
   private _activeSplitter: SplitterElement | null = null;
   private _minColumnWidth = percent(0);
   private _columnWidths: Percent[] = [];
-  private _startColumnWidths: Percent[] = [];
-  private _dragStartX = px(0);
-  private _prevX = px(0);
-  private _activeSplitterCursorOffset = px(0);
   private _dragState: {
     splitterIndex: number;
     pointerId: number;
@@ -134,11 +129,7 @@ export class ColumnResizeController implements ReactiveController {
       startX: px(mouseX - xOffset),
       prevX: px(mouseX - xOffset),
     };
-    this._startColumnWidths = this._columnWidths;
 
-    this._dragStartX = px(mouseX - xOffset);
-    this._activeSplitterCursorOffset = px(xOffset);
-    this._prevX = this._dragStartX;
     this._host.requestUpdate();
   }
 
@@ -166,14 +157,11 @@ export class ColumnResizeController implements ReactiveController {
     }
 
     const mouseX = event.pageX;
-
     const x = px(mouseX - this._dragState.dragOffset);
-    const deltaPx = px(x - this._prevX);
-
-    this._prevX = x;
+    const deltaPx = px(x - this._dragState.prevX);
     const delta = this._toPercent(deltaPx);
+    this._dragState.prevX = x;
 
-    ///
     const splitterPos = this.getActiveSplitterCalculatedPosition();
 
     if (
@@ -182,7 +170,6 @@ export class ColumnResizeController implements ReactiveController {
     ) {
       return;
     }
-    ///
 
     this._columnWidths = calculateColumnWidths(
       this._columnWidths,
@@ -220,15 +207,5 @@ export class ColumnResizeController implements ReactiveController {
 
   private _toPx(percent: Percent) {
     return toPx(percent, this._hostWidth);
-  }
-
-  private _isCursorOverTheActiveSplitter(event: PointerEvent) {
-    const localMouseX = event.pageX - this._hostX;
-    const localSplitterX = this.getActiveSplitterCalculatedPosition();
-
-    return (
-      localMouseX >= localSplitterX - SPLITTER_HIT_WIDTH / 2 &&
-      localMouseX <= localSplitterX + SPLITTER_HIT_WIDTH / 2
-    );
   }
 }
