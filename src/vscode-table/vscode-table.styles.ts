@@ -91,7 +91,7 @@ const styles: CSSResultGroup = [
     }
 
     .sash {
-      visibility: visible;
+      visibility: hidden;
     }
 
     :host([bordered-columns]) .sash,
