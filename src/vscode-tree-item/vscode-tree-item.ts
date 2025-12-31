@@ -42,6 +42,19 @@ function getParentItem(childItem: VscodeTreeItem) {
   return childItem.parentElement;
 }
 
+/**
+ * Represents an item in a Tree component.
+ *
+ * @tag vscode-tree
+ *
+ * @slot - Main content
+ * @slot icon-branch - Custom icon for a closed branch item.
+ * @slot icon-branch-opened - Custom icon for an opened branch item.
+ * @slot icon-leaf - Custom icon for a leaf item.
+ * @slot description - Description of the item. Displayed with a smaller font size and a less prominent color.
+ * @slot actions - Container for action buttons.
+ * @slot decoration - Container for small decorative elements aligned to the right edge of the item.
+ */
 @customElement('vscode-tree-item')
 export class VscodeTreeItem extends VscElement {
   static override styles = styles;
