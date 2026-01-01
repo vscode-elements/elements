@@ -22,6 +22,7 @@ import {
 } from '../includes/sizes.js';
 import styles from './vscode-table.styles.js';
 import {ColumnResizeController} from './ColumnResizeController.js';
+import {VscTableChangeMinColumnWidthEvent} from '../vscode-table-header-cell/vscode-table-header-cell.js';
 
 /**
  * @tag vscode-table
@@ -190,6 +191,15 @@ export class VscodeTable extends VscElement {
   private _prevComponentHeight = 0;
 
   private _columnResizeController = new ColumnResizeController(this);
+
+  constructor() {
+    super();
+
+    this.addEventListener(
+      'vsc-table-change-min-column-width',
+      this._handleMinColumnWidthChange
+    );
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -616,6 +626,17 @@ export class VscodeTable extends VscElement {
 
   private _handleSplitterPointerCancel = (event: PointerEvent) => {
     this._stopDrag(event);
+  };
+
+  private _handleMinColumnWidthChange = (
+    event: VscTableChangeMinColumnWidthEvent
+  ) => {
+    const {columnIndex, propertyValue} = event.detail;
+    const value = parseSizeAttributeToPercent(propertyValue, this._componentW);
+
+    if (value) {
+      this._columnResizeController.setColumnMinWidthAt(columnIndex, value);
+    }
   };
 
   override render(): TemplateResult {

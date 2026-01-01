@@ -36,6 +36,7 @@ export class VscodeTableHeaderCell extends VscElement {
       this.dispatchEvent(
         new CustomEvent('vsc-table-change-min-column-width', {
           detail: {columnIndex: this.index, propertyValue: this.minWidth},
+          bubbles: true,
         }) as VscTableChangeMinColumnWidthEvent
       );
     }
@@ -53,5 +54,9 @@ export class VscodeTableHeaderCell extends VscElement {
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-table-header-cell': VscodeTableHeaderCell;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-table-change-min-column-width': VscTableChangeMinColumnWidthEvent;
   }
 }
