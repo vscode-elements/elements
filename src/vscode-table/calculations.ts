@@ -4,7 +4,7 @@ export function calculateColumnWidths(
   widths: Percent[],
   splitterIndex: number,
   delta: Percent,
-  minWidth: Percent
+  minWidths: Map<number, Percent>
 ): Percent[] {
   const result = [...widths];
 
@@ -37,7 +37,7 @@ export function calculateColumnWidths(
   let totalAvailable: Percent = percent(0);
 
   for (const i of shrinkingSide) {
-    const available = Math.max(0, result[i] - minWidth);
+    const available = Math.max(0, result[i] - (minWidths.get(i) ?? 0));
     totalAvailable = percent(totalAvailable + available);
   }
 
@@ -52,7 +52,7 @@ export function calculateColumnWidths(
       break;
     }
 
-    const available = Math.max(0, result[i] - minWidth);
+    const available = Math.max(0, result[i] - (minWidths.get(i) ?? 0));
     const take = Math.min(available, remaining);
 
     result[i] = percent(result[i] - take);
