@@ -15,10 +15,13 @@ import {VscodeTableBody} from '../vscode-table-body/index.js';
 import {VscodeTableCell} from '../vscode-table-cell/index.js';
 import {VscodeTableHeader} from '../vscode-table-header/index.js';
 import {VscodeTableHeaderCell} from '../vscode-table-header-cell/index.js';
-import {parseSizeAttributeToPercent} from './calculations.js';
+import {
+  parseSizeAttributeToPercent,
+  Percent,
+  percent,
+} from '../includes/sizes.js';
 import styles from './vscode-table.styles.js';
 import {ColumnResizeController} from './ColumnResizeController.js';
-import {percent} from './calculations.js';
 
 /**
  * @tag vscode-table
@@ -203,11 +206,22 @@ export class VscodeTable extends VscElement {
   }
 
   protected override willUpdate(changedProperties: PropertyValues): void {
+    // `minColumnWidth` has been deprecated. Until it is completely removed from
+    // the API, it is used as a fallback value when no min-width is specified on
+    // a column header cell.
     if (changedProperties.has('minColumnWidth')) {
       const value = percent(
         parseSizeAttributeToPercent(this.minColumnWidth, this._componentW) ?? 0
       );
-      this._columnResizeController.setMinColumnWidth(value);
+      const prevMap = this._columnResizeController.columnMinWidths;
+      const widths = this._columnResizeController.columnWidths;
+
+      for (let i = 0; i < widths.length; i++) {
+        // Don't override the value comes form table header cell:
+        if (!prevMap.has(i)) {
+          this._columnResizeController.setColumnMinWidthAt(i, value);
+        }
+      }
     }
   }
 
@@ -494,6 +508,19 @@ export class VscodeTable extends VscElement {
 
   private _onHeaderSlotChange() {
     this._headerCells = this._queryHeaderCells();
+    const minWidths: Percent[] = [];
+    minWidths.fill(percent(0), 0, this._headerCells.length - 1);
+
+    this._headerCells.forEach((c, i) => {
+      c.index = i;
+
+      if (c.minWidth) {
+        const minWidth =
+          parseSizeAttributeToPercent(c.minWidth, this._componentW) ??
+          percent(0);
+        this._columnResizeController.setColumnMinWidthAt(i, minWidth);
+      }
+    });
   }
 
   private _onBodySlotChange() {

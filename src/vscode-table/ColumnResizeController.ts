@@ -1,14 +1,7 @@
 import {ReactiveController} from 'lit';
 import {type VscodeTable} from './vscode-table.js';
-import {
-  calculateColumnWidths,
-  Percent,
-  percent,
-  Px,
-  px,
-  toPercent,
-  toPx,
-} from './calculations.js';
+import {Percent, percent, Px, px, toPercent, toPx} from '../includes/sizes.js';
+import {calculateColumnWidths} from './calculations.js';
 
 type SplitterElement = HTMLDivElement & {
   dataset: DOMStringMap & {
@@ -21,7 +14,7 @@ export class ColumnResizeController implements ReactiveController {
   private _hostWidth = px(0);
   private _hostX = px(0);
   private _activeSplitter: SplitterElement | null = null;
-  private _minColumnWidth = percent(0);
+  private _columnMinWidths = new Map<number, Percent>();
   private _columnWidths: Percent[] = [];
   private _dragState: {
     splitterIndex: number;
@@ -79,6 +72,10 @@ export class ColumnResizeController implements ReactiveController {
     return this._columnWidths;
   }
 
+  get columnMinWidths() {
+    return new Map(this._columnMinWidths);
+  }
+
   saveHostDimensions() {
     const cr = this._host.getBoundingClientRect();
     const {width, x} = cr;
@@ -96,8 +93,9 @@ export class ColumnResizeController implements ReactiveController {
     return this._activeSplitter;
   }
 
-  setMinColumnWidth(width: Percent) {
-    this._minColumnWidth = width;
+  setColumnMinWidthAt(colIndex: number, value: Percent) {
+    this._columnMinWidths.set(colIndex, value);
+    this._host.requestUpdate();
     return this;
   }
 
@@ -181,7 +179,7 @@ export class ColumnResizeController implements ReactiveController {
       this._columnWidths,
       this._dragState.splitterIndex,
       delta,
-      this._minColumnWidth
+      this._columnMinWidths
     );
     this._cachedSplitterPositions = null;
 
