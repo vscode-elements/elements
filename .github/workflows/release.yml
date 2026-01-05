@@ -22,6 +22,10 @@ on:
           - next
           - nextmajor
 
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
