@@ -84,7 +84,7 @@ export class VscodeCollapsible extends VscElement {
     }
   }
 
-  private _onActionClick(event: PointerEvent) {
+  private _onHeaderSlotClick(event: PointerEvent) {
     event.stopPropagation();
   }
 
@@ -127,9 +127,11 @@ export class VscodeCollapsible extends VscElement {
           <h3 class="title">${heading}${descriptionMarkup}</h3>
           <div class="header-slots">
             <div class=${classMap(actionsClasses)}>
-              <slot name="actions" @click=${this._onActionClick}></slot>
+              <slot name="actions" @click=${this._onHeaderSlotClick}></slot>
             </div>
-            <div class="decorations"><slot name="decorations"></slot></div>
+            <div class="decorations">
+              <slot name="decorations" @click=${this._onHeaderSlotClick}></slot>
+            </div>
           </div>
         </div>
         <div class="collapsible-body" part="body">

@@ -120,4 +120,21 @@ describe('vscode-collapsible', () => {
 
     expect(el.open).to.be.true;
   });
+
+  it('prevents collapse on decoration icon click', async () => {
+    const el = await fixture<VscodeCollapsible>(html`
+      <vscode-collapsible always-show-header-actions open
+        ><vscode-icon
+          name="file"
+          slot="decorations"
+          id="action-icon"
+        ></vscode-icon>
+      </vscode-collapsible>
+    `);
+
+    const actionIcon = $('#action-icon');
+    await clickOnElement(actionIcon);
+
+    expect(el.open).to.be.true;
+  });
 });
