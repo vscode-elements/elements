@@ -22,7 +22,11 @@ import {
 } from '../includes/sizes.js';
 import styles from './vscode-table.styles.js';
 import {ColumnResizeController} from './ColumnResizeController.js';
-import {VscTableChangeMinColumnWidthEvent} from '../vscode-table-header-cell/vscode-table-header-cell.js';
+import {
+  VscTableChangeMinColumnWidthEvent,
+  VscTableChangePreferredColumnWidthEvent,
+} from '../vscode-table-header-cell/vscode-table-header-cell.js';
+import {calculateInitialWidths, Column} from './initial-column-widths.js';
 
 /**
  * @tag vscode-table
@@ -198,6 +202,10 @@ export class VscodeTable extends VscElement {
     this.addEventListener(
       'vsc-table-change-min-column-width',
       this._handleMinColumnWidthChange
+    );
+    this.addEventListener(
+      'vsc-table-change-preferred-column-width',
+      this._handlePreferredColumnWidthChange
     );
   }
 
@@ -519,7 +527,9 @@ export class VscodeTable extends VscElement {
   private _onHeaderSlotChange() {
     this._headerCells = this._queryHeaderCells();
     const minWidths: Percent[] = [];
+    const preferredWidths: Percent[] = [];
     minWidths.fill(percent(0), 0, this._headerCells.length - 1);
+    preferredWidths.fill(percent(0), 0, this._headerCells.length - 1);
 
     this._headerCells.forEach((c, i) => {
       c.index = i;
@@ -531,10 +541,28 @@ export class VscodeTable extends VscElement {
         this._columnResizeController.setColumnMinWidthAt(i, minWidth);
       }
     });
+
+    const columns = this._headerCells.map((cell) => {
+      const preferredWidth =
+        cell.preferredWidth !== 'auto'
+          ? parseSizeAttributeToPercent(cell.preferredWidth, this._componentW)
+          : cell.preferredWidth;
+      const minWidth = parseSizeAttributeToPercent(
+        cell.minWidth,
+        this._componentW
+      );
+
+      return {preferredWidth, minWidth} as Column;
+    });
+    const calculatedWidths = calculateInitialWidths(columns);
+
+    this._columnResizeController.setColumWidths(calculatedWidths);
+    this._resizeColumns(true);
   }
 
   private _onBodySlotChange() {
-    this._initDefaultColumnSizes();
+    // this._initDefaultColumnSizes();
+    this._updateBodyColumnWidths();
     this._initResizeObserver();
     this._updateResizeHandlersSize();
 
@@ -574,6 +602,12 @@ export class VscodeTable extends VscElement {
     this.requestUpdate();
   }
 
+  private _updateBodyColumnWidths() {
+    const widths = this._columnResizeController.columnWidths;
+    const firstRowCells = this._getCellsOfFirstRow();
+    firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
+  }
+
   private _resizeColumns(resizeBodyCells = true) {
     const widths = this._columnResizeController.columnWidths;
 
@@ -581,8 +615,7 @@ export class VscodeTable extends VscElement {
     headerCells.forEach((h, i) => (h.style.width = `${widths[i]}%`));
 
     if (resizeBodyCells) {
-      const firstRowCells = this._getCellsOfFirstRow();
-      firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
+      this._updateBodyColumnWidths();
     }
   }
 
@@ -639,7 +672,14 @@ export class VscodeTable extends VscElement {
     }
   };
 
+  private _handlePreferredColumnWidthChange = (
+    event: VscTableChangePreferredColumnWidthEvent
+  ) => {
+    console.log(event);
+  };
+
   override render(): TemplateResult {
+    console.log('render');
     const splitterPositions = this._columnResizeController.splitterPositions;
 
     const sashes = splitterPositions.map((val, index) => {
