@@ -510,21 +510,7 @@ export class VscodeTable extends VscElement {
     this._activeSashElementIndex = -1;
   }
 
-  private _onDefaultSlotChange() {
-    this._assignedElements.forEach((el) => {
-      if (el.tagName.toLowerCase() === 'vscode-table-header') {
-        el.slot = 'header';
-        return;
-      }
-
-      if (el.tagName.toLowerCase() === 'vscode-table-body') {
-        el.slot = 'body';
-        return;
-      }
-    });
-  }
-
-  private _onHeaderSlotChange() {
+  private _updateColumnWidths() {
     this._headerCells = this._queryHeaderCells();
     const minWidths: Percent[] = [];
     const preferredWidths: Percent[] = [];
@@ -558,6 +544,24 @@ export class VscodeTable extends VscElement {
 
     this._columnResizeController.setColumWidths(calculatedWidths);
     this._resizeColumns(true);
+  }
+
+  private _onDefaultSlotChange() {
+    this._assignedElements.forEach((el) => {
+      if (el.tagName.toLowerCase() === 'vscode-table-header') {
+        el.slot = 'header';
+        return;
+      }
+
+      if (el.tagName.toLowerCase() === 'vscode-table-body') {
+        el.slot = 'body';
+        return;
+      }
+    });
+  }
+
+  private _onHeaderSlotChange() {
+    this._updateColumnWidths();
   }
 
   private _onBodySlotChange() {
@@ -676,6 +680,7 @@ export class VscodeTable extends VscElement {
     event: VscTableChangePreferredColumnWidthEvent
   ) => {
     console.log(event);
+    this._updateColumnWidths();
   };
 
   override render(): TemplateResult {
