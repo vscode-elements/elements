@@ -673,6 +673,7 @@ export class VscodeTable extends VscElement {
 
     if (value) {
       this._columnResizeController.setColumnMinWidthAt(columnIndex, value);
+      this._updateColumnWidths();
     }
   };
 
