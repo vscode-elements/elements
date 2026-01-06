@@ -39,6 +39,8 @@ import {calculateInitialWidths, Column} from './initial-column-widths.js';
 export class VscodeTable extends VscElement {
   static override styles = styles;
 
+  //#region properties
+
   /** @internal */
   @property({reflect: true})
   override role = 'table';
@@ -132,6 +134,10 @@ export class VscodeTable extends VscElement {
   @property({type: Boolean, reflect: true, attribute: 'zebra-odd'})
   zebraOdd = false;
 
+  //#endregion
+
+  //#region private variables
+
   @query('.header')
   private _headerElement!: HTMLDivElement;
 
@@ -196,6 +202,10 @@ export class VscodeTable extends VscElement {
 
   private _columnResizeController = new ColumnResizeController(this);
 
+  //#endregion
+
+  //#region lifecycle methods
+
   constructor() {
     super();
 
@@ -242,6 +252,10 @@ export class VscodeTable extends VscElement {
       }
     }
   }
+
+  //#endregion
+
+  //#region private methods
 
   private _memoizeComponentDimensions() {
     const cr = this.getBoundingClientRect();
@@ -546,6 +560,27 @@ export class VscodeTable extends VscElement {
     this._resizeColumns(true);
   }
 
+  private _updateBodyColumnWidths() {
+    const widths = this._columnResizeController.columnWidths;
+    const firstRowCells = this._getCellsOfFirstRow();
+    firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
+  }
+
+  private _resizeColumns(resizeBodyCells = true) {
+    const widths = this._columnResizeController.columnWidths;
+
+    const headerCells = this._getHeaderCells();
+    headerCells.forEach((h, i) => (h.style.width = `${widths[i]}%`));
+
+    if (resizeBodyCells) {
+      this._updateBodyColumnWidths();
+    }
+  }
+
+  //#endregion
+
+  //#region event handlers
+
   private _onDefaultSlotChange() {
     this._assignedElements.forEach((el) => {
       if (el.tagName.toLowerCase() === 'vscode-table-header') {
@@ -606,23 +641,6 @@ export class VscodeTable extends VscElement {
     this.requestUpdate();
   }
 
-  private _updateBodyColumnWidths() {
-    const widths = this._columnResizeController.columnWidths;
-    const firstRowCells = this._getCellsOfFirstRow();
-    firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
-  }
-
-  private _resizeColumns(resizeBodyCells = true) {
-    const widths = this._columnResizeController.columnWidths;
-
-    const headerCells = this._getHeaderCells();
-    headerCells.forEach((h, i) => (h.style.width = `${widths[i]}%`));
-
-    if (resizeBodyCells) {
-      this._updateBodyColumnWidths();
-    }
-  }
-
   private _handleSplitterPointerDown(event: PointerEvent) {
     event.stopPropagation();
 
@@ -678,14 +696,14 @@ export class VscodeTable extends VscElement {
   };
 
   private _handlePreferredColumnWidthChange = (
-    event: VscTableChangePreferredColumnWidthEvent
+    _event: VscTableChangePreferredColumnWidthEvent
   ) => {
-    console.log(event);
     this._updateColumnWidths();
   };
 
+  //#endregion
+
   override render(): TemplateResult {
-    console.log('render');
     const splitterPositions = this._columnResizeController.splitterPositions;
 
     const sashes = splitterPositions.map((val, index) => {
