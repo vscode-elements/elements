@@ -601,7 +601,6 @@ export class VscodeTable extends VscElement {
 
   private _onBodySlotChange() {
     // this._initDefaultColumnSizes();
-    this._updateBodyColumnWidths();
     this._initResizeObserver();
     this._updateResizeHandlersSize();
 
@@ -701,6 +700,11 @@ export class VscodeTable extends VscElement {
     this._updateColumnWidths();
   };
 
+  private _handleTableBodySlotChange() {
+    this._cellsOfFirstRow = [];
+    this._updateBodyColumnWidths();
+  }
+
   //#endregion
 
   override render(): TemplateResult {
@@ -755,7 +759,11 @@ export class VscodeTable extends VscElement {
         </div>
         <vscode-scrollable class="scrollable">
           <div>
-            <slot name="body" @slotchange=${this._onBodySlotChange}></slot>
+            <slot
+              name="body"
+              @slotchange=${this._onBodySlotChange}
+              @vsc-table-body-slot-changed=${this._handleTableBodySlotChange}
+            ></slot>
           </div>
         </vscode-scrollable>
         ${sashes}
