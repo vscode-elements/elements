@@ -85,26 +85,30 @@ export async function moveMouseOnElement(
 
 /** A testing utility that drags an element with the mouse. */
 export async function dragElement(
-  /** The element to drag */
   el: Element,
-  /** The horizontal distance to drag in pixels */
   deltaX = 0,
-  /** The vertical distance to drag in pixels */
   deltaY = 0,
-  callbacks: {
-    afterMouseDown?: () => void | Promise<void>;
-    afterMouseMove?: () => void | Promise<void>;
-  } = {}
+  steps = 8,
+  position: 'left' | 'right' | 'center' = 'center'
 ): Promise<void> {
-  await moveMouseOnElement(el);
+  const start = determineMousePosition(el, position, 0, 0);
+
+  await sendMouse({
+    type: 'move',
+    position: [start.clickX, start.clickY],
+  });
+
   await sendMouse({type: 'down'});
 
-  await callbacks.afterMouseDown?.();
-
-  const {clickX, clickY} = determineMousePosition(el, 'center', deltaX, deltaY);
-  await sendMouse({type: 'move', position: [clickX, clickY]});
-
-  await callbacks.afterMouseMove?.();
+  for (let i = 1; i <= steps; i++) {
+    await sendMouse({
+      type: 'move',
+      position: [
+        Math.round(start.clickX + (deltaX * i) / steps),
+        Math.round(start.clickY + (deltaY * i) / steps),
+      ],
+    });
+  }
 
   await sendMouse({type: 'up'});
 }

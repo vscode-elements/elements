@@ -25,7 +25,7 @@ export class VscodeTableHeaderCell extends VscElement {
   static override styles = styles;
 
   @property({attribute: 'min-width'})
-  minWidth = '0';
+  minWidth: string | undefined = undefined;
 
   @property({attribute: 'preferred-width'})
   preferredWidth = 'auto';

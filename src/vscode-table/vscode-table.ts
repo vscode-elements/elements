@@ -539,16 +539,24 @@ export class VscodeTable extends VscElement {
           parseSizeAttributeToPercent(c.minWidth, this._componentW) ??
           percent(0);
         this._columnResizeController.setColumnMinWidthAt(i, minWidth);
+      } else {
+        const minWidth =
+          parseSizeAttributeToPercent(this.minColumnWidth, this._componentW) ??
+          percent(0);
+        this._columnResizeController.setColumnMinWidthAt(i, minWidth);
       }
     });
 
     const columns = this._headerCells.map((cell) => {
       const preferredWidth =
         cell.preferredWidth !== 'auto'
-          ? parseSizeAttributeToPercent(cell.preferredWidth, this._componentW)
+          ? parseSizeAttributeToPercent(
+              cell.preferredWidth ?? '0',
+              this._componentW
+            )
           : cell.preferredWidth;
       const minWidth = parseSizeAttributeToPercent(
-        cell.minWidth,
+        cell.minWidth ?? '0',
         this._componentW
       );
 

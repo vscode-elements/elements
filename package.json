@@ -33,7 +33,7 @@
     "icons": "node scripts/generateIconList.js",
     "vscode-data": "wireit",
     "ncu": "ncu -u",
-    "prepare": "npx playwright install chromium --only-shell"
+    "prepare": "npx playwright install chromium"
   },
   "wireit": {
     "analyze": {
