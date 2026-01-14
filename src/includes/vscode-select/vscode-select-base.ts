@@ -196,7 +196,9 @@ export class VscodeSelectBase extends VscElement {
 
     if (changedProperties.has('open') && this._firstUpdateCompleted) {
       if (this.open) {
-        this._dropdownEl.showPopover();
+        if (this.isConnected) {
+          this._dropdownEl.showPopover();
+        }
 
         const {x, y} = this.getBoundingClientRect();
         this._prevXPos = x;
@@ -562,8 +564,13 @@ export class VscodeSelectBase extends VscElement {
     this.focused = true;
   };
 
-  private _onComponentBlur = () => {
+  protected _onComponentBlur = () => {
+    this._toggleComboboxDropdown();
     this.focused = false;
+
+    if (this._opts.multiSelect) {
+      this._opts.filterPattern = '';
+    }
   };
 
   protected _onSlotChange(): void {
