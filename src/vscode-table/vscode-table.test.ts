@@ -145,4 +145,47 @@ describe('vscode-table', () => {
     expect(cells[0].style.width).to.equal('30%');
     expect(cells[1].style.width).to.equal('70%');
   });
+
+  it('chains shrinking across multiple columns when min-width is hit', async () => {
+    const el = await fixture<VscodeTable>(html`
+      <vscode-table resizable style="width: 600px">
+        <vscode-table-header>
+          <vscode-table-header-cell min-width="100">
+            Col A
+          </vscode-table-header-cell>
+          <vscode-table-header-cell min-width="200">
+            Col B
+          </vscode-table-header-cell>
+          <vscode-table-header-cell> Col C </vscode-table-header-cell>
+        </vscode-table-header>
+        <vscode-table-body>
+          <vscode-table-row>
+            <vscode-table-cell>A</vscode-table-cell>
+            <vscode-table-cell>B</vscode-table-cell>
+            <vscode-table-cell>C</vscode-table-cell>
+          </vscode-table-row>
+        </vscode-table-body>
+      </vscode-table>
+    `);
+
+    await dragElement($(el.shadowRoot!, '.sash.resizable'), -300, 0);
+
+    const cells = $$<HTMLElement>('vscode-table-cell');
+
+    const wA = parseFloat(cells[0].style.width);
+    const wB = parseFloat(cells[1].style.width);
+    const wC = parseFloat(cells[2].style.width);
+
+    // A should absorb the remaining shrink, but not go below its min-width
+    expect(wA).to.be.closeTo(16.67, 0.1);
+
+    // B should be clamped at its min-width: 200 / 600 = 33.33%
+    expect(wB).to.be.closeTo(50, 0.1);
+
+    // C grows by exactly what A lost
+    expect(wA + wB + wC).to.be.closeTo(100, 0.01);
+
+    // Ensure actual chaining happened (A < initial)
+    expect(wA).to.be.lessThan(33.34);
+  });
 });
