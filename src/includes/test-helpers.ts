@@ -88,7 +88,7 @@ export async function dragElement(
   el: Element,
   deltaX = 0,
   deltaY = 0,
-  steps = 8,
+  steps = 1,
   position: 'left' | 'right' | 'center' = 'center'
 ): Promise<void> {
   const start = determineMousePosition(el, position, 0, 0);

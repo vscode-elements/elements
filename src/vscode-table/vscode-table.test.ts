@@ -7,6 +7,7 @@ import '../vscode-table-row/vscode-table-row.js';
 import '../vscode-table-cell/vscode-table-cell.js';
 import '../vscode-table-header-cell/vscode-table-header-cell.js';
 import {expect, fixture, html} from '@open-wc/testing';
+import {VscodeTableCell} from '../vscode-table-cell/vscode-table-cell.js';
 
 describe('vscode-table', () => {
   it('is defined', () => {
@@ -41,29 +42,107 @@ describe('vscode-table', () => {
     expect(await testDrag()).not.to.throw;
   });
 
-  it.only('min column width', async () => {
+  it('resizes two columns when dragged left', async () => {
     const el = await fixture<VscodeTable>(html`
       <vscode-table resizable style="width: 500px">
         <vscode-table-header>
-          <vscode-table-header-cell min-width="100"
-            >Col 1</vscode-table-header-cell
-          >
+          <vscode-table-header-cell>Col 1</vscode-table-header-cell>
           <vscode-table-header-cell>Col 2</vscode-table-header-cell>
         </vscode-table-header>
         <vscode-table-body>
           <vscode-table-row>
-            <vscode-table-cell>cell 1</vscode-table-cell>
-            <vscode-table-cell>cell 2</vscode-table-cell>
+            <vscode-table-cell>A</vscode-table-cell>
+            <vscode-table-cell>B</vscode-table-cell>
           </vscode-table-row>
         </vscode-table-body>
       </vscode-table>
     `);
 
-    await dragElement($(el.shadowRoot!, '.sash.resizable'), -500, 0, 8, 'left');
+    await dragElement($(el.shadowRoot!, '.sash.resizable'), -100, 0);
 
-    const cells = $$('vscode-table-cell');
+    const cells = $$<VscodeTableCell>('vscode-table-cell');
 
-    expect(cells[0].style.getPropertyValue('width')).to.equal('20%');
-    expect(cells[1].style.getPropertyValue('width')).to.equal('80%');
+    const w1 = parseFloat(cells[0].style.width);
+    const w2 = parseFloat(cells[1].style.width);
+
+    expect(w1 + w2).to.equal(100);
+    expect(w1).to.be.lessThan(50);
+    expect(w2).to.be.greaterThan(50);
+  });
+
+  it('clamps resize at min-width', async () => {
+    const el = await fixture<VscodeTable>(html`
+      <vscode-table resizable style="width: 500px">
+        <vscode-table-header>
+          <vscode-table-header-cell min-width="100">
+            Col 1
+          </vscode-table-header-cell>
+          <vscode-table-header-cell> Col 2 </vscode-table-header-cell>
+        </vscode-table-header>
+        <vscode-table-body>
+          <vscode-table-row>
+            <vscode-table-cell>A</vscode-table-cell>
+            <vscode-table-cell>B</vscode-table-cell>
+          </vscode-table-row>
+        </vscode-table-body>
+      </vscode-table>
+    `);
+
+    // 500px table → min-width 100px = 20%
+    await dragElement($(el.shadowRoot!, '.sash.resizable'), -400, 0);
+
+    const cells = $$<VscodeTableCell>('vscode-table-cell');
+
+    expect(cells[0].style.width).to.equal('20%');
+    expect(cells[1].style.width).to.equal('80%');
+  });
+
+  it('uses preferred-width as initial column width', async () => {
+    await fixture<VscodeTable>(html`
+      <vscode-table resizable style="width: 500px">
+        <vscode-table-header>
+          <vscode-table-header-cell preferred-width="30%">
+            Col 1
+          </vscode-table-header-cell>
+          <vscode-table-header-cell> Col 2 </vscode-table-header-cell>
+        </vscode-table-header>
+        <vscode-table-body>
+          <vscode-table-row>
+            <vscode-table-cell>A</vscode-table-cell>
+            <vscode-table-cell>B</vscode-table-cell>
+          </vscode-table-row>
+        </vscode-table-body>
+      </vscode-table>
+    `);
+
+    const cells = $$<VscodeTableCell>('vscode-table-cell');
+
+    expect(cells[0].style.width).to.equal('30%');
+    expect(cells[1].style.width).to.equal('70%');
+  });
+
+  it('min-width overrides preferred-width when preferred is too small', async () => {
+    await fixture<VscodeTable>(html`
+      <vscode-table resizable style="width: 500px">
+        <vscode-table-header>
+          <vscode-table-header-cell preferred-width="10%" min-width="150">
+            Col 1
+          </vscode-table-header-cell>
+          <vscode-table-header-cell> Col 2 </vscode-table-header-cell>
+        </vscode-table-header>
+        <vscode-table-body>
+          <vscode-table-row>
+            <vscode-table-cell>A</vscode-table-cell>
+            <vscode-table-cell>B</vscode-table-cell>
+          </vscode-table-row>
+        </vscode-table-body>
+      </vscode-table>
+    `);
+
+    // 150px / 500px = 30%
+    const cells = $$<VscodeTableCell>('vscode-table-cell');
+
+    expect(cells[0].style.width).to.equal('30%');
+    expect(cells[1].style.width).to.equal('70%');
   });
 });
