@@ -8,6 +8,11 @@ export type VscTableChangeMinColumnWidthEvent = CustomEvent<{
   propertyValue: string;
 }>;
 
+export type VscTableChangePreferredColumnWidthEvent = CustomEvent<{
+  columnIndex: number;
+  propertyValue: string;
+}>;
+
 /**
  * @tag vscode-table-header-cell
  *
@@ -20,7 +25,10 @@ export class VscodeTableHeaderCell extends VscElement {
   static override styles = styles;
 
   @property({attribute: 'min-width'})
-  minWidth = '0';
+  minWidth: string | undefined = undefined;
+
+  @property({attribute: 'preferred-width'})
+  preferredWidth = 'auto';
 
   /** @internal */
   @property({type: Number})
@@ -38,6 +46,16 @@ export class VscodeTableHeaderCell extends VscElement {
           detail: {columnIndex: this.index, propertyValue: this.minWidth},
           bubbles: true,
         }) as VscTableChangeMinColumnWidthEvent
+      );
+    }
+
+    if (changedProperties.has('preferredWidth') && this.index > -1) {
+      /** @internal */
+      this.dispatchEvent(
+        new CustomEvent('vsc-table-change-preferred-column-width', {
+          detail: {columnIndex: this.index, propertyValue: this.preferredWidth},
+          bubbles: true,
+        }) as VscTableChangePreferredColumnWidthEvent
       );
     }
   }
@@ -58,5 +76,6 @@ declare global {
 
   interface GlobalEventHandlersEventMap {
     'vsc-table-change-min-column-width': VscTableChangeMinColumnWidthEvent;
+    'vsc-table-change-preferred-column-width': VscTableChangePreferredColumnWidthEvent;
   }
 }
