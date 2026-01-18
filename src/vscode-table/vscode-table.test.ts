@@ -188,4 +188,98 @@ describe('vscode-table', () => {
     // Ensure actual chaining happened (A < initial)
     expect(wA).to.be.lessThan(33.34);
   });
+
+  it('chains growing across multiple columns when right side hits min-width', async () => {
+    const el = await fixture<VscodeTable>(html`
+      <vscode-table resizable style="width: 600px">
+        <vscode-table-header>
+          <vscode-table-header-cell> Col A </vscode-table-header-cell>
+          <vscode-table-header-cell> Col B </vscode-table-header-cell>
+          <vscode-table-header-cell min-width="150">
+            Col C
+          </vscode-table-header-cell>
+        </vscode-table-header>
+        <vscode-table-body>
+          <vscode-table-row>
+            <vscode-table-cell>A</vscode-table-cell>
+            <vscode-table-cell>B</vscode-table-cell>
+            <vscode-table-cell>C</vscode-table-cell>
+          </vscode-table-row>
+        </vscode-table-body>
+      </vscode-table>
+    `);
+
+    // Drag splitter between B and C to the RIGHT
+    await dragElement($(el.shadowRoot!, '.sash.resizable'), +300, 0);
+
+    const cells = $$<HTMLElement>('vscode-table-cell');
+
+    const wA = parseFloat(cells[0].style.width);
+    const wB = parseFloat(cells[1].style.width);
+    const wC = parseFloat(cells[2].style.width);
+
+    // C should clamp at min-width: 150 / 600 = 25%
+    expect(wC).to.be.closeTo(25, 0.1);
+
+    // A + B should grow
+    expect(wA + wB).to.be.greaterThan(66.6);
+
+    // Sum invariant
+    expect(wA + wB + wC).to.be.closeTo(100, 0.01);
+  });
+
+  it('preserves column widths when table body is cleared and re-populated', async () => {
+    const el = await fixture<VscodeTable>(html`
+      <vscode-table resizable style="width: 500px">
+        <vscode-table-header>
+          <vscode-table-header-cell min-width="100">
+            Col 1
+          </vscode-table-header-cell>
+          <vscode-table-header-cell> Col 2 </vscode-table-header-cell>
+        </vscode-table-header>
+        <vscode-table-body>
+          <vscode-table-row>
+            <vscode-table-cell>A</vscode-table-cell>
+            <vscode-table-cell>B</vscode-table-cell>
+          </vscode-table-row>
+        </vscode-table-body>
+      </vscode-table>
+    `);
+
+    await dragElement($(el.shadowRoot!, '.sash.resizable'), -200, 0);
+
+    let cells = $$<HTMLElement>('vscode-table-cell');
+
+    const widthBefore = Array.from(cells).map((c) =>
+      c.style.getPropertyValue('width')
+    );
+
+    // Sanity check: widths are actually set
+    expect(widthBefore[0]).to.not.equal('');
+    expect(widthBefore[1]).to.not.equal('');
+
+    const body = el.querySelector('vscode-table-body')!;
+    body.innerHTML = '';
+
+    await el.updateComplete;
+
+    body.appendChild(
+      document.createRange().createContextualFragment(`
+      <vscode-table-row>
+        <vscode-table-cell>C</vscode-table-cell>
+        <vscode-table-cell>D</vscode-table-cell>
+      </vscode-table-row>
+    `)
+    );
+
+    await el.updateComplete;
+
+    cells = $$<HTMLElement>('vscode-table-cell');
+
+    const widthAfter = Array.from(cells).map((c) =>
+      c.style.getPropertyValue('width')
+    );
+
+    expect(widthAfter).to.deep.equal(widthBefore);
+  });
 });
