@@ -24,10 +24,17 @@ const styles: CSSResultGroup = [
       border-width: 1px;
       box-sizing: border-box;
       color: var(--vscode-settings-textInputForeground, #cccccc);
-      display: flex;
+      display: block;
       max-width: 100%;
       position: relative;
       width: 100%;
+    }
+
+    .container {
+      display: flex;
+      width: stretch;
+      width: -webkit-fill-available;
+      width: -moz-available;
     }
 
     :host([focused]) .root {
@@ -41,7 +48,23 @@ const styles: CSSResultGroup = [
 
     :host([invalid]) input,
     :host(:invalid) input {
+      /* background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d); */
+    }
+
+    #error-message {
+      display: none;
+      width: stretch;
+      width: -webkit-fill-available;
+      width: -moz-available;
+      padding: 5px;
+      color: var(--vscode-inputValidation-errorForeground, var(--vscode-settings-textInputForeground, #cccccc));
+      border-top: 1px solid var(--vscode-inputValidation-errorBorder, #be1100);
       background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d);
+    }
+
+    :host([invalid]) #error-message,
+    :host(:invalid) #error-message {
+      display: block;
     }
 
     ::slotted([slot='content-before']) {
