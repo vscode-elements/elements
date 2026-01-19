@@ -51,13 +51,21 @@ const styles: CSSResultGroup = [
     }
 
     .header-icon {
+      display: block;
+      height: 16px;
+      margin: 0 3px;
+      width: 16px;
+    }
+
+    .header-icon svg {
       color: var(--vscode-icon-foreground, #cccccc);
       display: block;
       flex-shrink: 0;
-      margin: 0 3px;
+      height: 100%;
+      width: 100%;
     }
 
-    .collapsible.open .header-icon {
+    .collapsible.open .header-icon svg {
       transform: rotate(90deg);
     }
 
