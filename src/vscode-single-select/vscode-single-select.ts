@@ -392,7 +392,7 @@ export class VscodeSingleSelect
           @input=${this._onComboboxInputInput}
           @click=${this._onComboboxInputClick}
           @keydown=${this._onComboboxInputSpaceKeyDown}
-        >
+        />
         <button
           aria-label="Open the list of options"
           class="combobox-button"

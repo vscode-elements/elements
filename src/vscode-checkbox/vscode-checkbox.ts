@@ -306,7 +306,7 @@ export class VscodeCheckbox
             this.toggle ? (this.checked ? 'true' : 'false') : undefined
           )}
           value=${this.value}
-        >
+        />
         <div class=${iconClasses}>${iconContent}</div>
         <label for="input" class="label" @click=${this._handleClick}>
           <span class=${labelInnerClasses}>
