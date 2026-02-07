@@ -20,7 +20,7 @@ export default [
     .combobox-face {
       background-color: var(--vscode-settings-dropdownBackground, #313131);
       border-color: var(--vscode-settings-dropdownBorder, #3c3c3c);
-      border-radius: 2px;
+      border-radius: 4px;
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;
@@ -162,7 +162,7 @@ export default [
     .dropdown {
       background-color: var(--vscode-settings-dropdownBackground, #313131);
       border-color: var(--vscode-settings-dropdownListBorder, #454545);
-      border-radius: 0 0 3px 3px;
+      border-radius: 4px;
       border-style: solid;
       border-width: 1px;
       bottom: unset;
@@ -180,7 +180,6 @@ export default [
     }
 
     :host([position='above']) .dropdown {
-      border-radius: 3px 3px 0 0;
       bottom: 26px;
       padding-bottom: 0;
       padding-top: 2px;

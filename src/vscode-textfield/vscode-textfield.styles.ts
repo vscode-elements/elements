@@ -19,7 +19,7 @@ const styles: CSSResultGroup = [
         --vscode-settings-textInputBorder,
         var(--vscode-settings-textInputBackground, #3c3c3c)
       );
-      border-radius: 2px;
+      border-radius: 4px;
       border-style: solid;
       border-width: 1px;
       box-sizing: border-box;

@@ -21,15 +21,15 @@ const styles: CSSResultGroup = [
     .base {
       align-items: center;
       background-color: var(--vscode-button-background, #0078d4);
-      border-bottom-left-radius: var(--vsc-border-left-radius, 2px);
-      border-bottom-right-radius: var(--vsc-border-right-radius, 2px);
+      border-bottom-left-radius: var(--vsc-border-left-radius, 4px);
+      border-bottom-right-radius: var(--vsc-border-right-radius, 4px);
       border-bottom-width: 1px;
       border-color: var(--vscode-button-border, transparent);
       border-left-width: var(--vsc-border-left-width, 1px);
       border-right-width: var(--vsc-border-right-width, 1px);
       border-style: solid;
-      border-top-left-radius: var(--vsc-border-left-radius, 2px);
-      border-top-right-radius: var(--vsc-border-right-radius, 2px);
+      border-top-left-radius: var(--vsc-border-left-radius, 4px);
+      border-top-right-radius: var(--vsc-border-right-radius, 4px);
       border-top-width: 1px;
       box-sizing: border-box;
       color: var(--vscode-button-foreground, #ffffff);
