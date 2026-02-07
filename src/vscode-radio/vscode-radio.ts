@@ -329,7 +329,7 @@ export class VscodeRadio
           ?checked=${this.checked}
           value=${this.value}
           tabindex=${this.tabIndex}
-        >
+        />
         <div class=${iconClasses}></div>
         <label for="input" class="label" @click=${this._handleClick}>
           <span class=${labelInnerClasses}>
