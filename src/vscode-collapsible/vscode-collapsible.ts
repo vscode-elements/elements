@@ -1,6 +1,7 @@
 import {html, nothing, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {chevronRightIcon} from '../includes/icons.js';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-collapsible.styles.js';
 
@@ -96,21 +97,6 @@ export class VscodeCollapsible extends VscElement {
     };
     const heading = this.heading ? this.heading : this.title;
 
-    const icon = html`<svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      class="header-icon"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M10.072 8.024L5.715 3.667l.618-.62L11 7.716v.618L6.333 13l-.618-.619 4.357-4.357z"
-      />
-    </svg>`;
-
     const descriptionMarkup = this.description
       ? html`<span class="description">${this.description}</span>`
       : nothing;
@@ -123,7 +109,7 @@ export class VscodeCollapsible extends VscElement {
           @click=${this._onHeaderClick}
           @keydown=${this._onHeaderKeyDown}
         >
-          ${icon}
+          <div class="header-icon">${chevronRightIcon}</div>
           <h3 class="title">${heading}${descriptionMarkup}</h3>
           <div class="header-slots">
             <div class=${classMap(actionsClasses)}>
