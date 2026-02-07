@@ -4,6 +4,5 @@
   "singleQuote": true,
   "bracketSpacing": false,
   "arrowParens": "always",
-  "endOfLine": "lf",
-  "plugins": ["@awmottaz/prettier-plugin-void-html"]
+  "endOfLine": "lf"
 }
