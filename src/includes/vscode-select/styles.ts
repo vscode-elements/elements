@@ -87,8 +87,14 @@ export default [
     :host(:focus) .combobox-face,
     :host([focused]) .select-face,
     :host([focused]) .combobox-face {
-      border-color: var(--vscode-focusBorder, #0078d4);
       outline: none;
+    }
+
+    :host(:focus:not([open])) .select-face,
+    :host(:focus:not([open])) .combobox-face,
+    :host([focused]:not([open])) .select-face,
+    :host([focused]:not([open])) .combobox-face {
+      border-color: var(--vscode-focusBorder, #0078d4);
     }
 
     .combobox-input {
@@ -166,12 +172,10 @@ export default [
       border-style: solid;
       border-width: 1px;
       bottom: unset;
+      box-shadow: 0 2px 8px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36));
       box-sizing: border-box;
       display: none;
-      padding-bottom: 2px;
-      padding-left: 0;
-      padding-right: 0;
-      padding-top: 0;
+      padding: 0;
       right: unset;
     }
 
@@ -186,15 +190,10 @@ export default [
       top: unset;
     }
 
-    :host(:focus) .dropdown,
-    :host([focused]) .dropdown {
-      border-color: var(--vscode-focusBorder, #0078d4);
-    }
-
     .scrollable {
       display: block;
       max-height: 222px;
-      margin: 1px;
+      margin: 0;
       outline: none;
       overflow: hidden;
     }
