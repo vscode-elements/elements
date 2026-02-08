@@ -11,7 +11,7 @@ const warn = (message: string, componentInstance?: VscElement) => {
     console.warn(`${prefix}${message}\n%o`, componentInstance);
   } else {
     // eslint-disable-next-line no-console
-    console.warn(`${message}\n%o`, componentInstance);
+    console.warn(`${prefix}${message}`);
   }
 };
 

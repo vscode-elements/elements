@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Elements</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@vscode/codicons/dist/codicon.css"
+      id="vscode-codicon-stylesheet"
+    >
+    <script
+      type="module"
+      src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
+    ></script>
+    <script type="module" src="/dist/main.js"></script>
+    <script>
+      const logEvents = (selector, eventType) => {
+        document.querySelector(selector).addEventListener(eventType, (ev) => {
+          console.log(ev);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <h1>Component demo</h1>
+    <main>
+      <vscode-demo>
+        <vscode-table resizable style="width: 200px">
+          <vscode-table-header>
+            <vscode-table-header-cell min-width="50" preferred-width="75%"
+              >Col 1</vscode-table-header-cell
+            >
+            <vscode-table-header-cell min-width="50"
+              >Col 2</vscode-table-header-cell
+            >
+          </vscode-table-header>
+          <vscode-table-body>
+            <vscode-table-row>
+              <vscode-table-cell>cell 1</vscode-table-cell>
+              <vscode-table-cell>cell 2</vscode-table-cell>
+            </vscode-table-row>
+          </vscode-table-body>
+        </vscode-table>
+      </vscode-demo>
+
+      <vscode-demo>
+        <vscode-table resizable style="width: 500px">
+          <vscode-table-header>
+            <vscode-table-header-cell min-width="100"
+              >Col 1</vscode-table-header-cell
+            >
+            <vscode-table-header-cell>Col 2</vscode-table-header-cell>
+          </vscode-table-header>
+          <vscode-table-body>
+            <vscode-table-row>
+              <vscode-table-cell>cell 1</vscode-table-cell>
+              <vscode-table-cell>cell 2</vscode-table-cell>
+            </vscode-table-row>
+          </vscode-table-body>
+        </vscode-table>
+      </vscode-demo>
+
+      <vscode-demo>
+        <vscode-table resizable style="width: 600px">
+          <vscode-table-header>
+            <vscode-table-header-cell min-width="100">
+              Col A
+            </vscode-table-header-cell>
+            <vscode-table-header-cell min-width="200">
+              Col B
+            </vscode-table-header-cell>
+            <vscode-table-header-cell> Col C </vscode-table-header-cell>
+          </vscode-table-header>
+          <vscode-table-body>
+            <vscode-table-row>
+              <vscode-table-cell>A</vscode-table-cell>
+              <vscode-table-cell>B</vscode-table-cell>
+              <vscode-table-cell>C</vscode-table-cell>
+            </vscode-table-row>
+          </vscode-table-body>
+        </vscode-table>
+      </vscode-demo>
+    </main>
+  </body>
+</html>
