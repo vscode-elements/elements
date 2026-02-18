@@ -2,16 +2,20 @@ import {html, TemplateResult} from 'lit';
 import {customElement, VscElement} from '../includes/VscElement.js';
 import styles from './vscode-form-helper.styles.js';
 
-const lightDOMStyles = new CSSStyleSheet();
-lightDOMStyles.replaceSync(`
-  vscode-form-helper * {
-    margin: 0;
-  }
+// Guard for SSR: CSSStyleSheet may not be available
+let lightDOMStyles: CSSStyleSheet | undefined;
+if (typeof CSSStyleSheet !== 'undefined') {
+  lightDOMStyles = new CSSStyleSheet();
+  lightDOMStyles.replaceSync(`
+    vscode-form-helper * {
+      margin: 0;
+    }
 
-  vscode-form-helper *:not(:last-child) {
-    margin-bottom: 8px;
-  }
-`);
+    vscode-form-helper *:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  `);
+}
 
 /**
  * Adds more detailed description to a [FromGroup](https://bendera.github.io/vscode-webview-elements/components/vscode-form-group/)
@@ -30,6 +34,11 @@ export class VscodeFormHelper extends VscElement {
   }
 
   private _injectLightDOMStyles() {
+    // Guard for SSR: document may not be available
+    if (typeof document === 'undefined' || !lightDOMStyles) {
+      return;
+    }
+
     const found = document.adoptedStyleSheets.find((s) => s === lightDOMStyles);
 
     if (!found) {
