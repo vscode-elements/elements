@@ -80,6 +80,11 @@ export class VscodeIcon extends VscElement {
     href: string | undefined;
     nonce: string | undefined;
   } {
+    // Guard for SSR: document may not be available
+    if (typeof document === 'undefined') {
+      return {nonce: undefined, href: undefined};
+    }
+
     const linkElement = document.getElementById('vscode-codicon-stylesheet');
     const href = linkElement?.getAttribute('href') || undefined;
     const nonce = linkElement?.nonce || undefined;
