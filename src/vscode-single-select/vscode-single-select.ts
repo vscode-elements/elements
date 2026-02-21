@@ -1,10 +1,10 @@
-import {html, LitElement, TemplateResult} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
-import {customElement} from '../includes/VscElement.js';
-import {chevronDownIcon} from '../includes/vscode-select/template-elements.js';
-import {VscodeSelectBase} from '../includes/vscode-select/vscode-select-base.js';
-import {AssociatedFormControl} from '../includes/AssociatedFormControl.js';
+import { html, LitElement, TemplateResult } from 'lit';
+import { property, query } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { AssociatedFormControl } from '../includes/AssociatedFormControl.js';
+import { customElement } from '../includes/VscElement.js';
+import { chevronDownIcon } from '../includes/vscode-select/template-elements.js';
+import { VscodeSelectBase } from '../includes/vscode-select/vscode-select-base.js';
 import styles from './vscode-single-select.styles.js';
 
 export type VscSingleSelectCreateOptionEvent = CustomEvent<{value: string}>;
@@ -314,7 +314,7 @@ export class VscodeSingleSelect
       this._opts.selectedIndex = Number((optEl as HTMLElement).dataset.index);
 
       this.open = false;
-      this._internals.setFormValue(this._value);
+      this._internals.setFormValue(this._opts.value as string);
       this._manageRequired();
       this._dispatchChangeEvent();
     }
