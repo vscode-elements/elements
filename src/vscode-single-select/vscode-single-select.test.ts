@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import {sendKeys} from '@web/test-runner-commands';
-import {clickOnElement, moveMouseOnElement} from '../includes/test-helpers.js';
+import {
+  $,
+  $$,
+  clickOnElement,
+  moveMouseOnElement,
+} from '../includes/test-helpers.js';
 import type {VscodeOption} from '../vscode-option/vscode-option.js';
 import {VscodeSingleSelect} from './index.js';
 import {aTimeout, expect, fixture, html} from '@open-wc/testing';
@@ -193,6 +198,28 @@ describe('vscode-single-select', () => {
       expect(el.value).to.eq('Ipsum');
       expect(el.selectedIndex).to.eq(1);
       expect(spy).to.be.called;
+    });
+
+    it('changes form value', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <vscode-single-select name="test">
+            <vscode-option>Lorem</vscode-option>
+            <vscode-option>Ipsum</vscode-option>
+            <vscode-option>Dolor</vscode-option>
+          </vscode-single-select>
+        </form>
+      `);
+
+      const sl = $('vscode-single-select');
+      await clickOnElement(form);
+
+      const options = $$<HTMLLIElement>(sl.shadowRoot!, 'li[role="option"]');
+      options[1].click();
+
+      const fd = new FormData(form);
+
+      expect(fd.get('test')).to.eq('Ipsum');
     });
 
     it('no item selected', async () => {
