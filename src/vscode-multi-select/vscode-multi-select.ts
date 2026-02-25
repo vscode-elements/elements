@@ -324,7 +324,6 @@ export class VscodeMultiSelect
 
   protected override _onComboboxInputBlur(): void {
     super._onComboboxInputBlur();
-    this._opts.filterPattern = '';
   }
   //#endregion
 
