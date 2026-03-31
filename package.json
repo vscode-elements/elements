@@ -142,7 +142,7 @@
     "@bendera/wds-plugin-directory-index": "^0.7.0",
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.23.0",
+    "@eslint/js": "^10.0.0",
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@open-wc/testing": "^4.0.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
