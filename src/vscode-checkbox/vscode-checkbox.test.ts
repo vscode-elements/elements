@@ -188,7 +188,7 @@ describe('vscode-checkbox', () => {
     const input = el.shadowRoot?.querySelector('input');
 
     expect(input?.checked).to.be.true;
-    expect(el.shadowRoot?.querySelector('.check-icon')).to.be.ok;
+    expect(el.shadowRoot?.querySelector('.icon.checked')).to.be.ok;
   });
 
   it('indeterminate state should be applied', async () => {
