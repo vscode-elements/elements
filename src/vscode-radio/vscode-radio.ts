@@ -325,7 +325,8 @@ export class VscodeRadio
           ?autofocus=${this.autofocus}
           id="input"
           class="radio"
-          type="checkbox"
+          type="radio"
+          name=${this.name}
           ?checked=${this.checked}
           value=${this.value}
           tabindex=${this.tabIndex}
