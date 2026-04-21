@@ -115,6 +115,9 @@ export class VscodeRadioGroup extends VscElement {
     if (listenedKeys.includes(key)) {
       ev.preventDefault();
     }
+    else {
+      return;
+    }
 
     if (key === 'ArrowRight' || key === 'ArrowDown') {
       this._checkNext();
@@ -122,6 +125,11 @@ export class VscodeRadioGroup extends VscElement {
 
     if (key === 'ArrowLeft' || key === 'ArrowUp') {
       this._checkPrev();
+    }
+
+    const checkedRadio = this._radios.find(r => r.checked);
+    if (checkedRadio) {
+      checkedRadio.dispatchEvent(new Event('change', {bubbles: true, composed: true}));
     }
   };
 
