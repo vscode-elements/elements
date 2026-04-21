@@ -320,7 +320,7 @@ export class VscodeRadio
     });
 
     return html`
-      <div class="wrapper">    
+      <div class="wrapper">
         <input
           ?autofocus=${this.autofocus}
           id="input"
