@@ -17,7 +17,7 @@ const styles: CSSResultGroup = [
       background-color: var(--vscode-settings-textInputBackground, #313131);
       border-color: var(
         --vscode-settings-textInputBorder,
-        var(--vscode-settings-textInputBackground, #3c3c3c)
+        var(--vscode-settings-textInputBackground, #313131)
       );
       border-radius: 4px;
       border-style: solid;
@@ -34,14 +34,15 @@ const styles: CSSResultGroup = [
       border-color: var(--vscode-focusBorder, #0078d4);
     }
 
-    :host([invalid]),
-    :host(:invalid) {
+    :host([invalid]) .root,
+    :host(:invalid) .root {
+      background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d);
       border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
-    :host([invalid]) input,
-    :host(:invalid) input {
-      background-color: var(--vscode-inputValidation-errorBackground, #5a1d1d);
+    :host([invalid][focused]) .root,
+    :host(:invalid[focused]) .root {
+      border-color: var(--vscode-inputValidation-errorBorder, #be1100);
     }
 
     ::slotted([slot='content-before']) {
@@ -61,14 +62,14 @@ const styles: CSSResultGroup = [
     }
 
     input {
-      background-color: var(--vscode-settings-textInputBackground, #313131);
+      background-color: transparent;
       border: 0;
       box-sizing: border-box;
       color: var(--vscode-settings-textInputForeground, #cccccc);
       display: block;
       font-family: var(--vscode-font-family, ${defaultFontStack});
       font-size: var(--vscode-font-size, 13px);
-      font-weight: var(--vscode-font-weight, 'normal');
+      font-weight: var(--vscode-font-weight, normal);
       line-height: 18px;
       outline: none;
       padding-bottom: 3px;
@@ -102,7 +103,7 @@ const styles: CSSResultGroup = [
       cursor: pointer;
       font-family: var(--vscode-font-family, ${defaultFontStack});
       font-size: var(--vscode-font-size, 13px);
-      font-weight: var(--vscode-font-weight, 'normal');
+      font-weight: var(--vscode-font-weight, normal);
       line-height: 20px;
       padding: 0 14px;
     }
