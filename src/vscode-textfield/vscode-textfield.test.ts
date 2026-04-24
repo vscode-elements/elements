@@ -277,4 +277,22 @@ describe('vscode-textfield', () => {
 
     expect(el.checkValidity()).to.eq(false);
   });
+
+  it('should reflect invalid property to the invalid attribute', async () => {
+    const el = await fixture<VscodeTextfield>(
+      '<vscode-textfield></vscode-textfield>'
+    );
+
+    expect(el.hasAttribute('invalid')).to.be.false;
+
+    el.invalid = true;
+    await el.updateComplete;
+
+    expect(el.hasAttribute('invalid')).to.be.true;
+
+    el.invalid = false;
+    await el.updateComplete;
+
+    expect(el.hasAttribute('invalid')).to.be.false;
+  });
 });

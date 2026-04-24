@@ -36,9 +36,8 @@ type InputType =
  * @fires {Event} change
  *
  * @cssprop [--vscode-settings-textInputBackground=#313131]
- * @cssprop [--vscode-settings-textInputBorder=var(--vscode-settings-textInputBackground, #3c3c3c)]
+ * @cssprop [--vscode-settings-textInputBorder=var(--vscode-settings-textInputBackground, #313131)]
  * @cssprop [--vscode-settings-textInputForeground=#cccccc]
- * @cssprop [--vscode-settings-textInputBackground=#313131]
  * @cssprop [--vscode-focusBorder=#0078d4]
  * @cssprop [--vscode-font-family=sans-serif] - A sans-serif font type depends on the host OS.
  * @cssprop [--vscode-font-size=13px]
