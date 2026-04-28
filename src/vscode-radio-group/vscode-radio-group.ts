@@ -114,8 +114,7 @@ export class VscodeRadioGroup extends VscElement {
 
     if (listenedKeys.includes(key)) {
       ev.preventDefault();
-    }
-    else {
+    } else {
       return;
     }
 
@@ -127,9 +126,11 @@ export class VscodeRadioGroup extends VscElement {
       this._checkPrev();
     }
 
-    const checkedRadio = this._radios.find(r => r.checked);
+    const checkedRadio = this._radios.find((r) => r.checked);
     if (checkedRadio) {
-      checkedRadio.dispatchEvent(new Event('change', {bubbles: true, composed: true}));
+      checkedRadio.dispatchEvent(
+        new Event('change', {bubbles: true, composed: true})
+      );
     }
   };
 
