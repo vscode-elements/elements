@@ -36,3 +36,5 @@ export {VscodeToolbarButton} from './vscode-toolbar-button/index.js';
 export {VscodeToolbarContainer} from './vscode-toolbar-container/index.js';
 export {VscodeTree} from './vscode-tree/index.js';
 export {VscodeTreeItem} from './vscode-tree-item/index.js';
+export {VscodeBreadcrumbs} from './vscode-breadcrumbs/index.js';
+export {VscodeBreadcrumbItem} from './vscode-breadcrumb-item/index.js';

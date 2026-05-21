@@ -12,7 +12,7 @@ import {VscElement} from '../VscElement.js';
 import {filterOptionsByPattern, highlightRanges} from './helpers.js';
 import type {InternalOption, Option, FilterMethod} from './types.js';
 import {OptionListController} from './OptionListController.js';
-import {checkIcon} from './template-elements.js';
+import {checkIcon} from '../icons.js';
 import '../../vscode-scrollable/vscode-scrollable.js';
 
 export const VISIBLE_OPTS = 10;
