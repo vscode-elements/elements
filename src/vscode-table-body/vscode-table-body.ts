@@ -14,13 +14,24 @@ export class VscodeTableBody extends VscElement {
   @property({reflect: true})
   override role = 'rowgroup';
 
+  private _handleSlotChange() {
+    /** @internal */
+    this.dispatchEvent(
+      new Event('vsc-table-body-slot-changed', {bubbles: true})
+    );
+  }
+
   override render(): TemplateResult {
-    return html` <slot></slot> `;
+    return html` <slot @slotchange=${this._handleSlotChange}></slot> `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
     'vscode-table-body': VscodeTableBody;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    'vsc-table-body-slot-changed': Event;
   }
 }
