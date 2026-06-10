@@ -350,6 +350,105 @@ describe('vscode-multi-select', () => {
     expect(el.value).to.eql(['asdf']);
   });
 
+  describe('i18n override props', () => {
+    it('selected-text overrides the badge label', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select selected-text="Ausgewählt">
+          <vscode-option selected>One</vscode-option>
+          <vscode-option>Two</vscode-option>
+        </vscode-multi-select>
+      `);
+      expect(el.shadowRoot?.querySelector('.select-face-badge')).lightDom.to.eq(
+        '1 Ausgewählt'
+      );
+    });
+
+    it('selected-text overrides the badge label when nothing is selected', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select selected-text="Ausgewählt">
+          <vscode-option>One</vscode-option>
+          <vscode-option>Two</vscode-option>
+        </vscode-multi-select>
+      `);
+      expect(el.shadowRoot?.querySelector('.select-face-badge')).lightDom.to.eq(
+        '0 Ausgewählt'
+      );
+    });
+
+    it('open-button-aria-label overrides the combobox button aria-label', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select combobox open-button-aria-label="Öffnen">
+          <vscode-option>One</vscode-option>
+        </vscode-multi-select>
+      `);
+      const btn =
+        el.shadowRoot?.querySelector<HTMLButtonElement>('.combobox-button');
+      expect(btn?.getAttribute('aria-label')).to.eq('Öffnen');
+    });
+
+    it('no-options-text is shown when the filter matches nothing', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select combobox no-options-text="Keine Optionen">
+          <vscode-option>Lorem</vscode-option>
+        </vscode-multi-select>
+      `);
+      el.focus();
+      await el.updateComplete;
+      await sendKeys({type: 'zzz'});
+      await el.updateComplete;
+      const noOpts = el.shadowRoot?.querySelector('.no-options');
+      expect(noOpts?.textContent?.trim()).to.eq('Keine Optionen');
+    });
+
+    it('create-option-prefix overrides the creatable suggestion text', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select
+          combobox
+          creatable
+          create-option-prefix="Hinzufügen"
+        >
+          <vscode-option>Lorem</vscode-option>
+        </vscode-multi-select>
+      `);
+      el.focus();
+      await el.updateComplete;
+      await sendKeys({type: 'Neu'});
+      await el.updateComplete;
+      const placeholder = el.shadowRoot?.querySelector('.option.placeholder');
+      expect(placeholder?.textContent?.trim()).to.eq('Hinzufügen "Neu"');
+    });
+
+    it('select-all-title overrides the select-all button tooltip', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select select-all-title="Alle auswählen">
+          <vscode-option>One</vscode-option>
+          <vscode-option>Two</vscode-option>
+        </vscode-multi-select>
+      `);
+      expect(el.selectAllTitle).to.eq('Alle auswählen');
+    });
+
+    it('deselect-all-title overrides the deselect-all button tooltip', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select deselect-all-title="Alle abwählen">
+          <vscode-option>One</vscode-option>
+          <vscode-option>Two</vscode-option>
+        </vscode-multi-select>
+      `);
+      expect(el.deselectAllTitle).to.eq('Alle abwählen');
+    });
+
+    it('accept-button-text overrides the OK button label', async () => {
+      const el = await fixture<VscodeMultiSelect>(html`
+        <vscode-multi-select accept-button-text="Bestätigen">
+          <vscode-option>One</vscode-option>
+          <vscode-option>Two</vscode-option>
+        </vscode-multi-select>
+      `);
+      expect(el.acceptButtonText).to.eq('Bestätigen');
+    });
+  });
+
   it('selects multiple options with keyboard');
   it('selectedIndexes sync with values');
   it(

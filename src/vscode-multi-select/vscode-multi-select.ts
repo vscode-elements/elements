@@ -68,6 +68,31 @@ export class VscodeMultiSelect
   @property({reflect: true})
   name: string | undefined = undefined;
 
+  /**
+   * Label suffix used in the selected-count badge (e.g. "3 Selected").
+   * Override to localise the badge text.
+   */
+  @property({attribute: 'selected-text'})
+  selectedText = 'Selected';
+
+  /**
+   * Tooltip for the "select all" button in the dropdown controls.
+   */
+  @property({attribute: 'select-all-title'})
+  selectAllTitle = 'Select all';
+
+  /**
+   * Tooltip for the "deselect all" button in the dropdown controls.
+   */
+  @property({attribute: 'deselect-all-title'})
+  deselectAllTitle = 'Deselect all';
+
+  /**
+   * Label for the accept/OK button in the dropdown controls.
+   */
+  @property({attribute: 'accept-button-text'})
+  acceptButtonText = 'OK';
+
   @property({type: Array, attribute: false})
   set selectedIndexes(val: number[]) {
     this._opts.selectedIndexes = val;
@@ -332,10 +357,10 @@ export class VscodeMultiSelect
   private _renderLabel() {
     switch (this._opts.selectedIndexes.length) {
       case 0:
-        return html`<span class="select-face-badge no-item">0 Selected</span>`;
+        return html`<span class="select-face-badge no-item">0 ${this.selectedText}</span>`;
       default:
         return html`<span class="select-face-badge"
-          >${this._opts.selectedIndexes.length} Selected</span
+          >${this._opts.selectedIndexes.length} ${this.selectedText}</span
         >`;
     }
   }
@@ -368,7 +393,7 @@ export class VscodeMultiSelect
           @keydown=${this._onComboboxInputSpaceKeyDown}
         />
         <button
-          aria-label="Open the list of options"
+          aria-label=${this.openButtonAriaLabel}
           class="combobox-button"
           type="button"
           @click=${this._onComboboxButtonClick}
@@ -413,7 +438,7 @@ export class VscodeMultiSelect
             <button
               type="button"
               @click=${this._onMultiSelectAllClick}
-              title="Select all"
+              title=${this.selectAllTitle}
               class="action-icon"
               id="select-all"
             >
@@ -422,7 +447,7 @@ export class VscodeMultiSelect
             <button
               type="button"
               @click=${this._onMultiDeselectAllClick}
-              title="Deselect all"
+              title=${this.deselectAllTitle}
               class="action-icon"
               id="select-none"
             >
@@ -431,7 +456,7 @@ export class VscodeMultiSelect
             <vscode-button
               class="button-accept"
               @click=${this._onMultiAcceptClick}
-              >OK</vscode-button
+              >${this.acceptButtonText}</vscode-button
             >
           </div>
         `

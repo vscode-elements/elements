@@ -1259,6 +1259,49 @@ describe('vscode-single-select', () => {
     expect(el.value).to.eql('asdf');
   });
 
+  describe('i18n override props', () => {
+    it('no-options-text is shown when the filter matches nothing', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select combobox no-options-text="Keine Optionen">
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+        </vscode-single-select>
+      `);
+      await clickOnElement(el);
+      await sendKeys({type: 'zzz'});
+      await el.updateComplete;
+      const noOpts = el.shadowRoot?.querySelector('.no-options');
+      expect(noOpts?.textContent?.trim()).to.eq('Keine Optionen');
+    });
+
+    it('create-option-prefix overrides the creatable suggestion text', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select combobox creatable create-option-prefix="Hinzufügen">
+          <vscode-option>Lorem</vscode-option>
+          <vscode-option>Ipsum</vscode-option>
+          <vscode-option>Dolor</vscode-option>
+        </vscode-single-select>
+      `);
+      el.focus();
+      await el.updateComplete;
+      await sendKeys({type: 'Neu'});
+      await el.updateComplete;
+      const placeholder = el.shadowRoot?.querySelector('.option.placeholder');
+      expect(placeholder?.textContent?.trim()).to.eq('Hinzufügen "Neu"');
+    });
+
+    it('open-button-aria-label overrides the combobox button aria-label', async () => {
+      const el = await fixture<VscodeSingleSelect>(html`
+        <vscode-single-select combobox open-button-aria-label="Öffnen">
+          <vscode-option>Lorem</vscode-option>
+        </vscode-single-select>
+      `);
+      const btn =
+        el.shadowRoot?.querySelector<HTMLButtonElement>('.combobox-button');
+      expect(btn?.getAttribute('aria-label')).to.eq('Öffnen');
+    });
+  });
+
   //keyboard navigation
   it('selects previous option with keyboard');
   it('selects next option with keyboard');
