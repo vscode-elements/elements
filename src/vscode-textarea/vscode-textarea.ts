@@ -115,6 +115,9 @@ export class VscodeTextarea
   set value(val: string) {
     this._value = val;
     this._internals.setFormValue(val);
+    this.updateComplete.then(() => {
+      this._setValidityFromInput();
+    });
   }
 
   get value(): string {
