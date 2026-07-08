@@ -19,6 +19,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
     "types": ["mocha"]
