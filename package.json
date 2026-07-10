@@ -166,7 +166,7 @@
     "@web/test-runner-playwright": "^1.0.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "chokidar": "^5.0.0",
-    "concurrently": "^9.1.2",
+    "concurrently": "^10.0.0",
     "custom-element-vs-code-integration": "^1.5.0",
     "custom-elements-manifest-deprecator": "^1.2.0",
     "deepmerge": "^4.3.1",
