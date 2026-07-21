@@ -41,6 +41,26 @@ export class VscodeSelectBase extends VscElement {
   label = '';
 
   /**
+   * Aria label for the button that opens the dropdown in combobox mode.
+   * Override this to localise the button for screen readers.
+   */
+  @property({attribute: 'open-button-aria-label'})
+  openButtonAriaLabel = 'Open the list of options';
+
+  /**
+   * Text shown in the dropdown when no options match the current filter.
+   */
+  @property({attribute: 'no-options-text'})
+  noOptionsText = 'No options';
+
+  /**
+   * Prefix text for the "create new option" entry shown in combobox+creatable
+   * mode. The rendered text will be: `${createOptionPrefix} "${filterPattern}"`.
+   */
+  @property({attribute: 'create-option-prefix'})
+  createOptionPrefix = 'Add';
+
+  /**
    * The element cannot be used and is not focusable.
    */
   @property({type: Boolean, reflect: true})
@@ -712,12 +732,12 @@ export class VscodeSelectBase extends VscElement {
         })}
         @mouseout=${this._onPlaceholderOptionMouseOut}
       >
-        Add "${this._opts.filterPattern}"
+        ${this.createOptionPrefix} "${this._opts.filterPattern}"
       </li>`;
     } else {
       return isListEmpty
         ? html`<li class="no-options" @click=${this._onNoOptionsClick}>
-            No options
+            ${this.noOptionsText}
           </li>`
         : nothing;
     }

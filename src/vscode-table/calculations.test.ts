@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {expect} from '@open-wc/testing';
 import {Percent, percent} from '../includes/sizes.js';
 import {calculateColumnWidths} from './calculations.js';
