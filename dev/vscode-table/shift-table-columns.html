@@ -37,27 +37,21 @@
     <h1>Basic example</h1>
     <main>
       <vscode-demo>
-        <vscode-table
-          class="table"
-          columns='["100px", "200px"]'
-          min-column-width="50"
-          resizable
-          style="margin-left: 200px"
-        >
+        <vscode-table class="table" resizable style="margin-left: 200px">
           <vscode-table-header slot="header">
-            <vscode-table-header-cell min-width="30"
+            <vscode-table-header-cell min-width="30" preferred-width="25"
               >Id</vscode-table-header-cell
             >
-            <vscode-table-header-cell min-width="70"
+            <vscode-table-header-cell min-width="70" preferred-width="50"
               >First name</vscode-table-header-cell
             >
-            <vscode-table-header-cell min-width="70"
+            <vscode-table-header-cell min-width="70" preferred-width="75"
               >Last name</vscode-table-header-cell
             >
-            <vscode-table-header-cell min-width="70"
+            <vscode-table-header-cell min-width="70" preferred-width="auto"
               >Email</vscode-table-header-cell
             >
-            <vscode-table-header-cell min-width="70"
+            <vscode-table-header-cell min-width="70" preferred-width="auto"
               >Company</vscode-table-header-cell
             >
           </vscode-table-header>
@@ -101,6 +95,28 @@
           </vscode-table-body>
         </vscode-table>
       </vscode-demo>
+      <button id="bt-empty">empty table body</button>
+      <button id="bt-append">Append row</button>
+      <script type="module">
+        const btEmpty = document.querySelector('#bt-empty');
+        const btAppend = document.querySelector('#bt-append');
+
+        btEmpty.addEventListener('click', () => {
+          document.querySelector('vscode-table-body').innerHTML = '';
+        });
+
+        btAppend.addEventListener('click', () => {
+          const row = document.createElement('vscode-table-row');
+          row.innerHTML = `
+            <vscode-table-cell>cell</vscode-table-cell>
+            <vscode-table-cell>cell</vscode-table-cell>
+            <vscode-table-cell>cell</vscode-table-cell>
+            <vscode-table-cell>cell</vscode-table-cell>
+            <vscode-table-cell>cell</vscode-table-cell>
+          `;
+          document.querySelector('vscode-table-body').append(row);
+        });
+      </script>
     </main>
   </body>
 </html>
