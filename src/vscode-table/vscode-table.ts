@@ -22,7 +22,11 @@ import {
 } from '../includes/sizes.js';
 import styles from './vscode-table.styles.js';
 import {ColumnResizeController} from './ColumnResizeController.js';
-import {VscTableChangeMinColumnWidthEvent} from '../vscode-table-header-cell/vscode-table-header-cell.js';
+import {
+  VscTableChangeMinColumnWidthEvent,
+  VscTableChangePreferredColumnWidthEvent,
+} from '../vscode-table-header-cell/vscode-table-header-cell.js';
+import {calculateInitialWidths, Column} from './initial-column-widths.js';
 
 /**
  * @tag vscode-table
@@ -34,6 +38,8 @@ import {VscTableChangeMinColumnWidthEvent} from '../vscode-table-header-cell/vsc
 @customElement('vscode-table')
 export class VscodeTable extends VscElement {
   static override styles = styles;
+
+  //#region properties
 
   /** @internal */
   @property({reflect: true})
@@ -128,6 +134,10 @@ export class VscodeTable extends VscElement {
   @property({type: Boolean, reflect: true, attribute: 'zebra-odd'})
   zebraOdd = false;
 
+  //#endregion
+
+  //#region private variables
+
   @query('.header')
   private _headerElement!: HTMLDivElement;
 
@@ -192,12 +202,20 @@ export class VscodeTable extends VscElement {
 
   private _columnResizeController = new ColumnResizeController(this);
 
+  //#endregion
+
+  //#region lifecycle methods
+
   constructor() {
     super();
 
     this.addEventListener(
       'vsc-table-change-min-column-width',
       this._handleMinColumnWidthChange
+    );
+    this.addEventListener(
+      'vsc-table-change-preferred-column-width',
+      this._handlePreferredColumnWidthChange
     );
   }
 
@@ -234,6 +252,10 @@ export class VscodeTable extends VscElement {
       }
     }
   }
+
+  //#endregion
+
+  //#region private methods
 
   private _memoizeComponentDimensions() {
     const cr = this.getBoundingClientRect();
@@ -502,6 +524,63 @@ export class VscodeTable extends VscElement {
     this._activeSashElementIndex = -1;
   }
 
+  private _updateColumnWidths() {
+    this._headerCells = this._queryHeaderCells();
+    const minWidths: Percent[] = [];
+    const preferredWidths: Percent[] = [];
+    minWidths.fill(percent(0), 0, this._headerCells.length - 1);
+    preferredWidths.fill(percent(0), 0, this._headerCells.length - 1);
+
+    this._headerCells.forEach((c, i) => {
+      c.index = i;
+
+      if (c.minWidth) {
+        const minWidth =
+          parseSizeAttributeToPercent(c.minWidth, this._componentW) ??
+          percent(0);
+        this._columnResizeController.setColumnMinWidthAt(i, minWidth);
+      }
+    });
+
+    const columns = this._headerCells.map((cell) => {
+      const preferredWidth =
+        cell.preferredWidth !== 'auto'
+          ? parseSizeAttributeToPercent(cell.preferredWidth, this._componentW)
+          : cell.preferredWidth;
+      const minWidth = parseSizeAttributeToPercent(
+        cell.minWidth,
+        this._componentW
+      );
+
+      return {preferredWidth, minWidth} as Column;
+    });
+    const calculatedWidths = calculateInitialWidths(columns);
+
+    this._columnResizeController.setColumWidths(calculatedWidths);
+    this._resizeColumns(true);
+  }
+
+  private _updateBodyColumnWidths() {
+    const widths = this._columnResizeController.columnWidths;
+    const firstRowCells = this._getCellsOfFirstRow();
+    firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
+  }
+
+  private _resizeColumns(resizeBodyCells = true) {
+    const widths = this._columnResizeController.columnWidths;
+
+    const headerCells = this._getHeaderCells();
+    headerCells.forEach((h, i) => (h.style.width = `${widths[i]}%`));
+
+    if (resizeBodyCells) {
+      this._updateBodyColumnWidths();
+    }
+  }
+
+  //#endregion
+
+  //#region event handlers
+
   private _onDefaultSlotChange() {
     this._assignedElements.forEach((el) => {
       if (el.tagName.toLowerCase() === 'vscode-table-header') {
@@ -517,24 +596,11 @@ export class VscodeTable extends VscElement {
   }
 
   private _onHeaderSlotChange() {
-    this._headerCells = this._queryHeaderCells();
-    const minWidths: Percent[] = [];
-    minWidths.fill(percent(0), 0, this._headerCells.length - 1);
-
-    this._headerCells.forEach((c, i) => {
-      c.index = i;
-
-      if (c.minWidth) {
-        const minWidth =
-          parseSizeAttributeToPercent(c.minWidth, this._componentW) ??
-          percent(0);
-        this._columnResizeController.setColumnMinWidthAt(i, minWidth);
-      }
-    });
+    this._updateColumnWidths();
   }
 
   private _onBodySlotChange() {
-    this._initDefaultColumnSizes();
+    // this._initDefaultColumnSizes();
     this._initResizeObserver();
     this._updateResizeHandlersSize();
 
@@ -572,18 +638,6 @@ export class VscodeTable extends VscElement {
     const index = Number(target.dataset.index);
     this._sashHovers[index] = false;
     this.requestUpdate();
-  }
-
-  private _resizeColumns(resizeBodyCells = true) {
-    const widths = this._columnResizeController.columnWidths;
-
-    const headerCells = this._getHeaderCells();
-    headerCells.forEach((h, i) => (h.style.width = `${widths[i]}%`));
-
-    if (resizeBodyCells) {
-      const firstRowCells = this._getCellsOfFirstRow();
-      firstRowCells.forEach((c, i) => (c.style.width = `${widths[i]}%`));
-    }
   }
 
   private _handleSplitterPointerDown(event: PointerEvent) {
@@ -636,8 +690,22 @@ export class VscodeTable extends VscElement {
 
     if (value) {
       this._columnResizeController.setColumnMinWidthAt(columnIndex, value);
+      this._updateColumnWidths();
     }
   };
+
+  private _handlePreferredColumnWidthChange = (
+    _event: VscTableChangePreferredColumnWidthEvent
+  ) => {
+    this._updateColumnWidths();
+  };
+
+  private _handleTableBodySlotChange() {
+    this._cellsOfFirstRow = [];
+    this._updateBodyColumnWidths();
+  }
+
+  //#endregion
 
   override render(): TemplateResult {
     const splitterPositions = this._columnResizeController.splitterPositions;
@@ -691,7 +759,11 @@ export class VscodeTable extends VscElement {
         </div>
         <vscode-scrollable class="scrollable">
           <div>
-            <slot name="body" @slotchange=${this._onBodySlotChange}></slot>
+            <slot
+              name="body"
+              @slotchange=${this._onBodySlotChange}
+              @vsc-table-body-slot-changed=${this._handleTableBodySlotChange}
+            ></slot>
           </div>
         </vscode-scrollable>
         ${sashes}
