@@ -13,7 +13,7 @@
       type="module"
       src="/node_modules/@vscode-elements/webview-playground/dist/index.js"
     ></script>
-    <script type="module" src="/dist/vscode-textfield/index.js"></script>
+    <script type="module" src="/dist/main.js"></script>
     <script>
       const logEvents = (selector, eventType) => {
         document.querySelector(selector).addEventListener(eventType, (ev) => {
@@ -27,7 +27,20 @@
     <h1>Textfield</h1>
     <h2>Change, Input</h2>
     <vscode-demo>
-      <vscode-textfield id="textfield-1"></vscode-textfield>
+      <vscode-textfield id="textfield-1">
+        <span
+          slot="content-after"
+          style="
+            display: flex;
+            align-items: center;
+            margin-top: -1px;
+            margin-right: 1px;
+          "
+        >
+          <vscode-key-label>Ctrl</vscode-key-label>
+          <span>+</span><vscode-key-label>K</vscode-key-label></span
+        >
+      </vscode-textfield>
       <script type="module">
         logEvents('#textfield-1', 'change');
         logEvents('#textfield-1', 'input');
