@@ -101,6 +101,19 @@ describe('vscode-textfield', () => {
     expect(el.getBoundingClientRect().height).to.eq(16);
   });
 
+  it('does not allow the text to scroll vertically at the small size', async () => {
+    const el = await fixture<VscodeTextfield>(html`
+      <vscode-textfield size="small" value="Test value"></vscode-textfield>
+    `);
+    const input = el.wrappedElement;
+
+    expect(input.scrollHeight).to.eq(input.clientHeight);
+
+    input.scrollTop = 1;
+
+    expect(input.scrollTop).to.eq(0);
+  });
+
   it('resizes file inputs with the component', async () => {
     for (const [size, expectedHeight, expectedFontSize] of [
       ['small', 16, '11px'],

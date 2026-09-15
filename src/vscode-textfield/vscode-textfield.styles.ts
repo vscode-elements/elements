@@ -91,9 +91,10 @@ const styles: CSSResultGroup = [
     }
 
     :host([size='small']) input {
+      height: 14px;
       line-height: 12px;
-      padding-bottom: 1px;
-      padding-top: 1px;
+      padding-bottom: 0;
+      padding-top: 0;
     }
 
     :host([size='small']) ::slotted(vscode-icon) {
