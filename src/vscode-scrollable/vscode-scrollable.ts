@@ -53,7 +53,7 @@ export class VscodeScrollable extends VscElement {
    * Controls shadow visibility when content overflows.
    */
   @property({type: Boolean, reflect: true})
-  shadow = true;
+  shadow = false;
 
   /**
    * It's true when `scrollPos` greater than 0
@@ -382,7 +382,7 @@ export class VscodeScrollable extends VscElement {
         @scroll=${this._handleScrollableContainerScroll}
       >
         <div
-          class=${classMap({shadow: true, visible: this.scrolled})}
+          class=${classMap({shadow: this.shadow, visible: this.scrolled})}
           .style=${stylePropertyMap({
             zIndex: String(this._scrollbarTrackZ),
           })}

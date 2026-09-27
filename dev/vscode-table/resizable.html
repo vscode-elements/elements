@@ -42,12 +42,30 @@
           console.log(ev);
         });
       };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const table = document.querySelector('.table');
+        const rerenderButton = document.querySelector('#rerender-table');
+        const renderCount = document.querySelector('#render-count');
+        const initialColumns = JSON.parse(table.getAttribute('columns'));
+        let rerenders = 0;
+
+        rerenderButton.addEventListener('click', () => {
+          table.columns = [...initialColumns];
+          rerenders++;
+          renderCount.textContent = `Rerenders: ${rerenders}`;
+        });
+      });
     </script>
   </head>
 
   <body>
     <h1>Basic example</h1>
     <main>
+      <div class="demo-controls">
+        <vscode-button id="rerender-table">Trigger rerender</vscode-button>
+        <span id="render-count">Rerenders: 0</span>
+      </div>
       <vscode-demo>
         <vscode-table
           class="table"

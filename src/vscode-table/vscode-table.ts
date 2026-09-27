@@ -85,14 +85,23 @@ export class VscodeTable extends VscElement {
       return;
     }
 
-    this._columns = val;
+    const hasChanged =
+      val.length !== this._columns.length ||
+      val.some((column, index) => column !== this._columns[index]);
 
-    if (this.isConnected) {
+    this._columns = [...val];
+
+    if (this.isConnected && hasChanged) {
       this._initDefaultColumnSizes();
     }
   }
   get columns(): string[] {
     return this._columns;
+  }
+
+  /** Current column widths as percentages, in header order. */
+  get columnWidths(): number[] {
+    return [...this._columnResizeController.columnWidths];
   }
 
   /**
@@ -174,6 +183,7 @@ export class VscodeTable extends VscElement {
   private _componentResizeObserver?: ResizeObserver;
   private _headerResizeObserver?: ResizeObserver;
   private _bodyResizeObserver?: ResizeObserver;
+  private _bodyMutationObserver?: MutationObserver;
   private _activeSashElementIndex = -1;
   private _componentH = 0;
   private _componentW = 0;
@@ -213,6 +223,7 @@ export class VscodeTable extends VscElement {
     this._componentResizeObserver?.unobserve(this);
     this._componentResizeObserver?.disconnect();
     this._bodyResizeObserver?.disconnect();
+    this._bodyMutationObserver?.disconnect();
   }
 
   protected override willUpdate(changedProperties: PropertyValues): void {
@@ -534,14 +545,34 @@ export class VscodeTable extends VscElement {
   }
 
   private _onBodySlotChange() {
-    this._initDefaultColumnSizes();
+    this._cellsOfFirstRow = this._queryCellsOfFirstRow();
+
+    if (
+      this._columnResizeController.columnWidths.length !==
+      this._getHeaderCells().length
+    ) {
+      this._initDefaultColumnSizes();
+    } else {
+      this._resizeColumns(true);
+    }
+
     this._initResizeObserver();
     this._updateResizeHandlersSize();
 
-    if (!this._bodyResizeObserver) {
-      const tbody = this._assignedBodyElements[0] ?? null;
+    const tbody = this._assignedBodyElements[0] ?? null;
 
-      if (tbody) {
+    this._bodyMutationObserver?.disconnect();
+    if (tbody) {
+      this._bodyMutationObserver = new MutationObserver(() => {
+        this._cellsOfFirstRow = this._queryCellsOfFirstRow();
+        this._resizeColumns(true);
+      });
+      this._bodyMutationObserver.observe(tbody, {
+        childList: true,
+        subtree: true,
+      });
+
+      if (!this._bodyResizeObserver) {
         this._bodyResizeObserver = new ResizeObserver(
           this._bodyResizeObserverCallback
         );
