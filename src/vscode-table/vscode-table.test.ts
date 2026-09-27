@@ -132,4 +132,53 @@ describe('vscode-table', () => {
 
     expect(roundedWidths).to.deep.equal(roundedInitialWidths);
   });
+
+  it('enforces the table minimum width unless a header overrides it', async () => {
+    const el = await fixture<VscodeTable>(html`
+      <vscode-table
+        resizable
+        style="width: 500px"
+        columns='["33.33%", "33.33%", "33.34%"]'
+      >
+        <vscode-table-header slot="header">
+          <vscode-table-header-cell>Col 1</vscode-table-header-cell>
+          <vscode-table-header-cell min-width="100px"
+            >Col 2</vscode-table-header-cell
+          >
+          <vscode-table-header-cell>Col 3</vscode-table-header-cell>
+        </vscode-table-header>
+        <vscode-table-body slot="body">
+          <vscode-table-row>
+            <vscode-table-cell>One</vscode-table-cell>
+            <vscode-table-cell>Two</vscode-table-cell>
+            <vscode-table-cell>Three</vscode-table-cell>
+          </vscode-table-row>
+        </vscode-table-body>
+      </vscode-table>
+    `);
+    await el.updateComplete;
+    await aTimeout(0);
+    await Promise.all(
+      Array.from(
+        el.querySelectorAll('vscode-table-header-cell'),
+        (cell) => cell.updateComplete
+      )
+    );
+    await el.updateComplete;
+
+    const splitter = $(el.shadowRoot!, '.sash-clickable');
+    const rect = splitter.getBoundingClientRect();
+    const startX = Math.floor(rect.x + window.scrollX + rect.width / 2);
+    const startY = Math.floor(rect.y + window.scrollY + rect.height / 2);
+
+    await sendMouse({type: 'move', position: [startX, startY]});
+    await sendMouse({type: 'down'});
+    await sendMouse({type: 'move', position: [startX + 400, startY]});
+    await sendMouse({type: 'up'});
+    await el.updateComplete;
+
+    expect(el.columnWidths.map((width) => Math.round(width))).to.deep.equal([
+      70, 20, 10,
+    ]);
+  });
 });
