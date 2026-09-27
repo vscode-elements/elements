@@ -759,7 +759,9 @@ describe('vscode-tree', () => {
 
   it('allows Escape key events to bubble outside the tree', async () => {
     const wrapper = await fixture<HTMLDivElement>(html`
-      <div><vscode-tree><vscode-tree-item>Item 1</vscode-tree-item></vscode-tree></div>
+      <div>
+        <vscode-tree><vscode-tree-item>Item 1</vscode-tree-item></vscode-tree>
+      </div>
     `);
     const tree = wrapper.querySelector<VscodeTree>('vscode-tree')!;
     const spy = sinon.spy();
