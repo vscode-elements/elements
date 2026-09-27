@@ -41,10 +41,8 @@ export function calculateColumnWidths(
     totalAvailable = percent(totalAvailable + available);
   }
 
-  // Abort if the requested delta cannot be fully satisfied
-  if (totalAvailable < remaining) {
-    return result;
-  }
+  const appliedDelta = percent(Math.min(absDelta, totalAvailable));
+  remaining = appliedDelta;
 
   // Shrink columns sequentially until the delta is fully consumed
   for (const i of shrinkingSide) {
@@ -60,7 +58,7 @@ export function calculateColumnWidths(
   }
 
   // Apply the exact opposite delta to the growing side
-  let toAdd: Percent = percent(absDelta);
+  let toAdd: Percent = appliedDelta;
 
   for (const i of growingSide) {
     if (toAdd === 0) {

@@ -83,6 +83,19 @@ describe('calculateColumnWidths', () => {
     expect(result).to.deep.equal([percent(45), percent(20), percent(35)]);
   });
 
+  it('clamps movement to the available shrink space', () => {
+    const widths = [percent(40), percent(15), percent(45)];
+
+    const result = calculateColumnWidths(
+      widths,
+      0,
+      percent(60),
+      defaultMinWidths
+    );
+
+    expect(result).to.deep.equal([percent(90), percent(0), percent(10)]);
+  });
+
   it.skip('shrinks multiple columns sequentially when needed', () => {
     const widths = [percent(40), percent(30), percent(30)];
 
