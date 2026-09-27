@@ -17,7 +17,7 @@ import {
   initPathTrackerProps,
 } from './helpers.js';
 
-export type VscTreeSelectEvent = CustomEvent<{selectedItems: VscodeTreeItem[]}>;
+export type VscTreeSelectEvent = CustomEvent<VscodeTreeItem[]>;
 
 export const ExpandMode = {
   singleClick: 'singleClick',
@@ -41,7 +41,6 @@ type ListenedKey =
   | 'ArrowLeft'
   | 'ArrowRight'
   | 'Enter'
-  | 'Escape'
   | 'Shift'
   | ' ';
 
@@ -52,7 +51,6 @@ const listenedKeys: ListenedKey[] = [
   'ArrowLeft',
   'ArrowRight',
   'Enter',
-  'Escape',
   'Shift',
 ];
 

@@ -11,6 +11,20 @@ describe('vscode-scrollable', () => {
     expect(el).to.instanceOf(VscodeScrollable);
   });
 
+  it('only renders the shadow when enabled', async () => {
+    const withoutShadow = await fixture<VscodeScrollable>(html`
+      <vscode-scrollable></vscode-scrollable>
+    `);
+    const withShadow = await fixture<VscodeScrollable>(html`
+      <vscode-scrollable shadow></vscode-scrollable>
+    `);
+
+    expect(withoutShadow.shadow).to.be.false;
+    expect(withoutShadow.shadowRoot!.querySelector('.shadow')).to.be.null;
+    expect(withShadow.shadow).to.be.true;
+    expect(withShadow.shadowRoot!.querySelector('.shadow')).not.to.be.null;
+  });
+
   it('initializes scrollbar', async () => {
     const el = await fixture<VscodeScrollable>(
       html`<vscode-scrollable style="width: 100px; height: 100px;"

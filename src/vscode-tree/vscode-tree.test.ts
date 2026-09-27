@@ -754,6 +754,28 @@ describe('vscode-tree', () => {
 
     expect(firstChild.selected).to.be.true;
     expect(spy.getCalls()[0].args[0].type).to.eq('vsc-tree-select');
+    expect(spy.getCalls()[0].args[0].detail).to.deep.equal([firstChild]);
+  });
+
+  it('allows Escape key events to bubble outside the tree', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div>
+        <vscode-tree><vscode-tree-item>Item 1</vscode-tree-item></vscode-tree>
+      </div>
+    `);
+    const tree = wrapper.querySelector<VscodeTree>('vscode-tree')!;
+    const spy = sinon.spy();
+    const event = new KeyboardEvent('keydown', {
+      key: 'Escape',
+      bubbles: true,
+      cancelable: true,
+    });
+
+    wrapper.addEventListener('keydown', spy);
+    tree.dispatchEvent(event);
+
+    expect(spy.calledOnce).to.be.true;
+    expect(event.defaultPrevented).to.be.false;
   });
 
   it('selects item with click on it', async () => {

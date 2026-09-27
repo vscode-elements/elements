@@ -85,14 +85,23 @@ export class VscodeTable extends VscElement {
       return;
     }
 
-    this._columns = val;
+    const hasChanged =
+      val.length !== this._columns.length ||
+      val.some((column, index) => column !== this._columns[index]);
 
-    if (this.isConnected) {
+    this._columns = [...val];
+
+    if (this.isConnected && hasChanged) {
       this._initDefaultColumnSizes();
     }
   }
   get columns(): string[] {
     return this._columns;
+  }
+
+  /** Current column widths as percentages, in header order. */
+  get columnWidths(): number[] {
+    return [...this._columnResizeController.columnWidths];
   }
 
   /**
@@ -174,6 +183,7 @@ export class VscodeTable extends VscElement {
   private _componentResizeObserver?: ResizeObserver;
   private _headerResizeObserver?: ResizeObserver;
   private _bodyResizeObserver?: ResizeObserver;
+  private _bodyMutationObserver?: MutationObserver;
   private _activeSashElementIndex = -1;
   private _componentH = 0;
   private _componentW = 0;
@@ -213,6 +223,7 @@ export class VscodeTable extends VscElement {
     this._componentResizeObserver?.unobserve(this);
     this._componentResizeObserver?.disconnect();
     this._bodyResizeObserver?.disconnect();
+    this._bodyMutationObserver?.disconnect();
   }
 
   protected override willUpdate(changedProperties: PropertyValues): void {
@@ -223,12 +234,11 @@ export class VscodeTable extends VscElement {
       const value = percent(
         parseSizeAttributeToPercent(this.minColumnWidth, this._componentW) ?? 0
       );
-      const prevMap = this._columnResizeController.columnMinWidths;
       const widths = this._columnResizeController.columnWidths;
+      const headerCells = this._getHeaderCells();
 
       for (let i = 0; i < widths.length; i++) {
-        // Don't override the value comes form table header cell:
-        if (!prevMap.has(i)) {
+        if (!headerCells[i]?.hasAttribute('min-width')) {
           this._columnResizeController.setColumnMinWidthAt(i, value);
         }
       }
@@ -524,24 +534,48 @@ export class VscodeTable extends VscElement {
     this._headerCells.forEach((c, i) => {
       c.index = i;
 
-      if (c.minWidth) {
-        const minWidth =
-          parseSizeAttributeToPercent(c.minWidth, this._componentW) ??
-          percent(0);
-        this._columnResizeController.setColumnMinWidthAt(i, minWidth);
-      }
+      const minWidth = parseSizeAttributeToPercent(
+        c.hasAttribute('min-width')
+          ? (c.getAttribute('min-width') ?? '0')
+          : this.minColumnWidth,
+        this._componentW
+      );
+      this._columnResizeController.setColumnMinWidthAt(
+        i,
+        minWidth ?? percent(0)
+      );
     });
   }
 
   private _onBodySlotChange() {
-    this._initDefaultColumnSizes();
+    this._cellsOfFirstRow = this._queryCellsOfFirstRow();
+
+    if (
+      this._columnResizeController.columnWidths.length !==
+      this._getHeaderCells().length
+    ) {
+      this._initDefaultColumnSizes();
+    } else {
+      this._resizeColumns(true);
+    }
+
     this._initResizeObserver();
     this._updateResizeHandlersSize();
 
-    if (!this._bodyResizeObserver) {
-      const tbody = this._assignedBodyElements[0] ?? null;
+    const tbody = this._assignedBodyElements[0] ?? null;
 
-      if (tbody) {
+    this._bodyMutationObserver?.disconnect();
+    if (tbody) {
+      this._bodyMutationObserver = new MutationObserver(() => {
+        this._cellsOfFirstRow = this._queryCellsOfFirstRow();
+        this._resizeColumns(true);
+      });
+      this._bodyMutationObserver.observe(tbody, {
+        childList: true,
+        subtree: true,
+      });
+
+      if (!this._bodyResizeObserver) {
         this._bodyResizeObserver = new ResizeObserver(
           this._bodyResizeObserverCallback
         );
@@ -632,9 +666,15 @@ export class VscodeTable extends VscElement {
     event: VscTableChangeMinColumnWidthEvent
   ) => {
     const {columnIndex, propertyValue} = event.detail;
-    const value = parseSizeAttributeToPercent(propertyValue, this._componentW);
+    const headerCell = event.target as VscodeTableHeaderCell;
+    const value = parseSizeAttributeToPercent(
+      headerCell.hasAttribute('min-width')
+        ? propertyValue
+        : this.minColumnWidth,
+      this._componentW
+    );
 
-    if (value) {
+    if (value !== null) {
       this._columnResizeController.setColumnMinWidthAt(columnIndex, value);
     }
   };
