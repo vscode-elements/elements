@@ -18,7 +18,12 @@ export const LabelledCheckboxOrRadioMixin = <T extends Constructor<LitElement>>(
     set label(val: string) {
       this._label = val;
 
-      if (this._slottedText === '') {
+      if (
+        this._slottedText === '' &&
+        (!this.hasAttribute('aria-label') ||
+          this.getAttribute('aria-label') === this._autoAriaLabel)
+      ) {
+        this._autoAriaLabel = val;
         this.setAttribute('aria-label', val);
       }
     }
@@ -31,10 +36,17 @@ export const LabelledCheckboxOrRadioMixin = <T extends Constructor<LitElement>>(
 
     private _slottedText = '';
 
+    private _autoAriaLabel: string | null = null;
+
     protected _handleSlotChange(): void {
       this._slottedText = this.textContent ? this.textContent.trim() : '';
 
-      if (this._slottedText !== '') {
+      if (
+        this._slottedText !== '' &&
+        (!this.hasAttribute('aria-label') ||
+          this.getAttribute('aria-label') === this._autoAriaLabel)
+      ) {
+        this._autoAriaLabel = this._slottedText;
         this.setAttribute('aria-label', this._slottedText);
       }
     }
