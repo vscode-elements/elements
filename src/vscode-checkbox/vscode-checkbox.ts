@@ -51,6 +51,29 @@ export class VscodeCheckbox
     delegatesFocus: true,
   };
 
+  static override get observedAttributes(): string[] {
+    return [
+      ...(super.observedAttributes ?? []),
+      'id',
+      'aria-label',
+      'aria-labelledby',
+    ];
+  }
+
+  override attributeChangedCallback(
+    name: string,
+    oldVal: string,
+    newVal: string
+  ): void {
+    super.attributeChangedCallback(name, oldVal, newVal);
+    if (
+      (name === 'id' || name === 'aria-label' || name === 'aria-labelledby') &&
+      oldVal !== newVal
+    ) {
+      this.requestUpdate();
+    }
+  }
+
   /**
    * Automatically focus on the element when the page loads.
    *
@@ -174,7 +197,13 @@ export class VscodeCheckbox
   }
 
   override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this.removeEventListener('keydown', this._handleKeyDown);
+    this._labelObserver?.disconnect();
+  }
+
+  override updated(): void {
+    this._observeExternalLabels();
   }
 
   /** @internal */
@@ -196,6 +225,71 @@ export class VscodeCheckbox
   private _inputEl!: HTMLInputElement;
 
   private _internals: ElementInternals;
+
+  private _labelObserver: MutationObserver | null = null;
+
+  private _observeExternalLabels(): void {
+    this._labelObserver?.disconnect();
+    const targets: Node[] = [];
+    if (this._internals.labels.length > 0) {
+      targets.push(...Array.from(this._internals.labels));
+    }
+    const labelledBy = this.getAttribute('aria-labelledby');
+    if (labelledBy) {
+      const root = this.getRootNode() as Document | ShadowRoot;
+      if (root && 'getElementById' in root) {
+        for (const id of labelledBy.split(/\s+/)) {
+          const el = id ? root.getElementById(id) : null;
+          if (el) {
+            targets.push(el);
+          }
+        }
+      }
+    }
+    if (targets.length > 0) {
+      if (!this._labelObserver) {
+        this._labelObserver = new MutationObserver(() => {
+          this.requestUpdate();
+        });
+      }
+      for (const target of targets) {
+        this._labelObserver.observe(target, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+        });
+      }
+    }
+  }
+
+  private _getAccessibleLabel(): string | undefined {
+    if (this._internals.labels.length > 0) {
+      const text = Array.from(this._internals.labels)
+        .map((label) => label.textContent?.trim() ?? '')
+        .filter((t) => t.length > 0)
+        .join(' ');
+      if (text.length > 0) {
+        return text;
+      }
+    }
+    const labelledBy = this.getAttribute('aria-labelledby');
+    if (labelledBy) {
+      const root = this.getRootNode() as Document | ShadowRoot;
+      if (root && 'getElementById' in root) {
+        const text = labelledBy
+          .split(/\s+/)
+          .map((id) =>
+            id ? (root.getElementById(id)?.textContent?.trim() ?? '') : ''
+          )
+          .filter((t) => t.length > 0)
+          .join(' ');
+        if (text.length > 0) {
+          return text;
+        }
+      }
+    }
+    return this.ariaLabel || undefined;
+  }
 
   // Sets the value of the control according to the native checkbox behavior.
   // - If the checkbox is unchecked, the value will be null, so the control will
@@ -305,6 +399,7 @@ export class VscodeCheckbox
           aria-checked=${ifDefined(
             this.toggle ? (this.checked ? 'true' : 'false') : undefined
           )}
+          aria-label=${ifDefined(this._getAccessibleLabel())}
           value=${this.value}
         />
         <div class=${iconClasses}>${iconContent}</div>

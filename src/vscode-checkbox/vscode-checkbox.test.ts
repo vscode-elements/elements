@@ -223,6 +223,86 @@ describe('vscode-checkbox', () => {
     expect(el.ariaLabel).to.eq('Test Label');
   });
 
+  it('should associate external <label for="..."> with the inner input', async () => {
+    document.body.style.backgroundColor = '#1f1f1f';
+    const wrapper = await fixture<HTMLDivElement>(
+      html`<div>
+        <vscode-checkbox id="file-checkbox"></vscode-checkbox>
+        <label for="file-checkbox" class="file-label"
+          ><span class="file-path">file1.txt</span></label
+        >
+      </div>`
+    );
+
+    const el = wrapper.querySelector<VscodeCheckbox>('vscode-checkbox')!;
+    const label = wrapper.querySelector<HTMLLabelElement>('label')!;
+    await el.updateComplete;
+
+    const input = el.shadowRoot?.querySelector('input');
+    expect(input?.getAttribute('aria-label')).to.eq('file1.txt');
+    await expect(el).to.be.accessible();
+
+    label.textContent = 'file2.txt';
+    await new Promise((r) => setTimeout(r, 0));
+    await el.updateComplete;
+    expect(input?.getAttribute('aria-label')).to.eq('file2.txt');
+  });
+
+  it('should resolve aria-labelledby from the host root node for the inner input', async () => {
+    document.body.style.backgroundColor = '#1f1f1f';
+    const wrapper = await fixture<HTMLDivElement>(
+      html`<div>
+        <vscode-checkbox aria-labelledby="file-label"></vscode-checkbox>
+        <span id="file-label" class="file-label"
+          ><span class="file-path">file1.txt</span></span
+        >
+      </div>`
+    );
+
+    const el = wrapper.querySelector<VscodeCheckbox>('vscode-checkbox')!;
+    const span = wrapper.querySelector<HTMLSpanElement>('#file-label')!;
+    await el.updateComplete;
+
+    const input = el.shadowRoot?.querySelector('input');
+    expect(input?.getAttribute('aria-label')).to.eq('file1.txt');
+    await expect(el).to.be.accessible();
+
+    span.textContent = 'file2.txt';
+    await new Promise((r) => setTimeout(r, 0));
+    await el.updateComplete;
+    expect(input?.getAttribute('aria-label')).to.eq('file2.txt');
+  });
+
+  it('should forward aria-label attribute to the inner input', async () => {
+    document.body.style.backgroundColor = '#1f1f1f';
+    const el = await fixture<VscodeCheckbox>(
+      html`<vscode-checkbox aria-label="Select file"></vscode-checkbox>`
+    );
+
+    const input = el.shadowRoot?.querySelector('input');
+
+    expect(input?.getAttribute('aria-label')).to.eq('Select file');
+    await expect(el).to.be.accessible();
+
+    el.ariaLabel = 'Updated label';
+    await el.updateComplete;
+
+    expect(input?.getAttribute('aria-label')).to.eq('Updated label');
+  });
+
+  it('should preserve explicit aria-label when slotted content is present', async () => {
+    const el = await fixture<VscodeCheckbox>(
+      html`<vscode-checkbox aria-label="Select file foo.ts"
+        >foo.ts</vscode-checkbox
+      >`
+    );
+
+    const input = el.shadowRoot?.querySelector('input');
+
+    expect(el.ariaLabel).to.eq('Select file foo.ts');
+    expect(input?.getAttribute('aria-label')).to.eq('Select file foo.ts');
+  });
+
   it('should toggle checked state when clicked', async () => {
     const el = await fixture<VscodeCheckbox>(
       html`<vscode-checkbox>Checkbox test</vscode-checkbox>`
